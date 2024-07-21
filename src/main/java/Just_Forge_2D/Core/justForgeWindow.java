@@ -1,9 +1,11 @@
-package Just_Forge_2D;
+package Just_Forge_2D.Core;
 
-import org.lwjgl.Version;
-import org.lwjgl.glfw.GLFWErrorCallback;
+import Just_Forge_2D.Core.Input.*;
+import Just_Forge_2D.Core.Scene.*;
+import Just_Forge_2D.Utils.justForgeTime;
+
 import org.lwjgl.opengl.GL;
-
+import org.lwjgl.glfw.GLFWErrorCallback;
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
@@ -15,7 +17,10 @@ public class justForgeWindow
     private int height;
     private String title;
     private long glfwWindow;
-    private float r, g, b, a;
+    private int fps = 0;
+    public float r, g, b, a;
+
+    private static justForgeScene currentScene;
 
     private static justForgeWindow window = null;
 
@@ -31,6 +36,27 @@ public class justForgeWindow
         this.g = 1.0f;
         this.b = 1.0f;
         this.a = 1.0f;
+
+        changeScene(0);
+    }
+
+    public static void changeScene(int newScene)
+    {
+        switch(newScene)
+        {
+            case 0:
+                currentScene = new justForgeLevelEditorScene();
+                // currentScene.init()
+                break;
+
+            case 1:
+                currentScene = new justForgeLevelScene();
+                break;
+
+            default:
+                assert false : "Unknown Scene " + newScene;
+                break;
+        }
     }
 
     public static justForgeWindow get()
@@ -115,34 +141,35 @@ public class justForgeWindow
 
     public void gameLoop()
     {
-        boolean color = false;
+        double beginTime = justForgeTime.getTime();
+        double endTime;
+        double dt = -1.0f;
+
         while (!glfwWindowShouldClose(glfwWindow))
         {
+            if (fps != (int) (1.0d / dt))
+            {
+                fps = (int) (1.0d / dt);
+                System.out.println("Current fps: " + fps);
+            }
             // Poll events
             glfwPollEvents();
 
-            // Render
-            if (color)
-            {
-                r = (float) Math.sin(r - 0.01f) / 2 + 0.5f;
-                g = (float) Math.sin(g - 0.01f + (3.14 / 3)) / 2 + 0.5f;
-                b = (float) Math.sin(b - 0.01f + (3.14 * 2 / 3)) / 2 + 0.5f;
-                glClearColor(r, g, b, a);
-            }
-            else
-            {
-                glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-            }
+            glClearColor(r, g, b, a);
             glClear(GL_COLOR_BUFFER_BIT);
 
-            if (justForgeKeyboard.isKeyPressed(GLFW_KEY_SPACE))
+            if (dt >= 0.0d)
             {
-                color = true;
+                currentScene.update(dt);
             }
-
 
             // Swap buffer for next frame
             glfwSwapBuffers(glfwWindow);
+
+            // Keep time
+            endTime = justForgeTime.getTime();
+            dt = endTime - beginTime;
+            beginTime = endTime;
         }
     }
 }

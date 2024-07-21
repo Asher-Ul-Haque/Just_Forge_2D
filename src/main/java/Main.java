@@ -1,4 +1,4 @@
-import Just_Forge_2D.justForgeWindow;
+import Just_Forge_2D.Core.justForgeWindow;
 
 public class Main
 {

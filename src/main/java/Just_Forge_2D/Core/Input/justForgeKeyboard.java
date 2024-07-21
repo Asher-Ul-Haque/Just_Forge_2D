@@ -1,4 +1,4 @@
-package Just_Forge_2D;
+package Just_Forge_2D.Core.Input;
 
 import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
 import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
@@ -13,7 +13,7 @@ public class justForgeKeyboard
 
     }
 
-    protected static void init()
+    public static void init()
     {
         if (justForgeKeyboard.keyboard == null)
         {
