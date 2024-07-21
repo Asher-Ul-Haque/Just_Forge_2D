@@ -3,41 +3,50 @@ package Just_Forge_2D;
 import org.lwjgl.Version;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
+
+import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
-public class Window
+public class justForgeWindow
 {
     private int width;
     private int height;
     private String title;
     private long glfwWindow;
+    private float r, g, b, a;
 
-    private static Window window = null;
+    private static justForgeWindow window = null;
 
 
-    private Window()
+    private justForgeWindow()
     {
         this.width = 1920;
         this.height = 1080;
+
         this.title = "Mario";
+
+        this.r = 1.0f;
+        this.g = 1.0f;
+        this.b = 1.0f;
+        this.a = 1.0f;
     }
 
-    public static Window get()
+    public static justForgeWindow get()
     {
-        if (Window.window == null)
+        if (justForgeWindow.window == null)
         {
-            Window.window = new Window();
+            justForgeWindow.window = new justForgeWindow();
         }
-        return Window.window;
+        return justForgeWindow.window;
     }
 
     public void run()
     {
-        System.out.println("Hello LWJDL " + Version.getVersion());
         init();
         gameLoop();
+        finish();
     }
 
     public void init()
@@ -64,6 +73,17 @@ public class Window
             throw new IllegalStateException("Failed to create the GLFW window");
         }
 
+        // Setup the mouse
+        justForgeMouse.init();
+        glfwSetCursorPosCallback(glfwWindow, justForgeMouse::mousePositionCallback);
+        glfwSetMouseButtonCallback(glfwWindow, justForgeMouse::mouseButtonCallback);
+        glfwSetScrollCallback(glfwWindow, justForgeMouse::mouseScrollCallback);
+
+        // Setup the keyboard
+        justForgeKeyboard.init();
+        glfwSetKeyCallback(glfwWindow, justForgeKeyboard::keyCallback);
+
+
         // Make the OpenGL context current
         glfwMakeContextCurrent(glfwWindow);
 
@@ -82,16 +102,44 @@ public class Window
         GL.createCapabilities();
     }
 
+    public void finish()
+    {
+        // Free the memory
+        glfwFreeCallbacks(glfwWindow);
+        glfwDestroyWindow(glfwWindow);
+
+        // Terminate GLFW nad free the error callback
+        glfwTerminate();
+        glfwSetErrorCallback(null).free();
+    }
+
     public void gameLoop()
     {
+        boolean color = false;
         while (!glfwWindowShouldClose(glfwWindow))
         {
             // Poll events
             glfwPollEvents();
 
             // Render
-            glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
+            if (color)
+            {
+                r = (float) Math.sin(r - 0.01f) / 2 + 0.5f;
+                g = (float) Math.sin(g - 0.01f + (3.14 / 3)) / 2 + 0.5f;
+                b = (float) Math.sin(b - 0.01f + (3.14 * 2 / 3)) / 2 + 0.5f;
+                glClearColor(r, g, b, a);
+            }
+            else
+            {
+                glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+            }
             glClear(GL_COLOR_BUFFER_BIT);
+
+            if (justForgeKeyboard.isKeyPressed(GLFW_KEY_SPACE))
+            {
+                color = true;
+            }
+
 
             // Swap buffer for next frame
             glfwSwapBuffers(glfwWindow);

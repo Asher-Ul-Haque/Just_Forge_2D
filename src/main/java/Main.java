@@ -1,10 +1,10 @@
-import Just_Forge_2D.Window;
+import Just_Forge_2D.justForgeWindow;
 
 public class Main
 {
     public static void main(String[] args)
     {
-        Window window = Window.get();
+        justForgeWindow window = justForgeWindow.get();
         window.run();
     }
 }
