@@ -4,15 +4,17 @@ import Just_Forge_2D.Core.justForgeWindow;
 
 import java.awt.event.KeyEvent;
 
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_SPACE;
+
 public class justForgeLevelEditorScene extends justForgeScene
 {
     private boolean changingScene = false;
-    private int timeToChangeScene = 2;
+    private float timeToChangeScene = 2.0f;
 
 
     public justForgeLevelEditorScene()
     {
-        System.out.println("Inside Level editor system");
+        System.out.println("Inside Level Editor Scene");
     }
 
     @Override
@@ -22,13 +24,20 @@ public class justForgeLevelEditorScene extends justForgeScene
         {
             changingScene = true;
         }
-        if (changingScene && timeToChangeScene <= 0)
+
+        if (changingScene)
         {
-            justForgeWindow.changeScene(1);
-            timeToChangeScene -= DELTA_TIME;
-            justForgeWindow.get().r -= DELTA_TIME * 5.0f;
-            justForgeWindow.get().g -= DELTA_TIME * 5.0f;
-            justForgeWindow.get().b -= DELTA_TIME * 5.0f;
+            if (timeToChangeScene > 0.0f)
+            {
+                timeToChangeScene -= DELTA_TIME;
+                justForgeWindow.get().r -= DELTA_TIME * 2.0f;
+                justForgeWindow.get().g -= DELTA_TIME * 2.0f;
+                justForgeWindow.get().b -= DELTA_TIME * 2.0f;
+            }
+            else
+            {
+                justForgeWindow.changeScene(1);
+            }
         }
     }
 }

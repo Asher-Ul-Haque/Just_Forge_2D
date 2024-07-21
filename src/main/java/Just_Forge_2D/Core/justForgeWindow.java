@@ -150,7 +150,7 @@ public class justForgeWindow
             if (fps != (int) (1.0d / dt))
             {
                 fps = (int) (1.0d / dt);
-                System.out.println("Current fps: " + fps);
+                //System.out.println("Current fps: " + fps);
             }
             // Poll events
             glfwPollEvents();
