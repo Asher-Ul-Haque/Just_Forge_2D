@@ -1,35 +1,59 @@
 package Just_Forge_2D.Core.Input;
 
+import Just_Forge_2D.Core.justForgeLogger;
+
 import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
 import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
 
+
+// - - - Mouse Input class
 public class justForgeMouse
 {
+    // - - - Private Variables - - -
+
+    // - - - Singleton
     private static justForgeMouse mouse;
+
+    // - - - Mouse Scrolling
     private double xScroll, yScroll;
-    private double xPosition, yPosition;
-    private double xPrevious, yPrevious;
-    private boolean isMouseButtonPressed[] = new boolean[3]; // left, middle, right
     private boolean isDraggin;
 
+    // - - - Mouse Positions
+    private double xPosition, yPosition;
+    private double xPrevious, yPrevious;
+
+    // - - - Mouse BUttons
+    private boolean isMouseButtonPressed[] = new boolean[3]; // left, middle, right
+
+
+    // - - - | Functions | - - -
+
+    // - - - Singleton Constructor
     private justForgeMouse()
     {
         this.xScroll   = 0.0;
         this.yScroll   = 0.0;
+
         this.xPosition = 0.0f;
         this.yPosition = 0.0f;
         this.xPrevious = 0.0f;
         this.yPrevious = 0.0f;
     }
 
+    // - - - Setup mouse
     public static void init()
     {
         if (justForgeMouse.mouse == null)
         {
             justForgeMouse.mouse = new justForgeMouse();
         }
+        justForgeLogger.FORGE_LOG_INFO("Mouse Input System Online");
     }
 
+
+    // - - - Callbacks for GLFW - - -
+
+    // - - - Update Mouse Move
     public static void mousePositionCallback(long WINDOW, double X_POSITION, double Y_POSITION)
     {
         // make sure the mouse exists
@@ -46,6 +70,7 @@ public class justForgeMouse
         justForgeMouse.mouse.isDraggin = justForgeMouse.mouse.isMouseButtonPressed[0] || justForgeMouse.mouse.isMouseButtonPressed[1] || justForgeMouse.mouse.isMouseButtonPressed[2];
     }
 
+    // - - - Update Clicks
     public static void mouseButtonCallback(long WINDOW, int BUTTON, int ACTION, int MODIFIER)
     {
         // make sure the mouse exists
@@ -72,6 +97,7 @@ public class justForgeMouse
         }
     }
 
+    // - - - Update scroll wheel
     public static void mouseScrollCallback(long WINDOW, double X_OFFSET, double Y_OFFSET)
     {
         assert justForgeMouse.mouse != null;
@@ -80,6 +106,7 @@ public class justForgeMouse
         justForgeMouse.mouse.yScroll = Y_OFFSET;
     }
 
+    // - - - Cleanup
     public static void endFrame()
     {
         assert justForgeMouse.mouse != null;
@@ -91,6 +118,9 @@ public class justForgeMouse
         justForgeMouse.mouse.yPrevious = justForgeMouse.mouse.yPosition;
     }
 
+    // - - - Getters - - -
+
+    // - - - Positions
     public static double getX()
     {
         assert justForgeMouse.mouse != null;
@@ -104,6 +134,7 @@ public class justForgeMouse
     }
 
 
+    // - - - Net Movement
     public static double getDeltaX()
     {
         assert justForgeMouse.mouse != null;
@@ -116,6 +147,8 @@ public class justForgeMouse
         return (justForgeMouse.mouse.yPrevious - justForgeMouse.mouse.yPosition);
     }
 
+
+    // - - - Scroll
     public static double getScrollX()
     {
         assert justForgeMouse.mouse != null;
@@ -134,6 +167,8 @@ public class justForgeMouse
         return justForgeMouse.mouse.isDraggin;
     }
 
+
+    // - - - Mouse buttons
     public static boolean isMouseButtonDown(int BUTTON)
     {
         assert justForgeMouse.mouse != null;

@@ -9,37 +9,29 @@ repositories {
     mavenCentral()
 }
 
-dependencies {
-    testImplementation(platform("org.junit:junit-bom:5.10.0"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
-}
-
-tasks.test {
-    useJUnitPlatform()
-}
 import org.gradle.internal.os.OperatingSystem
 
-        project.ext.lwjglVersion = "3.3.4"
+project.ext.lwjglVersion = "3.3.4"
 project.ext.jomlVersion = "1.10.7"
 
 switch (OperatingSystem.current()) {
     case OperatingSystem.LINUX:
-    project.ext.lwjglNatives = "natives-linux"
-    def osArch = System.getProperty("os.arch")
-    if (osArch.startsWith("arm") || osArch.startsWith("aarch64")) {
-        project.ext.lwjglNatives += osArch.contains("64") || osArch.startsWith("armv8") ? "-arm64" : "-arm32"
-    } else if  (osArch.startsWith("ppc")) {
-        project.ext.lwjglNatives += "-ppc64le"
-    } else if  (osArch.startsWith("riscv")) {
-        project.ext.lwjglNatives += "-riscv64"
-    }
-    break
+        project.ext.lwjglNatives = "natives-linux"
+        def osArch = System.getProperty("os.arch")
+        if (osArch.startsWith("arm") || osArch.startsWith("aarch64")) {
+            project.ext.lwjglNatives += osArch.contains("64") || osArch.startsWith("armv8") ? "-arm64" : "-arm32"
+        } else if  (osArch.startsWith("ppc")) {
+            project.ext.lwjglNatives += "-ppc64le"
+        } else if  (osArch.startsWith("riscv")) {
+            project.ext.lwjglNatives += "-riscv64"
+        }
+        break
     case OperatingSystem.MAC_OS:
-    project.ext.lwjglNatives = "natives-macos-arm64"
-    break
+        project.ext.lwjglNatives = "natives-macos-arm64"
+        break
     case OperatingSystem.WINDOWS:
-    project.ext.lwjglNatives = "natives-windows-x86"
-    break
+        project.ext.lwjglNatives = "natives-windows-x86"
+        break
 }
 
 dependencies {

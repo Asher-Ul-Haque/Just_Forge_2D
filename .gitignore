@@ -4,6 +4,15 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
+### Custom
+.idea/*
+build/*
+gradle/*
+.gradle/*
+uiPreview.svg
+tilesets.svg
+
+
 ### IntelliJ IDEA ###
 .idea/modules.xml
 .idea/jarRepositories.xml

@@ -1,26 +1,40 @@
 package Just_Forge_2D.Core.Input;
 
+import Just_Forge_2D.Core.justForgeLogger;
+
 import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
 import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
 
+
+// - - - Keyboard input class
 public class justForgeKeyboard
 {
+
+    // - - - Private variables - - -
+
+    // - - - Singleton
     private static justForgeKeyboard keyboard;
+
+    // - - - Key States
     private boolean isKeyPressed[] = new boolean[350];
 
-    private justForgeKeyboard()
-    {
 
-    }
+    // - - - Functions - - -
 
+    // - - - Singleton useless constructor
+    private justForgeKeyboard() {}
+
+    // - - - Initialize keyboard input system
     public static void init()
     {
+        justForgeLogger.FORGE_LOG_INFO("Keyboard Input System Online");
         if (justForgeKeyboard.keyboard == null)
         {
             justForgeKeyboard.keyboard = new justForgeKeyboard();
         }
     }
 
+    // - - - Callback for GLFW
     public static void keyCallback(long WINDOW, int KEY, int SCANCODE, int ACTION, int MODIFIER)
     {
         assert justForgeKeyboard.keyboard != null;
@@ -39,6 +53,7 @@ public class justForgeKeyboard
         }
     }
 
+    // - - - Get key state
     public static boolean isKeyPressed(int KEYCODE)
     {
         assert justForgeKeyboard.keyboard != null;
