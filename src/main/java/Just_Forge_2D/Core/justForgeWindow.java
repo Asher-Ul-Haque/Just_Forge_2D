@@ -49,8 +49,8 @@ public class justForgeWindow
     // - - - Private Constructor for Singleton
     private justForgeWindow()
     {
-        this.width = 1920;
-        this.height = 1080;
+        this.width = 500;
+        this.height = 500;
 
         this.title = "Just Forge Tester";
 
@@ -120,7 +120,7 @@ public class justForgeWindow
         glfwDefaultWindowHints();
         glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
         glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
-        glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE);
+        //glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE);
         justForgeLogger.FORGE_LOG_TRACE("Window Configuration Read");
 
         // Create the window

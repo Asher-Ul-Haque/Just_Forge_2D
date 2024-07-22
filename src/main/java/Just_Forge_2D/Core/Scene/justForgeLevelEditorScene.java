@@ -2,6 +2,7 @@ package Just_Forge_2D.Core.Scene;
 
 import Just_Forge_2D.Core.justForgeLogger;
 import Just_Forge_2D.Core.justForgeWindow;
+import Just_Forge_2D.Renderer.justForgeShader;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL20;
 
@@ -13,6 +14,8 @@ import static org.lwjgl.opengl.GL30.*;
 
 public class justForgeLevelEditorScene extends justForgeScene 
 {
+    private justForgeShader defaultShader;
+
     private String vertexShaderSrc = "#version 330 core\n" +
             "layout (location=0) in vec3 aPos;\n" +
             "layout (location=1) in vec4 aColor;\n" +
@@ -70,63 +73,9 @@ public class justForgeLevelEditorScene extends justForgeScene
     public void init() 
     {
         justForgeLogger.FORGE_LOG_INFO("Current Scene: Level Editor");
-        // ============================================================
-        // Compile and link shaders
-        // ============================================================
+        defaultShader = new justForgeShader("Assets/Shaders/default.glsl");
+        defaultShader.compile();
 
-        justForgeLogger.FORGE_LOG_INFO("Settting up shaders");
-
-        // First load and compile the vertex shader
-        justForgeLogger.FORGE_LOG_DEBUG("Compiling Default Vertex Shader");
-        vertexID = glCreateShader(GL_VERTEX_SHADER);
-        // Pass the shader source to the GPU
-        glShaderSource(vertexID, vertexShaderSrc);
-        glCompileShader(vertexID);
-
-        // Check for errors in compilation
-        int success = glGetShaderi(vertexID, GL_COMPILE_STATUS);
-        if (success == GL_FALSE) 
-        {
-            int len = glGetShaderi(vertexID, GL_INFO_LOG_LENGTH);
-            justForgeLogger.FORGE_LOG_ERROR("defaultShader.glsl'\n\tVertex shader compilation failed");
-            justForgeLogger.FORGE_LOG_ERROR(glGetShaderInfoLog(vertexID, len));
-            assert false : "";
-        }
-
-
-        justForgeLogger.FORGE_LOG_DEBUG("Compiling Default Fragment Shader");
-        // First load and compile the vertex shader
-        fragmentID = glCreateShader(GL_FRAGMENT_SHADER);
-        // Pass the shader source to the GPU
-        glShaderSource(fragmentID, fragmentShaderSrc);
-        glCompileShader(fragmentID);
-
-        // Check for errors in compilation
-        success = glGetShaderi(fragmentID, GL_COMPILE_STATUS);
-        if (success == GL_FALSE) 
-        {
-            int len = glGetShaderi(fragmentID, GL_INFO_LOG_LENGTH);
-            justForgeLogger.FORGE_LOG_ERROR("defaultShader.glsl'\n\tFragment shader compilation failed");
-            justForgeLogger.FORGE_LOG_ERROR(glGetShaderInfoLog(fragmentID, len));
-            assert false : "";
-        }
-
-        // Link shaders and check for errors
-        justForgeLogger.FORGE_LOG_DEBUG("Linking shaders");
-        shaderProgram = glCreateProgram();
-        glAttachShader(shaderProgram, vertexID);
-        glAttachShader(shaderProgram, fragmentID);
-        glLinkProgram(shaderProgram);
-
-        // Check for linking errors
-        success = glGetProgrami(shaderProgram, GL_LINK_STATUS);
-        if (success == GL_FALSE) 
-        {
-            int len = glGetProgrami(shaderProgram, GL_INFO_LOG_LENGTH);
-            justForgeLogger.FORGE_LOG_ERROR("defaultShader.glsl'\n\tLinking of shaders failed.");
-            justForgeLogger.FORGE_LOG_ERROR(glGetProgramInfoLog(shaderProgram, len));
-            assert false : "";
-        }
 
         // ============================================================
         // Generate VAO, VBO, and EBO buffer objects, and send to GPU
@@ -171,7 +120,7 @@ public class justForgeLevelEditorScene extends justForgeScene
     public void update(double DELTA_TIME)
     {
         // Bind shader program
-        glUseProgram(shaderProgram);
+        defaultShader.use();
         // Bind the VAO that we're using
         glBindVertexArray(vaoID);
 
@@ -192,6 +141,6 @@ public class justForgeLevelEditorScene extends justForgeScene
 
         glBindVertexArray(0);
 
-        glUseProgram(0);
+        defaultShader.detach();
     }
 }
