@@ -1,4 +1,4 @@
-package Just_Forge_2D.Core;
+package Just_Forge_2D.Utils;
 
 public class justForgeLogger
 {

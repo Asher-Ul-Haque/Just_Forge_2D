@@ -1,6 +1,6 @@
 package Just_Forge_2D.Core.Input;
 
-import Just_Forge_2D.Core.justForgeLogger;
+import Just_Forge_2D.Utils.justForgeLogger;
 
 import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
 import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;

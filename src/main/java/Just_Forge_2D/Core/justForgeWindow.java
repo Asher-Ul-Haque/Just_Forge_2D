@@ -5,6 +5,7 @@ package Just_Forge_2D.Core;
 // - - - Internal
 import Just_Forge_2D.Core.Input.*;
 import Just_Forge_2D.Core.Scene.*;
+import Just_Forge_2D.Utils.justForgeLogger;
 import Just_Forge_2D.Utils.justForgeTime;
 
 // - - - External
@@ -70,6 +71,7 @@ public class justForgeWindow
         {
             case 0:
                 currentScene = new justForgeLevelEditorScene();
+                currentScene.init();
                 break;
 
             case 1:
@@ -215,5 +217,10 @@ public class justForgeWindow
             dt = endTime - beginTime;
             beginTime = endTime;
         }
+    }
+
+    public static justForgeScene getCurrentScene()
+    {
+        return get().currentScene;
     }
 }

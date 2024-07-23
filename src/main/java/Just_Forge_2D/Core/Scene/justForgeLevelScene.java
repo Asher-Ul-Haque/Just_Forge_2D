@@ -1,5 +1,5 @@
 package Just_Forge_2D.Core.Scene;
-import Just_Forge_2D.Core.justForgeLogger;
+import Just_Forge_2D.Utils.justForgeLogger;
 import Just_Forge_2D.Core.justForgeWindow;
 
 

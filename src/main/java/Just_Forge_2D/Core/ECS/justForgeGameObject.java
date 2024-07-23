@@ -1,7 +1,8 @@
 package Just_Forge_2D.Core.ECS;
 
 import Just_Forge_2D.Core.ECS.Components.justForgeComponent;
-import Just_Forge_2D.Core.justForgeLogger;
+import Just_Forge_2D.Core.Transform;
+import Just_Forge_2D.Utils.justForgeLogger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,9 +11,17 @@ public class justForgeGameObject
 {
     private String name;
     private List<justForgeComponent> components = new ArrayList<>();
+    public Transform transform;
 
     public justForgeGameObject(String NAME)
     {
+        this.transform = new Transform();
+        this.name = NAME;
+    }
+
+    public justForgeGameObject(String NAME, Transform TRANSFORM)
+    {
+        this.transform = TRANSFORM;
         this.name = NAME;
     }
 

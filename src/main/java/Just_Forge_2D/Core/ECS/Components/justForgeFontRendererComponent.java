@@ -1,6 +1,6 @@
 package Just_Forge_2D.Core.ECS.Components;
 
-import Just_Forge_2D.Core.justForgeLogger;
+import Just_Forge_2D.Utils.justForgeLogger;
 
 // - - - Renderer Component
 public class justForgeFontRendererComponent extends justForgeComponent
