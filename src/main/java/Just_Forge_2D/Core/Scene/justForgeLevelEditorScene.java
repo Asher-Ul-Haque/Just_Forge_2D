@@ -1,63 +1,35 @@
 package Just_Forge_2D.Core.Scene;
 
+import Just_Forge_2D.Core.justForgeCamera;
 import Just_Forge_2D.Core.justForgeLogger;
 import Just_Forge_2D.Core.justForgeWindow;
 import Just_Forge_2D.Renderer.justForgeShader;
+import Just_Forge_2D.Renderer.justForgeTexture;
+
+import org.joml.Vector2f;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL20;
-
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
-
 import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL30.*;
 
 public class justForgeLevelEditorScene extends justForgeScene 
 {
     private justForgeShader defaultShader;
-
-    private String vertexShaderSrc = "#version 330 core\n" +
-            "layout (location=0) in vec3 aPos;\n" +
-            "layout (location=1) in vec4 aColor;\n" +
-            "\n" +
-            "out vec4 fColor;\n" +
-            "\n" +
-            "void main()\n" +
-            "{\n" +
-            "    fColor = aColor;\n" +
-            "    gl_Position = vec4(aPos, 1.0);\n" +
-            "}";
-
-    private String fragmentShaderSrc = "#version 330 core\n" +
-            "\n" +
-            "in vec4 fColor;\n" +
-            "\n" +
-            "out vec4 color;\n" +
-            "\n" +
-            "void main()\n" +
-            "{\n" +
-            "    color = fColor;\n" +
-            "}";
-
-    private int vertexID, fragmentID, shaderProgram;
+    private justForgeTexture testTexture;
     private float time = 0;
 
     private float[] vertexArray = {
-            // position               // color
-            0.5f, -0.5f, 0.0f,       1.0f, 0.0f, 0.0f, 1.0f, // Bottom right 0
-            -0.5f,  0.5f, 0.0f,       0.0f, 1.0f, 0.0f, 1.0f, // Top left     1
-            0.5f,  0.5f, 0.0f ,      1.0f, 0.0f, 1.0f, 1.0f, // Top right    2
-            -0.5f, -0.5f, 0.0f,       1.0f, 1.0f, 0.0f, 1.0f, // Bottom left  3
+            // position                    // color                         // texture UV
+             100f,    0.5f,    0.0f,       1.0f, 0.0f, 0.0f, 1.0f,          1, 1, // Bottom right 0
+             0.5f,    100.5f,  0.0f,       0.0f, 1.0f, 0.0f, 1.0f,          0, 0, // Top left 1
+             100.5f,  100.5f,  0.0f ,      1.0f, 0.0f, 1.0f, 1.0f,          1, 0, // Top right    2
+             0.5f,    0.5f,    0.0f,       1.0f, 1.0f, 0.0f, 1.0f,          0, 1, // Bottom left  3
     };
 
     // IMPORTANT: Must be in counter-clockwise order
     private int[] elementArray = {
-            /*
-                    x        x
-
-
-                    x        x
-             */
             2, 1, 0, // Top right triangle
             0, 1, 3 // bottom left triangle
     };
@@ -76,6 +48,12 @@ public class justForgeLevelEditorScene extends justForgeScene
         defaultShader = new justForgeShader("Assets/Shaders/default.glsl");
         defaultShader.compile();
 
+        // - - - test image
+        this.testTexture = new justForgeTexture("Assets/Textures/MarioWalk0.png");
+
+        // - - - Creating camera
+        justForgeLogger.FORGE_LOG_INFO("Creating Scene Camera");
+        this.camera = new justForgeCamera(new Vector2f());
 
         // ============================================================
         // Generate VAO, VBO, and EBO buffer objects, and send to GPU
@@ -105,13 +83,18 @@ public class justForgeLevelEditorScene extends justForgeScene
         // Add the vertex attribute pointers
         int positionsSize = 3;
         int colorSize = 4;
-        int floatSizeBytes = 4;
-        int vertexSizeBytes = (positionsSize + colorSize) * floatSizeBytes;
+        int floatSizeBytes = Float.BYTES;
+        int uvSize = 2;
+        int vertexSizeBytes = (positionsSize + colorSize + uvSize) * floatSizeBytes;
+
         glVertexAttribPointer(0, positionsSize, GL_FLOAT, false, vertexSizeBytes, 0);
         glEnableVertexAttribArray(0);
 
         glVertexAttribPointer(1, colorSize, GL_FLOAT, false, vertexSizeBytes, positionsSize * floatSizeBytes);
         glEnableVertexAttribArray(1);
+
+        glVertexAttribPointer(2, uvSize, GL_FLOAT, false, vertexSizeBytes, (positionsSize + colorSize) * floatSizeBytes);
+        glEnableVertexAttribArray(2);
 
         justForgeLogger.FORGE_LOG_INFO("Shader System Online");
     }
@@ -119,8 +102,33 @@ public class justForgeLevelEditorScene extends justForgeScene
     @Override
     public void update(double DELTA_TIME)
     {
-        // Bind shader program
+        // - - - TODO: test code remove this
+        camera.position.x -= DELTA_TIME * 100;
+        camera.position.y -= DELTA_TIME * 100;
+        if (camera.position.x < -1000)
+        {
+            camera.position.x = 80;
+        }
+        if (camera.position.y < -1000)
+        {
+            camera.position.y = 80;
+        }
+
+        // - - - Use shader
         defaultShader.use();
+
+
+        // - - - Upload DATA to GPU - - -
+
+        // - - - Upload Texture Data
+        defaultShader.uploadTexture("TEXTURE_SAMPLER", 0);
+        glActiveTexture(GL_TEXTURE0);
+        testTexture.bind();
+
+        // - - - Upload Camera Data
+        defaultShader.uploadMatrix4f("uProjection", camera.getProjectionMatrix());
+        defaultShader.uploadMatrix4f("uView", camera.getViewMatrix());
+
         // Bind the VAO that we're using
         glBindVertexArray(vaoID);
 
@@ -132,8 +140,8 @@ public class justForgeLevelEditorScene extends justForgeScene
 
         time += (float) DELTA_TIME;
         justForgeWindow.get().r = (float) (0.5f + (0.5f * Math.sin(time)));
-        justForgeWindow.get().g = (float) (0.5f + (0.5f * Math.sin(time + (2.0f / 3.0f * Math.PI))));
-        justForgeWindow.get().b = (float) (0.5f + (0.5f * Math.sin(time) + (4.0f / 7.0f * Math.PI)));
+        justForgeWindow.get().g = (float) (0.5f + (0.5f * Math.sin(time + (1.0f / 3.0f * Math.PI))));
+        justForgeWindow.get().b = (float) (0.5f + (0.5f * Math.sin(time) + (2.0f / 3.0f * Math.PI)));
 
         // Unbind everything
         glDisableVertexAttribArray(0);

@@ -1,23 +1,32 @@
 package Just_Forge_2D.Renderer;
 
 import Just_Forge_2D.Core.justForgeLogger;
+import org.joml.*;
+import org.lwjgl.BufferUtils;
 
 import java.io.IOException;
+import java.nio.FloatBuffer;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import static org.lwjgl.opengl.GL11.GL_FALSE;
 import static org.lwjgl.opengl.GL20.*;
 
+
+// - - - SHADER Mnagemnt
 public class justForgeShader
 {
+    // - - - Private variables for compiling
     private int shaderProgramID;
     private String vertexSource, fragmentSource;
     private String filePath;
+    private boolean beingUsed = false;
 
     public justForgeShader(String FILE_PATH)
     {
         this.filePath = FILE_PATH;
+
+        // - - - Get the file contents to compile it
         try
         {
             String source = new String(Files.readAllBytes(Paths.get(filePath)));
@@ -70,28 +79,25 @@ public class justForgeShader
             justForgeLogger.FORGE_LOG_ERROR(e.getMessage());
             assert false;
         }
-
-        justForgeLogger.FORGE_LOG_DEBUG(vertexSource);
-        justForgeLogger.FORGE_LOG_DEBUG(fragmentSource);
-
     }
 
+    // - - - ACtaully compile and link
     public void compile()
     {
         // - - - | Compile and link shaders | - - -
 
         int vertexID, fragmentID;
-
         justForgeLogger.FORGE_LOG_INFO("Settting up shaders");
 
-        // First load and compile the vertex shader
+        // - - - First load and compile the vertex shader
         justForgeLogger.FORGE_LOG_DEBUG("Compiling Default Vertex Shader");
         vertexID = glCreateShader(GL_VERTEX_SHADER);
-        // Pass the shader source to the GPU
+
+        // - - - Pass the shader source to the GPU
         glShaderSource(vertexID, vertexSource);
         glCompileShader(vertexID);
 
-        // Check for errors in compilation
+        // - - - Check for errors in compilation
         int success = glGetShaderi(vertexID, GL_COMPILE_STATUS);
         if (success == GL_FALSE)
         {
@@ -101,16 +107,16 @@ public class justForgeShader
             assert false : "";
         }
 
-
         justForgeLogger.FORGE_LOG_DEBUG("Compiling Default Fragment Shader");
-        // First load and compile the vertex shader
+
+        // - - - First load and compile the vertex shader
         fragmentID = glCreateShader(GL_FRAGMENT_SHADER);
-        // Pass the shader source to the GPU
+
+        // - - - Pass the shader source to the GPU
         glShaderSource(fragmentID, fragmentSource);
         glCompileShader(fragmentID);
 
-
-        // Check for errors in compilation
+        // - - - Check for errors in compilation
         success = glGetShaderi(fragmentID, GL_COMPILE_STATUS);
         if (success == GL_FALSE)
         {
@@ -120,7 +126,8 @@ public class justForgeShader
             assert false : "";
         }
 
-        // - - - Link Shaders
+
+        // - - - Link Shaders - - -
 
         justForgeLogger.FORGE_LOG_DEBUG("Linking shaders");
         shaderProgramID = glCreateProgram();
@@ -128,7 +135,7 @@ public class justForgeShader
         glAttachShader(shaderProgramID, fragmentID);
         glLinkProgram(shaderProgramID);
 
-        // Check for linking errors
+        // - - - Check for linking errors
         success = glGetProgrami(shaderProgramID, GL_LINK_STATUS);
         if (success == GL_FALSE)
         {
@@ -139,13 +146,91 @@ public class justForgeShader
         }
     }
 
+    // - - - Use and fuck - - -
+
     public void detach()
     {
+        beingUsed = false;
         glUseProgram(0);
     }
 
     public void use()
     {
-        glUseProgram(shaderProgramID);
+        if (!beingUsed)
+        {
+            glUseProgram(shaderProgramID);
+            beingUsed = true;
+        }
+    }
+
+
+    // - - - Upload to shader - - -
+
+    // - - - Matrix4
+    public void uploadMatrix4f(String VARIABLE_NAME, Matrix4f MAT_4)
+    {
+        int varLocation = glGetUniformLocation(shaderProgramID, VARIABLE_NAME);
+        use();
+        FloatBuffer matrixBuffer = BufferUtils.createFloatBuffer(16);
+        MAT_4.get(matrixBuffer);
+        glUniformMatrix4fv(varLocation, false, matrixBuffer);
+    }
+
+    // - - - Matrix3
+    public void uploadMatrix3f(String VARIABLE_NAME, Matrix3f MAT_3)
+    {
+        int varLocation = glGetUniformLocation(shaderProgramID, VARIABLE_NAME);
+        use();
+        FloatBuffer matrixBuffer = BufferUtils.createFloatBuffer(9);
+        MAT_3.get(matrixBuffer);
+        glUniformMatrix3fv(varLocation, false, matrixBuffer);
+    }
+
+    // - - - Vector4
+    public void uploadVec4f(String VARIABLE_NAME, Vector4f VEC_4)
+    {
+        int varLocation = glGetUniformLocation(shaderProgramID, VARIABLE_NAME);
+        use();
+        glUniform4f(varLocation, VEC_4.x, VEC_4.y, VEC_4.z, VEC_4.w);
+    }
+
+    // - - - Vector3
+    public void uploadVec3f(String VARIABLE_NAME, Vector3f VEC_3)
+    {
+        int varLocation = glGetUniformLocation(shaderProgramID, VARIABLE_NAME);
+        use();
+        glUniform3f(varLocation, VEC_3.x, VEC_3.y, VEC_3.z);
+    }
+
+    // - - - Vector2
+    public void uploadVec2f(String VARIABLE_NAME, Vector2f VEC_2)
+    {
+        int varLocation = glGetUniformLocation(shaderProgramID, VARIABLE_NAME);
+        use();
+        glUniform2f(varLocation, VEC_2.x, VEC_2.y);
+    }
+
+    // - - - Float
+    public void uploadFloat(String VARIABLE_NAME, float VALUE)
+    {
+        int varLocation = glGetUniformLocation(shaderProgramID, VARIABLE_NAME);
+        use();
+        glUniform1f(varLocation, VALUE);
+    }
+
+    // - - - Int
+    public void uploadInt(String VARIABLE_NAME, int VALUE)
+    {
+        int varLocation = glGetUniformLocation(shaderProgramID, VARIABLE_NAME);
+        use();
+        glUniform1i(varLocation, VALUE);
+    }
+
+    // - - - Texture
+    public void uploadTexture(String VARIABLE_NAME, int SLOT)
+    {
+        int varLocation = glGetUniformLocation(shaderProgramID, VARIABLE_NAME);
+        use();
+        glUniform1i(varLocation, SLOT);
     }
 }
