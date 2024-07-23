@@ -1,5 +1,8 @@
 package Just_Forge_2D.Core.Scene;
 
+import Just_Forge_2D.Core.ECS.Components.justForgeFontRendererComponent;
+import Just_Forge_2D.Core.ECS.Components.justForgeSpriteRendererComponent;
+import Just_Forge_2D.Core.ECS.justForgeGameObject;
 import Just_Forge_2D.Core.justForgeCamera;
 import Just_Forge_2D.Core.justForgeLogger;
 import Just_Forge_2D.Core.justForgeWindow;
@@ -19,6 +22,7 @@ public class justForgeLevelEditorScene extends justForgeScene
     private justForgeShader defaultShader;
     private justForgeTexture testTexture;
     private float time = 0;
+    private justForgeGameObject testObject;
 
     private float[] vertexArray = {
             // position                    // color                         // texture UV
@@ -39,6 +43,7 @@ public class justForgeLevelEditorScene extends justForgeScene
     public justForgeLevelEditorScene() 
     {
         init();
+        start();
     }
 
     @Override
@@ -47,6 +52,12 @@ public class justForgeLevelEditorScene extends justForgeScene
         justForgeLogger.FORGE_LOG_INFO("Current Scene: Level Editor");
         defaultShader = new justForgeShader("Assets/Shaders/default.glsl");
         defaultShader.compile();
+
+        justForgeLogger.FORGE_LOG_DEBUG("Creating test object");
+        this.testObject = new justForgeGameObject("test Object");
+        this.testObject.addComponent(new justForgeSpriteRendererComponent());
+        this.testObject.addComponent(new justForgeFontRendererComponent());
+        this.addGameObject(this.testObject);
 
         // - - - test image
         this.testTexture = new justForgeTexture("Assets/Textures/MarioWalk0.png");
@@ -150,5 +161,16 @@ public class justForgeLevelEditorScene extends justForgeScene
         glBindVertexArray(0);
 
         defaultShader.detach();
+
+        justForgeLogger.FORGE_LOG_DEBUG("Creating game object");
+        justForgeGameObject go = new justForgeGameObject("test object 2");
+        go.addComponent(new justForgeSpriteRendererComponent());
+        this.addGameObject(go);
+
+
+        for (justForgeGameObject gameObject : this.gameObjects)
+        {
+            gameObject.update((float) DELTA_TIME);
+        }
     }
 }
