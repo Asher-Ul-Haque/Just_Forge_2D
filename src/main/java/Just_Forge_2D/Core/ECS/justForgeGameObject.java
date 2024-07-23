@@ -53,22 +53,22 @@ public class justForgeGameObject
     {
         this.components.add(COMPONENT);
         COMPONENT.gameObject = this;
-        justForgeLogger.FORGE_LOG_TRACE("Added component: " + COMPONENT.toString() + "to Game Object " + this.toString());
+        justForgeLogger.FORGE_LOG_TRACE("Added component: " + COMPONENT + " to Game Object " + this);
     }
 
     public void update(float DELTA_TIME)
     {
-        for (int i = 0; i < components.size(); ++i)
+        for (justForgeComponent component : components)
         {
-            components.get(i).update(DELTA_TIME);
+            component.update(DELTA_TIME);
         }
     }
 
     public void start()
     {
-        for (int i = 0; i < components.size(); ++i)
+        for (justForgeComponent component : components)
         {
-            components.get(i).start();
+            component.start();
         }
     }
 }

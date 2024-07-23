@@ -11,7 +11,6 @@ import Just_Forge_2D.Renderer.justForgeTexture;
 
 import org.joml.Vector2f;
 import org.lwjgl.BufferUtils;
-import org.lwjgl.opengl.GL20;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 import static org.lwjgl.opengl.GL20.*;
@@ -114,8 +113,8 @@ public class justForgeLevelEditorScene extends justForgeScene
     public void update(double DELTA_TIME)
     {
         // - - - TODO: test code remove this
-        camera.position.x -= DELTA_TIME * 100;
-        camera.position.y -= DELTA_TIME * 100;
+        camera.position.x -= (float) (DELTA_TIME * 100);
+        camera.position.y -= (float) (DELTA_TIME * 100);
         if (camera.position.x < -1000)
         {
             camera.position.x = 80;
@@ -161,12 +160,6 @@ public class justForgeLevelEditorScene extends justForgeScene
         glBindVertexArray(0);
 
         defaultShader.detach();
-
-        justForgeLogger.FORGE_LOG_DEBUG("Creating game object");
-        justForgeGameObject go = new justForgeGameObject("test object 2");
-        go.addComponent(new justForgeSpriteRendererComponent());
-        this.addGameObject(go);
-
 
         for (justForgeGameObject gameObject : this.gameObjects)
         {

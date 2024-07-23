@@ -10,11 +10,17 @@ import static org.lwjgl.opengl.GL11C.*;
 import static org.lwjgl.stb.STBImage.stbi_image_free;
 import static org.lwjgl.stb.STBImage.stbi_load;
 
+// - - - Texture Loading Class
 public class justForgeTexture
 {
+    // - - - Private variables
     private String filepath;
     private int textureID;
 
+
+    // - - - Functions - - -
+
+    // - - - Constructor to set up a use able texture
     public justForgeTexture(String FILEPATH)
     {
         this.filepath = FILEPATH;
@@ -40,26 +46,25 @@ public class justForgeTexture
 
         if (image != null)
         {
-            justForgeLogger.FORGE_LOG_TRACE("Loaded image sucessfully: " + filepath);
-            int textureType;
-
-            switch (channels.get(0))
+            int textureType = switch (channels.get(0))
             {
-                case 3: //RGB image
+                case 3 ->
+                {
                     justForgeLogger.FORGE_LOG_TRACE("RGB image: " + filepath);
-                    textureType = GL_RGB;
-                    break;
-
-                case 4: //RGBA image
+                    yield GL_RGB; //RGB image
+                }
+                case 4 ->
+                {
                     justForgeLogger.FORGE_LOG_TRACE("RGBA image " + filepath);
-                    textureType = GL_RGBA;
-                    break;
-
-                default:
+                    yield GL_RGBA; //RGBA image
+                }
+                default ->
+                {
                     justForgeLogger.FORGE_LOG_WARNING("Unkown picture type with " + channels.get(0) + " attributes");
-                    textureType = -1;
-                    break;
-            }
+                    yield -1;
+                }
+            };
+
             glTexImage2D(GL_TEXTURE_2D, 0, textureType, width.get(0), height.get(0), 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
         }
         else
@@ -67,15 +72,17 @@ public class justForgeTexture
             justForgeLogger.FORGE_LOG_WARNING("Could not load image: " + filepath);
             assert false;
         }
-
+        justForgeLogger.FORGE_LOG_DEBUG("Loaded image sucessfully: " + filepath);
         stbi_image_free(image);
     }
 
+    // - - - Bind texture to an object
     public void bind()
     {
         glBindTexture(GL_TEXTURE_2D, textureID);
     }
 
+    // - - - Remove texture from an object
     public void detach()
     {
         glBindTexture(GL_TEXTURE_2D, 0);

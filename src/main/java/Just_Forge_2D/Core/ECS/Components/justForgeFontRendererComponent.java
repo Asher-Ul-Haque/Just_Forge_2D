@@ -2,6 +2,7 @@ package Just_Forge_2D.Core.ECS.Components;
 
 import Just_Forge_2D.Core.justForgeLogger;
 
+// - - - Renderer Component
 public class justForgeFontRendererComponent extends justForgeComponent
 {
     @Override

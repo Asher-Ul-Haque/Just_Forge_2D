@@ -11,7 +11,6 @@ import Just_Forge_2D.Utils.justForgeTime;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.glfw.GLFWErrorCallback;
 
-import Just_Forge_2D.Core.justForgeLogger;
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
@@ -194,11 +193,10 @@ public class justForgeWindow
             if (Math.abs(fps - (int) (1.0d / dt)) >= 20)
             {
                 fps = (int) (1.0d / dt);
-                justForgeLogger.FORGE_LOG_WARNING("Experienced fps spike");
-                justForgeLogger.FORGE_LOG_DEBUG("Current FPS: " + fps);
-                //System.out.println("Current fps: " + fps);
+                justForgeLogger.FORGE_LOG_WARNING("Experienced fps spike. FPS: " + fps);
             }
-            // Poll events
+
+            // - - - Poll events
             glfwPollEvents();
 
             glClearColor(r, g, b, a);

@@ -5,6 +5,7 @@ build/
 !**/src/test/**/build/
 
 ### Custom
+.idea/
 .idea/*
 build/*
 gradle/*
@@ -49,3 +50,4 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+/.idea/

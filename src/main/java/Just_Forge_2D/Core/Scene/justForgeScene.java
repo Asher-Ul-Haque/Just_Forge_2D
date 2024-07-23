@@ -10,13 +10,13 @@ import java.util.List;
 // - - - Abstract class for all the scenes
 public abstract class justForgeScene
 {
+    // - - - Private Variables - - -
     protected justForgeCamera camera;
     private boolean isRunning = false;
-    protected List<justForgeGameObject> gameObjects = new ArrayList<justForgeGameObject>();
+    protected List<justForgeGameObject> gameObjects = new ArrayList<>();
 
-    public justForgeScene()
-    {
-    }
+    // - - - Useless constructor
+    public justForgeScene() {}
     public abstract void update(double DELTA_TIME);
     public void init(){}
 
@@ -29,7 +29,7 @@ public abstract class justForgeScene
             return;
         }
         GAME_OBJECT.start();
-    };
+    }
 
     public void start()
     {

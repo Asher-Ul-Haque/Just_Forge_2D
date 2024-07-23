@@ -22,6 +22,7 @@ public class justForgeShader
     private String filePath;
     private boolean beingUsed = false;
 
+    // - - - Constructor to get a useable shader
     public justForgeShader(String FILE_PATH)
     {
         this.filePath = FILE_PATH;
@@ -81,7 +82,7 @@ public class justForgeShader
         }
     }
 
-    // - - - ACtaully compile and link
+    // - - - Actually compile and link
     public void compile()
     {
         // - - - | Compile and link shaders | - - -
