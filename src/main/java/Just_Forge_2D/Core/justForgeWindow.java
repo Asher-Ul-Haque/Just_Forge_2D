@@ -121,7 +121,7 @@ public class justForgeWindow
         glfwDefaultWindowHints();
         glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
         glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
-        //glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE);
+        glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE);
         justForgeLogger.FORGE_LOG_TRACE("Window Configuration Read");
 
         // Create the window
@@ -192,7 +192,7 @@ public class justForgeWindow
 
         while (!glfwWindowShouldClose(glfwWindow))
         {
-            if (Math.abs(fps - (int) (1.0d / dt)) >= 20)
+            if (Math.abs(fps - (int) (1.0d / dt)) >= 30)
             {
                 fps = (int) (1.0d / dt);
                 justForgeLogger.FORGE_LOG_WARNING("Experienced fps spike. FPS: " + fps);

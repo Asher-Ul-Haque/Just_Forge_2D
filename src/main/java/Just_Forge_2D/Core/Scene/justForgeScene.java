@@ -33,7 +33,6 @@ public abstract class justForgeScene
         gameObjects.add(GAME_OBJECT);
         if (!isRunning)
         {
-            justForgeLogger.FORGE_LOG_WARNING("Trying to add more game objects when the scene is not running");
             return;
         }
         this.renderer.add(GAME_OBJECT);

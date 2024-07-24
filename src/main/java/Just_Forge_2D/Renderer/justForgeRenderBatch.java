@@ -2,6 +2,7 @@ package Just_Forge_2D.Renderer;
 
 import Just_Forge_2D.Core.ECS.Components.justForgeSpriteRendererComponent;
 import Just_Forge_2D.Core.justForgeWindow;
+import Just_Forge_2D.Utils.justForgeAssetPool;
 import Just_Forge_2D.Utils.justForgeLogger;
 import org.joml.Vector4f;
 
@@ -33,8 +34,7 @@ public class justForgeRenderBatch
 
     public justForgeRenderBatch(int MAX_BATCH_SIZE)
     {
-        shader = new justForgeShader("Assets/Shaders/default.glsl");
-        shader.compile();
+        shader = justForgeAssetPool.getShader("Assets/Shaders/default.glsl");
         this.maxBatchSize = MAX_BATCH_SIZE;
         this.sprites = new justForgeSpriteRendererComponent[maxBatchSize];
 

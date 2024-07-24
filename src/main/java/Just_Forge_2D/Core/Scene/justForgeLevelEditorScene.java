@@ -5,6 +5,7 @@ import Just_Forge_2D.Core.ECS.Components.justForgeSpriteRendererComponent;
 import Just_Forge_2D.Core.ECS.justForgeGameObject;
 import Just_Forge_2D.Core.Transform;
 import Just_Forge_2D.Core.justForgeCamera;
+import Just_Forge_2D.Utils.justForgeAssetPool;
 import Just_Forge_2D.Utils.justForgeLogger;
 import Just_Forge_2D.Core.justForgeWindow;
 import Just_Forge_2D.Renderer.justForgeShader;
@@ -72,7 +73,14 @@ public class justForgeLevelEditorScene extends justForgeScene
             }
         }
 
+        loadResources();
+
         start();
+    }
+
+    private void loadResources()
+    {
+        justForgeAssetPool.getShader("Assets/Shaders/default.glsl");
     }
 
     @Override
