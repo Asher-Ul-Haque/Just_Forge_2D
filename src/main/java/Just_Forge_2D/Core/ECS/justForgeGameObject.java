@@ -12,17 +12,20 @@ public class justForgeGameObject
     private String name;
     private List<justForgeComponent> components = new ArrayList<>();
     public justForgeTransform transform;
+    private int layer;
 
     public justForgeGameObject(String NAME)
     {
         this.transform = new justForgeTransform();
         this.name = NAME;
+        this.layer = 0;
     }
 
-    public justForgeGameObject(String NAME, justForgeTransform TRANSFORM)
+    public justForgeGameObject(String NAME, justForgeTransform TRANSFORM, int LAYER)
     {
         this.transform = TRANSFORM;
         this.name = NAME;
+        this.layer = LAYER;
     }
 
     public <T extends justForgeComponent> T getCompoent(Class<T> COMPONENT_CLASS)
@@ -79,5 +82,10 @@ public class justForgeGameObject
         {
             component.start();
         }
+    }
+
+    public int getLayer()
+    {
+        return this.layer;
     }
 }

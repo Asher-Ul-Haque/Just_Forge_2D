@@ -55,8 +55,8 @@ public class justForgeWindow
         this.title = "Just Forge Tester";
 
         this.r = 0.0f;
-        this.g = 0.0f;
-        this.b = 0.0f;
+        this.g = 1.0f;
+        this.b = 1.0f;
         this.a = 1.0f;
 
         justForgeLogger.FORGE_LOG_INFO("Started Just Forge 2D");
@@ -161,6 +161,8 @@ public class justForgeWindow
         // creates the GLCapabilities instance and makes the OpenGL
         // bindings available for use
         GL.createCapabilities();
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
         justForgeLogger.FORGE_LOG_INFO("Window System Online");
 
         changeScene(0);

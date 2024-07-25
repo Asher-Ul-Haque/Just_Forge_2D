@@ -13,7 +13,7 @@ public class justForgeSpriteRenderer extends justForgeComponent
     private Vector4f color;
     justForgeSprite sprite;
     private justForgeTransform lastTransform;
-    private boolean isChanged = false;
+    private boolean isChanged = true;
 
     public justForgeSpriteRenderer(Vector4f COLOR)
     {

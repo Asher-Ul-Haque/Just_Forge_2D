@@ -54,12 +54,12 @@ public class justForgeLevelEditorScene extends justForgeScene
         loadResources();
         sprites = justForgeAssetPool.getSpriteSheet("Assets/Textures/spritesheet.png");
 
-        obj1 = new justForgeGameObject("OBject 1", new justForgeTransform(new Vector2f(100, 100), new Vector2f(256, 256)));
-        obj1.addComponent(new justForgeSpriteRenderer(sprites.getSprite(0)));
+        obj1 = new justForgeGameObject("OBject 1", new justForgeTransform(new Vector2f(100, 100), new Vector2f(256, 256)), 1);
+        obj1.addComponent(new justForgeSpriteRenderer(new justForgeSprite(justForgeAssetPool.getTexture("Assets/Textures/blendImage1.png"))));
         this.addGameObject(obj1);
 
-        justForgeGameObject obj2 = new justForgeGameObject("OBject 2", new justForgeTransform(new Vector2f(400, 400), new Vector2f(256, 256)));
-        obj2.addComponent(new justForgeSpriteRenderer(sprites.getSprite(10)));
+        justForgeGameObject obj2 = new justForgeGameObject("OBject 2", new justForgeTransform(new Vector2f(400, 100), new Vector2f(256, 256)), 1);
+        obj2.addComponent(new justForgeSpriteRenderer(new justForgeSprite(justForgeAssetPool.getTexture("Assets/Textures/blendImage2.png"))));
         this.addGameObject(obj2);
 
         start();
@@ -76,19 +76,7 @@ public class justForgeLevelEditorScene extends justForgeScene
     {
         spriteFlipeTimeLeft -= DELTA_TIME;
 
-        obj1.transform.position.x += 10 * DELTA_TIME;
-        if (spriteFlipeTimeLeft <= 0)
-        {
-            spriteFlipeTimeLeft = spriteFlipTime;
-            spriteIndex++;
-
-            if (spriteIndex >= 21)
-            {
-                spriteIndex = 0;
-            }
-
-            obj1.getCompoent(justForgeSpriteRenderer.class).setSprite(sprites.getSprite(spriteIndex));
-        }
+        obj1.transform.position.x += (float) (15 * DELTA_TIME);
 
         for (justForgeGameObject gameObject : this.gameObjects)
         {

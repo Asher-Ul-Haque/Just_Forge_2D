@@ -4,6 +4,7 @@ import Just_Forge_2D.Core.ECS.Components.Sprite.justForgeSpriteRenderer;
 import Just_Forge_2D.Core.justForgeWindow;
 import Just_Forge_2D.Utils.justForgeAssetPool;
 import Just_Forge_2D.Utils.justForgeLogger;
+import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 
@@ -13,7 +14,7 @@ import java.util.List;
 import static org.lwjgl.opengl.GL20C.*;
 import static org.lwjgl.opengl.GL30C.*;
 
-public class justForgeRenderBatch
+public class justForgeRenderBatch implements Comparable<justForgeRenderBatch>
 {
     /* C struct
         Vertex
@@ -33,7 +34,6 @@ public class justForgeRenderBatch
     private final int TEXTURE_COORDS_OFFSET = COLOR_OFFSET + COLOR_SIZE * Float.BYTES;
     private final int TEXTURE_ID_OFFSET = TEXTURE_COORDS_OFFSET + TEXTURE_COORDS_SIZE * Float.BYTES;
 
-
     private justForgeSpriteRenderer[] sprites;
     private int spriteCount;
     protected boolean hasRoom;
@@ -44,12 +44,14 @@ public class justForgeRenderBatch
     private int vaoID, vboID;
     private int maxBatchSize;
     private justForgeShader shader;
+    private int layer;
 
-    public justForgeRenderBatch(int MAX_BATCH_SIZE)
+    public justForgeRenderBatch(int MAX_BATCH_SIZE, int LAYER)
     {
         shader = justForgeAssetPool.getShader("Assets/Shaders/default.glsl");
         this.maxBatchSize = MAX_BATCH_SIZE;
         this.sprites = new justForgeSpriteRenderer[maxBatchSize];
+        this.layer = LAYER;
 
         //  4 vertices quadrants
         this.vertices = new float[maxBatchSize * VERTEX_SIZE * 4];
@@ -272,5 +274,16 @@ public class justForgeRenderBatch
     public boolean hasTexture(justForgeTexture TEXTURE)
     {
         return this.textures.contains(TEXTURE);
+    }
+
+    public int getLayer()
+    {
+        return this.layer;
+    }
+
+    @Override
+    public int compareTo(@NotNull justForgeRenderBatch OTHER)
+    {
+        return Integer.compare(OTHER.getLayer(),this.getLayer());
     }
 }
