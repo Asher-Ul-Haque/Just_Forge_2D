@@ -23,12 +23,10 @@ public class justForgeCamera
         adjustProjection();
     }
 
-    public void adjustProjection()
-    {
-        projectionMatrix.identity();
-        projectionMatrix.ortho(0.0f, 32.0f * 32.0f, 0.0f, 32.0f * 32.0f, 0.0f, 64.0f); // the screen is 32 tiles of 32 pizels each in both directions
-    }
 
+    // - - - Getters and Setters - - -
+
+    // - - - get the view matrix
     public Matrix4f getViewMatrix()
     {
         Vector3f cameraFront = new Vector3f(0.0f, 0.0f, -1.0f);
@@ -40,8 +38,17 @@ public class justForgeCamera
         return viewMatrix;
     }
 
+    // - - - get the projection matrix
     public Matrix4f getProjectionMatrix()
     {
         return this.projectionMatrix;
     }
+
+    public void adjustProjection()
+    {
+        projectionMatrix.identity();
+        projectionMatrix.ortho(0.0f, 32.0f * 32.0f, 0.0f, 32.0f * 32.0f, 0.0f, 64.0f); // the screen is 32 tiles of 32 pizels each in both directions
+    }
+
+
 }

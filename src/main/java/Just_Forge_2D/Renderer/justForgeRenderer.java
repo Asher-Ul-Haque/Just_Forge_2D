@@ -5,6 +5,7 @@ import Just_Forge_2D.Core.ECS.justForgeGameObject;
 import Just_Forge_2D.Utils.justForgeLogger;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class justForgeRenderer
@@ -33,7 +34,7 @@ public class justForgeRenderer
 
         for (justForgeRenderBatch batch : batches)
         {
-            if (batch.hasRoom)
+            if (batch.hasRoom && batch.getLayer() == SPRITE.gameObject.getLayer())
             {
                 justForgeTexture texture = SPRITE.getTexture();
                 if (texture == null || (batch.hasTexture(texture) || batch.hasTextureRoom()))
@@ -47,12 +48,12 @@ public class justForgeRenderer
 
         if (!added)
         {
-            justForgeLogger.FORGE_LOG_DEBUG("Batch ran out of room, creating new batch");
-            justForgeRenderBatch newBatch = new justForgeRenderBatch(MAX_BATCH_SIZE);
+            justForgeLogger.FORGE_LOG_DEBUG("Batch ran out of room, creating new batch for layer: " + SPRITE.gameObject.getLayer());
+            justForgeRenderBatch newBatch = new justForgeRenderBatch(MAX_BATCH_SIZE, SPRITE.gameObject.getLayer());
             newBatch.start();
             batches.add(newBatch);
             newBatch.addSprite(SPRITE);
-            added = true;
+            Collections.sort(batches);
         }
     }
 

@@ -7,61 +7,42 @@ import Just_Forge_2D.Utils.justForgeTransform;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 
-// - - - Sprite Renderer
+// - - - Component for rendering sprites
 public class justForgeSpriteRenderer extends justForgeComponent
 {
+    // - - - private variables - - -
     private Vector4f color;
-    justForgeSprite sprite;
+    private justForgeSprite sprite;
     private justForgeTransform lastTransform;
-    private boolean isChanged = false;
+    private boolean isChanged = true;
 
+
+    // - - - | Functions | - - -
+
+
+    // - - - Constructors - - -
+
+    // - - - store color and make a sprite without texture
     public justForgeSpriteRenderer(Vector4f COLOR)
     {
         this.sprite = new justForgeSprite(null);
         this.color = COLOR;
     }
 
+    // - - - well just take in the sprite and give no tint
     public justForgeSpriteRenderer(justForgeSprite SPRITE)
     {
         this.sprite = SPRITE;
         this.color = new Vector4f(1.0f, 1.0f, 1.0f, 1.0f);
     }
 
-    @Override
-    public void start()
-    {
-        this.lastTransform = gameObject.transform.copy();
-    }
 
-    @Override
-    public void update(float DELTA_TIME)
-    {
-        if (!this.lastTransform.equals(this.gameObject.transform))
-        {
-            this.gameObject.transform.copy(this.lastTransform);
-            this.isChanged = true;
-        }
-    }
+    // - - - Getters and Setters - - -
 
+    // - - - Color
     public Vector4f getColor()
     {
         return this.color;
-    }
-
-    public justForgeTexture getTexture()
-    {
-        return sprite.getTexture();
-    }
-
-    public Vector2f[] getTextureCoords()
-    {
-        return sprite.getTextureCoordinates();
-    }
-
-    public void setSprite(justForgeSprite SPRITE)
-    {
-        this.sprite = SPRITE;
-        this.isChanged = true;
     }
 
     public void setColor(Vector4f COLOR)
@@ -75,6 +56,25 @@ public class justForgeSpriteRenderer extends justForgeComponent
         justForgeLogger.FORGE_LOG_WARNING("Previous color and current color equal when changing color of a sprite: " + this.sprite);
     }
 
+    // - - - Texture
+    public justForgeTexture getTexture()
+    {
+        return sprite.getTexture();
+    }
+
+    public Vector2f[] getTextureCoords()
+    {
+        return sprite.getTextureCoordinates();
+    }
+
+    // - - - Sprite
+    public void setSprite(justForgeSprite SPRITE)
+    {
+        this.sprite = SPRITE;
+        this.isChanged = true;
+    }
+
+    // - - - Animations
     public boolean isChanged()
     {
         return this.isChanged;
@@ -83,5 +83,26 @@ public class justForgeSpriteRenderer extends justForgeComponent
     public void clean()
     {
         this.isChanged = false;
+    }
+
+
+    // - - - Use Functions - - -
+
+    // - - - Start because constructors are pointless
+    @Override
+    public void start()
+    {
+        this.lastTransform = gameObject.transform.copy();
+    }
+
+    // - - - Update if data changes
+    @Override
+    public void update(float DELTA_TIME)
+    {
+        if (!this.lastTransform.equals(this.gameObject.transform))
+        {
+            this.gameObject.transform.copy(this.lastTransform);
+            this.isChanged = true;
+        }
     }
 }

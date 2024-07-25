@@ -23,21 +23,15 @@ public abstract class justForgeScene
     // - - - Scene Rendering
     protected justForgeRenderer renderer = new justForgeRenderer();
 
+
+    // - - - | Functions | - - -
+
+
     // - - - Useless constructor
     public justForgeScene() {}
-    public abstract void update(double DELTA_TIME);
-    public void init(){}
 
-    public void addGameObject(justForgeGameObject GAME_OBJECT)
-    {
-        gameObjects.add(GAME_OBJECT);
-        if (!isRunning)
-        {
-            return;
-        }
-        this.renderer.add(GAME_OBJECT);
-        GAME_OBJECT.start();
-    }
+
+    // - - - Use the Scene - - -
 
     public void start()
     {
@@ -47,6 +41,23 @@ public abstract class justForgeScene
             this.renderer.add(go);
         }
         isRunning = true;
+    }
+
+    public abstract void update(double DELTA_TIME);
+    public void init(){}
+
+
+    // - - - Getters and Setters - - -
+
+    public void addGameObject(justForgeGameObject GAME_OBJECT)
+    {
+        gameObjects.add(GAME_OBJECT);
+        if (!isRunning)
+        {
+            return;
+        }
+        GAME_OBJECT.start();
+        this.renderer.add(GAME_OBJECT);
     }
 
     public justForgeCamera getCamera()

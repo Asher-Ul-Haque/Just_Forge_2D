@@ -3,26 +3,57 @@ package Just_Forge_2D.Core.ECS;
 import Just_Forge_2D.Core.ECS.Components.justForgeComponent;
 import Just_Forge_2D.Utils.justForgeTransform;
 import Just_Forge_2D.Utils.justForgeLogger;
-
 import java.util.ArrayList;
 import java.util.List;
 
+// - - - ECS ka entity, par mai to game object bolunga
 public class justForgeGameObject
 {
+    // - - - private variables
     private String name;
     private List<justForgeComponent> components = new ArrayList<>();
     public justForgeTransform transform;
+    private int layer;
 
+
+    // - - - | Functions | - - -
+
+
+    // - - - Constructors - - -
+
+    // - - - Yeah I want a game object with uh, what do you have
     public justForgeGameObject(String NAME)
     {
         this.transform = new justForgeTransform();
         this.name = NAME;
+        this.layer = 0;
+        justForgeLogger.FORGE_LOG_INFO("Game object created : " + NAME);
     }
 
-    public justForgeGameObject(String NAME, justForgeTransform TRANSFORM)
+    // - - - add a transform to it and draw it to this layer please
+    public justForgeGameObject(String NAME, justForgeTransform TRANSFORM, int LAYER)
     {
         this.transform = TRANSFORM;
         this.name = NAME;
+        this.layer = LAYER;
+        justForgeLogger.FORGE_LOG_INFO("Game object created : " + NAME);
+    }
+
+
+    // - - - Get Layer
+    public int getLayer()
+    {
+        return this.layer;
+    }
+
+
+    // - - - Component Management - - -
+
+    public void addComponent(justForgeComponent COMPONENT)
+    {
+        this.components.add(COMPONENT);
+        COMPONENT.gameObject = this;
+        justForgeLogger.FORGE_LOG_TRACE("Added component: " + COMPONENT + " to Game Object " + this);
     }
 
     public <T extends justForgeComponent> T getCompoent(Class<T> COMPONENT_CLASS)
@@ -58,12 +89,8 @@ public class justForgeGameObject
         }
     }
 
-    public void addComponent(justForgeComponent COMPONENT)
-    {
-        this.components.add(COMPONENT);
-        COMPONENT.gameObject = this;
-        justForgeLogger.FORGE_LOG_TRACE("Added component: " + COMPONENT + " to Game Object " + this);
-    }
+
+    // - - - Usage - - -
 
     public void update(float DELTA_TIME)
     {

@@ -3,9 +3,10 @@ package Just_Forge_2D.Core.ECS.Components;
 import Just_Forge_2D.Core.ECS.Components.Sprite.justForgeSpriteRenderer;
 import Just_Forge_2D.Utils.justForgeLogger;
 
-// - - - Renderer Component
+// - - - Font Renderer Component
 public class justForgeFont extends justForgeComponent
 {
+    // - - - Function to start
     @Override
     public void start()
     {
@@ -15,9 +16,9 @@ public class justForgeFont extends justForgeComponent
         }
     }
 
+    // - - - update the font renderer
     @Override
     public void update(float DELTA_TIME)
     {
-
     }
 }

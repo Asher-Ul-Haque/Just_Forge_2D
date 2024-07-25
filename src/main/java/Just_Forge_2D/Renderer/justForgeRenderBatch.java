@@ -4,6 +4,7 @@ import Just_Forge_2D.Core.ECS.Components.Sprite.justForgeSpriteRenderer;
 import Just_Forge_2D.Core.justForgeWindow;
 import Just_Forge_2D.Utils.justForgeAssetPool;
 import Just_Forge_2D.Utils.justForgeLogger;
+import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 
@@ -13,7 +14,7 @@ import java.util.List;
 import static org.lwjgl.opengl.GL20C.*;
 import static org.lwjgl.opengl.GL30C.*;
 
-public class justForgeRenderBatch
+public class justForgeRenderBatch implements Comparable<justForgeRenderBatch>
 {
     /* C struct
         Vertex
@@ -22,16 +23,26 @@ public class justForgeRenderBatch
         Texture coords
         texture id
      */
+    // - - - | Private Variables | - - -
+
+
+    // - - - What would have been #defines in C - - -
+
+    // - - - sizes
     private final int POSITION_SIZE = 2;
     private final int COLOR_SIZE = 4;
+    private final int TEXTURE_COORDS_SIZE = 2;
+    private final int VERTEX_SIZE = 9;
+    private final int TEXTURE_ID_SIZE = 1;
+
+    // - - - offset
     private final int POSITION_OFFSET = 0;
     private final int COLOR_OFFSET = POSITION_OFFSET + POSITION_SIZE * Float.BYTES;
-    private final int VERTEX_SIZE = 9;
-    private final int VERTEX_SIZE_BYTES = VERTEX_SIZE * Float.BYTES;
-    private final int TEXTURE_COORDS_SIZE = 2;
-    private final int TEXTURE_ID_SIZE = 1;
     private final int TEXTURE_COORDS_OFFSET = COLOR_OFFSET + COLOR_SIZE * Float.BYTES;
     private final int TEXTURE_ID_OFFSET = TEXTURE_COORDS_OFFSET + TEXTURE_COORDS_SIZE * Float.BYTES;
+
+    // - - - vertex size in bytes
+    private final int VERTEX_SIZE_BYTES = VERTEX_SIZE * Float.BYTES;
 
 
     private justForgeSpriteRenderer[] sprites;
@@ -44,12 +55,14 @@ public class justForgeRenderBatch
     private int vaoID, vboID;
     private int maxBatchSize;
     private justForgeShader shader;
+    private int layer;
 
-    public justForgeRenderBatch(int MAX_BATCH_SIZE)
+    public justForgeRenderBatch(int MAX_BATCH_SIZE, int LAYER)
     {
         shader = justForgeAssetPool.getShader("Assets/Shaders/default.glsl");
         this.maxBatchSize = MAX_BATCH_SIZE;
         this.sprites = new justForgeSpriteRenderer[maxBatchSize];
+        this.layer = LAYER;
 
         //  4 vertices quadrants
         this.vertices = new float[maxBatchSize * VERTEX_SIZE * 4];
@@ -272,5 +285,16 @@ public class justForgeRenderBatch
     public boolean hasTexture(justForgeTexture TEXTURE)
     {
         return this.textures.contains(TEXTURE);
+    }
+
+    public int getLayer()
+    {
+        return this.layer;
+    }
+
+    @Override
+    public int compareTo(@NotNull justForgeRenderBatch OTHER)
+    {
+        return Integer.compare(OTHER.getLayer(),this.getLayer());
     }
 }
