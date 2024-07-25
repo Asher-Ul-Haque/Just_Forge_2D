@@ -18,6 +18,12 @@ public class justForgeLevelEditorScene extends justForgeScene
     private justForgeTexture testTexture;
     private float time = 0;
     private justForgeGameObject testObject;
+    private justForgeGameObject obj1;
+    private justForgeSpriteSheet sprites;
+
+    private int spriteIndex = 0;
+    private float spriteFlipTime = 0.2f;
+    private float spriteFlipeTimeLeft = 0;
 
     private float[] vertexArray = {
             // position                    // color                         // texture UV
@@ -46,10 +52,10 @@ public class justForgeLevelEditorScene extends justForgeScene
         this.camera = new justForgeCamera(new Vector2f());
 
         loadResources();
-        justForgeSpriteSheet sprites = justForgeAssetPool.getSpriteSheet("Assets/Textures/spritesheet.png");
+        sprites = justForgeAssetPool.getSpriteSheet("Assets/Textures/spritesheet.png");
 
-        justForgeGameObject obj1 = new justForgeGameObject("OBject 1", new justForgeTransform(new Vector2f(100, 100), new Vector2f(256, 256)));
-        obj1.addComponent(new justForgeSpriteRenderer(sprites.getSprite(21)));
+        obj1 = new justForgeGameObject("OBject 1", new justForgeTransform(new Vector2f(100, 100), new Vector2f(256, 256)));
+        obj1.addComponent(new justForgeSpriteRenderer(sprites.getSprite(0)));
         this.addGameObject(obj1);
 
         justForgeGameObject obj2 = new justForgeGameObject("OBject 2", new justForgeTransform(new Vector2f(400, 400), new Vector2f(256, 256)));
@@ -68,6 +74,22 @@ public class justForgeLevelEditorScene extends justForgeScene
     @Override
     public void update(double DELTA_TIME)
     {
+        spriteFlipeTimeLeft -= DELTA_TIME;
+
+        obj1.transform.position.x += 10 * DELTA_TIME;
+        if (spriteFlipeTimeLeft <= 0)
+        {
+            spriteFlipeTimeLeft = spriteFlipTime;
+            spriteIndex++;
+
+            if (spriteIndex >= 21)
+            {
+                spriteIndex = 0;
+            }
+
+            obj1.getCompoent(justForgeSpriteRenderer.class).setSprite(sprites.getSprite(spriteIndex));
+        }
+
         for (justForgeGameObject gameObject : this.gameObjects)
         {
             gameObject.update((float) DELTA_TIME);

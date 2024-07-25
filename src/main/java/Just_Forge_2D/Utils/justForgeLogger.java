@@ -10,7 +10,7 @@ public class justForgeLogger
     private static final String ANSI_PASTEL_RED = "\u001B[38;5;216m"; // Light Pink
     private static final String ANSI_BLUE = "\u001B[34m";        // Blue
     private static final String ANSI_GREEN = "\u001B[32m";       // Green
-    private static final String ANSI_CYAN = "\u001B[36m";        // Cyan (light blue)
+    private static final String ANSI_PURPLE = "\u001B[35m";        // PURPLE (light blue)
 
 
     // - - - Logging functions - - -
@@ -36,7 +36,7 @@ public class justForgeLogger
 
     public static void FORGE_LOG_TRACE(Object... ARGS)
     {
-        System.out.println(ANSI_CYAN + "[TRACE]:   \t" + formatMessage(ARGS) + ANSI_RESET);
+        System.out.println(ANSI_PURPLE + "[TRACE]:   \t" + formatMessage(ARGS) + ANSI_RESET);
     }
 
     public static void FORGE_LOG_INFO(Object... ARGS)

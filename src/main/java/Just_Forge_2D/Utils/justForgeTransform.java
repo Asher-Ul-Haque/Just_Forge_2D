@@ -26,4 +26,30 @@ public class justForgeTransform
     {
         init(POSITION, SCALE);
     }
+
+    public justForgeTransform copy()
+    {
+        return new justForgeTransform(new Vector2f(this.position), new Vector2f(this.scale));
+    }
+
+    public void copy(justForgeTransform TO)
+    {
+        TO.position.set(this.position);
+        TO.scale.set(this.scale);
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (o == null)
+        {
+            return false;
+        }
+        if (!(o instanceof justForgeTransform t))
+        {
+            return false;
+        }
+
+        return t.position.equals(this.position) && t.scale.equals(this.scale);
+    }
 }

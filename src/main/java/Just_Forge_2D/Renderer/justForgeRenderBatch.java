@@ -124,7 +124,21 @@ public class justForgeRenderBatch
 
     protected void render()
     {
-        // - - - for now, we will rebuffer all data every frame
+        boolean rebufferData = false;
+        for (int i = 0; i < spriteCount; ++i)
+        {
+            justForgeSpriteRenderer sprite = sprites[i];
+            if (sprite.isChanged())
+            {
+                loadVertexProperties(i);
+                sprite.clean();
+                rebufferData = true;
+            }
+        }
+        if (!rebufferData)
+        {
+            return;
+        }
         glBindBuffer(GL_ARRAY_BUFFER, vboID);
         glBufferSubData(GL_ARRAY_BUFFER, 0, vertices);
 
