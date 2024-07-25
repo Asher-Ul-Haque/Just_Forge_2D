@@ -1,23 +1,15 @@
 package Just_Forge_2D.Core.Scene;
 
-import Just_Forge_2D.Core.ECS.Components.justForgeFontRendererComponent;
-import Just_Forge_2D.Core.ECS.Components.justForgeSpriteRendererComponent;
+import Just_Forge_2D.Core.ECS.Components.justForgeSprite;
 import Just_Forge_2D.Core.ECS.justForgeGameObject;
 import Just_Forge_2D.Core.Transform;
 import Just_Forge_2D.Core.justForgeCamera;
 import Just_Forge_2D.Utils.justForgeAssetPool;
-import Just_Forge_2D.Utils.justForgeLogger;
-import Just_Forge_2D.Core.justForgeWindow;
 import Just_Forge_2D.Renderer.justForgeShader;
 import Just_Forge_2D.Renderer.justForgeTexture;
 
 import org.joml.Vector2f;
 import org.joml.Vector4f;
-import org.lwjgl.BufferUtils;
-import java.nio.FloatBuffer;
-import java.nio.IntBuffer;
-import static org.lwjgl.opengl.GL20.*;
-import static org.lwjgl.opengl.GL30.*;
 
 public class justForgeLevelEditorScene extends justForgeScene 
 {
@@ -49,29 +41,16 @@ public class justForgeLevelEditorScene extends justForgeScene
     @Override
     public void init() 
     {
-        // - - - TODO: test code, remov ethe 10k cubes
+       // - - - TODO: test code, remov ethe 10k cubes
         this.camera = new justForgeCamera(new Vector2f());
 
-        int xOffset = 10;
-        int yOffset = 10;
+       justForgeGameObject obj1 = new justForgeGameObject("OBject 1", new Transform(new Vector2f(100, 100), new Vector2f(256, 256)));
+       obj1.addComponent(new justForgeSprite(justForgeAssetPool.getTexture("Assets/Textures/MarioWalk0.png")));
+       this.addGameObject(obj1);
 
-        float totalWidth = (float)(600 - xOffset * 2);
-        float totalHeight = (float)(300 - yOffset * 2);
-        float sizeX = totalWidth / 100.0f;
-        float sizeY = totalHeight / 100.0f;
-
-        for (int x = 0; x < 100; ++x)
-        {
-            for (int y = 0; y < 100; ++y)
-            {
-                float xPos = xOffset + (x * sizeX);
-                float yPos = yOffset + (y * sizeY);
-
-                justForgeGameObject gameObject = new justForgeGameObject("Test Obect- " + x + " : " + y, new Transform(new Vector2f(xPos, yPos), new Vector2f(sizeX, sizeY)));
-                gameObject.addComponent(new justForgeSpriteRendererComponent(new Vector4f(xPos / totalWidth, yPos / totalHeight, 1, 1)));
-                this.addGameObject(gameObject);
-            }
-        }
+       justForgeGameObject obj2 = new justForgeGameObject("OBject 2", new Transform(new Vector2f(400, 400), new Vector2f(256, 256)));
+       obj2.addComponent(new justForgeSprite(justForgeAssetPool.getTexture("Assets/Textures/GoombaWalk0.png")));
+       this.addGameObject(obj2);
 
         loadResources();
 

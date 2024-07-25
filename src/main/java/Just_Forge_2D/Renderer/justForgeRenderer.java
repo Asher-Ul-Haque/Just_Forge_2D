@@ -1,6 +1,6 @@
 package Just_Forge_2D.Renderer;
 
-import Just_Forge_2D.Core.ECS.Components.justForgeSpriteRendererComponent;
+import Just_Forge_2D.Core.ECS.Components.justForgeSprite;
 import Just_Forge_2D.Core.ECS.justForgeGameObject;
 import Just_Forge_2D.Utils.justForgeLogger;
 
@@ -19,7 +19,7 @@ public class justForgeRenderer
 
     public void add(justForgeGameObject gameObject)
     {
-        justForgeSpriteRendererComponent sprite = gameObject.getCompoent(justForgeSpriteRendererComponent.class);
+        justForgeSprite sprite = gameObject.getCompoent(justForgeSprite.class);
 
         if (sprite != null)
         {
@@ -27,7 +27,7 @@ public class justForgeRenderer
         }
     }
 
-    private void add(justForgeSpriteRendererComponent SPRITE)
+    private void add(justForgeSprite SPRITE)
     {
         boolean added = false;
 

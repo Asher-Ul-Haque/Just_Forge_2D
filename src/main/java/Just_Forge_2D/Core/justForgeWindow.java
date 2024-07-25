@@ -49,14 +49,14 @@ public class justForgeWindow
     // - - - Private Constructor for Singleton
     private justForgeWindow()
     {
-        this.width = 500;
-        this.height = 500;
+        this.width = 1920;
+        this.height = 780;
 
         this.title = "Just Forge Tester";
 
-        this.r = 1.0f;
-        this.g = 1.0f;
-        this.b = 1.0f;
+        this.r = 0.0f;
+        this.g = 0.0f;
+        this.b = 0.0f;
         this.a = 1.0f;
 
         justForgeLogger.FORGE_LOG_INFO("Started Just Forge 2D");

@@ -234,4 +234,12 @@ public class justForgeShader
         use();
         glUniform1i(varLocation, SLOT);
     }
+
+    // - - - Many textures
+    public void uploadIntArray(String VARIABLE_NAME, int[] ARRAY)
+    {
+        int varLocation = glGetUniformLocation(shaderProgramID, VARIABLE_NAME);
+        use();
+        glUniform1iv(varLocation, ARRAY);
+    }
 }

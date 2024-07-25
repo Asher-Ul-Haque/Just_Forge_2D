@@ -1,5 +1,7 @@
 package Just_Forge_2D.Utils;
 
+// import static org.lwjgl.glfw.GLFW.glfwGetTime;
+
 public class justForgeTime
 {
     // - - - Private Variables
@@ -8,6 +10,7 @@ public class justForgeTime
     // - - - Get the time
     public static double getTime()
     {
+        //return glfwGetTime();
         return (System.nanoTime() - timeStarted) * 1E-9;
     }
 }

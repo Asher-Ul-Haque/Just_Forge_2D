@@ -1,10 +1,14 @@
 package Just_Forge_2D.Renderer;
 
-import Just_Forge_2D.Core.ECS.Components.justForgeSpriteRendererComponent;
+import Just_Forge_2D.Core.ECS.Components.justForgeSprite;
 import Just_Forge_2D.Core.justForgeWindow;
 import Just_Forge_2D.Utils.justForgeAssetPool;
 import Just_Forge_2D.Utils.justForgeLogger;
+import org.joml.Vector2f;
 import org.joml.Vector4f;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.lwjgl.opengl.GL20C.*;
 import static org.lwjgl.opengl.GL30C.*;
@@ -15,18 +19,27 @@ public class justForgeRenderBatch
         Vertex
         Position
         Color
+        Texture coords
+        texture id
      */
     private final int POSITION_SIZE = 2;
     private final int COLOR_SIZE = 4;
     private final int POSITION_OFFSET = 0;
     private final int COLOR_OFFSET = POSITION_OFFSET + POSITION_SIZE * Float.BYTES;
-    private final int VERTEX_SIZE = 6;
+    private final int VERTEX_SIZE = 9;
     private final int VERTEX_SIZE_BYTES = VERTEX_SIZE * Float.BYTES;
+    private final int TEXTURE_COORDS_SIZE = 2;
+    private final int TEXTURE_ID_SIZE = 1;
+    private final int TEXTURE_COORDS_OFFSET = COLOR_OFFSET + COLOR_SIZE * Float.BYTES;
+    private final int TEXTURE_ID_OFFSET = TEXTURE_COORDS_OFFSET + TEXTURE_COORDS_SIZE * Float.BYTES;
 
-    private justForgeSpriteRendererComponent[] sprites;
+
+    private justForgeSprite[] sprites;
     private int spriteCount;
     protected boolean hasRoom;
     private float[] vertices;
+    private int[] textureSlots = {0, 1, 2, 3, 4, 5, 6, 7};
+    private List<justForgeTexture> textures;
 
     private int vaoID, vboID;
     private int maxBatchSize;
@@ -36,13 +49,16 @@ public class justForgeRenderBatch
     {
         shader = justForgeAssetPool.getShader("Assets/Shaders/default.glsl");
         this.maxBatchSize = MAX_BATCH_SIZE;
-        this.sprites = new justForgeSpriteRendererComponent[maxBatchSize];
+        this.sprites = new justForgeSprite[maxBatchSize];
 
         //  4 vertices quadrants
         this.vertices = new float[maxBatchSize * VERTEX_SIZE * 4];
 
         this.spriteCount = 0;
         this.hasRoom = true;
+
+        // - - - Initialise textures
+        this.textures = new ArrayList<>();
     }
 
     public void start()
@@ -68,6 +84,12 @@ public class justForgeRenderBatch
 
         glVertexAttribPointer(1, COLOR_SIZE, GL_FLOAT, false, VERTEX_SIZE_BYTES, COLOR_OFFSET);
         glEnableVertexAttribArray(1);
+
+        glVertexAttribPointer(2, TEXTURE_COORDS_SIZE, GL_FLOAT, false, VERTEX_SIZE_BYTES, TEXTURE_COORDS_OFFSET);
+        glEnableVertexAttribArray(2);
+
+        glVertexAttribPointer(3, TEXTURE_ID_SIZE, GL_FLOAT, false, VERTEX_SIZE_BYTES, TEXTURE_ID_OFFSET);
+        glEnableVertexAttribArray(3);
     }
 
     private int[] generateIndices()
@@ -110,6 +132,12 @@ public class justForgeRenderBatch
         shader.use();
         shader.uploadMatrix4f("uProjection", justForgeWindow.getCurrentScene().getCamera().getProjectionMatrix());
         shader.uploadMatrix4f("uView", justForgeWindow.getCurrentScene().getCamera().getViewMatrix());
+        for (int i = 0; i < textures.size(); ++i)
+        {
+            glActiveTexture(GL_TEXTURE0 + i + 1);
+            textures.get(i).bind();
+        }
+        shader.uploadIntArray("uTextures", textureSlots);
 
         // - - - bIND everything
         glBindVertexArray(vaoID);
@@ -119,6 +147,12 @@ public class justForgeRenderBatch
         // - - - Draw call
         glDrawElements(GL_TRIANGLES, this.spriteCount * 6, GL_UNSIGNED_INT, 0);
 
+        // - - - Unbind textures
+        for (int i = 0; i < textures.size(); ++i)
+        {
+            textures.get(i).detach();
+        }
+
         // - - - Disable everything
         glDisableVertexAttribArray(0);
         glDisableVertexAttribArray(1);
@@ -126,12 +160,22 @@ public class justForgeRenderBatch
         shader.detach();
     }
 
-    public void addSprite(justForgeSpriteRendererComponent SPRITE)
+    public void addSprite(justForgeSprite SPRITE)
     {
         // - - - Get the index and add the render object
         int index = this.spriteCount;
         this.sprites[index] = SPRITE;
         this.spriteCount++;
+
+        // - - - Check for textures
+        if (SPRITE.getTexture() != null)
+        {
+            if (!textures.contains(SPRITE.getTexture()))
+            {
+                justForgeLogger.FORGE_LOG_TRACE("Detected texture for sprite: " + SPRITE + " Ready to be loaded");
+                textures.add(SPRITE.getTexture());
+            }
+        }
 
         // - - - Add properties to load verticies array
         loadVertexProperties(index);
@@ -145,11 +189,26 @@ public class justForgeRenderBatch
 
     private void loadVertexProperties(int INDEX)
     {
-        justForgeSpriteRendererComponent sprite = this.sprites[INDEX];
+        justForgeSprite sprite = this.sprites[INDEX];
 
         // - - - Find offset within array (4 verticies for a sprite) and color
         int offset = INDEX * 4 * VERTEX_SIZE;
         Vector4f color = sprite.getColor();
+        int textID = 0;
+        Vector2f[] textureCoords = sprite.getTextureCoords();
+
+        // - - - Load texture
+        if (sprite.getTexture() != null)
+        {
+            for (int i = 0; i < textures.size(); ++i)
+            {
+                if (textures.get(i) == sprite.getTexture())
+                {
+                    textID = i + 1;
+                    break;
+                }
+            }
+        }
 
         // - - - Add vertiices with the appropirate properties
         float xAdd = 1.0f;
@@ -180,6 +239,11 @@ public class justForgeRenderBatch
             vertices[offset + 3] = color.y;
             vertices[offset + 4] = color.z;
             vertices[offset + 5] = color.w;
+
+            // - - - Load the texture coordinates and id
+            vertices[offset + 6] = textureCoords[i].x;
+            vertices[offset + 7] = textureCoords[i].y;
+            vertices[offset + 8] = textID;
 
             // - - - Update the offset
             offset += VERTEX_SIZE;
