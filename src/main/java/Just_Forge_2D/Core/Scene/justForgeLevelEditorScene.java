@@ -1,15 +1,16 @@
 package Just_Forge_2D.Core.Scene;
 
-import Just_Forge_2D.Core.ECS.Components.justForgeSprite;
+import Just_Forge_2D.Core.ECS.Components.Sprite.justForgeSprite;
+import Just_Forge_2D.Core.ECS.Components.Sprite.justForgeSpriteRenderer;
+import Just_Forge_2D.Core.ECS.Components.Sprite.justForgeSpriteSheet;
 import Just_Forge_2D.Core.ECS.justForgeGameObject;
-import Just_Forge_2D.Core.Transform;
+import Just_Forge_2D.Utils.justForgeTransform;
 import Just_Forge_2D.Core.justForgeCamera;
 import Just_Forge_2D.Utils.justForgeAssetPool;
 import Just_Forge_2D.Renderer.justForgeShader;
 import Just_Forge_2D.Renderer.justForgeTexture;
 
 import org.joml.Vector2f;
-import org.joml.Vector4f;
 
 public class justForgeLevelEditorScene extends justForgeScene 
 {
@@ -41,18 +42,19 @@ public class justForgeLevelEditorScene extends justForgeScene
     @Override
     public void init() 
     {
-       // - - - TODO: test code, remov ethe 10k cubes
+        // - - - TODO: test code, remov ethe 10k cubes
         this.camera = new justForgeCamera(new Vector2f());
 
-       justForgeGameObject obj1 = new justForgeGameObject("OBject 1", new Transform(new Vector2f(100, 100), new Vector2f(256, 256)));
-       obj1.addComponent(new justForgeSprite(justForgeAssetPool.getTexture("Assets/Textures/MarioWalk0.png")));
-       this.addGameObject(obj1);
-
-       justForgeGameObject obj2 = new justForgeGameObject("OBject 2", new Transform(new Vector2f(400, 400), new Vector2f(256, 256)));
-       obj2.addComponent(new justForgeSprite(justForgeAssetPool.getTexture("Assets/Textures/GoombaWalk0.png")));
-       this.addGameObject(obj2);
-
         loadResources();
+        justForgeSpriteSheet sprites = justForgeAssetPool.getSpriteSheet("Assets/Textures/spritesheet.png");
+
+        justForgeGameObject obj1 = new justForgeGameObject("OBject 1", new justForgeTransform(new Vector2f(100, 100), new Vector2f(256, 256)));
+        obj1.addComponent(new justForgeSpriteRenderer(sprites.getSprite(21)));
+        this.addGameObject(obj1);
+
+        justForgeGameObject obj2 = new justForgeGameObject("OBject 2", new justForgeTransform(new Vector2f(400, 400), new Vector2f(256, 256)));
+        obj2.addComponent(new justForgeSpriteRenderer(sprites.getSprite(10)));
+        this.addGameObject(obj2);
 
         start();
     }
@@ -60,6 +62,7 @@ public class justForgeLevelEditorScene extends justForgeScene
     private void loadResources()
     {
         justForgeAssetPool.getShader("Assets/Shaders/default.glsl");
+        justForgeAssetPool.addSpriteSheet("Assets/Textures/spritesheet.png", new justForgeSpriteSheet(justForgeAssetPool.getTexture("Assets/Textures/spritesheet.png"), 16, 16, 26, 0));
     }
 
     @Override

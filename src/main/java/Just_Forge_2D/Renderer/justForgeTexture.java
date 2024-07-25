@@ -15,7 +15,7 @@ public class justForgeTexture
     // - - - Private variables
     private String filepath;
     private int textureID;
-
+    private int width, height;
 
     // - - - Functions - - -
 
@@ -46,6 +46,8 @@ public class justForgeTexture
 
         if (image != null)
         {
+            this.width = width.get(0);
+            this.height = height.get(0);
             int textureType = switch (channels.get(0))
             {
                 case 3 ->
@@ -86,5 +88,15 @@ public class justForgeTexture
     public void detach()
     {
         glBindTexture(GL_TEXTURE_2D, 0);
+    }
+
+    public int getWidth()
+    {
+        return this.width;
+    }
+
+    public int getHeight()
+    {
+        return this.height;
     }
 }

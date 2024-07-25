@@ -1,12 +1,12 @@
-package Just_Forge_2D.Core;
+package Just_Forge_2D.Utils;
 import org.joml.Vector2f;
 
-public class Transform
+public class justForgeTransform
 {
     public Vector2f position;
     public Vector2f scale;
 
-    public Transform()
+    public justForgeTransform()
     {
         init(new Vector2f(), new Vector2f());
     }
@@ -17,12 +17,12 @@ public class Transform
         this.scale = SCALE;
     }
 
-    public Transform(Vector2f POSITION)
+    public justForgeTransform(Vector2f POSITION)
     {
         init(position, new Vector2f());
     }
 
-    public Transform(Vector2f POSITION, Vector2f SCALE)
+    public justForgeTransform(Vector2f POSITION, Vector2f SCALE)
     {
         init(POSITION, SCALE);
     }

@@ -2,6 +2,7 @@ package Just_Forge_2D.Utils;
 
 import Just_Forge_2D.Renderer.justForgeShader;
 import Just_Forge_2D.Renderer.justForgeTexture;
+import Just_Forge_2D.Core.ECS.Components.Sprite.justForgeSpriteSheet;
 
 import java.io.File;
 import java.util.HashMap;
@@ -11,6 +12,7 @@ public class justForgeAssetPool
 {
     private static Map<String, justForgeShader> shaderPool = new HashMap<>();
     private static Map<String, justForgeTexture> texturePool = new HashMap<>();
+    private static Map<String, justForgeSpriteSheet> spriteSheetPool = new HashMap<>();
 
     public static justForgeShader getShader(String FILE_PATH)
     {
@@ -46,5 +48,25 @@ public class justForgeAssetPool
             justForgeLogger.FORGE_LOG_DEBUG("Texture with path: " + FILE_PATH + " Hashed in Texture Asset Pool and loaded");
             return texture;
         }
+    }
+
+    public static void addSpriteSheet(String FILE_PATH, justForgeSpriteSheet SPRITE_SHEET)
+    {
+        File file = new File(FILE_PATH);
+        if (!justForgeAssetPool.spriteSheetPool.containsKey(file.getAbsolutePath()))
+        {
+            justForgeAssetPool.spriteSheetPool.put(file.getAbsolutePath(), SPRITE_SHEET);
+        }
+    }
+
+    public static justForgeSpriteSheet getSpriteSheet(String FILE_PATH)
+    {
+        File file = new File(FILE_PATH);
+        if (!justForgeAssetPool.spriteSheetPool.containsKey(file.getAbsolutePath()))
+        {
+            justForgeLogger.FORGE_LOG_ERROR("Tried to access a spritesheet : " + FILE_PATH + " before adding to the resource pool");
+            assert false;
+        }
+        return justForgeAssetPool.spriteSheetPool.get(file.getAbsolutePath());
     }
 }

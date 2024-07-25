@@ -1,6 +1,6 @@
 package Just_Forge_2D.Renderer;
 
-import Just_Forge_2D.Core.ECS.Components.justForgeSprite;
+import Just_Forge_2D.Core.ECS.Components.Sprite.justForgeSpriteRenderer;
 import Just_Forge_2D.Core.justForgeWindow;
 import Just_Forge_2D.Utils.justForgeAssetPool;
 import Just_Forge_2D.Utils.justForgeLogger;
@@ -34,7 +34,7 @@ public class justForgeRenderBatch
     private final int TEXTURE_ID_OFFSET = TEXTURE_COORDS_OFFSET + TEXTURE_COORDS_SIZE * Float.BYTES;
 
 
-    private justForgeSprite[] sprites;
+    private justForgeSpriteRenderer[] sprites;
     private int spriteCount;
     protected boolean hasRoom;
     private float[] vertices;
@@ -49,7 +49,7 @@ public class justForgeRenderBatch
     {
         shader = justForgeAssetPool.getShader("Assets/Shaders/default.glsl");
         this.maxBatchSize = MAX_BATCH_SIZE;
-        this.sprites = new justForgeSprite[maxBatchSize];
+        this.sprites = new justForgeSpriteRenderer[maxBatchSize];
 
         //  4 vertices quadrants
         this.vertices = new float[maxBatchSize * VERTEX_SIZE * 4];
@@ -160,7 +160,7 @@ public class justForgeRenderBatch
         shader.detach();
     }
 
-    public void addSprite(justForgeSprite SPRITE)
+    public void addSprite(justForgeSpriteRenderer SPRITE)
     {
         // - - - Get the index and add the render object
         int index = this.spriteCount;
@@ -189,7 +189,7 @@ public class justForgeRenderBatch
 
     private void loadVertexProperties(int INDEX)
     {
-        justForgeSprite sprite = this.sprites[INDEX];
+        justForgeSpriteRenderer sprite = this.sprites[INDEX];
 
         // - - - Find offset within array (4 verticies for a sprite) and color
         int offset = INDEX * 4 * VERTEX_SIZE;
@@ -248,5 +248,15 @@ public class justForgeRenderBatch
             // - - - Update the offset
             offset += VERTEX_SIZE;
         }
+    }
+
+    public boolean hasTextureRoom()
+    {
+        return this.textures.size() < 8;
+    }
+
+    public boolean hasTexture(justForgeTexture TEXTURE)
+    {
+        return this.textures.contains(TEXTURE);
     }
 }
