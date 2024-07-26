@@ -1,8 +1,8 @@
 package Just_Forge_2D.Core.ECS;
 
 import Just_Forge_2D.Core.ECS.Components.justForgeComponent;
-import Just_Forge_2D.Utils.justForgeTransform;
 import Just_Forge_2D.Utils.justForgeLogger;
+import Just_Forge_2D.Utils.justForgeTransform;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,4 +88,19 @@ public class justForgeGameObject
     {
         return this.layer;
     }
+
+    @Override
+    public String toString()
+    {
+        return this.name;
+    }
+
+    public void editorGUI()
+    {
+        for (justForgeComponent component : components)
+        {
+            component.editorGUI();
+        }
+    }
+
 }

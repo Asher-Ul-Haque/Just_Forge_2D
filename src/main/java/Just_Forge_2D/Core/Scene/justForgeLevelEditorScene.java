@@ -4,12 +4,12 @@ import Just_Forge_2D.Core.ECS.Components.Sprite.justForgeSprite;
 import Just_Forge_2D.Core.ECS.Components.Sprite.justForgeSpriteRenderer;
 import Just_Forge_2D.Core.ECS.Components.Sprite.justForgeSpriteSheet;
 import Just_Forge_2D.Core.ECS.justForgeGameObject;
-import Just_Forge_2D.Utils.justForgeTransform;
 import Just_Forge_2D.Core.justForgeCamera;
-import Just_Forge_2D.Utils.justForgeAssetPool;
 import Just_Forge_2D.Renderer.justForgeShader;
 import Just_Forge_2D.Renderer.justForgeTexture;
-
+import Just_Forge_2D.Utils.justForgeAssetPool;
+import Just_Forge_2D.Utils.justForgeTransform;
+import imgui.ImGui;
 import org.joml.Vector2f;
 
 public class justForgeLevelEditorScene extends justForgeScene 
@@ -24,6 +24,7 @@ public class justForgeLevelEditorScene extends justForgeScene
     private int spriteIndex = 0;
     private float spriteFlipTime = 0.2f;
     private float spriteFlipeTimeLeft = 0;
+    int direction = 1;
 
     private float[] vertexArray = {
             // position                    // color                         // texture UV
@@ -57,6 +58,7 @@ public class justForgeLevelEditorScene extends justForgeScene
         obj1 = new justForgeGameObject("OBject 1", new justForgeTransform(new Vector2f(100, 100), new Vector2f(256, 256)), 1);
         obj1.addComponent(new justForgeSpriteRenderer(new justForgeSprite(justForgeAssetPool.getTexture("Assets/Textures/blendImage1.png"))));
         this.addGameObject(obj1);
+        this.activeGameObject = obj1;
 
         justForgeGameObject obj2 = new justForgeGameObject("OBject 2", new justForgeTransform(new Vector2f(400, 100), new Vector2f(256, 256)), 1);
         obj2.addComponent(new justForgeSpriteRenderer(new justForgeSprite(justForgeAssetPool.getTexture("Assets/Textures/blendImage2.png"))));
@@ -76,13 +78,28 @@ public class justForgeLevelEditorScene extends justForgeScene
     {
         spriteFlipeTimeLeft -= DELTA_TIME;
 
-        obj1.transform.position.x += (float) (15 * DELTA_TIME);
+
+        obj1.transform.position.x += (float) (150 * DELTA_TIME) * direction;
 
         for (justForgeGameObject gameObject : this.gameObjects)
         {
             gameObject.update((float) DELTA_TIME);
         }
 
+        if ((obj1.transform.position.x >= 500) || (obj1.transform.position.x <= 50))
+        {
+            direction = -direction;
+        }
+
         this.renderer.render();
     }
+
+    @Override
+    public void editorGUI()
+    {
+        ImGui.begin("Test Window");
+        ImGui.text("Some random text");
+        ImGui.end();
+    }
+
 }

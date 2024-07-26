@@ -4,6 +4,7 @@ import Just_Forge_2D.Core.ECS.Components.justForgeComponent;
 import Just_Forge_2D.Renderer.justForgeTexture;
 import Just_Forge_2D.Utils.justForgeLogger;
 import Just_Forge_2D.Utils.justForgeTransform;
+import imgui.ImGui;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 
@@ -104,5 +105,20 @@ public class justForgeSpriteRenderer extends justForgeComponent
             this.gameObject.transform.copy(this.lastTransform);
             this.isChanged = true;
         }
+    }
+
+
+    // - - - Editor Functionality - - -
+
+    @Override
+    public void editorGUI()
+    {
+        float[] inColor = {color.x, color.y, color.z, color.w};
+        if (ImGui.colorPicker4("Color Picker: ", inColor))
+        {
+            this.color.set(inColor[0], inColor[1], inColor[2], inColor[3]);
+            this.isChanged = true;
+        }
+
     }
 }

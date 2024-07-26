@@ -1,8 +1,8 @@
 package Just_Forge_2D.Utils;
 
+import Just_Forge_2D.Core.ECS.Components.Sprite.justForgeSpriteSheet;
 import Just_Forge_2D.Renderer.justForgeShader;
 import Just_Forge_2D.Renderer.justForgeTexture;
-import Just_Forge_2D.Core.ECS.Components.Sprite.justForgeSpriteSheet;
 
 import java.io.File;
 import java.util.HashMap;
