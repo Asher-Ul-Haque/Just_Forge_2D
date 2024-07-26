@@ -161,11 +161,8 @@ public class justForgeWindow
         // creates the GLCapabilities instance and makes the OpenGL
         // bindings available for use
         GL.createCapabilities();
-
-        // Alpha indexing
         glEnable(GL_BLEND);
         glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
-
         justForgeLogger.FORGE_LOG_INFO("Window System Online");
 
         changeScene(0);

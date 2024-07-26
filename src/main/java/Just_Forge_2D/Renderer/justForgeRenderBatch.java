@@ -23,27 +23,16 @@ public class justForgeRenderBatch implements Comparable<justForgeRenderBatch>
         Texture coords
         texture id
      */
-    // - - - | Private Variables | - - -
-
-
-    // - - - What would have been #defines in C - - -
-
-    // - - - sizes
     private final int POSITION_SIZE = 2;
     private final int COLOR_SIZE = 4;
-    private final int TEXTURE_COORDS_SIZE = 2;
-    private final int VERTEX_SIZE = 9;
-    private final int TEXTURE_ID_SIZE = 1;
-
-    // - - - offset
     private final int POSITION_OFFSET = 0;
     private final int COLOR_OFFSET = POSITION_OFFSET + POSITION_SIZE * Float.BYTES;
+    private final int VERTEX_SIZE = 9;
+    private final int VERTEX_SIZE_BYTES = VERTEX_SIZE * Float.BYTES;
+    private final int TEXTURE_COORDS_SIZE = 2;
+    private final int TEXTURE_ID_SIZE = 1;
     private final int TEXTURE_COORDS_OFFSET = COLOR_OFFSET + COLOR_SIZE * Float.BYTES;
     private final int TEXTURE_ID_OFFSET = TEXTURE_COORDS_OFFSET + TEXTURE_COORDS_SIZE * Float.BYTES;
-
-    // - - - vertex size in bytes
-    private final int VERTEX_SIZE_BYTES = VERTEX_SIZE * Float.BYTES;
-
 
     private justForgeSpriteRenderer[] sprites;
     private int spriteCount;
