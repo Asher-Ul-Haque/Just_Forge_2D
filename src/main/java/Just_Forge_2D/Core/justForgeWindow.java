@@ -53,15 +53,15 @@ public class justForgeWindow
     // - - - Private Constructor for Singleton
     private justForgeWindow()
     {
-        this.width = 1920;
-        this.height = 780;
+        this.width = 800;
+        this.height = 600;
 
         this.title = "Just Forge Tester";
 
         this.r = 0.0f;
-        this.g = 1.0f;
-        this.b = 1.0f;
-        this.a = 1.0f;
+        this.g = 0.0f;
+        this.b = 0.0f;
+        this.a = 0.0f;
 
         justForgeLogger.FORGE_LOG_INFO("Started Just Forge 2D");
     }
@@ -123,9 +123,11 @@ public class justForgeWindow
 
         // Configure GLFW
         glfwDefaultWindowHints();
-        glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
+        glfwWindowHint(GLFW_VISIBLE, GLFW_TRUE);
         glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
-        glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE);
+        glfwWindowHint(GLFW_MAXIMIZED, GLFW_FALSE);
+        glfwWindowHint(GLFW_DECORATED, GL_TRUE);
+        glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, GL_TRUE);
         justForgeLogger.FORGE_LOG_TRACE("Window Configuration Read");
 
         // Create the window
@@ -223,7 +225,7 @@ public class justForgeWindow
             }
 
             // - - - Update the editor
-            this.editorLayer.update((float) dt);
+            this.editorLayer.update((float) dt, currentScene);
 
             // - - - Swap buffer for next frame
             glfwSwapBuffers(glfwWindow);

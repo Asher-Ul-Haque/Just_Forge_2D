@@ -4,6 +4,7 @@ import Just_Forge_2D.Core.ECS.justForgeGameObject;
 import Just_Forge_2D.Core.justForgeCamera;
 import Just_Forge_2D.Renderer.justForgeRenderer;
 import Just_Forge_2D.Utils.justForgeLogger;
+import imgui.ImGui;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,7 @@ public abstract class justForgeScene
 
     // - - - ALl the objects
     protected List<justForgeGameObject> gameObjects = new ArrayList<>();
+    protected justForgeGameObject activeGameObject = null;
 
     // - - - Scene Rendering
     protected justForgeRenderer renderer = new justForgeRenderer();
@@ -64,4 +66,18 @@ public abstract class justForgeScene
     {
         return this.camera;
     }
+
+    public void sceneGUI()
+    {
+        if (activeGameObject != null)
+        {
+            ImGui.begin("Inspector");
+            activeGameObject.editorGUI();
+            ImGui.end();
+        }
+        editorGUI();
+    }
+
+    public void editorGUI()
+    {}
 }

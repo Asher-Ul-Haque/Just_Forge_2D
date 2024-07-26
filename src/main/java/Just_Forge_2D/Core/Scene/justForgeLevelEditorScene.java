@@ -10,6 +10,7 @@ import Just_Forge_2D.Utils.justForgeAssetPool;
 import Just_Forge_2D.Renderer.justForgeShader;
 import Just_Forge_2D.Renderer.justForgeTexture;
 
+import imgui.ImGui;
 import org.joml.Vector2f;
 
 public class justForgeLevelEditorScene extends justForgeScene 
@@ -57,6 +58,7 @@ public class justForgeLevelEditorScene extends justForgeScene
         obj1 = new justForgeGameObject("OBject 1", new justForgeTransform(new Vector2f(100, 100), new Vector2f(256, 256)), 1);
         obj1.addComponent(new justForgeSpriteRenderer(new justForgeSprite(justForgeAssetPool.getTexture("Assets/Textures/blendImage1.png"))));
         this.addGameObject(obj1);
+        this.activeGameObject = obj1;
 
         justForgeGameObject obj2 = new justForgeGameObject("OBject 2", new justForgeTransform(new Vector2f(400, 100), new Vector2f(256, 256)), 1);
         obj2.addComponent(new justForgeSpriteRenderer(new justForgeSprite(justForgeAssetPool.getTexture("Assets/Textures/blendImage2.png"))));
@@ -76,6 +78,7 @@ public class justForgeLevelEditorScene extends justForgeScene
     {
         spriteFlipeTimeLeft -= DELTA_TIME;
 
+
         obj1.transform.position.x += (float) (15 * DELTA_TIME);
 
         for (justForgeGameObject gameObject : this.gameObjects)
@@ -85,4 +88,13 @@ public class justForgeLevelEditorScene extends justForgeScene
 
         this.renderer.render();
     }
+
+    @Override
+    public void editorGUI()
+    {
+        ImGui.begin("Test Window");
+        ImGui.text("Some random text");
+        ImGui.end();
+    }
+
 }

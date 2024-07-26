@@ -7,6 +7,8 @@ public abstract class justForgeComponent
 {
     public justForgeGameObject gameObject = null;
 
-    public abstract void update(float DELTA_TIME);
+    public void update(float DELTA_TIME){}
     public void start(){}
+
+    public void editorGUI(){}
 }

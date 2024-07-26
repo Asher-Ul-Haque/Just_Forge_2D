@@ -88,4 +88,19 @@ public class justForgeGameObject
     {
         return this.layer;
     }
+
+    @Override
+    public String toString()
+    {
+        return this.name;
+    }
+
+    public void editorGUI()
+    {
+        for (justForgeComponent component : components)
+        {
+            component.editorGUI();
+        }
+    }
+
 }
