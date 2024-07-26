@@ -51,6 +51,8 @@ dependencies {
 
     implementation "io.github.spair:$imguiNatives:$imguiVersion"
     implementation platform("org.lwjgl:lwjgl-bom:$lwjglVersion")
+    implementation "io.github.spair:imgui-java-app:$imguiVersion"
+
 
     implementation "org.lwjgl:lwjgl"
     implementation "org.lwjgl:lwjgl-assimp"

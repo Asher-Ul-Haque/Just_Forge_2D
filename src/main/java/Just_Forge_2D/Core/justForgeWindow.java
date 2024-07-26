@@ -5,6 +5,7 @@ package Just_Forge_2D.Core;
 // - - - Internal
 import Just_Forge_2D.Core.Input.*;
 import Just_Forge_2D.Core.Scene.*;
+import Just_Forge_2D.Editor.justForgeImGui;
 import Just_Forge_2D.Utils.justForgeLogger;
 import Just_Forge_2D.Utils.justForgeTime;
 
@@ -41,6 +42,9 @@ public class justForgeWindow
 
     // - - - Singleton
     private static justForgeWindow window = null;
+
+    // - - - Editor
+    private justForgeImGui editorLayer;
 
 
     // - - - | Functions | - - -
@@ -136,6 +140,10 @@ public class justForgeWindow
         glfwSetCursorPosCallback(glfwWindow, justForgeMouse::mousePositionCallback);
         glfwSetMouseButtonCallback(glfwWindow, justForgeMouse::mouseButtonCallback);
         glfwSetScrollCallback(glfwWindow, justForgeMouse::mouseScrollCallback);
+        glfwSetWindowSizeCallback(glfwWindow, (w, newWidth, newHeight) -> {
+            justForgeWindow.setWidth(newWidth);
+            justForgeWindow.setHeight(newHeight);
+        });
         justForgeLogger.FORGE_LOG_TRACE("Mouse Input linked with window");
 
         // Setup the keyboard
@@ -164,6 +172,9 @@ public class justForgeWindow
         glEnable(GL_BLEND);
         glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
         justForgeLogger.FORGE_LOG_INFO("Window System Online");
+
+        this.editorLayer = new justForgeImGui(glfwWindow);
+        this.editorLayer.initImGui();
 
         changeScene(0);
 
@@ -211,10 +222,13 @@ public class justForgeWindow
                 currentScene.update(dt);
             }
 
-            // Swap buffer for next frame
+            // - - - Update the editor
+            this.editorLayer.update((float) dt);
+
+            // - - - Swap buffer for next frame
             glfwSwapBuffers(glfwWindow);
 
-            // Keep time
+            // - - - Keep time
             endTime = justForgeTime.getTime();
             dt = endTime - beginTime;
             beginTime = endTime;
@@ -224,5 +238,25 @@ public class justForgeWindow
     public static justForgeScene getCurrentScene()
     {
         return get().currentScene;
+    }
+
+    public static int getWidth()
+    {
+        return get().width;
+    }
+
+    public static int getHeight()
+    {
+        return get().height;
+    }
+
+    public static void setWidth(int NEW_WIDTH)
+    {
+        get().width = NEW_WIDTH;
+    }
+
+    public static void setHeight(int NEW_HEIGHT)
+    {
+        get().height = NEW_HEIGHT;
     }
 }
