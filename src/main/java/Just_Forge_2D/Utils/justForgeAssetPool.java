@@ -7,12 +7,19 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+
+// - - - Class to store references to all our assets to protect them from the garbage collection
 public class justForgeAssetPool
 {
+    // - - - private variable maps for all types of assets
     private static Map<String, justForgeShader> shaderPool = new HashMap<>();
     private static Map<String, justForgeTexture> texturePool = new HashMap<>();
     private static Map<String, justForgeSpriteSheet> spriteSheetPool = new HashMap<>();
 
+
+    // - - - Functions - - -
+
+    // - - - shader
     public static justForgeShader getShader(String FILE_PATH)
     {
         File file = new File(FILE_PATH);
@@ -32,6 +39,7 @@ public class justForgeAssetPool
         }
     }
 
+    // - - - texture
     public static justForgeTexture getTexture(String FILE_PATH)
     {
         File file = new File(FILE_PATH);
@@ -49,6 +57,9 @@ public class justForgeAssetPool
             return texture;
         }
     }
+
+
+    // - - - sprite sheets - - -
 
     public static void addSpriteSheet(String FILE_PATH, justForgeSpriteSheet SPRITE_SHEET)
     {

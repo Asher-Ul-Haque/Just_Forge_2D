@@ -203,10 +203,11 @@ public class justForgeWindow
     // - - - Loop the game
     public void gameLoop()
     {
-        double beginTime = justForgeTime.getTime();
-        double endTime;
-        double dt = -1.0f;
+        float beginTime = (float) justForgeTime.getTime();
+        float endTime;
+        float dt = -1.0f;
 
+        currentScene.load();
         while (!glfwWindowShouldClose(glfwWindow))
         {
             if (Math.abs(fps - (int) (1.0d / dt)) >= 30)
@@ -233,10 +234,11 @@ public class justForgeWindow
             glfwSwapBuffers(glfwWindow);
 
             // - - - Keep time
-            endTime = justForgeTime.getTime();
+            endTime = (float) justForgeTime.getTime();
             dt = endTime - beginTime;
             beginTime = endTime;
         }
+        currentScene.save();
     }
 
     public static justForgeScene getCurrentScene()

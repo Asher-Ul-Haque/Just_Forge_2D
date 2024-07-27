@@ -24,29 +24,45 @@ public class justForgeRenderBatch implements Comparable<justForgeRenderBatch>
         Texture coords
         texture id
      */
-    private final int POSITION_SIZE = 2;
-    private final int COLOR_SIZE = 4;
-    private final int POSITION_OFFSET = 0;
-    private final int COLOR_OFFSET = POSITION_OFFSET + POSITION_SIZE * Float.BYTES;
-    private final int VERTEX_SIZE = 9;
-    private final int VERTEX_SIZE_BYTES = VERTEX_SIZE * Float.BYTES;
+
+
+    // - - - | Private variables | - - -
+
+
+    // - - - What would have been a #define in C
+
+    // - - - sizes
     private final int TEXTURE_COORDS_SIZE = 2;
     private final int TEXTURE_ID_SIZE = 1;
+    private final int POSITION_SIZE = 2;
+    private final int VERTEX_SIZE = 9;
+    private final int COLOR_SIZE = 4;
+    private final int VERTEX_SIZE_BYTES = VERTEX_SIZE * Float.BYTES;
+
+    // - - - offset
+    private final int POSITION_OFFSET = 0;
+    private final int COLOR_OFFSET = POSITION_OFFSET + POSITION_SIZE * Float.BYTES;
     private final int TEXTURE_COORDS_OFFSET = COLOR_OFFSET + COLOR_SIZE * Float.BYTES;
     private final int TEXTURE_ID_OFFSET = TEXTURE_COORDS_OFFSET + TEXTURE_COORDS_SIZE * Float.BYTES;
 
+    // - - - batch related
     private justForgeSpriteRenderer[] sprites;
     private int spriteCount;
     protected boolean hasRoom;
-    private float[] vertices;
-    private int[] textureSlots = {0, 1, 2, 3, 4, 5, 6, 7};
     private List<justForgeTexture> textures;
-
-    private int vaoID, vboID;
     private int maxBatchSize;
-    private justForgeShader shader;
     private int layer;
 
+    // - - - for remderer
+    private int vaoID, vboID;
+    private justForgeShader shader;
+    private float[] vertices;
+    private int[] textureSlots = {0, 1, 2, 3, 4, 5, 6, 7};
+
+
+    // - - - Functions - - - -
+
+    // - - - constructor
     public justForgeRenderBatch(int MAX_BATCH_SIZE, int LAYER)
     {
         shader = justForgeAssetPool.getShader("Assets/Shaders/default.glsl");
@@ -64,6 +80,7 @@ public class justForgeRenderBatch implements Comparable<justForgeRenderBatch>
         this.textures = new ArrayList<>();
     }
 
+    // - - - starter to make the batch accpet input, create its buffers and enable them
     public void start()
     {
         // - - - Generate and bind a vertex array object
@@ -95,36 +112,7 @@ public class justForgeRenderBatch implements Comparable<justForgeRenderBatch>
         glEnableVertexAttribArray(3);
     }
 
-    private int[] generateIndices()
-    {
-        // 6 indices per quad (3 per triangle)
-        int[] elements = new int[6 * maxBatchSize];
-
-        for (int i = 0; i < maxBatchSize; ++i)
-        {
-            loadElementIndices(elements, i);
-        }
-
-        return elements;
-    }
-
-    private void loadElementIndices(int[] ELEMENTS, int INDEX)
-    {
-        int offsetArrayIndex = 6 * INDEX;
-        int offset = 4 * INDEX;
-
-        // 3, 2, 0, 0, 2, 1         7, 6, 4, 4, 6, 5
-        // - - - Create the first triangle
-        ELEMENTS[offsetArrayIndex] = offset + 3;
-        ELEMENTS[offsetArrayIndex + 1] = offset + 2;
-        ELEMENTS[offsetArrayIndex + 2] = offset + 0;
-
-        // - - - Create the second triangle
-        ELEMENTS[offsetArrayIndex + 3] = offset + 0;
-        ELEMENTS[offsetArrayIndex + 4] = offset + 2;
-        ELEMENTS[offsetArrayIndex + 5] = offset + 1;
-    }
-
+    // - - - there is no comment here
     protected void render()
     {
         boolean rebufferData = false;
@@ -143,7 +131,6 @@ public class justForgeRenderBatch implements Comparable<justForgeRenderBatch>
             glBindBuffer(GL_ARRAY_BUFFER, vboID);
             glBufferSubData(GL_ARRAY_BUFFER, 0, vertices);
         }
-
 
         // - - - Use the shader
         shader.use();
@@ -177,6 +164,7 @@ public class justForgeRenderBatch implements Comparable<justForgeRenderBatch>
         shader.detach();
     }
 
+    // - - - add sprite to a renderer batch, taking into account its layering
     public void addSprite(justForgeSpriteRenderer SPRITE)
     {
         // - - - Get the index and add the render object
@@ -204,6 +192,7 @@ public class justForgeRenderBatch implements Comparable<justForgeRenderBatch>
         }
     }
 
+    // - - - loading vertex properties
     private void loadVertexProperties(int INDEX)
     {
         justForgeSpriteRenderer sprite = this.sprites[INDEX];
@@ -265,6 +254,39 @@ public class justForgeRenderBatch implements Comparable<justForgeRenderBatch>
             // - - - Update the offset
             offset += VERTEX_SIZE;
         }
+    }
+
+
+    // - - - Helper functions, getters and setters - - -
+
+    private int[] generateIndices()
+    {
+        // 6 indices per quad (3 per triangle)
+        int[] elements = new int[6 * maxBatchSize];
+
+        for (int i = 0; i < maxBatchSize; ++i)
+        {
+            loadElementIndices(elements, i);
+        }
+
+        return elements;
+    }
+
+    private void loadElementIndices(int[] ELEMENTS, int INDEX)
+    {
+        int offsetArrayIndex = 6 * INDEX;
+        int offset = 4 * INDEX;
+
+        // 3, 2, 0, 0, 2, 1         7, 6, 4, 4, 6, 5
+        // - - - Create the first triangle
+        ELEMENTS[offsetArrayIndex] = offset + 3;
+        ELEMENTS[offsetArrayIndex + 1] = offset + 2;
+        ELEMENTS[offsetArrayIndex + 2] = offset + 0;
+
+        // - - - Create the second triangle
+        ELEMENTS[offsetArrayIndex + 3] = offset + 0;
+        ELEMENTS[offsetArrayIndex + 4] = offset + 2;
+        ELEMENTS[offsetArrayIndex + 5] = offset + 1;
     }
 
     public boolean hasTextureRoom()

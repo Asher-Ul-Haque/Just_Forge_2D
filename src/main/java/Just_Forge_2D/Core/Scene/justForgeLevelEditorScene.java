@@ -3,11 +3,14 @@ package Just_Forge_2D.Core.Scene;
 import Just_Forge_2D.Core.ECS.Components.Sprite.justForgeSprite;
 import Just_Forge_2D.Core.ECS.Components.Sprite.justForgeSpriteRenderer;
 import Just_Forge_2D.Core.ECS.Components.Sprite.justForgeSpriteSheet;
+import Just_Forge_2D.Core.ECS.Components.justForgeComponent;
 import Just_Forge_2D.Core.ECS.justForgeGameObject;
 import Just_Forge_2D.Core.justForgeCamera;
 import Just_Forge_2D.Renderer.justForgeShader;
 import Just_Forge_2D.Renderer.justForgeTexture;
+import Just_Forge_2D.Utils.JsonHandlers.justForgeGameObjectJsonHandler;
 import Just_Forge_2D.Utils.justForgeAssetPool;
+import Just_Forge_2D.Utils.JsonHandlers.justForgeComponentJsonHandler;
 import Just_Forge_2D.Utils.justForgeLogger;
 import Just_Forge_2D.Utils.justForgeTransform;
 import com.google.gson.Gson;
@@ -52,12 +55,15 @@ public class justForgeLevelEditorScene extends justForgeScene
     }
 
     @Override
-    public void init() 
-    {
+    public void init() {
         // - - - TODO: test code, remov ethe 10k cubes
         this.camera = new justForgeCamera(new Vector2f());
-
         loadResources();
+        if (levelLoaded)
+        {
+            return;
+        }
+
         sprites = justForgeAssetPool.getSpriteSheet("Assets/Textures/spritesheet.png");
 
         obj1 = new justForgeGameObject("OBject 1", new justForgeTransform(new Vector2f(100, 100), new Vector2f(256, 256)), 2);
@@ -76,8 +82,7 @@ public class justForgeLevelEditorScene extends justForgeScene
         this.addGameObject(obj2);
         //this.activeGameObject = obj2;
 
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        justForgeLogger.FORGE_LOG_DEBUG(gson.toJson(obj1));
+
 
 
         start();
