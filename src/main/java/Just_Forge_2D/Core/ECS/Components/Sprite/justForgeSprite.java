@@ -8,8 +8,13 @@ import org.joml.Vector2f;
 public class justForgeSprite
 {
     // - - - private variables for texturing
-    private justForgeTexture texture;
-    private Vector2f[] textureCoordinates;
+    private justForgeTexture texture = null;
+    private Vector2f[] textureCoordinates = {
+    new Vector2f(1, 1),
+            new Vector2f(1, 0),
+            new Vector2f(0, 0),
+            new Vector2f(0, 1),
+            };
 
 
     // - - - | Functions | - - -
@@ -18,7 +23,7 @@ public class justForgeSprite
     // - - - - Constructors
 
     // - - - Not useless constructors for once, store textures, invent texture coordinate
-    public justForgeSprite(justForgeTexture TEXTURE)
+    /*public justForgeSprite(justForgeTexture TEXTURE)
     {
         this.texture = TEXTURE;
         this.textureCoordinates = new Vector2f[]{
@@ -34,7 +39,7 @@ public class justForgeSprite
     {
         this.texture = TEXTURE;
         this.textureCoordinates = TEXTURE_COORDINATES;
-    }
+    }*/
 
 
     // - - - Getters - - -
@@ -50,4 +55,23 @@ public class justForgeSprite
     {
         return this.textureCoordinates;
     }
+
+
+    // - - - Setters - - -
+
+    // - - - for texture
+    public justForgeSprite setTexture(justForgeTexture TEXTURE)
+    {
+        this.texture = TEXTURE;
+        return this;
+    }
+
+    // - - - for coordinates
+    public justForgeSprite setTextureCoordinates(Vector2f[] TEXTURE_COORDS)
+    {
+        this.textureCoordinates = TEXTURE_COORDS;
+        return this;
+    }
+
+
 }

@@ -12,10 +12,10 @@ import org.joml.Vector4f;
 public class justForgeSpriteRenderer extends justForgeComponent
 {
     // - - - private variables - - -
-    private Vector4f color;
-    private justForgeSprite sprite;
-    private justForgeTransform lastTransform;
-    private boolean isChanged = true;
+    private Vector4f color = new Vector4f(1, 1, 1, 1);
+    private justForgeSprite sprite = new justForgeSprite();
+    private transient justForgeTransform lastTransform;
+    private transient boolean isChanged = true;
 
 
     // - - - | Functions | - - -
@@ -24,7 +24,7 @@ public class justForgeSpriteRenderer extends justForgeComponent
     // - - - Constructors - - -
 
     // - - - store color and make a sprite without texture
-    public justForgeSpriteRenderer(Vector4f COLOR)
+    /*public justForgeSpriteRenderer(Vector4f COLOR)
     {
         this.sprite = new justForgeSprite(null);
         this.color = COLOR;
@@ -35,7 +35,7 @@ public class justForgeSpriteRenderer extends justForgeComponent
     {
         this.sprite = SPRITE;
         this.color = new Vector4f(1.0f, 1.0f, 1.0f, 1.0f);
-    }
+    }*/
 
 
     // - - - Getters and Setters - - -

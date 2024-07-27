@@ -138,12 +138,12 @@ public class justForgeRenderBatch implements Comparable<justForgeRenderBatch>
                 rebufferData = true;
             }
         }
-        if (!rebufferData)
+        if (rebufferData)
         {
-            return;
+            glBindBuffer(GL_ARRAY_BUFFER, vboID);
+            glBufferSubData(GL_ARRAY_BUFFER, 0, vertices);
         }
-        glBindBuffer(GL_ARRAY_BUFFER, vboID);
-        glBufferSubData(GL_ARRAY_BUFFER, 0, vertices);
+
 
         // - - - Use the shader
         shader.use();

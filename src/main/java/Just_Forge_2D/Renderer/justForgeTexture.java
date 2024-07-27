@@ -19,8 +19,8 @@ public class justForgeTexture
 
     // - - - Functions - - -
 
-    // - - - Constructor to set up a use able texture
-    public justForgeTexture(String FILEPATH)
+    // - - - init
+    public void init(String FILEPATH)
     {
         this.filepath = FILEPATH;
 

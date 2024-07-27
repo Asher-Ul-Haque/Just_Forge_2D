@@ -63,7 +63,7 @@ public class justForgeWindow
         this.r = 1.0f;
         this.g = 0.5f;
         this.b = 0.5f;
-        this.a = 0.0f;
+        this.a = 1.0f;
 
         justForgeLogger.FORGE_LOG_INFO("Started Just Forge 2D");
     }

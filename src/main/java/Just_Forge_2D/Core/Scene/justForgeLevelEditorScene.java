@@ -8,9 +8,13 @@ import Just_Forge_2D.Core.justForgeCamera;
 import Just_Forge_2D.Renderer.justForgeShader;
 import Just_Forge_2D.Renderer.justForgeTexture;
 import Just_Forge_2D.Utils.justForgeAssetPool;
+import Just_Forge_2D.Utils.justForgeLogger;
 import Just_Forge_2D.Utils.justForgeTransform;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import imgui.ImGui;
 import org.joml.Vector2f;
+import org.joml.Vector4f;
 
 public class justForgeLevelEditorScene extends justForgeScene 
 {
@@ -20,6 +24,7 @@ public class justForgeLevelEditorScene extends justForgeScene
     private justForgeGameObject testObject;
     private justForgeGameObject obj1;
     private justForgeSpriteSheet sprites;
+    private justForgeSpriteRenderer obj1SpriteRenderer;
 
     private int spriteIndex = 0;
     private float spriteFlipTime = 0.2f;
@@ -55,14 +60,25 @@ public class justForgeLevelEditorScene extends justForgeScene
         loadResources();
         sprites = justForgeAssetPool.getSpriteSheet("Assets/Textures/spritesheet.png");
 
-        obj1 = new justForgeGameObject("OBject 1", new justForgeTransform(new Vector2f(100, 100), new Vector2f(256, 256)), 1);
-        obj1.addComponent(new justForgeSpriteRenderer(new justForgeSprite(justForgeAssetPool.getTexture("Assets/Textures/blendImage1.png"))));
+        obj1 = new justForgeGameObject("OBject 1", new justForgeTransform(new Vector2f(100, 100), new Vector2f(256, 256)), 2);
+        obj1SpriteRenderer = new justForgeSpriteRenderer();
+        obj1SpriteRenderer.setColor(new Vector4f(1, 0, 0, 1));
+        obj1.addComponent(obj1SpriteRenderer);
         this.addGameObject(obj1);
         this.activeGameObject = obj1;
 
-        justForgeGameObject obj2 = new justForgeGameObject("OBject 2", new justForgeTransform(new Vector2f(400, 100), new Vector2f(256, 256)), 1);
-        obj2.addComponent(new justForgeSpriteRenderer(new justForgeSprite(justForgeAssetPool.getTexture("Assets/Textures/blendImage2.png"))));
+        justForgeGameObject obj2 = new justForgeGameObject("OBject 2", new justForgeTransform(new Vector2f(400, 100), new Vector2f(256, 256)), 21);
+        justForgeSpriteRenderer obj2SpriteRenderer = new justForgeSpriteRenderer();
+        justForgeSprite obj2Sprite = new justForgeSprite();
+        obj2Sprite.setTexture(justForgeAssetPool.getTexture("Assets/Textures/blendImage2.png"));
+        obj2SpriteRenderer.setSprite(obj2Sprite);
+        obj2.addComponent(obj2SpriteRenderer);
         this.addGameObject(obj2);
+        //this.activeGameObject = obj2;
+
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        justForgeLogger.FORGE_LOG_DEBUG(gson.toJson(obj1));
+
 
         start();
     }
@@ -76,10 +92,12 @@ public class justForgeLevelEditorScene extends justForgeScene
     @Override
     public void update(double DELTA_TIME)
     {
+
         spriteFlipeTimeLeft -= DELTA_TIME;
 
 
         obj1.transform.position.x += (float) (150 * DELTA_TIME) * direction;
+
 
         for (justForgeGameObject gameObject : this.gameObjects)
         {

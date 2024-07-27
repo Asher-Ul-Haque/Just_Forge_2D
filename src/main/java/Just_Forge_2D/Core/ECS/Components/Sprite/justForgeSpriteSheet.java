@@ -41,7 +41,9 @@ public class justForgeSpriteSheet
                             new Vector2f(leftX, topY)
             };
 
-            justForgeSprite sprite = new justForgeSprite(this.spriteSheet, textureCoords);
+            justForgeSprite sprite = new justForgeSprite();
+            sprite.setTexture(this.spriteSheet);
+            sprite.setTextureCoordinates(textureCoords);
             this.sprites.add(sprite);
 
             currentX += SPRITE_WIDTH + SPACING;

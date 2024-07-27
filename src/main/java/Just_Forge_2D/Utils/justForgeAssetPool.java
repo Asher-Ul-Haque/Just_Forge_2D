@@ -3,7 +3,6 @@ package Just_Forge_2D.Utils;
 import Just_Forge_2D.Core.ECS.Components.Sprite.justForgeSpriteSheet;
 import Just_Forge_2D.Renderer.justForgeShader;
 import Just_Forge_2D.Renderer.justForgeTexture;
-
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
@@ -43,7 +42,8 @@ public class justForgeAssetPool
         }
         else
         {
-            justForgeTexture texture = new justForgeTexture(FILE_PATH);
+            justForgeTexture texture = new justForgeTexture();
+            texture.init(FILE_PATH);
             justForgeAssetPool.texturePool.put(file.getAbsolutePath(), texture);
             justForgeLogger.FORGE_LOG_DEBUG("Texture with path: " + FILE_PATH + " Hashed in Texture Asset Pool and loaded");
             return texture;
