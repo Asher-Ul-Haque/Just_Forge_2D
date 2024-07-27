@@ -77,7 +77,8 @@ public class justForgeWindow
         {
             case 0:
                 currentScene = new justForgeLevelEditorScene();
-                currentScene.init();
+
+
                 break;
 
             case 1:
@@ -89,7 +90,10 @@ public class justForgeWindow
                 assert false : "Unknown Scene " + newScene;
                 break;
         }
-        //currentScene.init();
+        currentScene.load();
+        currentScene.init();
+        currentScene.start();
+
     }
 
 
@@ -207,7 +211,6 @@ public class justForgeWindow
         float endTime;
         float dt = -1.0f;
 
-        currentScene.load();
         while (!glfwWindowShouldClose(glfwWindow))
         {
             if (Math.abs(fps - (int) (1.0d / dt)) >= 30)

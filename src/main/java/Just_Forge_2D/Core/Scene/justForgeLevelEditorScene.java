@@ -4,6 +4,7 @@ import Just_Forge_2D.Core.ECS.Components.Sprite.justForgeSprite;
 import Just_Forge_2D.Core.ECS.Components.Sprite.justForgeSpriteRenderer;
 import Just_Forge_2D.Core.ECS.Components.Sprite.justForgeSpriteSheet;
 import Just_Forge_2D.Core.ECS.Components.justForgeComponent;
+import Just_Forge_2D.Core.ECS.Components.justForgeRigidBodyComponent;
 import Just_Forge_2D.Core.ECS.justForgeGameObject;
 import Just_Forge_2D.Core.justForgeCamera;
 import Just_Forge_2D.Renderer.justForgeShader;
@@ -25,7 +26,7 @@ public class justForgeLevelEditorScene extends justForgeScene
     private justForgeTexture testTexture;
     private float time = 0;
     private justForgeGameObject testObject;
-    private justForgeGameObject obj1;
+    private justForgeGameObject obj1 = new justForgeGameObject("oBjec 1");
     private justForgeSpriteSheet sprites;
     private justForgeSpriteRenderer obj1SpriteRenderer;
 
@@ -61,15 +62,17 @@ public class justForgeLevelEditorScene extends justForgeScene
         loadResources();
         if (levelLoaded)
         {
+            this.activeGameObject = gameObjects.get(0);
             return;
         }
 
-        sprites = justForgeAssetPool.getSpriteSheet("Assets/Textures/spritesheet.png");
+        //sprites = justForgeAssetPool.getSpriteSheet("Assets/Textures/spritesheet.png");
 
         obj1 = new justForgeGameObject("OBject 1", new justForgeTransform(new Vector2f(100, 100), new Vector2f(256, 256)), 2);
         obj1SpriteRenderer = new justForgeSpriteRenderer();
         obj1SpriteRenderer.setColor(new Vector4f(1, 0, 0, 1));
         obj1.addComponent(obj1SpriteRenderer);
+        obj1.addComponent(new justForgeRigidBodyComponent());
         this.addGameObject(obj1);
         this.activeGameObject = obj1;
 
@@ -82,16 +85,13 @@ public class justForgeLevelEditorScene extends justForgeScene
         this.addGameObject(obj2);
         //this.activeGameObject = obj2;
 
-
-
-
-        start();
     }
 
     private void loadResources()
     {
         justForgeAssetPool.getShader("Assets/Shaders/default.glsl");
         justForgeAssetPool.addSpriteSheet("Assets/Textures/spritesheet.png", new justForgeSpriteSheet(justForgeAssetPool.getTexture("Assets/Textures/spritesheet.png"), 16, 16, 26, 0));
+        justForgeAssetPool.getTexture("Assets/Textures/blendImage2.png");
     }
 
     @Override

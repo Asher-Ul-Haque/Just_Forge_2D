@@ -14,7 +14,7 @@ public class justForgeSpriteRenderer extends justForgeComponent
     // - - - private variables - - -
     private Vector4f color = new Vector4f(1, 1, 1, 1);
     private justForgeSprite sprite = new justForgeSprite();
-    private transient justForgeTransform lastTransform;
+    private transient justForgeTransform lastTransform = new justForgeTransform();
     private transient boolean isChanged = true;
 
 
