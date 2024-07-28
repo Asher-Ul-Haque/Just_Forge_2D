@@ -16,24 +16,20 @@ public class GameObject
     private List<Component> components = new ArrayList<>();
     public TransformComponent transform; // transform is a mandatory component
     private int layer;
+    private static int ID_COUNTER = 0;
+    private int uniqueID = -1;
 
 
     // - - -  | Functions | - - -
 
     // - - - Constructors - - -
-    public GameObject(String NAME)
-    {
-        this.transform = new TransformComponent();
-        this.name = NAME;
-        this.layer = 0;
-        justForgeLogger.FORGE_LOG_DEBUG("Created new Game Object : " + NAME);
-    }
 
     public GameObject(String NAME, TransformComponent TRANSFORM, int LAYER)
     {
         this.transform = TRANSFORM;
         this.name = NAME;
         this.layer = LAYER;
+        this.uniqueID = ID_COUNTER++;
         justForgeLogger.FORGE_LOG_DEBUG("Created new Game Object : " + NAME);
     }
 
@@ -77,9 +73,15 @@ public class GameObject
 
     public void addComponent(Component COMPONENT)
     {
+        COMPONENT.generateID();
         this.components.add(COMPONENT);
         COMPONENT.gameObject = this;
         justForgeLogger.FORGE_LOG_TRACE("Added component: " + COMPONENT + " to Game Object " + this);
+    }
+
+    public List<Component> getComponents()
+    {
+        return this.components;
     }
 
 
@@ -119,5 +121,19 @@ public class GameObject
             component.editorGUI();
         }
     }
+
+
+    // - - - Unique IDS - - -
+
+    public static void init(int MAX_ID)
+    {
+        ID_COUNTER = MAX_ID;
+    }
+
+    public int getUniqueID()
+    {
+        return this.uniqueID;
+    }
+
 
 }

@@ -9,7 +9,7 @@
             "x": 1.0,
             "y": 0.0,
             "z": 0.0,
-            "w": 1.0
+            "w": 0.54509807
           },
           "sprite": {
             "width": 0.0,
@@ -32,7 +32,8 @@
                 "y": 1.0
               }
             ]
-          }
+          },
+          "uniqueID": 0
         }
       },
       {
@@ -44,7 +45,8 @@
             "x": 0.0,
             "y": 0.5,
             "z": 0.0
-          }
+          },
+          "uniqueID": 1
         }
       }
     ],
@@ -56,9 +58,11 @@
       "scale": {
         "x": 256.0,
         "y": 256.0
-      }
+      },
+      "uniqueID": -1
     },
-    "layer": 2
+    "layer": 2,
+    "uniqueID": 0
   },
   {
     "name": "Object 2",
@@ -99,7 +103,8 @@
                 "y": 1.0
               }
             ]
-          }
+          },
+          "uniqueID": 2
         }
       }
     ],
@@ -111,9 +116,11 @@
       "scale": {
         "x": 256.0,
         "y": 256.0
-      }
+      },
+      "uniqueID": -1
     },
-    "layer": 3
+    "layer": 3,
+    "uniqueID": 1
   },
   {
     "name": "Sprite OBject Generated",
@@ -154,7 +161,8 @@
                 "y": 0.5
               }
             ]
-          }
+          },
+          "uniqueID": 3
         }
       }
     ],
@@ -166,9 +174,11 @@
       "scale": {
         "x": 64.0,
         "y": 64.0
-      }
+      },
+      "uniqueID": -1
     },
-    "layer": 0
+    "layer": 0,
+    "uniqueID": 2
   },
   {
     "name": "Sprite OBject Generated",
@@ -209,7 +219,8 @@
                 "y": 0.5
               }
             ]
-          }
+          },
+          "uniqueID": 4
         }
       }
     ],
@@ -221,9 +232,11 @@
       "scale": {
         "x": 64.0,
         "y": 64.0
-      }
+      },
+      "uniqueID": -1
     },
-    "layer": 0
+    "layer": 0,
+    "uniqueID": 3
   },
   {
     "name": "Sprite OBject Generated",
@@ -264,7 +277,8 @@
                 "y": 1.0
               }
             ]
-          }
+          },
+          "uniqueID": 5
         }
       }
     ],
@@ -276,9 +290,11 @@
       "scale": {
         "x": 64.0,
         "y": 64.0
-      }
+      },
+      "uniqueID": -1
     },
-    "layer": 0
+    "layer": 0,
+    "uniqueID": 4
   },
   {
     "name": "Sprite OBject Generated",
@@ -319,7 +335,8 @@
                 "y": 1.0
               }
             ]
-          }
+          },
+          "uniqueID": 6
         }
       }
     ],
@@ -331,8 +348,126 @@
       "scale": {
         "x": 64.0,
         "y": 64.0
-      }
+      },
+      "uniqueID": -1
     },
-    "layer": 0
+    "layer": 0,
+    "uniqueID": 5
+  },
+  {
+    "name": "Sprite OBject Generated",
+    "components": [
+      {
+        "type": "Just_Forge_2D.Core.ECS.Components.Attachable.Sprite.SpriteComponent",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16.0,
+            "height": 16.0,
+            "texture": {
+              "filepath": "Assets/Textures/spritesheet.png",
+              "textureID": 2,
+              "width": 224,
+              "height": 32
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.2857143,
+                "y": 0.5
+              },
+              {
+                "x": 0.2857143,
+                "y": 0.0
+              },
+              {
+                "x": 0.21428572,
+                "y": 0.0
+              },
+              {
+                "x": 0.21428572,
+                "y": 0.5
+              }
+            ]
+          },
+          "uniqueID": 7
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": -1.8242798,
+        "y": 180.62503
+      },
+      "scale": {
+        "x": 64.0,
+        "y": 64.0
+      },
+      "uniqueID": -1
+    },
+    "layer": 0,
+    "uniqueID": 6
+  },
+  {
+    "name": "Sprite OBject Generated",
+    "components": [
+      {
+        "type": "Just_Forge_2D.Core.ECS.Components.Attachable.Sprite.SpriteComponent",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16.0,
+            "height": 16.0,
+            "texture": {
+              "filepath": "Assets/Textures/spritesheet.png",
+              "textureID": 2,
+              "width": 224,
+              "height": 32
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.071428575,
+                "y": 0.5
+              },
+              {
+                "x": 0.071428575,
+                "y": 0.0
+              },
+              {
+                "x": 0.0,
+                "y": 0.0
+              },
+              {
+                "x": 0.0,
+                "y": 0.5
+              }
+            ]
+          },
+          "uniqueID": 8
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": 209.01025,
+        "y": 427.37503
+      },
+      "scale": {
+        "x": 64.0,
+        "y": 64.0
+      },
+      "uniqueID": -1
+    },
+    "layer": 0,
+    "uniqueID": 7
   }
 ]

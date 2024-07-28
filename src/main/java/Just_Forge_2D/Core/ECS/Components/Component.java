@@ -14,7 +14,8 @@ public abstract class Component
 {
     // - - - Private variables
     public transient GameObject gameObject = null; // a reference to the object it belongs to
-
+    private static int ID_COUNTER = 0;
+    private int uniqueID = -1;
 
     // - - - Functions - - -
 
@@ -102,5 +103,23 @@ public abstract class Component
             justForgeLogger.FORGE_LOG_FATAL("Error loading GUI code: illegal access exception for component " + this.toString());
             justForgeLogger.FORGE_LOG_ERROR(e.getMessage());
         }
+    }
+
+    public void generateID()
+    {
+        if (this.uniqueID == -1)
+        {
+            this.uniqueID = ID_COUNTER++;
+        }
+    }
+
+    public int getUniqueID()
+    {
+        return this.uniqueID;
+    }
+
+    public static void init(int MAX_ID)
+    {
+        ID_COUNTER = MAX_ID;
     }
 }

@@ -266,4 +266,3 @@ public class justForgeImGui
         justForgeLogger.FORGE_LOG_INFO("Editor GUI destroyed");
     }
 }
-

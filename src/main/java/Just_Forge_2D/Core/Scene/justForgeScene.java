@@ -118,11 +118,24 @@ public abstract class justForgeScene
 
         if (!inFile.equals(""))
         {
+            int maxGoId = -1;
+            int maxCompoId = -1;
             GameObject[] objects = gson.fromJson(inFile, GameObject[].class);
             for (int i = 0; i < objects.length; ++i)
             {
                 addGameObject(objects[i]);
+
+                for (Component component : objects[i].getComponents())
+                {
+                    maxCompoId = Math.max(maxCompoId, component.getUniqueID());
+                }
+                maxGoId = Math.max(maxGoId, objects[i].getUniqueID());
             }
+
+            maxGoId++;
+            maxCompoId++;
+            GameObject.init(maxGoId);
+            Component.init(maxCompoId);
             this.levelLoaded = true;
         }
     }
