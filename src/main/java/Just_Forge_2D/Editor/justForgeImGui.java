@@ -3,6 +3,7 @@ package Just_Forge_2D.Editor;
 import Just_Forge_2D.Core.Scene.justForgeScene;
 import Just_Forge_2D.Core.Window;
 import Just_Forge_2D.Utils.justForgeLogger;
+import Just_Forge_2D.Core.Input.*;
 import imgui.ImFontAtlas;
 import imgui.ImFontConfig;
 import imgui.ImGui;
@@ -111,6 +112,11 @@ public class justForgeImGui
             io.setKeyShift(io.getKeysDown(GLFW.GLFW_KEY_LEFT_SHIFT) || io.getKeysDown(GLFW.GLFW_KEY_RIGHT_SHIFT));
             io.setKeyAlt(io.getKeysDown(GLFW.GLFW_KEY_LEFT_ALT) || io.getKeysDown(GLFW.GLFW_KEY_RIGHT_ALT));
             io.setKeySuper(io.getKeysDown(GLFW.GLFW_KEY_LEFT_SUPER) || io.getKeysDown(GLFW.GLFW_KEY_RIGHT_SUPER));
+
+            if (!io.getWantCaptureKeyboard())
+            {
+                justForgeKeyboard.keyCallback(w, key, scancode, action, mods);
+            }
         });
 
         // - - - callback for typing
@@ -138,6 +144,10 @@ public class justForgeImGui
             if (!io.getWantCaptureMouse() && mouseDown[1])
             {
                 ImGui.setWindowFocus(null);
+            }
+            if (!io.getWantCaptureMouse())
+            {
+                Mouse.mouseButtonCallback(w, button, action, mods);
             }
         });
 
@@ -215,7 +225,6 @@ public class justForgeImGui
         // Any Dear ImGui code SHOULD go between ImGui.newFrame()/ImGui.render() methods
         ImGui.newFrame();
         SCENE.sceneGUI();
-        ImGui.showDemoWindow();
         ImGui.render();
 
         endFrame();

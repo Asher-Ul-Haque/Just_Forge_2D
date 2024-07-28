@@ -1,6 +1,6 @@
 package Just_Forge_2D.Utils;
 
-import Just_Forge_2D.Core.ECS.Components.Sprite.SpriteSheet;
+import Just_Forge_2D.Core.ECS.Components.Attachable.Sprite.SpriteSheet;
 import Just_Forge_2D.Renderer.justForgeShader;
 import Just_Forge_2D.Renderer.justForgeTexture;
 import java.io.File;

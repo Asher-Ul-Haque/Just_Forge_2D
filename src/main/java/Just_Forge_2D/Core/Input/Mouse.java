@@ -3,19 +3,18 @@ package Just_Forge_2D.Core.Input;
 import Just_Forge_2D.Core.Window;
 import Just_Forge_2D.Utils.justForgeLogger;
 import org.joml.Vector4f;
-import org.lwjgl.glfw.GLFW;
 
 import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
 import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
 
 
 // - - - Mouse Input class
-public class justForgeMouse
+public class Mouse
 {
     // - - - Private Variables - - -
 
     // - - - Singleton
-    private static justForgeMouse mouse;
+    private static Mouse mouse;
 
     // - - - Mouse Scrolling
     private double xScroll, yScroll;
@@ -32,7 +31,7 @@ public class justForgeMouse
     // - - - | Functions | - - -
 
     // - - - Singleton Constructor
-    private justForgeMouse()
+    private Mouse()
     {
         this.xScroll   = 0.0;
         this.yScroll   = 0.0;
@@ -45,14 +44,14 @@ public class justForgeMouse
     }
 
     // - - - Setup mouse
-    public static justForgeMouse get()
+    public static Mouse get()
     {
-        if (justForgeMouse.mouse == null)
+        if (Mouse.mouse == null)
         {
-            justForgeMouse.mouse = new justForgeMouse();
+            Mouse.mouse = new Mouse();
             justForgeLogger.FORGE_LOG_INFO("Mouse Input System Online");
         }
-        return justForgeMouse.mouse;
+        return Mouse.mouse;
     }
 
 
@@ -69,7 +68,7 @@ public class justForgeMouse
         get().yPosition = Y_POSITION;
         get().xPosition = X_POSITION;
 
-        get().isDraggin = get().isMouseButtonPressed[0] || get().mouse.isMouseButtonPressed[1] || justForgeMouse.mouse.isMouseButtonPressed[2];
+        get().isDraggin = get().isMouseButtonPressed[0] || get().mouse.isMouseButtonPressed[1] || Mouse.mouse.isMouseButtonPressed[2];
     }
 
     // - - - Update Clicks
@@ -147,19 +146,17 @@ public class justForgeMouse
         Vector4f temp = new Vector4f(currentX, 0, 0, 1);
         temp.mul(Window.getCurrentScene().getCamera().getInverseProjectionMatrix()).mul(Window.getCurrentScene().getCamera().getInverseViewMatrix());
         currentX = temp.x;
-        return -1;
+        return currentX;
     }
 
     public static float getOrthoY()
     {
-        float currentY = getY();
-        currentY = (currentY / (float) Window.getWidth()) * 2.0f - 1.0f;
+        float currentY = Window.getHeight() - getY();
+        currentY = (currentY / (float) Window.getHeight()) * 2.0f - 1.0f;
         Vector4f temp = new Vector4f(0, currentY, 0, 1);
         temp.mul(Window.getCurrentScene().getCamera().getInverseProjectionMatrix()).mul(Window.getCurrentScene().getCamera().getInverseViewMatrix());
         currentY = temp.y;
-        justForgeLogger.FORGE_LOG_TRACE(currentY);
-
-        return -1;
+        return currentY;
     }
 
 

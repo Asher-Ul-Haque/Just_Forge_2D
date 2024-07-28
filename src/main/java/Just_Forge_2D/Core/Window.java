@@ -5,13 +5,14 @@ package Just_Forge_2D.Core;
 // - - - Internal
 
 import Just_Forge_2D.Core.Input.justForgeKeyboard;
-import Just_Forge_2D.Core.Input.justForgeMouse;
+import Just_Forge_2D.Core.Input.Mouse;
 import Just_Forge_2D.Core.Scene.EditorScene;
 import Just_Forge_2D.Core.Scene.justForgeScene;
 import Just_Forge_2D.Editor.justForgeImGui;
 import Just_Forge_2D.Utils.justForgeLogger;
 import Just_Forge_2D.Utils.justForgeTime;
 import org.lwjgl.glfw.GLFWErrorCallback;
+import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
 
 import java.util.Objects;
@@ -39,9 +40,10 @@ public class Window
     private int maximized = 0;
     private int visible = 0;
     private int decorated = 1;
-    private int resizable = 1;
+    private int resizable = 0;
     private boolean enableVsync = true;
     private boolean isInitialized = false;
+    private boolean isMeddledWith = false;
 
     // - - - Rendering varaibles
     private int fps = 0;
@@ -67,8 +69,10 @@ public class Window
     // - - - Private Constructor for Singleton
     private Window()
     {
-        this.width = 1920;
-        this.height = 780;
+        this.width = 800;
+        this.height = 600;
+
+        float targestAspectRatio = 16f / 9f;
 
         this.title = "Just Forge Tester";
 
@@ -142,6 +146,14 @@ public class Window
         glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, transparent);
         justForgeLogger.FORGE_LOG_DEBUG("Window Configuration Read");
 
+        // TODO: Maybe let this stay
+        GLFWVidMode videoMode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+        if (!isMeddledWith)
+        {
+            this.width = videoMode.width();
+            this.height = videoMode.height();
+        }
+
         // - - - Create the window
         glfwWindow = glfwCreateWindow(this.width, this.height, this.title, NULL, NULL);
         if (glfwWindow == NULL)
@@ -151,10 +163,10 @@ public class Window
         justForgeLogger.FORGE_LOG_INFO("Window successfully created");
 
         // - - - Setup the mouse
-        justForgeMouse.get();
-        glfwSetCursorPosCallback(glfwWindow, justForgeMouse::mousePositionCallback);
-        glfwSetMouseButtonCallback(glfwWindow, justForgeMouse::mouseButtonCallback);
-        glfwSetScrollCallback(glfwWindow, justForgeMouse::mouseScrollCallback);
+        Mouse.get();
+        glfwSetCursorPosCallback(glfwWindow, Mouse::mousePositionCallback);
+        glfwSetMouseButtonCallback(glfwWindow, Mouse::mouseButtonCallback);
+        glfwSetScrollCallback(glfwWindow, Mouse::mouseScrollCallback);
         glfwSetWindowSizeCallback(glfwWindow, (w, newWidth, newHeight) -> {
             Window.setWidth(newWidth);
             Window.setHeight(newHeight);

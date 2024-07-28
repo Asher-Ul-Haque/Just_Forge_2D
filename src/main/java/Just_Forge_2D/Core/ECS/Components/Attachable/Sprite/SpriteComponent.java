@@ -1,9 +1,9 @@
-package Just_Forge_2D.Core.ECS.Components.Sprite;
+package Just_Forge_2D.Core.ECS.Components.Attachable.Sprite;
 
 import Just_Forge_2D.Core.ECS.Components.Component;
 import Just_Forge_2D.Renderer.justForgeTexture;
 import Just_Forge_2D.Utils.justForgeLogger;
-import Just_Forge_2D.Core.ECS.Components.TransformComponent;
+import Just_Forge_2D.Core.ECS.Components.Unattachable.TransformComponent;
 import imgui.ImGui;
 import org.joml.Vector2f;
 import org.joml.Vector4f;

@@ -1,4 +1,5 @@
-package Just_Forge_2D.Core.ECS.Components;
+package Just_Forge_2D.Core.ECS.Components.Unattachable;
+import Just_Forge_2D.Core.ECS.Components.Component;
 import org.joml.Vector2f;
 
 // - - - class to store data regarding position and scale

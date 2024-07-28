@@ -1,16 +1,16 @@
 package Just_Forge_2D.Core.Scene;
 
-import Just_Forge_2D.Core.ECS.Components.Sprite.Sprite;
-import Just_Forge_2D.Core.ECS.Components.Sprite.SpriteComponent;
-import Just_Forge_2D.Core.ECS.Components.Sprite.SpriteSheet;
+import Just_Forge_2D.Core.ECS.Components.Attachable.Sprite.Sprite;
+import Just_Forge_2D.Core.ECS.Components.Attachable.Sprite.SpriteComponent;
+import Just_Forge_2D.Core.ECS.Components.Attachable.Sprite.SpriteSheet;
+import Just_Forge_2D.Core.ECS.Components.Unattachable.MouseControlComponent;
 import Just_Forge_2D.Core.ECS.Components.justForgeRigidBodyComponent;
 import Just_Forge_2D.Core.ECS.GameObject;
 import Just_Forge_2D.Core.Camera;
-import Just_Forge_2D.Core.Input.justForgeMouse;
-import Just_Forge_2D.Renderer.justForgeShader;
-import Just_Forge_2D.Renderer.justForgeTexture;
+import Just_Forge_2D.Core.Input.Mouse;
+import Just_Forge_2D.Editor.Prefabs;
 import Just_Forge_2D.Utils.justForgeAssetPool;
-import Just_Forge_2D.Core.ECS.Components.TransformComponent;
+import Just_Forge_2D.Core.ECS.Components.Unattachable.TransformComponent;
 import Just_Forge_2D.Utils.justForgeLogger;
 import imgui.ImGui;
 import imgui.ImVec2;
@@ -22,6 +22,8 @@ public class EditorScene extends justForgeScene
     private GameObject obj1;
     private SpriteSheet sprites;
     private SpriteComponent obj1Sprite;
+
+    MouseControlComponent mouseControls = new MouseControlComponent();
 
     public EditorScene()
     {
@@ -51,7 +53,7 @@ public class EditorScene extends justForgeScene
         GameObject obj2 = new GameObject("Object 2", new TransformComponent(new Vector2f(400, 100), new Vector2f(256, 256)), 3);
         SpriteComponent obj2SpriteRender = new SpriteComponent();
         Sprite obj2Sprite = new Sprite();
-        obj2Sprite.setTexture(justForgeAssetPool.getTexture("Assets/images/blendImage2.png"));
+        obj2Sprite.setTexture(justForgeAssetPool.getTexture("Assets/Textures/blendImage2.png"));
         obj2SpriteRender.setSprite(obj2Sprite);
         obj2.addComponent(obj2SpriteRender);
         this.addGameObject(obj2);
@@ -67,8 +69,8 @@ public class EditorScene extends justForgeScene
     @Override
     public void update(double DELTA_TIME)
     {
-        justForgeMouse.getOrthoX();
-        justForgeMouse.getOrthoY();
+        justForgeLogger.FORGE_LOG_INFO("MOuse ortho " + Mouse.getOrthoX() + " " + Mouse.getOrthoY());
+        mouseControls.update((float) DELTA_TIME);
         for (GameObject gameObject : this.gameObjects)
         {
             gameObject.update((float) DELTA_TIME);
@@ -100,6 +102,8 @@ public class EditorScene extends justForgeScene
             if (ImGui.imageButton(id, spriteWidth, spriteHeight, texCoords[0].x, texCoords[0].y, texCoords[2].x, texCoords[2].y))
             {
                 justForgeLogger.FORGE_LOG_WARNING("Button: " + i + "clicked");
+                GameObject object = Prefabs.generateSpriteObject(sprite, spriteWidth, spriteHeight);
+                mouseControls.pickupObject(object);
             }
             ImGui.popID();
 

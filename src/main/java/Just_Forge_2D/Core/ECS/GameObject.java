@@ -2,7 +2,7 @@ package Just_Forge_2D.Core.ECS;
 
 import Just_Forge_2D.Core.ECS.Components.Component;
 import Just_Forge_2D.Utils.justForgeLogger;
-import Just_Forge_2D.Core.ECS.Components.TransformComponent;
+import Just_Forge_2D.Core.ECS.Components.Unattachable.TransformComponent;
 
 import java.util.ArrayList;
 import java.util.List;
