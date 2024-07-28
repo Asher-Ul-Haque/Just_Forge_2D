@@ -8,7 +8,7 @@ import org.joml.Vector3f;
 public class Camera
 {
     // - - - Private Variable
-    private Matrix4f projectionMatrix, viewMatrix;
+    private Matrix4f projectionMatrix, viewMatrix, inverseProjectionMatrix, inverseViewMatrix;
     public Vector2f position;
 
 
@@ -19,7 +19,9 @@ public class Camera
     {
         this.position = POSITION;
         this.projectionMatrix = new Matrix4f();
+        this.inverseProjectionMatrix = new Matrix4f();
         this.viewMatrix = new Matrix4f();
+        this.inverseViewMatrix = new Matrix4f();
         adjustProjection();
     }
 
@@ -34,6 +36,7 @@ public class Camera
 
         this.viewMatrix.identity();
         viewMatrix.lookAt(new Vector3f(position.x, position.y, 20.0f), cameraFront.add(position.x, position.y, 0.0f), cameraUp);
+        this.viewMatrix.invert(this.inverseViewMatrix);
 
         return this.viewMatrix;
     }
@@ -48,5 +51,18 @@ public class Camera
     {
         projectionMatrix.identity();
         projectionMatrix.ortho(0.0f, 32.0f * 40.0f, 0.0f, 32.0f * 21.0f, 0.0f, 100.0f); // the screen is 32 tiles of 32 pizels each in both directions
+        projectionMatrix.invert(inverseProjectionMatrix);
+    }
+
+
+    // - - - Get the inverse matrices
+    public Matrix4f getInverseProjectionMatrix()
+    {
+        return this.inverseProjectionMatrix;
+    }
+
+    public Matrix4f getInverseViewMatrix()
+    {
+        return this.inverseViewMatrix;
     }
 }

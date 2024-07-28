@@ -99,4 +99,9 @@ public class justForgeTexture
     {
         return this.height;
     }
+
+    public int getID()
+    {
+        return this.textureID;
+    }
 }

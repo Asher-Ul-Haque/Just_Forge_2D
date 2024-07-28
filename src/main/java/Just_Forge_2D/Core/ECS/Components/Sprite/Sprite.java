@@ -8,6 +8,7 @@ import org.joml.Vector2f;
 public class Sprite
 {
     // - - - private variables for texturing
+    private float width, height;
     private justForgeTexture texture = null;
     private Vector2f[] textureCoordinates = {
     new Vector2f(1, 1),
@@ -56,6 +57,24 @@ public class Sprite
         return this.textureCoordinates;
     }
 
+    // - - - for width
+    public float getWidth()
+    {
+        return this.width;
+    }
+
+    // - - - for height
+    public float getHeight()
+    {
+        return this.height;
+    }
+
+    // - - - for textID
+    public int getTextureID()
+    {
+        return texture == null ? -1 : texture.getID();
+    }
+
 
     // - - - Setters - - -
 
@@ -69,5 +88,17 @@ public class Sprite
     public void setTextureCoordinates(Vector2f[] TEXTURE_COORDS)
     {
         this.textureCoordinates = TEXTURE_COORDS;
+    }
+
+    // - - - for width
+    public void setWidth(float NEW_WIDTH)
+    {
+        this.width = NEW_WIDTH;
+    }
+
+    // - - - for height
+    public void setHeight(float NEW_HEIGHT)
+    {
+        this.height = NEW_HEIGHT;
     }
 }

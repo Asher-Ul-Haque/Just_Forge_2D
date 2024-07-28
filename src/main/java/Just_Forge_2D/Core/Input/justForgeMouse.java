@@ -1,6 +1,8 @@
 package Just_Forge_2D.Core.Input;
 
+import Just_Forge_2D.Core.Window;
 import Just_Forge_2D.Utils.justForgeLogger;
+import org.joml.Vector4f;
 import org.lwjgl.glfw.GLFW;
 
 import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
@@ -134,6 +136,30 @@ public class justForgeMouse
     public static float getDeltaY()
     {
         return (float) (get().yPrevious - get().yPosition);
+    }
+
+
+    // - - - Ortho graphic
+    public static float getOrthoX()
+    {
+        float currentX = getX();
+        currentX = (currentX / (float) Window.getWidth()) * 2.0f - 1.0f;
+        Vector4f temp = new Vector4f(currentX, 0, 0, 1);
+        temp.mul(Window.getCurrentScene().getCamera().getInverseProjectionMatrix()).mul(Window.getCurrentScene().getCamera().getInverseViewMatrix());
+        currentX = temp.x;
+        return -1;
+    }
+
+    public static float getOrthoY()
+    {
+        float currentY = getY();
+        currentY = (currentY / (float) Window.getWidth()) * 2.0f - 1.0f;
+        Vector4f temp = new Vector4f(0, currentY, 0, 1);
+        temp.mul(Window.getCurrentScene().getCamera().getInverseProjectionMatrix()).mul(Window.getCurrentScene().getCamera().getInverseViewMatrix());
+        currentY = temp.y;
+        justForgeLogger.FORGE_LOG_TRACE(currentY);
+
+        return -1;
     }
 
 

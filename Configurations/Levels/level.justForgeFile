@@ -6,12 +6,14 @@
         "type": "Just_Forge_2D.Core.ECS.Components.Sprite.SpriteComponent",
         "properties": {
           "color": {
-            "x": 0.7419355,
-            "y": 0.31911203,
-            "z": 0.31911203,
-            "w": 1.0
+            "x": 0.94509804,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 0.78039217
           },
           "sprite": {
+            "width": 0.0,
+            "height": 0.0,
             "textureCoordinates": [
               {
                 "x": 1.0,
@@ -71,6 +73,8 @@
             "w": 1.0
           },
           "sprite": {
+            "width": 0.0,
+            "height": 0.0,
             "texture": {
               "filepath": "Assets/Textures/blendImage2.png",
               "textureID": 3,

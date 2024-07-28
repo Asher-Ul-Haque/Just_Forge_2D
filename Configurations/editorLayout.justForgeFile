@@ -9,12 +9,17 @@ Size=128,54
 Collapsed=1
 
 [Window][Dear ImGui Demo]
-Pos=323,0
+Pos=-71,95
 Size=550,706
 Collapsed=1
 
 [Window][Inspector]
 Pos=-6,0
 Size=329,381
+Collapsed=0
+
+[Window][Block Picker]
+Pos=320,-1
+Size=775,282
 Collapsed=0
 
