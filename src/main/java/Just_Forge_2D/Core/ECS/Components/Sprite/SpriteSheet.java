@@ -7,18 +7,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 // - - - Sprite Sheets to use texture
-public class justForgeSpriteSheet
+public class SpriteSheet
 {
     // - - - private variables
-    private justForgeTexture spriteSheet;
-    private List<justForgeSprite> sprites;
+    private final justForgeTexture spriteSheet;
+    private List<Sprite> sprites;
 
 
     // - - - | Functions | - - -
 
 
     // - - - Constructor to make a sprite sheet
-    public justForgeSpriteSheet(justForgeTexture SPRITE_SHEET, int SPRITE_WIDTH, int SPRITE_HEIGHT, int SPRITE_COUNT, int SPACING)
+    public SpriteSheet(justForgeTexture SPRITE_SHEET, int SPRITE_WIDTH, int SPRITE_HEIGHT, int SPRITE_COUNT, int SPACING)
     {
         this.sprites = new ArrayList<>();
         this.spriteSheet = SPRITE_SHEET;
@@ -41,7 +41,7 @@ public class justForgeSpriteSheet
                             new Vector2f(leftX, topY)
             };
 
-            justForgeSprite sprite = new justForgeSprite();
+            Sprite sprite = new Sprite();
             sprite.setTexture(this.spriteSheet);
             sprite.setTextureCoordinates(textureCoords);
             this.sprites.add(sprite);
@@ -56,7 +56,7 @@ public class justForgeSpriteSheet
     }
 
     // - - - getter to get a sprite by the index
-    public justForgeSprite getSprite(int INDEX)
+    public Sprite getSprite(int INDEX)
     {
         return this.sprites.get(INDEX);
     }

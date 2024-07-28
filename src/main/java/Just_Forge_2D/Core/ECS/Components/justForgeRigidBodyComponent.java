@@ -3,7 +3,7 @@ package Just_Forge_2D.Core.ECS.Components;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 
-public class justForgeRigidBodyComponent extends justForgeComponent
+public class justForgeRigidBodyComponent extends Component
 {
     private int colliderType = 0;
     private float friction = 0.8f;

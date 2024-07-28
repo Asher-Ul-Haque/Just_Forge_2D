@@ -1,20 +1,20 @@
 package Just_Forge_2D.Core.ECS.Components.Sprite;
 
-import Just_Forge_2D.Core.ECS.Components.justForgeComponent;
+import Just_Forge_2D.Core.ECS.Components.Component;
 import Just_Forge_2D.Renderer.justForgeTexture;
 import Just_Forge_2D.Utils.justForgeLogger;
-import Just_Forge_2D.Utils.justForgeTransform;
+import Just_Forge_2D.Core.ECS.Components.TransformComponent;
 import imgui.ImGui;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 
 // - - - Component for rendering sprites
-public class justForgeSpriteRenderer extends justForgeComponent
+public class SpriteComponent extends Component
 {
     // - - - private variables - - -
     private Vector4f color = new Vector4f(1, 1, 1, 1);
-    private justForgeSprite sprite = new justForgeSprite();
-    private transient justForgeTransform lastTransform = new justForgeTransform();
+    private Sprite sprite = new Sprite();
+    private transient TransformComponent lastTransform = new TransformComponent();
     private transient boolean isChanged = true;
 
 
@@ -69,7 +69,7 @@ public class justForgeSpriteRenderer extends justForgeComponent
     }
 
     // - - - Sprite
-    public void setSprite(justForgeSprite SPRITE)
+    public void setSprite(Sprite SPRITE)
     {
         this.sprite = SPRITE;
         this.isChanged = true;
@@ -119,6 +119,5 @@ public class justForgeSpriteRenderer extends justForgeComponent
             this.color.set(inColor[0], inColor[1], inColor[2], inColor[3]);
             this.isChanged = true;
         }
-
     }
 }

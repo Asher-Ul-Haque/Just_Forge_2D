@@ -1,8 +1,8 @@
-package Just_Forge_2D.Utils;
+package Just_Forge_2D.Core.ECS.Components;
 import org.joml.Vector2f;
 
 // - - - class to store data regarding position and scale
-public class justForgeTransform
+public class TransformComponent extends Component
 {
     // - - - private variables
     public Vector2f position;
@@ -20,17 +20,17 @@ public class justForgeTransform
         this.scale = SCALE;
     }
 
-    public justForgeTransform()
+    public TransformComponent()
     {
         init(new Vector2f(), new Vector2f());
     }
 
-    public justForgeTransform(Vector2f POSITION)
+    public TransformComponent(Vector2f POSITION)
     {
-        init(position, new Vector2f());
+        init(POSITION, new Vector2f());
     }
 
-    public justForgeTransform(Vector2f POSITION, Vector2f SCALE)
+    public TransformComponent(Vector2f POSITION, Vector2f SCALE)
     {
         init(POSITION, SCALE);
     }
@@ -39,12 +39,12 @@ public class justForgeTransform
     // - - - Basic Utility functions - - -
 
     // - - - Copy
-    public justForgeTransform copy()
+    public TransformComponent copy()
     {
-        return new justForgeTransform(new Vector2f(this.position), new Vector2f(this.scale));
+        return new TransformComponent(new Vector2f(this.position), new Vector2f(this.scale));
     }
 
-    public void copy(justForgeTransform TO)
+    public void copy(TransformComponent TO)
     {
         TO.position.set(this.position);
         TO.scale.set(this.scale);
@@ -58,7 +58,7 @@ public class justForgeTransform
         {
             return false;
         }
-        if (!(o instanceof justForgeTransform t))
+        if (!(o instanceof TransformComponent t))
         {
             return false;
         }

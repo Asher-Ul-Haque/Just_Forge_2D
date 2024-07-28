@@ -1,36 +1,48 @@
 package Just_Forge_2D.Core.ECS;
 
-import Just_Forge_2D.Core.ECS.Components.justForgeComponent;
+import Just_Forge_2D.Core.ECS.Components.Component;
 import Just_Forge_2D.Utils.justForgeLogger;
-import Just_Forge_2D.Utils.justForgeTransform;
+import Just_Forge_2D.Core.ECS.Components.TransformComponent;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class justForgeGameObject
+
+// - - - THe E of ECS
+public class GameObject
 {
+    // - - - private variables
     private String name;
-    private List<justForgeComponent> components = new ArrayList<>();
-    public justForgeTransform transform;
+    private List<Component> components = new ArrayList<>();
+    public TransformComponent transform; // transform is a mandatory component
     private int layer;
 
-    public justForgeGameObject(String NAME)
+
+    // - - -  | Functions | - - -
+
+    // - - - Constructors - - -
+    public GameObject(String NAME)
     {
-        this.transform = new justForgeTransform();
+        this.transform = new TransformComponent();
         this.name = NAME;
         this.layer = 0;
+        justForgeLogger.FORGE_LOG_DEBUG("Created new Game Object : " + NAME);
     }
 
-    public justForgeGameObject(String NAME, justForgeTransform TRANSFORM, int LAYER)
+    public GameObject(String NAME, TransformComponent TRANSFORM, int LAYER)
     {
         this.transform = TRANSFORM;
         this.name = NAME;
         this.layer = LAYER;
+        justForgeLogger.FORGE_LOG_DEBUG("Created new Game Object : " + NAME);
     }
 
-    public <T extends justForgeComponent> T getCompoent(Class<T> COMPONENT_CLASS)
+
+    // - - - component management - - -
+
+    public <T extends Component> T getCompoent(Class<T> COMPONENT_CLASS)
     {
-        for (justForgeComponent c : components)
+        for (Component c : components)
         {
             if (COMPONENT_CLASS.isAssignableFrom(c.getClass()))
             {
@@ -45,10 +57,11 @@ public class justForgeGameObject
                 }
             }
         }
+        justForgeLogger.FORGE_LOG_WARNING("Returning null on get Component on Game Object " + this.name + " for component of type" + COMPONENT_CLASS);
         return null;
     }
 
-    public <T extends justForgeComponent> void removeComponent(Class<T> COMPONENT_CLASS)
+    public <T extends Component> void removeComponent(Class<T> COMPONENT_CLASS)
     {
         for (int i = 0; i < components.size(); ++i)
         {
@@ -59,18 +72,22 @@ public class justForgeGameObject
                 return;
             }
         }
+        justForgeLogger.FORGE_LOG_WARNING("No component of type: " + COMPONENT_CLASS + " To remove from game object " + this.name);
     }
 
-    public void addComponent(justForgeComponent COMPONENT)
+    public void addComponent(Component COMPONENT)
     {
         this.components.add(COMPONENT);
         COMPONENT.gameObject = this;
         justForgeLogger.FORGE_LOG_TRACE("Added component: " + COMPONENT + " to Game Object " + this);
     }
 
+
+    // - - - Usage - - -
+
     public void update(float DELTA_TIME)
     {
-        for (justForgeComponent component : components)
+        for (Component component : components)
         {
             component.update(DELTA_TIME);
         }
@@ -78,7 +95,7 @@ public class justForgeGameObject
 
     public void start()
     {
-        for (justForgeComponent component : components)
+        for (Component component : components)
         {
             component.start();
         }
@@ -97,7 +114,7 @@ public class justForgeGameObject
 
     public void editorGUI()
     {
-        for (justForgeComponent component : components)
+        for (Component component : components)
         {
             component.editorGUI();
         }

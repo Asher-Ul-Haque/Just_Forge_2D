@@ -5,7 +5,7 @@ import org.joml.Vector2f;
 import org.joml.Vector3f;
 
 // - - - 2D Camera
-public class justForgeCamera
+public class Camera
 {
     // - - - Private Variable
     private Matrix4f projectionMatrix, viewMatrix;
@@ -15,7 +15,7 @@ public class justForgeCamera
     // - - - Functions - - -
 
     // - - - Camera constructor to use camera immediately
-    public justForgeCamera(Vector2f POSITION)
+    public Camera(Vector2f POSITION)
     {
         this.position = POSITION;
         this.projectionMatrix = new Matrix4f();
@@ -33,9 +33,9 @@ public class justForgeCamera
         Vector3f cameraUp = new Vector3f(0.0f, 1.0f, 0.0f);
 
         this.viewMatrix.identity();
-        viewMatrix.lookAt(new Vector3f(position.x, position.y, 16.0f), cameraFront.add(position.x, position.y, 0.0f), cameraUp);
+        viewMatrix.lookAt(new Vector3f(position.x, position.y, 20.0f), cameraFront.add(position.x, position.y, 0.0f), cameraUp);
 
-        return viewMatrix;
+        return this.viewMatrix;
     }
 
     // - - - get the projection matrix
@@ -47,8 +47,6 @@ public class justForgeCamera
     public void adjustProjection()
     {
         projectionMatrix.identity();
-        projectionMatrix.ortho(0.0f, 32.0f * 32.0f, 0.0f, 32.0f * 32.0f, 0.0f, 64.0f); // the screen is 32 tiles of 32 pizels each in both directions
+        projectionMatrix.ortho(0.0f, 32.0f * 40.0f, 0.0f, 32.0f * 21.0f, 0.0f, 100.0f); // the screen is 32 tiles of 32 pizels each in both directions
     }
-
-
 }

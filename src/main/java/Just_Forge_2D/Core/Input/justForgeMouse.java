@@ -1,6 +1,7 @@
 package Just_Forge_2D.Core.Input;
 
 import Just_Forge_2D.Utils.justForgeLogger;
+import org.lwjgl.glfw.GLFW;
 
 import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
 import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
@@ -23,7 +24,7 @@ public class justForgeMouse
     private double xPrevious, yPrevious;
 
     // - - - Mouse BUttons
-    private boolean isMouseButtonPressed[] = new boolean[3]; // left, middle, right
+    private boolean isMouseButtonPressed[] = new boolean[9]; // left, middle, right
 
 
     // - - - | Functions | - - -
@@ -36,18 +37,20 @@ public class justForgeMouse
 
         this.xPosition = 0.0f;
         this.yPosition = 0.0f;
+
         this.xPrevious = 0.0f;
         this.yPrevious = 0.0f;
     }
 
     // - - - Setup mouse
-    public static void init()
+    public static justForgeMouse get()
     {
         if (justForgeMouse.mouse == null)
         {
             justForgeMouse.mouse = new justForgeMouse();
+            justForgeLogger.FORGE_LOG_INFO("Mouse Input System Online");
         }
-        justForgeLogger.FORGE_LOG_INFO("Mouse Input System Online");
+        return justForgeMouse.mouse;
     }
 
 
@@ -56,27 +59,21 @@ public class justForgeMouse
     // - - - Update Mouse Move
     public static void mousePositionCallback(long WINDOW, double X_POSITION, double Y_POSITION)
     {
-        // make sure the mouse exists
-        assert justForgeMouse.mouse != null;
+        // - - - save off mouse state
+        get().xPrevious = get().xPosition;
+        get().yPrevious = get().yPosition;
 
-        // save off mouse state
-        justForgeMouse.mouse.xPrevious = justForgeMouse.mouse.xPosition;
-        justForgeMouse.mouse.yPrevious = justForgeMouse.mouse.yPosition;
+        // - - - save the new mouse state
+        get().yPosition = Y_POSITION;
+        get().xPosition = X_POSITION;
 
-        // save the new mouse state
-        justForgeMouse.mouse.yPosition = Y_POSITION;
-        justForgeMouse.mouse.xPosition = X_POSITION;
-
-        justForgeMouse.mouse.isDraggin = justForgeMouse.mouse.isMouseButtonPressed[0] || justForgeMouse.mouse.isMouseButtonPressed[1] || justForgeMouse.mouse.isMouseButtonPressed[2];
+        get().isDraggin = get().isMouseButtonPressed[0] || get().mouse.isMouseButtonPressed[1] || justForgeMouse.mouse.isMouseButtonPressed[2];
     }
 
     // - - - Update Clicks
     public static void mouseButtonCallback(long WINDOW, int BUTTON, int ACTION, int MODIFIER)
     {
-        // make sure the mouse exists
-        assert justForgeMouse.mouse != null;
-
-        if (BUTTON >= justForgeMouse.mouse.isMouseButtonPressed.length)
+        if (BUTTON >= get().isMouseButtonPressed.length)
         {
             return;
         }
@@ -84,12 +81,12 @@ public class justForgeMouse
         switch(ACTION)
         {
             case GLFW_PRESS:
-                justForgeMouse.mouse.isMouseButtonPressed[BUTTON] = true;
+                get().isMouseButtonPressed[BUTTON] = true;
                 break;
 
             case GLFW_RELEASE:
-                justForgeMouse.mouse.isMouseButtonPressed[BUTTON] = false;
-                justForgeMouse.mouse.isDraggin = false;
+                get().isMouseButtonPressed[BUTTON] = false;
+                get().isDraggin = false;
                 break;
 
             default:
@@ -100,83 +97,71 @@ public class justForgeMouse
     // - - - Update scroll wheel
     public static void mouseScrollCallback(long WINDOW, double X_OFFSET, double Y_OFFSET)
     {
-        assert justForgeMouse.mouse != null;
-
-        justForgeMouse.mouse.xScroll = X_OFFSET;
-        justForgeMouse.mouse.yScroll = Y_OFFSET;
+        get().xScroll = X_OFFSET;
+        get().yScroll = Y_OFFSET;
     }
 
     // - - - Cleanup
     public static void endFrame()
     {
-        assert justForgeMouse.mouse != null;
+        get().xScroll = 0.0f;
+        get().yScroll = 0.0f;
 
-        justForgeMouse.mouse.xScroll = 0.0f;
-        justForgeMouse.mouse.yScroll = 0.0f;
-
-        justForgeMouse.mouse.xPrevious = justForgeMouse.mouse.xPosition;
-        justForgeMouse.mouse.yPrevious = justForgeMouse.mouse.yPosition;
+        get().xPrevious = get().xPosition;
+        get().yPrevious = get().yPosition;
     }
 
     // - - - Getters - - -
 
     // - - - Positions
-    public static double getX()
+    public static float getX()
     {
-        assert justForgeMouse.mouse != null;
-        return justForgeMouse.mouse.xPosition;
+        return (float) get().xPosition;
     }
 
-    public static double getY()
+    public static float getY()
     {
-        assert justForgeMouse.mouse != null;
-        return justForgeMouse.mouse.yPosition;
+        return (float) get().yPosition;
     }
 
 
     // - - - Net Movement
-    public static double getDeltaX()
+    public static float getDeltaX()
     {
-        assert justForgeMouse.mouse != null;
-        return (justForgeMouse.mouse.xPrevious - justForgeMouse.mouse.xPosition);
+        return (float) (get().xPrevious - get().xPosition);
     }
 
-    public static double getDeltaY()
+    public static float getDeltaY()
     {
-        assert justForgeMouse.mouse != null;
-        return (justForgeMouse.mouse.yPrevious - justForgeMouse.mouse.yPosition);
+        return (float) (get().yPrevious - get().yPosition);
     }
 
 
     // - - - Scroll
-    public static double getScrollX()
+    public static float getScrollX()
     {
-        assert justForgeMouse.mouse != null;
-        return justForgeMouse.mouse.xScroll;
+        return (float) get().xScroll;
     }
 
-    public static double getScrollY()
+    public static float getScrollY()
     {
-        assert justForgeMouse.mouse != null;
-        return justForgeMouse.mouse.yScroll;
+        return (float) get().yScroll;
     }
 
     public static boolean isDragging()
     {
-        assert justForgeMouse.mouse != null;
-        return justForgeMouse.mouse.isDraggin;
+        return get().isDraggin;
     }
 
 
     // - - - Mouse buttons
     public static boolean isMouseButtonDown(int BUTTON)
     {
-        assert justForgeMouse.mouse != null;
-        if (BUTTON >= justForgeMouse.mouse.isMouseButtonPressed.length)
+        if (BUTTON >= get().isMouseButtonPressed.length)
         {
             return false;
         }
 
-        return justForgeMouse.mouse.isMouseButtonPressed[BUTTON];
+        return get().isMouseButtonPressed[BUTTON];
     }
 }

@@ -1,7 +1,7 @@
 package Just_Forge_2D.Renderer;
 
-import Just_Forge_2D.Core.ECS.Components.Sprite.justForgeSpriteRenderer;
-import Just_Forge_2D.Core.justForgeWindow;
+import Just_Forge_2D.Core.ECS.Components.Sprite.SpriteComponent;
+import Just_Forge_2D.Core.Window;
 import Just_Forge_2D.Utils.justForgeAssetPool;
 import Just_Forge_2D.Utils.justForgeLogger;
 import org.jetbrains.annotations.NotNull;
@@ -46,7 +46,7 @@ public class justForgeRenderBatch implements Comparable<justForgeRenderBatch>
     private final int TEXTURE_ID_OFFSET = TEXTURE_COORDS_OFFSET + TEXTURE_COORDS_SIZE * Float.BYTES;
 
     // - - - batch related
-    private justForgeSpriteRenderer[] sprites;
+    private SpriteComponent[] sprites;
     private int spriteCount;
     protected boolean hasRoom;
     private List<justForgeTexture> textures;
@@ -67,7 +67,7 @@ public class justForgeRenderBatch implements Comparable<justForgeRenderBatch>
     {
         shader = justForgeAssetPool.getShader("Assets/Shaders/default.glsl");
         this.maxBatchSize = MAX_BATCH_SIZE;
-        this.sprites = new justForgeSpriteRenderer[maxBatchSize];
+        this.sprites = new SpriteComponent[maxBatchSize];
         this.layer = LAYER;
 
         //  4 vertices quadrants
@@ -118,7 +118,7 @@ public class justForgeRenderBatch implements Comparable<justForgeRenderBatch>
         boolean rebufferData = false;
         for (int i = 0; i < spriteCount; ++i)
         {
-            justForgeSpriteRenderer sprite = sprites[i];
+            SpriteComponent sprite = sprites[i];
             if (sprite.isChanged())
             {
                 loadVertexProperties(i);
@@ -134,8 +134,8 @@ public class justForgeRenderBatch implements Comparable<justForgeRenderBatch>
 
         // - - - Use the shader
         shader.use();
-        shader.uploadMatrix4f("uProjection", justForgeWindow.getCurrentScene().getCamera().getProjectionMatrix());
-        shader.uploadMatrix4f("uView", justForgeWindow.getCurrentScene().getCamera().getViewMatrix());
+        shader.uploadMatrix4f("uProjection", Window.getCurrentScene().getCamera().getProjectionMatrix());
+        shader.uploadMatrix4f("uView", Window.getCurrentScene().getCamera().getViewMatrix());
         for (int i = 0; i < textures.size(); ++i)
         {
             glActiveTexture(GL_TEXTURE0 + i + 1);
@@ -165,7 +165,7 @@ public class justForgeRenderBatch implements Comparable<justForgeRenderBatch>
     }
 
     // - - - add sprite to a renderer batch, taking into account its layering
-    public void addSprite(justForgeSpriteRenderer SPRITE)
+    public void addSprite(SpriteComponent SPRITE)
     {
         // - - - Get the index and add the render object
         int index = this.spriteCount;
@@ -195,7 +195,7 @@ public class justForgeRenderBatch implements Comparable<justForgeRenderBatch>
     // - - - loading vertex properties
     private void loadVertexProperties(int INDEX)
     {
-        justForgeSpriteRenderer sprite = this.sprites[INDEX];
+        SpriteComponent sprite = this.sprites[INDEX];
 
         // - - - Find offset within array (4 verticies for a sprite) and color
         int offset = INDEX * 4 * VERTEX_SIZE;

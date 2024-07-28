@@ -3,12 +3,12 @@
     "name": "OBject 1",
     "components": [
       {
-        "type": "Just_Forge_2D.Core.ECS.Components.Sprite.justForgeSpriteRenderer",
+        "type": "Just_Forge_2D.Core.ECS.Components.Sprite.SpriteComponent",
         "properties": {
           "color": {
-            "x": 0.77956986,
-            "y": 0.0,
-            "z": 0.0,
+            "x": 0.7419355,
+            "y": 0.31911203,
+            "z": 0.31911203,
             "w": 1.0
           },
           "sprite": {
@@ -62,7 +62,7 @@
     "name": "OBject 2",
     "components": [
       {
-        "type": "Just_Forge_2D.Core.ECS.Components.Sprite.justForgeSpriteRenderer",
+        "type": "Just_Forge_2D.Core.ECS.Components.Sprite.SpriteComponent",
         "properties": {
           "color": {
             "x": 1.0,

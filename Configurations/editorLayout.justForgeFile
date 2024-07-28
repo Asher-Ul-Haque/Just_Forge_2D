@@ -9,12 +9,12 @@ Size=128,54
 Collapsed=1
 
 [Window][Dear ImGui Demo]
-Pos=14,29
+Pos=323,0
 Size=550,706
 Collapsed=1
 
 [Window][Inspector]
-Pos=121,-8
+Pos=-6,0
 Size=329,381
 Collapsed=0
 

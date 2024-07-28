@@ -1,6 +1,6 @@
 package Just_Forge_2D.Core.Scene;
 
-import Just_Forge_2D.Core.justForgeWindow;
+import Just_Forge_2D.Core.Window;
 import Just_Forge_2D.Utils.justForgeLogger;
 
 
@@ -12,10 +12,10 @@ public class justForgeLevelScene extends justForgeScene
     public justForgeLevelScene()
     {
         justForgeLogger.FORGE_LOG_INFO("Current Scene: Default Level");
-        justForgeWindow.get().r = 1;
-        justForgeWindow.get().g = 1;
-        justForgeWindow.get().b = 1;
-        justForgeWindow.get().a = 1;
+        Window.get().r = 1;
+        Window.get().g = 1;
+        Window.get().b = 1;
+        Window.get().a = 1;
     }
 
     @Override

@@ -1,15 +1,15 @@
 package Just_Forge_2D.Utils.JsonHandlers;
 
-import Just_Forge_2D.Core.ECS.Components.justForgeComponent;
+import Just_Forge_2D.Core.ECS.Components.Component;
 import Just_Forge_2D.Utils.justForgeLogger;
 import com.google.gson.*;
 
 import java.lang.reflect.Type;
 
-public class justForgeComponentJsonHandler implements JsonSerializer<justForgeComponent>, JsonDeserializer<justForgeComponent>
+public class justForgeComponentJsonHandler implements JsonSerializer<Component>, JsonDeserializer<Component>
 {
     @Override
-    public JsonElement serialize(justForgeComponent COMPONENT, Type type, JsonSerializationContext jsonSerializationContext)
+    public JsonElement serialize(Component COMPONENT, Type type, JsonSerializationContext jsonSerializationContext)
     {
         JsonObject result = new JsonObject();
 
@@ -20,7 +20,7 @@ public class justForgeComponentJsonHandler implements JsonSerializer<justForgeCo
     }
 
     @Override
-    public justForgeComponent deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException
+    public Component deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException
     {
         JsonObject object = jsonElement.getAsJsonObject();
         String objectType = object.get("type").getAsString();

@@ -1,7 +1,7 @@
 package Just_Forge_2D.Editor;
 
 import Just_Forge_2D.Core.Scene.justForgeScene;
-import Just_Forge_2D.Core.justForgeWindow;
+import Just_Forge_2D.Core.Window;
 import Just_Forge_2D.Utils.justForgeLogger;
 import imgui.ImFontAtlas;
 import imgui.ImFontConfig;
@@ -224,8 +224,8 @@ public class justForgeImGui
     private void startFrame(final float DELTA_TIME)
     {
         // - - - Get window properties and mouse position
-        float[] winWidth = {justForgeWindow.getWidth()};
-        float[] winHeight = {justForgeWindow.getHeight()};
+        float[] winWidth = {Window.getWidth()};
+        float[] winHeight = {Window.getHeight()};
         double[] mousePosX = {0};
         double[] mousePosY = {0};
         GLFW.glfwGetCursorPos(windowPtr, mousePosX, mousePosY);

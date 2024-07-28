@@ -1,8 +1,8 @@
 package Just_Forge_2D.Core.Scene;
 
-import Just_Forge_2D.Core.ECS.Components.justForgeComponent;
-import Just_Forge_2D.Core.ECS.justForgeGameObject;
-import Just_Forge_2D.Core.justForgeCamera;
+import Just_Forge_2D.Core.ECS.Components.Component;
+import Just_Forge_2D.Core.ECS.GameObject;
+import Just_Forge_2D.Core.Camera;
 import Just_Forge_2D.Renderer.justForgeRenderer;
 import Just_Forge_2D.Utils.JsonHandlers.justForgeComponentJsonHandler;
 import Just_Forge_2D.Utils.JsonHandlers.justForgeGameObjectJsonHandler;
@@ -24,12 +24,12 @@ public abstract class justForgeScene
     // - - - Private Variables - - -
 
     // - - - Basic
-    protected justForgeCamera camera;
+    protected Camera camera;
     private boolean isRunning = false;
 
     // - - - ALl the objects
-    protected List<justForgeGameObject> gameObjects = new ArrayList<>();
-    protected justForgeGameObject activeGameObject = null;
+    protected List<GameObject> gameObjects = new ArrayList<>();
+    protected GameObject activeGameObject = null;
 
     // - - - Scene Rendering
     protected justForgeRenderer renderer = new justForgeRenderer();
@@ -49,7 +49,7 @@ public abstract class justForgeScene
 
     public void start()
     {
-        for (justForgeGameObject go : gameObjects)
+        for (GameObject go : gameObjects)
         {
             go.start();
             this.renderer.add(go);
@@ -63,7 +63,7 @@ public abstract class justForgeScene
 
     // - - - Getters and Setters - - -
 
-    public void addGameObject(justForgeGameObject GAME_OBJECT)
+    public void addGameObject(GameObject GAME_OBJECT)
     {
         gameObjects.add(GAME_OBJECT);
         if (!isRunning)
@@ -74,7 +74,7 @@ public abstract class justForgeScene
         this.renderer.add(GAME_OBJECT);
     }
 
-    public justForgeCamera getCamera()
+    public Camera getCamera()
     {
         return this.camera;
     }
@@ -102,8 +102,8 @@ public abstract class justForgeScene
     {
         Gson gson = new GsonBuilder()
                 .setPrettyPrinting()
-                .registerTypeAdapter(justForgeComponent.class, new justForgeComponentJsonHandler())
-                .registerTypeAdapter(justForgeGameObject.class, new justForgeGameObjectJsonHandler())
+                .registerTypeAdapter(Component.class, new justForgeComponentJsonHandler())
+                .registerTypeAdapter(GameObject.class, new justForgeGameObjectJsonHandler())
                 .create();
         String inFile = "";
         try
@@ -118,7 +118,7 @@ public abstract class justForgeScene
 
         if (!inFile.equals(""))
         {
-            justForgeGameObject[] objects = gson.fromJson(inFile, justForgeGameObject[].class);
+            GameObject[] objects = gson.fromJson(inFile, GameObject[].class);
             for (int i = 0; i < objects.length; ++i)
             {
                 addGameObject(objects[i]);
@@ -131,8 +131,8 @@ public abstract class justForgeScene
     {
         Gson gson = new GsonBuilder()
                 .setPrettyPrinting()
-                .registerTypeAdapter(justForgeComponent.class, new justForgeComponentJsonHandler())
-                .registerTypeAdapter(justForgeGameObject.class, new justForgeGameObjectJsonHandler())
+                .registerTypeAdapter(Component.class, new justForgeComponentJsonHandler())
+                .registerTypeAdapter(GameObject.class, new justForgeGameObjectJsonHandler())
                 .create();
         justForgeLogger.FORGE_LOG_INFO("Saving scene...: " + this.toString());
 

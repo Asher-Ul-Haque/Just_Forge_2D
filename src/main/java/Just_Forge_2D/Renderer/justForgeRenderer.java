@@ -1,7 +1,7 @@
 package Just_Forge_2D.Renderer;
 
-import Just_Forge_2D.Core.ECS.Components.Sprite.justForgeSpriteRenderer;
-import Just_Forge_2D.Core.ECS.justForgeGameObject;
+import Just_Forge_2D.Core.ECS.Components.Sprite.SpriteComponent;
+import Just_Forge_2D.Core.ECS.GameObject;
 import Just_Forge_2D.Utils.justForgeLogger;
 
 import java.util.ArrayList;
@@ -18,9 +18,9 @@ public class justForgeRenderer
         this.batches = new ArrayList<>();
     }
 
-    public void add(justForgeGameObject gameObject)
+    public void add(GameObject gameObject)
     {
-        justForgeSpriteRenderer sprite = gameObject.getCompoent(justForgeSpriteRenderer.class);
+        SpriteComponent sprite = gameObject.getCompoent(SpriteComponent.class);
 
         if (sprite != null)
         {
@@ -28,7 +28,7 @@ public class justForgeRenderer
         }
     }
 
-    private void add(justForgeSpriteRenderer SPRITE)
+    private void add(SpriteComponent SPRITE)
     {
         boolean added = false;
 

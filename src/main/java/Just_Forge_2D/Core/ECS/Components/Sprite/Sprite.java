@@ -5,7 +5,7 @@ import org.joml.Vector2f;
 
 
 // - - - Utilities for renderering sprites. Need to rename this file
-public class justForgeSprite
+public class Sprite
 {
     // - - - private variables for texturing
     private justForgeTexture texture = null;
@@ -60,18 +60,14 @@ public class justForgeSprite
     // - - - Setters - - -
 
     // - - - for texture
-    public justForgeSprite setTexture(justForgeTexture TEXTURE)
+    public void setTexture(justForgeTexture TEXTURE)
     {
         this.texture = TEXTURE;
-        return this;
     }
 
     // - - - for coordinates
-    public justForgeSprite setTextureCoordinates(Vector2f[] TEXTURE_COORDS)
+    public void setTextureCoordinates(Vector2f[] TEXTURE_COORDS)
     {
         this.textureCoordinates = TEXTURE_COORDS;
-        return this;
     }
-
-
 }

@@ -1,6 +1,6 @@
 package Just_Forge_2D.Core.ECS.Components;
 
-import Just_Forge_2D.Core.ECS.justForgeGameObject;
+import Just_Forge_2D.Core.ECS.GameObject;
 import Just_Forge_2D.Utils.justForgeLogger;
 import imgui.ImGui;
 import org.joml.Vector3f;
@@ -10,13 +10,19 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
 // - - - Abstrasct class for components
-public abstract class justForgeComponent
+public abstract class Component
 {
-    public transient justForgeGameObject gameObject = null;
+    // - - - Private variables
+    public transient GameObject gameObject = null; // a reference to the object it belongs to
 
+
+    // - - - Functions - - -
+
+    // - - - use
     public void update(float DELTA_TIME){}
     public void start(){}
 
+    // - - - make the IMGui PART
     public void editorGUI()
     {
         try
