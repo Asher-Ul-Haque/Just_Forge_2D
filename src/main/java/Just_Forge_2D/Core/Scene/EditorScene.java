@@ -9,12 +9,14 @@ import Just_Forge_2D.Core.ECS.GameObject;
 import Just_Forge_2D.Core.Camera;
 import Just_Forge_2D.Core.Input.Mouse;
 import Just_Forge_2D.Editor.Prefabs;
+import Just_Forge_2D.Renderer.DebugPencil;
 import Just_Forge_2D.Utils.justForgeAssetPool;
 import Just_Forge_2D.Core.ECS.Components.Unattachable.TransformComponent;
 import Just_Forge_2D.Utils.justForgeLogger;
 import imgui.ImGui;
 import imgui.ImVec2;
 import org.joml.Vector2f;
+import org.joml.Vector3f;
 import org.joml.Vector4f;
 
 public class EditorScene extends justForgeScene
@@ -57,20 +59,26 @@ public class EditorScene extends justForgeScene
         obj2SpriteRender.setSprite(obj2Sprite);
         obj2.addComponent(obj2SpriteRender);
         this.addGameObject(obj2);
+
     }
 
     private void loadResources()
     {
         justForgeAssetPool.getShader("Assets/Shaders/default.glsl");
-        justForgeAssetPool.addSpriteSheet("Assets/Textures/spritesheet.png", new SpriteSheet(justForgeAssetPool.getTexture("Assets/Textures/spritesheet.png"), 16, 16, 26, 0));
+        justForgeAssetPool.addSpriteSheet("Assets/Textures/spritesheet.png", new SpriteSheet(justForgeAssetPool.getTexture("Assets/Textures/spritesheet.png"), 16, 16, 81, 0));
         justForgeAssetPool.getTexture("Assets/Textures/blendImage2.png");
     }
 
+    float t = 0.0f;
     @Override
     public void update(double DELTA_TIME)
     {
-        justForgeLogger.FORGE_LOG_INFO("MOuse ortho " + Mouse.getOrthoX() + " " + Mouse.getOrthoY());
         mouseControls.update((float) DELTA_TIME);
+
+        float x = ((float)Math.sin(t) * 200.0f) + 600.0f;
+        float y = ((float)Math.cos(t) * 200.0f) + 400.0f;
+        t+= 0.1f;
+        DebugPencil.addLine2D(new Vector2f(600, 400), new Vector2f(x, y), 93);
         for (GameObject gameObject : this.gameObjects)
         {
             gameObject.update((float) DELTA_TIME);
@@ -101,7 +109,6 @@ public class EditorScene extends justForgeScene
             ImGui.pushID(i);
             if (ImGui.imageButton(id, spriteWidth, spriteHeight, texCoords[0].x, texCoords[0].y, texCoords[2].x, texCoords[2].y))
             {
-                justForgeLogger.FORGE_LOG_WARNING("Button: " + i + "clicked");
                 GameObject object = Prefabs.generateSpriteObject(sprite, spriteWidth, spriteHeight);
                 mouseControls.pickupObject(object);
             }

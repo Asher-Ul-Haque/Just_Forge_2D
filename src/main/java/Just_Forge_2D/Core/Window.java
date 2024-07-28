@@ -9,6 +9,7 @@ import Just_Forge_2D.Core.Input.Mouse;
 import Just_Forge_2D.Core.Scene.EditorScene;
 import Just_Forge_2D.Core.Scene.justForgeScene;
 import Just_Forge_2D.Editor.justForgeImGui;
+import Just_Forge_2D.Renderer.DebugPencil;
 import Just_Forge_2D.Utils.justForgeLogger;
 import Just_Forge_2D.Utils.justForgeTime;
 import org.lwjgl.glfw.GLFWErrorCallback;
@@ -36,11 +37,11 @@ public class Window
     private int height;
     private String title;
     private long glfwWindow;
-    private int transparent = 0;
-    private int maximized = 0;
-    private int visible = 0;
-    private int decorated = 1;
-    private int resizable = 0;
+    private int transparent = GLFW_FALSE;
+    private int maximized = GLFW_FALSE;
+    private int visible = GLFW_FALSE;
+    private int decorated = GLFW_TRUE;
+    private int resizable = GLFW_FALSE;
     private boolean enableVsync = true;
     private boolean isInitialized = false;
     private boolean isMeddledWith = false;
@@ -76,10 +77,10 @@ public class Window
 
         this.title = "Just Forge Tester";
 
-        this.r = 1.0f;
-        this.g = 0.5f;
-        this.b = 0.5f;
-        this.a = 1.0f;
+        this.r = 0.0f;
+        this.g = 0.0f;
+        this.b = 0.0f;
+        this.a = 0.0f;
 
         justForgeLogger.FORGE_LOG_INFO("Started Just Forge 2D");
     }
@@ -245,11 +246,15 @@ public class Window
         // - - - Poll events
         glfwPollEvents();
 
+        // - - - Debug Drawing
+        DebugPencil.beginFrame();
+
         glClearColor(r, g, b, a);
         glClear(GL_COLOR_BUFFER_BIT);
 
         if (dt >= 0.0d)
         {
+            DebugPencil.draw();
             currentScene.update(dt);
         }
 
