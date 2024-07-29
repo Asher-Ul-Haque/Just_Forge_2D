@@ -28,7 +28,7 @@ public class DebugPencil
 
     private static boolean started = false;
 
-    private static final int defaultLifetime = 60; //120 frames
+    private static final int defaultLifetime = 120; //120 frames
     private static final Vector3f defaultColor = new Vector3f(0, 0, 1);
     private static final int defaultWidth = 2;
 

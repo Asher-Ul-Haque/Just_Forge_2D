@@ -1,0 +1,32 @@
+package Just_Forge_2D.Forge_Physics.Primitives;
+
+import Just_Forge_2D.Forge_Physics.RigidBody.RigidBody2D;
+import org.joml.Vector2f;
+
+public class AABB
+{
+    private Vector2f size = new Vector2f();
+    private Vector2f halfSize = new Vector2f();
+    private RigidBody2D rigidBody = null;
+
+    public AABB()
+    {
+
+    }
+
+    public AABB(Vector2f MIN, Vector2f MAX)
+    {
+        this.size = new Vector2f(MAX).sub(MIN);
+        this.halfSize = new Vector2f(size).mul(0.5f);
+    }
+
+    public Vector2f getMin()
+    {
+        return new Vector2f(this.rigidBody.getPosition()).sub(this.halfSize);
+    }
+
+    public Vector2f getMax()
+    {
+        return new Vector2f(this.rigidBody.getPosition()).add(this.halfSize);
+    }
+}

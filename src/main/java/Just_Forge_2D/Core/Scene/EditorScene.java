@@ -41,8 +41,7 @@ public class EditorScene extends justForgeScene
         sprites = justForgeAssetPool.getSpriteSheet("Assets/Textures/spritesheet.png");
         if (levelLoaded)
         {
-            this.activeGameObject = gameObjects.get(0);
-            return;
+            //this.activeGameObject = gameObjects.get(0);
         }
     }
 
@@ -56,6 +55,7 @@ public class EditorScene extends justForgeScene
     @Override
     public void update(double DELTA_TIME)
     {
+        this.camera.position.y -= (float) (DELTA_TIME * Math.random() * 100);
         master.getCompoent(MouseControlComponent.class).update((float) DELTA_TIME);
         for (GameObject gameObject : this.gameObjects)
         {
@@ -88,6 +88,7 @@ public class EditorScene extends justForgeScene
             if (ImGui.imageButton(id, spriteWidth, spriteHeight, texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y))
             {
                 GameObject object = Prefabs.generateSpriteObject(sprite, Configurations.GRID_WIDTH, Configurations.GRID_HEIGHT);
+                this.activeGameObject = object;
                 master.getCompoent(MouseControlComponent.class).pickupObject(object);
             }
             ImGui.popID();
