@@ -10,6 +10,8 @@ public class Camera
     // - - - Private Variable
     private Matrix4f projectionMatrix, viewMatrix, inverseProjectionMatrix, inverseViewMatrix;
     public Vector2f position;
+    private Vector2f projectionSize = new Vector2f(32.0f * 40.0f, 32.0f * 21.0f);
+    private Vector2f cameraPos;
 
 
     // - - - Functions - - -
@@ -50,7 +52,7 @@ public class Camera
     public void adjustProjection()
     {
         projectionMatrix.identity();
-        projectionMatrix.ortho(0.0f, 32.0f * 40.0f, 0.0f, 32.0f * 21.0f, 0.0f, 100.0f); // the screen is 32 tiles of 32 pizels each in both directions
+        projectionMatrix.ortho(0.0f, projectionSize.x, 0.0f, projectionSize.y, 0.0f, 100.0f); // the screen is 32 tiles of 32 pizels each in both directions
         projectionMatrix.invert(inverseProjectionMatrix);
     }
 
@@ -64,5 +66,11 @@ public class Camera
     public Matrix4f getInverseViewMatrix()
     {
         return this.inverseViewMatrix;
+    }
+
+    // - - - for projectionSize
+    public Vector2f getProjectionSize()
+    {
+        return this.projectionSize;
     }
 }

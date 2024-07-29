@@ -1,38 +1,40 @@
 package Just_Forge_2D.Core.Scene;
 
 import Just_Forge_2D.Core.ECS.Components.Attachable.Sprite.Sprite;
-import Just_Forge_2D.Core.ECS.Components.Attachable.Sprite.SpriteComponent;
 import Just_Forge_2D.Core.ECS.Components.Attachable.Sprite.SpriteSheet;
-import Just_Forge_2D.Core.ECS.Components.Unattachable.MouseControlComponent;
+import Just_Forge_2D.Core.ECS.Components.GridLines;
+import Just_Forge_2D.Core.ECS.Components.Attachable.MouseControlComponent;
 import Just_Forge_2D.Core.ECS.Components.justForgeRigidBodyComponent;
 import Just_Forge_2D.Core.ECS.GameObject;
 import Just_Forge_2D.Core.Camera;
-import Just_Forge_2D.Core.Input.Mouse;
 import Just_Forge_2D.Editor.Prefabs;
-import Just_Forge_2D.Renderer.DebugPencil;
+import Just_Forge_2D.Utils.Configurations;
 import Just_Forge_2D.Utils.justForgeAssetPool;
 import Just_Forge_2D.Core.ECS.Components.Unattachable.TransformComponent;
-import Just_Forge_2D.Utils.justForgeLogger;
 import imgui.ImGui;
 import imgui.ImVec2;
 import org.joml.Vector2f;
-import org.joml.Vector3f;
-import org.joml.Vector4f;
 
 public class EditorScene extends justForgeScene
 {
-    private GameObject obj1;
+    private GameObject master = new GameObject("Master", new TransformComponent(new Vector2f(100, 100)), 0);
     private SpriteSheet sprites;
-    private SpriteComponent obj1Sprite;
 
-    MouseControlComponent mouseControls = new MouseControlComponent();
+
+//    MouseControlComponent mouseControls = new MouseControlComponent();
 
     public EditorScene()
     {
     }
 
     @Override
-    public void init() {
+    public void init()
+    {
+        master.addComponent(new justForgeRigidBodyComponent());
+        master.addComponent(new GridLines());
+        master.addComponent(new MouseControlComponent());
+        this.addGameObject(master);
+        this.activeGameObject = master;
         // - - - TODO: test code, remov ethe 10k cubes
         loadResources();
         this.camera = new Camera(new Vector2f(-250, 0));
@@ -42,24 +44,6 @@ public class EditorScene extends justForgeScene
             this.activeGameObject = gameObjects.get(0);
             return;
         }
-
-
-        obj1 = new GameObject("OBject 1", new TransformComponent(new Vector2f(200, 100), new Vector2f(256, 256)), 2);
-        obj1Sprite = new SpriteComponent();
-        obj1Sprite.setColor(new Vector4f(1, 0, 0, 1));
-        obj1.addComponent(obj1Sprite);
-        obj1.addComponent(new justForgeRigidBodyComponent());
-        this.addGameObject(obj1);
-        this.activeGameObject = obj1;
-
-        GameObject obj2 = new GameObject("Object 2", new TransformComponent(new Vector2f(400, 100), new Vector2f(256, 256)), 3);
-        SpriteComponent obj2SpriteRender = new SpriteComponent();
-        Sprite obj2Sprite = new Sprite();
-        obj2Sprite.setTexture(justForgeAssetPool.getTexture("Assets/Textures/blendImage2.png"));
-        obj2SpriteRender.setSprite(obj2Sprite);
-        obj2.addComponent(obj2SpriteRender);
-        this.addGameObject(obj2);
-
     }
 
     private void loadResources()
@@ -69,16 +53,10 @@ public class EditorScene extends justForgeScene
         justForgeAssetPool.getTexture("Assets/Textures/blendImage2.png");
     }
 
-    float t = 0.0f;
     @Override
     public void update(double DELTA_TIME)
     {
-        mouseControls.update((float) DELTA_TIME);
-
-        float x = ((float)Math.sin(t) * 200.0f) + 600.0f;
-        float y = ((float)Math.cos(t) * 200.0f) + 400.0f;
-        t+= 0.1f;
-        DebugPencil.addLine2D(new Vector2f(600, 400), new Vector2f(x, y), 93);
+        master.getCompoent(MouseControlComponent.class).update((float) DELTA_TIME);
         for (GameObject gameObject : this.gameObjects)
         {
             gameObject.update((float) DELTA_TIME);
@@ -107,10 +85,10 @@ public class EditorScene extends justForgeScene
             Vector2f[] texCoords = sprite.getTextureCoordinates();
 
             ImGui.pushID(i);
-            if (ImGui.imageButton(id, spriteWidth, spriteHeight, texCoords[0].x, texCoords[0].y, texCoords[2].x, texCoords[2].y))
+            if (ImGui.imageButton(id, spriteWidth, spriteHeight, texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y))
             {
-                GameObject object = Prefabs.generateSpriteObject(sprite, spriteWidth, spriteHeight);
-                mouseControls.pickupObject(object);
+                GameObject object = Prefabs.generateSpriteObject(sprite, Configurations.GRID_WIDTH, Configurations.GRID_HEIGHT);
+                master.getCompoent(MouseControlComponent.class).pickupObject(object);
             }
             ImGui.popID();
 
@@ -123,7 +101,6 @@ public class EditorScene extends justForgeScene
                 ImGui.sameLine();
             }
         }
-
         ImGui.end();
     }
 }

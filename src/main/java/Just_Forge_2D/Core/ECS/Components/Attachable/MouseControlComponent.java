@@ -1,9 +1,10 @@
-package Just_Forge_2D.Core.ECS.Components.Unattachable;
+package Just_Forge_2D.Core.ECS.Components.Attachable;
 
 import Just_Forge_2D.Core.ECS.Components.Component;
 import Just_Forge_2D.Core.ECS.GameObject;
 import Just_Forge_2D.Core.Input.Mouse;
 import Just_Forge_2D.Core.Window;
+import Just_Forge_2D.Utils.Configurations;
 import Just_Forge_2D.Utils.justForgeLogger;
 import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_LEFT;
 
@@ -30,8 +31,8 @@ public class MouseControlComponent extends Component
         if (holdingObject != null)
         {
             //justForgeLogger.FORGE_LOG_TRACE("Mouse orhto: " + Mouse.getOrthoX() + " " + Mouse.getOrthoY());
-            holdingObject.transform.position.x = Mouse.getOrthoX() - holdingObject.transform.scale.x / 2f;
-            holdingObject.transform.position.y = Mouse.getOrthoY() - holdingObject.transform.scale.x / 2f;
+            holdingObject.transform.position.x = (int)(Mouse.getOrthoX() / Configurations.GRID_WIDTH) * Configurations.GRID_WIDTH;
+            holdingObject.transform.position.y = (int)(Mouse.getOrthoY() / Configurations.GRID_HEIGHT) * Configurations.GRID_WIDTH;
             if (Mouse.isMouseButtonDown(GLFW_MOUSE_BUTTON_LEFT))
             {
                 place();
