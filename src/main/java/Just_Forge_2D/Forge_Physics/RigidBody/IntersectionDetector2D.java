@@ -4,6 +4,7 @@ import Just_Forge_2D.Forge_Physics.Primitives.AABB;
 import Just_Forge_2D.Forge_Physics.Primitives.Box;
 import Just_Forge_2D.Forge_Physics.Primitives.Circle;
 import Just_Forge_2D.Renderer.Line2D;
+import Just_Forge_2D.Utils.ForgeMath;
 import org.joml.Vector2f;
 
 public class IntersectionDetector2D
@@ -34,7 +35,13 @@ public class IntersectionDetector2D
 
     public static boolean pointInBox(Vector2f POINT, Box BOX)
     {
-        // TODO: implement this
-        return false;
+        // - - - translate point in locale space
+        Vector2f pointLocalBoxSpace = new Vector2f(POINT);
+        ForgeMath.rotate(pointLocalBoxSpace, BOX.getRigidBody().getRotation(), BOX.getRigidBody().getPosition());
+
+        Vector2f min = BOX.getMin();
+        Vector2f max = BOX.getMax();
+
+        return pointLocalBoxSpace.x <= max.x && min.x <= pointLocalBoxSpace.x && pointLocalBoxSpace.y <= max.y && min.y <= pointLocalBoxSpace.y;
     }
 }

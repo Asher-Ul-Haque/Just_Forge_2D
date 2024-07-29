@@ -52,4 +52,9 @@ public class Box
 
         return vertices;
     }
+
+    public RigidBody2D getRigidBody()
+    {
+        return this.rigidBody;
+    }
 }
