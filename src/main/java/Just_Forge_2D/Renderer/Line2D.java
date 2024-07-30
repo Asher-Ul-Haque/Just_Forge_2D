@@ -9,14 +9,16 @@ public class Line2D
     private Vector2f to;
     private Vector3f color;
 
-    public Line2D(Vector2f from, Vector2f to, Vector3f color, int lifetime) {
+    public Line2D(Vector2f from, Vector2f to, Vector3f color, int lifetime)
+    {
         this.from = from;
         this.to = to;
         this.color = color;
         this.lifetime = lifetime;
     }
 
-    public Line2D(Vector2f from, Vector2f to, Vector3f color) {
+    public Line2D(Vector2f from, Vector2f to, Vector3f color)
+    {
         this.from = from;
         this.to = to;
         this.color = color;
@@ -27,6 +29,13 @@ public class Line2D
         this.lifetime = LIFETIME;
         this.from = from;
         this.to = to;
+    }
+
+    public Line2D(Vector2f FROM, Vector2f TO)
+    {
+        this.lifetime = 60;
+        this.from = FROM;
+        this.to = TO;
     }
 
     public Vector2f getFrom() {
