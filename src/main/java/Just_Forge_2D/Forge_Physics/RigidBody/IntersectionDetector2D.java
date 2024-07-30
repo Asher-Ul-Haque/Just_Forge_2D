@@ -67,4 +67,50 @@ public class IntersectionDetector2D
         Vector2f closestPoint = new Vector2f(LINE.getFrom()).add(ab.mul(t));
         return pointInCircle(closestPoint, CIRCLE);
     }
+
+    public static boolean lineAndAABB(Line2D LINE, AABB BOX)
+    {
+        if (pointInAABB(LINE.getFrom(), BOX) || pointInAABB(LINE.getTo(), BOX))
+        {
+            return true;
+        }
+
+        Vector2f unitVector = new Vector2f(LINE.getTo()).sub(LINE.getFrom());
+        unitVector.normalize();
+        unitVector.x = (unitVector.x != 0) ? 1.0f / unitVector.x : 0f;
+        unitVector.y = (unitVector.y) != 0 ? 1.0f / unitVector.y : 0f;
+
+        Vector2f min = BOX.getMin();
+        min.sub(LINE.getFrom()).mul(unitVector);
+
+        Vector2f max = BOX.getMax();
+        max.sub(LINE.getFrom()).mul(unitVector);
+
+        float tMin = Math.max(Math.min(min.x, max.x), Math.min(min.y, max.y));
+        float tMax = Math.min(Math.max(min.x, max.x), Math.max(min.y, max.y));
+        if (tMax <0 || tMin > tMax)
+        {
+            return false;
+        }
+
+        float t = (tMin < 0f) ? tMax : tMin;
+        return t > 0f && t * t < LINE.lengthSquared();
+    }
+
+    public static boolean lineAndBox(Line2D LINE, Box BOX)
+    {
+        float theta = -BOX.getRigidBody().getRotation();
+
+        Vector2f center = BOX.getRigidBody().getPosition();
+        Vector2f localStart = new Vector2f(LINE.getFrom());
+        Vector2f localEnd = new Vector2f(LINE.getTo());
+
+        ForgeMath.rotate(localStart, theta, center);
+        ForgeMath.rotate(localEnd, theta, center);
+
+        Line2D localLine = new Line2D(localStart, localEnd);
+        AABB aabb = new AABB(BOX.getMin(), BOX.getMax());
+
+        return lineAndAABB(localLine, aabb);
+    }
 }

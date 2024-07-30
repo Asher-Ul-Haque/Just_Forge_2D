@@ -77,4 +77,9 @@ public class Line2D
         lifetime--;
         return this.lifetime;
     }
+
+    public float lengthSquared()
+    {
+        return new Vector2f(this.to).sub(this.from).lengthSquared();
+    }
 }

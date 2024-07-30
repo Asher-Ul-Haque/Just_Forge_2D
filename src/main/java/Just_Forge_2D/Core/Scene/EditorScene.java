@@ -55,7 +55,6 @@ public class EditorScene extends justForgeScene
     @Override
     public void update(double DELTA_TIME)
     {
-        this.camera.position.y -= (float) (DELTA_TIME * Math.random() * 100);
         master.getCompoent(MouseControlComponent.class).update((float) DELTA_TIME);
         for (GameObject gameObject : this.gameObjects)
         {
@@ -79,8 +78,8 @@ public class EditorScene extends justForgeScene
         for (int i = 0; i < sprites.size(); ++i)
         {
             Sprite sprite = sprites.getSprite(i);
-            float spriteWidth = sprite.getWidth() * 4;
-            float spriteHeight = sprite.getHeight() * 4;
+            float spriteWidth = sprite.getWidth() * 2;
+            float spriteHeight = sprite.getHeight() * 2;
             int id = sprite.getTextureID();
             Vector2f[] texCoords = sprite.getTextureCoordinates();
 
