@@ -1,16 +1,13 @@
 package Just_Forge_2D.Forge_Physics.RigidBody;
 
-import Just_Forge_2D.Forge_Physics.Primitives.AABB;
-import Just_Forge_2D.Forge_Physics.Primitives.Box;
-import Just_Forge_2D.Forge_Physics.Primitives.Circle;
-import Just_Forge_2D.Renderer.Line2D;
+import Just_Forge_2D.Forge_Physics.Primitives.*;
 import Just_Forge_2D.Utils.ForgeMath;
 import org.joml.Vector2f;
 
 
-public class IntersectionDetector2D
+public class IntersectionDetector
 {
-    public static boolean pointOnLine(Vector2f POINT, Line2D LINE)
+    public static boolean pointOnLine(Vector2f POINT, Line LINE)
     {
         float dy = LINE.getTo().y - LINE.getFrom().y;
         float dx = LINE.getTo().x - LINE.getFrom().x;
@@ -46,7 +43,7 @@ public class IntersectionDetector2D
         return pointLocalBoxSpace.x <= max.x && min.x <= pointLocalBoxSpace.x && pointLocalBoxSpace.y <= max.y && min.y <= pointLocalBoxSpace.y;
     }
 
-    public static boolean lineAndCircle(Line2D LINE, Circle CIRCLE)
+    public static boolean lineAndCircle(Line LINE, Circle CIRCLE)
     {
         if (pointInCircle(LINE.getFrom(), CIRCLE) || pointInCircle(LINE.getTo(), CIRCLE))
         {
@@ -68,7 +65,7 @@ public class IntersectionDetector2D
         return pointInCircle(closestPoint, CIRCLE);
     }
 
-    public static boolean lineAndAABB(Line2D LINE, AABB BOX)
+    public static boolean lineAndAABB(Line LINE, AABB BOX)
     {
         if (pointInAABB(LINE.getFrom(), BOX) || pointInAABB(LINE.getTo(), BOX))
         {
@@ -97,7 +94,7 @@ public class IntersectionDetector2D
         return t > 0f && t * t < LINE.lengthSquared();
     }
 
-    public static boolean lineAndBox(Line2D LINE, Box BOX)
+    public static boolean lineAndBox(Line LINE, Box BOX)
     {
         float theta = -BOX.getRigidBody().getRotation();
 
@@ -108,9 +105,47 @@ public class IntersectionDetector2D
         ForgeMath.rotate(localStart, theta, center);
         ForgeMath.rotate(localEnd, theta, center);
 
-        Line2D localLine = new Line2D(localStart, localEnd);
+        Line localLine = new Line(localStart, localEnd);
         AABB aabb = new AABB(BOX.getMin(), BOX.getMax());
 
         return lineAndAABB(localLine, aabb);
+    }
+
+    public static boolean raycast(Circle CIRLCE, Ray RAY, RayCastResult RESULT)
+    {
+        RayCastResult.reset(RESULT);
+        Vector2f originToCirlce = new Vector2f(CIRLCE.getCenter()).sub(RAY.getOrigin());
+        float radiusSquared = CIRLCE.getRadius();
+        float originToCircleLengthSquared = originToCirlce.lengthSquared();
+
+        // - - - project the vector from ray origin onto the direction of the ray
+        float a = originToCirlce.dot(RAY.getDirection());
+        float bSq = originToCircleLengthSquared - (a * a);
+        if (radiusSquared - bSq < 0.0f)
+        {
+            return false;
+        }
+
+        float f = (float)Math.sqrt(radiusSquared - bSq);
+        float t = 0;
+        if (originToCircleLengthSquared < radiusSquared)
+        {
+            // - - - ray starts inside the circle
+            t = a + f;
+        }
+        else
+        {
+            t = a - f;
+        }
+
+        if (RESULT != null)
+        {
+            Vector2f point = new Vector2f(RAY.getOrigin()).add(RAY.getDirection().mul(t));
+            Vector2f normal = new Vector2f(point).sub(CIRLCE.getCenter());
+            normal.normalize();
+
+            RESULT.init(point, normal, t, true);
+        }
+        return true;
     }
 }

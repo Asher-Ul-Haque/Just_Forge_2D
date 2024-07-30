@@ -3,7 +3,7 @@ package Just_Forge_2D.Forge_Physics.RigidBody;
 import Just_Forge_2D.Core.ECS.Components.Component;
 import org.joml.Vector2f;
 
-public class RigidBody2D extends Component
+public class RigidBody extends Component
 {
     private Vector2f position = new Vector2f();
 

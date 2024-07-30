@@ -14,12 +14,12 @@ Size=550,706
 Collapsed=1
 
 [Window][Inspector]
-Pos=7,3
+Pos=0,-1
 Size=329,381
 Collapsed=0
 
 [Window][Block Picker]
-Pos=327,0
+Pos=327,-1
 Size=1019,200
 Collapsed=0
 

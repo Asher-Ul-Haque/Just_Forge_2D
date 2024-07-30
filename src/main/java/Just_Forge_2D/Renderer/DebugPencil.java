@@ -1,6 +1,7 @@
 package Just_Forge_2D.Renderer;
 
 import Just_Forge_2D.Core.Window;
+import Just_Forge_2D.Forge_Physics.Primitives.Line;
 import Just_Forge_2D.Utils.justForgeAssetPool;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
@@ -17,7 +18,7 @@ import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 public class DebugPencil
 {
     private static final int MAX_LINES = 480;
-    private static final List<Line2D> lines = new ArrayList<>();
+    private static final List<Line> lines = new ArrayList<>();
 
     // 6 floats per vertex, 3 for position, 3 for color, 2 vertices per line
     private static final float[] vertexArray = new float[MAX_LINES * 6 * 2];
@@ -83,7 +84,7 @@ public class DebugPencil
         if (lines.size() <= 0) return;
 
         int index = 0;
-        for (Line2D line: lines)
+        for (Line line: lines)
         {
             for (int i = 0; i < 2; ++i)
             {
@@ -134,7 +135,7 @@ public class DebugPencil
     public static void addLine2D(Vector2f FROM, Vector2f TO, Vector3f COLOR, int LIFETIME)
     {
         if (lines.size() >= MAX_LINES) return;
-        DebugPencil.lines.add(new Line2D(FROM, TO, COLOR, LIFETIME));
+        DebugPencil.lines.add(new Line(FROM, TO, COLOR, LIFETIME));
     }
 
     public static void addLine2D(Vector2f FROM, Vector2f TO, Vector3f COLOR)
