@@ -2,6 +2,7 @@ package Just_Forge_2D.Renderer;
 
 import Just_Forge_2D.Core.Window;
 import Just_Forge_2D.Forge_Physics.Primitives.Line;
+import Just_Forge_2D.Utils.ForgeMath;
 import Just_Forge_2D.Utils.justForgeAssetPool;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
@@ -9,6 +10,7 @@ import org.joml.Vector3f;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Vector;
 
 import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL20.*;
@@ -32,6 +34,8 @@ public class DebugPencil
     private static final int defaultLifetime = 120; //120 frames
     private static final Vector3f defaultColor = new Vector3f(0, 0, 1);
     private static final int defaultWidth = 2;
+    private static final int defaultSegments = 360;
+    private static final float defaultRotation = 0f;
 
     public static void start()
     {
@@ -132,23 +136,103 @@ public class DebugPencil
     }
 
     // TODO: Add other primitives and other constatns for common values like colors
-    public static void addLine2D(Vector2f FROM, Vector2f TO, Vector3f COLOR, int LIFETIME)
+    public static void addLine(Vector2f FROM, Vector2f TO, Vector3f COLOR, int LIFETIME)
     {
         if (lines.size() >= MAX_LINES) return;
         DebugPencil.lines.add(new Line(FROM, TO, COLOR, LIFETIME));
     }
 
-    public static void addLine2D(Vector2f FROM, Vector2f TO, Vector3f COLOR)
+    public static void addLine(Vector2f FROM, Vector2f TO, Vector3f COLOR)
     {
     }
 
-    public static void addLine2D(Vector2f FROM, Vector2f TO, int LIFETIME)
+    public static void addLine(Vector2f FROM, Vector2f TO, int LIFETIME)
     {
-        addLine2D(FROM, TO, defaultColor, LIFETIME);
+        addLine(FROM, TO, defaultColor, LIFETIME);
     }
 
-    public static void addLine2D(Vector2f FROM, Vector2f TO)
+    public static void addLine(Vector2f FROM, Vector2f TO)
     {
-        addLine2D(FROM, TO, defaultColor, defaultLifetime);
+        addLine(FROM, TO, defaultColor, defaultLifetime);
+    }
+
+    public static void addBox2D(Vector2f CENTER, Vector2f DIMENSIONS, float ROTATION, Vector3f COLOR, int LIFETIME)
+    {
+        Vector2f min = new Vector2f(CENTER).sub(new Vector2f(DIMENSIONS).mul(0.5f));
+        Vector2f max = new Vector2f(CENTER).add(new Vector2f(DIMENSIONS).mul(0.5f));
+
+        Vector2f[] vertices = {
+            new Vector2f(min.x, min.y), new Vector2f(min.x, max.y),
+            new Vector2f(max.x, max.y), new Vector2f(max.x, min.y)};
+
+        if (ROTATION != 0.0f)
+        {
+            for (Vector2f vert : vertices)
+            {
+                ForgeMath.rotate(vert, ROTATION, CENTER);
+            }
+        }
+
+        addLine(vertices[0], vertices[1], COLOR, LIFETIME);
+        addLine(vertices[1], vertices[2], COLOR, LIFETIME);
+        addLine(vertices[2], vertices[3], COLOR, LIFETIME);
+        addLine(vertices[3], vertices[0], COLOR, LIFETIME);
+    }
+
+    public static void addBox2D(Vector2f CENTER, Vector2f DIMENSIONS, float ROTATION, Vector3f COLOR)
+    {
+        addBox2D(CENTER, DIMENSIONS, ROTATION, COLOR, defaultLifetime);
+    }
+
+    public static void addBox2D(Vector2f CENTER, Vector2f DIMENSIONS, float ROTATION, int LIFETIME)
+    {
+        addBox2D(CENTER, DIMENSIONS, ROTATION, defaultColor, LIFETIME);
+    }
+
+    public static void addBox2D(Vector2f CENTER, Vector2f DIMENSIONS, Vector3f COLOR, int LIFETIME)
+    {
+        addBox2D(CENTER, DIMENSIONS, 0f, COLOR, LIFETIME);
+    }
+
+
+    public static void addBox2D(Vector2f CENTER, Vector2f DIMENSIONS, float ROTATION)
+    {
+        addBox2D(CENTER, DIMENSIONS, ROTATION, defaultColor, defaultLifetime);
+    }
+
+    public static void addBox2D(Vector2f CENTER, Vector2f DIMENSIONS, Vector3f COLOR)
+    {
+        addBox2D(CENTER, DIMENSIONS, defaultRotation, COLOR, defaultLifetime);
+    }
+
+    public static void addBox2D(Vector2f CENTER, Vector2f DIMENSIONS, int LIFETIME)
+    {
+        addBox2D(CENTER, DIMENSIONS, defaultRotation, defaultColor, LIFETIME);
+    }
+
+    public static void addBox2D(Vector2f CENTER, Vector2f DIMENSIONS)
+    {
+        addBox2D(CENTER, DIMENSIONS, defaultRotation, defaultColor, defaultLifetime);
+    }
+
+    public static void addCircle(Vector2f CENTER, float RADIUS, Vector3f COLOR, int LIFETIME)
+    {
+        Vector2f[] points = new Vector2f[defaultSegments];
+        float increment = (float) (2 * Math.PI / defaultSegments);
+        float currentAngle = 0;
+
+        for (int i = 0; i < defaultSegments; ++i)
+        {
+            Vector2f temp = new Vector2f(RADIUS, 0);
+            ForgeMath.rotate(temp, currentAngle, new Vector2f());
+            points[i] = new Vector2f(temp).add(CENTER);
+
+            if (i > 0)
+            {
+                addLine(points[i - 1], points[i], COLOR, LIFETIME);
+            }
+            currentAngle += increment;
+        }
+        addLine(points[points.length - 1], points[0], COLOR, LIFETIME);
     }
 }

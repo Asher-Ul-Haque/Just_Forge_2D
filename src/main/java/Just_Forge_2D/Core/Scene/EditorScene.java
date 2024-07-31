@@ -8,12 +8,14 @@ import Just_Forge_2D.Core.ECS.Components.justForgeRigidBodyComponent;
 import Just_Forge_2D.Core.ECS.GameObject;
 import Just_Forge_2D.Core.Camera;
 import Just_Forge_2D.Editor.Prefabs;
+import Just_Forge_2D.Renderer.DebugPencil;
 import Just_Forge_2D.Utils.Configurations;
 import Just_Forge_2D.Utils.justForgeAssetPool;
 import Just_Forge_2D.Core.ECS.Components.Unattachable.TransformComponent;
 import imgui.ImGui;
 import imgui.ImVec2;
 import org.joml.Vector2f;
+import org.joml.Vector3f;
 
 public class EditorScene extends justForgeScene
 {
@@ -52,10 +54,19 @@ public class EditorScene extends justForgeScene
         justForgeAssetPool.getTexture("Assets/Textures/blendImage2.png");
     }
 
+    float x = 400;
+    float y = 200;
+    float angle = 0.0f;
     @Override
     public void update(double DELTA_TIME)
     {
         master.getCompoent(MouseControlComponent.class).update((float) DELTA_TIME);
+        for (int i = 0; i < 1; i++)
+        {
+            DebugPencil.addCircle(new Vector2f(x, y), 64, new Vector3f(0, 1, 0), 1);
+        }
+        x += (float) (DELTA_TIME * 15);
+        y += (float) (DELTA_TIME * 15);
         for (GameObject gameObject : this.gameObjects)
         {
             gameObject.update((float) DELTA_TIME);

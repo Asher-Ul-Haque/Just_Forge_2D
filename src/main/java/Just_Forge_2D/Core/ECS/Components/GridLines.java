@@ -30,12 +30,12 @@ public class GridLines extends Component
 
             if (i < numVertLines)
             {
-                DebugPencil.addLine2D(new Vector2f(x, firstY), new Vector2f(x, firstY + height));
+                DebugPencil.addLine(new Vector2f(x, firstY), new Vector2f(x, firstY + height));
             }
 
             if (i < numHorLines)
             {
-                DebugPencil.addLine2D(new Vector2f(firstX, y), new Vector2f(firstX + width, y));
+                DebugPencil.addLine(new Vector2f(firstX, y), new Vector2f(firstX + width, y));
             }
         }
     }
