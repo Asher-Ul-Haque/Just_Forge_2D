@@ -53,6 +53,11 @@ public class Box
         return vertices;
     }
 
+    public Vector2f getHalfSize()
+    {
+        return this.halfSize;
+    }
+
     public RigidBody getRigidBody()
     {
         return this.rigidBody;

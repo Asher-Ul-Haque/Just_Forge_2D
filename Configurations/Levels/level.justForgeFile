@@ -199,7 +199,7 @@
       "uniqueID": -1
     },
     "layer": 0,
-    "uniqueID": 0
+    "uniqueID": 4
   },
   {
     "name": "Sprite OBject Generated",
@@ -257,7 +257,7 @@
       "uniqueID": -1
     },
     "layer": 0,
-    "uniqueID": 4
+    "uniqueID": 5
   },
   {
     "name": "Sprite OBject Generated",
@@ -315,7 +315,7 @@
       "uniqueID": -1
     },
     "layer": 0,
-    "uniqueID": 5
+    "uniqueID": 6
   },
   {
     "name": "Sprite OBject Generated",
@@ -373,7 +373,7 @@
       "uniqueID": -1
     },
     "layer": 0,
-    "uniqueID": 6
+    "uniqueID": 7
   },
   {
     "name": "Sprite OBject Generated",
@@ -431,7 +431,7 @@
       "uniqueID": -1
     },
     "layer": 0,
-    "uniqueID": 7
+    "uniqueID": 8
   },
   {
     "name": "Sprite OBject Generated",
@@ -489,7 +489,7 @@
       "uniqueID": -1
     },
     "layer": 0,
-    "uniqueID": 8
+    "uniqueID": 9
   },
   {
     "name": "Sprite OBject Generated",
@@ -547,7 +547,7 @@
       "uniqueID": -1
     },
     "layer": 0,
-    "uniqueID": 9
+    "uniqueID": 10
   },
   {
     "name": "Sprite OBject Generated",
@@ -605,7 +605,7 @@
       "uniqueID": -1
     },
     "layer": 0,
-    "uniqueID": 10
+    "uniqueID": 11
   },
   {
     "name": "Sprite OBject Generated",
@@ -663,7 +663,7 @@
       "uniqueID": -1
     },
     "layer": 0,
-    "uniqueID": 11
+    "uniqueID": 12
   },
   {
     "name": "Sprite OBject Generated",
@@ -721,7 +721,7 @@
       "uniqueID": -1
     },
     "layer": 0,
-    "uniqueID": 12
+    "uniqueID": 13
   },
   {
     "name": "Sprite OBject Generated",
@@ -779,7 +779,7 @@
       "uniqueID": -1
     },
     "layer": 0,
-    "uniqueID": 13
+    "uniqueID": 14
   },
   {
     "name": "Sprite OBject Generated",
@@ -837,7 +837,7 @@
       "uniqueID": -1
     },
     "layer": 0,
-    "uniqueID": 14
+    "uniqueID": 15
   },
   {
     "name": "Sprite OBject Generated",
@@ -895,7 +895,7 @@
       "uniqueID": -1
     },
     "layer": 0,
-    "uniqueID": 15
+    "uniqueID": 16
   },
   {
     "name": "Sprite OBject Generated",
@@ -953,7 +953,7 @@
       "uniqueID": -1
     },
     "layer": 0,
-    "uniqueID": 16
+    "uniqueID": 17
   },
   {
     "name": "Sprite OBject Generated",
@@ -1011,7 +1011,7 @@
       "uniqueID": -1
     },
     "layer": 0,
-    "uniqueID": 17
+    "uniqueID": 18
   },
   {
     "name": "Sprite OBject Generated",
@@ -1069,7 +1069,7 @@
       "uniqueID": -1
     },
     "layer": 0,
-    "uniqueID": 18
+    "uniqueID": 19
   },
   {
     "name": "Sprite OBject Generated",
@@ -1127,6 +1127,150 @@
       "uniqueID": -1
     },
     "layer": 0,
-    "uniqueID": 19
+    "uniqueID": 20
+  },
+  {
+    "name": "Master",
+    "components": [
+      {
+        "type": "Just_Forge_2D.Core.ECS.Components.justForgeRigidBodyComponent",
+        "properties": {
+          "colliderType": 0,
+          "friction": 0.8,
+          "velocity": {
+            "x": 0.0,
+            "y": 0.5,
+            "z": 0.0
+          },
+          "uniqueID": 24
+        }
+      },
+      {
+        "type": "Just_Forge_2D.Core.ECS.Components.GridLines",
+        "properties": {
+          "uniqueID": 25
+        }
+      },
+      {
+        "type": "Just_Forge_2D.Core.ECS.Components.Attachable.MouseControlComponent",
+        "properties": {
+          "uniqueID": 26
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": 100.0,
+        "y": 100.0
+      },
+      "scale": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "uniqueID": -1
+    },
+    "layer": 0,
+    "uniqueID": 21
+  },
+  {
+    "name": "Sprite OBject Generated",
+    "components": [
+      {
+        "type": "Just_Forge_2D.Core.ECS.Components.Attachable.Sprite.SpriteComponent",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16.0,
+            "height": 16.0,
+            "texture": {
+              "filepath": "Assets/Textures/spritesheet.png",
+              "textureID": 2,
+              "width": 112,
+              "height": 192
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.5714286,
+                "y": 0.5
+              },
+              {
+                "x": 0.5714286,
+                "y": 0.41666666
+              },
+              {
+                "x": 0.42857143,
+                "y": 0.41666666
+              },
+              {
+                "x": 0.42857143,
+                "y": 0.5
+              }
+            ]
+          },
+          "uniqueID": 27
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": 288.0,
+        "y": 352.0
+      },
+      "scale": {
+        "x": 32.0,
+        "y": 32.0
+      },
+      "uniqueID": -1
+    },
+    "layer": 0,
+    "uniqueID": 22
+  },
+  {
+    "name": "Master",
+    "components": [
+      {
+        "type": "Just_Forge_2D.Core.ECS.Components.justForgeRigidBodyComponent",
+        "properties": {
+          "colliderType": 0,
+          "friction": 0.8,
+          "velocity": {
+            "x": 0.0,
+            "y": 0.5,
+            "z": 0.0
+          },
+          "uniqueID": 28
+        }
+      },
+      {
+        "type": "Just_Forge_2D.Core.ECS.Components.GridLines",
+        "properties": {
+          "uniqueID": 29
+        }
+      },
+      {
+        "type": "Just_Forge_2D.Core.ECS.Components.Attachable.MouseControlComponent",
+        "properties": {
+          "uniqueID": 30
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": 100.0,
+        "y": 100.0
+      },
+      "scale": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "uniqueID": -1
+    },
+    "layer": 0,
+    "uniqueID": 0
   }
 ]
