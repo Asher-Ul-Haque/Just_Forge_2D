@@ -2,7 +2,7 @@ package Just_Forge_2D.Utils;
 
 import Just_Forge_2D.Core.ECS.Components.Attachable.Sprite.SpriteSheet;
 import Just_Forge_2D.Renderer.justForgeShader;
-import Just_Forge_2D.Renderer.justForgeTexture;
+import Just_Forge_2D.Renderer.Texture;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,7 +13,7 @@ public class justForgeAssetPool
 {
     // - - - private variable maps for all types of assets
     private static Map<String, justForgeShader> shaderPool = new HashMap<>();
-    private static Map<String, justForgeTexture> texturePool = new HashMap<>();
+    private static Map<String, Texture> texturePool = new HashMap<>();
     private static Map<String, SpriteSheet> spriteSheetPool = new HashMap<>();
 
 
@@ -40,7 +40,7 @@ public class justForgeAssetPool
     }
 
     // - - - texture
-    public static justForgeTexture getTexture(String FILE_PATH)
+    public static Texture getTexture(String FILE_PATH)
     {
         File file = new File(FILE_PATH);
         if (justForgeAssetPool.texturePool.containsKey(file.getAbsolutePath()))
@@ -50,7 +50,7 @@ public class justForgeAssetPool
         }
         else
         {
-            justForgeTexture texture = new justForgeTexture();
+            Texture texture = new Texture();
             texture.init(FILE_PATH);
             justForgeAssetPool.texturePool.put(file.getAbsolutePath(), texture);
             justForgeLogger.FORGE_LOG_DEBUG("Texture with path: " + FILE_PATH + " Hashed in Texture Asset Pool and loaded");

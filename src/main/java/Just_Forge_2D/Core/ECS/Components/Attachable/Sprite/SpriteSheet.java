@@ -1,6 +1,6 @@
 package Just_Forge_2D.Core.ECS.Components.Attachable.Sprite;
 
-import Just_Forge_2D.Renderer.justForgeTexture;
+import Just_Forge_2D.Renderer.Texture;
 import org.joml.Vector2f;
 
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ import java.util.List;
 public class SpriteSheet
 {
     // - - - private variables
-    private final justForgeTexture spriteSheet;
+    private final Texture spriteSheet;
     private List<Sprite> sprites;
 
 
@@ -18,7 +18,7 @@ public class SpriteSheet
 
 
     // - - - Constructor to make a sprite sheet
-    public SpriteSheet(justForgeTexture SPRITE_SHEET, int SPRITE_WIDTH, int SPRITE_HEIGHT, int SPRITE_COUNT, int SPACING)
+    public SpriteSheet(Texture SPRITE_SHEET, int SPRITE_WIDTH, int SPRITE_HEIGHT, int SPRITE_COUNT, int SPACING)
     {
         this.sprites = new ArrayList<>();
         this.spriteSheet = SPRITE_SHEET;

@@ -49,7 +49,7 @@ public class justForgeRenderBatch implements Comparable<justForgeRenderBatch>
     private SpriteComponent[] sprites;
     private int spriteCount;
     protected boolean hasRoom;
-    private List<justForgeTexture> textures;
+    private List<Texture> textures;
     private int maxBatchSize;
     private int layer;
 
@@ -208,7 +208,7 @@ public class justForgeRenderBatch implements Comparable<justForgeRenderBatch>
         {
             for (int i = 0; i < textures.size(); ++i)
             {
-                if (textures.get(i) == sprite.getTexture())
+                if (textures.get(i).equals(sprite.getTexture()))
                 {
                     textID = i + 1;
                     break;
@@ -294,7 +294,7 @@ public class justForgeRenderBatch implements Comparable<justForgeRenderBatch>
         return this.textures.size() < 8;
     }
 
-    public boolean hasTexture(justForgeTexture TEXTURE)
+    public boolean hasTexture(Texture TEXTURE)
     {
         return this.textures.contains(TEXTURE);
     }

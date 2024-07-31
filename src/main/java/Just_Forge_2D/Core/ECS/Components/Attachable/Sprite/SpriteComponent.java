@@ -1,7 +1,7 @@
 package Just_Forge_2D.Core.ECS.Components.Attachable.Sprite;
 
 import Just_Forge_2D.Core.ECS.Components.Component;
-import Just_Forge_2D.Renderer.justForgeTexture;
+import Just_Forge_2D.Renderer.Texture;
 import Just_Forge_2D.Utils.justForgeLogger;
 import Just_Forge_2D.Core.ECS.Components.Unattachable.TransformComponent;
 import imgui.ImGui;
@@ -58,7 +58,7 @@ public class SpriteComponent extends Component
     }
 
     // - - - Texture
-    public justForgeTexture getTexture()
+    public Texture getTexture()
     {
         return sprite.getTexture();
     }

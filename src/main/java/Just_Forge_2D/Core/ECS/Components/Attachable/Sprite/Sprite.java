@@ -1,6 +1,6 @@
 package Just_Forge_2D.Core.ECS.Components.Attachable.Sprite;
 
-import Just_Forge_2D.Renderer.justForgeTexture;
+import Just_Forge_2D.Renderer.Texture;
 import org.joml.Vector2f;
 
 
@@ -9,7 +9,7 @@ public class Sprite
 {
     // - - - private variables for texturing
     private float width, height;
-    private justForgeTexture texture = null;
+    private Texture texture = null;
     private Vector2f[] textureCoordinates = {
     new Vector2f(1, 1),
             new Vector2f(1, 0),
@@ -46,7 +46,7 @@ public class Sprite
     // - - - Getters - - -
 
     // - - - for texture
-    public justForgeTexture getTexture()
+    public Texture getTexture()
     {
         return this.texture;
     }
@@ -79,7 +79,7 @@ public class Sprite
     // - - - Setters - - -
 
     // - - - for texture
-    public void setTexture(justForgeTexture TEXTURE)
+    public void setTexture(Texture TEXTURE)
     {
         this.texture = TEXTURE;
     }

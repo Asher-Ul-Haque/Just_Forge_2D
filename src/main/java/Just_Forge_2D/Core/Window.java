@@ -10,6 +10,7 @@ import Just_Forge_2D.Core.Scene.EditorScene;
 import Just_Forge_2D.Core.Scene.justForgeScene;
 import Just_Forge_2D.Editor.justForgeImGui;
 import Just_Forge_2D.Renderer.DebugPencil;
+import Just_Forge_2D.Renderer.Framebuffer;
 import Just_Forge_2D.Utils.justForgeLogger;
 import Just_Forge_2D.Utils.justForgeTime;
 import org.lwjgl.glfw.GLFWErrorCallback;
@@ -49,6 +50,7 @@ public class Window
     // - - - Rendering varaibles
     private int fps = 0;
     public float r, g, b, a;
+    private Framebuffer framebuffer;
 
     // - - - Systems
     private static justForgeScene currentScene;
@@ -209,6 +211,9 @@ public class Window
         this.editorLayer.initImGui();
         justForgeLogger.FORGE_LOG_INFO("Editor linked with window");
 
+        this.framebuffer = new Framebuffer(800, 600);
+        justForgeLogger.FORGE_LOG_INFO("Framebuffer created and assigned for offscreen rendering");
+
         beginTime = (float) justForgeTime.getTime();
         justForgeLogger.FORGE_LOG_INFO("Time keeping system Online");
     }
@@ -252,11 +257,17 @@ public class Window
         glClearColor(r, g, b, a);
         glClear(GL_COLOR_BUFFER_BIT);
 
+        // - - - Framebuffer
+        this.framebuffer.bind();
+
         if (dt >= 0.0d)
         {
             DebugPencil.draw();
             currentScene.update(dt);
         }
+
+        // - - - Finish drawing to texture so that imgui should be rendered to the window
+        this.framebuffer.unbind();
 
         // - - - Update the editor
         this.editorLayer.update((float) dt, currentScene);

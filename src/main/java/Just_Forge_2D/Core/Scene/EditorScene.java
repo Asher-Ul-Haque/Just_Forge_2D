@@ -33,7 +33,7 @@ public class EditorScene extends justForgeScene
     public void init()
     {
         master.addComponent(new justForgeRigidBodyComponent());
-        master.addComponent(new GridLines());
+        //master.addComponent(new GridLines());
         master.addComponent(new MouseControlComponent());
         this.addGameObject(master);
         this.activeGameObject = master;

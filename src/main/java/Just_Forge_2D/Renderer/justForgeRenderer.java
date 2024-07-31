@@ -36,7 +36,7 @@ public class justForgeRenderer
         {
             if (batch.hasRoom && batch.getLayer() == SPRITE.gameObject.getLayer())
             {
-                justForgeTexture texture = SPRITE.getTexture();
+                Texture texture = SPRITE.getTexture();
                 if (texture == null || (batch.hasTexture(texture) || batch.hasTextureRoom()))
                 {
                     batch.addSprite(SPRITE);

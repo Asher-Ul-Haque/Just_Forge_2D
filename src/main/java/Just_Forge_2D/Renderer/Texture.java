@@ -10,7 +10,7 @@ import static org.lwjgl.opengl.GL11C.*;
 import static org.lwjgl.stb.STBImage.*;
 
 // - - - Texture Loading Class
-public class justForgeTexture
+public class Texture
 {
     // - - - Private variables
     private String filepath;
@@ -18,6 +18,28 @@ public class justForgeTexture
     private int width, height;
 
     // - - - Functions - - -
+
+    // - - - Constructor
+    public Texture()
+    {
+        textureID = -1;
+        width = -1;
+        height = -1;
+        justForgeLogger.FORGE_LOG_WARNING("Not recommended to use the default constructor of texture. See documentation on github");
+    }
+
+    public Texture(int WIDTH, int HEIGHT)
+    {
+        justForgeLogger.FORGE_LOG_WARNING("Making a texture for the framebuffer. Do not use constructors for texture, see Documentation");
+        this.filepath = "Assets/Textures/Generated";
+
+        // - - - Generate the texture on GPU
+        textureID = glGenTextures();
+        glBindTexture(GL_TEXTURE_2D, textureID);
+
+        // - - - sorry GPU, I cant give data because I dont have any.
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
+    }
 
     // - - - init
     public void init(String FILEPATH)
@@ -103,5 +125,20 @@ public class justForgeTexture
     public int getID()
     {
         return this.textureID;
+    }
+
+    // - - - get the filepath
+    public String getFilepath()
+    {
+        return this.filepath;
+    }
+
+    // - - - compare two textures
+    @Override
+    public boolean equals(Object OBJECT)
+    {
+        if (OBJECT == null) return false;
+        if (!(OBJECT instanceof Texture oTexture)) return false;
+        return oTexture.getWidth() == this.width && oTexture.getHeight() == this.height && oTexture.getID() == this.textureID && oTexture.getFilepath().equals(this.filepath);
     }
 }
