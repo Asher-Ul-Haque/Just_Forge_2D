@@ -1,6 +1,7 @@
 package Just_Forge_2D.Core.Scene;
 
 import Just_Forge_2D.Core.ECS.Components.Attachable.Sprite.Sprite;
+import Just_Forge_2D.Core.ECS.Components.Attachable.Sprite.SpriteComponent;
 import Just_Forge_2D.Core.ECS.Components.Attachable.Sprite.SpriteSheet;
 import Just_Forge_2D.Core.ECS.Components.GridLines;
 import Just_Forge_2D.Core.ECS.Components.Attachable.MouseControlComponent;
@@ -32,18 +33,19 @@ public class EditorScene extends justForgeScene
     @Override
     public void init()
     {
-        master.addComponent(new justForgeRigidBodyComponent());
+
         //master.addComponent(new GridLines());
         master.addComponent(new MouseControlComponent());
         this.addGameObject(master);
-        this.activeGameObject = master;
-        // - - - TODO: test code, remov ethe 10k cubes
         loadResources();
         this.camera = new Camera(new Vector2f(-250, 0));
         sprites = justForgeAssetPool.getSpriteSheet("Assets/Textures/spritesheet.png");
         if (levelLoaded)
         {
-            //this.activeGameObject = gameObjects.get(0);
+            if (!gameObjects.isEmpty())
+            {
+                this.activeGameObject = gameObjects.get(0);
+            }
         }
     }
 
@@ -52,6 +54,18 @@ public class EditorScene extends justForgeScene
         justForgeAssetPool.getShader("Assets/Shaders/default.glsl");
         justForgeAssetPool.addSpriteSheet("Assets/Textures/spritesheet.png", new SpriteSheet(justForgeAssetPool.getTexture("Assets/Textures/spritesheet.png"), 16, 16, 81, 0));
         justForgeAssetPool.getTexture("Assets/Textures/blendImage2.png");
+
+        for (GameObject g : gameObjects)
+        {
+            if (g.getCompoent(SpriteComponent.class) != null)
+            {
+               SpriteComponent spr = g.getCompoent(SpriteComponent.class);
+               if (spr.getTexture() != null)
+               {
+                   spr.setTexture(justForgeAssetPool.getTexture(spr.getTexture().getFilepath()));
+               }
+            }
+        }
     }
 
     float x = 400;

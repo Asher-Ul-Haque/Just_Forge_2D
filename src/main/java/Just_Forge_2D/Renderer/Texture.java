@@ -14,7 +14,7 @@ public class Texture
 {
     // - - - Private variables
     private String filepath;
-    private int textureID;
+    private transient int textureID;
     private int width, height;
 
     // - - - Functions - - -

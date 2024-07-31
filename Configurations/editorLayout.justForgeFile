@@ -14,12 +14,26 @@ Size=550,706
 Collapsed=1
 
 [Window][Inspector]
-Pos=0,-1
-Size=329,381
+Pos=8,30
+Size=1350,109
 Collapsed=0
+DockId=0x00000002,0
 
 [Window][Block Picker]
-Pos=327,-1
-Size=1019,200
+Pos=8,141
+Size=114,619
 Collapsed=0
+DockId=0x00000003,0
+
+[Window][Dockspace Demo]
+Pos=0,0
+Size=1366,768
+Collapsed=0
+
+[Docking][Data]
+DockSpace     ID=0x6D3A3A6E Window=0x091AB4BE Pos=8,30 Size=1350,730 Split=Y Selected=0xA9416207
+  DockNode    ID=0x00000002 Parent=0x6D3A3A6E SizeRef=1350,109 Selected=0xF02CD328
+  DockNode    ID=0x00000004 Parent=0x6D3A3A6E SizeRef=1350,619 Split=X
+    DockNode  ID=0x00000003 Parent=0x00000004 SizeRef=114,730 Selected=0xA9416207
+    DockNode  ID=0x00000005 Parent=0x00000004 SizeRef=1234,730 CentralNode=1 Selected=0xF02CD328
 

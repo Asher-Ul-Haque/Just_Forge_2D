@@ -120,4 +120,9 @@ public class SpriteComponent extends Component
             this.isChanged = true;
         }
     }
+
+    public void setTexture(Texture TEXTURE)
+    {
+        this.sprite.setTexture(TEXTURE);
+    }
 }

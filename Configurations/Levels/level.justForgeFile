@@ -53,7 +53,6 @@
             "height": 16.0,
             "texture": {
               "filepath": "Assets/Textures/spritesheet.png",
-              "textureID": 2,
               "width": 112,
               "height": 192
             },
@@ -111,7 +110,6 @@
             "height": 16.0,
             "texture": {
               "filepath": "Assets/Textures/spritesheet.png",
-              "textureID": 2,
               "width": 112,
               "height": 192
             },
@@ -169,7 +167,6 @@
             "height": 16.0,
             "texture": {
               "filepath": "Assets/Textures/spritesheet.png",
-              "textureID": 2,
               "width": 112,
               "height": 192
             },
@@ -227,7 +224,6 @@
             "height": 16.0,
             "texture": {
               "filepath": "Assets/Textures/spritesheet.png",
-              "textureID": 2,
               "width": 112,
               "height": 192
             },
@@ -285,7 +281,6 @@
             "height": 16.0,
             "texture": {
               "filepath": "Assets/Textures/spritesheet.png",
-              "textureID": 2,
               "width": 112,
               "height": 192
             },
@@ -343,7 +338,6 @@
             "height": 16.0,
             "texture": {
               "filepath": "Assets/Textures/spritesheet.png",
-              "textureID": 2,
               "width": 112,
               "height": 192
             },
@@ -438,7 +432,6 @@
             "height": 16.0,
             "texture": {
               "filepath": "Assets/Textures/spritesheet.png",
-              "textureID": 2,
               "width": 112,
               "height": 192
             },
@@ -496,7 +489,6 @@
             "height": 16.0,
             "texture": {
               "filepath": "Assets/Textures/spritesheet.png",
-              "textureID": 2,
               "width": 112,
               "height": 192
             },
@@ -554,7 +546,6 @@
             "height": 16.0,
             "texture": {
               "filepath": "Assets/Textures/spritesheet.png",
-              "textureID": 2,
               "width": 112,
               "height": 192
             },
@@ -686,7 +677,6 @@
             "height": 16.0,
             "texture": {
               "filepath": "Assets/Textures/spritesheet.png",
-              "textureID": 3,
               "width": 112,
               "height": 192
             },
@@ -762,6 +752,562 @@
       "uniqueID": -1
     },
     "layer": 0,
+    "uniqueID": 15
+  },
+  {
+    "name": "Master",
+    "components": [
+      {
+        "type": "Just_Forge_2D.Core.ECS.Components.justForgeRigidBodyComponent",
+        "properties": {
+          "colliderType": 0,
+          "friction": 0.8,
+          "velocity": {
+            "x": 0.0,
+            "y": 0.5,
+            "z": 0.0
+          },
+          "uniqueID": 20
+        }
+      },
+      {
+        "type": "Just_Forge_2D.Core.ECS.Components.Attachable.MouseControlComponent",
+        "properties": {
+          "uniqueID": 21
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": 100.0,
+        "y": 100.0
+      },
+      "scale": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "uniqueID": -1
+    },
+    "layer": 0,
+    "uniqueID": 16
+  },
+  {
+    "name": "Master",
+    "components": [
+      {
+        "type": "Just_Forge_2D.Core.ECS.Components.Attachable.MouseControlComponent",
+        "properties": {
+          "uniqueID": 22
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": 100.0,
+        "y": 100.0
+      },
+      "scale": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "uniqueID": -1
+    },
+    "layer": 0,
+    "uniqueID": 17
+  },
+  {
+    "name": "Sprite OBject Generated",
+    "components": [
+      {
+        "type": "Just_Forge_2D.Core.ECS.Components.Attachable.Sprite.SpriteComponent",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16.0,
+            "height": 16.0,
+            "texture": {
+              "filepath": "Assets/Textures/spritesheet.png",
+              "width": 112,
+              "height": 192
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.42857143,
+                "y": 0.25
+              },
+              {
+                "x": 0.42857143,
+                "y": 0.16666667
+              },
+              {
+                "x": 0.2857143,
+                "y": 0.16666667
+              },
+              {
+                "x": 0.2857143,
+                "y": 0.25
+              }
+            ]
+          },
+          "uniqueID": 23
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": 160.0,
+        "y": 512.0
+      },
+      "scale": {
+        "x": 32.0,
+        "y": 32.0
+      },
+      "uniqueID": -1
+    },
+    "layer": 0,
+    "uniqueID": 18
+  },
+  {
+    "name": "Sprite OBject Generated",
+    "components": [
+      {
+        "type": "Just_Forge_2D.Core.ECS.Components.Attachable.Sprite.SpriteComponent",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16.0,
+            "height": 16.0,
+            "texture": {
+              "filepath": "Assets/Textures/spritesheet.png",
+              "width": 112,
+              "height": 192
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.42857143,
+                "y": 0.25
+              },
+              {
+                "x": 0.42857143,
+                "y": 0.16666667
+              },
+              {
+                "x": 0.2857143,
+                "y": 0.16666667
+              },
+              {
+                "x": 0.2857143,
+                "y": 0.25
+              }
+            ]
+          },
+          "uniqueID": 24
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": 256.0,
+        "y": 320.0
+      },
+      "scale": {
+        "x": 32.0,
+        "y": 32.0
+      },
+      "uniqueID": -1
+    },
+    "layer": 0,
+    "uniqueID": 19
+  },
+  {
+    "name": "Master",
+    "components": [
+      {
+        "type": "Just_Forge_2D.Core.ECS.Components.Attachable.MouseControlComponent",
+        "properties": {
+          "uniqueID": 25
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": 100.0,
+        "y": 100.0
+      },
+      "scale": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "uniqueID": -1
+    },
+    "layer": 0,
+    "uniqueID": 20
+  },
+  {
+    "name": "Sprite OBject Generated",
+    "components": [
+      {
+        "type": "Just_Forge_2D.Core.ECS.Components.Attachable.Sprite.SpriteComponent",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16.0,
+            "height": 16.0,
+            "texture": {
+              "filepath": "Assets/Textures/spritesheet.png",
+              "width": 112,
+              "height": 192
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.5714286,
+                "y": 0.16666667
+              },
+              {
+                "x": 0.5714286,
+                "y": 0.083333336
+              },
+              {
+                "x": 0.42857143,
+                "y": 0.083333336
+              },
+              {
+                "x": 0.42857143,
+                "y": 0.16666667
+              }
+            ]
+          },
+          "uniqueID": 26
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": 576.0,
+        "y": 320.0
+      },
+      "scale": {
+        "x": 32.0,
+        "y": 32.0
+      },
+      "uniqueID": -1
+    },
+    "layer": 0,
+    "uniqueID": 21
+  },
+  {
+    "name": "Master",
+    "components": [
+      {
+        "type": "Just_Forge_2D.Core.ECS.Components.Attachable.MouseControlComponent",
+        "properties": {
+          "holdingObject": {
+            "name": "Sprite OBject Generated",
+            "components": [
+              {
+                "type": "Just_Forge_2D.Core.ECS.Components.Attachable.Sprite.SpriteComponent",
+                "properties": {
+                  "color": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0,
+                    "w": 1.0
+                  },
+                  "sprite": {
+                    "width": 16.0,
+                    "height": 16.0,
+                    "texture": {
+                      "filepath": "Assets/Textures/spritesheet.png",
+                      "width": 112,
+                      "height": 192
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.2857143,
+                        "y": 0.16666667
+                      },
+                      {
+                        "x": 0.2857143,
+                        "y": 0.083333336
+                      },
+                      {
+                        "x": 0.14285715,
+                        "y": 0.083333336
+                      },
+                      {
+                        "x": 0.14285715,
+                        "y": 0.16666667
+                      }
+                    ]
+                  },
+                  "uniqueID": 28
+                }
+              }
+            ],
+            "transform": {
+              "position": {
+                "x": -224.0,
+                "y": 672.0
+              },
+              "scale": {
+                "x": 32.0,
+                "y": 32.0
+              },
+              "uniqueID": -1
+            },
+            "layer": 0,
+            "uniqueID": 23
+          },
+          "uniqueID": 27
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": 100.0,
+        "y": 100.0
+      },
+      "scale": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "uniqueID": -1
+    },
+    "layer": 0,
+    "uniqueID": 22
+  },
+  {
+    "name": "Sprite OBject Generated",
+    "components": [
+      {
+        "type": "Just_Forge_2D.Core.ECS.Components.Attachable.Sprite.SpriteComponent",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16.0,
+            "height": 16.0,
+            "texture": {
+              "filepath": "Assets/Textures/spritesheet.png",
+              "width": 112,
+              "height": 192
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.2857143,
+                "y": 0.16666667
+              },
+              {
+                "x": 0.2857143,
+                "y": 0.083333336
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.083333336
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.16666667
+              }
+            ]
+          },
+          "uniqueID": 28
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": -32.0,
+        "y": 640.0
+      },
+      "scale": {
+        "x": 32.0,
+        "y": 32.0
+      },
+      "uniqueID": -1
+    },
+    "layer": 0,
+    "uniqueID": 24
+  },
+  {
+    "name": "Master",
+    "components": [
+      {
+        "type": "Just_Forge_2D.Core.ECS.Components.Attachable.MouseControlComponent",
+        "properties": {
+          "uniqueID": 29
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": 100.0,
+        "y": 100.0
+      },
+      "scale": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "uniqueID": -1
+    },
+    "layer": 0,
+    "uniqueID": 25
+  },
+  {
+    "name": "Master",
+    "components": [
+      {
+        "type": "Just_Forge_2D.Core.ECS.Components.Attachable.MouseControlComponent",
+        "properties": {
+          "holdingObject": {
+            "name": "Sprite OBject Generated",
+            "components": [
+              {
+                "type": "Just_Forge_2D.Core.ECS.Components.Attachable.Sprite.SpriteComponent",
+                "properties": {
+                  "color": {
+                    "x": 1.0,
+                    "y": 1.0,
+                    "z": 1.0,
+                    "w": 1.0
+                  },
+                  "sprite": {
+                    "width": 16.0,
+                    "height": 16.0,
+                    "texture": {
+                      "filepath": "Assets/Textures/spritesheet.png",
+                      "width": 112,
+                      "height": 192
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.85714287,
+                        "y": 1.0
+                      },
+                      {
+                        "x": 0.85714287,
+                        "y": 0.9166667
+                      },
+                      {
+                        "x": 0.71428573,
+                        "y": 0.9166667
+                      },
+                      {
+                        "x": 0.71428573,
+                        "y": 1.0
+                      }
+                    ]
+                  },
+                  "uniqueID": 31
+                }
+              }
+            ],
+            "transform": {
+              "position": {
+                "x": -224.0,
+                "y": 672.0
+              },
+              "scale": {
+                "x": 32.0,
+                "y": 32.0
+              },
+              "uniqueID": -1
+            },
+            "layer": 0,
+            "uniqueID": 26
+          },
+          "uniqueID": 30
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": 100.0,
+        "y": 100.0
+      },
+      "scale": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "uniqueID": -1
+    },
+    "layer": 0,
     "uniqueID": 0
+  },
+  {
+    "name": "Sprite OBject Generated",
+    "components": [
+      {
+        "type": "Just_Forge_2D.Core.ECS.Components.Attachable.Sprite.SpriteComponent",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16.0,
+            "height": 16.0,
+            "texture": {
+              "filepath": "Assets/Textures/spritesheet.png",
+              "width": 112,
+              "height": 192
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.85714287,
+                "y": 1.0
+              },
+              {
+                "x": 0.85714287,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.71428573,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.71428573,
+                "y": 1.0
+              }
+            ]
+          },
+          "uniqueID": 31
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": -224.0,
+        "y": 672.0
+      },
+      "scale": {
+        "x": 32.0,
+        "y": 32.0
+      },
+      "uniqueID": -1
+    },
+    "layer": 0,
+    "uniqueID": 26
   }
 ]
