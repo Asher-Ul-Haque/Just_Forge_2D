@@ -9,6 +9,8 @@ import Just_Forge_2D.Core.ECS.Components.justForgeRigidBodyComponent;
 import Just_Forge_2D.Core.ECS.GameObject;
 import Just_Forge_2D.Core.Camera;
 import Just_Forge_2D.Editor.Prefabs;
+import Just_Forge_2D.Physics.PhysicsSystem;
+import Just_Forge_2D.Physics.RigidBody.RigidBody;
 import Just_Forge_2D.Renderer.DebugPencil;
 import Just_Forge_2D.Utils.Configurations;
 import Just_Forge_2D.Utils.justForgeAssetPool;
@@ -18,10 +20,14 @@ import imgui.ImVec2;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 
+
 public class EditorScene extends justForgeScene
 {
     private GameObject master = new GameObject("Master", new TransformComponent(new Vector2f(100, 100)), 0);
     private SpriteSheet sprites;
+    PhysicsSystem physics = new PhysicsSystem(1.0f / 60.0f, new Vector2f(0, -10));
+    TransformComponent obj1, obj2;
+    RigidBody rb1, rb2;
 
 
 //    MouseControlComponent mouseControls = new MouseControlComponent();
@@ -37,6 +43,18 @@ public class EditorScene extends justForgeScene
         //master.addComponent(new GridLines());
         master.addComponent(new MouseControlComponent());
         this.addGameObject(master);
+
+        obj1 = new TransformComponent(new Vector2f(100, 500));
+        obj2 = new TransformComponent(new Vector2f(200, 500));
+        rb1 = new RigidBody();
+        rb2 = new RigidBody();
+        rb1.setRawTransform(obj1);
+        rb2.setRawTransform(obj2);
+        rb1.setMass(100);
+        rb2.setMass(200);
+        physics.addRigidBody(rb1);
+        physics.addRigidBody(rb2);
+
         loadResources();
         this.camera = new Camera(new Vector2f(-250, 0));
         sprites = justForgeAssetPool.getSpriteSheet("Assets/Textures/spritesheet.png");
@@ -68,19 +86,16 @@ public class EditorScene extends justForgeScene
         }
     }
 
-    float x = 400;
-    float y = 200;
-    float angle = 0.0f;
     @Override
     public void update(double DELTA_TIME)
     {
         master.getCompoent(MouseControlComponent.class).update((float) DELTA_TIME);
-        for (int i = 0; i < 1; i++)
-        {
-            DebugPencil.addCircle(new Vector2f(x, y), 64, new Vector3f(0, 1, 0), 1);
-        }
-        x += (float) (DELTA_TIME * 15);
-        y += (float) (DELTA_TIME * 15);
+
+        DebugPencil.addBox2D(obj1.position, new Vector2f(32, 32), new Vector3f(1, 0, 0));
+        DebugPencil.addBox2D(obj2.position, new Vector2f(32, 32), new Vector3f(0, 1, 0));
+
+        physics.update((float) DELTA_TIME);
+
         for (GameObject gameObject : this.gameObjects)
         {
             gameObject.update((float) DELTA_TIME);

@@ -1,7 +1,7 @@
 package Just_Forge_2D.Renderer;
 
 import Just_Forge_2D.Core.Window;
-import Just_Forge_2D.Forge_Physics.Primitives.Line;
+import Just_Forge_2D.Physics.Primitives.Line;
 import Just_Forge_2D.Utils.ForgeMath;
 import Just_Forge_2D.Utils.justForgeAssetPool;
 import org.joml.Vector2f;
@@ -10,7 +10,6 @@ import org.joml.Vector3f;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Vector;
 
 import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL20.*;

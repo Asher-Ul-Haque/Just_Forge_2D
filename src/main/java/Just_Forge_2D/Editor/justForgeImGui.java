@@ -221,9 +221,9 @@ public class justForgeImGui
     {
         startFrame(DELTA_TIME);
         ImGui.newFrame();
-        setupDockSpace();
+        //setupDockSpace();
         SCENE.sceneGUI();
-        ImGui.end();
+        //ImGui.end();
         ImGui.render();
 
         endFrame();

@@ -79,10 +79,10 @@ public class Window
 
         this.title = "Just Forge Tester";
 
-        this.r = 0.0f;
-        this.g = 0.0f;
-        this.b = 0.0f;
-        this.a = 0.0f;
+        this.r = 1.0f;
+        this.g = 1.0f;
+        this.b = 1.0f;
+        this.a = 1.0f;
 
         justForgeLogger.FORGE_LOG_INFO("Started Just Forge 2D");
     }
@@ -258,7 +258,7 @@ public class Window
         glClear(GL_COLOR_BUFFER_BIT);
 
         // - - - Framebuffer
-        this.framebuffer.bind();
+        //this.framebuffer.bind();
 
         if (dt >= 0.0d)
         {

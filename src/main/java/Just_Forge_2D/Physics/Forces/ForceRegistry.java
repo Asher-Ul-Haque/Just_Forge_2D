@@ -1,6 +1,6 @@
-package Just_Forge_2D.Forge_Physics.Forces;
+package Just_Forge_2D.Physics.Forces;
 
-import Just_Forge_2D.Forge_Physics.RigidBody.RigidBody;
+import Just_Forge_2D.Physics.RigidBody.RigidBody;
 
 import java.util.ArrayList;
 import java.util.List;
