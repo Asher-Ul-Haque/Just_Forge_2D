@@ -4,23 +4,26 @@ import Just_Forge_2D.Physics.RigidBody.RigidBody;
 import Just_Forge_2D.Utils.ForgeMath;
 import org.joml.Vector2f;
 
-public class Box
+public class Box extends Primitive
 {
+    // - - - primitive variables
     private Vector2f size = new Vector2f();
     private Vector2f halfSize = new Vector2f();
-    private RigidBody rigidBody = null;
 
-    public Box()
-    {
 
-    }
+    // - - - Functions - - -
 
+    // - - - useless constructor
+    public Box() {}
+
+    // - - - useful constructor
     public Box(Vector2f MIN, Vector2f MAX)
     {
         this.size = new Vector2f(MAX).sub(MIN);
         this.halfSize = new Vector2f(size).mul(0.5f);
     }
 
+    // - - - Getters
     public Vector2f getLocalMin()
     {
         return new Vector2f(this.rigidBody.getPosition()).sub(this.halfSize);

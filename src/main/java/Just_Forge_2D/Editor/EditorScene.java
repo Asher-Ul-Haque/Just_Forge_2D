@@ -1,15 +1,13 @@
-package Just_Forge_2D.Core.Scene;
+package Just_Forge_2D.Editor;
 
 import Just_Forge_2D.Core.ECS.Components.Attachable.Sprite.Sprite;
 import Just_Forge_2D.Core.ECS.Components.Attachable.Sprite.SpriteComponent;
 import Just_Forge_2D.Core.ECS.Components.Attachable.Sprite.SpriteSheet;
-import Just_Forge_2D.Core.ECS.Components.GridLines;
 import Just_Forge_2D.Core.ECS.Components.Attachable.MouseControlComponent;
-import Just_Forge_2D.Core.ECS.Components.justForgeRigidBodyComponent;
 import Just_Forge_2D.Core.ECS.GameObject;
 import Just_Forge_2D.Core.Camera;
-import Just_Forge_2D.Editor.Prefabs;
-import Just_Forge_2D.Physics.PhysicsSystem;
+import Just_Forge_2D.Core.Scene.Scene;
+import Just_Forge_2D.Physics.Physics;
 import Just_Forge_2D.Physics.RigidBody.RigidBody;
 import Just_Forge_2D.Renderer.DebugPencil;
 import Just_Forge_2D.Utils.Configurations;
@@ -21,11 +19,11 @@ import org.joml.Vector2f;
 import org.joml.Vector3f;
 
 
-public class EditorScene extends justForgeScene
+public class EditorScene extends Scene
 {
     private GameObject master = new GameObject("Master", new TransformComponent(new Vector2f(100, 100)), 0);
     private SpriteSheet sprites;
-    PhysicsSystem physics = new PhysicsSystem(1.0f / 60.0f, new Vector2f(0, -10));
+    Physics physics = new Physics(1.0f / 60.0f, new Vector2f(0, -10));
     TransformComponent obj1, obj2;
     RigidBody rb1, rb2;
 
@@ -91,8 +89,8 @@ public class EditorScene extends justForgeScene
     {
         master.getCompoent(MouseControlComponent.class).update((float) DELTA_TIME);
 
-        DebugPencil.addBox2D(obj1.position, new Vector2f(32, 32), new Vector3f(1, 0, 0));
-        DebugPencil.addBox2D(obj2.position, new Vector2f(32, 32), new Vector3f(0, 1, 0));
+        DebugPencil.addBox(obj1.position, new Vector2f(32, 32), new Vector3f(1, 0, 0));
+        DebugPencil.addBox(obj2.position, new Vector2f(32, 32), new Vector3f(0, 1, 0));
 
         physics.update((float) DELTA_TIME);
 

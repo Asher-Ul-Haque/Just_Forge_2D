@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 // - - - Abstract class for all the scenes
-public abstract class justForgeScene
+public abstract class Scene
 {
     // - - - Private Variables - - -
 
@@ -42,7 +42,7 @@ public abstract class justForgeScene
 
 
     // - - - Useless constructor
-    public justForgeScene() {}
+    public Scene() {}
 
 
     // - - - Use the Scene - - -
@@ -60,9 +60,6 @@ public abstract class justForgeScene
     public abstract void update(double DELTA_TIME);
     public void init(){}
 
-
-    // - - - Getters and Setters - - -
-
     public void addGameObject(GameObject GAME_OBJECT)
     {
         gameObjects.add(GAME_OBJECT);
@@ -73,6 +70,8 @@ public abstract class justForgeScene
         GAME_OBJECT.start();
         this.renderer.add(GAME_OBJECT);
     }
+
+    // - - - Getters and Setters - - -
 
     public Camera getCamera()
     {
@@ -116,20 +115,20 @@ public abstract class justForgeScene
             justForgeLogger.FORGE_LOG_ERROR(e.getMessage());
         }
 
-        if (!inFile.equals(""))
+        if (!inFile.isEmpty())
         {
             int maxGoId = -1;
             int maxCompoId = -1;
             GameObject[] objects = gson.fromJson(inFile, GameObject[].class);
-            for (int i = 0; i < objects.length; ++i)
+            for (GameObject object : objects)
             {
-                addGameObject(objects[i]);
+                addGameObject(object);
 
-                for (Component component : objects[i].getComponents())
+                for (Component component : object.getComponents())
                 {
                     maxCompoId = Math.max(maxCompoId, component.getUniqueID());
                 }
-                maxGoId = Math.max(maxGoId, objects[i].getUniqueID());
+                maxGoId = Math.max(maxGoId, object.getUniqueID());
             }
 
             maxGoId++;
@@ -140,6 +139,7 @@ public abstract class justForgeScene
         }
     }
 
+    // - - - save
     public void save()
     {
         Gson gson = new GsonBuilder()
@@ -160,7 +160,6 @@ public abstract class justForgeScene
         {
             justForgeLogger.FORGE_LOG_ERROR("Couldnt write to file");
             justForgeLogger.FORGE_LOG_ERROR(e.getMessage());
-            e.printStackTrace();
         }
     }
 }

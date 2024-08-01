@@ -3,12 +3,22 @@ package Just_Forge_2D.Physics.Primitives;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 
+//  - - - Line Class
 public class Line
 {
+    // - - - Private Variables - - -
     private Vector2f from;
     private Vector2f to;
     private Vector3f color;
+    private int lifetime;
 
+
+    // - - - | Functions | - - -
+
+
+    // - - - Constructors - - -
+
+    // - - - with everything
     public Line(Vector2f from, Vector2f to, Vector3f color, int lifetime)
     {
         this.from = from;
@@ -17,6 +27,7 @@ public class Line
         this.lifetime = lifetime;
     }
 
+    // - - - no lifetime
     public Line(Vector2f from, Vector2f to, Vector3f color)
     {
         this.from = from;
@@ -24,6 +35,7 @@ public class Line
         this.color = color;
     }
 
+    // - - - no color
     public Line(Vector2f from, Vector2f to, int LIFETIME)
     {
         this.lifetime = LIFETIME;
@@ -31,6 +43,7 @@ public class Line
         this.to = to;
     }
 
+    // - - - neither lifetime nor color
     public Line(Vector2f FROM, Vector2f TO)
     {
         this.lifetime = 60;
@@ -38,39 +51,43 @@ public class Line
         this.to = TO;
     }
 
+
+    // - - - Getters and Setters - - -
+
+    // - - - From
     public Vector2f getFrom() {
         return from;
     }
-
-    public void setFrom(Vector2f from) {
-        this.from = from;
+    public void setFrom(Vector2f FROM) {
+        this.from = FROM;
     }
 
+    // - - - To
     public Vector2f getTo() {
         return to;
     }
-
-    public void setTo(Vector2f to) {
-        this.to = to;
+    public void setTo(Vector2f TO) {
+        this.to = TO;
     }
 
+    // - - - Color
     public Vector3f getColor() {
         return color;
     }
-
-    public void setColor(Vector3f color) {
-        this.color = color;
+    public void setColor(Vector3f COLOR) {
+        this.color = COLOR;
     }
 
+    // - - - Lifetime
     public int getLifetime() {
         return lifetime;
     }
-
-    public void setLifetime(int lifetime) {
-        this.lifetime = lifetime;
+    public void setLifetime(int LIFETIME) {
+        this.lifetime = LIFETIME;
     }
 
-    private int lifetime;
+
+    // - - - Utility - - -
 
     public int beginFrame()
     {

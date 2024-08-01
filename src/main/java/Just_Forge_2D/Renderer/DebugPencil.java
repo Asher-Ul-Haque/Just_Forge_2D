@@ -18,24 +18,33 @@ import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 
 public class DebugPencil
 {
-    private static final int MAX_LINES = 480;
+    // - - - Private Variables - - -
+
+    // - - - lines
+    private static final int MAX_LINES = 512;
     private static final List<Line> lines = new ArrayList<>();
 
-    // 6 floats per vertex, 3 for position, 3 for color, 2 vertices per line
+    // - - - rendering info
+    // - - - 6 floats per vertex, 3 for position, 3 for color, 2 vertices per line
     private static final float[] vertexArray = new float[MAX_LINES * 6 * 2];
     private static final justForgeShader shader = justForgeAssetPool.getShader("Assets/Shaders/debug.glsl");
-
     private static int vaoID;
     private static int vboID;
 
     private static boolean started = false;
 
+    // - - - Defaults
     private static final int defaultLifetime = 120; //120 frames
     private static final Vector3f defaultColor = new Vector3f(0, 0, 1);
     private static final int defaultWidth = 2;
     private static final int defaultSegments = 360;
     private static final float defaultRotation = 0f;
 
+
+    // - - - | Functions | - - -
+
+
+    // - - - start
     public static void start()
     {
         // - - - Generate the vao
@@ -62,6 +71,7 @@ public class DebugPencil
         glLineWidth(defaultWidth);
     }
 
+    // - - - frame start
     public static void beginFrame()
     {
         // - - - make sure started
@@ -134,28 +144,43 @@ public class DebugPencil
         shader.detach();
     }
 
+
+    // - - - | Add Stuff | - - -
     // TODO: Add other primitives and other constatns for common values like colors
+
+
+    // - - - Add Lines - - -
+
+    // - - - default
     public static void addLine(Vector2f FROM, Vector2f TO, Vector3f COLOR, int LIFETIME)
     {
         if (lines.size() >= MAX_LINES) return;
         DebugPencil.lines.add(new Line(FROM, TO, COLOR, LIFETIME));
     }
 
+    // - - - no lifetime
     public static void addLine(Vector2f FROM, Vector2f TO, Vector3f COLOR)
     {
+        DebugPencil.addLine(FROM, TO, COLOR, defaultLifetime);
     }
 
+    // - - - no color
     public static void addLine(Vector2f FROM, Vector2f TO, int LIFETIME)
     {
         addLine(FROM, TO, defaultColor, LIFETIME);
     }
 
+    // - - - neither color nor lifetime
     public static void addLine(Vector2f FROM, Vector2f TO)
     {
         addLine(FROM, TO, defaultColor, defaultLifetime);
     }
 
-    public static void addBox2D(Vector2f CENTER, Vector2f DIMENSIONS, float ROTATION, Vector3f COLOR, int LIFETIME)
+
+    // - - - Add Box - - -
+
+    // - - - default
+    public static void addBox(Vector2f CENTER, Vector2f DIMENSIONS, float ROTATION, Vector3f COLOR, int LIFETIME)
     {
         Vector2f min = new Vector2f(CENTER).sub(new Vector2f(DIMENSIONS).mul(0.5f));
         Vector2f max = new Vector2f(CENTER).add(new Vector2f(DIMENSIONS).mul(0.5f));
@@ -178,42 +203,52 @@ public class DebugPencil
         addLine(vertices[3], vertices[0], COLOR, LIFETIME);
     }
 
-    public static void addBox2D(Vector2f CENTER, Vector2f DIMENSIONS, float ROTATION, Vector3f COLOR)
+    // - - - no lifetime
+    public static void addBox(Vector2f CENTER, Vector2f DIMENSIONS, float ROTATION, Vector3f COLOR)
     {
-        addBox2D(CENTER, DIMENSIONS, ROTATION, COLOR, defaultLifetime);
+        addBox(CENTER, DIMENSIONS, ROTATION, COLOR, defaultLifetime);
     }
 
-    public static void addBox2D(Vector2f CENTER, Vector2f DIMENSIONS, float ROTATION, int LIFETIME)
+    // - - - no color
+    public static void addBox(Vector2f CENTER, Vector2f DIMENSIONS, float ROTATION, int LIFETIME)
     {
-        addBox2D(CENTER, DIMENSIONS, ROTATION, defaultColor, LIFETIME);
+        addBox(CENTER, DIMENSIONS, ROTATION, defaultColor, LIFETIME);
     }
 
-    public static void addBox2D(Vector2f CENTER, Vector2f DIMENSIONS, Vector3f COLOR, int LIFETIME)
+    // - - - no rotation
+    public static void addBox(Vector2f CENTER, Vector2f DIMENSIONS, Vector3f COLOR, int LIFETIME)
     {
-        addBox2D(CENTER, DIMENSIONS, 0f, COLOR, LIFETIME);
+        addBox(CENTER, DIMENSIONS, 0f, COLOR, LIFETIME);
+    }
+
+    // - - - no color and lifetime
+    public static void addBox(Vector2f CENTER, Vector2f DIMENSIONS, float ROTATION)
+    {
+        addBox(CENTER, DIMENSIONS, ROTATION, defaultColor, defaultLifetime);
+    }
+
+    // - - - no rotation and lifetime
+    public static void addBox(Vector2f CENTER, Vector2f DIMENSIONS, Vector3f COLOR)
+    {
+        addBox(CENTER, DIMENSIONS, defaultRotation, COLOR, defaultLifetime);
+    }
+
+    // - - - no rotation or color
+    public static void addBox(Vector2f CENTER, Vector2f DIMENSIONS, int LIFETIME)
+    {
+        addBox(CENTER, DIMENSIONS, defaultRotation, defaultColor, LIFETIME);
+    }
+
+    // - - - no rotation, color and lifetime
+    public static void addBox(Vector2f CENTER, Vector2f DIMENSIONS)
+    {
+        addBox(CENTER, DIMENSIONS, defaultRotation, defaultColor, defaultLifetime);
     }
 
 
-    public static void addBox2D(Vector2f CENTER, Vector2f DIMENSIONS, float ROTATION)
-    {
-        addBox2D(CENTER, DIMENSIONS, ROTATION, defaultColor, defaultLifetime);
-    }
+    // - - - add Circle - - -
 
-    public static void addBox2D(Vector2f CENTER, Vector2f DIMENSIONS, Vector3f COLOR)
-    {
-        addBox2D(CENTER, DIMENSIONS, defaultRotation, COLOR, defaultLifetime);
-    }
-
-    public static void addBox2D(Vector2f CENTER, Vector2f DIMENSIONS, int LIFETIME)
-    {
-        addBox2D(CENTER, DIMENSIONS, defaultRotation, defaultColor, LIFETIME);
-    }
-
-    public static void addBox2D(Vector2f CENTER, Vector2f DIMENSIONS)
-    {
-        addBox2D(CENTER, DIMENSIONS, defaultRotation, defaultColor, defaultLifetime);
-    }
-
+    // - - - default
     public static void addCircle(Vector2f CENTER, float RADIUS, Vector3f COLOR, int LIFETIME)
     {
         Vector2f[] points = new Vector2f[defaultSegments];
@@ -233,5 +268,89 @@ public class DebugPencil
             currentAngle += increment;
         }
         addLine(points[points.length - 1], points[0], COLOR, LIFETIME);
+    }
+
+    // - - - no color
+    public static void addCircle(Vector2f CENTER, float RADIUS, int LIFETIME)
+    {
+        addCircle(CENTER, RADIUS, defaultColor, LIFETIME);
+    }
+
+    // - - - no lifetime
+    public static void addCircle(Vector2f CENTER, float RADIUS, Vector3f COLOR)
+    {
+        addCircle(CENTER, RADIUS, COLOR, defaultLifetime);
+    }
+
+    // - - - neither lifetime nor color
+    public static void addCircle(Vector2f CENTER, float RADIUS)
+    {
+        addCircle(CENTER, RADIUS, defaultColor, defaultLifetime);
+    }
+
+    // - - - add Polygon - - -
+
+    // - - - default
+    public static void addPolygon(Vector2f CENTER, float HALF_DIAGONAL, int SIDE_COUNT, float ROTATION, Vector3f COLOR, int LIFETIME)
+    {
+        Vector2f[] points = new Vector2f[SIDE_COUNT];
+        float increment = (float) (2 * Math.PI / SIDE_COUNT);
+        float currentAngle = 0;
+
+        for (int i = 0; i < SIDE_COUNT; ++i)
+        {
+            Vector2f temp = new Vector2f(HALF_DIAGONAL, 0);
+            ForgeMath.rotate(temp, currentAngle + ROTATION, new Vector2f());
+            points[i] = new Vector2f(temp).add(CENTER);
+
+            if (i > 0)
+            {
+                addLine(points[i - 1], points[i], COLOR, LIFETIME);
+            }
+            currentAngle += increment;
+        }
+        addLine(points[points.length - 1], points[0], COLOR, LIFETIME);
+    }
+
+    // - - - without lifetime
+    public static void addPolygon(Vector2f CENTER, float HALF_DIAGONAL, int SIDE_COUNT, float ROTATION, Vector3f COLOR)
+    {
+        addPolygon(CENTER, HALF_DIAGONAL, SIDE_COUNT, ROTATION, COLOR, defaultLifetime);
+    }
+
+    // - - - without color
+    public static void addPolygon(Vector2f CENTER, float HALF_DIAGONAL, int SIDE_COUNT, float ROTATION, int LIFETIME)
+    {
+        addPolygon(CENTER, HALF_DIAGONAL, SIDE_COUNT, ROTATION, defaultColor, LIFETIME);
+    }
+
+    // - - - without rotation
+    public static void addPolygon(Vector2f CENTER, float HALF_DIAGONAL, int SIDE_COUNT, Vector3f COLOR, int LIFETIME)
+    {
+        addPolygon(CENTER, HALF_DIAGONAL, SIDE_COUNT, defaultRotation, COLOR, LIFETIME);
+    }
+
+    // - - - without color and lifetime
+    public static void addPolygon(Vector2f CENTER, float HALF_DIAGONAL, int SIDE_COUNT, float ROTATION)
+    {
+        addPolygon(CENTER, HALF_DIAGONAL, SIDE_COUNT, ROTATION, defaultColor, defaultLifetime);
+    }
+
+    // - - - without rotation and color
+    public static void addPolygon(Vector2f CENTER, float HALF_DIAGONAL, int SIDE_COUNT, int LIFETIME)
+    {
+        addPolygon(CENTER, HALF_DIAGONAL, SIDE_COUNT, defaultRotation, defaultColor, LIFETIME);
+    }
+
+    // - - - without rotation and lifetime
+    public static void addPolygon(Vector2f CENTER, float HALF_DIAGONAL, int SIDE_COUNT, Vector3f COLOR)
+    {
+        addPolygon(CENTER, HALF_DIAGONAL, SIDE_COUNT, defaultRotation, COLOR, defaultLifetime);
+    }
+
+    // - - - without only neccessities
+    public static void addPolygon(Vector2f CENTER, float HALF_DIAGONAL, int SIDE_COUNT)
+    {
+        addPolygon(CENTER, HALF_DIAGONAL, SIDE_COUNT, defaultRotation, defaultColor, defaultLifetime);
     }
 }

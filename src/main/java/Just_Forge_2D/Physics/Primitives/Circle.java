@@ -3,10 +3,9 @@ package Just_Forge_2D.Physics.Primitives;
 import Just_Forge_2D.Physics.RigidBody.RigidBody;
 import org.joml.Vector2f;
 
-public class Circle
+public class Circle extends Primitive
 {
     private float radius = 1.0f;
-    private RigidBody body = null;
 
     public float getRadius()
     {
@@ -15,7 +14,7 @@ public class Circle
 
     public Vector2f getCenter()
     {
-        return body.getPosition();
+        return this.rigidBody.getPosition();
     }
 
     public void setRadius(float RADIUS)

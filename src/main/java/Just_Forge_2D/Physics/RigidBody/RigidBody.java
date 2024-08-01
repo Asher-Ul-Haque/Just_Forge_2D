@@ -6,15 +6,33 @@ import org.joml.Vector2f;
 
 public class RigidBody extends Component
 {
+    // - - - Private variables - - -
+
+    private final Vector2f forceAccumulator = new Vector2f();
+    private boolean fixedRotation;
+
+    private float mass = 0.0f;
+    private float inverseMass = 0.0f;
+
     private TransformComponent rawTransform;
-    private Vector2f forceAccumulator = new Vector2f();
-    private Vector2f position = new Vector2f();
-    private float rotation = 0.0f; // degrees
-    private Vector2f velocity = new Vector2f();
+    private final Vector2f position = new Vector2f();
+    private final Vector2f velocity = new Vector2f();
+
+    private float rotation = 0.0f; // radians
     private float angularVelocity = 0.0f;
+
     private float friction = 0.0f;
     private float angularFriction = 0.0f;
-    private boolean fixedRotation;
+
+
+    // - - - | Functions | - - -
+
+
+    // - - - default constructor
+    public RigidBody(){}
+
+
+    // - - - Mass - - -
 
     public float getMass()
     {
@@ -30,13 +48,8 @@ public class RigidBody extends Component
         }
     }
 
-    private float mass = 0.0f;
-    private float inverseMass = 0.0f;
 
-    public float getRotation()
-    {
-        return rotation;
-    }
+    // - - - Transform - - -
 
     public void setTransform(Vector2f POSITION, float ROTATION)
     {
@@ -49,24 +62,10 @@ public class RigidBody extends Component
         this.position.set(POSITION);
     }
 
-    public Vector2f getPosition()
+    public void setRawTransform(TransformComponent rawTransform)
     {
-        return position;
-    }
-
-    public void physicsUpdate(float DELTA_TIME)
-    {
-        if (this.mass == 0.0f) return;
-
-        // - - - calculate linear velocuty
-        Vector2f acceleration = new Vector2f(forceAccumulator).mul(this.inverseMass); //newtons second law
-        this.velocity.add(acceleration.mul(DELTA_TIME));
-
-        // - - - calculate position
-        this.position.add(new Vector2f(velocity).mul(DELTA_TIME));
-
-        syncCollisionTransforms();
-        clearAccumulator();
+        this.rawTransform = rawTransform;
+        this.position.set(rawTransform.position);
     }
 
     public void syncCollisionTransforms()
@@ -77,19 +76,49 @@ public class RigidBody extends Component
         }
     }
 
-    public void clearAccumulator()
+
+    // - - - Stuff related to rotation - - -
+
+    public float getRotation()
     {
-        this.forceAccumulator.zero();
+        return rotation;
     }
+
+
+    // - - - Stuff related to position - - -
+
+    public Vector2f getPosition()
+    {
+        return position;
+    }
+
+
+    // - - - Stuff related to forces - - -
 
     public void addForce(Vector2f FORCE)
     {
         this.forceAccumulator.add(FORCE);
     }
 
-    public void setRawTransform(TransformComponent rawTransform)
+    public void clearAccumulator()
     {
-        this.rawTransform = rawTransform;
-        this.position.set(rawTransform.position);
+        this.forceAccumulator.zero();
+    }
+
+
+    // - - - update
+    public void physicsUpdate(float DELTA_TIME)
+    {
+        if (this.mass == 0.0f) return;
+
+        // - - - calculate linear velocity
+        Vector2f acceleration = new Vector2f(forceAccumulator).mul(this.inverseMass); //newtons second law
+        this.velocity.add(acceleration.mul(DELTA_TIME));
+
+        // - - - calculate position
+        this.position.add(new Vector2f(velocity).mul(DELTA_TIME));
+
+        syncCollisionTransforms();
+        clearAccumulator();
     }
 }

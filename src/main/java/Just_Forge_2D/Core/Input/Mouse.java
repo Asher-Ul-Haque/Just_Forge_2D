@@ -18,14 +18,15 @@ public class Mouse
 
     // - - - Mouse Scrolling
     private double xScroll, yScroll;
-    private boolean isDraggin;
+    private boolean isDragging;
 
     // - - - Mouse Positions
     private double xPosition, yPosition;
     private double xPrevious, yPrevious;
 
-    // - - - Mouse BUttons
-    private boolean isMouseButtonPressed[] = new boolean[9]; // left, middle, right
+    // - - - Mouse Buttons
+    private final int buttonCount = 9;
+    private final boolean[] isMouseButtonPressed = new boolean[buttonCount]; // left, middle, right
 
 
     // - - - | Functions | - - -
@@ -68,7 +69,7 @@ public class Mouse
         get().yPosition = Y_POSITION;
         get().xPosition = X_POSITION;
 
-        get().isDraggin = get().isMouseButtonPressed[0] || get().mouse.isMouseButtonPressed[1] || Mouse.mouse.isMouseButtonPressed[2];
+        get().isDragging = get().isMouseButtonPressed[0] || get().mouse.isMouseButtonPressed[1] || Mouse.mouse.isMouseButtonPressed[2];
     }
 
     // - - - Update Clicks
@@ -87,7 +88,7 @@ public class Mouse
 
             case GLFW_RELEASE:
                 get().isMouseButtonPressed[BUTTON] = false;
-                get().isDraggin = false;
+                get().isDragging = false;
                 break;
 
             default:
@@ -112,9 +113,12 @@ public class Mouse
         get().yPrevious = get().yPosition;
     }
 
-    // - - - Getters - - -
 
-    // - - - Positions
+    // - - - | Getters | - - -
+
+
+    // - - - Positions - - -
+
     public static float getX()
     {
         return (float) get().xPosition;
@@ -126,7 +130,8 @@ public class Mouse
     }
 
 
-    // - - - Net Movement
+    // - - - Net Movement - - -
+
     public static float getDeltaX()
     {
         return (float) (get().xPrevious - get().xPosition);
@@ -138,7 +143,8 @@ public class Mouse
     }
 
 
-    // - - - Ortho graphic
+    // - - - Orthographic - - -
+
     public static float getOrthoX()
     {
         float currentX = getX();
@@ -160,7 +166,8 @@ public class Mouse
     }
 
 
-    // - - - Scroll
+    // - - - Scroll - - -
+
     public static float getScrollX()
     {
         return (float) get().xScroll;
@@ -173,11 +180,12 @@ public class Mouse
 
     public static boolean isDragging()
     {
-        return get().isDraggin;
+        return get().isDragging;
     }
 
 
-    // - - - Mouse buttons
+    // - - - Mouse buttons - - -
+
     public static boolean isMouseButtonDown(int BUTTON)
     {
         if (BUTTON >= get().isMouseButtonPressed.length)

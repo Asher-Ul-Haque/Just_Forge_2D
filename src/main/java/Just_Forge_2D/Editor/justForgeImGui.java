@@ -1,6 +1,6 @@
 package Just_Forge_2D.Editor;
 
-import Just_Forge_2D.Core.Scene.justForgeScene;
+import Just_Forge_2D.Core.Scene.Scene;
 import Just_Forge_2D.Core.Window;
 import Just_Forge_2D.Utils.justForgeLogger;
 import Just_Forge_2D.Core.Input.*;
@@ -114,7 +114,7 @@ public class justForgeImGui
 
             if (!io.getWantCaptureKeyboard())
             {
-                justForgeKeyboard.keyCallback(w, key, scancode, action, mods);
+                Keyboard.keyCallback(w, key, scancode, action, mods);
             }
         });
 
@@ -217,7 +217,7 @@ public class justForgeImGui
 
     // - - - GUI usage functions - - -
 
-    public void update(float DELTA_TIME, justForgeScene SCENE)
+    public void update(float DELTA_TIME, Scene SCENE)
     {
         startFrame(DELTA_TIME);
         ImGui.newFrame();

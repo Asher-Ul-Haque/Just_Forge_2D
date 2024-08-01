@@ -4,19 +4,32 @@ import Just_Forge_2D.Physics.Primitives.*;
 import Just_Forge_2D.Utils.ForgeMath;
 import org.joml.Vector2f;
 
-
+// - - - Bulk of the math class. If there are errors, they are here
 public class IntersectionDetector
 {
+    // - - - | Primitive vs Primitive | - - -
+
+
+    // - - - Point vs the World - - -
+
+    // - - - Line
     public static boolean pointOnLine(Vector2f POINT, Line LINE)
     {
         float dy = LINE.getTo().y - LINE.getFrom().y;
         float dx = LINE.getTo().x - LINE.getFrom().x;
+
+        if (dx == 0f)
+        {
+            return ForgeMath.compare(POINT.x, LINE.getFrom().x);
+        }
+
         float m = dy / dx;
         float b = LINE.getTo().y - (m * LINE.getTo().x);
 
         return POINT.y == m * POINT.x + b;
     }
 
+    // - - - Circle
     public static boolean pointInCircle(Vector2f POINT, Circle CIRCLE)
     {
         Vector2f center = CIRCLE.getCenter();
@@ -24,6 +37,7 @@ public class IntersectionDetector
         return lineFromCenterToPoint.lengthSquared() <= CIRCLE.getRadius() * CIRCLE.getRadius();
     }
 
+    // - - - AABB
     public static boolean pointInAABB(Vector2f POINT, AABB BOX)
     {
         Vector2f min = BOX.getMin();
@@ -31,6 +45,7 @@ public class IntersectionDetector
         return POINT.x <= max.x && min.x <= POINT.x && POINT.y <= max.y && min.y <= POINT.y;
     }
 
+    // - - - Box
     public static boolean pointInBox(Vector2f POINT, Box BOX)
     {
         // - - - translate point in locale space
@@ -43,6 +58,10 @@ public class IntersectionDetector
         return pointLocalBoxSpace.x <= max.x && min.x <= pointLocalBoxSpace.x && pointLocalBoxSpace.y <= max.y && min.y <= pointLocalBoxSpace.y;
     }
 
+
+    // - - - Line vs The World - - -
+
+    // - - - Circle
     public static boolean lineAndCircle(Line LINE, Circle CIRCLE)
     {
         if (pointInCircle(LINE.getFrom(), CIRCLE) || pointInCircle(LINE.getTo(), CIRCLE))
@@ -51,6 +70,8 @@ public class IntersectionDetector
         }
 
         Vector2f ab = new Vector2f(LINE.getTo()).sub(LINE.getFrom());
+
+        // - - - project circle position onto ab
         Vector2f circleCenter = CIRCLE.getCenter();
         Vector2f centerToLineStart = new Vector2f(circleCenter).sub(LINE.getFrom());
         float t = centerToLineStart.dot(ab) / ab.dot(ab);
@@ -65,6 +86,7 @@ public class IntersectionDetector
         return pointInCircle(closestPoint, CIRCLE);
     }
 
+    // - - - AABB
     public static boolean lineAndAABB(Line LINE, AABB BOX)
     {
         if (pointInAABB(LINE.getFrom(), BOX) || pointInAABB(LINE.getTo(), BOX))
@@ -84,8 +106,8 @@ public class IntersectionDetector
         max.sub(LINE.getFrom()).mul(unitVector);
 
         float tMin = Math.max(Math.min(min.x, max.x), Math.min(min.y, max.y));
-        float tMax = Math.min(Math.max(min.x, max.x), Math.max(min.y, max.y));
-        if (tMax <0 || tMin > tMax)
+        float tMax = tMin;
+        if (tMax < 0 || tMin > tMax)
         {
             return false;
         }
@@ -94,6 +116,7 @@ public class IntersectionDetector
         return t > 0f && t * t < LINE.lengthSquared();
     }
 
+    // - - - Box
     public static boolean lineAndBox(Line LINE, Box BOX)
     {
         float theta = -BOX.getRigidBody().getRotation();
@@ -110,6 +133,206 @@ public class IntersectionDetector
 
         return lineAndAABB(localLine, aabb);
     }
+
+
+    // - - - Circle vs the World - - -
+
+    // - - - Line
+    public static boolean circleAndLine(Circle CIRCLE, Line LINE)
+    {
+        return lineAndCircle(LINE, CIRCLE);
+    }
+
+    // - - - Circle
+    public static boolean circleAndCircle(Circle CIRCLE_1, Circle CIRCLE_2)
+    {
+        Vector2f vecBetweenCenters = new Vector2f(CIRCLE_1.getCenter()).sub(new Vector2f(CIRCLE_2.getCenter()));
+        float radiiSum = CIRCLE_1.getRadius() + CIRCLE_2.getRadius();
+        return  vecBetweenCenters.lengthSquared() <= radiiSum * radiiSum;
+    }
+
+    // - - - AABB
+    public static boolean circleAndAABB(Circle CIRCLE, AABB BOX)
+    {
+        Vector2f min = BOX.getMin();
+        Vector2f max = BOX.getMax();
+
+        Vector2f closestPointToCirlce = new Vector2f(CIRCLE.getCenter());
+        if (closestPointToCirlce.x < min.x)
+        {
+            closestPointToCirlce.x = min.x;;
+        }
+        else if (closestPointToCirlce.x > max.x)
+        {
+            closestPointToCirlce.x = max.x;
+        }
+
+        if (closestPointToCirlce.y < min.y)
+        {
+            closestPointToCirlce.y = min.y;
+        }
+        else if (closestPointToCirlce.y > max.y)
+        {
+            closestPointToCirlce.y = max.y;
+        }
+
+        Vector2f circleToBox = new Vector2f(CIRCLE.getCenter()).sub(closestPointToCirlce);
+        return circleToBox.lengthSquared() <= CIRCLE.getRadius() * CIRCLE.getRadius();
+    }
+
+    // - - - Box
+    public static boolean circleAndBox(Circle CIRCLE, Box BOX)
+    {
+        // treat box as AABB after rotating
+        Vector2f min = new Vector2f();
+        Vector2f max = new Vector2f(BOX.getHalfSize()).mul(2.0f);
+
+        // - - - create a circle in box local space
+        Vector2f r = new Vector2f(CIRCLE.getCenter()).sub(BOX.getRigidBody().getPosition());
+        ForgeMath.rotate(r, -BOX.getRigidBody().getRotation(), new Vector2f(0f, 0f));
+        Vector2f localCirclePOs = new Vector2f(r).add(BOX.getHalfSize());
+
+        Vector2f closestPointToCirlce = new Vector2f(localCirclePOs);
+        if (closestPointToCirlce.x < min.x)
+        {
+            closestPointToCirlce.x = min.x;;
+        }
+        else if (closestPointToCirlce.x > max.x)
+        {
+            closestPointToCirlce.x = max.x;
+        }
+
+        if (closestPointToCirlce.y < min.y)
+        {
+            closestPointToCirlce.y = min.y;
+        }
+        else if (closestPointToCirlce.y > max.y)
+        {
+            closestPointToCirlce.y = max.y;
+        }
+
+        Vector2f circleToBox = new Vector2f(localCirclePOs).sub(closestPointToCirlce);
+        return circleToBox.lengthSquared() <= CIRCLE.getRadius() * CIRCLE.getRadius();
+    }
+
+
+    // - - - AABB vs the World - - -
+
+    // - - - circle
+    public static boolean AABBandCircle(AABB BOX, Circle CIRCLE)
+    {
+        return circleAndAABB(CIRCLE, BOX);
+    }
+
+    // - - - AABB
+    public static boolean AABBandAABB(AABB BOX_1, AABB BOX_2)
+    {
+        // NOTE: axis aligned on x and y
+        Vector2f[] axesToTest = {new Vector2f(0, 1), new Vector2f(1, 0)};
+        for (Vector2f axis : axesToTest)
+        {
+            if (!overlapOnAxis(BOX_1, BOX_2, axis))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // - - - Box
+    public static boolean AABBandBOX(AABB BOX_1, Box BOX_2)
+    {
+        Vector2f[] axesToTest = {
+                new Vector2f(0, 1), new Vector2f(1, 0),
+                new Vector2f(0, 1), new Vector2f(1, 0)
+        };
+        ForgeMath.rotate(axesToTest[2], BOX_2.getRigidBody().getRotation(), new Vector2f(0, 0));
+        ForgeMath.rotate(axesToTest[3], BOX_2.getRigidBody().getRotation(), new Vector2f(0, 0));
+        for (Vector2f axis : axesToTest)
+        {
+            if (!overlapOnAxis(BOX_1, BOX_2, axis))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+
+    // - - - | Utility | - - -
+
+    // - - - Get Interval - - -
+
+    private static Vector2f getInterval(AABB RECTANGLE, Vector2f AXIS)
+    {
+        Vector2f result = new Vector2f(0, 0);
+        Vector2f min = RECTANGLE.getMin();
+        Vector2f max = RECTANGLE.getMax();
+
+        Vector2f[] vertices = {
+                new Vector2f(min.x, min.y), new Vector2f(min.x, max.y),
+                new Vector2f(max.x, min.y), new Vector2f(max.x, max.y)
+        };
+
+        result.x = AXIS.dot(vertices[0]);
+        result.y = result.x;
+
+        for (int i = 1; i < 4; i++)
+        {
+            float projection = AXIS.dot(vertices[i]);
+            result.x = Math.min(result.x, projection);
+            result.y = Math.max(result.y, projection);
+        }
+        return result;
+    }
+
+    private static Vector2f getInterval(Box RECTANGLE, Vector2f AXIS)
+    {
+        Vector2f result = new Vector2f(0, 0);
+
+        Vector2f[] vertices = RECTANGLE.getVertices();
+
+        result.x = AXIS.dot(vertices[0]);
+        result.y = result.x;
+
+        for (int i = 1; i < 4; i++)
+        {
+            float projection = AXIS.dot(vertices[i]);
+            result.x = Math.min(result.x, projection);
+            result.y = Math.max(result.y, projection);
+        }
+        return result;
+    }
+
+
+    // - - - Axis Overlap - - -
+
+    private static boolean overlapOnAxis(AABB BOX_1, AABB BOX_2, Vector2f AXIS)
+    {
+        // - - - NOTE: Assuming axis is a unit vector
+        Vector2f interval = getInterval(BOX_1, AXIS);
+        Vector2f interval2 = getInterval(BOX_2, AXIS);
+        return ((interval2.x <= interval.y) && (interval.x <= interval2.y));
+    }
+
+    private static boolean overlapOnAxis(AABB BOX_1, Box BOX_2, Vector2f AXIS)
+    {
+        // - - - NOTE: Assuming axis is a unit vector
+        Vector2f interval = getInterval(BOX_1, AXIS);
+        Vector2f interval2 = getInterval(BOX_2, AXIS);
+        return ((interval2.x <= interval.y) && (interval.x <= interval2.y));
+    }
+
+    private static boolean overlapOnAxis(Box BOX_1, Box BOX_2, Vector2f AXIS)
+    {
+        // - - - NOTE: Assuming axis is a unit vector
+        Vector2f interval = getInterval(BOX_1, AXIS);
+        Vector2f interval2 = getInterval(BOX_2, AXIS);
+        return ((interval2.x <= interval.y) && (interval.x <= interval2.y));
+    }
+
+
+    // - - - Raycasting - - -
 
     public static boolean raycast(Circle CIRLCE, Ray RAY, RayCastResult RESULT)
     {
@@ -241,181 +464,5 @@ public class IntersectionDetector
             RESULT.init(point, normal, t, true);
         }
         return true;
-    }
-
-    public static boolean circleAndLine(Circle CIRCLE, Line LINE)
-    {
-        return lineAndCircle(LINE, CIRCLE);
-    }
-
-    public static boolean circleAndCircle(Circle CIRCLE_1, Circle CIRCLE_2)
-    {
-        Vector2f vecBetweenCenters = new Vector2f(CIRCLE_1.getCenter()).sub(new Vector2f(CIRCLE_2.getCenter()));
-        float radiiSum = CIRCLE_1.getRadius() + CIRCLE_2.getRadius();
-        return  vecBetweenCenters.lengthSquared() <= radiiSum * radiiSum;
-    }
-
-    public static boolean circleAndAABB(Circle CIRCLE, AABB BOX)
-    {
-        Vector2f min = BOX.getMin();
-        Vector2f max = BOX.getMax();
-
-        Vector2f closestPointToCirlce = new Vector2f(CIRCLE.getCenter());
-        if (closestPointToCirlce.x < min.x)
-        {
-            closestPointToCirlce.x = min.x;;
-        }
-        else if (closestPointToCirlce.x > max.x)
-        {
-            closestPointToCirlce.x = max.x;
-        }
-
-        if (closestPointToCirlce.y < min.y)
-        {
-            closestPointToCirlce.y = min.y;
-        }
-        else if (closestPointToCirlce.y > max.y)
-        {
-            closestPointToCirlce.y = max.y;
-        }
-
-        Vector2f circleToBox = new Vector2f(CIRCLE.getCenter()).sub(closestPointToCirlce);
-        return circleToBox.lengthSquared() <= CIRCLE.getRadius() * CIRCLE.getRadius();
-    }
-
-    public static boolean circleAndBox2D(Circle CIRCLE, Box BOX)
-    {
-        // treat box as AABB after rotating
-        Vector2f min = new Vector2f();
-        Vector2f max = new Vector2f(BOX.getHalfSize()).mul(2.0f);
-
-        // - - - create a circle in box local space
-        Vector2f r = new Vector2f(CIRCLE.getCenter()).sub(BOX.getRigidBody().getPosition());
-        ForgeMath.rotate(r, -BOX.getRigidBody().getRotation(), new Vector2f(0f, 0f));
-        Vector2f localCirclePOs = new Vector2f(r).add(BOX.getHalfSize());
-
-        Vector2f closestPointToCirlce = new Vector2f(localCirclePOs);
-        if (closestPointToCirlce.x < min.x)
-        {
-            closestPointToCirlce.x = min.x;;
-        }
-        else if (closestPointToCirlce.x > max.x)
-        {
-            closestPointToCirlce.x = max.x;
-        }
-
-        if (closestPointToCirlce.y < min.y)
-        {
-            closestPointToCirlce.y = min.y;
-        }
-        else if (closestPointToCirlce.y > max.y)
-        {
-            closestPointToCirlce.y = max.y;
-        }
-
-        Vector2f circleToBox = new Vector2f(localCirclePOs).sub(closestPointToCirlce);
-        return circleToBox.lengthSquared() <= CIRCLE.getRadius() * CIRCLE.getRadius();
-    }
-
-    public static boolean AABBandCircle(AABB BOX, Circle CIRCLE)
-    {
-        return circleAndAABB(CIRCLE, BOX);
-    }
-
-    public static boolean AABBandAABB(AABB BOX_1, AABB BOX_2)
-    {
-        // NOTE: axis aligned on x and y
-        Vector2f[] axesToTest = {new Vector2f(0, 1), new Vector2f(1, 0)};
-        for (Vector2f axis : axesToTest)
-        {
-            if (!overlapOnAxis(BOX_1, BOX_2, axis))
-            {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public static boolean AABBandBOX(AABB BOX_1, Box BOX_2)
-    {
-        Vector2f[] axesToTest = {
-                new Vector2f(0, 1), new Vector2f(1, 0),
-                new Vector2f(0, 1), new Vector2f(1, 0)
-        };
-        ForgeMath.rotate(axesToTest[2], BOX_2.getRigidBody().getRotation(), new Vector2f(0, 0));
-        ForgeMath.rotate(axesToTest[3], BOX_2.getRigidBody().getRotation(), new Vector2f(0, 0));
-        for (Vector2f axis : axesToTest)
-        {
-            if (!overlapOnAxis(BOX_1, BOX_2, axis))
-            {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private static Vector2f getInterval(AABB RECTANGLE, Vector2f AXIS)
-    {
-        Vector2f result = new Vector2f(0, 0);
-        Vector2f min = RECTANGLE.getMin();
-        Vector2f max = RECTANGLE.getMax();
-
-        Vector2f[] vertices = {
-                new Vector2f(min.x, min.y), new Vector2f(min.x, max.y),
-                new Vector2f(max.x, min.y), new Vector2f(max.x, max.y)
-        };
-
-        result.x = AXIS.dot(vertices[0]);
-        result.y = result.x;
-
-        for (int i = 1; i < 4; i++)
-        {
-            float projection = AXIS.dot(vertices[i]);
-            result.x = Math.min(result.x, projection);
-            result.y = Math.max(result.y, projection);
-        }
-        return result;
-    }
-
-    private static boolean overlapOnAxis(AABB BOX_1, AABB BOX_2, Vector2f AXIS)
-    {
-        // - - - NOTE: Assuming axis is a unit vector
-        Vector2f interval = getInterval(BOX_1, AXIS);
-        Vector2f interval2 = getInterval(BOX_2, AXIS);
-        return ((interval2.x <= interval.y) && (interval.x <= interval2.y));
-    }
-
-    private static boolean overlapOnAxis(AABB BOX_1, Box BOX_2, Vector2f AXIS)
-    {
-        // - - - NOTE: Assuming axis is a unit vector
-        Vector2f interval = getInterval(BOX_1, AXIS);
-        Vector2f interval2 = getInterval(BOX_2, AXIS);
-        return ((interval2.x <= interval.y) && (interval.x <= interval2.y));
-    }
-
-    private static boolean overlapOnAxis(Box BOX_1, Box BOX_2, Vector2f AXIS)
-    {
-        // - - - NOTE: Assuming axis is a unit vector
-        Vector2f interval = getInterval(BOX_1, AXIS);
-        Vector2f interval2 = getInterval(BOX_2, AXIS);
-        return ((interval2.x <= interval.y) && (interval.x <= interval2.y));
-    }
-
-    private static Vector2f getInterval(Box RECTANGLE, Vector2f AXIS)
-    {
-        Vector2f result = new Vector2f(0, 0);
-
-        Vector2f[] vertices = RECTANGLE.getVertices();
-
-        result.x = AXIS.dot(vertices[0]);
-        result.y = result.x;
-
-        for (int i = 1; i < 4; i++)
-        {
-            float projection = AXIS.dot(vertices[i]);
-            result.x = Math.min(result.x, projection);
-            result.y = Math.max(result.y, projection);
-        }
-        return result;
     }
 }

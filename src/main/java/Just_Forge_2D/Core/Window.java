@@ -4,10 +4,10 @@ package Just_Forge_2D.Core;
 
 // - - - Internal
 
-import Just_Forge_2D.Core.Input.justForgeKeyboard;
+import Just_Forge_2D.Core.Input.Keyboard;
 import Just_Forge_2D.Core.Input.Mouse;
-import Just_Forge_2D.Core.Scene.EditorScene;
-import Just_Forge_2D.Core.Scene.justForgeScene;
+import Just_Forge_2D.Editor.EditorScene;
+import Just_Forge_2D.Core.Scene.Scene;
 import Just_Forge_2D.Editor.justForgeImGui;
 import Just_Forge_2D.Renderer.DebugPencil;
 import Just_Forge_2D.Renderer.Framebuffer;
@@ -33,27 +33,32 @@ public class Window
     // - - - | Private Variables | - - -
 
 
-    // - - - Window variables
-    private int width;
-    private int height;
-    private String title;
+    // - - - Window variables - - -
+
+    // - - - basic size and title
+    private int width = 1980;
+    private int height= 720;
+    private final String title;
+
+    // - - - window pointer
     private long glfwWindow;
+    private boolean isInitialized = false;
+
+    // - - - advanced window configuration
     private int transparent = GLFW_FALSE;
     private int maximized = GLFW_FALSE;
     private int visible = GLFW_FALSE;
     private int decorated = GLFW_TRUE;
     private int resizable = GLFW_FALSE;
-    private boolean enableVsync = true;
-    private boolean isInitialized = false;
-    private boolean isMeddledWith = false;
 
-    // - - - Rendering varaibles
+    // - - - Rendering variables
     private int fps = 0;
     public float r, g, b, a;
+    private boolean enableVsync = true;
     private Framebuffer framebuffer;
 
     // - - - Systems
-    private static justForgeScene currentScene;
+    private static Scene currentScene;
 
     // - - - Singleton
     private static Window window = null;
@@ -66,16 +71,14 @@ public class Window
     float endTime = 0;
     float dt = -1;
 
+
     // - - - | Functions | - - -
 
 
     // - - - Private Constructor for Singleton
     private Window()
     {
-        this.width = 800;
-        this.height = 600;
-
-        float targestAspectRatio = 16f / 9f;
+        float targetAspectRatio = 16f / 9f;
 
         this.title = "Just Forge Tester";
 
@@ -87,9 +90,8 @@ public class Window
         justForgeLogger.FORGE_LOG_INFO("Started Just Forge 2D");
     }
 
-
     // - - - Systems function to change the scene
-    public static void changeScene(justForgeScene NEW_SCENE)
+    public static void changeScene(Scene NEW_SCENE)
     {
         justForgeLogger.FORGE_LOG_INFO("Switching Scenes");
         currentScene = NEW_SCENE;
@@ -104,6 +106,7 @@ public class Window
         if (Window.window == null)
         {
             Window.window = new Window();
+            justForgeLogger.FORGE_LOG_INFO("Window system restarted");
         }
         return Window.window;
     }
@@ -151,6 +154,7 @@ public class Window
 
         // TODO: Maybe let this stay
         GLFWVidMode videoMode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+        boolean isMeddledWith = false;
         if (!isMeddledWith)
         {
             this.width = videoMode.width();
@@ -165,7 +169,7 @@ public class Window
         }
         justForgeLogger.FORGE_LOG_INFO("Window successfully created");
 
-        // - - - Setup the mouse
+        // - - - Set up the mouse
         Mouse.get();
         glfwSetCursorPosCallback(glfwWindow, Mouse::mousePositionCallback);
         glfwSetMouseButtonCallback(glfwWindow, Mouse::mouseButtonCallback);
@@ -176,9 +180,9 @@ public class Window
         });
         justForgeLogger.FORGE_LOG_INFO("Mouse Input linked with window");
 
-        // - - - Setup the keyboard
-        justForgeKeyboard.init();
-        glfwSetKeyCallback(glfwWindow, justForgeKeyboard::keyCallback);
+        // - - - Set up the keyboard
+        Keyboard.get();
+        glfwSetKeyCallback(glfwWindow, Keyboard::keyCallback);
         justForgeLogger.FORGE_LOG_INFO("Keyboard Input linked with window");
 
         // - - - Make the OpenGL context current
@@ -230,7 +234,7 @@ public class Window
         glfwTerminate();
         Objects.requireNonNull(glfwSetErrorCallback(null)).free();
 
-        // - - - Save SCene
+        // - - - Save Scene
         currentScene.save();
 
         // - - - Final Logs
@@ -258,7 +262,7 @@ public class Window
         glClear(GL_COLOR_BUFFER_BIT);
 
         // - - - Framebuffer
-        //this.framebuffer.bind();
+        this.framebuffer.bind();
 
         if (dt >= 0.0d)
         {
@@ -281,10 +285,17 @@ public class Window
         beginTime = endTime;
     }
 
-    public static justForgeScene getCurrentScene()
+
+    // - - - | Getters Setters and Decoration | - - -
+
+    // - - - scene
+    public static Scene getCurrentScene()
     {
         return get().currentScene;
     }
+
+
+    // - - - width, height and title - - -
 
     public static int getWidth()
     {
@@ -306,16 +317,6 @@ public class Window
         get().height = NEW_HEIGHT;
     }
 
-    public static float getWindowOpacity()
-    {
-        return glfwGetWindowOpacity(get().glfwWindow);
-    }
-
-    public static void setWindowOpacity(float OPACITY)
-    {
-        glfwSetWindowOpacity(get().glfwWindow, OPACITY);
-    }
-
     public static String getWindowTitle()
     {
         return glfwGetWindowTitle(get().glfwWindow);
@@ -331,13 +332,17 @@ public class Window
         glfwSetWindowAspectRatio(get().glfwWindow, NUMERATOR, DENOMINATOR);
     }
 
-    public static void setVsync(boolean ENABLE)
+
+    // - - - look and feel - - -
+
+    public static float getWindowOpacity()
     {
-        get().enableVsync  = ENABLE;
-        if (!ENABLE)
-        {
-            glfwSwapInterval(1);
-        }
+        return glfwGetWindowOpacity(get().glfwWindow);
+    }
+
+    public static void setWindowOpacity(float OPACITY)
+    {
+        glfwSetWindowOpacity(get().glfwWindow, OPACITY);
     }
 
     public static void setWindowPosition(int X, int Y)
@@ -345,16 +350,11 @@ public class Window
         glfwSetWindowPos(get().glfwWindow, X, Y);
     }
 
-    public static void close()
-    {
-        glfwSetWindowShouldClose(get().glfwWindow, true);
-    }
-
     public static void setTransparent(boolean DO)
     {
         if (!get().isInitialized)
         {
-
+            return;
         }
         if (DO)
         {
@@ -380,6 +380,27 @@ public class Window
         {
             glfwSetWindowAttrib(get().glfwWindow, GLFW_DECORATED, GLFW_FALSE);
         }
+    }
+
+    public static void setClearColor(float R, float G, float B, float A)
+    {
+        get().g = G;
+        get().r = R;
+        get().b = B;
+        get().a = A;
+    }
+
+
+    // - - - hide, show maximise, minimize, close etc - - -
+
+    public static void close()
+    {
+        glfwSetWindowShouldClose(get().glfwWindow, true);
+    }
+
+    public static boolean shouldClose()
+    {
+        return glfwWindowShouldClose(get().glfwWindow);
     }
 
     public static void maximize()
@@ -408,22 +429,20 @@ public class Window
         }
     }
 
-    public static void setColor(float R, float G, float B, float A)
-    {
-        get().g = G;
-        get().r = R;
-        get().b = B;
-        get().a = A;
-    }
 
-    public static boolean shouldClose()
+    // - - - fps related - - -
+
+    public static void setVsync(boolean ENABLE)
     {
-        return glfwWindowShouldClose(get().glfwWindow);
+        get().enableVsync  = ENABLE;
+        if (!ENABLE)
+        {
+            glfwSwapInterval(1);
+        }
     }
 
     public static float getFPS()
     {
         return get().fps;
     }
-
 }

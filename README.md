@@ -1,6 +1,6 @@
 <div align="center">
   
-<img src="https://github.com/user-attachments/assets/9b3adcf7-70c9-45f0-ab14-3769072244d5" alt="Quickemu" width="256" />
+<img src="https://github.com/user-attachments/assets/9b3adcf7-70c9-45f0-ab14-3769072244d5" alt="Logo" width="256" />
 
 # Just Forge 2D
 
