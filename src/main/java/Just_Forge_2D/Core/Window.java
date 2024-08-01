@@ -216,6 +216,7 @@ public class Window
         justForgeLogger.FORGE_LOG_INFO("Editor linked with window");
 
         this.framebuffer = new Framebuffer(800, 600);
+        glViewport(0, 0, 800, 600);
         justForgeLogger.FORGE_LOG_INFO("Framebuffer created and assigned for offscreen rendering");
 
         beginTime = (float) justForgeTime.getTime();
@@ -246,7 +247,7 @@ public class Window
     // - - - Loop the game
     public void gameLoop()
     {
-        if (Math.abs(fps - (int) (1.0d / dt)) >= 30)
+        if (Math.abs(fps - (int) (1.0d / dt)) >= 600)
         {
             fps = (int) (1.0d / dt);
             justForgeLogger.FORGE_LOG_WARNING("Experienced fps spike. FPS: " + fps);
@@ -258,11 +259,11 @@ public class Window
         // - - - Debug Drawing
         DebugPencil.beginFrame();
 
-        glClearColor(r, g, b, a);
-        glClear(GL_COLOR_BUFFER_BIT);
-
         // - - - Framebuffer
         this.framebuffer.bind();
+
+        glClearColor(r, g, b, a);
+        glClear(GL_COLOR_BUFFER_BIT);
 
         if (dt >= 0.0d)
         {
@@ -292,6 +293,12 @@ public class Window
     public static Scene getCurrentScene()
     {
         return get().currentScene;
+    }
+
+    // - - - framebuffer
+    public static Framebuffer getFramebuffer()
+    {
+        return get().framebuffer;
     }
 
 
@@ -325,6 +332,11 @@ public class Window
     public static void setWindowTitle(String TITLE)
     {
         glfwSetWindowTitle(get().glfwWindow, TITLE);
+    }
+
+    public static float getAspectRatio()
+    {
+        return 16f/9f;
     }
 
     public static void setAspectRatio(int NUMERATOR, int DENOMINATOR)

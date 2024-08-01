@@ -100,8 +100,8 @@ public abstract class Component
         }
         catch (IllegalAccessException e)
         {
-            justForgeLogger.FORGE_LOG_FATAL("Error loading GUI code: illegal access exception for component " + this.toString());
-            justForgeLogger.FORGE_LOG_ERROR(e.getMessage());
+            //justForgeLogger.FORGE_LOG_FATAL("Error loading GUI code: illegal access exception for component " + this.toString());
+            //justForgeLogger.FORGE_LOG_ERROR(e.getMessage());
         }
     }
 
