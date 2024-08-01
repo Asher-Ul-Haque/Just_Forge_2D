@@ -1061,8 +1061,8 @@
             ],
             "transform": {
               "position": {
-                "x": -224.0,
-                "y": 672.0
+                "x": 0.0,
+                "y": 640.0
               },
               "scale": {
                 "x": 32.0,
@@ -1223,8 +1223,8 @@
             ],
             "transform": {
               "position": {
-                "x": -224.0,
-                "y": 672.0
+                "x": 0.0,
+                "y": 640.0
               },
               "scale": {
                 "x": 32.0,
@@ -1233,7 +1233,7 @@
               "uniqueID": -1
             },
             "layer": 0,
-            "uniqueID": 26
+            "uniqueID": 27
           },
           "uniqueID": 30
         }
@@ -1251,7 +1251,7 @@
       "uniqueID": -1
     },
     "layer": 0,
-    "uniqueID": 0
+    "uniqueID": 26
   },
   {
     "name": "Sprite OBject Generated",
@@ -1308,6 +1308,30 @@
       "uniqueID": -1
     },
     "layer": 0,
-    "uniqueID": 26
+    "uniqueID": 28
+  },
+  {
+    "name": "Master",
+    "components": [
+      {
+        "type": "Just_Forge_2D.Core.ECS.Components.Attachable.MouseControlComponent",
+        "properties": {
+          "uniqueID": 32
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": 100.0,
+        "y": 100.0
+      },
+      "scale": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "uniqueID": -1
+    },
+    "layer": 0,
+    "uniqueID": 0
   }
 ]

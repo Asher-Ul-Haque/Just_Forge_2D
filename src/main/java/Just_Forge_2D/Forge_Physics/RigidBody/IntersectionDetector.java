@@ -37,8 +37,8 @@ public class IntersectionDetector
         Vector2f pointLocalBoxSpace = new Vector2f(POINT);
         ForgeMath.rotate(pointLocalBoxSpace, BOX.getRigidBody().getRotation(), BOX.getRigidBody().getPosition());
  
-        Vector2f min = BOX.getMin();
-        Vector2f max = BOX.getMax();
+        Vector2f min = BOX.getLocalMin();
+        Vector2f max = BOX.getLocalMax();
 
         return pointLocalBoxSpace.x <= max.x && min.x <= pointLocalBoxSpace.x && pointLocalBoxSpace.y <= max.y && min.y <= pointLocalBoxSpace.y;
     }
@@ -106,7 +106,7 @@ public class IntersectionDetector
         ForgeMath.rotate(localEnd, theta, center);
 
         Line localLine = new Line(localStart, localEnd);
-        AABB aabb = new AABB(BOX.getMin(), BOX.getMax());
+        AABB aabb = new AABB(BOX.getLocalMin(), BOX.getLocalMax());
 
         return lineAndAABB(localLine, aabb);
     }

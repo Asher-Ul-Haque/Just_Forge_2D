@@ -1,6 +1,7 @@
 package Just_Forge_2D.Forge_Physics.Primitives;
 
 import Just_Forge_2D.Forge_Physics.RigidBody.RigidBody;
+import Just_Forge_2D.Utils.ForgeMath;
 import org.joml.Vector2f;
 
 public class Box
@@ -20,20 +21,20 @@ public class Box
         this.halfSize = new Vector2f(size).mul(0.5f);
     }
 
-    public Vector2f getMin()
+    public Vector2f getLocalMin()
     {
         return new Vector2f(this.rigidBody.getPosition()).sub(this.halfSize);
     }
 
-    public Vector2f getMax()
+    public Vector2f getLocalMax()
     {
         return new Vector2f(this.rigidBody.getPosition()).add(this.halfSize);
     }
 
     public Vector2f[] getVertices()
     {
-        Vector2f min = getMin();
-        Vector2f max = getMax();
+        Vector2f min = getLocalMin();
+        Vector2f max = getLocalMax();
 
         Vector2f[] vertices = {
                 new Vector2f(min.x, min.y), new Vector2f(min.x, max.y),
@@ -44,9 +45,8 @@ public class Box
         {
             for (Vector2f vert : vertices)
             {
-                // TODO: Implement
                 // Rotates point(Vector2f about center) by rtoation(float in degrees)
-                //ForgeMath.rotate(vert, this.rigidBody.getPosition(), this.rigidBody.getRotation());
+                ForgeMath.rotate(vert, this.rigidBody.getRotation(), this.rigidBody.getPosition());
             }
         }
 

@@ -29,4 +29,10 @@ public class AABB
     {
         return new Vector2f(this.rigidBody.getPosition()).add(this.halfSize);
     }
+
+    public void setSize(Vector2f SIZE)
+    {
+        this.size.set(SIZE);
+        this.halfSize.set(SIZE.x / 2f, SIZE.y / 2f);
+    }
 }

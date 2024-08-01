@@ -17,4 +17,9 @@ public class Circle
     {
         return body.getPosition();
     }
+
+    public void setRadius(float RADIUS)
+    {
+        this.radius = RADIUS;
+    }
 }
