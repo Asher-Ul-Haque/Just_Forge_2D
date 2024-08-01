@@ -40,6 +40,7 @@ public class Framebuffer
         if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
         {
             justForgeLogger.FORGE_LOG_ERROR("Framebuffer not complete");
+            justForgeLogger.FORGE_LOG_ERROR(glGetError());
             assert false;
         }
         glBindFramebuffer(GL_FRAMEBUFFER, 0);

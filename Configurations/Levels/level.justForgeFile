@@ -785,7 +785,7 @@
             ],
             "transform": {
               "position": {
-                "x": 960.0,
+                "x": -128.0,
                 "y": 640.0
               },
               "scale": {
@@ -1100,7 +1100,7 @@
             ],
             "transform": {
               "position": {
-                "x": 960.0,
+                "x": -128.0,
                 "y": 640.0
               },
               "scale": {
@@ -1194,6 +1194,78 @@
         "type": "Just_Forge_2D.Core.ECS.Components.Attachable.MouseControlComponent",
         "properties": {
           "uniqueID": 31
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": 100.0,
+        "y": 100.0
+      },
+      "scale": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "uniqueID": -1
+    },
+    "layer": 0,
+    "uniqueID": 34
+  },
+  {
+    "name": "Master",
+    "components": [
+      {
+        "type": "Just_Forge_2D.Core.ECS.Components.Attachable.MouseControlComponent",
+        "properties": {
+          "uniqueID": 32
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": 100.0,
+        "y": 100.0
+      },
+      "scale": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "uniqueID": -1
+    },
+    "layer": 0,
+    "uniqueID": 35
+  },
+  {
+    "name": "Master",
+    "components": [
+      {
+        "type": "Just_Forge_2D.Core.ECS.Components.Attachable.MouseControlComponent",
+        "properties": {
+          "uniqueID": 33
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": 100.0,
+        "y": 100.0
+      },
+      "scale": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "uniqueID": -1
+    },
+    "layer": 0,
+    "uniqueID": 36
+  },
+  {
+    "name": "Master",
+    "components": [
+      {
+        "type": "Just_Forge_2D.Core.ECS.Components.Attachable.MouseControlComponent",
+        "properties": {
+          "uniqueID": 34
         }
       }
     ],
