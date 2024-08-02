@@ -34,8 +34,9 @@ public class justForgeRenderBatch implements Comparable<justForgeRenderBatch>
     // - - - sizes
     private final int TEXTURE_COORDS_SIZE = 2;
     private final int TEXTURE_ID_SIZE = 1;
+    private final int ENTITY_ID_SIZE = 1;
     private final int POSITION_SIZE = 2;
-    private final int VERTEX_SIZE = 9;
+    private final int VERTEX_SIZE = 10;
     private final int COLOR_SIZE = 4;
     private final int VERTEX_SIZE_BYTES = VERTEX_SIZE * Float.BYTES;
 
@@ -44,6 +45,7 @@ public class justForgeRenderBatch implements Comparable<justForgeRenderBatch>
     private final int COLOR_OFFSET = POSITION_OFFSET + POSITION_SIZE * Float.BYTES;
     private final int TEXTURE_COORDS_OFFSET = COLOR_OFFSET + COLOR_SIZE * Float.BYTES;
     private final int TEXTURE_ID_OFFSET = TEXTURE_COORDS_OFFSET + TEXTURE_COORDS_SIZE * Float.BYTES;
+    private final int ENTITY_ID_OFFSET = TEXTURE_ID_OFFSET + TEXTURE_ID_OFFSET * Float.BYTES;
 
     // - - - batch related
     private SpriteComponent[] sprites;
@@ -55,7 +57,6 @@ public class justForgeRenderBatch implements Comparable<justForgeRenderBatch>
 
     // - - - for remderer
     private int vaoID, vboID;
-    private justForgeShader shader;
     private float[] vertices;
     private int[] textureSlots = {0, 1, 2, 3, 4, 5, 6, 7};
 
@@ -65,7 +66,7 @@ public class justForgeRenderBatch implements Comparable<justForgeRenderBatch>
     // - - - constructor
     public justForgeRenderBatch(int MAX_BATCH_SIZE, int LAYER)
     {
-        shader = justForgeAssetPool.getShader("Assets/Shaders/default.glsl");
+        //shader = justForgeAssetPool.getShader("Assets/Shaders/default.glsl");
         this.maxBatchSize = MAX_BATCH_SIZE;
         this.sprites = new SpriteComponent[maxBatchSize];
         this.layer = LAYER;
@@ -110,6 +111,9 @@ public class justForgeRenderBatch implements Comparable<justForgeRenderBatch>
 
         glVertexAttribPointer(3, TEXTURE_ID_SIZE, GL_FLOAT, false, VERTEX_SIZE_BYTES, TEXTURE_ID_OFFSET);
         glEnableVertexAttribArray(3);
+
+        glVertexAttribPointer(4, ENTITY_ID_SIZE, GL_FLOAT, false, VERTEX_SIZE_BYTES, ENTITY_ID_OFFSET);
+        glEnableVertexAttribArray(4);
     }
 
     // - - - there is no comment here
@@ -133,6 +137,7 @@ public class justForgeRenderBatch implements Comparable<justForgeRenderBatch>
         }
 
         // - - - Use the shader
+        justForgeShader shader = justForgeRenderer.getCurrentShader();
         shader.use();
         shader.uploadMatrix4f("uProjection", Window.getCurrentScene().getCamera().getProjectionMatrix());
         shader.uploadMatrix4f("uView", Window.getCurrentScene().getCamera().getViewMatrix());
@@ -250,6 +255,9 @@ public class justForgeRenderBatch implements Comparable<justForgeRenderBatch>
             vertices[offset + 6] = textureCoords[i].x;
             vertices[offset + 7] = textureCoords[i].y;
             vertices[offset + 8] = textID;
+
+            // - - - Load Entity ID
+            vertices[offset + 9] = sprite.gameObject.getUniqueID() + 1;
 
             // - - - Update the offset
             offset += VERTEX_SIZE;

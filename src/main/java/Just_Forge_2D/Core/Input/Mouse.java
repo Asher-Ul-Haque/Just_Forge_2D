@@ -182,6 +182,22 @@ public class Mouse
     }
 
 
+    // - - - Screen Space - - -
+
+    public static float getScreenX()
+    {
+        float currentX = getX() - get().gameViewportPos.x;
+        currentX = (currentX / get().grameViewportSize.x) * 1980;
+        return currentX;
+    }
+
+    public static float getScreenY()
+    {
+        float currentY = getY() - get().gameViewportPos.y;
+        currentY = 720f - ((currentY / get().grameViewportSize.y) * 720f);
+        return currentY;
+    }
+
     // - - - Scroll - - -
 
     public static float getScrollX()

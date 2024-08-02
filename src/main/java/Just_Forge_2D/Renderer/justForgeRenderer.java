@@ -12,6 +12,7 @@ public class justForgeRenderer
 {
     private final int MAX_BATCH_SIZE = 1024;
     private List<justForgeRenderBatch> batches;
+    private static justForgeShader currentShader;
 
     public justForgeRenderer()
     {
@@ -63,5 +64,16 @@ public class justForgeRenderer
         {
             batch.render();
         }
+    }
+
+    public static void bindShader(justForgeShader SHADER)
+    {
+        currentShader = SHADER;
+        currentShader.use();
+    }
+
+    public static justForgeShader getCurrentShader()
+    {
+        return currentShader;
     }
 }

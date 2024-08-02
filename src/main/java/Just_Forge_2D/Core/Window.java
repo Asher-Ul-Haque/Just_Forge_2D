@@ -8,15 +8,20 @@ import Just_Forge_2D.Core.Input.Keyboard;
 import Just_Forge_2D.Core.Input.Mouse;
 import Just_Forge_2D.Editor.EditorScene;
 import Just_Forge_2D.Core.Scene.Scene;
+import Just_Forge_2D.Editor.ObjectSelector;
 import Just_Forge_2D.Editor.justForgeImGui;
 import Just_Forge_2D.Renderer.DebugPencil;
 import Just_Forge_2D.Renderer.Framebuffer;
+import Just_Forge_2D.Renderer.justForgeRenderer;
+import Just_Forge_2D.Renderer.justForgeShader;
+import Just_Forge_2D.Utils.justForgeAssetPool;
 import Just_Forge_2D.Utils.justForgeLogger;
 import Just_Forge_2D.Utils.justForgeTime;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
 
+import javax.swing.*;
 import java.util.Objects;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
@@ -65,11 +70,16 @@ public class Window
 
     // - - - Editor
     private justForgeImGui editorLayer;
+    private ObjectSelector selector;
 
     // - - - time keeping
     float beginTime = 0;
     float endTime = 0;
     float dt = -1;
+
+    // - - - shaders
+    justForgeShader defaultShader;
+    justForgeShader selectorShader;
 
 
     // - - - | Functions | - - -
@@ -215,9 +225,14 @@ public class Window
         this.editorLayer.initImGui();
         justForgeLogger.FORGE_LOG_INFO("Editor linked with window");
 
+        this.selector = new ObjectSelector(1980, 720);
         this.framebuffer = new Framebuffer(1980, 720);
         glViewport(0, 0, 1980, 720);
         justForgeLogger.FORGE_LOG_INFO("Framebuffer created and assigned for offscreen rendering");
+
+        // - - - compile shaders
+        this.defaultShader = justForgeAssetPool.getShader("Assets/Shaders/default.glsl");
+        this.selectorShader = justForgeAssetPool.getShader("Assets/Shaders/selector.glsl");
 
         beginTime = (float) justForgeTime.getTime();
         justForgeLogger.FORGE_LOG_INFO("Time keeping system Online");
@@ -256,6 +271,22 @@ public class Window
         // - - - Poll events
         glfwPollEvents();
 
+
+        // - - - Renderpasses - - -
+
+        // - - - 1: renderer to object picker
+        glDisable(GL_BLEND);
+        selector.enableWriting();
+
+        glViewport(0, 0, 1980, 720);
+        glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        justForgeRenderer.bindShader(selectorShader);
+        currentScene.render(dt);
+        selector.disableWriting();
+
+        // - - - 2: render to monitor
+
         // - - - Debug Drawing
         DebugPencil.beginFrame();
 
@@ -268,7 +299,17 @@ public class Window
         if (dt >= 0.0d)
         {
             DebugPencil.draw();
+            justForgeRenderer.bindShader(defaultShader);
             currentScene.update(dt);
+            currentScene.render(dt);
+        }
+
+        // TODO: Remove test code
+        if (Mouse.isMouseButtonDown(GLFW_MOUSE_BUTTON_LEFT))
+        {
+            int x = (int)Mouse.getScreenX();
+            int y = (int)Mouse.getScreenY();
+            justForgeLogger.FORGE_LOG_DEBUG(selector.readPixel(x, y));
         }
 
         // - - - Finish drawing to texture so that imgui should be rendered to the window

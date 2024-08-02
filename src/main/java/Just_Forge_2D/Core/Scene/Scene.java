@@ -57,7 +57,8 @@ public abstract class Scene
         isRunning = true;
     }
 
-    public abstract void update(double DELTA_TIME);
+    public abstract void update(float DELTA_TIME);
+    public abstract void render(float DELTA_TIME);
     public void init(){}
 
     public void addGameObject(GameObject GAME_OBJECT)
