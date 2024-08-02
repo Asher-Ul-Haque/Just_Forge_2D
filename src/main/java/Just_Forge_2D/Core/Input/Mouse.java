@@ -1,7 +1,10 @@
 package Just_Forge_2D.Core.Input;
 
+import Just_Forge_2D.Core.Camera;
 import Just_Forge_2D.Core.Window;
 import Just_Forge_2D.Utils.justForgeLogger;
+import org.joml.Matrix4f;
+import org.joml.Vector2f;
 import org.joml.Vector4f;
 
 import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
@@ -27,6 +30,10 @@ public class Mouse
     // - - - Mouse Buttons
     private final int buttonCount = 9;
     private final boolean[] isMouseButtonPressed = new boolean[buttonCount]; // left, middle, right
+
+    // - - - Relations
+    private Vector2f gameViewportPos = new Vector2f();
+    private Vector2f grameViewportSize = new Vector2f();
 
 
     // - - - | Functions | - - -
@@ -147,20 +154,26 @@ public class Mouse
 
     public static float getOrthoX()
     {
-        float currentX = getX();
-        currentX = (currentX / (float) Window.getWidth()) * 2.0f - 1.0f;
+        float currentX = getX() - get().gameViewportPos.x;
+        currentX = (currentX / get().grameViewportSize.x) * 2.0f - 1.0f;
         Vector4f temp = new Vector4f(currentX, 0, 0, 1);
-        temp.mul(Window.getCurrentScene().getCamera().getInverseProjectionMatrix()).mul(Window.getCurrentScene().getCamera().getInverseViewMatrix());
+        Camera camera = Window.getCurrentScene().getCamera();
+        Matrix4f viewProjection = new Matrix4f();
+        camera.getInverseViewMatrix().mul(camera.getInverseProjectionMatrix(), viewProjection);
+        temp.mul(viewProjection);
         currentX = temp.x;
         return currentX;
     }
 
     public static float getOrthoY()
     {
-        float currentY = Window.getHeight() - getY();
-        currentY = (currentY / (float) Window.getHeight()) * 2.0f - 1.0f;
+        float currentY = get().gameViewportPos.y - getY();
+        currentY = (currentY / get().grameViewportSize.y) * 2.0f - 1.0f;
         Vector4f temp = new Vector4f(0, currentY, 0, 1);
-        temp.mul(Window.getCurrentScene().getCamera().getInverseProjectionMatrix()).mul(Window.getCurrentScene().getCamera().getInverseViewMatrix());
+        Camera camera = Window.getCurrentScene().getCamera();
+        Matrix4f viewProjection = new Matrix4f();
+        camera.getInverseViewMatrix().mul(camera.getInverseProjectionMatrix(), viewProjection);
+        temp.mul(viewProjection);
         currentY = temp.y;
         return currentY;
     }
@@ -194,5 +207,14 @@ public class Mouse
         }
 
         return get().isMouseButtonPressed[BUTTON];
+    }
+
+
+    // - - - View port - - -
+
+    public static void setGameViewport(Vector2f GAME_VIEWPORT_POS, Vector2f GAME_VIEWPORT_SIZE)
+    {
+        get().gameViewportPos.set(GAME_VIEWPORT_POS);
+        get().grameViewportSize.set(GAME_VIEWPORT_SIZE);
     }
 }

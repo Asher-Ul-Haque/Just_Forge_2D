@@ -215,8 +215,8 @@ public class Window
         this.editorLayer.initImGui();
         justForgeLogger.FORGE_LOG_INFO("Editor linked with window");
 
-        this.framebuffer = new Framebuffer(800, 600);
-        glViewport(0, 0, 800, 600);
+        this.framebuffer = new Framebuffer(1980, 720);
+        glViewport(0, 0, 1980, 720);
         justForgeLogger.FORGE_LOG_INFO("Framebuffer created and assigned for offscreen rendering");
 
         beginTime = (float) justForgeTime.getTime();

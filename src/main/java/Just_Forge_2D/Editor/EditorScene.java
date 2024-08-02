@@ -4,6 +4,7 @@ import Just_Forge_2D.Core.ECS.Components.Attachable.Sprite.Sprite;
 import Just_Forge_2D.Core.ECS.Components.Attachable.Sprite.SpriteComponent;
 import Just_Forge_2D.Core.ECS.Components.Attachable.Sprite.SpriteSheet;
 import Just_Forge_2D.Core.ECS.Components.Attachable.MouseControlComponent;
+import Just_Forge_2D.Core.ECS.Components.GridLines;
 import Just_Forge_2D.Core.ECS.GameObject;
 import Just_Forge_2D.Core.Camera;
 import Just_Forge_2D.Core.Scene.Scene;
@@ -17,15 +18,15 @@ import imgui.ImGui;
 import imgui.ImVec2;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
+import org.joml.Vector4f;
 
 
 public class EditorScene extends Scene
 {
-    private GameObject master = new GameObject("Master", new TransformComponent(new Vector2f(100, 100)), 0);
+    private GameObject master = new GameObject("Master", new TransformComponent(new Vector2f(100, 200), new Vector2f(256, 256)), 0);
     private SpriteSheet sprites;
     Physics physics = new Physics(1.0f / 60.0f, new Vector2f(0, -10));
-    TransformComponent obj1, obj2;
-    RigidBody rb1, rb2;
+    RigidBody rb1;
 
 
 //    MouseControlComponent mouseControls = new MouseControlComponent();
@@ -40,18 +41,14 @@ public class EditorScene extends Scene
 
         //master.addComponent(new GridLines());
         master.addComponent(new MouseControlComponent());
-        this.addGameObject(master);
-
-        obj1 = new TransformComponent(new Vector2f(100, 500));
-        obj2 = new TransformComponent(new Vector2f(200, 500));
+        SpriteComponent component = new SpriteComponent();
+        component.setColor(new Vector4f(1, 0, 0, 1));
+        master.addComponent(component);
         rb1 = new RigidBody();
-        rb2 = new RigidBody();
-        rb1.setRawTransform(obj1);
-        rb2.setRawTransform(obj2);
-        rb1.setMass(100);
-        rb2.setMass(200);
+        rb1.setMass(100.0f);
+        rb1.setRawTransform(master.transform);
         physics.addRigidBody(rb1);
-        physics.addRigidBody(rb2);
+        this.addGameObject(master);
 
         loadResources();
         this.camera = new Camera(new Vector2f(-250, 0));
@@ -89,15 +86,11 @@ public class EditorScene extends Scene
     {
         master.getCompoent(MouseControlComponent.class).update((float) DELTA_TIME);
 
-        DebugPencil.addBox(obj1.position, new Vector2f(32, 32), new Vector3f(1, 0, 0));
-        DebugPencil.addBox(obj2.position, new Vector2f(32, 32), new Vector3f(0, 1, 0));
-
-        physics.update((float) DELTA_TIME);
-
         for (GameObject gameObject : this.gameObjects)
         {
             gameObject.update((float) DELTA_TIME);
         }
+        physics.update((float) DELTA_TIME);
         this.renderer.render();
     }
 

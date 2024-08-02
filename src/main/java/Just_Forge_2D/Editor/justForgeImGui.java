@@ -144,7 +144,7 @@ public class justForgeImGui
             {
                 ImGui.setWindowFocus(null);
             }
-            if (!io.getWantCaptureMouse())
+            if (!io.getWantCaptureMouse() || GameViewport.getWantCaptureMouse())
             {
                 Mouse.mouseButtonCallback(w, button, action, mods);
             }
