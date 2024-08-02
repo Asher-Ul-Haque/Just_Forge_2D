@@ -15,13 +15,13 @@ Collapsed=1
 
 [Window][Inspector]
 Pos=8,30
-Size=32,730
+Size=224,730
 Collapsed=0
 DockId=0x00000004,0
 
 [Window][Block Picker]
-Pos=42,609
-Size=1316,151
+Pos=234,609
+Size=1124,151
 Collapsed=0
 DockId=0x00000002,0
 
@@ -31,15 +31,15 @@ Size=1366,768
 Collapsed=0
 
 [Window][Game Viewport]
-Pos=42,30
-Size=1316,577
+Pos=234,30
+Size=1124,577
 Collapsed=0
 DockId=0x00000001,0
 
 [Docking][Data]
 DockSpace     ID=0x6D3A3A6E Window=0x091AB4BE Pos=8,30 Size=1350,730 Split=X Selected=0xAE7BB42F
-  DockNode    ID=0x00000004 Parent=0x6D3A3A6E SizeRef=32,730 Selected=0xF02CD328
-  DockNode    ID=0x00000005 Parent=0x6D3A3A6E SizeRef=1316,730 Split=Y
+  DockNode    ID=0x00000004 Parent=0x6D3A3A6E SizeRef=224,730 Selected=0xF02CD328
+  DockNode    ID=0x00000005 Parent=0x6D3A3A6E SizeRef=1124,730 Split=Y
     DockNode  ID=0x00000001 Parent=0x00000005 SizeRef=1350,32 CentralNode=1 Selected=0xAE7BB42F
     DockNode  ID=0x00000002 Parent=0x00000005 SizeRef=1350,151 Selected=0xA9416207
 

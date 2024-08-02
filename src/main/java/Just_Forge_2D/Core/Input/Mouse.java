@@ -167,8 +167,11 @@ public class Mouse
 
     public static float getOrthoY()
     {
-        float currentY = get().gameViewportPos.y - getY();
-        currentY = (currentY / get().grameViewportSize.y) * 2.0f - 1.0f;
+        float currentY = getY() - get().gameViewportPos.y;
+        currentY = -((currentY / get().grameViewportSize.y) * 2.0f - 1.0f);
+        //float currentY = get().gameViewportPos.y - getY();
+        //float currentY = -get().gameViewportPos.y + Window.getHeight() - getY();
+//        currentY = (currentY / get().grameViewportSize.y) * 2.0f - 1.0f;
         Vector4f temp = new Vector4f(0, currentY, 0, 1);
         Camera camera = Window.getCurrentScene().getCamera();
         Matrix4f viewProjection = new Matrix4f();
