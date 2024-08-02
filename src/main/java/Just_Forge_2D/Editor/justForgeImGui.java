@@ -23,14 +23,17 @@ public class justForgeImGui
     private final long[] mouseCursors = new long[ImGuiMouseCursor.COUNT];
     private final ImGuiImplGl3 imGuiGl3 = new ImGuiImplGl3();
     private final long windowPtr;
+    private final GameViewport gameViewport = new GameViewport();
+    private final PropertiesWindow propertiesWindow;
 
 
     // - - - Functions - - -
 
     // - - - Constructor
-    public justForgeImGui(long GLFW_WINDOW_POINTER)
+    public justForgeImGui(long GLFW_WINDOW_POINTER, ObjectSelector SELECTOR)
     {
         this.windowPtr = GLFW_WINDOW_POINTER;
+        this.propertiesWindow = new PropertiesWindow(SELECTOR);
         justForgeLogger.FORGE_LOG_INFO("Created imgui for window " + GLFW_WINDOW_POINTER);
     }
 
@@ -144,7 +147,7 @@ public class justForgeImGui
             {
                 ImGui.setWindowFocus(null);
             }
-            if (!io.getWantCaptureMouse() || GameViewport.getWantCaptureMouse())
+            if (!io.getWantCaptureMouse() || gameViewport.getWantCaptureMouse())
             {
                 Mouse.mouseButtonCallback(w, button, action, mods);
             }
@@ -222,8 +225,10 @@ public class justForgeImGui
         startFrame(DELTA_TIME);
         ImGui.newFrame();
         setupDockSpace();
-        SCENE.sceneGUI();
-        GameViewport.gui();
+        SCENE.editorGUI();
+        gameViewport.gui();
+        propertiesWindow.update(DELTA_TIME, SCENE);
+        propertiesWindow.editorGUI();
         ImGui.end();
         ImGui.render();
 

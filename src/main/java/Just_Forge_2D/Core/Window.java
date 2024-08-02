@@ -221,11 +221,11 @@ public class Window
         isInitialized = true;
         justForgeLogger.FORGE_LOG_INFO("Window System Online");
 
-        this.editorLayer = new justForgeImGui(glfwWindow);
+        this.selector = new ObjectSelector(1980, 720);
+        this.editorLayer = new justForgeImGui(glfwWindow, this.selector);
         this.editorLayer.initImGui();
         justForgeLogger.FORGE_LOG_INFO("Editor linked with window");
 
-        this.selector = new ObjectSelector(1980, 720);
         this.framebuffer = new Framebuffer(1980, 720);
         glViewport(0, 0, 1980, 720);
         justForgeLogger.FORGE_LOG_INFO("Framebuffer created and assigned for offscreen rendering");
@@ -302,14 +302,6 @@ public class Window
             justForgeRenderer.bindShader(defaultShader);
             currentScene.update(dt);
             currentScene.render(dt);
-        }
-
-        // TODO: Remove test code
-        if (Mouse.isMouseButtonDown(GLFW_MOUSE_BUTTON_LEFT))
-        {
-            int x = (int)Mouse.getScreenX();
-            int y = (int)Mouse.getScreenY();
-            justForgeLogger.FORGE_LOG_DEBUG(selector.readPixel(x, y));
         }
 
         // - - - Finish drawing to texture so that imgui should be rendered to the window

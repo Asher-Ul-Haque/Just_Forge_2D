@@ -50,13 +50,6 @@ public class EditorScene extends Scene
         loadResources();
         this.camera = new Camera(new Vector2f(-250, 0));
         sprites = justForgeAssetPool.getSpriteSheet("Assets/Textures/spritesheet.png");
-        if (levelLoaded)
-        {
-            if (!gameObjects.isEmpty())
-            {
-                this.activeGameObject = gameObjects.get(0);
-            }
-        }
     }
 
     private void loadResources()

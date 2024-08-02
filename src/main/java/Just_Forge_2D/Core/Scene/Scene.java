@@ -17,6 +17,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 // - - - Abstract class for all the scenes
 public abstract class Scene
@@ -61,6 +62,9 @@ public abstract class Scene
     public abstract void render(float DELTA_TIME);
     public void init(){}
 
+
+    // - - -  Game Objects - - -
+
     public void addGameObject(GameObject GAME_OBJECT)
     {
         gameObjects.add(GAME_OBJECT);
@@ -70,6 +74,28 @@ public abstract class Scene
         }
         GAME_OBJECT.start();
         this.renderer.add(GAME_OBJECT);
+    }
+
+    public GameObject getGameObject(int GAME_OBJECT_ID)
+    {
+        Optional<GameObject> result = this.gameObjects.stream().filter(gameObject -> gameObject.getUniqueID() == GAME_OBJECT_ID).findFirst();
+        if (result.isEmpty())
+        {
+            justForgeLogger.FORGE_LOG_ERROR("Found no game object with ID: " + GAME_OBJECT_ID + " in scene: " + this.toString());
+        }
+        return result.orElse(null);
+
+        /*
+        for (GameObject object : gameObjects)
+        {
+            if (object.getUniqueID() == GAME_OBJECT_ID)
+            {
+                return object;
+            }
+        }
+        justForgeLogger.FORGE_LOG_ERROR("Found no game object with ID: " + GAME_OBJECT_ID + " in scene: " + this.toString());
+        return null;
+         */
     }
 
     // - - - Getters and Setters - - -
@@ -82,16 +108,6 @@ public abstract class Scene
 
     // - - - Editor GUI - - -
 
-    public void sceneGUI()
-    {
-        if (activeGameObject != null)
-        {
-            ImGui.begin("Inspector");
-            activeGameObject.editorGUI();
-            ImGui.end();
-        }
-        editorGUI();
-    }
 
     public void editorGUI() {}
 
