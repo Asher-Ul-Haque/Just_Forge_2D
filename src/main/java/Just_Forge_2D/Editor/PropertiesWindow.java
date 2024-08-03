@@ -27,11 +27,16 @@ public class PropertiesWindow
             int x = (int)Mouse.getScreenX();
             int y = (int)Mouse.getScreenY();
             int gameObjectID = this.selector.readPixel(x, y);
-            activeGameObject = CURRENT_SCENE.getGameObject(gameObjectID);
-            for (GameObject object : Window.getCurrentScene().gameObjects)
+            // TODO: temporary
+            if (gameObjectID > -1)
             {
-                justForgeLogger.FORGE_LOG_TRACE(object.getUniqueID());
+                activeGameObject = CURRENT_SCENE.getGameObject(gameObjectID);
             }
+            else
+            {
+                activeGameObject = CURRENT_SCENE.getGameObject(0);
+            }
+            justForgeLogger.FORGE_LOG_DEBUG("Currently active object: " + activeGameObject.toString());
         }
     }
 

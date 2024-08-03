@@ -314,6 +314,9 @@ public class Window
         // - - - Swap buffer for next frame
         glfwSwapBuffers(glfwWindow);
 
+        // - - - finish input
+        Mouse.endFrame();
+
         // - - - Keep time
         endTime = (float) justForgeTime.getTime();
         dt = endTime - beginTime;

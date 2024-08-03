@@ -20,7 +20,7 @@ import org.joml.Vector4f;
 
 public class EditorScene extends Scene
 {
-    private GameObject master = new GameObject("Master", new TransformComponent(new Vector2f(100, 200), new Vector2f(256, 256)), 0);
+    private GameObject master = new GameObject("Master", new TransformComponent(new Vector2f(100, 200), new Vector2f(26, 26)), 0);
     private SpriteSheet sprites;
     Physics physics = new Physics(1.0f / 60.0f, new Vector2f(0, -10));
     RigidBody rb1;
@@ -35,9 +35,11 @@ public class EditorScene extends Scene
     @Override
     public void init()
     {
+        this.camera = new Camera(new Vector2f(-250, 0));
 
-        //master.addComponent(new GridLines());
+        master.addComponent(new GridLines());
         master.addComponent(new MouseControlComponent());
+        master.addComponent(new EditorCamera(this.camera));
         SpriteComponent component = new SpriteComponent();
         component.setColor(new Vector4f(1, 0, 0, 1));
         master.addComponent(component);
@@ -48,7 +50,6 @@ public class EditorScene extends Scene
         this.addGameObject(master);
 
         loadResources();
-        this.camera = new Camera(new Vector2f(-250, 0));
         sprites = justForgeAssetPool.getSpriteSheet("Assets/Textures/spritesheet.png");
     }
 

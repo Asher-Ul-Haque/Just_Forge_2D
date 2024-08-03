@@ -1,5 +1,7 @@
-package Just_Forge_2D.Core.ECS.Components;
+package Just_Forge_2D.Editor;
 
+import Just_Forge_2D.Core.Camera;
+import Just_Forge_2D.Core.ECS.Components.Component;
 import Just_Forge_2D.Core.Window;
 import Just_Forge_2D.Renderer.DebugPencil;
 import Just_Forge_2D.Utils.Configurations;
@@ -10,17 +12,18 @@ public class GridLines extends Component
     @Override
     public void update(float DELTA_TIME)
     {
-        Vector2f cameraPos = Window.getCurrentScene().getCamera().position;
-        Vector2f projectionSize = Window.getCurrentScene().getCamera().getProjectionSize();
+        Camera camera = Window.getCurrentScene().getCamera();
+        Vector2f cameraPos = camera.position;
+        Vector2f projectionSize = camera.getProjectionSize();
 
         int firstX = ((int) (cameraPos.x / Configurations.GRID_WIDTH) - 1) * Configurations.GRID_WIDTH;
         int firstY = ((int) (cameraPos.y / Configurations.GRID_HEIGHT) - 1) * Configurations.GRID_HEIGHT;
 
-        int numVertLines = (int) (projectionSize.x / Configurations.GRID_WIDTH) + 2;
-        int numHorLines = (int) (projectionSize.y / Configurations.GRID_HEIGHT) + 2;
+        int numVertLines = (int) ((projectionSize.x * camera.getZoom()) / Configurations.GRID_WIDTH) + 2;
+        int numHorLines = (int) ((projectionSize.y * camera.getZoom()) / Configurations.GRID_HEIGHT) + 2;
 
-        int height = (int) projectionSize.y;
-        int width = (int) projectionSize.x;
+        int height = (int) (projectionSize.y * camera.getZoom());
+        int width = (int) (projectionSize.x * camera.getZoom());
 
         int maxLines = Math.max(numHorLines, numVertLines);
         for (int i = 0; i < maxLines; ++i)

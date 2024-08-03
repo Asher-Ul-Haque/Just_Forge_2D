@@ -3,9 +3,117 @@
     "name": "Master",
     "components": [
       {
-        "type": "Just_Forge_2D.Core.ECS.Components.Attachable.MouseControlComponent",
+        "type": "Just_Forge_2D.Editor.GridLines",
         "properties": {
           "uniqueID": 0
+        }
+      },
+      {
+        "type": "Just_Forge_2D.Core.ECS.Components.Attachable.MouseControlComponent",
+        "properties": {
+          "uniqueID": 1
+        }
+      },
+      {
+        "type": "Just_Forge_2D.Editor.EditorCamera",
+        "properties": {
+          "dragDebounce": 0.32,
+          "editorCamera": {
+            "projectionMatrix": {
+              "properties": 2,
+              "m00": 0.0015625,
+              "m01": 0.0,
+              "m02": 0.0,
+              "m03": 0.0,
+              "m10": 0.0,
+              "m11": 0.0029761905,
+              "m12": 0.0,
+              "m13": 0.0,
+              "m20": 0.0,
+              "m21": 0.0,
+              "m22": -0.02,
+              "m23": 0.0,
+              "m30": -1.0,
+              "m31": -1.0,
+              "m32": -1.0,
+              "m33": 1.0
+            },
+            "viewMatrix": {
+              "properties": 18,
+              "m00": 1.0,
+              "m01": 0.0,
+              "m02": 0.0,
+              "m03": 0.0,
+              "m10": 0.0,
+              "m11": 1.0,
+              "m12": 0.0,
+              "m13": 0.0,
+              "m20": 0.0,
+              "m21": 0.0,
+              "m22": 1.0,
+              "m23": 0.0,
+              "m30": 229.14775,
+              "m31": 378.23828,
+              "m32": -20.0,
+              "m33": 1.0
+            },
+            "inverseProjectionMatrix": {
+              "properties": 2,
+              "m00": 640.0,
+              "m01": -0.0,
+              "m02": -0.0,
+              "m03": 0.0,
+              "m10": -0.0,
+              "m11": 336.00003,
+              "m12": -0.0,
+              "m13": 0.0,
+              "m20": -0.0,
+              "m21": -0.0,
+              "m22": -50.000004,
+              "m23": 0.0,
+              "m30": 640.0,
+              "m31": 336.00003,
+              "m32": -50.000004,
+              "m33": 1.0
+            },
+            "inverseViewMatrix": {
+              "properties": 18,
+              "m00": 1.0,
+              "m01": 0.0,
+              "m02": 0.0,
+              "m03": 0.0,
+              "m10": 0.0,
+              "m11": 1.0,
+              "m12": 0.0,
+              "m13": 0.0,
+              "m20": 0.0,
+              "m21": 0.0,
+              "m22": 1.0,
+              "m23": 0.0,
+              "m30": -229.14775,
+              "m31": -378.23828,
+              "m32": 20.0,
+              "m33": 1.0
+            },
+            "position": {
+              "x": 0.0,
+              "y": 0.0
+            },
+            "projectionSize": {
+              "x": 1280.0,
+              "y": 672.0
+            },
+            "zoom": 1.0
+          },
+          "clickOrigin": {
+            "x": 267.66278,
+            "y": 321.91824
+          },
+          "lerpTime": 0.0,
+          "dragSensitivity": 10.0,
+          "scrollSensitivity": 0.1,
+          "reset": false,
+          "uniqueID": 2
         }
       },
       {
@@ -39,18 +147,18 @@
               }
             ]
           },
-          "uniqueID": 1
+          "uniqueID": 3
         }
       }
     ],
     "transform": {
       "position": {
         "x": 100.0,
-        "y": -369.77756
+        "y": -8609.484
       },
       "scale": {
-        "x": 256.0,
-        "y": 256.0
+        "x": 26.0,
+        "y": 26.0
       },
       "uniqueID": -1
     },
@@ -65,8 +173,8 @@
         "properties": {
           "color": {
             "x": 1.0,
-            "y": 1.0,
-            "z": 1.0,
+            "y": 0.0,
+            "z": 0.0,
             "w": 1.0
           },
           "sprite": {
@@ -80,30 +188,30 @@
             "textureCoordinates": [
               {
                 "x": 0.25,
-                "y": 0.25
+                "y": 0.5
               },
               {
                 "x": 0.25,
-                "y": 0.0
-              },
-              {
-                "x": 0.0,
-                "y": 0.0
+                "y": 0.25
               },
               {
                 "x": 0.0,
                 "y": 0.25
+              },
+              {
+                "x": 0.0,
+                "y": 0.5
               }
             ]
           },
-          "uniqueID": 2
+          "uniqueID": 4
         }
       }
     ],
     "transform": {
       "position": {
-        "x": 768.0,
-        "y": 320.0
+        "x": 32.0,
+        "y": -288.0
       },
       "scale": {
         "x": 32.0,
@@ -115,69 +223,120 @@
     "uniqueID": 2
   },
   {
-    "name": "Sprite OBject Generated",
-    "components": [
-      {
-        "type": "Just_Forge_2D.Core.ECS.Components.Attachable.Sprite.SpriteComponent",
-        "properties": {
-          "color": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0,
-            "w": 1.0
-          },
-          "sprite": {
-            "width": 16.0,
-            "height": 16.0,
-            "texture": {
-              "filepath": "Assets/Textures/spritesheet.png",
-              "width": 64,
-              "height": 64
-            },
-            "textureCoordinates": [
-              {
-                "x": 0.25,
-                "y": 0.5
-              },
-              {
-                "x": 0.25,
-                "y": 0.25
-              },
-              {
-                "x": 0.0,
-                "y": 0.25
-              },
-              {
-                "x": 0.0,
-                "y": 0.5
-              }
-            ]
-          },
-          "uniqueID": 3
-        }
-      }
-    ],
-    "transform": {
-      "position": {
-        "x": 640.0,
-        "y": 192.0
-      },
-      "scale": {
-        "x": 32.0,
-        "y": 32.0
-      },
-      "uniqueID": -1
-    },
-    "layer": 0,
-    "uniqueID": 3
-  },
-  {
     "name": "Master",
     "components": [
       {
+        "type": "Just_Forge_2D.Editor.GridLines",
+        "properties": {
+          "uniqueID": 5
+        }
+      },
+      {
         "type": "Just_Forge_2D.Core.ECS.Components.Attachable.MouseControlComponent",
         "properties": {
-          "uniqueID": 4
+          "uniqueID": 6
+        }
+      },
+      {
+        "type": "Just_Forge_2D.Editor.EditorCamera",
+        "properties": {
+          "dragDebounce": 0.32,
+          "editorCamera": {
+            "projectionMatrix": {
+              "properties": 2,
+              "m00": 0.0015625,
+              "m01": 0.0,
+              "m02": 0.0,
+              "m03": 0.0,
+              "m10": 0.0,
+              "m11": 0.0029761905,
+              "m12": 0.0,
+              "m13": 0.0,
+              "m20": 0.0,
+              "m21": 0.0,
+              "m22": -0.02,
+              "m23": 0.0,
+              "m30": -1.0,
+              "m31": -1.0,
+              "m32": -1.0,
+              "m33": 1.0
+            },
+            "viewMatrix": {
+              "properties": 18,
+              "m00": 1.0,
+              "m01": 0.0,
+              "m02": 0.0,
+              "m03": 0.0,
+              "m10": 0.0,
+              "m11": 1.0,
+              "m12": 0.0,
+              "m13": 0.0,
+              "m20": 0.0,
+              "m21": 0.0,
+              "m22": 1.0,
+              "m23": 0.0,
+              "m30": 424.02005,
+              "m31": 441.40097,
+              "m32": -20.0,
+              "m33": 1.0
+            },
+            "inverseProjectionMatrix": {
+              "properties": 2,
+              "m00": 640.0,
+              "m01": -0.0,
+              "m02": -0.0,
+              "m03": 0.0,
+              "m10": -0.0,
+              "m11": 336.00003,
+              "m12": -0.0,
+              "m13": 0.0,
+              "m20": -0.0,
+              "m21": -0.0,
+              "m22": -50.000004,
+              "m23": 0.0,
+              "m30": 640.0,
+              "m31": 336.00003,
+              "m32": -50.000004,
+              "m33": 1.0
+            },
+            "inverseViewMatrix": {
+              "properties": 18,
+              "m00": 1.0,
+              "m01": 0.0,
+              "m02": 0.0,
+              "m03": 0.0,
+              "m10": 0.0,
+              "m11": 1.0,
+              "m12": 0.0,
+              "m13": 0.0,
+              "m20": 0.0,
+              "m21": 0.0,
+              "m22": 1.0,
+              "m23": 0.0,
+              "m30": -424.02005,
+              "m31": -441.40097,
+              "m32": 20.0,
+              "m33": 1.0
+            },
+            "position": {
+              "x": 0.0,
+              "y": 0.0
+            },
+            "projectionSize": {
+              "x": 1280.0,
+              "y": 672.0
+            },
+            "zoom": 1.0
+          },
+          "clickOrigin": {
+            "x": 267.66278,
+            "y": 321.91824
+          },
+          "lerpTime": 0.0,
+          "dragSensitivity": 10.0,
+          "scrollSensitivity": 0.1,
+          "reset": false,
+          "uniqueID": 7
         }
       },
       {
@@ -211,18 +370,573 @@
               }
             ]
           },
-          "uniqueID": 5
+          "uniqueID": 8
         }
       }
     ],
     "transform": {
       "position": {
         "x": 100.0,
-        "y": -6247.054
+        "y": -1076.0001
       },
       "scale": {
-        "x": 256.0,
-        "y": 256.0
+        "x": 26.0,
+        "y": 26.0
+      },
+      "uniqueID": -1
+    },
+    "layer": 0,
+    "uniqueID": 3
+  },
+  {
+    "name": "Master",
+    "components": [
+      {
+        "type": "Just_Forge_2D.Editor.GridLines",
+        "properties": {
+          "uniqueID": 9
+        }
+      },
+      {
+        "type": "Just_Forge_2D.Core.ECS.Components.Attachable.MouseControlComponent",
+        "properties": {
+          "uniqueID": 10
+        }
+      },
+      {
+        "type": "Just_Forge_2D.Editor.EditorCamera",
+        "properties": {
+          "dragDebounce": 0.32,
+          "editorCamera": {
+            "projectionMatrix": {
+              "properties": 2,
+              "m00": 0.0015625,
+              "m01": 0.0,
+              "m02": 0.0,
+              "m03": 0.0,
+              "m10": 0.0,
+              "m11": 0.0029761905,
+              "m12": 0.0,
+              "m13": 0.0,
+              "m20": 0.0,
+              "m21": 0.0,
+              "m22": -0.02,
+              "m23": 0.0,
+              "m30": -1.0,
+              "m31": -1.0,
+              "m32": -1.0,
+              "m33": 1.0
+            },
+            "viewMatrix": {
+              "properties": 18,
+              "m00": 1.0,
+              "m01": 0.0,
+              "m02": 0.0,
+              "m03": 0.0,
+              "m10": 0.0,
+              "m11": 1.0,
+              "m12": 0.0,
+              "m13": 0.0,
+              "m20": 0.0,
+              "m21": 0.0,
+              "m22": 1.0,
+              "m23": 0.0,
+              "m30": 250.0,
+              "m31": -0.0,
+              "m32": -20.0,
+              "m33": 1.0
+            },
+            "inverseProjectionMatrix": {
+              "properties": 2,
+              "m00": 640.0,
+              "m01": -0.0,
+              "m02": -0.0,
+              "m03": 0.0,
+              "m10": -0.0,
+              "m11": 336.00003,
+              "m12": -0.0,
+              "m13": 0.0,
+              "m20": -0.0,
+              "m21": -0.0,
+              "m22": -50.000004,
+              "m23": 0.0,
+              "m30": 640.0,
+              "m31": 336.00003,
+              "m32": -50.000004,
+              "m33": 1.0
+            },
+            "inverseViewMatrix": {
+              "properties": 18,
+              "m00": 1.0,
+              "m01": 0.0,
+              "m02": 0.0,
+              "m03": 0.0,
+              "m10": 0.0,
+              "m11": 1.0,
+              "m12": 0.0,
+              "m13": 0.0,
+              "m20": 0.0,
+              "m21": 0.0,
+              "m22": 1.0,
+              "m23": 0.0,
+              "m30": -250.0,
+              "m31": -0.0,
+              "m32": 20.0,
+              "m33": 1.0
+            },
+            "position": {
+              "x": 0.0,
+              "y": 0.0
+            },
+            "projectionSize": {
+              "x": 1280.0,
+              "y": 672.0
+            },
+            "zoom": 1.0
+          },
+          "clickOrigin": {
+            "x": 267.66278,
+            "y": 321.91824
+          },
+          "lerpTime": 0.0,
+          "dragSensitivity": 10.0,
+          "scrollSensitivity": 0.1,
+          "reset": false,
+          "uniqueID": 11
+        }
+      },
+      {
+        "type": "Just_Forge_2D.Core.ECS.Components.Attachable.Sprite.SpriteComponent",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 0.0,
+            "height": 0.0,
+            "textureCoordinates": [
+              {
+                "x": 1.0,
+                "y": 1.0
+              },
+              {
+                "x": 1.0,
+                "y": 0.0
+              },
+              {
+                "x": 0.0,
+                "y": 0.0
+              },
+              {
+                "x": 0.0,
+                "y": 1.0
+              }
+            ]
+          },
+          "uniqueID": 12
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": 100.0,
+        "y": -7644.096
+      },
+      "scale": {
+        "x": 26.0,
+        "y": 26.0
+      },
+      "uniqueID": -1
+    },
+    "layer": 0,
+    "uniqueID": 4
+  },
+  {
+    "name": "Sprite OBject Generated",
+    "components": [
+      {
+        "type": "Just_Forge_2D.Core.ECS.Components.Attachable.Sprite.SpriteComponent",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16.0,
+            "height": 16.0,
+            "texture": {
+              "filepath": "Assets/Textures/spritesheet.png",
+              "width": 64,
+              "height": 64
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.5,
+                "y": 0.5
+              },
+              {
+                "x": 0.5,
+                "y": 0.25
+              },
+              {
+                "x": 0.25,
+                "y": 0.25
+              },
+              {
+                "x": 0.25,
+                "y": 0.5
+              }
+            ]
+          },
+          "uniqueID": 13
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": -192.0,
+        "y": 64.0
+      },
+      "scale": {
+        "x": 32.0,
+        "y": 32.0
+      },
+      "uniqueID": -1
+    },
+    "layer": 0,
+    "uniqueID": 5
+  },
+  {
+    "name": "Master",
+    "components": [
+      {
+        "type": "Just_Forge_2D.Editor.GridLines",
+        "properties": {
+          "uniqueID": 14
+        }
+      },
+      {
+        "type": "Just_Forge_2D.Core.ECS.Components.Attachable.MouseControlComponent",
+        "properties": {
+          "uniqueID": 15
+        }
+      },
+      {
+        "type": "Just_Forge_2D.Editor.EditorCamera",
+        "properties": {
+          "dragDebounce": 0.32,
+          "editorCamera": {
+            "projectionMatrix": {
+              "properties": 2,
+              "m00": 0.0015625,
+              "m01": 0.0,
+              "m02": 0.0,
+              "m03": 0.0,
+              "m10": 0.0,
+              "m11": 0.0029761905,
+              "m12": 0.0,
+              "m13": 0.0,
+              "m20": 0.0,
+              "m21": 0.0,
+              "m22": -0.02,
+              "m23": 0.0,
+              "m30": -1.0,
+              "m31": -1.0,
+              "m32": -1.0,
+              "m33": 1.0
+            },
+            "viewMatrix": {
+              "properties": 18,
+              "m00": 1.0,
+              "m01": 0.0,
+              "m02": 0.0,
+              "m03": 0.0,
+              "m10": 0.0,
+              "m11": 1.0,
+              "m12": 0.0,
+              "m13": 0.0,
+              "m20": 0.0,
+              "m21": 0.0,
+              "m22": 1.0,
+              "m23": 0.0,
+              "m30": -0.0,
+              "m31": -0.0,
+              "m32": -20.0,
+              "m33": 1.0
+            },
+            "inverseProjectionMatrix": {
+              "properties": 2,
+              "m00": 640.0,
+              "m01": -0.0,
+              "m02": -0.0,
+              "m03": 0.0,
+              "m10": -0.0,
+              "m11": 336.00003,
+              "m12": -0.0,
+              "m13": 0.0,
+              "m20": -0.0,
+              "m21": -0.0,
+              "m22": -50.000004,
+              "m23": 0.0,
+              "m30": 640.0,
+              "m31": 336.00003,
+              "m32": -50.000004,
+              "m33": 1.0
+            },
+            "inverseViewMatrix": {
+              "properties": 18,
+              "m00": 1.0,
+              "m01": 0.0,
+              "m02": 0.0,
+              "m03": 0.0,
+              "m10": 0.0,
+              "m11": 1.0,
+              "m12": 0.0,
+              "m13": 0.0,
+              "m20": 0.0,
+              "m21": 0.0,
+              "m22": 1.0,
+              "m23": 0.0,
+              "m30": 0.0,
+              "m31": 0.0,
+              "m32": 20.0,
+              "m33": 1.0
+            },
+            "position": {
+              "x": 0.0,
+              "y": 0.0
+            },
+            "projectionSize": {
+              "x": 1280.0,
+              "y": 672.0
+            },
+            "zoom": 1.0
+          },
+          "clickOrigin": {
+            "x": 267.66278,
+            "y": 321.91824
+          },
+          "lerpTime": 0.0,
+          "dragSensitivity": 10.0,
+          "scrollSensitivity": 0.1,
+          "reset": false,
+          "uniqueID": 16
+        }
+      },
+      {
+        "type": "Just_Forge_2D.Core.ECS.Components.Attachable.Sprite.SpriteComponent",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 0.0,
+            "height": 0.0,
+            "textureCoordinates": [
+              {
+                "x": 1.0,
+                "y": 1.0
+              },
+              {
+                "x": 1.0,
+                "y": 0.0
+              },
+              {
+                "x": 0.0,
+                "y": 0.0
+              },
+              {
+                "x": 0.0,
+                "y": 1.0
+              }
+            ]
+          },
+          "uniqueID": 17
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": 100.0,
+        "y": -13367.591
+      },
+      "scale": {
+        "x": 26.0,
+        "y": 26.0
+      },
+      "uniqueID": -1
+    },
+    "layer": 0,
+    "uniqueID": 6
+  },
+  {
+    "name": "Master",
+    "components": [
+      {
+        "type": "Just_Forge_2D.Editor.GridLines",
+        "properties": {
+          "uniqueID": 18
+        }
+      },
+      {
+        "type": "Just_Forge_2D.Core.ECS.Components.Attachable.MouseControlComponent",
+        "properties": {
+          "uniqueID": 19
+        }
+      },
+      {
+        "type": "Just_Forge_2D.Editor.EditorCamera",
+        "properties": {
+          "dragDebounce": 0.32,
+          "editorCamera": {
+            "projectionMatrix": {
+              "properties": 2,
+              "m00": 0.0015625,
+              "m01": 0.0,
+              "m02": 0.0,
+              "m03": 0.0,
+              "m10": 0.0,
+              "m11": 0.0029761905,
+              "m12": 0.0,
+              "m13": 0.0,
+              "m20": 0.0,
+              "m21": 0.0,
+              "m22": -0.02,
+              "m23": 0.0,
+              "m30": -1.0,
+              "m31": -1.0,
+              "m32": -1.0,
+              "m33": 1.0
+            },
+            "viewMatrix": {
+              "properties": 18,
+              "m00": 1.0,
+              "m01": 0.0,
+              "m02": 0.0,
+              "m03": 0.0,
+              "m10": 0.0,
+              "m11": 1.0,
+              "m12": 0.0,
+              "m13": 0.0,
+              "m20": 0.0,
+              "m21": 0.0,
+              "m22": 1.0,
+              "m23": 0.0,
+              "m30": -0.0,
+              "m31": -0.0,
+              "m32": -20.0,
+              "m33": 1.0
+            },
+            "inverseProjectionMatrix": {
+              "properties": 2,
+              "m00": 640.0,
+              "m01": -0.0,
+              "m02": -0.0,
+              "m03": 0.0,
+              "m10": -0.0,
+              "m11": 336.00003,
+              "m12": -0.0,
+              "m13": 0.0,
+              "m20": -0.0,
+              "m21": -0.0,
+              "m22": -50.000004,
+              "m23": 0.0,
+              "m30": 640.0,
+              "m31": 336.00003,
+              "m32": -50.000004,
+              "m33": 1.0
+            },
+            "inverseViewMatrix": {
+              "properties": 18,
+              "m00": 1.0,
+              "m01": 0.0,
+              "m02": 0.0,
+              "m03": 0.0,
+              "m10": 0.0,
+              "m11": 1.0,
+              "m12": 0.0,
+              "m13": 0.0,
+              "m20": 0.0,
+              "m21": 0.0,
+              "m22": 1.0,
+              "m23": 0.0,
+              "m30": 0.0,
+              "m31": 0.0,
+              "m32": 20.0,
+              "m33": 1.0
+            },
+            "position": {
+              "x": 0.0,
+              "y": 0.0
+            },
+            "projectionSize": {
+              "x": 1280.0,
+              "y": 672.0
+            },
+            "zoom": 1.0
+          },
+          "clickOrigin": {
+            "x": 267.66278,
+            "y": 321.91824
+          },
+          "lerpTime": 0.0,
+          "dragSensitivity": 10.0,
+          "scrollSensitivity": 0.1,
+          "reset": false,
+          "uniqueID": 20
+        }
+      },
+      {
+        "type": "Just_Forge_2D.Core.ECS.Components.Attachable.Sprite.SpriteComponent",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 0.0,
+            "height": 0.0,
+            "textureCoordinates": [
+              {
+                "x": 1.0,
+                "y": 1.0
+              },
+              {
+                "x": 1.0,
+                "y": 0.0
+              },
+              {
+                "x": 0.0,
+                "y": 0.0
+              },
+              {
+                "x": 0.0,
+                "y": 1.0
+              }
+            ]
+          },
+          "uniqueID": 21
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": 100.0,
+        "y": -5509.4014
+      },
+      "scale": {
+        "x": 26.0,
+        "y": 26.0
       },
       "uniqueID": -1
     },
@@ -237,8 +951,8 @@
         "properties": {
           "color": {
             "x": 1.0,
-            "y": 0.16250002,
-            "z": 0.16250002,
+            "y": 1.0,
+            "z": 1.0,
             "w": 1.0
           },
           "sprite": {
@@ -250,32 +964,32 @@
               "height": 64
             },
             "textureCoordinates": [
-              {
-                "x": 0.25,
-                "y": 0.75
-              },
               {
                 "x": 0.25,
                 "y": 0.5
               },
               {
+                "x": 0.25,
+                "y": 0.25
+              },
+              {
+                "x": 0.0,
+                "y": 0.25
+              },
+              {
                 "x": 0.0,
                 "y": 0.5
-              },
-              {
-                "x": 0.0,
-                "y": 0.75
               }
             ]
           },
-          "uniqueID": 6
+          "uniqueID": 22
         }
       }
     ],
     "transform": {
       "position": {
-        "x": -96.0,
-        "y": 192.0
+        "x": 512.0,
+        "y": 320.0
       },
       "scale": {
         "x": 32.0,
@@ -284,120 +998,6 @@
       "uniqueID": -1
     },
     "layer": 0,
-    "uniqueID": 4
-  },
-  {
-    "name": "Sprite OBject Generated",
-    "components": [
-      {
-        "type": "Just_Forge_2D.Core.ECS.Components.Attachable.Sprite.SpriteComponent",
-        "properties": {
-          "color": {
-            "x": 0.6625,
-            "y": 0.11593751,
-            "z": 0.11593751,
-            "w": 1.0
-          },
-          "sprite": {
-            "width": 16.0,
-            "height": 16.0,
-            "texture": {
-              "filepath": "Assets/Textures/spritesheet.png",
-              "width": 64,
-              "height": 64
-            },
-            "textureCoordinates": [
-              {
-                "x": 0.25,
-                "y": 1.0
-              },
-              {
-                "x": 0.25,
-                "y": 0.75
-              },
-              {
-                "x": 0.0,
-                "y": 0.75
-              },
-              {
-                "x": 0.0,
-                "y": 1.0
-              }
-            ]
-          },
-          "uniqueID": 7
-        }
-      }
-    ],
-    "transform": {
-      "position": {
-        "x": 160.0,
-        "y": 288.0
-      },
-      "scale": {
-        "x": 32.0,
-        "y": 32.0
-      },
-      "uniqueID": -1
-    },
-    "layer": 0,
-    "uniqueID": 5
-  },
-  {
-    "name": "Sprite OBject Generated",
-    "components": [
-      {
-        "type": "Just_Forge_2D.Core.ECS.Components.Attachable.Sprite.SpriteComponent",
-        "properties": {
-          "color": {
-            "x": 0.3125,
-            "y": 0.2109375,
-            "z": 0.2109375,
-            "w": 1.0
-          },
-          "sprite": {
-            "width": 16.0,
-            "height": 16.0,
-            "texture": {
-              "filepath": "Assets/Textures/spritesheet.png",
-              "width": 64,
-              "height": 64
-            },
-            "textureCoordinates": [
-              {
-                "x": 1.0,
-                "y": 1.0
-              },
-              {
-                "x": 1.0,
-                "y": 0.75
-              },
-              {
-                "x": 0.75,
-                "y": 0.75
-              },
-              {
-                "x": 0.75,
-                "y": 1.0
-              }
-            ]
-          },
-          "uniqueID": 8
-        }
-      }
-    ],
-    "transform": {
-      "position": {
-        "x": 0.0,
-        "y": 256.0
-      },
-      "scale": {
-        "x": 32.0,
-        "y": 32.0
-      },
-      "uniqueID": -1
-    },
-    "layer": 0,
-    "uniqueID": 6
+    "uniqueID": 7
   }
 ]
