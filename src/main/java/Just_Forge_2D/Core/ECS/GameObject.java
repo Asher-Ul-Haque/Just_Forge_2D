@@ -18,6 +18,7 @@ public class GameObject
     private int layer;
     private static int ID_COUNTER = 0;
     private int uniqueID = -1;
+    private boolean doSerialization = true;
 
 
     // - - -  | Functions | - - -
@@ -133,6 +134,18 @@ public class GameObject
     public int getUniqueID()
     {
         return this.uniqueID;
+    }
+
+
+    // - - - Saving - - -
+    public void noSerialize()
+    {
+        this.doSerialization = false;
+    }
+
+    public boolean getSerializationStatus()
+    {
+        return this.doSerialization;
     }
 
 

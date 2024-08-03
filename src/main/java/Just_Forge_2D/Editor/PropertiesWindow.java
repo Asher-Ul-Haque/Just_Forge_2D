@@ -13,6 +13,7 @@ public class PropertiesWindow
 {
     private GameObject activeGameObject = null;
     private final ObjectSelector selector;
+    private float debounce = 0.2f;
 
     public PropertiesWindow(ObjectSelector SELECTOR)
     {
@@ -21,22 +22,21 @@ public class PropertiesWindow
 
     public void update(float DELTA_TIME, Scene CURRENT_SCENE)
     {
+        debounce -= DELTA_TIME;
         // TODO: Remove test code
-        if (Mouse.isMouseButtonDown(GLFW_MOUSE_BUTTON_LEFT))
+        if (Mouse.isMouseButtonDown(GLFW_MOUSE_BUTTON_LEFT) && debounce < 0)
         {
             int x = (int)Mouse.getScreenX();
             int y = (int)Mouse.getScreenY();
             int gameObjectID = this.selector.readPixel(x, y);
-            // TODO: temporary
-            if (gameObjectID > -1)
+            activeGameObject = CURRENT_SCENE.getGameObject(gameObjectID);
+            this.debounce = 0.2f;
+            if (this.activeGameObject != null)
             {
-                activeGameObject = CURRENT_SCENE.getGameObject(gameObjectID);
+                justForgeLogger.FORGE_LOG_DEBUG("Currently active object: " + activeGameObject.toString());
+                return;
             }
-            else
-            {
-                activeGameObject = CURRENT_SCENE.getGameObject(0);
-            }
-            justForgeLogger.FORGE_LOG_DEBUG("Currently active object: " + activeGameObject.toString());
+            justForgeLogger.FORGE_LOG_DEBUG("Currently active object: Null");
         }
     }
 
@@ -48,5 +48,10 @@ public class PropertiesWindow
             activeGameObject.editorGUI();
             ImGui.end();
         }
+    }
+
+    public GameObject getActiveGameObject()
+    {
+        return this.activeGameObject;
     }
 }

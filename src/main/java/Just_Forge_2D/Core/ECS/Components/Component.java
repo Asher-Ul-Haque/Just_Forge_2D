@@ -3,6 +3,7 @@ package Just_Forge_2D.Core.ECS.Components;
 import Just_Forge_2D.Core.ECS.GameObject;
 import Just_Forge_2D.Utils.justForgeLogger;
 import imgui.ImGui;
+import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 
@@ -70,6 +71,15 @@ public abstract class Component
                     {
                         val = !val;
                         field.set(this, val);
+                    }
+                }
+                else if (type == Vector2f.class)
+                {
+                    Vector2f val = (Vector2f) value;
+                    float[] imVec2 = {val.x, val.y};
+                    if (ImGui.dragFloat2(name +": ", imVec2))
+                    {
+                        val.set(imVec2[0], imVec2[1]);
                     }
                 }
                 else if (type == Vector3f.class)

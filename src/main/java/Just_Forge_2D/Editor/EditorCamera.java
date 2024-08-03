@@ -6,8 +6,7 @@ import Just_Forge_2D.Core.Input.Keyboard;
 import Just_Forge_2D.Core.Input.Mouse;
 import org.joml.Vector2f;
 
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_KP_DECIMAL;
-import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_MIDDLE;
+import static org.lwjgl.glfw.GLFW.*;
 
 public class EditorCamera extends Component
 {
@@ -28,20 +27,20 @@ public class EditorCamera extends Component
     public void update(float DELTA_TIME)
     {
         this.editorCamera.adjustProjection();
-        if (Mouse.isMouseButtonDown(GLFW_MOUSE_BUTTON_MIDDLE) && dragDebounce > 0)
+        if (Mouse.isMouseButtonDown(GLFW_MOUSE_BUTTON_LEFT) && dragDebounce > 0)
         {
             this.clickOrigin = new Vector2f(Mouse.getOrthoX(), Mouse.getOrthoY());
             dragDebounce -= DELTA_TIME;
             return;
         }
-        else if (Mouse.isMouseButtonDown(GLFW_MOUSE_BUTTON_MIDDLE))
+        else if (Mouse.isMouseButtonDown(GLFW_MOUSE_BUTTON_LEFT))
         {
             Vector2f mousePos = new Vector2f(Mouse.getOrthoX(), Mouse.getOrthoY());
             Vector2f delta = new Vector2f(mousePos).sub(this.clickOrigin);
             this.editorCamera.position.sub(delta.mul(DELTA_TIME).mul(this.dragSensitivity));
             this.clickOrigin.lerp(mousePos, DELTA_TIME);
         }
-        if (dragDebounce <= 0.0f && !Mouse.isMouseButtonDown(GLFW_MOUSE_BUTTON_MIDDLE))
+        if (dragDebounce <= 0.0f && !Mouse.isMouseButtonDown(GLFW_MOUSE_BUTTON_LEFT))
         {
             dragDebounce = 0.32f;
         }
@@ -54,21 +53,21 @@ public class EditorCamera extends Component
 
         }
 
-        if (Keyboard.isKeyPressed(GLFW_KEY_KP_DECIMAL))
+        if (Keyboard.isKeyPressed(GLFW_KEY_0))
         {
             reset = true;
         }
         if (reset)
         {
             editorCamera.position.lerp(new Vector2f(), lerpTime);
-            editorCamera.setZoom(editorCamera.getZoom() + (1.0f - editorCamera.getZoom()) * lerpTime);
+            editorCamera.setZoom(editorCamera.getZoom() + (0.5f - editorCamera.getZoom()) * lerpTime);
             this.lerpTime += 0.1f * DELTA_TIME;
             if (Math.abs(editorCamera.position.x) <= 5.0f && Math.abs(editorCamera.position.y) <= 5.0f)
             {
                 editorCamera.position.set(0f, 0f);
                 reset = false;
                 this.lerpTime = 0f;
-                this.editorCamera.setZoom(1);
+                this.editorCamera.setZoom(0.5f);
             }
         }
     }

@@ -54,7 +54,7 @@ public class SpriteComponent extends Component
             this.isChanged = true;
             return;
         }
-        justForgeLogger.FORGE_LOG_WARNING("Previous color and current color equal when changing color of a sprite: " + this.sprite);
+        //justForgeLogger.FORGE_LOG_WARNING("Previous color and current color equal when changing color of a sprite: " + this.sprite);
     }
 
     // - - - Texture
