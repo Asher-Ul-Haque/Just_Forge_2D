@@ -54,7 +54,7 @@ public class Window
     private int maximized = GLFW_FALSE;
     private int visible = GLFW_FALSE;
     private int decorated = GLFW_TRUE;
-    private int resizable = GLFW_FALSE;
+    private int resizable = GLFW_TRUE;
 
     // - - - Rendering variables
     private int fps = 0;
@@ -221,14 +221,15 @@ public class Window
         isInitialized = true;
         justForgeLogger.FORGE_LOG_INFO("Window System Online");
 
+        this.framebuffer = new Framebuffer(1980, 720);
         this.selector = new ObjectSelector(1980, 720);
+        glViewport(0, 0, 1980, 720);
+        justForgeLogger.FORGE_LOG_INFO("Framebuffer created and assigned for offscreen rendering");
+
         this.editorLayer = new justForgeImGui(glfwWindow, this.selector);
         this.editorLayer.initImGui();
         justForgeLogger.FORGE_LOG_INFO("Editor linked with window");
 
-        this.framebuffer = new Framebuffer(1980, 720);
-        glViewport(0, 0, 1980, 720);
-        justForgeLogger.FORGE_LOG_INFO("Framebuffer created and assigned for offscreen rendering");
 
         // - - - compile shaders
         this.defaultShader = justForgeAssetPool.getShader("Assets/Shaders/default.glsl");

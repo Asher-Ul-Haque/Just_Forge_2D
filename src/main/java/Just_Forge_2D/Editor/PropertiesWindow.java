@@ -3,6 +3,7 @@ package Just_Forge_2D.Editor;
 import Just_Forge_2D.Core.ECS.GameObject;
 import Just_Forge_2D.Core.Input.Mouse;
 import Just_Forge_2D.Core.Scene.Scene;
+import Just_Forge_2D.Core.Window;
 import Just_Forge_2D.Utils.justForgeLogger;
 import imgui.ImGui;
 
@@ -27,6 +28,10 @@ public class PropertiesWindow
             int y = (int)Mouse.getScreenY();
             int gameObjectID = this.selector.readPixel(x, y);
             activeGameObject = CURRENT_SCENE.getGameObject(gameObjectID);
+            for (GameObject object : Window.getCurrentScene().gameObjects)
+            {
+                justForgeLogger.FORGE_LOG_TRACE(object.getUniqueID());
+            }
         }
     }
 

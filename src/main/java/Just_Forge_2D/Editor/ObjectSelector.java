@@ -1,11 +1,8 @@
 package Just_Forge_2D.Editor;
 
-import Just_Forge_2D.Renderer.Texture;
 import Just_Forge_2D.Utils.justForgeLogger;
-
 import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
 import static org.lwjgl.opengl.GL11.glGetError;
-import static org.lwjgl.opengl.GL14.GL_DEPTH_COMPONENT32;
 import static org.lwjgl.opengl.GL30.*;
 import static org.lwjgl.opengl.GL30.GL_FRAMEBUFFER;
 
@@ -79,9 +76,9 @@ public class ObjectSelector
         glBindFramebuffer(GL_READ_FRAMEBUFFER, fbo);
         glReadBuffer(GL_COLOR_ATTACHMENT0);
 
-        float pixels[] = new float[3];
+        float[] pixels = new float[3];
         glReadPixels(X, Y, 1, 1, GL_RGB, GL_FLOAT, pixels);
 
-        return (int)pixels[0] - 1;
+        return (int)(pixels[0]) - 1;
     }
 }

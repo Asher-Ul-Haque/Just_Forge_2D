@@ -29,7 +29,7 @@ public abstract class Scene
     private boolean isRunning = false;
 
     // - - - ALl the objects
-    protected List<GameObject> gameObjects = new ArrayList<>();
+    public List<GameObject> gameObjects = new ArrayList<>();
     protected GameObject activeGameObject = null;
 
     // - - - Scene Rendering
