@@ -68,7 +68,7 @@ public class EditorCamera extends Component
                 editorCamera.position.set(0f, 0f);
                 reset = false;
                 this.lerpTime = 0f;
-                this.editorCamera.setZoom(1);
+                this.editorCamera.setZoom(0.5f);
             }
         }
     }

@@ -289,4 +289,10 @@ public class justForgeImGui
         // - - - SETUP DOCKSPACE
         ImGui.dockSpace(ImGui.getID("Dockspace"));
     }
+
+    // - - - properties panel
+    public PropertiesWindow getPropertiesWindow()
+    {
+        return this.propertiesWindow;
+    }
 }

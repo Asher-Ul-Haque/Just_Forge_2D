@@ -288,6 +288,8 @@ public class Window
 
         // - - - 2: render to monitor
 
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
         // - - - Debug Drawing
         DebugPencil.beginFrame();
 
@@ -493,5 +495,12 @@ public class Window
     public static float getFPS()
     {
         return get().fps;
+    }
+
+
+    // - - - editor realted - - -
+    public static justForgeImGui getEditor()
+    {
+        return get().editorLayer;
     }
 }

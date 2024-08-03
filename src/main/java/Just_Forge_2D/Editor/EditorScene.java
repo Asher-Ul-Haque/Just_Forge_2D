@@ -7,6 +7,7 @@ import Just_Forge_2D.Core.ECS.Components.Attachable.MouseControlComponent;
 import Just_Forge_2D.Core.ECS.GameObject;
 import Just_Forge_2D.Core.Camera;
 import Just_Forge_2D.Core.Scene.Scene;
+import Just_Forge_2D.Core.Window;
 import Just_Forge_2D.Physics.Physics;
 import Just_Forge_2D.Physics.RigidBody.RigidBody;
 import Just_Forge_2D.Utils.Configurations;
@@ -22,11 +23,6 @@ public class EditorScene extends Scene
 {
     private GameObject master = new GameObject("Master", new TransformComponent(new Vector2f(100, 200), new Vector2f(26, 26)), 0);
     private SpriteSheet sprites;
-    Physics physics = new Physics(1.0f / 60.0f, new Vector2f(0, -10));
-    RigidBody rb1;
-
-
-//    MouseControlComponent mouseControls = new MouseControlComponent();
 
     public EditorScene()
     {
@@ -35,28 +31,25 @@ public class EditorScene extends Scene
     @Override
     public void init()
     {
-        this.camera = new Camera(new Vector2f(-250, 0));
+        loadResources();
+        sprites = justForgeAssetPool.getSpriteSheet("Assets/Textures/spritesheet.png");
+        SpriteSheet gizmos = justForgeAssetPool.getSpriteSheet("Assets/Textures/gizmos.png");
 
+        this.camera = new Camera(new Vector2f(-250, 0));
         master.addComponent(new GridLines());
         master.addComponent(new MouseControlComponent());
         master.addComponent(new EditorCamera(this.camera));
-        SpriteComponent component = new SpriteComponent();
-        component.setColor(new Vector4f(1, 0, 0, 1));
-        master.addComponent(component);
-        rb1 = new RigidBody();
-        rb1.setMass(100.0f);
-        rb1.setRawTransform(master.transform);
-        physics.addRigidBody(rb1);
+        master.addComponent(new TranslationGizmo(gizmos.getSprite(1)));
         this.addGameObject(master);
 
-        loadResources();
-        sprites = justForgeAssetPool.getSpriteSheet("Assets/Textures/spritesheet.png");
+        master.start();
     }
 
     private void loadResources()
     {
         justForgeAssetPool.getShader("Assets/Shaders/default.glsl");
         justForgeAssetPool.addSpriteSheet("Assets/Textures/spritesheet.png", new SpriteSheet(justForgeAssetPool.getTexture("Assets/Textures/spritesheet.png"), 16, 16, 16, 0));
+        justForgeAssetPool.addSpriteSheet("Assets/Textures/gizmos.png", new SpriteSheet(justForgeAssetPool.getTexture("Assets/Textures/gizmos.png"), 24, 48, 2, 0));
         justForgeAssetPool.getTexture("Assets/Textures/blendImage2.png");
 
         for (GameObject g : gameObjects)
@@ -75,14 +68,13 @@ public class EditorScene extends Scene
     @Override
     public void update(float DELTA_TIME)
     {
-        master.getCompoent(MouseControlComponent.class).update((float) DELTA_TIME);
-
+        master.update(DELTA_TIME);
+        this.camera.adjustProjection();
         for (GameObject gameObject : this.gameObjects)
         {
             gameObject.update((float) DELTA_TIME);
         }
-        physics.update((float) DELTA_TIME);
-        this.renderer.render();
+        render(DELTA_TIME);
     }
 
     @Override
@@ -94,8 +86,11 @@ public class EditorScene extends Scene
     @Override
     public void editorGUI()
     {
-        ImGui.begin("Block Picker");
+        ImGui.begin("Master Panel");
+        master.editorGUI();
+        ImGui.end();
 
+        ImGui.begin("Block Picker");
         ImVec2 windowPos = new ImVec2();
         ImGui.getWindowPos(windowPos);
         ImVec2 windowSize = new ImVec2();

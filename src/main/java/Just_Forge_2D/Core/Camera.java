@@ -12,7 +12,7 @@ public class Camera
     public Vector2f position;
     private Vector2f projectionSize = new Vector2f(32.0f * 40.0f, 32.0f * 21.0f);
     private Vector2f cameraPos;
-    private float zoom = 1f;
+    private float zoom = 0.5f;
 
 
     // - - - Functions - - -

@@ -79,10 +79,6 @@ public abstract class Scene
     public GameObject getGameObject(int GAME_OBJECT_ID)
     {
         Optional<GameObject> result = this.gameObjects.stream().filter(gameObject -> gameObject.getUniqueID() == GAME_OBJECT_ID).findFirst();
-        if (result.isEmpty())
-        {
-            justForgeLogger.FORGE_LOG_ERROR("Found no game object with ID: " + GAME_OBJECT_ID + " in scene: " + this.toString());
-        }
         return result.orElse(null);
 
         /*
@@ -169,7 +165,15 @@ public abstract class Scene
         try
         {
             FileWriter writer = new FileWriter("Configurations/Levels/level.justForgeFile");
-            writer.write(gson.toJson(this.gameObjects));
+            List<GameObject> toSerialize = new ArrayList<>();
+            for (GameObject obj : this.gameObjects)
+            {
+                if (obj.getSerializationStatus())
+                {
+                    toSerialize.add(obj);
+                }
+            }
+            writer.write(gson.toJson(toSerialize));
             writer.close();
             justForgeLogger.FORGE_LOG_INFO("Saved scene: " + this.toString());
         }
