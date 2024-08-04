@@ -27,20 +27,20 @@ public class EditorCamera extends Component
     public void update(float DELTA_TIME)
     {
         this.editorCamera.adjustProjection();
-        if (Mouse.isMouseButtonDown(GLFW_MOUSE_BUTTON_LEFT) && dragDebounce > 0)
+        if (Mouse.isMouseButtonDown(GLFW_MOUSE_BUTTON_RIGHT) && dragDebounce > 0)
         {
-            this.clickOrigin = new Vector2f(Mouse.getOrthoX(), Mouse.getOrthoY());
+            this.clickOrigin = new Vector2f(Mouse.getWorldX(), Mouse.getWorldY());
             dragDebounce -= DELTA_TIME;
             return;
         }
-        else if (Mouse.isMouseButtonDown(GLFW_MOUSE_BUTTON_LEFT))
+        else if (Mouse.isMouseButtonDown(GLFW_MOUSE_BUTTON_RIGHT))
         {
-            Vector2f mousePos = new Vector2f(Mouse.getOrthoX(), Mouse.getOrthoY());
+            Vector2f mousePos = new Vector2f(Mouse.getWorldX(), Mouse.getWorldY());
             Vector2f delta = new Vector2f(mousePos).sub(this.clickOrigin);
             this.editorCamera.position.sub(delta.mul(DELTA_TIME).mul(this.dragSensitivity));
             this.clickOrigin.lerp(mousePos, DELTA_TIME);
         }
-        if (dragDebounce <= 0.0f && !Mouse.isMouseButtonDown(GLFW_MOUSE_BUTTON_LEFT))
+        if (dragDebounce <= 0.0f && !Mouse.isMouseButtonDown(GLFW_MOUSE_BUTTON_RIGHT))
         {
             dragDebounce = 0.32f;
         }

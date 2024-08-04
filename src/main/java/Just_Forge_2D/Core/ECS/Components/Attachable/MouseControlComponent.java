@@ -31,8 +31,8 @@ public class MouseControlComponent extends Component
         if (holdingObject != null)
         {
             //justForgeLogger.FORGE_LOG_TRACE("Mouse orhto: " + Mouse.getOrthoX() + " " + Mouse.getOrthoY());
-            holdingObject.transform.position.x = (int)(Mouse.getOrthoX() / Configurations.GRID_WIDTH) * Configurations.GRID_WIDTH;
-            holdingObject.transform.position.y = (int)(Mouse.getOrthoY() / Configurations.GRID_HEIGHT) * Configurations.GRID_WIDTH;
+            holdingObject.transform.position.x = (int)(Mouse.getWorldX() / Configurations.GRID_WIDTH) * Configurations.GRID_WIDTH;
+            holdingObject.transform.position.y = (int)(Mouse.getWorldY() / Configurations.GRID_HEIGHT) * Configurations.GRID_WIDTH;
             if (Mouse.isMouseButtonDown(GLFW_MOUSE_BUTTON_LEFT))
             {
                 place();

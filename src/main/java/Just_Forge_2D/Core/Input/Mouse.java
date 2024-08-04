@@ -27,8 +27,13 @@ public class Mouse
     private double xPosition, yPosition;
     private double xPrevious, yPrevious;
 
+    // - - - Wrold Positions
+    private double xWorldPosition, yWorldPosition;
+    private double xWorldPrevious, yWorldPrevious;
+
     // - - - Mouse Buttons
     private final int buttonCount = 9;
+    private int mouseButtonDownCount = 0;
     private final boolean[] isMouseButtonPressed = new boolean[buttonCount]; // left, middle, right
 
     // - - - Relations
@@ -76,7 +81,16 @@ public class Mouse
         get().yPosition = Y_POSITION;
         get().xPosition = X_POSITION;
 
-        get().isDragging = get().isMouseButtonPressed[0] || get().mouse.isMouseButtonPressed[1] || Mouse.mouse.isMouseButtonPressed[2];
+        // - - - save the world position
+        get().xWorldPrevious = get().xWorldPosition;
+        get().yWorldPrevious = get().yWorldPosition;
+
+        // - - - redo world calculations
+        calcWorldY();
+        calcWorldX();
+
+        // - - - check drag
+        if (get().mouseButtonDownCount > 0) get().isDragging = true;
     }
 
     // - - - Update Clicks
@@ -91,11 +105,13 @@ public class Mouse
         {
             case GLFW_PRESS:
                 get().isMouseButtonPressed[BUTTON] = true;
+                get().mouseButtonDownCount++;
                 break;
 
             case GLFW_RELEASE:
                 get().isMouseButtonPressed[BUTTON] = false;
                 get().isDragging = false;
+                get().mouseButtonDownCount--;
                 break;
 
             default:
@@ -118,6 +134,9 @@ public class Mouse
 
         get().xPrevious = get().xPosition;
         get().yPrevious = get().yPosition;
+
+        get().xWorldPrevious = get().xWorldPosition;
+        get().yWorldPrevious = get().yWorldPosition;
     }
 
 
@@ -150,9 +169,32 @@ public class Mouse
     }
 
 
-    // - - - Orthographic - - -
+    // - - - World Space - - -
 
-    public static float getOrthoX()
+    // - - - get coordinates
+    public static float getWorldX()
+    {
+        return (float) get().xWorldPosition;
+    }
+
+    public static float getWorldY()
+    {
+        return (float) get().yWorldPosition;
+    }
+
+    // - - - delta
+    public static float getWorldDeltaX()
+    {
+        return (float) (get().xWorldPrevious - get().xWorldPosition);
+    }
+
+    public static float getWorldDeltaY()
+    {
+        return (float) (get().yWorldPrevious - get().yWorldPosition);
+    }
+
+    // - - - set coordinates
+    private static void calcWorldX()
     {
         float currentX = getX() - get().gameViewportPos.x;
         currentX = (currentX / get().grameViewportSize.x) * 2.0f - 1.0f;
@@ -161,24 +203,20 @@ public class Mouse
         Matrix4f viewProjection = new Matrix4f();
         camera.getInverseViewMatrix().mul(camera.getInverseProjectionMatrix(), viewProjection);
         temp.mul(viewProjection);
-        currentX = temp.x;
-        return currentX;
+        get().xWorldPosition = temp.x;
     }
 
-    public static float getOrthoY()
+
+    public static void calcWorldY()
     {
         float currentY = getY() - get().gameViewportPos.y;
         currentY = -((currentY / get().grameViewportSize.y) * 2.0f - 1.0f);
-        //float currentY = get().gameViewportPos.y - getY();
-        //float currentY = -get().gameViewportPos.y + Window.getHeight() - getY();
-//        currentY = (currentY / get().grameViewportSize.y) * 2.0f - 1.0f;
         Vector4f temp = new Vector4f(0, currentY, 0, 1);
         Camera camera = Window.getCurrentScene().getCamera();
         Matrix4f viewProjection = new Matrix4f();
         camera.getInverseViewMatrix().mul(camera.getInverseProjectionMatrix(), viewProjection);
         temp.mul(viewProjection);
-        currentY = temp.y;
-        return currentY;
+        get().yWorldPosition = temp.y;
     }
 
 

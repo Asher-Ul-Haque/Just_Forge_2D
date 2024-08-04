@@ -1,5 +1,6 @@
 package Just_Forge_2D.Editor;
 
+import Just_Forge_2D.Core.ECS.Components.NonPickable;
 import Just_Forge_2D.Core.ECS.GameObject;
 import Just_Forge_2D.Core.Input.Mouse;
 import Just_Forge_2D.Core.Scene.Scene;
@@ -23,20 +24,23 @@ public class PropertiesWindow
     public void update(float DELTA_TIME, Scene CURRENT_SCENE)
     {
         debounce -= DELTA_TIME;
-        // TODO: Remove test code
         if (Mouse.isMouseButtonDown(GLFW_MOUSE_BUTTON_LEFT) && debounce < 0)
         {
             int x = (int)Mouse.getScreenX();
             int y = (int)Mouse.getScreenY();
             int gameObjectID = this.selector.readPixel(x, y);
-            activeGameObject = CURRENT_SCENE.getGameObject(gameObjectID);
-            this.debounce = 0.2f;
-            if (this.activeGameObject != null)
+            GameObject picked = Window.getCurrentScene().getGameObject(gameObjectID);
+            if (picked != null && picked.getCompoent(NonPickable.class) == null)
             {
-                justForgeLogger.FORGE_LOG_DEBUG("Currently active object: " + activeGameObject.toString());
-                return;
+                justForgeLogger.FORGE_LOG_DEBUG("Currently active object: " + picked.toString());
+                this.activeGameObject = picked;
             }
-            justForgeLogger.FORGE_LOG_DEBUG("Currently active object: Null");
+            else if (picked == null && !Mouse.isDragging())
+            {
+                justForgeLogger.FORGE_LOG_DEBUG("Currently active object: Null");
+                activeGameObject = null;
+            }
+            this.debounce = 0.2f;
         }
     }
 

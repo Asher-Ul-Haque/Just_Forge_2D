@@ -98,9 +98,9 @@ public class GameObject
 
     public void start()
     {
-        for (Component component : components)
+        for (int i = 0; i < components.size(); ++i)
         {
-            component.start();
+            components.get(i).start();
         }
     }
 

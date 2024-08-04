@@ -3,11 +3,11 @@ package Just_Forge_2D.Editor;
 import Just_Forge_2D.Core.ECS.Components.Attachable.Sprite.Sprite;
 import Just_Forge_2D.Core.Input.Mouse;
 
-public class TranslationGizmo extends Gizmo
+public class ScaleGizmo extends Gizmo
 {
-    public TranslationGizmo(Sprite ARROW)
+    public ScaleGizmo(Sprite SCALE)
     {
-        super(ARROW);
+        super(SCALE);
     }
 
     @Override
@@ -17,14 +17,13 @@ public class TranslationGizmo extends Gizmo
         {
             if (xAxisActive && !yAxisActive)
             {
-                activeGameObject.transform.position.x -= Mouse.getWorldDeltaX();
+                activeGameObject.transform.scale.x -= Mouse.getWorldDeltaX();
             }
             else if (yAxisActive && !xAxisActive)
             {
-                activeGameObject.transform.position.y -= Mouse.getWorldDeltaY();
+                activeGameObject.transform.scale.y -= Mouse.getWorldDeltaY();
             }
         }
         super.update(DELTA_TIME);
     }
-
 }

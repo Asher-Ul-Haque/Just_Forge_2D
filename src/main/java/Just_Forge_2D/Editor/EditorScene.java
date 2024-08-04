@@ -36,11 +36,11 @@ public class EditorScene extends Scene
         SpriteSheet gizmos = justForgeAssetPool.getSpriteSheet("Assets/Textures/gizmos.png");
 
         this.camera = new Camera(new Vector2f(-250, 0));
-        master.addComponent(new GridLines());
+        //master.addComponent(new GridLines());
         master.addComponent(new MouseControlComponent());
         master.addComponent(new EditorCamera(this.camera));
-        master.addComponent(new TranslationGizmo(gizmos.getSprite(1)));
-        this.addGameObject(master);
+        master.addComponent(new GizmoSystem(gizmos));
+        //this.addGameObject(master);
 
         master.start();
     }
@@ -49,7 +49,7 @@ public class EditorScene extends Scene
     {
         justForgeAssetPool.getShader("Assets/Shaders/default.glsl");
         justForgeAssetPool.addSpriteSheet("Assets/Textures/spritesheet.png", new SpriteSheet(justForgeAssetPool.getTexture("Assets/Textures/spritesheet.png"), 16, 16, 16, 0));
-        justForgeAssetPool.addSpriteSheet("Assets/Textures/gizmos.png", new SpriteSheet(justForgeAssetPool.getTexture("Assets/Textures/gizmos.png"), 24, 48, 2, 0));
+        justForgeAssetPool.addSpriteSheet("Assets/Textures/gizmos.png", new SpriteSheet(justForgeAssetPool.getTexture("Assets/Textures/gizmos.png"), 24, 48, 3, 0));
         justForgeAssetPool.getTexture("Assets/Textures/blendImage2.png");
 
         for (GameObject g : gameObjects)
