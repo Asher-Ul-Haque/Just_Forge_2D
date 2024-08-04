@@ -1,6 +1,7 @@
 package Just_Forge_2D.Core.ECS.Components.Attachable.Sprite;
 
 import Just_Forge_2D.Core.ECS.Components.Component;
+import Just_Forge_2D.Editor.ForgeGUI;
 import Just_Forge_2D.Renderer.Texture;
 import Just_Forge_2D.Utils.justForgeLogger;
 import Just_Forge_2D.Core.ECS.Components.Unattachable.TransformComponent;
@@ -93,6 +94,7 @@ public class SpriteComponent extends Component
     @Override
     public void start()
     {
+        if (this.gameObject.transform == null) justForgeLogger.FORGE_LOG_ERROR(gameObject);
         this.lastTransform = gameObject.transform.copy();
     }
 
@@ -100,6 +102,7 @@ public class SpriteComponent extends Component
     @Override
     public void update(float DELTA_TIME)
     {
+        if (this.gameObject.transform == null) justForgeLogger.FORGE_LOG_ERROR(gameObject);
         if (!this.lastTransform.equals(this.gameObject.transform))
         {
             this.gameObject.transform.copy(this.lastTransform);
@@ -113,10 +116,8 @@ public class SpriteComponent extends Component
     @Override
     public void editorGUI()
     {
-        float[] inColor = {color.x, color.y, color.z, color.w};
-        if (ImGui.colorPicker4("Color Picker: ", inColor))
+        if (ForgeGUI.colorPicker4("COlor Picker", this.color))
         {
-            this.color.set(inColor[0], inColor[1], inColor[2], inColor[3]);
             this.isChanged = true;
         }
     }

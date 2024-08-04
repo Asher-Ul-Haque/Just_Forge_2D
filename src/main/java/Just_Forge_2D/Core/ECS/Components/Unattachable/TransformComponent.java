@@ -1,5 +1,6 @@
 package Just_Forge_2D.Core.ECS.Components.Unattachable;
 import Just_Forge_2D.Core.ECS.Components.Component;
+import Just_Forge_2D.Editor.ForgeGUI;
 import org.joml.Vector2f;
 
 // - - - class to store data regarding position and scale
@@ -7,6 +8,7 @@ public class TransformComponent extends Component
 {
     // - - - private variables
     public Vector2f position;
+    public int layer;
     public Vector2f scale;
     public float rotation = 0.0f;
 
@@ -20,6 +22,7 @@ public class TransformComponent extends Component
     {
         this.position = POSITION;
         this.scale = SCALE;
+        this.layer = 0;
     }
 
     public TransformComponent()
@@ -65,6 +68,12 @@ public class TransformComponent extends Component
             return false;
         }
 
-        return t.position.equals(this.position) && t.scale.equals(this.scale);
+        return (t.position.equals(this.position)) && (t.scale.equals(this.scale)) && (t.rotation == this.rotation) && (t.layer == this.layer);
+    }
+
+    @Override
+    public void editorGUI()
+    {
+        ForgeGUI.drawVec2Control("Position", this.position);
     }
 }

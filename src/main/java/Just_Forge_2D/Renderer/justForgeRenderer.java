@@ -35,8 +35,10 @@ public class justForgeRenderer
 
         for (justForgeRenderBatch batch : batches)
         {
-            if (batch.hasRoom && batch.getLayer() == SPRITE.gameObject.getLayer())
+            justForgeLogger.FORGE_LOG_DEBUG(SPRITE.gameObject.transform.layer);
+            if (batch.hasRoom && batch.getLayer() == SPRITE.gameObject.transform.layer)
             {
+                justForgeLogger.FORGE_LOG_DEBUG("Object : Layer :: " + batch.getLayer() + " : " + SPRITE.gameObject.transform.layer + " " + SPRITE.gameObject);
                 Texture texture = SPRITE.getTexture();
                 if (texture == null || (batch.hasTexture(texture) || batch.hasTextureRoom()))
                 {
@@ -49,8 +51,8 @@ public class justForgeRenderer
 
         if (!added)
         {
-            justForgeLogger.FORGE_LOG_DEBUG("Batch ran out of room, creating new batch for layer: " + SPRITE.gameObject.getLayer());
-            justForgeRenderBatch newBatch = new justForgeRenderBatch(MAX_BATCH_SIZE, SPRITE.gameObject.getLayer());
+            justForgeLogger.FORGE_LOG_DEBUG("Batch ran out of room, creating new batch for layer: " + SPRITE.gameObject.transform.layer);
+            justForgeRenderBatch newBatch = new justForgeRenderBatch(MAX_BATCH_SIZE, SPRITE.gameObject.transform.layer);
             newBatch.start();
             batches.add(newBatch);
             newBatch.addSprite(SPRITE);

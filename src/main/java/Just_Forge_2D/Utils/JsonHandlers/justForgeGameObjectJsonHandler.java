@@ -15,15 +15,15 @@ public class justForgeGameObjectJsonHandler implements JsonDeserializer<GameObje
         JsonObject object = jsonElement.getAsJsonObject();
         String name = object.get("name").getAsString();
         JsonArray components = object.getAsJsonArray("components");
-        TransformComponent transform = jsonDeserializationContext.deserialize(object.get("transform"), TransformComponent.class);
-        int layer = jsonDeserializationContext.deserialize(object.get("layer"), int.class);
 
-        GameObject newGameObject = new GameObject(name, transform, layer);
+        GameObject newGameObject = new GameObject(name);
+
         for (JsonElement e : components)
         {
             Component component = jsonDeserializationContext.deserialize(e, Component.class);
             newGameObject.addComponent(component);
         }
+        newGameObject.transform = newGameObject.getCompoent(TransformComponent.class);
 
         return newGameObject;
     }

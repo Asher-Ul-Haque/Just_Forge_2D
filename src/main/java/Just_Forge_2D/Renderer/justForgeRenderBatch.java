@@ -336,6 +336,6 @@ public class justForgeRenderBatch implements Comparable<justForgeRenderBatch>
     @Override
     public int compareTo(@NotNull justForgeRenderBatch OTHER)
     {
-        return Integer.compare(OTHER.getLayer(),this.getLayer());
+        return Integer.compare(this.getLayer(), OTHER.getLayer());
     }
 }

@@ -3,6 +3,7 @@ package Just_Forge_2D.Core.ECS;
 import Just_Forge_2D.Core.ECS.Components.Component;
 import Just_Forge_2D.Utils.justForgeLogger;
 import Just_Forge_2D.Core.ECS.Components.Unattachable.TransformComponent;
+import imgui.ImGui;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,8 +15,7 @@ public class GameObject
     // - - - private variables
     private String name;
     private List<Component> components = new ArrayList<>();
-    public TransformComponent transform; // transform is a mandatory component
-    private int layer;
+    public transient TransformComponent transform; // transform is a mandatory component
     private static int ID_COUNTER = 0;
     private int uniqueID = -1;
     private boolean doSerialization = true;
@@ -25,11 +25,9 @@ public class GameObject
 
     // - - - Constructors - - -
 
-    public GameObject(String NAME, TransformComponent TRANSFORM, int LAYER)
+    public GameObject(String NAME)
     {
-        this.transform = TRANSFORM;
         this.name = NAME;
-        this.layer = LAYER;
         this.uniqueID = ID_COUNTER++;
         justForgeLogger.FORGE_LOG_DEBUG("Created new Game Object : " + NAME);
     }
@@ -98,15 +96,11 @@ public class GameObject
 
     public void start()
     {
+        // WARNING: DO not change to enhanced for loop
         for (int i = 0; i < components.size(); ++i)
         {
             components.get(i).start();
         }
-    }
-
-    public int getLayer()
-    {
-        return this.layer;
     }
 
     @Override
@@ -119,6 +113,7 @@ public class GameObject
     {
         for (Component component : components)
         {
+            if (ImGui.collapsingHeader(component.getClass().getSimpleName()))
             component.editorGUI();
         }
     }
@@ -147,6 +142,4 @@ public class GameObject
     {
         return this.doSerialization;
     }
-
-
 }

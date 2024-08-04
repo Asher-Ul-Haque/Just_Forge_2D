@@ -1,6 +1,7 @@
 package Just_Forge_2D.Core.Scene;
 
 import Just_Forge_2D.Core.ECS.Components.Component;
+import Just_Forge_2D.Core.ECS.Components.Unattachable.TransformComponent;
 import Just_Forge_2D.Core.ECS.GameObject;
 import Just_Forge_2D.Core.Camera;
 import Just_Forge_2D.Renderer.justForgeRenderer;
@@ -64,6 +65,14 @@ public abstract class Scene
 
 
     // - - -  Game Objects - - -
+
+    public GameObject createGameObject(String NAME)
+    {
+        GameObject go = new GameObject(NAME);
+        go.addComponent(new TransformComponent());
+        go.transform = go.getCompoent(TransformComponent.class);
+        return go;
+    }
 
     public void addGameObject(GameObject GAME_OBJECT)
     {

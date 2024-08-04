@@ -21,7 +21,8 @@ import org.joml.Vector4f;
 
 public class EditorScene extends Scene
 {
-    private GameObject master = new GameObject("Master", new TransformComponent(new Vector2f(100, 200), new Vector2f(26, 26)), 0);
+//    private GameObject master = new GameObject("Master", new TransformComponent(new Vector2f(100, 200), new Vector2f(26, 26)), 0);
+    private GameObject master = this.createGameObject("Master");
     private SpriteSheet sprites;
 
     public EditorScene()

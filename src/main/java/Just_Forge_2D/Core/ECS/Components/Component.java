@@ -1,6 +1,7 @@
 package Just_Forge_2D.Core.ECS.Components;
 
 import Just_Forge_2D.Core.ECS.GameObject;
+import Just_Forge_2D.Editor.ForgeGUI;
 import Just_Forge_2D.Utils.justForgeLogger;
 import imgui.ImGui;
 import org.joml.Vector2f;
@@ -48,20 +49,12 @@ public abstract class Component
                 if (type == int.class)
                 {
                     int val = (int) value;
-                    int[] imInt = {val};
-                    if (ImGui.dragInt(name + ": ", imInt))
-                    {
-                        field.set(this, imInt[0]);
-                    }
+                    field.set(this, ForgeGUI.drawIntControl(name, val));
                 }
                 else if (type == float.class)
                 {
                     float val = (float) value;
-                    float[] imFloat = {val};
-                    if (ImGui.dragFloat(name + ": ", imFloat))
-                    {
-                        field.set(this, imFloat[0]);
-                    }
+                    field.set(this, ForgeGUI.drawFloatControl(name, val));
                 }
                 else if (type == boolean.class)
                 {
@@ -76,11 +69,7 @@ public abstract class Component
                 else if (type == Vector2f.class)
                 {
                     Vector2f val = (Vector2f) value;
-                    float[] imVec2 = {val.x, val.y};
-                    if (ImGui.dragFloat2(name +": ", imVec2))
-                    {
-                        val.set(imVec2[0], imVec2[1]);
-                    }
+                    ForgeGUI.drawVec2Control(name, val);
                 }
                 else if (type == Vector3f.class)
                 {

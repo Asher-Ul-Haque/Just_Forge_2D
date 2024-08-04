@@ -37,8 +37,8 @@ public class Gizmo extends Component
 
     public Gizmo(Sprite ARROW)
     {
-        this.xAxisGizmo = Prefabs.generateSpriteObject(ARROW, 16, 48);
-        this.yAxisGizmo = Prefabs.generateSpriteObject(ARROW, 16, 48);
+        this.xAxisGizmo = Prefabs.generateSpriteObject("X axis Gizmo", ARROW, 16, 48);
+        this.yAxisGizmo = Prefabs.generateSpriteObject("Y axis Gizmo", ARROW, 16, 48);
         this.xAxisSprite = this.xAxisGizmo.getCompoent(SpriteComponent.class);
         this.yAxisSprite = this.yAxisGizmo.getCompoent(SpriteComponent.class);
         this.xAxisGizmo.transform.position.add(this.xAxisOffset);
@@ -99,6 +99,8 @@ public class Gizmo extends Component
     {
         this.xAxisGizmo.transform.rotation = (float) (Math.PI / 2);
         this.yAxisGizmo.transform.rotation = (float) (Math.PI);
+        this.xAxisGizmo.transform.layer = 2;
+        this.yAxisGizmo.transform.layer = 2;
         this.xAxisGizmo.noSerialize();
         this.yAxisGizmo.noSerialize();
     }
