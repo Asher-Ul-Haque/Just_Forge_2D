@@ -87,7 +87,7 @@ public class TransformComponent extends Component
     {
         ForgeIsGUI.drawVec2Control("Position", this.position);
         ForgeIsGUI.drawVec2Control("Scale", this.scale, 32.0f);
-        ForgeIsGUI.drawFloatControl("Rotation", this.rotation);
-        ForgeIsGUI.drawIntControl("Layer", this.layer);
+        this.rotation = ForgeIsGUI.drawFloatControl("Rotation", this.rotation);
+        this.layer = ForgeIsGUI.drawIntControl("Layer", this.layer);
     }
 }
