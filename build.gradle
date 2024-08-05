@@ -6,6 +6,9 @@ group = "somebody.just"
 version = "1.0-SNAPSHOT"
 
 repositories {
+    flatDir{
+        dirs 'libs'
+    }
     mavenCentral()
 }
 
@@ -39,6 +42,9 @@ switch (OperatingSystem.current()) {
 }
 
 dependencies {
+
+    // Box 2d
+    implementation name: 'jbox2d-library'
     implementation 'com.google.code.gson:gson:2.11.0'
 
     implementation platform("org.lwjgl:lwjgl-bom:$lwjglVersion")

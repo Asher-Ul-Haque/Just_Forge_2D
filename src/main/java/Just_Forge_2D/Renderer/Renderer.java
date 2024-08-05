@@ -45,10 +45,8 @@ public class Renderer
 
         for (RenderBatch batch : batches)
         {
-            justForgeLogger.FORGE_LOG_DEBUG(SPRITE.gameObject.transform.layer);
             if (batch.hasRoom && batch.getLayer() == SPRITE.gameObject.transform.layer)
             {
-                justForgeLogger.FORGE_LOG_DEBUG("Object : Layer :: " + batch.getLayer() + " : " + SPRITE.gameObject.transform.layer + " " + SPRITE.gameObject);
                 Texture texture = SPRITE.getTexture();
                 if (texture == null || (batch.hasTexture(texture) || batch.hasTextureRoom()))
                 {
