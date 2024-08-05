@@ -3,7 +3,7 @@ package Just_Forge_2D.Renderer;
 import Just_Forge_2D.Core.Window;
 import Just_Forge_2D.Physics.Primitives.Line;
 import Just_Forge_2D.Utils.ForgeMath;
-import Just_Forge_2D.Utils.justForgeAssetPool;
+import Just_Forge_2D.Utils.AssetPool;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 
@@ -25,9 +25,8 @@ public class DebugPencil
     private static final List<Line> lines = new ArrayList<>();
 
     // - - - rendering info
-    // - - - 6 floats per vertex, 3 for position, 3 for color, 2 vertices per line
     private static final float[] vertexArray = new float[MAX_LINES * 6 * 2];
-    private static final justForgeShader shader = justForgeAssetPool.getShader("Assets/Shaders/debug.glsl");
+    private static final Shader shader = AssetPool.getShader("Assets/Shaders/debug.glsl");
     private static int vaoID;
     private static int vboID;
 
@@ -81,7 +80,7 @@ public class DebugPencil
             started = true;
         }
 
-        // - - - remove dead lines
+        // - - - remove lines that got timed out
         for (int i = 0; i < lines.size(); ++i)
         {
             if (lines.get(i).beginFrame() < 0)
@@ -94,7 +93,7 @@ public class DebugPencil
 
     public static void draw()
     {
-        if (lines.size() <= 0) return;
+        if (lines.isEmpty()) return;
 
         int index = 0;
         for (Line line: lines)
@@ -120,7 +119,7 @@ public class DebugPencil
 
         // - - - bind and upload
         glBindBuffer(GL_ARRAY_BUFFER, vboID);
-        glBufferSubData(GL_ARRAY_BUFFER, 0, Arrays.copyOfRange(vertexArray, 0, lines.size() * 6 * 2)); // we dont have maximum number of lines always
+        glBufferSubData(GL_ARRAY_BUFFER, 0, Arrays.copyOfRange(vertexArray, 0, lines.size() * 6 * 2)); // we don't have maximum number of lines always
 
         // - - - draw
         shader.use();
@@ -146,7 +145,7 @@ public class DebugPencil
 
 
     // - - - | Add Stuff | - - -
-    // TODO: Add other primitives and other constatns for common values like colors
+    // TODO: Add other primitives and other constants for common values like colors
 
 
     // - - - Add Lines - - -
@@ -348,7 +347,7 @@ public class DebugPencil
         addPolygon(CENTER, HALF_DIAGONAL, SIDE_COUNT, defaultRotation, COLOR, defaultLifetime);
     }
 
-    // - - - without only neccessities
+    // - - - with only necessities
     public static void addPolygon(Vector2f CENTER, float HALF_DIAGONAL, int SIDE_COUNT)
     {
         addPolygon(CENTER, HALF_DIAGONAL, SIDE_COUNT, defaultRotation, defaultColor, defaultLifetime);

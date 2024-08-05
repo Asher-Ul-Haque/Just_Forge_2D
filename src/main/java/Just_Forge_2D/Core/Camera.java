@@ -7,11 +7,19 @@ import org.joml.Vector3f;
 // - - - 2D Camera
 public class Camera
 {
-    // - - - Private Variable
-    private Matrix4f projectionMatrix, viewMatrix, inverseProjectionMatrix, inverseViewMatrix;
+    // - - - Private Variables - - -
+
+    // - - - projection
+    private final Matrix4f projectionMatrix;
+    private final Matrix4f inverseProjectionMatrix;
+    private final Vector2f projectionSize = new Vector2f(32.0f * 40.0f, 32.0f * 21.0f);
+
+    // - - - view
+    private final Matrix4f viewMatrix;
+    private final Matrix4f inverseViewMatrix;
+
+    // - - - position and zoom
     public Vector2f position;
-    private Vector2f projectionSize = new Vector2f(32.0f * 40.0f, 32.0f * 21.0f);
-    private Vector2f cameraPos;
     private float zoom = 0.5f;
 
 
@@ -53,7 +61,7 @@ public class Camera
     public void adjustProjection()
     {
         projectionMatrix.identity();
-        projectionMatrix.ortho(0.0f, projectionSize.x * this.zoom, 0.0f, projectionSize.y * this.zoom, 0.0f, 100.0f); // the screen is 32 tiles of 32 pizels each in both directions
+        projectionMatrix.ortho(0.0f, projectionSize.x * this.zoom, 0.0f, projectionSize.y * this.zoom, 0.0f, 100.0f);
         projectionMatrix.invert(inverseProjectionMatrix);
     }
 

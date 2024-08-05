@@ -1,16 +1,15 @@
 package Just_Forge_2D.Core.Scene;
 
 import Just_Forge_2D.Core.ECS.Components.Component;
-import Just_Forge_2D.Core.ECS.Components.Unattachable.TransformComponent;
+import Just_Forge_2D.Core.ECS.Components.TransformComponent;
 import Just_Forge_2D.Core.ECS.GameObject;
 import Just_Forge_2D.Core.Camera;
-import Just_Forge_2D.Renderer.justForgeRenderer;
+import Just_Forge_2D.Renderer.Renderer;
 import Just_Forge_2D.Utils.JsonHandlers.justForgeComponentJsonHandler;
 import Just_Forge_2D.Utils.JsonHandlers.justForgeGameObjectJsonHandler;
 import Just_Forge_2D.Utils.justForgeLogger;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import imgui.ImGui;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -18,7 +17,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 // - - - Abstract class for all the scenes
 public abstract class Scene
@@ -34,7 +32,7 @@ public abstract class Scene
     protected GameObject activeGameObject = null;
 
     // - - - Scene Rendering
-    protected justForgeRenderer renderer = new justForgeRenderer();
+    protected Renderer renderer = new Renderer();
 
     // - - - saving and loading
     protected boolean levelLoaded = false;
@@ -87,10 +85,6 @@ public abstract class Scene
 
     public GameObject getGameObject(int GAME_OBJECT_ID)
     {
-        Optional<GameObject> result = this.gameObjects.stream().filter(gameObject -> gameObject.getUniqueID() == GAME_OBJECT_ID).findFirst();
-        return result.orElse(null);
-
-        /*
         for (GameObject object : gameObjects)
         {
             if (object.getUniqueID() == GAME_OBJECT_ID)
@@ -98,9 +92,8 @@ public abstract class Scene
                 return object;
             }
         }
-        justForgeLogger.FORGE_LOG_ERROR("Found no game object with ID: " + GAME_OBJECT_ID + " in scene: " + this.toString());
+        justForgeLogger.FORGE_LOG_WARNING("Found no game object with ID: " + GAME_OBJECT_ID + " in scene: " + this);
         return null;
-         */
     }
 
     // - - - Getters and Setters - - -
@@ -110,10 +103,7 @@ public abstract class Scene
         return this.camera;
     }
 
-
-    // - - - Editor GUI - - -
-
-
+    // - - - Editor GUI
     public void editorGUI() {}
 
 
@@ -133,7 +123,7 @@ public abstract class Scene
         }
         catch (IOException e)
         {
-            justForgeLogger.FORGE_LOG_ERROR("Couldnt read from file: Configurations/Levels/level.justForgeFile");
+            justForgeLogger.FORGE_LOG_ERROR("Couldn't read from file: Configurations/Levels/level.justForgeFile");
             justForgeLogger.FORGE_LOG_ERROR(e.getMessage());
         }
 
@@ -169,7 +159,7 @@ public abstract class Scene
                 .registerTypeAdapter(Component.class, new justForgeComponentJsonHandler())
                 .registerTypeAdapter(GameObject.class, new justForgeGameObjectJsonHandler())
                 .create();
-        justForgeLogger.FORGE_LOG_INFO("Saving scene...: " + this.toString());
+        justForgeLogger.FORGE_LOG_INFO("Saving scene...: " + this);
 
         try
         {
@@ -184,11 +174,11 @@ public abstract class Scene
             }
             writer.write(gson.toJson(toSerialize));
             writer.close();
-            justForgeLogger.FORGE_LOG_INFO("Saved scene: " + this.toString());
+            justForgeLogger.FORGE_LOG_INFO("Saved scene: " + this);
         }
         catch (IOException e)
         {
-            justForgeLogger.FORGE_LOG_ERROR("Couldnt write to file");
+            justForgeLogger.FORGE_LOG_ERROR("Couldn't write to file");
             justForgeLogger.FORGE_LOG_ERROR(e.getMessage());
         }
     }

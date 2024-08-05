@@ -1,4 +1,4 @@
-package Just_Forge_2D.Editor;
+package Just_Forge_2D.Core.ECS.Components.EditorComponents;
 
 import Just_Forge_2D.Core.Camera;
 import Just_Forge_2D.Core.ECS.Components.Component;
@@ -8,21 +8,33 @@ import org.joml.Vector2f;
 
 import static org.lwjgl.glfw.GLFW.*;
 
-public class EditorCamera extends Component
+public class EditorCameraComponent extends Component
 {
+    // - - - private variables - - -
+
+    // - - - the camera
+    private final Camera editorCamera;
+
+    // - - - sensitivity
     private float dragDebounce = 0.32f;
-    private Camera editorCamera;
-    private Vector2f clickOrigin = new Vector2f();
     private float lerpTime = 0f;
     private float dragSensitivity = 10.0f;
     private float scrollSensitivity = 0.1f;
+
+    // - - - everything else
+    private Vector2f clickOrigin = new Vector2f();
     private boolean reset = true;
 
-    public EditorCamera(Camera EDITOR_CAMERA)
+
+    // - - - Functions - - -
+
+    // - - - constructor
+    public EditorCameraComponent(Camera EDITOR_CAMERA)
     {
         this.editorCamera = EDITOR_CAMERA;
     }
 
+    // - - - usage
     @Override
     public void update(float DELTA_TIME)
     {

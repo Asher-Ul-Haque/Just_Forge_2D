@@ -1,26 +1,19 @@
 package Just_Forge_2D.Renderer;
 
 import Just_Forge_2D.Utils.justForgeLogger;
-
 import static org.lwjgl.opengl.GL30.*;
-import static org.lwjgl.opengl.GL44.glBufferStorage;
 
 public class Framebuffer
 {
-    private int fboID = 0;
-    private Texture texture = null;
-
-    public int getFboID()
-    {
-        return fboID;
-    }
-
-    public int getTextureID()
-    {
-        return texture.getID();
-    }
+    // private variables
+    private final int fboID;
+    private final Texture texture;
 
 
+    // - - - | Functions | - - -
+
+
+    // - - - constructor
     public Framebuffer(int WIDTH, int HEIGHT)
     {
         // - - - generate framebuffer
@@ -44,7 +37,11 @@ public class Framebuffer
             assert false;
         }
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        justForgeLogger.FORGE_LOG_INFO("Framebuffer created");
     }
+
+
+    // - - - usage - - -
 
     public void bind()
     {
@@ -54,5 +51,17 @@ public class Framebuffer
     public void unbind()
     {
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    }
+
+
+    // - - - getters - - -
+    public int getFboID()
+    {
+        return fboID;
+    }
+
+    public int getTextureID()
+    {
+        return texture.getID();
     }
 }

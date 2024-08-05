@@ -2,7 +2,7 @@ package Just_Forge_2D.Core.ECS;
 
 import Just_Forge_2D.Core.ECS.Components.Component;
 import Just_Forge_2D.Utils.justForgeLogger;
-import Just_Forge_2D.Core.ECS.Components.Unattachable.TransformComponent;
+import Just_Forge_2D.Core.ECS.Components.TransformComponent;
 import imgui.ImGui;
 
 import java.util.ArrayList;
@@ -13,8 +13,8 @@ import java.util.List;
 public class GameObject
 {
     // - - - private variables
-    private String name;
-    private List<Component> components = new ArrayList<>();
+    private final String name;
+    private final List<Component> components = new ArrayList<>();
     public transient TransformComponent transform; // transform is a mandatory component
     private static int ID_COUNTER = 0;
     private int uniqueID = -1;
@@ -103,23 +103,26 @@ public class GameObject
         }
     }
 
-    @Override
-    public String toString()
-    {
-        return this.name;
-    }
-
+    // - - - Editor Stuff
     public void editorGUI()
     {
         for (Component component : components)
         {
             if (ImGui.collapsingHeader(component.getClass().getSimpleName()))
-            component.editorGUI();
+            {
+                component.editorGUI();
+            }
         }
     }
 
 
     // - - - Unique IDS - - -
+
+    @Override
+    public String toString()
+    {
+        return this.name;
+    }
 
     public static void init(int MAX_ID)
     {

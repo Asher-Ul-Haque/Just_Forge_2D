@@ -1,7 +1,7 @@
 package Just_Forge_2D.Utils;
 
-import Just_Forge_2D.Core.ECS.Components.Attachable.Sprite.SpriteSheet;
-import Just_Forge_2D.Renderer.justForgeShader;
+import Just_Forge_2D.Core.ECS.Components.Sprite.SpriteSheet;
+import Just_Forge_2D.Renderer.Shader;
 import Just_Forge_2D.Renderer.Texture;
 import java.io.File;
 import java.util.HashMap;
@@ -9,31 +9,31 @@ import java.util.Map;
 
 
 // - - - Class to store references to all our assets to protect them from the garbage collection
-public class justForgeAssetPool
+public class AssetPool
 {
     // - - - private variable maps for all types of assets
-    private static Map<String, justForgeShader> shaderPool = new HashMap<>();
-    private static Map<String, Texture> texturePool = new HashMap<>();
-    private static Map<String, SpriteSheet> spriteSheetPool = new HashMap<>();
+    private static final Map<String, Shader> shaderPool = new HashMap<>();
+    private static final Map<String, Texture> texturePool = new HashMap<>();
+    private static final Map<String, SpriteSheet> spriteSheetPool = new HashMap<>();
 
 
     // - - - Functions - - -
 
     // - - - shader
-    public static justForgeShader getShader(String FILE_PATH)
+    public static Shader getShader(String FILE_PATH)
     {
         File file = new File(FILE_PATH);
 
-        if (justForgeAssetPool.shaderPool.containsKey(file.getAbsolutePath()))
+        if (AssetPool.shaderPool.containsKey(file.getAbsolutePath()))
         {
             justForgeLogger.FORGE_LOG_TRACE("Loaded shader: " + FILE_PATH);
-            return justForgeAssetPool.shaderPool.get(file.getAbsolutePath());
+            return AssetPool.shaderPool.get(file.getAbsolutePath());
         }
         else
         {
-            justForgeShader shader = new justForgeShader(FILE_PATH);
+            Shader shader = new Shader(FILE_PATH);
             shader.compile();
-            justForgeAssetPool.shaderPool.put(file.getAbsolutePath(), shader);
+            AssetPool.shaderPool.put(file.getAbsolutePath(), shader);
             justForgeLogger.FORGE_LOG_DEBUG("Shader with path: " + FILE_PATH + " Hashed in shader Asset Pool and loaded");
             return shader;
         }
@@ -43,16 +43,16 @@ public class justForgeAssetPool
     public static Texture getTexture(String FILE_PATH)
     {
         File file = new File(FILE_PATH);
-        if (justForgeAssetPool.texturePool.containsKey(file.getAbsolutePath()))
+        if (AssetPool.texturePool.containsKey(file.getAbsolutePath()))
         {
             justForgeLogger.FORGE_LOG_TRACE("Loaded texture: " + FILE_PATH);
-            return justForgeAssetPool.texturePool.get(file.getAbsolutePath());
+            return AssetPool.texturePool.get(file.getAbsolutePath());
         }
         else
         {
             Texture texture = new Texture();
             texture.init(FILE_PATH);
-            justForgeAssetPool.texturePool.put(file.getAbsolutePath(), texture);
+            AssetPool.texturePool.put(file.getAbsolutePath(), texture);
             justForgeLogger.FORGE_LOG_DEBUG("Texture with path: " + FILE_PATH + " Hashed in Texture Asset Pool and loaded");
             return texture;
         }
@@ -64,20 +64,20 @@ public class justForgeAssetPool
     public static void addSpriteSheet(String FILE_PATH, SpriteSheet SPRITE_SHEET)
     {
         File file = new File(FILE_PATH);
-        if (!justForgeAssetPool.spriteSheetPool.containsKey(file.getAbsolutePath()))
+        if (!AssetPool.spriteSheetPool.containsKey(file.getAbsolutePath()))
         {
-            justForgeAssetPool.spriteSheetPool.put(file.getAbsolutePath(), SPRITE_SHEET);
+            AssetPool.spriteSheetPool.put(file.getAbsolutePath(), SPRITE_SHEET);
         }
     }
 
     public static SpriteSheet getSpriteSheet(String FILE_PATH)
     {
         File file = new File(FILE_PATH);
-        if (!justForgeAssetPool.spriteSheetPool.containsKey(file.getAbsolutePath()))
+        if (!AssetPool.spriteSheetPool.containsKey(file.getAbsolutePath()))
         {
             justForgeLogger.FORGE_LOG_ERROR("Tried to access a spritesheet : " + FILE_PATH + " before adding to the resource pool");
             assert false;
         }
-        return justForgeAssetPool.spriteSheetPool.get(file.getAbsolutePath());
+        return AssetPool.spriteSheetPool.get(file.getAbsolutePath());
     }
 }

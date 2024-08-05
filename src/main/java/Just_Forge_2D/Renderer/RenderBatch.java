@@ -1,8 +1,7 @@
 package Just_Forge_2D.Renderer;
 
-import Just_Forge_2D.Core.ECS.Components.Attachable.Sprite.SpriteComponent;
+import Just_Forge_2D.Core.ECS.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.Core.Window;
-import Just_Forge_2D.Utils.justForgeAssetPool;
 import Just_Forge_2D.Utils.justForgeLogger;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
@@ -16,7 +15,7 @@ import static org.lwjgl.opengl.GL20C.*;
 import static org.lwjgl.opengl.GL30C.glBindVertexArray;
 import static org.lwjgl.opengl.GL30C.glGenVertexArrays;
 
-public class justForgeRenderBatch implements Comparable<justForgeRenderBatch>
+public class RenderBatch implements Comparable<RenderBatch>
 {
     /* C struct
         Vertex
@@ -49,23 +48,23 @@ public class justForgeRenderBatch implements Comparable<justForgeRenderBatch>
     private final int ENTITY_ID_OFFSET = TEXTURE_ID_OFFSET + TEXTURE_ID_SIZE * Float.BYTES;
 
     // - - - batch related
-    private SpriteComponent[] sprites;
+    private final SpriteComponent[] sprites;
     private int spriteCount;
     protected boolean hasRoom;
-    private List<Texture> textures;
-    private int maxBatchSize;
-    private int layer;
+    private final List<Texture> textures;
+    private final int maxBatchSize;
+    private final int layer;
 
-    // - - - for remderer
+    // - - - for renderer
     private int vaoID, vboID;
-    private float[] vertices;
-    private int[] textureSlots = {0, 1, 2, 3, 4, 5, 6, 7};
+    private final float[] vertices;
+    private final int[] textureSlots = {0, 1, 2, 3, 4, 5, 6, 7};
 
 
     // - - - Functions - - - -
 
     // - - - constructor
-    public justForgeRenderBatch(int MAX_BATCH_SIZE, int LAYER)
+    public RenderBatch(int MAX_BATCH_SIZE, int LAYER)
     {
         //shader = justForgeAssetPool.getShader("Assets/Shaders/default.glsl");
         this.maxBatchSize = MAX_BATCH_SIZE;
@@ -80,9 +79,11 @@ public class justForgeRenderBatch implements Comparable<justForgeRenderBatch>
 
         // - - - Initialise textures
         this.textures = new ArrayList<>();
+
+        justForgeLogger.FORGE_LOG_INFO("Render Batch created for layer: " + this.layer);
     }
 
-    // - - - starter to make the batch accpet input, create its buffers and enable them
+    // - - - starter to make the batch accept input, create its buffers and enable them
     public void start()
     {
         // - - - Generate and bind a vertex array object
@@ -115,6 +116,7 @@ public class justForgeRenderBatch implements Comparable<justForgeRenderBatch>
 
         glVertexAttribPointer(4, ENTITY_ID_SIZE, GL_FLOAT, false, VERTEX_SIZE_BYTES, ENTITY_ID_OFFSET);
         glEnableVertexAttribArray(4);
+        justForgeLogger.FORGE_LOG_DEBUG("RenderBatch for layer: " + this.layer + " started");
     }
 
     // - - - there is no comment here
@@ -138,7 +140,7 @@ public class justForgeRenderBatch implements Comparable<justForgeRenderBatch>
         }
 
         // - - - Use the shader
-        justForgeShader shader = justForgeRenderer.getCurrentShader();
+        Shader shader = Renderer.getCurrentShader();
         shader.use();
         shader.uploadMatrix4f("uProjection", Window.getCurrentScene().getCamera().getProjectionMatrix());
         shader.uploadMatrix4f("uView", Window.getCurrentScene().getCamera().getViewMatrix());
@@ -158,9 +160,9 @@ public class justForgeRenderBatch implements Comparable<justForgeRenderBatch>
         glDrawElements(GL_TRIANGLES, this.spriteCount * 6, GL_UNSIGNED_INT, 0);
 
         // - - - Unbind textures
-        for (int i = 0; i < textures.size(); ++i)
+        for (Texture texture : textures)
         {
-            textures.get(i).detach();
+            texture.detach();
         }
 
         // - - - Disable everything
@@ -188,7 +190,7 @@ public class justForgeRenderBatch implements Comparable<justForgeRenderBatch>
             }
         }
 
-        // - - - Add properties to load verticies array
+        // - - - Add properties to load vertices array
         loadVertexProperties(index);
 
         if (spriteCount >= this.maxBatchSize)
@@ -203,7 +205,7 @@ public class justForgeRenderBatch implements Comparable<justForgeRenderBatch>
     {
         SpriteComponent sprite = this.sprites[INDEX];
 
-        // - - - Find offset within array (4 verticies for a sprite) and color
+        // - - - Find offset within array (4 vertices for a sprite) and color
         int offset = INDEX * 4 * VERTEX_SIZE;
         Vector4f color = sprite.getColor();
         int textID = 0;
@@ -235,7 +237,7 @@ public class justForgeRenderBatch implements Comparable<justForgeRenderBatch>
                     sprite.gameObject.transform.scale.y, 1);
         }
 
-        // - - - Add vertiices with the appropirate properties
+        // - - - Add vertices with the appropriate properties
         float xAdd = 1.0f;
         float yAdd = 1.0f;
         for (int i = 0; i < 4; ++i)
@@ -310,10 +312,10 @@ public class justForgeRenderBatch implements Comparable<justForgeRenderBatch>
         // - - - Create the first triangle
         ELEMENTS[offsetArrayIndex] = offset + 3;
         ELEMENTS[offsetArrayIndex + 1] = offset + 2;
-        ELEMENTS[offsetArrayIndex + 2] = offset + 0;
+        ELEMENTS[offsetArrayIndex + 2] = offset;
 
         // - - - Create the second triangle
-        ELEMENTS[offsetArrayIndex + 3] = offset + 0;
+        ELEMENTS[offsetArrayIndex + 3] = offset;
         ELEMENTS[offsetArrayIndex + 4] = offset + 2;
         ELEMENTS[offsetArrayIndex + 5] = offset + 1;
     }
@@ -334,7 +336,7 @@ public class justForgeRenderBatch implements Comparable<justForgeRenderBatch>
     }
 
     @Override
-    public int compareTo(@NotNull justForgeRenderBatch OTHER)
+    public int compareTo(@NotNull RenderBatch OTHER)
     {
         return Integer.compare(this.getLayer(), OTHER.getLayer());
     }

@@ -1,57 +1,63 @@
-package Just_Forge_2D.Editor;
+package Just_Forge_2D.Core.Scene;
 
-import Just_Forge_2D.Core.ECS.Components.Attachable.Sprite.Sprite;
-import Just_Forge_2D.Core.ECS.Components.Attachable.Sprite.SpriteComponent;
-import Just_Forge_2D.Core.ECS.Components.Attachable.Sprite.SpriteSheet;
-import Just_Forge_2D.Core.ECS.Components.Attachable.MouseControlComponent;
+import Just_Forge_2D.Core.ECS.Components.Sprite.Sprite;
+import Just_Forge_2D.Core.ECS.Components.Sprite.SpriteComponent;
+import Just_Forge_2D.Core.ECS.Components.Sprite.SpriteSheet;
+import Just_Forge_2D.Core.ECS.Components.EditorComponents.MouseControlComponent;
 import Just_Forge_2D.Core.ECS.GameObject;
 import Just_Forge_2D.Core.Camera;
-import Just_Forge_2D.Core.Scene.Scene;
-import Just_Forge_2D.Core.Window;
-import Just_Forge_2D.Physics.Physics;
-import Just_Forge_2D.Physics.RigidBody.RigidBody;
+import Just_Forge_2D.Core.ECS.Components.EditorComponents.EditorCameraComponent;
+import Just_Forge_2D.Core.ECS.Components.EditorComponents.GizmoSystem.GizmoSystemComponent;
+import Just_Forge_2D.Core.ECS.Components.EditorComponents.GridlinesComponent;
+import Just_Forge_2D.Editor.Prefabs;
 import Just_Forge_2D.Utils.Configurations;
-import Just_Forge_2D.Utils.justForgeAssetPool;
-import Just_Forge_2D.Core.ECS.Components.Unattachable.TransformComponent;
+import Just_Forge_2D.Utils.AssetPool;
 import imgui.ImGui;
 import imgui.ImVec2;
 import org.joml.Vector2f;
-import org.joml.Vector4f;
 
 
+// - - - Class to run the editor
 public class EditorScene extends Scene
 {
-//    private GameObject master = new GameObject("Master", new TransformComponent(new Vector2f(100, 200), new Vector2f(26, 26)), 0);
-    private GameObject master = this.createGameObject("Master");
+    // - - - private variables
+    private final GameObject master = this.createGameObject("Master");
     private SpriteSheet sprites;
 
+
+    // - - - | Functions | - - -
+
+
+    // - - - Constructors and initialization - - -
+
+    // - - - useless constructor
     public EditorScene()
     {
     }
 
+    // - - - useful initialization
     @Override
     public void init()
     {
         loadResources();
-        sprites = justForgeAssetPool.getSpriteSheet("Assets/Textures/spritesheet.png");
-        SpriteSheet gizmos = justForgeAssetPool.getSpriteSheet("Assets/Textures/gizmos.png");
+        sprites = AssetPool.getSpriteSheet("Assets/Textures/spritesheet.png");
+        SpriteSheet gizmos = AssetPool.getSpriteSheet("Assets/Textures/gizmos.png");
 
-        this.camera = new Camera(new Vector2f(-250, 0));
-        //master.addComponent(new GridLines());
+        this.camera = new Camera(new Vector2f(-250, -100));
+        master.addComponent(new GridlinesComponent());
         master.addComponent(new MouseControlComponent());
-        master.addComponent(new EditorCamera(this.camera));
-        master.addComponent(new GizmoSystem(gizmos));
-        //this.addGameObject(master);
+        master.addComponent(new EditorCameraComponent(this.camera));
+        master.addComponent(new GizmoSystemComponent(gizmos));
 
         master.start();
     }
 
     private void loadResources()
     {
-        justForgeAssetPool.getShader("Assets/Shaders/default.glsl");
-        justForgeAssetPool.addSpriteSheet("Assets/Textures/spritesheet.png", new SpriteSheet(justForgeAssetPool.getTexture("Assets/Textures/spritesheet.png"), 16, 16, 16, 0));
-        justForgeAssetPool.addSpriteSheet("Assets/Textures/gizmos.png", new SpriteSheet(justForgeAssetPool.getTexture("Assets/Textures/gizmos.png"), 24, 48, 3, 0));
-        justForgeAssetPool.getTexture("Assets/Textures/blendImage2.png");
+        AssetPool.getShader("Assets/Shaders/default.glsl");
+        AssetPool.addSpriteSheet("Assets/Textures/spritesheet.png", new SpriteSheet(AssetPool.getTexture("Assets/Textures/spritesheet.png"), 16, 16, 16, 0));
+        AssetPool.addSpriteSheet("Assets/Textures/gizmos.png", new SpriteSheet(AssetPool.getTexture("Assets/Textures/gizmos.png"), 24, 48, 3, 0));
+        AssetPool.getTexture("Assets/Textures/blendImage2.png");
 
         for (GameObject g : gameObjects)
         {
@@ -60,11 +66,14 @@ public class EditorScene extends Scene
                SpriteComponent spr = g.getCompoent(SpriteComponent.class);
                if (spr.getTexture() != null)
                {
-                   spr.setTexture(justForgeAssetPool.getTexture(spr.getTexture().getFilepath()));
+                   spr.setTexture(AssetPool.getTexture(spr.getTexture().getFilepath()));
                }
             }
         }
     }
+
+
+    // - - - Scene usage - - -
 
     @Override
     public void update(float DELTA_TIME)
@@ -73,7 +82,7 @@ public class EditorScene extends Scene
         this.camera.adjustProjection();
         for (GameObject gameObject : this.gameObjects)
         {
-            gameObject.update((float) DELTA_TIME);
+            gameObject.update(DELTA_TIME);
         }
         render(DELTA_TIME);
     }
@@ -84,6 +93,7 @@ public class EditorScene extends Scene
         this.renderer.render();
     }
 
+    // - - - editor stuff
     @Override
     public void editorGUI()
     {
@@ -118,7 +128,7 @@ public class EditorScene extends Scene
 
             ImVec2 lastButtonPos = new ImVec2();
             ImGui.getItemRectMax(lastButtonPos);
-            float lastButtonX2 = lastButtonPos.x;;
+            float lastButtonX2 = lastButtonPos.x;
             float nextButtonX2 = lastButtonX2 + itemSpacing.x + spriteWidth;
             if (i + 1 < sprites.size() && nextButtonX2 < windowX2)
             {

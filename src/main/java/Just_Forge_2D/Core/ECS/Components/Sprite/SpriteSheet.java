@@ -1,4 +1,4 @@
-package Just_Forge_2D.Core.ECS.Components.Attachable.Sprite;
+package Just_Forge_2D.Core.ECS.Components.Sprite;
 
 import Just_Forge_2D.Renderer.Texture;
 import org.joml.Vector2f;
@@ -11,7 +11,7 @@ public class SpriteSheet
 {
     // - - - private variables
     private final Texture spriteSheet;
-    private List<Sprite> sprites;
+    private final List<Sprite> sprites;
 
 
     // - - - | Functions | - - -
@@ -24,7 +24,7 @@ public class SpriteSheet
         this.spriteSheet = SPRITE_SHEET;
 
         int currentX = 0;
-        int currentY = SPRITE_SHEET.getHeight() - SPRITE_HEIGHT; // bototm left corner of top left sprite
+        int currentY = SPRITE_SHEET.getHeight() - SPRITE_HEIGHT; // bottom left corner of top left sprite
 
         for (int i = 0; i < SPRITE_COUNT; ++i)
         {

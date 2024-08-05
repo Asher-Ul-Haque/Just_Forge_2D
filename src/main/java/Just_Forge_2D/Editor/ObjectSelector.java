@@ -6,11 +6,19 @@ import static org.lwjgl.opengl.GL11.glGetError;
 import static org.lwjgl.opengl.GL30.*;
 import static org.lwjgl.opengl.GL30.GL_FRAMEBUFFER;
 
+// - - - Object Selector
 public class ObjectSelector
 {
+    // - - - private variables
     private int objectTextureId;
     private int fbo;
     private int depthTexture;
+
+
+    // - - - | Functions | - - -
+
+
+    // - - - Constructors and initialization - - -
 
     public ObjectSelector(int WIDTH, int HEIGHT)
     {
@@ -61,6 +69,9 @@ public class ObjectSelector
         return true;
     }
 
+
+    // - - - Writing - - -
+
     public void enableWriting()
     {
         glBindFramebuffer(GL_DRAW_FRAMEBUFFER, fbo);
@@ -71,6 +82,8 @@ public class ObjectSelector
         glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
     }
 
+
+    // - - - Reading - - -
     public int readPixel(int X, int Y)
     {
         glBindFramebuffer(GL_READ_FRAMEBUFFER, fbo);

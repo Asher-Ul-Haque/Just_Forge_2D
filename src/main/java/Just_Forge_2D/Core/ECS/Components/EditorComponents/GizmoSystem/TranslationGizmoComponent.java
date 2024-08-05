@@ -1,13 +1,16 @@
-package Just_Forge_2D.Editor;
+package Just_Forge_2D.Core.ECS.Components.EditorComponents.GizmoSystem;
 
-import Just_Forge_2D.Core.ECS.Components.Attachable.Sprite.Sprite;
+import Just_Forge_2D.Core.ECS.Components.Sprite.Sprite;
 import Just_Forge_2D.Core.Input.Mouse;
+import Just_Forge_2D.Utils.justForgeLogger;
 
-public class TranslationGizmo extends Gizmo
+// - - - Translation Gizmo
+public class TranslationGizmoComponent extends GizmoComponent
 {
-    public TranslationGizmo(Sprite ARROW)
+    public TranslationGizmoComponent(Sprite ARROW)
     {
         super(ARROW);
+        justForgeLogger.FORGE_LOG_INFO("Created translation Gizmo");
     }
 
     @Override
@@ -26,5 +29,4 @@ public class TranslationGizmo extends Gizmo
         }
         super.update(DELTA_TIME);
     }
-
 }

@@ -6,22 +6,21 @@ package Just_Forge_2D.Core;
 
 import Just_Forge_2D.Core.Input.Keyboard;
 import Just_Forge_2D.Core.Input.Mouse;
-import Just_Forge_2D.Editor.EditorScene;
+import Just_Forge_2D.Core.Scene.EditorScene;
 import Just_Forge_2D.Core.Scene.Scene;
 import Just_Forge_2D.Editor.ObjectSelector;
 import Just_Forge_2D.Editor.justForgeImGui;
 import Just_Forge_2D.Renderer.DebugPencil;
 import Just_Forge_2D.Renderer.Framebuffer;
-import Just_Forge_2D.Renderer.justForgeRenderer;
-import Just_Forge_2D.Renderer.justForgeShader;
-import Just_Forge_2D.Utils.justForgeAssetPool;
+import Just_Forge_2D.Renderer.Renderer;
+import Just_Forge_2D.Renderer.Shader;
+import Just_Forge_2D.Utils.AssetPool;
 import Just_Forge_2D.Utils.justForgeLogger;
 import Just_Forge_2D.Utils.justForgeTime;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
 
-import javax.swing.*;
 import java.util.Objects;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
@@ -78,8 +77,8 @@ public class Window
     float dt = -1;
 
     // - - - shaders
-    justForgeShader defaultShader;
-    justForgeShader selectorShader;
+    Shader defaultShader;
+    Shader selectorShader;
 
 
     // - - - | Functions | - - -
@@ -232,8 +231,8 @@ public class Window
 
 
         // - - - compile shaders
-        this.defaultShader = justForgeAssetPool.getShader("Assets/Shaders/default.glsl");
-        this.selectorShader = justForgeAssetPool.getShader("Assets/Shaders/selector.glsl");
+        this.defaultShader = AssetPool.getShader("Assets/Shaders/default.glsl");
+        this.selectorShader = AssetPool.getShader("Assets/Shaders/selector.glsl");
 
         beginTime = (float) justForgeTime.getTime();
         justForgeLogger.FORGE_LOG_INFO("Time keeping system Online");
@@ -282,7 +281,7 @@ public class Window
         glViewport(0, 0, 1980, 720);
         glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        justForgeRenderer.bindShader(selectorShader);
+        Renderer.bindShader(selectorShader);
         currentScene.render(dt);
         selector.disableWriting();
 
@@ -302,7 +301,7 @@ public class Window
         if (dt >= 0.0d)
         {
             DebugPencil.draw();
-            justForgeRenderer.bindShader(defaultShader);
+            Renderer.bindShader(defaultShader);
             currentScene.update(dt);
             currentScene.render(dt);
         }

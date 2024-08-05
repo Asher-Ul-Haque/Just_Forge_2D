@@ -1,41 +1,53 @@
-package Just_Forge_2D.Editor;
+package Just_Forge_2D.Core.ECS.Components.EditorComponents.GizmoSystem;
 
-import Just_Forge_2D.Core.ECS.Components.Attachable.Sprite.Sprite;
-import Just_Forge_2D.Core.ECS.Components.Attachable.Sprite.SpriteComponent;
 import Just_Forge_2D.Core.ECS.Components.Component;
-import Just_Forge_2D.Core.ECS.Components.NonPickable;
+import Just_Forge_2D.Core.ECS.Components.NonPickableComponent;
+import Just_Forge_2D.Core.ECS.Components.Sprite.Sprite;
+import Just_Forge_2D.Core.ECS.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.Core.ECS.GameObject;
 import Just_Forge_2D.Core.Input.Mouse;
 import Just_Forge_2D.Core.Window;
+import Just_Forge_2D.Editor.Prefabs;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
-
 import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_LEFT;
 
-public class Gizmo extends Component
+// - - - Gizmo
+public class GizmoComponent extends Component
 {
+    // - - - Private Variables - - -
 
-    private Vector4f xAxisColor = new Vector4f(1, 0.3f, 0.3f, 1);
-    private Vector4f xAxisHoverColor = new Vector4f(1, 0, 0, 1);
-    private Vector4f yAxisColor = new Vector4f(0.3f, 1, 0.3f, 1);
-    private Vector4f yAxisHoverColor = new Vector4f(0, 1, 0, 1);
-    private Vector2f xAxisOffset = new Vector2f(64, -5);
-    private Vector2f yAxisOffset = new Vector2f(16, 61);
-
-    private GameObject xAxisGizmo;
-    private GameObject yAxisGizmo;
-    private SpriteComponent xAxisSprite;
-    private SpriteComponent yAxisSprite;
-    private int gizmoWidth = 16;
-    private int gizmoHeight = 48;
-
+    // - - - xAxis Gizmo
+    private final Vector4f xAxisColor = new Vector4f(1, 0.3f, 0.3f, 1);
+    private final Vector4f xAxisHoverColor = new Vector4f(1, 0, 0, 1);
+    private final Vector2f xAxisOffset = new Vector2f(64, -5);
+    private final SpriteComponent xAxisSprite;
     protected boolean xAxisActive = false;
-    protected boolean yAxisActive = false;
-    private boolean using = false;
+    private final GameObject xAxisGizmo;
 
+    // - - - yAxis Gizmo
+    private final Vector4f yAxisColor = new Vector4f(0.3f, 1, 0.3f, 1);
+    private final Vector4f yAxisHoverColor = new Vector4f(0, 1, 0, 1);
+    private final Vector2f yAxisOffset = new Vector2f(16, 61);
+    private final SpriteComponent yAxisSprite;
+    protected boolean yAxisActive = false;
+    private final GameObject yAxisGizmo;
+
+    // - - - Size
+    private final int gizmoWidth = 16;
+    private final int gizmoHeight = 48;
+
+    // - - - state
+    private boolean using = false;
     protected GameObject activeGameObject = null;
 
-    public Gizmo(Sprite ARROW)
+
+    // - - - | Functions | - - -
+
+
+    // - - - Constructor - - -
+
+    public GizmoComponent(Sprite ARROW)
     {
         this.xAxisGizmo = Prefabs.generateSpriteObject("X axis Gizmo", ARROW, 16, 48);
         this.yAxisGizmo = Prefabs.generateSpriteObject("Y axis Gizmo", ARROW, 16, 48);
@@ -43,12 +55,15 @@ public class Gizmo extends Component
         this.yAxisSprite = this.yAxisGizmo.getCompoent(SpriteComponent.class);
         this.xAxisGizmo.transform.position.add(this.xAxisOffset);
         this.yAxisGizmo.transform.position.add(this.yAxisOffset);
-        this.xAxisGizmo.addComponent(new NonPickable());
-        this.yAxisGizmo.addComponent(new NonPickable());
+        this.xAxisGizmo.addComponent(new NonPickableComponent());
+        this.yAxisGizmo.addComponent(new NonPickableComponent());
 
         Window.getCurrentScene().addGameObject(this.xAxisGizmo);
         Window.getCurrentScene().addGameObject(this.yAxisGizmo);
     }
+
+
+    // - - - Usage - - -
 
     @Override
     public void update(float DELTA_TIME)
@@ -105,6 +120,9 @@ public class Gizmo extends Component
         this.yAxisGizmo.noSerialize();
     }
 
+
+    // - - - Activate or Inactivate - - -
+
     private void activate()
     {
         this.xAxisSprite.setColor(xAxisColor);
@@ -117,6 +135,9 @@ public class Gizmo extends Component
         this.xAxisSprite.setColor(new Vector4f(0, 0, 0, 0));
         this.yAxisSprite.setColor(new Vector4f(0, 0, 0, 0));
     }
+
+
+    // - - - Hover - - -
 
     private boolean checkXHoverState()
     {
@@ -152,6 +173,7 @@ public class Gizmo extends Component
         return false;
     }
 
+    // - - - usage
     public void setUsing(boolean REALLY)
     {
         this.using = REALLY;

@@ -1,11 +1,9 @@
 package Just_Forge_2D.Editor;
 
-import Just_Forge_2D.Core.ECS.Components.Attachable.Sprite.Sprite;
-import Just_Forge_2D.Core.ECS.Components.Attachable.Sprite.SpriteComponent;
-import Just_Forge_2D.Core.ECS.Components.Unattachable.TransformComponent;
+import Just_Forge_2D.Core.ECS.Components.Sprite.Sprite;
+import Just_Forge_2D.Core.ECS.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.Core.ECS.GameObject;
 import Just_Forge_2D.Core.Window;
-import org.joml.Vector2f;
 
 public class Prefabs
 {

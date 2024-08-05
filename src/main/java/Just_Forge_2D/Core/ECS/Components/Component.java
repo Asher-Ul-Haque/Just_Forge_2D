@@ -1,8 +1,7 @@
 package Just_Forge_2D.Core.ECS.Components;
 
 import Just_Forge_2D.Core.ECS.GameObject;
-import Just_Forge_2D.Editor.ForgeGUI;
-import Just_Forge_2D.Utils.justForgeLogger;
+import Just_Forge_2D.Editor.ForgeIsGUI;
 import imgui.ImGui;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
@@ -49,12 +48,12 @@ public abstract class Component
                 if (type == int.class)
                 {
                     int val = (int) value;
-                    field.set(this, ForgeGUI.drawIntControl(name, val));
+                    field.set(this, ForgeIsGUI.drawIntControl(name, val));
                 }
                 else if (type == float.class)
                 {
                     float val = (float) value;
-                    field.set(this, ForgeGUI.drawFloatControl(name, val));
+                    field.set(this, ForgeIsGUI.drawFloatControl(name, val));
                 }
                 else if (type == boolean.class)
                 {
@@ -69,25 +68,17 @@ public abstract class Component
                 else if (type == Vector2f.class)
                 {
                     Vector2f val = (Vector2f) value;
-                    ForgeGUI.drawVec2Control(name, val);
+                    ForgeIsGUI.drawVec2Control(name, val);
                 }
                 else if (type == Vector3f.class)
                 {
                     Vector3f val = (Vector3f) value;
-                    float[] imVec3 = {val.x, val.y, val.z};
-                    if (ImGui.dragFloat3(name +": ", imVec3))
-                    {
-                        val.set(imVec3[0], imVec3[1], imVec3[2]);
-                    }
+                    ForgeIsGUI.drawVec3(name, val);
                 }
                 else if (type == Vector4f.class)
                 {
                     Vector4f val = (Vector4f) value;
-                    float[] imVec4 = {val.x, val.y, val.z, val.w};
-                    if (ImGui.dragFloat4(name +": ", imVec4))
-                    {
-                        val.set(imVec4[0], imVec4[1], imVec4[2], imVec4[3]);
-                    }
+                    ForgeIsGUI.colorPicker4(name, val);
                 }
 
 

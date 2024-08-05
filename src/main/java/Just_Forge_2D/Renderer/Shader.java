@@ -14,7 +14,7 @@ import static org.lwjgl.opengl.GL20.*;
 
 
 // - - - SHADER Mnagemnt
-public class justForgeShader
+public class Shader
 {
     // - - - Private variables for compiling
     private int shaderProgramID;
@@ -23,7 +23,7 @@ public class justForgeShader
     private boolean beingUsed = false;
 
     // - - - Constructor to get a useable shader
-    public justForgeShader(String FILE_PATH)
+    public Shader(String FILE_PATH)
     {
         this.filePath = FILE_PATH;
 

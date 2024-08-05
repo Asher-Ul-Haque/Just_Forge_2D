@@ -1,26 +1,33 @@
 package Just_Forge_2D.Editor;
 
-import Just_Forge_2D.Core.ECS.Components.NonPickable;
+import Just_Forge_2D.Core.ECS.Components.NonPickableComponent;
 import Just_Forge_2D.Core.ECS.GameObject;
 import Just_Forge_2D.Core.Input.Mouse;
 import Just_Forge_2D.Core.Scene.Scene;
 import Just_Forge_2D.Core.Window;
 import Just_Forge_2D.Utils.justForgeLogger;
 import imgui.ImGui;
-
 import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_LEFT;
 
+
+// - - - Properties Window
 public class PropertiesWindow
 {
+    // - - - private variables
     private GameObject activeGameObject = null;
     private final ObjectSelector selector;
     private float debounce = 0.2f;
 
+
+    // - - - Functions - - -
+
+    // - - - Constructor
     public PropertiesWindow(ObjectSelector SELECTOR)
     {
         this.selector = SELECTOR;
     }
 
+    // - - - usage
     public void update(float DELTA_TIME, Scene CURRENT_SCENE)
     {
         debounce -= DELTA_TIME;
@@ -30,7 +37,7 @@ public class PropertiesWindow
             int y = (int)Mouse.getScreenY();
             int gameObjectID = this.selector.readPixel(x, y);
             GameObject picked = Window.getCurrentScene().getGameObject(gameObjectID);
-            if (picked != null && picked.getCompoent(NonPickable.class) == null)
+            if (picked != null && picked.getCompoent(NonPickableComponent.class) == null)
             {
                 justForgeLogger.FORGE_LOG_DEBUG("Currently active object: " + picked.toString());
                 this.activeGameObject = picked;
@@ -44,6 +51,13 @@ public class PropertiesWindow
         }
     }
 
+    // - - - getter
+    public GameObject getActiveGameObject()
+    {
+        return this.activeGameObject;
+    }
+
+    // - - - ignore this, this is for the editor
     public void editorGUI()
     {
         if (activeGameObject != null)
@@ -54,8 +68,4 @@ public class PropertiesWindow
         }
     }
 
-    public GameObject getActiveGameObject()
-    {
-        return this.activeGameObject;
-    }
 }

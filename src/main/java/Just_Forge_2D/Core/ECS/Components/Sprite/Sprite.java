@@ -1,4 +1,4 @@
-package Just_Forge_2D.Core.ECS.Components.Attachable.Sprite;
+package Just_Forge_2D.Core.ECS.Components.Sprite;
 
 import Just_Forge_2D.Renderer.Texture;
 import org.joml.Vector2f;

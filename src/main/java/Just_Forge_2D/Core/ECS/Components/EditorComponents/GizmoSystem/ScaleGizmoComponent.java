@@ -1,13 +1,16 @@
-package Just_Forge_2D.Editor;
+package Just_Forge_2D.Core.ECS.Components.EditorComponents.GizmoSystem;
 
-import Just_Forge_2D.Core.ECS.Components.Attachable.Sprite.Sprite;
+import Just_Forge_2D.Core.ECS.Components.Sprite.Sprite;
 import Just_Forge_2D.Core.Input.Mouse;
+import Just_Forge_2D.Utils.justForgeLogger;
 
-public class ScaleGizmo extends Gizmo
+// - - - Scale Gizmo
+public class ScaleGizmoComponent extends GizmoComponent
 {
-    public ScaleGizmo(Sprite SCALE)
+    public ScaleGizmoComponent(Sprite SCALE)
     {
         super(SCALE);
+        justForgeLogger.FORGE_LOG_INFO("Created Scale Gizmo");
     }
 
     @Override

@@ -1,11 +1,10 @@
-package Just_Forge_2D.Core.ECS.Components.Attachable.Sprite;
+package Just_Forge_2D.Core.ECS.Components.Sprite;
 
 import Just_Forge_2D.Core.ECS.Components.Component;
-import Just_Forge_2D.Editor.ForgeGUI;
+import Just_Forge_2D.Editor.ForgeIsGUI;
 import Just_Forge_2D.Renderer.Texture;
 import Just_Forge_2D.Utils.justForgeLogger;
-import Just_Forge_2D.Core.ECS.Components.Unattachable.TransformComponent;
-import imgui.ImGui;
+import Just_Forge_2D.Core.ECS.Components.TransformComponent;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 
@@ -13,30 +12,13 @@ import org.joml.Vector4f;
 public class SpriteComponent extends Component
 {
     // - - - private variables - - -
-    private Vector4f color = new Vector4f(1, 1, 1, 1);
+    private final Vector4f color = new Vector4f(1, 1, 1, 1);
     private Sprite sprite = new Sprite();
     private transient TransformComponent lastTransform = new TransformComponent();
     private transient boolean isChanged = true;
 
 
     // - - - | Functions | - - -
-
-
-    // - - - Constructors - - -
-
-    // - - - store color and make a sprite without texture
-    /*public justForgeSpriteRenderer(Vector4f COLOR)
-    {
-        this.sprite = new justForgeSprite(null);
-        this.color = COLOR;
-    }
-
-    // - - - well just take in the sprite and give no tint
-    public justForgeSpriteRenderer(justForgeSprite SPRITE)
-    {
-        this.sprite = SPRITE;
-        this.color = new Vector4f(1.0f, 1.0f, 1.0f, 1.0f);
-    }*/
 
 
     // - - - Getters and Setters - - -
@@ -53,9 +35,7 @@ public class SpriteComponent extends Component
         {
             this.color.set(COLOR);
             this.isChanged = true;
-            return;
         }
-        //justForgeLogger.FORGE_LOG_WARNING("Previous color and current color equal when changing color of a sprite: " + this.sprite);
     }
 
     // - - - Texture
@@ -116,12 +96,14 @@ public class SpriteComponent extends Component
     @Override
     public void editorGUI()
     {
-        if (ForgeGUI.colorPicker4("COlor Picker", this.color))
+        if (ForgeIsGUI.colorPicker4("Color Picker", this.color))
         {
             this.isChanged = true;
         }
     }
 
+
+    // - - - modify properties
     public void setTexture(Texture TEXTURE)
     {
         this.sprite.setTexture(TEXTURE);
