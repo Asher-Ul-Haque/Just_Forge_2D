@@ -1,7 +1,7 @@
 package Just_Forge_2D.Renderer;
 
 import Just_Forge_2D.Core.ECS.Components.Sprite.SpriteComponent;
-import Just_Forge_2D.Core.Window;
+import Just_Forge_2D.Core.ForgeDynamo;
 import Just_Forge_2D.Utils.justForgeLogger;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
@@ -142,8 +142,8 @@ public class RenderBatch implements Comparable<RenderBatch>
         // - - - Use the shader
         Shader shader = Renderer.getCurrentShader();
         shader.use();
-        shader.uploadMatrix4f("uProjection", Window.getCurrentScene().getCamera().getProjectionMatrix());
-        shader.uploadMatrix4f("uView", Window.getCurrentScene().getCamera().getViewMatrix());
+        shader.uploadMatrix4f("uProjection", ForgeDynamo.getCurrentScene().getCamera().getProjectionMatrix());
+        shader.uploadMatrix4f("uView", ForgeDynamo.getCurrentScene().getCamera().getViewMatrix());
         for (int i = 0; i < textures.size(); ++i)
         {
             glActiveTexture(GL_TEXTURE0 + i + 1);

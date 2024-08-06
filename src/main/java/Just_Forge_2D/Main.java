@@ -1,6 +1,6 @@
 package Just_Forge_2D;
 
-import Just_Forge_2D.Core.Window;
+import Just_Forge_2D.Core.ForgeDynamo;
 import imgui.app.Application;
 import imgui.app.Configuration;
 
@@ -18,7 +18,7 @@ public class Main extends Application
 
     public static void main(String[] args)
     {
-        Window window = Window.get();
-        window.run();
+        ForgeDynamo forgeDynamo = ForgeDynamo.get();
+        forgeDynamo.run();
     }
 }

@@ -1,7 +1,7 @@
 package Just_Forge_2D.Core.Input;
 
 import Just_Forge_2D.Core.Camera;
-import Just_Forge_2D.Core.Window;
+import Just_Forge_2D.Core.ForgeDynamo;
 import Just_Forge_2D.Utils.justForgeLogger;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
@@ -199,7 +199,7 @@ public class Mouse
         float currentX = getX() - get().gameViewportPos.x;
         currentX = (currentX / get().grameViewportSize.x) * 2.0f - 1.0f;
         Vector4f temp = new Vector4f(currentX, 0, 0, 1);
-        Camera camera = Window.getCurrentScene().getCamera();
+        Camera camera = ForgeDynamo.getCurrentScene().getCamera();
         Matrix4f viewProjection = new Matrix4f();
         camera.getInverseViewMatrix().mul(camera.getInverseProjectionMatrix(), viewProjection);
         temp.mul(viewProjection);
@@ -212,7 +212,7 @@ public class Mouse
         float currentY = getY() - get().gameViewportPos.y;
         currentY = -((currentY / get().grameViewportSize.y) * 2.0f - 1.0f);
         Vector4f temp = new Vector4f(0, currentY, 0, 1);
-        Camera camera = Window.getCurrentScene().getCamera();
+        Camera camera = ForgeDynamo.getCurrentScene().getCamera();
         Matrix4f viewProjection = new Matrix4f();
         camera.getInverseViewMatrix().mul(camera.getInverseProjectionMatrix(), viewProjection);
         temp.mul(viewProjection);

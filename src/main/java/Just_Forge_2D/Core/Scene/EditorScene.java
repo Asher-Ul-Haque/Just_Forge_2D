@@ -44,7 +44,7 @@ public class EditorScene extends Scene
         SpriteSheet gizmos = AssetPool.getSpriteSheet("Assets/Textures/gizmos.png");
 
         this.camera = new Camera(new Vector2f(-250, -100));
-        master.addComponent(new GridlinesComponent());
+        //master.addComponent(new GridlinesComponent());
         master.addComponent(new MouseControlComponent());
         master.addComponent(new EditorCameraComponent(this.camera));
         master.addComponent(new GizmoSystemComponent(gizmos));

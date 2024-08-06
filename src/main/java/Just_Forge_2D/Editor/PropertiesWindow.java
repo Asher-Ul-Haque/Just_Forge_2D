@@ -1,10 +1,14 @@
 package Just_Forge_2D.Editor;
 
 import Just_Forge_2D.Core.ECS.Components.NonPickableComponent;
+import Just_Forge_2D.Core.ECS.Components.PhysicsComponents.Collider.BoxColliderComponent;
+import Just_Forge_2D.Core.ECS.Components.PhysicsComponents.Collider.CircleColliderComponent;
+import Just_Forge_2D.Core.ECS.Components.PhysicsComponents.RigidBodyComponent;
 import Just_Forge_2D.Core.ECS.GameObject;
 import Just_Forge_2D.Core.Input.Mouse;
 import Just_Forge_2D.Core.Scene.Scene;
-import Just_Forge_2D.Core.Window;
+import Just_Forge_2D.Core.ForgeDynamo;
+import Just_Forge_2D.Physics.RigidBody.RigidBody;
 import Just_Forge_2D.Utils.justForgeLogger;
 import imgui.ImGui;
 import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_LEFT;
@@ -36,7 +40,7 @@ public class PropertiesWindow
             int x = (int)Mouse.getScreenX();
             int y = (int)Mouse.getScreenY();
             int gameObjectID = this.selector.readPixel(x, y);
-            GameObject picked = Window.getCurrentScene().getGameObject(gameObjectID);
+            GameObject picked = ForgeDynamo.getCurrentScene().getGameObject(gameObjectID);
             if (picked != null && picked.getCompoent(NonPickableComponent.class) == null)
             {
                 justForgeLogger.FORGE_LOG_DEBUG("Currently active object: " + picked.toString());
@@ -63,6 +67,36 @@ public class PropertiesWindow
         if (activeGameObject != null)
         {
             ImGui.begin("Properties");
+
+            if (ImGui.beginPopupContextWindow("Component Adder"))
+            {
+                if (ImGui.menuItem("Add Rigid Body"))
+                {
+                    if (activeGameObject.getCompoent(RigidBodyComponent.class) == null)
+                    {
+                        activeGameObject.addComponent(new RigidBodyComponent());
+                    }
+                }
+
+                if (ImGui.menuItem("Add Box Collider"))
+                {
+                    if (activeGameObject.getCompoent(BoxColliderComponent.class) == null && activeGameObject.getCompoent(CircleColliderComponent.class) == null)
+                    {
+                        activeGameObject.addComponent(new BoxColliderComponent());
+                    }
+                }
+
+                if (ImGui.menuItem("Add Circle Collider"))
+                {
+                    if (activeGameObject.getCompoent(CircleColliderComponent.class) == null && activeGameObject.getCompoent(BoxColliderComponent.class) == null)
+                    {
+                        activeGameObject.addComponent(new CircleColliderComponent());
+                    }
+                }
+
+                ImGui.endPopup();
+            }
+
             activeGameObject.editorGUI();
             ImGui.end();
         }

@@ -3,7 +3,7 @@ package Just_Forge_2D.Core.ECS.Components.EditorComponents;
 import Just_Forge_2D.Core.ECS.Components.Component;
 import Just_Forge_2D.Core.ECS.GameObject;
 import Just_Forge_2D.Core.Input.Mouse;
-import Just_Forge_2D.Core.Window;
+import Just_Forge_2D.Core.ForgeDynamo;
 import Just_Forge_2D.Utils.Configurations;
 import Just_Forge_2D.Utils.justForgeLogger;
 import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_LEFT;
@@ -23,7 +23,7 @@ public class MouseControlComponent extends Component
     public void pickupObject(GameObject GO)
     {
         this.holdingObject = GO;
-        Window.getCurrentScene().addGameObject(GO);
+        ForgeDynamo.getCurrentScene().addGameObject(GO);
         justForgeLogger.FORGE_LOG_DEBUG("Picked up object: "+ this.holdingObject);
     }
 

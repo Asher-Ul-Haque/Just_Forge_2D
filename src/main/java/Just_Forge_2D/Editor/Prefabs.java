@@ -3,7 +3,7 @@ package Just_Forge_2D.Editor;
 import Just_Forge_2D.Core.ECS.Components.Sprite.Sprite;
 import Just_Forge_2D.Core.ECS.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.Core.ECS.GameObject;
-import Just_Forge_2D.Core.Window;
+import Just_Forge_2D.Core.ForgeDynamo;
 
 public class Prefabs
 {
@@ -14,7 +14,7 @@ public class Prefabs
 
     public static GameObject generateSpriteObject(String NAME, Sprite SPRITE, float SIZE_X, float SIZE_Y)
     {
-        GameObject block = Window.getCurrentScene().createGameObject(NAME);
+        GameObject block = ForgeDynamo.getCurrentScene().createGameObject(NAME);
         block.transform.scale.x = SIZE_X;
         block.transform.scale.y = SIZE_Y;
         block.transform.layer = 1;

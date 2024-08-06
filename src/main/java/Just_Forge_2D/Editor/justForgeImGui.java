@@ -1,7 +1,7 @@
 package Just_Forge_2D.Editor;
 
 import Just_Forge_2D.Core.Scene.Scene;
-import Just_Forge_2D.Core.Window;
+import Just_Forge_2D.Core.ForgeDynamo;
 import Just_Forge_2D.Utils.justForgeLogger;
 import Just_Forge_2D.Core.Input.*;
 import imgui.ImFontAtlas;
@@ -239,8 +239,8 @@ public class justForgeImGui
     private void startFrame(final float DELTA_TIME)
     {
         // - - - Get window properties and mouse position
-        float[] winWidth = {Window.getWidth()};
-        float[] winHeight = {Window.getHeight()};
+        float[] winWidth = {ForgeDynamo.getWidth()};
+        float[] winHeight = {ForgeDynamo.getHeight()};
         double[] mousePosX = {0};
         double[] mousePosY = {0};
         GLFW.glfwGetCursorPos(windowPtr, mousePosX, mousePosY);
@@ -277,7 +277,7 @@ public class justForgeImGui
         int windowFlags = ImGuiWindowFlags.MenuBar | ImGuiWindowFlags.NoDocking;
 
         ImGui.setNextWindowPos(0.0f, 0.0f, ImGuiCond.Always);
-        ImGui.setNextWindowSize(Window.getWidth(), Window.getHeight());
+        ImGui.setNextWindowSize(ForgeDynamo.getWidth(), ForgeDynamo.getHeight());
         ImGui.pushStyleVar(ImGuiStyleVar.WindowRounding, 4.0f);
         ImGui.pushStyleVar(ImGuiStyleVar.WindowBorderSize, 0.0f);
 

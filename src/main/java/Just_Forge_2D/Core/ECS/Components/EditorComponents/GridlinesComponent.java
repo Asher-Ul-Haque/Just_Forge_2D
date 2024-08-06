@@ -2,7 +2,7 @@ package Just_Forge_2D.Core.ECS.Components.EditorComponents;
 
 import Just_Forge_2D.Core.Camera;
 import Just_Forge_2D.Core.ECS.Components.Component;
-import Just_Forge_2D.Core.Window;
+import Just_Forge_2D.Core.ForgeDynamo;
 import Just_Forge_2D.Renderer.DebugPencil;
 import Just_Forge_2D.Utils.Configurations;
 import org.joml.Vector2f;
@@ -13,7 +13,7 @@ public class GridlinesComponent extends Component
     @Override
     public void update(float DELTA_TIME)
     {
-        Camera camera = Window.getCurrentScene().getCamera();
+        Camera camera = ForgeDynamo.getCurrentScene().getCamera();
         Vector2f cameraPos = camera.position;
         Vector2f projectionSize = camera.getProjectionSize();
 

@@ -32,7 +32,7 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 // - - - | Class | - - -
 
 
-public class Window
+public class ForgeDynamo
 {
     // - - - | Private Variables | - - -
 
@@ -65,7 +65,7 @@ public class Window
     private static Scene currentScene;
 
     // - - - Singleton
-    private static Window window = null;
+    private static ForgeDynamo forgeDynamo = null;
 
     // - - - Editor
     private justForgeImGui editorLayer;
@@ -85,7 +85,7 @@ public class Window
 
 
     // - - - Private Constructor for Singleton
-    private Window()
+    private ForgeDynamo()
     {
         float targetAspectRatio = 16f / 9f;
 
@@ -110,14 +110,14 @@ public class Window
     }
 
     // - - - Get the window
-    public static Window get()
+    public static ForgeDynamo get()
     {
-        if (Window.window == null)
+        if (ForgeDynamo.forgeDynamo == null)
         {
-            Window.window = new Window();
+            ForgeDynamo.forgeDynamo = new ForgeDynamo();
             justForgeLogger.FORGE_LOG_INFO("Window system restarted");
         }
-        return Window.window;
+        return ForgeDynamo.forgeDynamo;
     }
 
     // - - - Run the game
@@ -129,9 +129,9 @@ public class Window
             init();
         }
         changeScene(new EditorScene());
-        while (!Window.shouldClose())
+        while (!ForgeDynamo.shouldClose())
         {
-            window.gameLoop();
+            forgeDynamo.gameLoop();
         }
         finish();
         close();
@@ -184,8 +184,8 @@ public class Window
         glfwSetMouseButtonCallback(glfwWindow, Mouse::mouseButtonCallback);
         glfwSetScrollCallback(glfwWindow, Mouse::mouseScrollCallback);
         glfwSetWindowSizeCallback(glfwWindow, (w, newWidth, newHeight) -> {
-            Window.setWidth(newWidth);
-            Window.setHeight(newHeight);
+            ForgeDynamo.setWidth(newWidth);
+            ForgeDynamo.setHeight(newHeight);
         });
         justForgeLogger.FORGE_LOG_INFO("Mouse Input linked with window");
 
