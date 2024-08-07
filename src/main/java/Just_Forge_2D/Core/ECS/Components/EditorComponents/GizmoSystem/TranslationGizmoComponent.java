@@ -14,7 +14,7 @@ public class TranslationGizmoComponent extends GizmoComponent
     }
 
     @Override
-    public void update(float DELTA_TIME)
+    public void editorUpdate(float DELTA_TIME)
     {
         if (activeGameObject != null)
         {
@@ -27,6 +27,6 @@ public class TranslationGizmoComponent extends GizmoComponent
                 activeGameObject.transform.position.y -= Mouse.getWorldDeltaY();
             }
         }
-        super.update(DELTA_TIME);
+        super.editorUpdate(DELTA_TIME);
     }
 }

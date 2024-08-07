@@ -11,7 +11,7 @@ import org.joml.Vector2f;
 public class GridlinesComponent extends Component
 {
     @Override
-    public void update(float DELTA_TIME)
+    public void editorUpdate(float DELTA_TIME)
     {
         Camera camera = ForgeDynamo.getCurrentScene().getCamera();
         Vector2f cameraPos = camera.position;

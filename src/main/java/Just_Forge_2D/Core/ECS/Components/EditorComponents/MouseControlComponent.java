@@ -35,7 +35,7 @@ public class MouseControlComponent extends Component
 
     // - - - run
     @Override
-    public void update(float DELTA_TIME)
+    public void editorUpdate(float DELTA_TIME)
     {
         if (holdingObject != null)
         {

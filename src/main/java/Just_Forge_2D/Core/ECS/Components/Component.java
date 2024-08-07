@@ -1,5 +1,6 @@
 package Just_Forge_2D.Core.ECS.Components;
 
+import Just_Forge_2D.Core.ECS.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.Core.ECS.GameObject;
 import Just_Forge_2D.Editor.ForgeIsGUI;
 import imgui.ImGui;
@@ -22,7 +23,9 @@ public abstract class Component
 
     // - - - use
     public void update(float DELTA_TIME){}
+    public void editorUpdate(float DELTA_TIME){}
     public void start(){}
+    public void destroy(){}
 
     // - - - make the IMGui PART
     public void editorGUI()
@@ -112,4 +115,7 @@ public abstract class Component
     {
         ID_COUNTER = MAX_ID;
     }
+
+    public void editorUpdate(SpriteComponent SPRITE)
+    {}
 }

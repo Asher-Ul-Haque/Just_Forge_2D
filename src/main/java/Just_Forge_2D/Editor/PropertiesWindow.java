@@ -102,4 +102,9 @@ public class PropertiesWindow
         }
     }
 
+    public void setActiveGameObject(GameObject GO)
+    {
+        this.activeGameObject = GO;
+    }
+
 }

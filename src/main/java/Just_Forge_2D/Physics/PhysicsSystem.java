@@ -93,4 +93,17 @@ public class PhysicsSystem
             body.createFixture(shape, rb.getMass());
         }
     }
+
+    public void destroyGameObject(GameObject GO)
+    {
+        RigidBodyComponent rb = GO.getCompoent(RigidBodyComponent.class);
+        if (rb != null)
+        {
+            if (rb.getRawBody() != null)
+            {
+                world.destroyBody(rb.getRawBody());
+                rb.setRawBody(null);
+            }
+        }
+    }
 }

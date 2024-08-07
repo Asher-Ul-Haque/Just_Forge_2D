@@ -4,10 +4,15 @@ package Just_Forge_2D.Core;
 
 // - - - Internal
 
+import Just_Forge_2D.Core.ECS.GameObject;
+import Just_Forge_2D.Core.EventSystem.EventSystem;
+import Just_Forge_2D.Core.EventSystem.Events.Event;
+import Just_Forge_2D.Core.EventSystem.Observer;
 import Just_Forge_2D.Core.Input.Keyboard;
 import Just_Forge_2D.Core.Input.Mouse;
-import Just_Forge_2D.Core.Scene.EditorScene;
+import Just_Forge_2D.Core.Scene.EditorSceneInitializer;
 import Just_Forge_2D.Core.Scene.Scene;
+import Just_Forge_2D.Core.Scene.SceneInitializer;
 import Just_Forge_2D.Editor.ObjectSelector;
 import Just_Forge_2D.Editor.justForgeImGui;
 import Just_Forge_2D.Renderer.DebugPencil;
@@ -21,6 +26,7 @@ import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
 
+import java.awt.*;
 import java.util.Objects;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
@@ -32,7 +38,7 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 // - - - | Class | - - -
 
 
-public class ForgeDynamo
+public class ForgeDynamo implements Observer
 {
     // - - - | Private Variables | - - -
 
@@ -60,6 +66,7 @@ public class ForgeDynamo
     public float r, g, b, a;
     private boolean enableVsync = true;
     private Framebuffer framebuffer;
+    private boolean isRuntimePlaying = false;
 
     // - - - Systems
     private static Scene currentScene;
@@ -88,7 +95,6 @@ public class ForgeDynamo
     private ForgeDynamo()
     {
         float targetAspectRatio = 16f / 9f;
-
         this.title = "Just Forge Tester";
 
         this.r = 1.0f;
@@ -96,14 +102,22 @@ public class ForgeDynamo
         this.b = 1.0f;
         this.a = 1.0f;
 
+        EventSystem.addObserver(this);
+
         justForgeLogger.FORGE_LOG_INFO("Started Just Forge 2D");
     }
 
     // - - - Systems function to change the scene
-    public static void changeScene(Scene NEW_SCENE)
+    public static void changeScene(SceneInitializer INITIALIZER)
     {
-        justForgeLogger.FORGE_LOG_INFO("Switching Scenes");
-        currentScene = NEW_SCENE;
+        if (currentScene != null)
+        {
+            justForgeLogger.FORGE_LOG_INFO("Clearing Scene Catch from previous run");
+            currentScene.destroy();
+        }
+        getEditor().getPropertiesWindow().setActiveGameObject(null);
+
+        currentScene = new Scene(INITIALIZER);
         currentScene.load();
         currentScene.init();
         currentScene.start();
@@ -128,7 +142,7 @@ public class ForgeDynamo
         {
             init();
         }
-        changeScene(new EditorScene());
+        changeScene(new EditorSceneInitializer());
         while (!ForgeDynamo.shouldClose())
         {
             forgeDynamo.gameLoop();
@@ -250,9 +264,6 @@ public class ForgeDynamo
         glfwTerminate();
         Objects.requireNonNull(glfwSetErrorCallback(null)).free();
 
-        // - - - Save Scene
-        currentScene.save();
-
         // - - - Final Logs
         justForgeLogger.FORGE_LOG_INFO("Input and window system decoupled");
         justForgeLogger.FORGE_LOG_INFO("All systems offline");
@@ -302,7 +313,14 @@ public class ForgeDynamo
         {
             DebugPencil.draw();
             Renderer.bindShader(defaultShader);
-            currentScene.update(dt);
+            if (isRuntimePlaying)
+            {
+                currentScene.update(dt);
+            }
+            else
+            {
+                currentScene.editorUpdate(dt);
+            }
             currentScene.render(dt);
         }
 
@@ -501,5 +519,34 @@ public class ForgeDynamo
     public static justForgeImGui getEditor()
     {
         return get().editorLayer;
+    }
+
+    @Override
+    public void onNotify(GameObject OBJECT, Event EVENT)
+    {
+        switch (EVENT.type)
+        {
+            case ForgeStart:
+                justForgeLogger.FORGE_LOG_INFO("Starting Game");
+                this.isRuntimePlaying = true;
+                currentScene.save();
+                ForgeDynamo.changeScene(new EditorSceneInitializer());
+                break;
+
+            case ForgeStop:
+                justForgeLogger.FORGE_LOG_INFO("Ending Game");
+                this.isRuntimePlaying = false;
+                ForgeDynamo.changeScene(new EditorSceneInitializer());
+                break;
+
+            case SaveLevel:
+                justForgeLogger.FORGE_LOG_INFO("Saving Scene: " + currentScene);
+                currentScene.save();
+                break;
+
+            case LoadLevel:
+                ForgeDynamo.changeScene(new EditorSceneInitializer());
+                break;
+        }
     }
 }

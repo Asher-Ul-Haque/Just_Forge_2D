@@ -66,7 +66,7 @@ public class GizmoComponent extends Component
     // - - - Usage - - -
 
     @Override
-    public void update(float DELTA_TIME)
+    public void editorUpdate(float DELTA_TIME)
     {
         if (!using) return;
 
@@ -118,6 +118,12 @@ public class GizmoComponent extends Component
         this.yAxisGizmo.transform.layer = 2;
         this.xAxisGizmo.noSerialize();
         this.yAxisGizmo.noSerialize();
+    }
+
+    @Override
+    public void update(float DELTA_TIME)
+    {
+        if (this.using) inactivate();
     }
 
 

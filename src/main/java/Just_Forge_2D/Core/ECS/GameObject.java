@@ -19,6 +19,7 @@ public class GameObject
     private static int ID_COUNTER = 0;
     private int uniqueID = -1;
     private boolean doSerialization = true;
+    private boolean isDead = false;
 
 
     // - - -  | Functions | - - -
@@ -129,6 +130,15 @@ public class GameObject
         ID_COUNTER = MAX_ID;
     }
 
+    public void destroy()
+    {
+        this.isDead = true;
+        for (int i = 0; i < components.size(); ++i)
+        {
+            components.get(i).destroy();
+        }
+    }
+
     public int getUniqueID()
     {
         return this.uniqueID;
@@ -144,5 +154,18 @@ public class GameObject
     public boolean getSerializationStatus()
     {
         return this.doSerialization;
+    }
+
+    public boolean isDead()
+    {
+        return this.isDead;
+    }
+
+    public void editorUpdate(float DELTA_TIME)
+    {
+        for (int i = 0 ; i < components.size(); ++i)
+        {
+            components.get(i).editorUpdate(DELTA_TIME);
+        }
     }
 }

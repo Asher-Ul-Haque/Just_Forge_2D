@@ -4,12 +4,14 @@ import Just_Forge_2D.Core.ECS.Components.Component;
 import Just_Forge_2D.Core.ECS.Components.TransformComponent;
 import Just_Forge_2D.Core.ECS.GameObject;
 import Just_Forge_2D.Core.Camera;
+import Just_Forge_2D.Physics.PhysicsSystem;
 import Just_Forge_2D.Renderer.Renderer;
 import Just_Forge_2D.Utils.JsonHandlers.justForgeComponentJsonHandler;
 import Just_Forge_2D.Utils.JsonHandlers.justForgeGameObjectJsonHandler;
 import Just_Forge_2D.Utils.justForgeLogger;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.joml.Vector2f;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -19,47 +21,84 @@ import java.util.ArrayList;
 import java.util.List;
 
 // - - - Abstract class for all the scenes
-public abstract class Scene
+public class Scene
 {
     // - - - Private Variables - - -
 
     // - - - Basic
-    protected Camera camera;
+    private Camera camera;
     private boolean isRunning = false;
 
     // - - - ALl the objects
-    public List<GameObject> gameObjects = new ArrayList<>();
-    protected GameObject activeGameObject = null;
+    private List<GameObject> gameObjects;
+    private GameObject activeGameObject = null;
 
     // - - - Scene Rendering
-    protected Renderer renderer = new Renderer();
+    private Renderer renderer;
+    private SceneInitializer initializer;
 
     // - - - saving and loading
-    protected boolean levelLoaded = false;
+    private PhysicsSystem physics;
 
 
     // - - - | Functions | - - -
 
 
-    // - - - Useless constructor
-    public Scene() {}
+    // - - - Now presenting: useful constructor
+    public Scene(SceneInitializer INITIALIZER)
+    {
+        this.initializer = INITIALIZER;
+        this.physics = new PhysicsSystem();
+        this.renderer = new Renderer();
+        this.gameObjects = new ArrayList<>();
+        this.isRunning = false;
+    }
 
 
     // - - - Use the Scene - - -
 
     public void start()
     {
-        for (GameObject go : gameObjects)
+        // NOTE: do not change to enhanced for loop
+        for (int i = 0; i < gameObjects.size(); ++i)
         {
+            GameObject go = gameObjects.get(i);
             go.start();
             this.renderer.add(go);
         }
         isRunning = true;
     }
 
-    public abstract void update(float DELTA_TIME);
-    public abstract void render(float DELTA_TIME);
-    public void init(){}
+    public void update(float DELTA_TIME)
+    {
+        this.camera.adjustProjection();
+        this.physics.update(DELTA_TIME);
+        for (int i = 0; i < gameObjects.size(); ++i)
+        {
+            GameObject go = gameObjects.get(i);
+            go.update(DELTA_TIME);
+
+            if (go.isDead())
+            {
+                gameObjects.remove(i);
+                this.renderer.destroyGameObject(go);
+                this.physics.destroyGameObject(go);
+                i--;
+            }
+        }
+    }
+
+    public void render(float DELTA_TIME)
+    {
+        this.renderer.render();
+    }
+
+    public void init()
+    {
+        this.camera = new Camera(new Vector2f(-250, -100));
+        this.initializer.loadResources(this);
+        this.initializer.init(this);
+    }
 
 
     // - - -  Game Objects - - -
@@ -75,12 +114,12 @@ public abstract class Scene
     public void addGameObject(GameObject GAME_OBJECT)
     {
         gameObjects.add(GAME_OBJECT);
-        if (!isRunning)
+        if (isRunning)
         {
-            return;
+            GAME_OBJECT.start();
+            this.renderer.add(GAME_OBJECT);
+            this.physics.add(GAME_OBJECT);
         }
-        GAME_OBJECT.start();
-        this.renderer.add(GAME_OBJECT);
     }
 
     public GameObject getGameObject(int GAME_OBJECT_ID)
@@ -104,7 +143,10 @@ public abstract class Scene
     }
 
     // - - - Editor GUI
-    public void editorGUI() {}
+    public void editorGUI()
+    {
+        this.initializer.editorGUI();
+    }
 
 
     // - - - Loading and Saving - - -
@@ -147,7 +189,24 @@ public abstract class Scene
             maxCompoId++;
             GameObject.init(maxGoId);
             Component.init(maxCompoId);
-            this.levelLoaded = true;
+        }
+    }
+
+    public void editorUpdate(float DELTA_TIME)
+    {
+        this.camera.adjustProjection();
+        for (int i = 0; i < gameObjects.size(); ++i)
+        {
+            GameObject go = gameObjects.get(i);
+            go.editorUpdate(DELTA_TIME);
+
+            if (go.isDead())
+            {
+                gameObjects.remove(i);
+                this.renderer.destroyGameObject(go);
+                this.physics.destroyGameObject(go);
+                i--;
+            }
         }
     }
 
@@ -180,6 +239,19 @@ public abstract class Scene
         {
             justForgeLogger.FORGE_LOG_ERROR("Couldn't write to file");
             justForgeLogger.FORGE_LOG_ERROR(e.getMessage());
+        }
+    }
+
+    public List<GameObject> getGameObjects()
+    {
+        return this.gameObjects;
+    }
+
+    public void destroy()
+    {
+        for (GameObject go : this.gameObjects)
+        {
+            go.destroy();
         }
     }
 }

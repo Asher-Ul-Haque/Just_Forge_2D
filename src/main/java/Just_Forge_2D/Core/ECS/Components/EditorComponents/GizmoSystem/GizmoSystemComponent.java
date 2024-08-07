@@ -36,7 +36,7 @@ public class GizmoSystemComponent extends Component
     // - - - Usage - - -
 
     @Override
-    public void update(float DELTA_TIME)
+    public void editorUpdate(float DELTA_TIME)
     {
         switch (currentGizmo)
         {

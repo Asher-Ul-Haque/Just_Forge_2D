@@ -1,6 +1,7 @@
 package Just_Forge_2D.Renderer;
 
 import Just_Forge_2D.Core.ECS.Components.Sprite.SpriteComponent;
+import Just_Forge_2D.Core.ECS.GameObject;
 import Just_Forge_2D.Core.ForgeDynamo;
 import Just_Forge_2D.Utils.justForgeLogger;
 import org.jetbrains.annotations.NotNull;
@@ -339,5 +340,24 @@ public class RenderBatch implements Comparable<RenderBatch>
     public int compareTo(@NotNull RenderBatch OTHER)
     {
         return Integer.compare(this.getLayer(), OTHER.getLayer());
+    }
+
+    public boolean destroyIfExists(GameObject GO)
+    {
+        SpriteComponent sprite = GO.getCompoent(SpriteComponent.class);
+        for (int i = 0; i < spriteCount; ++i)
+        {
+            if (sprites[i] == sprite)
+            {
+                for (int j = i ; j < spriteCount - 1; j++)
+                {
+                    sprites[j] = sprites[j + 1];
+                    sprites[j].setChanged();
+                }
+                spriteCount--;
+                return true;
+            }
+        }
+        return false;
     }
 }

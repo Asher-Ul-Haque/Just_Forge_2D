@@ -5,10 +5,8 @@ import Just_Forge_2D.Core.ECS.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.Core.ECS.Components.Sprite.SpriteSheet;
 import Just_Forge_2D.Core.ECS.Components.EditorComponents.MouseControlComponent;
 import Just_Forge_2D.Core.ECS.GameObject;
-import Just_Forge_2D.Core.Camera;
 import Just_Forge_2D.Core.ECS.Components.EditorComponents.EditorCameraComponent;
 import Just_Forge_2D.Core.ECS.Components.EditorComponents.GizmoSystem.GizmoSystemComponent;
-import Just_Forge_2D.Core.ECS.Components.EditorComponents.GridlinesComponent;
 import Just_Forge_2D.Editor.Prefabs;
 import Just_Forge_2D.Utils.Configurations;
 import Just_Forge_2D.Utils.AssetPool;
@@ -18,10 +16,10 @@ import org.joml.Vector2f;
 
 
 // - - - Class to run the editor
-public class EditorScene extends Scene
+public class EditorSceneInitializer extends SceneInitializer
 {
     // - - - private variables
-    private final GameObject master = this.createGameObject("Master");
+    private GameObject master;
     private SpriteSheet sprites;
 
 
@@ -31,35 +29,35 @@ public class EditorScene extends Scene
     // - - - Constructors and initialization - - -
 
     // - - - useless constructor
-    public EditorScene()
+    public EditorSceneInitializer()
     {
     }
 
     // - - - useful initialization
     @Override
-    public void init()
+    public void init(Scene SCENE)
     {
-        loadResources();
         sprites = AssetPool.getSpriteSheet("Assets/Textures/spritesheet.png");
         SpriteSheet gizmos = AssetPool.getSpriteSheet("Assets/Textures/gizmos.png");
 
-        this.camera = new Camera(new Vector2f(-250, -100));
+        this.master = SCENE.createGameObject("Master");
+        this.master.noSerialize();
         //master.addComponent(new GridlinesComponent());
         master.addComponent(new MouseControlComponent());
-        master.addComponent(new EditorCameraComponent(this.camera));
+        master.addComponent(new EditorCameraComponent(SCENE.getCamera()));
         master.addComponent(new GizmoSystemComponent(gizmos));
-
-        master.start();
+        SCENE.addGameObject(this.master);
     }
 
-    private void loadResources()
+    @Override
+    public void loadResources(Scene SCENE)
     {
         AssetPool.getShader("Assets/Shaders/default.glsl");
         AssetPool.addSpriteSheet("Assets/Textures/spritesheet.png", new SpriteSheet(AssetPool.getTexture("Assets/Textures/spritesheet.png"), 16, 16, 16, 0));
         AssetPool.addSpriteSheet("Assets/Textures/gizmos.png", new SpriteSheet(AssetPool.getTexture("Assets/Textures/gizmos.png"), 24, 48, 3, 0));
         AssetPool.getTexture("Assets/Textures/blendImage2.png");
 
-        for (GameObject g : gameObjects)
+        for (GameObject g : SCENE.getGameObjects())
         {
             if (g.getCompoent(SpriteComponent.class) != null)
             {
@@ -75,32 +73,11 @@ public class EditorScene extends Scene
 
     // - - - Scene usage - - -
 
-    @Override
-    public void update(float DELTA_TIME)
-    {
-        master.update(DELTA_TIME);
-        this.camera.adjustProjection();
-        for (GameObject gameObject : this.gameObjects)
-        {
-            gameObject.update(DELTA_TIME);
-        }
-        render(DELTA_TIME);
-    }
-
-    @Override
-    public void render(float DELTA_TIME)
-    {
-        this.renderer.render();
-    }
 
     // - - - editor stuff
     @Override
     public void editorGUI()
     {
-        ImGui.begin("Master Panel");
-        master.editorGUI();
-        ImGui.end();
-
         ImGui.begin("Block Picker");
         ImVec2 windowPos = new ImVec2();
         ImGui.getWindowPos(windowPos);
@@ -121,7 +98,6 @@ public class EditorScene extends Scene
             if (ImGui.imageButton(id, spriteWidth, spriteHeight, texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y))
             {
                 GameObject object = Prefabs.generateSpriteObject(sprite, Configurations.GRID_WIDTH, Configurations.GRID_HEIGHT);
-                this.activeGameObject = object;
                 master.getCompoent(MouseControlComponent.class).pickupObject(object);
             }
             ImGui.popID();

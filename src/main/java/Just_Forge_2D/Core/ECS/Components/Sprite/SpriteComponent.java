@@ -90,6 +90,17 @@ public class SpriteComponent extends Component
         }
     }
 
+    @Override
+    public void editorUpdate(float DELTA_TIME)
+    {
+        if (this.gameObject.transform == null) justForgeLogger.FORGE_LOG_ERROR(gameObject);
+        if (!this.lastTransform.equals(this.gameObject.transform))
+        {
+            this.gameObject.transform.copy(this.lastTransform);
+            this.isChanged = true;
+        }
+    }
+
 
     // - - - Editor Functionality - - -
 
@@ -107,5 +118,10 @@ public class SpriteComponent extends Component
     public void setTexture(Texture TEXTURE)
     {
         this.sprite.setTexture(TEXTURE);
+    }
+
+    public void setChanged()
+    {
+        this.isChanged = true;
     }
 }

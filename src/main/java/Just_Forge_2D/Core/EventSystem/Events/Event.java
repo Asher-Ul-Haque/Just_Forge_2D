@@ -2,5 +2,15 @@ package Just_Forge_2D.Core.EventSystem.Events;
 
 public class Event
 {
-    private EventTypes type;
+    public EventTypes type;
+
+    public Event(EventTypes TYPE)
+    {
+        this.type = TYPE;
+    }
+
+    public Event()
+    {
+        this.type = EventTypes.UserEvent;
+    }
 }

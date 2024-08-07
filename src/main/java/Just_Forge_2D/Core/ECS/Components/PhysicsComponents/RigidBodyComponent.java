@@ -16,7 +16,7 @@ public class RigidBodyComponent extends Component
     private boolean fixedRotation = false;
     private boolean continousCollission = true;
 
-    private Body rawBody = null;
+    private transient Body rawBody = null;
 
     public Vector2f getVelocity() {
         return velocity;

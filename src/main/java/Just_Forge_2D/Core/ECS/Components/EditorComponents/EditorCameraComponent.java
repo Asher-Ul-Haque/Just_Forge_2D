@@ -36,7 +36,7 @@ public class EditorCameraComponent extends Component
 
     // - - - usage
     @Override
-    public void update(float DELTA_TIME)
+    public void editorUpdate(float DELTA_TIME)
     {
         this.editorCamera.adjustProjection();
         if (Mouse.isMouseButtonDown(GLFW_MOUSE_BUTTON_RIGHT) && dragDebounce > 0)
