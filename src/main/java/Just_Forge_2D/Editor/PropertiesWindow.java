@@ -8,8 +8,7 @@ import Just_Forge_2D.Core.ECS.GameObject;
 import Just_Forge_2D.Core.Input.Mouse;
 import Just_Forge_2D.Core.Scene.Scene;
 import Just_Forge_2D.Core.ForgeDynamo;
-import Just_Forge_2D.Physics.RigidBody.RigidBody;
-import Just_Forge_2D.Utils.justForgeLogger;
+import Just_Forge_2D.Utils.Logger;
 import imgui.ImGui;
 import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_LEFT;
 
@@ -43,12 +42,12 @@ public class PropertiesWindow
             GameObject picked = ForgeDynamo.getCurrentScene().getGameObject(gameObjectID);
             if (picked != null && picked.getCompoent(NonPickableComponent.class) == null)
             {
-                justForgeLogger.FORGE_LOG_DEBUG("Currently active object: " + picked.toString());
+                Logger.FORGE_LOG_DEBUG("Currently active object: " + picked.toString());
                 this.activeGameObject = picked;
             }
             else if (picked == null && !Mouse.isDragging())
             {
-                justForgeLogger.FORGE_LOG_DEBUG("Currently active object: Null");
+                Logger.FORGE_LOG_DEBUG("Currently active object: Null");
                 activeGameObject = null;
             }
             this.debounce = 0.2f;

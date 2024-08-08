@@ -1,6 +1,6 @@
 package Just_Forge_2D.Renderer;
 
-import Just_Forge_2D.Utils.justForgeLogger;
+import Just_Forge_2D.Utils.Logger;
 import org.lwjgl.BufferUtils;
 
 import java.nio.ByteBuffer;
@@ -25,12 +25,11 @@ public class Texture
         textureID = -1;
         width = -1;
         height = -1;
-        justForgeLogger.FORGE_LOG_WARNING("Not recommended to use the default constructor of texture. See documentation on github");
+        Logger.FORGE_LOG_WARNING("Not recommended to use the default constructor of texture. See documentation on github");
     }
 
     public Texture(int WIDTH, int HEIGHT)
     {
-        justForgeLogger.FORGE_LOG_WARNING("Making a texture for the framebuffer. Do not use constructors for texture, see Documentation");
         this.filepath = "Assets/Textures/Generated";
 
         // - - - Generate the texture on GPU
@@ -76,17 +75,17 @@ public class Texture
             {
                 case 3 ->
                 {
-                    justForgeLogger.FORGE_LOG_TRACE("RGB image: " + filepath);
+                    Logger.FORGE_LOG_TRACE("RGB image: " + filepath);
                     yield GL_RGB; //RGB image
                 }
                 case 4 ->
                 {
-                    justForgeLogger.FORGE_LOG_TRACE("RGBA image " + filepath);
+                    Logger.FORGE_LOG_TRACE("RGBA image " + filepath);
                     yield GL_RGBA; //RGBA image
                 }
                 default ->
                 {
-                    justForgeLogger.FORGE_LOG_WARNING("Unkown picture type with " + channels.get(0) + " attributes");
+                    Logger.FORGE_LOG_WARNING("Unkown picture type with " + channels.get(0) + " attributes");
                     yield -1;
                 }
             };
@@ -95,10 +94,10 @@ public class Texture
         }
         else
         {
-            justForgeLogger.FORGE_LOG_WARNING("Could not load image: " + filepath);
+            Logger.FORGE_LOG_WARNING("Could not load image: " + filepath);
             assert false;
         }
-        justForgeLogger.FORGE_LOG_DEBUG("Loaded image sucessfully: " + filepath);
+        Logger.FORGE_LOG_DEBUG("Loaded image sucessfully: " + filepath);
         stbi_image_free(image);
     }
 

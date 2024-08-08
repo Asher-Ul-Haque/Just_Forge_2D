@@ -1,6 +1,6 @@
 package Just_Forge_2D.Renderer;
 
-import Just_Forge_2D.Utils.justForgeLogger;
+import Just_Forge_2D.Utils.Logger;
 import org.joml.*;
 import org.lwjgl.BufferUtils;
 
@@ -13,16 +13,16 @@ import static org.lwjgl.opengl.GL11.GL_FALSE;
 import static org.lwjgl.opengl.GL20.*;
 
 
-// - - - SHADER Mnagemnt
+// - - - SHADER Management
 public class Shader
 {
     // - - - Private variables for compiling
     private int shaderProgramID;
     private String vertexSource, fragmentSource;
-    private String filePath;
+    private final String filePath;
     private boolean beingUsed = false;
 
-    // - - - Constructor to get a useable shader
+    // - - - Constructor to get a usable shader
     public Shader(String FILE_PATH)
     {
         this.filePath = FILE_PATH;
@@ -54,7 +54,7 @@ public class Shader
                     break;
 
                 default:
-                    justForgeLogger.FORGE_LOG_ERROR("Unexpected token: " + firstPattern);
+                    Logger.FORGE_LOG_ERROR("Unexpected token: " + firstPattern);
                     throw new IOException("Unexpected token: " + firstPattern);
             }
 
@@ -69,15 +69,15 @@ public class Shader
                     break;
 
                 default:
-                    justForgeLogger.FORGE_LOG_ERROR("Unexpected token: " + firstPattern);
+                    Logger.FORGE_LOG_ERROR("Unexpected token: " + firstPattern);
                     throw new IOException("Unexpected token: " + firstPattern);
             }
 
         }
         catch (IOException e)
         {
-            justForgeLogger.FORGE_LOG_ERROR("Could not open file for shader: " + filePath);
-            justForgeLogger.FORGE_LOG_ERROR(e.getMessage());
+            Logger.FORGE_LOG_ERROR("Could not open file for shader: " + filePath);
+            Logger.FORGE_LOG_ERROR(e.getMessage());
             assert false;
         }
     }
@@ -88,10 +88,10 @@ public class Shader
         // - - - | Compile and link shaders | - - -
 
         int vertexID, fragmentID;
-        justForgeLogger.FORGE_LOG_INFO("Settting up shaders");
+        Logger.FORGE_LOG_INFO("Setting up shader: " + this.filePath);
 
         // - - - First load and compile the vertex shader
-        justForgeLogger.FORGE_LOG_DEBUG("Compiling Default Vertex Shader");
+        Logger.FORGE_LOG_DEBUG("Compiling Vertex Shader");
         vertexID = glCreateShader(GL_VERTEX_SHADER);
 
         // - - - Pass the shader source to the GPU
@@ -103,12 +103,12 @@ public class Shader
         if (success == GL_FALSE)
         {
             int len = glGetShaderi(vertexID, GL_INFO_LOG_LENGTH);
-            justForgeLogger.FORGE_LOG_ERROR("defaultShader.glsl'\n\tVertex shader compilation failed");
-            justForgeLogger.FORGE_LOG_ERROR(glGetShaderInfoLog(vertexID, len));
+            Logger.FORGE_LOG_ERROR("defaultShader.glsl'\n\tVertex shader compilation failed");
+            Logger.FORGE_LOG_ERROR(glGetShaderInfoLog(vertexID, len));
             assert false : "";
         }
 
-        justForgeLogger.FORGE_LOG_DEBUG("Compiling Default Fragment Shader");
+        Logger.FORGE_LOG_DEBUG("Compiling Fragment Shader");
 
         // - - - First load and compile the vertex shader
         fragmentID = glCreateShader(GL_FRAGMENT_SHADER);
@@ -122,15 +122,15 @@ public class Shader
         if (success == GL_FALSE)
         {
             int len = glGetShaderi(fragmentID, GL_INFO_LOG_LENGTH);
-            justForgeLogger.FORGE_LOG_ERROR(filePath + "\tFragment shader compilation failed");
-            justForgeLogger.FORGE_LOG_ERROR(glGetShaderInfoLog(fragmentID, len));
+            Logger.FORGE_LOG_ERROR(filePath + "\tFragment shader compilation failed");
+            Logger.FORGE_LOG_ERROR(glGetShaderInfoLog(fragmentID, len));
             assert false : "";
         }
 
 
         // - - - Link Shaders - - -
 
-        justForgeLogger.FORGE_LOG_DEBUG("Linking shaders");
+        Logger.FORGE_LOG_DEBUG("Linking shaders");
         shaderProgramID = glCreateProgram();
         glAttachShader(shaderProgramID, vertexID);
         glAttachShader(shaderProgramID, fragmentID);
@@ -141,8 +141,8 @@ public class Shader
         if (success == GL_FALSE)
         {
             int len = glGetProgrami(shaderProgramID, GL_INFO_LOG_LENGTH);
-            justForgeLogger.FORGE_LOG_ERROR(filePath + "\tLinking of shaders failed.");
-            justForgeLogger.FORGE_LOG_ERROR(glGetProgramInfoLog(shaderProgramID, len));
+            Logger.FORGE_LOG_ERROR(filePath + "\tLinking of shaders failed.");
+            Logger.FORGE_LOG_ERROR(glGetProgramInfoLog(shaderProgramID, len));
             assert false : "";
         }
     }

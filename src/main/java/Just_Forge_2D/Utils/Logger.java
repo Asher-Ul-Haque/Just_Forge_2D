@@ -1,6 +1,6 @@
 package Just_Forge_2D.Utils;
 
-public class justForgeLogger
+public class Logger
 {
     private static final String ANSI_RESET = "\u001B[0m";
 

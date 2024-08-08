@@ -20,13 +20,12 @@ import Just_Forge_2D.Renderer.Framebuffer;
 import Just_Forge_2D.Renderer.Renderer;
 import Just_Forge_2D.Renderer.Shader;
 import Just_Forge_2D.Utils.AssetPool;
-import Just_Forge_2D.Utils.justForgeLogger;
-import Just_Forge_2D.Utils.justForgeTime;
+import Just_Forge_2D.Utils.Logger;
+import Just_Forge_2D.Utils.TimeKeeper;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
 
-import java.awt.*;
 import java.util.Objects;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
@@ -104,7 +103,7 @@ public class ForgeDynamo implements Observer
 
         EventSystem.addObserver(this);
 
-        justForgeLogger.FORGE_LOG_INFO("Started Just Forge 2D");
+        Logger.FORGE_LOG_INFO("Started Just Forge 2D");
     }
 
     // - - - Systems function to change the scene
@@ -112,7 +111,7 @@ public class ForgeDynamo implements Observer
     {
         if (currentScene != null)
         {
-            justForgeLogger.FORGE_LOG_INFO("Clearing Scene Catch from previous run");
+            Logger.FORGE_LOG_INFO("Clearing Scene Catch from previous run");
             currentScene.destroy();
         }
         getEditor().getPropertiesWindow().setActiveGameObject(null);
@@ -129,7 +128,7 @@ public class ForgeDynamo implements Observer
         if (ForgeDynamo.forgeDynamo == null)
         {
             ForgeDynamo.forgeDynamo = new ForgeDynamo();
-            justForgeLogger.FORGE_LOG_INFO("Window system restarted");
+            Logger.FORGE_LOG_INFO("Window system restarted");
         }
         return ForgeDynamo.forgeDynamo;
     }
@@ -137,7 +136,7 @@ public class ForgeDynamo implements Observer
     // - - - Run the game
     public void run()
     {
-        justForgeLogger.FORGE_LOG_WARNING("Running Game Engine in automatic mode");
+        Logger.FORGE_LOG_WARNING("Running Game Engine in automatic mode");
         if (!isInitialized)
         {
             init();
@@ -154,17 +153,17 @@ public class ForgeDynamo implements Observer
     // - - - Initialize the window
     public void init()
     {
-        justForgeLogger.FORGE_LOG_INFO("Turning on Windowing System");
+        Logger.FORGE_LOG_INFO("Turning on Windowing System");
         // - - - Setup error callback for GLFW
         GLFWErrorCallback.createPrint(System.err).set();
-        justForgeLogger.FORGE_LOG_DEBUG("Error callback assigned for GLFW");
+        Logger.FORGE_LOG_DEBUG("Error callback assigned for GLFW");
 
         // - - - Initialize GLFW
         if (!glfwInit())
         {
-            justForgeLogger.FORGE_LOG_FATAL("Unable to initialize window creation!!");
+            Logger.FORGE_LOG_FATAL("Unable to initialize window creation!!");
         }
-        justForgeLogger.FORGE_LOG_DEBUG("GLFW initialized successfully");
+        Logger.FORGE_LOG_DEBUG("GLFW initialized successfully");
 
         // - - - Configure GLFW
         glfwDefaultWindowHints();
@@ -173,7 +172,7 @@ public class ForgeDynamo implements Observer
         glfwWindowHint(GLFW_MAXIMIZED, maximized);
         glfwWindowHint(GLFW_DECORATED, decorated);
         glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, transparent);
-        justForgeLogger.FORGE_LOG_DEBUG("Window Configuration Read");
+        Logger.FORGE_LOG_DEBUG("Window Configuration Read");
 
         // TODO: Maybe let this stay
         GLFWVidMode videoMode = glfwGetVideoMode(glfwGetPrimaryMonitor());
@@ -188,9 +187,9 @@ public class ForgeDynamo implements Observer
         glfwWindow = glfwCreateWindow(this.width, this.height, this.title, NULL, NULL);
         if (glfwWindow == NULL)
         {
-            justForgeLogger.FORGE_LOG_FATAL("Unable to create window!!");
+            Logger.FORGE_LOG_FATAL("Unable to create window!!");
         }
-        justForgeLogger.FORGE_LOG_INFO("Window successfully created");
+        Logger.FORGE_LOG_INFO("Window successfully created");
 
         // - - - Set up the mouse
         Mouse.get();
@@ -201,21 +200,21 @@ public class ForgeDynamo implements Observer
             ForgeDynamo.setWidth(newWidth);
             ForgeDynamo.setHeight(newHeight);
         });
-        justForgeLogger.FORGE_LOG_INFO("Mouse Input linked with window");
+        Logger.FORGE_LOG_INFO("Mouse Input linked with window");
 
         // - - - Set up the keyboard
         Keyboard.get();
         glfwSetKeyCallback(glfwWindow, Keyboard::keyCallback);
-        justForgeLogger.FORGE_LOG_INFO("Keyboard Input linked with window");
+        Logger.FORGE_LOG_INFO("Keyboard Input linked with window");
 
         // - - - Make the OpenGL context current
         glfwMakeContextCurrent(glfwWindow);
-        justForgeLogger.FORGE_LOG_DEBUG("OpenGL initialized");
+        Logger.FORGE_LOG_DEBUG("OpenGL initialized");
 
         // - - - Enable vsync
         if (enableVsync)
         {
-            justForgeLogger.FORGE_LOG_WARNING("V-sync enabled. Game engine will attempt to match monitor refresh rate");
+            Logger.FORGE_LOG_WARNING("V-sync enabled. Game engine will attempt to match monitor refresh rate");
             glfwSwapInterval(1);
         }
 
@@ -232,24 +231,24 @@ public class ForgeDynamo implements Observer
         glEnable(GL_BLEND);
         glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
         isInitialized = true;
-        justForgeLogger.FORGE_LOG_INFO("Window System Online");
+        Logger.FORGE_LOG_INFO("Window System Online");
 
         this.framebuffer = new Framebuffer(1980, 720);
         this.selector = new ObjectSelector(1980, 720);
         glViewport(0, 0, 1980, 720);
-        justForgeLogger.FORGE_LOG_INFO("Framebuffer created and assigned for offscreen rendering");
+        Logger.FORGE_LOG_INFO("Framebuffer created and assigned for offscreen rendering");
 
         this.editorLayer = new justForgeImGui(glfwWindow, this.selector);
         this.editorLayer.initImGui();
-        justForgeLogger.FORGE_LOG_INFO("Editor linked with window");
+        Logger.FORGE_LOG_INFO("Editor linked with window");
 
 
         // - - - compile shaders
         this.defaultShader = AssetPool.getShader("Assets/Shaders/default.glsl");
         this.selectorShader = AssetPool.getShader("Assets/Shaders/selector.glsl");
 
-        beginTime = (float) justForgeTime.getTime();
-        justForgeLogger.FORGE_LOG_INFO("Time keeping system Online");
+        beginTime = (float) TimeKeeper.getTime();
+        Logger.FORGE_LOG_INFO("Time keeping system Online");
     }
 
     // - - - Cleanup after game
@@ -258,16 +257,16 @@ public class ForgeDynamo implements Observer
         // - - - Free the memory
         glfwFreeCallbacks(glfwWindow);
         glfwDestroyWindow(glfwWindow);
-        justForgeLogger.FORGE_LOG_INFO("Cleaning up window memory");
+        Logger.FORGE_LOG_INFO("Cleaning up window memory");
 
         // - - - Terminate GLFW nad free the error callback
         glfwTerminate();
         Objects.requireNonNull(glfwSetErrorCallback(null)).free();
 
         // - - - Final Logs
-        justForgeLogger.FORGE_LOG_INFO("Input and window system decoupled");
-        justForgeLogger.FORGE_LOG_INFO("All systems offline");
-        justForgeLogger.FORGE_LOG_INFO("Game Engine Shutdown");
+        Logger.FORGE_LOG_INFO("Input and window system decoupled");
+        Logger.FORGE_LOG_INFO("All systems offline");
+        Logger.FORGE_LOG_INFO("Game Engine Shutdown");
     }
 
     // - - - Loop the game
@@ -276,7 +275,7 @@ public class ForgeDynamo implements Observer
         if (Math.abs(fps - (int) (1.0d / dt)) >= 600)
         {
             fps = (int) (1.0d / dt);
-            justForgeLogger.FORGE_LOG_WARNING("Experienced fps spike. FPS: " + fps);
+            Logger.FORGE_LOG_WARNING("Experienced fps spike. FPS: " + fps);
         }
 
         // - - - Poll events
@@ -337,7 +336,7 @@ public class ForgeDynamo implements Observer
         Mouse.endFrame();
 
         // - - - Keep time
-        endTime = (float) justForgeTime.getTime();
+        endTime = (float) TimeKeeper.getTime();
         dt = endTime - beginTime;
         beginTime = endTime;
     }
@@ -527,20 +526,20 @@ public class ForgeDynamo implements Observer
         switch (EVENT.type)
         {
             case ForgeStart:
-                justForgeLogger.FORGE_LOG_INFO("Starting Game");
+                Logger.FORGE_LOG_INFO("Starting Game");
                 this.isRuntimePlaying = true;
                 currentScene.save();
                 ForgeDynamo.changeScene(new EditorSceneInitializer());
                 break;
 
             case ForgeStop:
-                justForgeLogger.FORGE_LOG_INFO("Ending Game");
+                Logger.FORGE_LOG_INFO("Ending Game");
                 this.isRuntimePlaying = false;
                 ForgeDynamo.changeScene(new EditorSceneInitializer());
                 break;
 
             case SaveLevel:
-                justForgeLogger.FORGE_LOG_INFO("Saving Scene: " + currentScene);
+                Logger.FORGE_LOG_INFO("Saving Scene: " + currentScene);
                 currentScene.save();
                 break;
 

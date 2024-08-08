@@ -3,7 +3,7 @@ package Just_Forge_2D.Core.ECS.Components.Sprite;
 import Just_Forge_2D.Core.ECS.Components.Component;
 import Just_Forge_2D.Editor.ForgeIsGUI;
 import Just_Forge_2D.Renderer.Texture;
-import Just_Forge_2D.Utils.justForgeLogger;
+import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.Core.ECS.Components.TransformComponent;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
@@ -74,7 +74,7 @@ public class SpriteComponent extends Component
     @Override
     public void start()
     {
-        if (this.gameObject.transform == null) justForgeLogger.FORGE_LOG_ERROR(gameObject);
+        if (this.gameObject.transform == null) Logger.FORGE_LOG_ERROR(gameObject);
         this.lastTransform = gameObject.transform.copy();
     }
 
@@ -82,7 +82,7 @@ public class SpriteComponent extends Component
     @Override
     public void update(float DELTA_TIME)
     {
-        if (this.gameObject.transform == null) justForgeLogger.FORGE_LOG_ERROR(gameObject);
+        if (this.gameObject.transform == null) Logger.FORGE_LOG_ERROR(gameObject);
         if (!this.lastTransform.equals(this.gameObject.transform))
         {
             this.gameObject.transform.copy(this.lastTransform);
@@ -93,7 +93,7 @@ public class SpriteComponent extends Component
     @Override
     public void editorUpdate(float DELTA_TIME)
     {
-        if (this.gameObject.transform == null) justForgeLogger.FORGE_LOG_ERROR(gameObject);
+        if (this.gameObject.transform == null) Logger.FORGE_LOG_ERROR(gameObject);
         if (!this.lastTransform.equals(this.gameObject.transform))
         {
             this.gameObject.transform.copy(this.lastTransform);

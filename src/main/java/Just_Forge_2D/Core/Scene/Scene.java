@@ -8,7 +8,7 @@ import Just_Forge_2D.Physics.PhysicsSystem;
 import Just_Forge_2D.Renderer.Renderer;
 import Just_Forge_2D.Utils.JsonHandlers.justForgeComponentJsonHandler;
 import Just_Forge_2D.Utils.JsonHandlers.justForgeGameObjectJsonHandler;
-import Just_Forge_2D.Utils.justForgeLogger;
+import Just_Forge_2D.Utils.Logger;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.joml.Vector2f;
@@ -65,6 +65,7 @@ public class Scene
             GameObject go = gameObjects.get(i);
             go.start();
             this.renderer.add(go);
+            this.physics.add(go);
         }
         isRunning = true;
     }
@@ -131,7 +132,7 @@ public class Scene
                 return object;
             }
         }
-        justForgeLogger.FORGE_LOG_WARNING("Found no game object with ID: " + GAME_OBJECT_ID + " in scene: " + this);
+        Logger.FORGE_LOG_WARNING("Found no game object with ID: " + GAME_OBJECT_ID + " in scene: " + this);
         return null;
     }
 
@@ -165,8 +166,8 @@ public class Scene
         }
         catch (IOException e)
         {
-            justForgeLogger.FORGE_LOG_ERROR("Couldn't read from file: Configurations/Levels/level.justForgeFile");
-            justForgeLogger.FORGE_LOG_ERROR(e.getMessage());
+            Logger.FORGE_LOG_ERROR("Couldn't read from file: Configurations/Levels/level.justForgeFile");
+            Logger.FORGE_LOG_ERROR(e.getMessage());
         }
 
         if (!inFile.isEmpty())
@@ -218,7 +219,7 @@ public class Scene
                 .registerTypeAdapter(Component.class, new justForgeComponentJsonHandler())
                 .registerTypeAdapter(GameObject.class, new justForgeGameObjectJsonHandler())
                 .create();
-        justForgeLogger.FORGE_LOG_INFO("Saving scene...: " + this);
+        Logger.FORGE_LOG_INFO("Saving scene...: " + this);
 
         try
         {
@@ -233,12 +234,12 @@ public class Scene
             }
             writer.write(gson.toJson(toSerialize));
             writer.close();
-            justForgeLogger.FORGE_LOG_INFO("Saved scene: " + this);
+            Logger.FORGE_LOG_INFO("Saved scene: " + this);
         }
         catch (IOException e)
         {
-            justForgeLogger.FORGE_LOG_ERROR("Couldn't write to file");
-            justForgeLogger.FORGE_LOG_ERROR(e.getMessage());
+            Logger.FORGE_LOG_ERROR("Couldn't write to file");
+            Logger.FORGE_LOG_ERROR(e.getMessage());
         }
     }
 

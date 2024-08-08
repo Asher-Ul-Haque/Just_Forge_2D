@@ -2,86 +2,131 @@ package Just_Forge_2D.Core.ECS.Components.PhysicsComponents;
 
 import Just_Forge_2D.Core.ECS.Components.Component;
 import Just_Forge_2D.Physics.Enums.BodyType;
+import Just_Forge_2D.Utils.Configurations;
 import org.jbox2d.dynamics.Body;
 import org.joml.Vector2f;
 
+// - - - Rigid Body
 public class RigidBodyComponent extends Component
 {
+    // - - - private variables
     private Vector2f velocity = new Vector2f();
-    private float angularDamping = 0.0f;
-    private float linearDamping = 0.9f;
-    private float mass = 0;
+    private float angularDamping = Configurations.ANGULAR_DAMPING;
+    private float linearDamping = Configurations.LINEAR_DAMPING;
+    private float mass = Configurations.DEFAULT_MASS;
     private BodyType bodyType = BodyType.Dynamic;
-
-    private boolean fixedRotation = false;
-    private boolean continousCollission = true;
-
+    private boolean fixedRotation = Configurations.ROTATION_FIXED;
+    private boolean continuousCollision = Configurations.CONTINUOUS_COLLISION;
     private transient Body rawBody = null;
 
-    public Vector2f getVelocity() {
+
+    // - - - | Functions | - - -
+
+
+    // - - - Velocity - - -
+
+    public Vector2f getVelocity()
+    {
         return velocity;
     }
 
-    public void setVelocity(Vector2f velocity) {
-        this.velocity = velocity;
+    public void setVelocity(Vector2f VELOCITY)
+    {
+        this.velocity = VELOCITY;
     }
+
+
+    // - - - Angular Damping - - -
 
     public float getAngularDamping() {
         return angularDamping;
     }
 
-    public void setAngularDamping(float angularDamping) {
-        this.angularDamping = angularDamping;
+    public void setAngularDamping(float ANGULAR_DAMPING)
+    {
+        this.angularDamping = ANGULAR_DAMPING;
     }
 
-    public float getLinearDamping() {
+
+    // - - - Linear Damping - - -
+
+    public float getLinearDamping()
+    {
         return linearDamping;
     }
 
-    public void setLinearDamping(float linearDamping) {
-        this.linearDamping = linearDamping;
+    public void setLinearDamping(float LINEAR_DAMPING)
+    {
+        this.linearDamping = LINEAR_DAMPING;
     }
 
-    public float getMass() {
+
+    // - - - Mass - - -
+
+    public float getMass()
+    {
         return mass;
     }
 
-    public void setMass(float mass) {
-        this.mass = mass;
+    public void setMass(float MASS)
+    {
+        this.mass = MASS;
     }
 
-    public BodyType getBodyType() {
+
+    // - - - Body Type - - -
+
+    public BodyType getBodyType()
+    {
         return bodyType;
     }
 
-    public void setBodyType(BodyType bodyType) {
-        this.bodyType = bodyType;
+    public void setBodyType(BodyType TYPE)
+    {
+        this.bodyType = TYPE;
     }
 
-    public boolean isFixedRotation() {
+
+    // - - - Fixed Rotation - - -
+
+    public boolean isFixedRotation()
+    {
         return fixedRotation;
     }
 
-    public void setFixedRotation(boolean fixedRotation) {
-        this.fixedRotation = fixedRotation;
+    public void setFixedRotation(boolean REALLY)
+    {
+        this.fixedRotation = REALLY;
     }
 
-    public boolean isContinousCollission() {
-        return continousCollission;
+
+    // - - - Continuous Collision - - -
+
+    public boolean isContinuousCollision()
+    {
+        return continuousCollision;
     }
 
-    public void setContinousCollission(boolean continousCollission) {
-        this.continousCollission = continousCollission;
+    public void setContinuousCollision(boolean REALLY)
+    {
+        this.continuousCollision = REALLY;
     }
 
-    public Body getRawBody() {
+
+    // - - - Raw Body - - -
+
+    public Body getRawBody()
+    {
         return rawBody;
     }
 
-    public void setRawBody(Body rawBody) {
-        this.rawBody = rawBody;
+    public void setRawBody(Body BODY)
+    {
+        this.rawBody = BODY;
     }
 
+
+    // - - - update
     @Override
     public void update(float DELTA_TIME)
     {

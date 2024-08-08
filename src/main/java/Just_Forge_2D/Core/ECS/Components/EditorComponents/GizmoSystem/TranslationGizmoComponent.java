@@ -2,7 +2,7 @@ package Just_Forge_2D.Core.ECS.Components.EditorComponents.GizmoSystem;
 
 import Just_Forge_2D.Core.ECS.Components.Sprite.Sprite;
 import Just_Forge_2D.Core.Input.Mouse;
-import Just_Forge_2D.Utils.justForgeLogger;
+import Just_Forge_2D.Utils.Logger;
 
 // - - - Translation Gizmo
 public class TranslationGizmoComponent extends GizmoComponent
@@ -10,7 +10,7 @@ public class TranslationGizmoComponent extends GizmoComponent
     public TranslationGizmoComponent(Sprite ARROW)
     {
         super(ARROW);
-        justForgeLogger.FORGE_LOG_INFO("Created translation Gizmo");
+        Logger.FORGE_LOG_INFO("Created translation Gizmo");
     }
 
     @Override

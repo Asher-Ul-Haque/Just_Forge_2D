@@ -1,5 +1,6 @@
 package Just_Forge_2D.Core.Scene;
 
+import Just_Forge_2D.Core.ECS.Components.EditorComponents.GridlinesComponent;
 import Just_Forge_2D.Core.ECS.Components.Sprite.Sprite;
 import Just_Forge_2D.Core.ECS.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.Core.ECS.Components.Sprite.SpriteSheet;
@@ -42,7 +43,7 @@ public class EditorSceneInitializer extends SceneInitializer
 
         this.master = SCENE.createGameObject("Master");
         this.master.noSerialize();
-        //master.addComponent(new GridlinesComponent());
+        master.addComponent(new GridlinesComponent());
         master.addComponent(new MouseControlComponent());
         master.addComponent(new EditorCameraComponent(SCENE.getCamera()));
         master.addComponent(new GizmoSystemComponent(gizmos));

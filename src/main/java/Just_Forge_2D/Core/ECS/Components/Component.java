@@ -22,7 +22,9 @@ public abstract class Component
     // - - - Functions - - -
 
     // - - - use
-    public void update(float DELTA_TIME){}
+    public void update(float DELTA_TIME)
+    {
+    }
     public void editorUpdate(float DELTA_TIME){}
     public void start(){}
     public void destroy(){}
@@ -43,7 +45,7 @@ public abstract class Component
                     field.setAccessible(true);
                 }
 
-                Class type = field.getType();
+                Class<?> type = field.getType();
                 Object value = field.get(this);
                 String name = field.getName();
 

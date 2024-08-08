@@ -1,7 +1,7 @@
 package Just_Forge_2D.Core.ECS.Components;
 
 import Just_Forge_2D.Core.ECS.Components.Sprite.SpriteComponent;
-import Just_Forge_2D.Utils.justForgeLogger;
+import Just_Forge_2D.Utils.Logger;
 
 // - - - Font Renderer Component
 public class justForgeFont extends Component
@@ -12,7 +12,7 @@ public class justForgeFont extends Component
     {
         if (gameObject.getCompoent(SpriteComponent.class) != null)
         {
-            justForgeLogger.FORGE_LOG_DEBUG("Found font renderer");
+            Logger.FORGE_LOG_DEBUG("Found font renderer");
         }
     }
 

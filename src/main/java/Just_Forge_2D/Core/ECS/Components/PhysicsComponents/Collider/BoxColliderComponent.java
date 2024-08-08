@@ -4,11 +4,17 @@ import Just_Forge_2D.Core.ECS.Components.Component;
 import Just_Forge_2D.Renderer.DebugPencil;
 import org.joml.Vector2f;
 
+// - - - Box Collider
 public class BoxColliderComponent extends Collider
 {
+    // - - - private variables
     private Vector2f halfSize = new Vector2f(1);
-    private Vector2f origin = new Vector2f();
+    private final Vector2f origin = new Vector2f();
 
+
+    // - - - Functions - - -
+
+    // - - - half size
     public Vector2f getHalfSize() {
         return halfSize;
     }
@@ -18,11 +24,13 @@ public class BoxColliderComponent extends Collider
         this.halfSize = HALF_SIZE;
     }
 
+    // - - - origin
     public Vector2f getOrigin()
     {
         return this.origin;
     }
 
+    // - - - update
     @Override
     public void editorUpdate(float DELTA_tIME)
     {

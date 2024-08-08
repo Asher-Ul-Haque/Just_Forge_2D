@@ -5,7 +5,7 @@ import Just_Forge_2D.Core.ECS.GameObject;
 import Just_Forge_2D.Core.Input.Mouse;
 import Just_Forge_2D.Core.ForgeDynamo;
 import Just_Forge_2D.Utils.Configurations;
-import Just_Forge_2D.Utils.justForgeLogger;
+import Just_Forge_2D.Utils.Logger;
 import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_LEFT;
 
 // - - - Component to make sure things can be picked up
@@ -24,12 +24,12 @@ public class MouseControlComponent extends Component
     {
         this.holdingObject = GO;
         ForgeDynamo.getCurrentScene().addGameObject(GO);
-        justForgeLogger.FORGE_LOG_DEBUG("Picked up object: "+ this.holdingObject);
+        Logger.FORGE_LOG_DEBUG("Picked up object: "+ this.holdingObject);
     }
 
     public void place()
     {
-        justForgeLogger.FORGE_LOG_DEBUG("Placed game object: " + this.holdingObject);
+        Logger.FORGE_LOG_DEBUG("Placed game object: " + this.holdingObject);
         this.holdingObject = null;
     }
 

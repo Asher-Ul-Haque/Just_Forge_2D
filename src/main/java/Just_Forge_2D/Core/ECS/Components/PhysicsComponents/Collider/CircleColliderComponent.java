@@ -10,7 +10,8 @@ public class CircleColliderComponent extends Collider
         return radius;
     }
 
-    public void setRadius(float radius) {
-        this.radius = radius;
+    public void setRadius(float RADIUS)
+    {
+        this.radius = RADIUS;
     }
 }

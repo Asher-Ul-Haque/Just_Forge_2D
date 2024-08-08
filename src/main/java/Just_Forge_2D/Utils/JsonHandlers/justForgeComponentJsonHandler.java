@@ -1,7 +1,7 @@
 package Just_Forge_2D.Utils.JsonHandlers;
 
 import Just_Forge_2D.Core.ECS.Components.Component;
-import Just_Forge_2D.Utils.justForgeLogger;
+import Just_Forge_2D.Utils.Logger;
 import com.google.gson.*;
 
 import java.lang.reflect.Type;
@@ -32,7 +32,7 @@ public class justForgeComponentJsonHandler implements JsonSerializer<Component>,
         }
         catch (ClassNotFoundException e)
         {
-            justForgeLogger.FORGE_LOG_FATAL("Unkown element type: " + type, e);
+            Logger.FORGE_LOG_FATAL("Unkown element type: " + type, e);
             throw new JsonParseException("Unkown element type: " + type, e);
         }
     }

@@ -2,7 +2,7 @@ package Just_Forge_2D.Editor;
 
 import Just_Forge_2D.Core.Scene.Scene;
 import Just_Forge_2D.Core.ForgeDynamo;
-import Just_Forge_2D.Utils.justForgeLogger;
+import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.Core.Input.*;
 import imgui.ImFontAtlas;
 import imgui.ImFontConfig;
@@ -36,7 +36,7 @@ public class justForgeImGui
         this.windowPtr = GLFW_WINDOW_POINTER;
         this.propertiesWindow = new PropertiesWindow(SELECTOR);
         this.menuBar = new MenuBar();
-        justForgeLogger.FORGE_LOG_INFO("Created imgui for window " + GLFW_WINDOW_POINTER);
+        Logger.FORGE_LOG_INFO("Created imgui for window " + GLFW_WINDOW_POINTER);
     }
 
     // - - - start function because constructors are pointless
@@ -45,7 +45,7 @@ public class justForgeImGui
         // IMPORTANT!!
         // This line is critical for Dear ImGui to work.
         ImGui.createContext();
-        justForgeLogger.FORGE_LOG_INFO("context created for imgui rendering");
+        Logger.FORGE_LOG_INFO("context created for imgui rendering");
 
         // - - - Initialize ImGuiIO config
         final ImGuiIO io = ImGui.getIO();
@@ -96,7 +96,7 @@ public class justForgeImGui
         mouseCursors[ImGuiMouseCursor.Hand] = GLFW.glfwCreateStandardCursor(GLFW.GLFW_HAND_CURSOR);
         mouseCursors[ImGuiMouseCursor.NotAllowed] = GLFW.glfwCreateStandardCursor(GLFW.GLFW_ARROW_CURSOR);
 
-        justForgeLogger.FORGE_LOG_INFO("Input system mapped with editor gui");
+        Logger.FORGE_LOG_INFO("Input system mapped with editor gui");
 
         // - - - Callbacks - - -
 
@@ -162,7 +162,7 @@ public class justForgeImGui
             io.setMouseWheel(io.getMouseWheel() + (float) yOffset);
             Mouse.mouseScrollCallback(w, xOffset, yOffset);
         });
-        justForgeLogger.FORGE_LOG_INFO("editor gui input system callbacks assigned. Ready for immediate mode GUI");
+        Logger.FORGE_LOG_INFO("editor gui input system callbacks assigned. Ready for immediate mode GUI");
 
 
         // - - - Clipboard management - - -
@@ -192,7 +192,7 @@ public class justForgeImGui
                 }
             }
         });
-        justForgeLogger.FORGE_LOG_INFO("editor gui clipboard reading activated");
+        Logger.FORGE_LOG_INFO("editor gui clipboard reading activated");
 
 
         // - - - Fonts - - -
@@ -214,10 +214,10 @@ public class justForgeImGui
         fontConfig.destroy(); // After all fonts were added we don't need this config more
         fontAtlas.build();
 
-        justForgeLogger.FORGE_LOG_INFO("Custom font read and assigned: " + fontPath + " with font size: " + fontSize);
+        Logger.FORGE_LOG_INFO("Custom font read and assigned: " + fontPath + " with font size: " + fontSize);
 
         imGuiGl3.init("#version 450 core");
-        justForgeLogger.FORGE_LOG_INFO("Editor GUI ready");
+        Logger.FORGE_LOG_INFO("Editor GUI ready");
     }
 
 
@@ -272,7 +272,7 @@ public class justForgeImGui
     {
         imGuiGl3.dispose();
         ImGui.destroyContext();
-        justForgeLogger.FORGE_LOG_INFO("Editor GUI destroyed");
+        Logger.FORGE_LOG_INFO("Editor GUI destroyed");
     }
 
     private void setupDockSpace()

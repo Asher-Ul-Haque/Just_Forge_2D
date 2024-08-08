@@ -2,7 +2,8 @@ package Just_Forge_2D.Renderer;
 
 import Just_Forge_2D.Core.ECS.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.Core.ECS.GameObject;
-import Just_Forge_2D.Utils.justForgeLogger;
+import Just_Forge_2D.Utils.Configurations;
+import Just_Forge_2D.Utils.Logger;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,7 +13,7 @@ import java.util.List;
 public class Renderer
 {
     // - - - private variables
-    private final int MAX_BATCH_SIZE = 1024;
+    private final int MAX_BATCH_SIZE = Configurations.MAX_BATCH_SIZE;
     private final List<RenderBatch> batches;
     private static Shader currentShader;
 
@@ -59,12 +60,26 @@ public class Renderer
 
         if (!added)
         {
-            justForgeLogger.FORGE_LOG_DEBUG("Batch ran out of room, creating new batch for layer: " + SPRITE.gameObject.transform.layer);
+            Logger.FORGE_LOG_DEBUG("Batch ran out of room, creating new batch for layer: " + SPRITE.gameObject.transform.layer);
             RenderBatch newBatch = new RenderBatch(MAX_BATCH_SIZE, SPRITE.gameObject.transform.layer);
             newBatch.start();
             batches.add(newBatch);
             newBatch.addSprite(SPRITE);
             Collections.sort(batches);
+        }
+    }
+
+    // - - - Destroy Game Object
+    public void destroyGameObject(GameObject GO)
+    {
+        Logger.FORGE_LOG_DEBUG("Destroying Game Object from the scene: " + GO);
+        if (GO.getCompoent(SpriteComponent.class) == null) return;
+        for (RenderBatch batch: batches)
+        {
+            if (batch.destroyIfExists(GO))
+            {
+                return;
+            }
         }
     }
 
@@ -91,17 +106,6 @@ public class Renderer
         return currentShader;
     }
 
-    public void destroyGameObject(GameObject GO)
-    {
-        if (GO.getCompoent(SpriteComponent.class) == null) return;
-        for (RenderBatch batch: batches)
-        {
-            if (batch.destroyIfExists(GO))
-            {
-                return;
-            }
-        }
-    }
 }
 
 

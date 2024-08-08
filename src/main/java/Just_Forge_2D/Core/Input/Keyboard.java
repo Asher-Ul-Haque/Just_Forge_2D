@@ -1,6 +1,6 @@
 package Just_Forge_2D.Core.Input;
 
-import Just_Forge_2D.Utils.justForgeLogger;
+import Just_Forge_2D.Utils.Logger;
 
 import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
 import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
@@ -31,7 +31,7 @@ public class Keyboard
         if (Keyboard.keyboard == null)
         {
             Keyboard.keyboard = new Keyboard();
-            justForgeLogger.FORGE_LOG_INFO("Keyboard Input System Online");
+            Logger.FORGE_LOG_INFO("Keyboard Input System Online");
         }
         return Keyboard.keyboard;
     }

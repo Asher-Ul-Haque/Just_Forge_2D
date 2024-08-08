@@ -1,7 +1,7 @@
 package Just_Forge_2D.Core.ECS;
 
 import Just_Forge_2D.Core.ECS.Components.Component;
-import Just_Forge_2D.Utils.justForgeLogger;
+import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.Core.ECS.Components.TransformComponent;
 import imgui.ImGui;
 
@@ -30,7 +30,7 @@ public class GameObject
     {
         this.name = NAME;
         this.uniqueID = ID_COUNTER++;
-        justForgeLogger.FORGE_LOG_DEBUG("Created new Game Object : " + NAME);
+        Logger.FORGE_LOG_DEBUG("Created new Game Object : " + NAME);
     }
 
 
@@ -48,12 +48,12 @@ public class GameObject
                 }
                 catch (ClassCastException e)
                 {
-                    justForgeLogger.FORGE_LOG_ERROR("Failed component casting \n" + e.getMessage());
+                    Logger.FORGE_LOG_ERROR("Failed component casting \n" + e.getMessage());
                     assert false;
                 }
             }
         }
-        justForgeLogger.FORGE_LOG_WARNING("Returning null on get Component on Game Object " + this.name + " for component of type" + COMPONENT_CLASS);
+        Logger.FORGE_LOG_WARNING("Returning null on get Component on Game Object " + this.name + " for component of type" + COMPONENT_CLASS);
         return null;
     }
 
@@ -63,12 +63,12 @@ public class GameObject
         {
             if (COMPONENT_CLASS.isAssignableFrom(components.getClass()))
             {
-                justForgeLogger.FORGE_LOG_TRACE("Removed Component at index " + i + ": " + components.get(i).toString());
+                Logger.FORGE_LOG_TRACE("Removed Component at index " + i + ": " + components.get(i).toString());
                 components.remove(i);
                 return;
             }
         }
-        justForgeLogger.FORGE_LOG_WARNING("No component of type: " + COMPONENT_CLASS + " To remove from game object " + this.name);
+        Logger.FORGE_LOG_WARNING("No component of type: " + COMPONENT_CLASS + " To remove from game object " + this.name);
     }
 
     public void addComponent(Component COMPONENT)
@@ -76,7 +76,7 @@ public class GameObject
         COMPONENT.generateID();
         this.components.add(COMPONENT);
         COMPONENT.gameObject = this;
-        justForgeLogger.FORGE_LOG_TRACE("Added component: " + COMPONENT + " to Game Object " + this);
+        Logger.FORGE_LOG_TRACE("Added component: " + COMPONENT + " to Game Object " + this);
     }
 
     public List<Component> getComponents()

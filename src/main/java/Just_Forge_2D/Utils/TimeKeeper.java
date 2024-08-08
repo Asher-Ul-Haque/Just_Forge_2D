@@ -2,7 +2,7 @@ package Just_Forge_2D.Utils;
 
 // import static org.lwjgl.glfw.GLFW.glfwGetTime;
 
-public class justForgeTime
+public class TimeKeeper
 {
     // - - - Private Variables
     public static double timeStarted = System.nanoTime();

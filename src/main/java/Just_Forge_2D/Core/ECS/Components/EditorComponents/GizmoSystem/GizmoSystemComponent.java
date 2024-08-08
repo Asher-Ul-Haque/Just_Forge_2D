@@ -3,7 +3,7 @@ package Just_Forge_2D.Core.ECS.Components.EditorComponents.GizmoSystem;
 import Just_Forge_2D.Core.ECS.Components.Component;
 import Just_Forge_2D.Core.ECS.Components.Sprite.SpriteSheet;
 import Just_Forge_2D.Core.Input.Keyboard;
-import Just_Forge_2D.Utils.justForgeLogger;
+import Just_Forge_2D.Utils.Logger;
 import static org.lwjgl.glfw.GLFW.*;
 
 // - - - Gizmo System
@@ -27,7 +27,7 @@ public class GizmoSystemComponent extends Component
     @Override
     public void start()
     {
-        justForgeLogger.FORGE_LOG_INFO("Adding Gizmo System to " + gameObject);
+        Logger.FORGE_LOG_INFO("Adding Gizmo System to " + gameObject);
         gameObject.addComponent(new TranslationGizmoComponent(gizmos.getSprite(1)));
         gameObject.addComponent(new ScaleGizmoComponent(gizmos.getSprite(2)));
     }

@@ -1,6 +1,6 @@
 package Just_Forge_2D.Renderer;
 
-import Just_Forge_2D.Utils.justForgeLogger;
+import Just_Forge_2D.Utils.Logger;
 import static org.lwjgl.opengl.GL30.*;
 
 public class Framebuffer
@@ -32,12 +32,12 @@ public class Framebuffer
 
         if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
         {
-            justForgeLogger.FORGE_LOG_ERROR("Framebuffer not complete");
-            justForgeLogger.FORGE_LOG_ERROR(glGetError());
+            Logger.FORGE_LOG_ERROR("Framebuffer not complete");
+            Logger.FORGE_LOG_ERROR(glGetError());
             assert false;
         }
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
-        justForgeLogger.FORGE_LOG_INFO("Framebuffer created");
+        Logger.FORGE_LOG_INFO("Framebuffer created");
     }
 
 

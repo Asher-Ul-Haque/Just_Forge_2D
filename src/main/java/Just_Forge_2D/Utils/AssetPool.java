@@ -26,7 +26,7 @@ public class AssetPool
 
         if (AssetPool.shaderPool.containsKey(file.getAbsolutePath()))
         {
-            justForgeLogger.FORGE_LOG_TRACE("Loaded shader: " + FILE_PATH);
+            Logger.FORGE_LOG_TRACE("Loaded shader: " + FILE_PATH);
             return AssetPool.shaderPool.get(file.getAbsolutePath());
         }
         else
@@ -34,7 +34,7 @@ public class AssetPool
             Shader shader = new Shader(FILE_PATH);
             shader.compile();
             AssetPool.shaderPool.put(file.getAbsolutePath(), shader);
-            justForgeLogger.FORGE_LOG_DEBUG("Shader with path: " + FILE_PATH + " Hashed in shader Asset Pool and loaded");
+            Logger.FORGE_LOG_DEBUG("Shader with path: " + FILE_PATH + " Hashed in shader Asset Pool and loaded");
             return shader;
         }
     }
@@ -45,7 +45,7 @@ public class AssetPool
         File file = new File(FILE_PATH);
         if (AssetPool.texturePool.containsKey(file.getAbsolutePath()))
         {
-            justForgeLogger.FORGE_LOG_TRACE("Loaded texture: " + FILE_PATH);
+            Logger.FORGE_LOG_TRACE("Loaded texture: " + FILE_PATH);
             return AssetPool.texturePool.get(file.getAbsolutePath());
         }
         else
@@ -53,7 +53,7 @@ public class AssetPool
             Texture texture = new Texture();
             texture.init(FILE_PATH);
             AssetPool.texturePool.put(file.getAbsolutePath(), texture);
-            justForgeLogger.FORGE_LOG_DEBUG("Texture with path: " + FILE_PATH + " Hashed in Texture Asset Pool and loaded");
+            Logger.FORGE_LOG_DEBUG("Texture with path: " + FILE_PATH + " Hashed in Texture Asset Pool and loaded");
             return texture;
         }
     }
@@ -75,7 +75,7 @@ public class AssetPool
         File file = new File(FILE_PATH);
         if (!AssetPool.spriteSheetPool.containsKey(file.getAbsolutePath()))
         {
-            justForgeLogger.FORGE_LOG_ERROR("Tried to access a spritesheet : " + FILE_PATH + " before adding to the resource pool");
+            Logger.FORGE_LOG_ERROR("Tried to access a spritesheet : " + FILE_PATH + " before adding to the resource pool");
             assert false;
         }
         return AssetPool.spriteSheetPool.get(file.getAbsolutePath());

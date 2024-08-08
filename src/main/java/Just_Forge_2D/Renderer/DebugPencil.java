@@ -2,6 +2,7 @@ package Just_Forge_2D.Renderer;
 
 import Just_Forge_2D.Core.ForgeDynamo;
 import Just_Forge_2D.Physics.Primitives.Line;
+import Just_Forge_2D.Utils.Configurations;
 import Just_Forge_2D.Utils.ForgeMath;
 import Just_Forge_2D.Utils.AssetPool;
 import org.joml.Vector2f;
@@ -21,7 +22,7 @@ public class DebugPencil
     // - - - Private Variables - - -
 
     // - - - lines
-    private static final int MAX_LINES = 512;
+    private static final int MAX_LINES = Configurations.DEBUG_PENCIL_MAX_LINES;
     private static final List<Line> lines = new ArrayList<>();
 
     // - - - rendering info
@@ -33,11 +34,11 @@ public class DebugPencil
     private static boolean started = false;
 
     // - - - Defaults
-    private static final int defaultLifetime = 120; //120 frames
-    private static final Vector3f defaultColor = new Vector3f(0, 0, 1);
-    private static final int defaultWidth = 2;
-    private static final int defaultSegments = 360;
-    private static final float defaultRotation = 0f;
+    private static final int defaultLifetime = Configurations.DEBUG_PENCIL_DEFAULT_LIFE;
+    private static final Vector3f defaultColor = Configurations.DEBUG_PENCIL_DEFAULT_COLOR;
+    private static final int defaultWidth = Configurations.DEBUG_PENCIL_DEFAULT_WIDTH;
+    private static final int defaultSegments = Configurations.DEBUG_PENCIL_DEFAULT_CIRCLE_PRECISION;
+    private static final float defaultRotation = Configurations.DEBUG_PENCIL_DEFAULT_ROTATION;
 
 
     // - - - | Functions | - - -

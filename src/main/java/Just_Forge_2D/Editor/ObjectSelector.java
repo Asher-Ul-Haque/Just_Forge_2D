@@ -1,6 +1,6 @@
 package Just_Forge_2D.Editor;
 
-import Just_Forge_2D.Utils.justForgeLogger;
+import Just_Forge_2D.Utils.Logger;
 import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
 import static org.lwjgl.opengl.GL11.glGetError;
 import static org.lwjgl.opengl.GL30.*;
@@ -24,7 +24,7 @@ public class ObjectSelector
     {
         if (!init(WIDTH, HEIGHT))
         {
-            justForgeLogger.FORGE_LOG_ERROR("Error initalizing object picker");
+            Logger.FORGE_LOG_ERROR("Error initalizing object picker");
         }
     }
 
@@ -57,8 +57,8 @@ public class ObjectSelector
 
         if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
         {
-            justForgeLogger.FORGE_LOG_ERROR("Framebuffer not complete");
-            justForgeLogger.FORGE_LOG_ERROR(glGetError());
+            Logger.FORGE_LOG_ERROR("Framebuffer not complete");
+            Logger.FORGE_LOG_ERROR(glGetError());
             assert false;
             return false;
         }

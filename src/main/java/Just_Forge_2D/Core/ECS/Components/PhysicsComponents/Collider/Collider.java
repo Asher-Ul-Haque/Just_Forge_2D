@@ -11,5 +11,4 @@ public abstract class Collider extends Component
     {
         return this.offset;
     }
-
 }

@@ -2,7 +2,7 @@ package Just_Forge_2D.Core.Input;
 
 import Just_Forge_2D.Core.Camera;
 import Just_Forge_2D.Core.ForgeDynamo;
-import Just_Forge_2D.Utils.justForgeLogger;
+import Just_Forge_2D.Utils.Logger;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
@@ -62,7 +62,7 @@ public class Mouse
         if (Mouse.mouse == null)
         {
             Mouse.mouse = new Mouse();
-            justForgeLogger.FORGE_LOG_INFO("Mouse Input System Online");
+            Logger.FORGE_LOG_INFO("Mouse Input System Online");
         }
         return Mouse.mouse;
     }

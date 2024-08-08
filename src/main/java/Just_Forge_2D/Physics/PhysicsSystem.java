@@ -5,7 +5,8 @@ import Just_Forge_2D.Core.ECS.Components.PhysicsComponents.Collider.CircleCollid
 import Just_Forge_2D.Core.ECS.Components.PhysicsComponents.RigidBodyComponent;
 import Just_Forge_2D.Core.ECS.Components.TransformComponent;
 import Just_Forge_2D.Core.ECS.GameObject;
-import Just_Forge_2D.Utils.justForgeLogger;
+import Just_Forge_2D.Utils.Configurations;
+import Just_Forge_2D.Utils.Logger;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
@@ -14,26 +15,28 @@ import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.World;
 import org.joml.Vector2f;
 
+// - - - interface to communicate with Box2D
 public class PhysicsSystem
 {
-    private Vec2 gravity = new Vec2(0, -10.0f);
-    private World world = new World(gravity);
+    // - - - private variables - - -
+
+    // - - - world settings
+    private final Vec2 gravity = Configurations.GRAVITY;
+    private final World world = new World(gravity);
     private float physicsTime = 0.0f;
-    private float physicsTimeDelta = 1.0f / 60.0f;
-    private int vecolictyIterations = 8;
-    private int positionIterations = 3;
 
-    public void update(float DELTA_TIME)
-    {
-        // - - - ensure that update happens only every 16 milliseconds. We increase only when we pass 16ms
-        physicsTime += DELTA_TIME;
-        if (physicsTime >= 0.0f)
-        {
-            physicsTime -= physicsTimeDelta;
-            world.step(physicsTimeDelta, vecolictyIterations, positionIterations);
-        }
-    }
+    // - - - world precisions
+    private float physicsTimeDelta = Configurations.PHYSICS_DELTA_TIME;
+    private int velocityIterations = Configurations.VELOCITY_ITERATIONS;
+    private int positionIterations = Configurations.POSITION_ITERATIONS;
 
+
+    // - - - | Functions | - - -
+
+
+    // - - - Game Objects - - -
+
+    // - - - add
     public void add(GameObject OBJ)
     {
         RigidBodyComponent rb = OBJ.getCompoent(RigidBodyComponent.class);
@@ -47,7 +50,7 @@ public class PhysicsSystem
             bodyDef.angularDamping = rb.getAngularDamping();
             bodyDef.linearDamping = rb.getLinearDamping();
             bodyDef.fixedRotation = rb.isFixedRotation();
-            bodyDef.bullet = rb.isContinousCollission();
+            bodyDef.bullet = rb.isContinuousCollision();
 
             switch (rb.getBodyType())
             {
@@ -64,7 +67,7 @@ public class PhysicsSystem
                     break;
 
                 default:
-                    justForgeLogger.FORGE_LOG_ERROR("Bro how did we get here: advancement unlocked");
+                    Logger.FORGE_LOG_ERROR("Bro how did we get here: advancement unlocked");
                     break;
             }
 
@@ -82,6 +85,7 @@ public class PhysicsSystem
                 Vector2f offset = boxCollider.getOffset();
                 Vector2f origin = new Vector2f(boxCollider.getOrigin());
                 shape.setAsBox(halfSize.x, halfSize.y, new Vec2(origin.x, origin.y), 0);
+
                 Vec2 pos = bodyDef.position;
                 float xPos = pos.x + offset.x;
                 float yPos = pos.y + offset.y;
@@ -91,11 +95,15 @@ public class PhysicsSystem
             Body body = this.world.createBody(bodyDef);
             rb.setRawBody(body);
             body.createFixture(shape, rb.getMass());
+
+            Logger.FORGE_LOG_DEBUG("Linked Box2D with " + OBJ);
         }
     }
 
+    // - - - destroy
     public void destroyGameObject(GameObject GO)
     {
+        Logger.FORGE_LOG_DEBUG("Unlinked Box2D with " + GO);
         RigidBodyComponent rb = GO.getCompoent(RigidBodyComponent.class);
         if (rb != null)
         {
@@ -104,6 +112,18 @@ public class PhysicsSystem
                 world.destroyBody(rb.getRawBody());
                 rb.setRawBody(null);
             }
+        }
+    }
+
+    // - - - update
+    public void update(float DELTA_TIME)
+    {
+        // - - - ensure that update happens only every 16 milliseconds. We increase only when we pass 16ms
+        physicsTime += DELTA_TIME;
+        if (physicsTime >= 0.0f)
+        {
+            physicsTime -= physicsTimeDelta;
+            world.step(physicsTimeDelta, velocityIterations, positionIterations);
         }
     }
 }

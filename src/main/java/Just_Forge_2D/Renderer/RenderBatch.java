@@ -3,7 +3,7 @@ package Just_Forge_2D.Renderer;
 import Just_Forge_2D.Core.ECS.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.Core.ECS.GameObject;
 import Just_Forge_2D.Core.ForgeDynamo;
-import Just_Forge_2D.Utils.justForgeLogger;
+import Just_Forge_2D.Utils.Logger;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
@@ -81,7 +81,7 @@ public class RenderBatch implements Comparable<RenderBatch>
         // - - - Initialise textures
         this.textures = new ArrayList<>();
 
-        justForgeLogger.FORGE_LOG_INFO("Render Batch created for layer: " + this.layer);
+        Logger.FORGE_LOG_INFO("Render Batch created for layer: " + this.layer);
     }
 
     // - - - starter to make the batch accept input, create its buffers and enable them
@@ -117,7 +117,7 @@ public class RenderBatch implements Comparable<RenderBatch>
 
         glVertexAttribPointer(4, ENTITY_ID_SIZE, GL_FLOAT, false, VERTEX_SIZE_BYTES, ENTITY_ID_OFFSET);
         glEnableVertexAttribArray(4);
-        justForgeLogger.FORGE_LOG_DEBUG("RenderBatch for layer: " + this.layer + " started");
+        Logger.FORGE_LOG_DEBUG("RenderBatch for layer: " + this.layer + " started");
     }
 
     // - - - there is no comment here
@@ -186,7 +186,7 @@ public class RenderBatch implements Comparable<RenderBatch>
         {
             if (!textures.contains(SPRITE.getTexture()))
             {
-                justForgeLogger.FORGE_LOG_TRACE("Detected texture for sprite: " + SPRITE + " Ready to be loaded");
+                Logger.FORGE_LOG_TRACE("Detected texture for sprite: " + SPRITE + " Ready to be loaded");
                 textures.add(SPRITE.getTexture());
             }
         }
@@ -196,7 +196,7 @@ public class RenderBatch implements Comparable<RenderBatch>
 
         if (spriteCount >= this.maxBatchSize)
         {
-            justForgeLogger.FORGE_LOG_WARNING("No more space to insert another sprite. Render Batch full");
+            Logger.FORGE_LOG_WARNING("No more space to insert another sprite. Render Batch full");
             this.hasRoom = false;
         }
     }
@@ -321,6 +321,8 @@ public class RenderBatch implements Comparable<RenderBatch>
         ELEMENTS[offsetArrayIndex + 5] = offset + 1;
     }
 
+
+    // - - - Texture - - -
     public boolean hasTextureRoom()
     {
         return this.textures.size() < 8;
@@ -331,19 +333,23 @@ public class RenderBatch implements Comparable<RenderBatch>
         return this.textures.contains(TEXTURE);
     }
 
+    // - - - layer
     public int getLayer()
     {
         return this.layer;
     }
 
+    // - - - compare
     @Override
     public int compareTo(@NotNull RenderBatch OTHER)
     {
         return Integer.compare(this.getLayer(), OTHER.getLayer());
     }
 
+    // - -  destroy
     public boolean destroyIfExists(GameObject GO)
     {
+        Logger.FORGE_LOG_DEBUG("Removing game object: " + GO + " from render batch with layer " + this.layer);
         SpriteComponent sprite = GO.getCompoent(SpriteComponent.class);
         for (int i = 0; i < spriteCount; ++i)
         {
