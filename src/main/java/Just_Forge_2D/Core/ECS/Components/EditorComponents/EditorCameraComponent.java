@@ -72,14 +72,14 @@ public class EditorCameraComponent extends Component
         if (reset)
         {
             editorCamera.position.lerp(new Vector2f(), lerpTime);
-            editorCamera.setZoom(editorCamera.getZoom() + (0.5f - editorCamera.getZoom()) * lerpTime);
+            editorCamera.setZoom(editorCamera.getZoom() + (1f - editorCamera.getZoom()) * lerpTime);
             this.lerpTime += 0.1f * DELTA_TIME;
-            if (Math.abs(editorCamera.position.x) <= 5.0f && Math.abs(editorCamera.position.y) <= 5.0f)
+            if (Math.abs(editorCamera.position.x) <= 1f && Math.abs(editorCamera.position.y) <= 1f)
             {
                 editorCamera.position.set(0f, 0f);
                 reset = false;
                 this.lerpTime = 0f;
-                this.editorCamera.setZoom(0.5f);
+                this.editorCamera.setZoom(1f);
             }
         }
     }

@@ -5,12 +5,15 @@ import Just_Forge_2D.Core.ECS.Components.NonPickableComponent;
 import Just_Forge_2D.Core.ECS.Components.Sprite.Sprite;
 import Just_Forge_2D.Core.ECS.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.Core.ECS.GameObject;
+import Just_Forge_2D.Core.Input.Keyboard;
 import Just_Forge_2D.Core.Input.Mouse;
 import Just_Forge_2D.Core.ForgeDynamo;
 import Just_Forge_2D.Editor.Prefabs;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
-import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_LEFT;
+import org.lwjgl.glfw.GLFW;
+
+import static org.lwjgl.glfw.GLFW.*;
 
 // - - - Gizmo
 public class GizmoComponent extends Component
@@ -20,7 +23,7 @@ public class GizmoComponent extends Component
     // - - - xAxis Gizmo
     private final Vector4f xAxisColor = new Vector4f(1, 0.3f, 0.3f, 1);
     private final Vector4f xAxisHoverColor = new Vector4f(1, 0, 0, 1);
-    private final Vector2f xAxisOffset = new Vector2f(64, -5);
+    private final Vector2f xAxisOffset = new Vector2f(24f / 80f, -6f / 80f);
     private final SpriteComponent xAxisSprite;
     protected boolean xAxisActive = false;
     private final GameObject xAxisGizmo;
@@ -28,14 +31,14 @@ public class GizmoComponent extends Component
     // - - - yAxis Gizmo
     private final Vector4f yAxisColor = new Vector4f(0.3f, 1, 0.3f, 1);
     private final Vector4f yAxisHoverColor = new Vector4f(0, 1, 0, 1);
-    private final Vector2f yAxisOffset = new Vector2f(16, 61);
+    private final Vector2f yAxisOffset = new Vector2f(-7f / 80f, 21f / 80f);
     private final SpriteComponent yAxisSprite;
     protected boolean yAxisActive = false;
     private final GameObject yAxisGizmo;
 
     // - - - Size
-    private final int gizmoWidth = 16;
-    private final int gizmoHeight = 48;
+    private final float gizmoWidth = 16f / 80f;
+    private final float gizmoHeight = 48f / 80f;
 
     // - - - state
     private boolean using = false;
@@ -49,8 +52,8 @@ public class GizmoComponent extends Component
 
     public GizmoComponent(Sprite ARROW)
     {
-        this.xAxisGizmo = Prefabs.generateSpriteObject("X axis Gizmo", ARROW, 16, 48);
-        this.yAxisGizmo = Prefabs.generateSpriteObject("Y axis Gizmo", ARROW, 16, 48);
+        this.xAxisGizmo = Prefabs.generateSpriteObject("X axis Gizmo", ARROW, gizmoWidth, gizmoHeight);
+        this.yAxisGizmo = Prefabs.generateSpriteObject("Y axis Gizmo", ARROW, gizmoWidth, gizmoHeight);
         this.xAxisSprite = this.xAxisGizmo.getCompoent(SpriteComponent.class);
         this.yAxisSprite = this.yAxisGizmo.getCompoent(SpriteComponent.class);
         this.xAxisGizmo.transform.position.add(this.xAxisOffset);
@@ -70,10 +73,25 @@ public class GizmoComponent extends Component
     {
         if (!using) return;
 
+        // TODO: refactor
         this.activeGameObject = ForgeDynamo.getEditor().getPropertiesWindow().getActiveGameObject(); //this.propertiesWindow.getActiveGameObject();
         if (this.activeGameObject != null)
         {
             this.activate();
+            if (Keyboard.isKeyPressed(GLFW_KEY_C) && Keyboard.isKeyBeginPress(GLFW_KEY_V))
+            {
+                GameObject newObj = this.activeGameObject.copy();
+                ForgeDynamo.getCurrentScene().addGameObject(newObj);
+                newObj.transform.position.add(0.1f, 0.1f);
+                ForgeDynamo.getEditor().getPropertiesWindow().setActiveGameObject(newObj);
+                return;
+            }
+            else if (Keyboard.isKeyPressed(GLFW_KEY_DELETE))
+            {
+                activeGameObject.destroy();
+                this.inactivate();
+                ForgeDynamo.getEditor().getPropertiesWindow().setActiveGameObject(null);
+            }
         }
         else
         {
@@ -149,10 +167,10 @@ public class GizmoComponent extends Component
     {
         Vector2f mousePos = new Vector2f(Mouse.getWorldX(), Mouse.getWorldY());
 
-        if (mousePos.x <= xAxisGizmo.transform.position.x &&
-                mousePos.x >= xAxisGizmo.transform.position.x - gizmoHeight &&
-                mousePos.y >= xAxisGizmo.transform.position.y &&
-                mousePos.y <= xAxisGizmo.transform.position.y + gizmoWidth)
+        if (mousePos.x <= xAxisGizmo.transform.position.x + (gizmoHeight / 2.0f) &&
+                mousePos.x >= xAxisGizmo.transform.position.x - (gizmoWidth / 2f) &&
+                mousePos.y >= xAxisGizmo.transform.position.y - (gizmoHeight /2f) &&
+                mousePos.y <= xAxisGizmo.transform.position.y + (gizmoWidth / 2f))
         {
             xAxisSprite.setColor(xAxisHoverColor);
             return true;
@@ -166,10 +184,10 @@ public class GizmoComponent extends Component
     {
         Vector2f mousePos = new Vector2f(Mouse.getWorldX(), Mouse.getWorldY());
 
-        if (mousePos.x <= yAxisGizmo.transform.position.x &&
-                mousePos.x >= yAxisGizmo.transform.position.x - gizmoWidth &&
-                mousePos.y <= yAxisGizmo.transform.position.y &&
-                mousePos.y >= yAxisGizmo.transform.position.y - gizmoHeight)
+        if (mousePos.x <= yAxisGizmo.transform.position.x + (gizmoWidth / 2f)&&
+                mousePos.x >= yAxisGizmo.transform.position.x - (gizmoWidth / 2f)&&
+                mousePos.y <= yAxisGizmo.transform.position.y + (gizmoHeight / 2.0f)&&
+                mousePos.y >= yAxisGizmo.transform.position.y - (gizmoHeight / 2f))
         {
             yAxisSprite.setColor(yAxisHoverColor);
             return true;

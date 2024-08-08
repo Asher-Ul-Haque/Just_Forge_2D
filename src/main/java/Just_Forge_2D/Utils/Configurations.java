@@ -8,11 +8,11 @@ import org.joml.Vector3f;
 
 public class Configurations
 {
-    public static final int GRID_WIDTH = 32;
-    public static final int GRID_HEIGHT = 32;
+    public static final float GRID_WIDTH = 0.25f;
+    public static final float GRID_HEIGHT = 0.25f;
     public static final int MAX_BATCH_SIZE = 1024;
     public static final int DEBUG_PENCIL_MAX_LINES = 512;
-    public static final int DEBUG_PENCIL_DEFAULT_LIFE = 20;
+    public static final int DEBUG_PENCIL_DEFAULT_LIFE = 1;
     public static final Vector3f DEBUG_PENCIL_DEFAULT_COLOR = new Vector3f(0, 1, 0);
     public static final int DEBUG_PENCIL_DEFAULT_WIDTH = 2;
     public static final int DEBUG_PENCIL_DEFAULT_CIRCLE_PRECISION = 20;

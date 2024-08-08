@@ -60,14 +60,15 @@ public class RenderBatch implements Comparable<RenderBatch>
     private int vaoID, vboID;
     private final float[] vertices;
     private final int[] textureSlots = {0, 1, 2, 3, 4, 5, 6, 7};
+    private Renderer renderer;
 
 
     // - - - Functions - - - -
 
     // - - - constructor
-    public RenderBatch(int MAX_BATCH_SIZE, int LAYER)
+    public RenderBatch(int MAX_BATCH_SIZE, int LAYER, Renderer RENDERER)
     {
-        //shader = justForgeAssetPool.getShader("Assets/Shaders/default.glsl");
+        this.renderer = RENDERER;
         this.maxBatchSize = MAX_BATCH_SIZE;
         this.sprites = new SpriteComponent[maxBatchSize];
         this.layer = LAYER;
@@ -132,6 +133,12 @@ public class RenderBatch implements Comparable<RenderBatch>
                 loadVertexProperties(i);
                 sprite.clean();
                 rebufferData = true;
+            }
+            if (sprite.gameObject.transform.layer != this.layer)
+            {
+                destroyIfExists(sprite.gameObject);
+                renderer.add(sprite.gameObject);
+                i--;
             }
         }
         if (rebufferData)
@@ -239,22 +246,22 @@ public class RenderBatch implements Comparable<RenderBatch>
         }
 
         // - - - Add vertices with the appropriate properties
-        float xAdd = 1.0f;
-        float yAdd = 1.0f;
+        float xAdd = 0.5f; // place towards center
+        float yAdd = 0.5f;
         for (int i = 0; i < 4; ++i)
         {
             switch (i)
             {
                 case 1:
-                    yAdd = 0.0f;
+                    yAdd = -0.5f;
                     break;
 
                 case 2:
-                    xAdd = 0.0f;
+                    xAdd = -0.5f;
                     break;
 
                 case 3:
-                    yAdd = 1.0f;
+                    yAdd = 0.5f;
                     break;
             }
             Vector4f currentPos = new Vector4f(sprite.gameObject.transform.position.x + (xAdd * sprite.gameObject.transform.scale.x),

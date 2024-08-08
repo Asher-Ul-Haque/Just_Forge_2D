@@ -61,7 +61,7 @@ public class Renderer
         if (!added)
         {
             Logger.FORGE_LOG_DEBUG("Batch ran out of room, creating new batch for layer: " + SPRITE.gameObject.transform.layer);
-            RenderBatch newBatch = new RenderBatch(MAX_BATCH_SIZE, SPRITE.gameObject.transform.layer);
+            RenderBatch newBatch = new RenderBatch(MAX_BATCH_SIZE, SPRITE.gameObject.transform.layer, this);
             newBatch.start();
             batches.add(newBatch);
             newBatch.addSprite(SPRITE);
@@ -86,8 +86,9 @@ public class Renderer
     // - - - use
     public void render()
     {
-        for (RenderBatch batch : batches)
+        for (int i = 0; i < batches.size(); ++i)
         {
+            RenderBatch batch = batches.get(i);
             batch.render();
         }
     }

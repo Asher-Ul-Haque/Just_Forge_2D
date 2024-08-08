@@ -1,8 +1,14 @@
 package Just_Forge_2D.Core.ECS;
 
 import Just_Forge_2D.Core.ECS.Components.Component;
+import Just_Forge_2D.Core.ECS.Components.Sprite.SpriteComponent;
+import Just_Forge_2D.Utils.AssetPool;
+import Just_Forge_2D.Utils.JsonHandlers.justForgeComponentJsonHandler;
+import Just_Forge_2D.Utils.JsonHandlers.justForgeGameObjectJsonHandler;
 import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.Core.ECS.Components.TransformComponent;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import imgui.ImGui;
 
 import java.util.ArrayList;
@@ -167,5 +173,36 @@ public class GameObject
         {
             components.get(i).editorUpdate(DELTA_TIME);
         }
+    }
+
+    public GameObject copy()
+    {
+        // TODO: refactor
+        Gson gson = new GsonBuilder()
+                .setPrettyPrinting()
+                .registerTypeAdapter(Component.class, new justForgeComponentJsonHandler())
+                .registerTypeAdapter(GameObject.class, new justForgeGameObjectJsonHandler())
+                .create();
+        String objAsJson = gson.toJson(this);
+        GameObject obj = gson.fromJson(objAsJson, GameObject.class);
+        obj.generateUniqueID();
+
+        for (Component c : obj.components)
+        {
+            c.generateID();
+        }
+
+        SpriteComponent sprite = obj.getCompoent(SpriteComponent.class);
+        if (sprite != null && sprite.getTexture() != null)
+        {
+            sprite.setTexture(AssetPool.getTexture(sprite.getTexture().getFilepath()));
+        }
+
+        return obj;
+    }
+
+    private void generateUniqueID()
+    {
+        this.uniqueID = ID_COUNTER++;
     }
 }

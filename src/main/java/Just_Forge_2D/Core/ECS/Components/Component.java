@@ -3,7 +3,9 @@ package Just_Forge_2D.Core.ECS.Components;
 import Just_Forge_2D.Core.ECS.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.Core.ECS.GameObject;
 import Just_Forge_2D.Editor.ForgeIsGUI;
+import Just_Forge_2D.Utils.Logger;
 import imgui.ImGui;
+import imgui.type.ImInt;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
@@ -85,6 +87,14 @@ public abstract class Component
                     Vector4f val = (Vector4f) value;
                     ForgeIsGUI.colorPicker4(name, val);
                 }
+                else if (type.isEnum()) {
+                    String[] enumValues = getEnumValues((Class<Enum>) type);
+                    String enumType = ((Enum) value).name();
+                    ImInt index = new ImInt(indexOf(enumType, enumValues));
+                    if (ImGui.combo(field.getName(), index, enumValues, enumValues.length)) {
+                        field.set(this, type.getEnumConstants()[index.get()]);
+                    }
+                }
 
 
                 if (isPrivate)
@@ -95,8 +105,8 @@ public abstract class Component
         }
         catch (IllegalAccessException e)
         {
-            //justForgeLogger.FORGE_LOG_FATAL("Error loading GUI code: illegal access exception for component " + this.toString());
-            //justForgeLogger.FORGE_LOG_ERROR(e.getMessage());
+            Logger.FORGE_LOG_FATAL("Error loading GUI code: illegal access exception for component " + this.toString());
+            Logger.FORGE_LOG_ERROR(e.getMessage());
         }
     }
 
@@ -120,4 +130,25 @@ public abstract class Component
 
     public void editorUpdate(SpriteComponent SPRITE)
     {}
+
+    private <T extends Enum<T>> String[] getEnumValues(Class<T> enumType) {
+        String[] enumValues = new String[enumType.getEnumConstants().length];
+        int i = 0;
+        for (T enumIntegerValue : enumType.getEnumConstants()) {
+            enumValues[i] = enumIntegerValue.name();
+            i++;
+        }
+        return enumValues;
+    }
+
+    private int indexOf(String str, String[] arr) {
+        for (int i=0; i < arr.length; i++) {
+            if (str.equals(arr[i])) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
 }

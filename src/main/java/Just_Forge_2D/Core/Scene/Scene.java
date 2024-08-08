@@ -96,7 +96,7 @@ public class Scene
 
     public void init()
     {
-        this.camera = new Camera(new Vector2f(-250, -100));
+        this.camera = new Camera(new Vector2f(0, 0));
         this.initializer.loadResources(this);
         this.initializer.init(this);
     }

@@ -17,8 +17,8 @@ public class GridlinesComponent extends Component
         Vector2f cameraPos = camera.position;
         Vector2f projectionSize = camera.getProjectionSize();
 
-        int firstX = ((int) (cameraPos.x / Configurations.GRID_WIDTH) - 1) * Configurations.GRID_WIDTH;
-        int firstY = ((int) (cameraPos.y / Configurations.GRID_HEIGHT) - 1) * Configurations.GRID_HEIGHT;
+        float firstX = ((int) (cameraPos.x / Configurations.GRID_WIDTH) - 1) * Configurations.GRID_WIDTH;
+        float firstY = ((int) (cameraPos.y / Configurations.GRID_HEIGHT) - 1) * Configurations.GRID_HEIGHT;
 
         int numVertLines = (int) (projectionSize.x * camera.getZoom() / Configurations.GRID_WIDTH) + 2;
         int numHorLines = (int) (projectionSize.y * camera.getZoom() / Configurations.GRID_HEIGHT) + 2;
@@ -29,8 +29,8 @@ public class GridlinesComponent extends Component
         int maxLines = Math.max(numHorLines, numVertLines);
         for (int i = 0; i < maxLines; ++i)
         {
-            int x = firstX + (Configurations.GRID_WIDTH * i);
-            int y = firstY + (Configurations.GRID_HEIGHT * i);
+            float x = firstX + (Configurations.GRID_WIDTH * i);
+            float y = firstY + (Configurations.GRID_HEIGHT * i);
 
             if (i < numVertLines)
             {
