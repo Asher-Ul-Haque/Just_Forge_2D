@@ -92,7 +92,7 @@
         }
       }
     ],
-    "uniqueID": 0,
+    "uniqueID": 36,
     "doSerialization": true,
     "isDead": false
   },
@@ -103,8 +103,8 @@
         "type": "Just_Forge_2D.Core.ECS.Components.TransformComponent",
         "properties": {
           "position": {
-            "x": 1.7641504,
-            "y": 1.205189
+            "x": 1.5454916,
+            "y": 1.5783672
           },
           "layer": 1,
           "scale": {
@@ -189,7 +189,7 @@
         }
       }
     ],
-    "uniqueID": 1,
+    "uniqueID": 37,
     "doSerialization": true,
     "isDead": false
   },
@@ -200,7 +200,7 @@
         "type": "Just_Forge_2D.Core.ECS.Components.TransformComponent",
         "properties": {
           "position": {
-            "x": 2.202,
+            "x": 2.4119124,
             "y": 0.8835916
           },
           "layer": 1,
@@ -286,7 +286,7 @@
         }
       }
     ],
-    "uniqueID": 2,
+    "uniqueID": 38,
     "doSerialization": true,
     "isDead": false
   },
@@ -297,7 +297,7 @@
         "type": "Just_Forge_2D.Core.ECS.Components.TransformComponent",
         "properties": {
           "position": {
-            "x": 2.375,
+            "x": 2.165088,
             "y": 1.875
           },
           "layer": 1,
@@ -383,7 +383,7 @@
         }
       }
     ],
-    "uniqueID": 3,
+    "uniqueID": 39,
     "doSerialization": true,
     "isDead": false
   }

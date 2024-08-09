@@ -34,7 +34,7 @@ public class PropertiesWindow
     public void update(float DELTA_TIME, Scene CURRENT_SCENE)
     {
         debounce -= DELTA_TIME;
-        if (Mouse.isMouseButtonDown(GLFW_MOUSE_BUTTON_LEFT) && debounce < 0)
+        if (!Mouse.isDragging() && Mouse.isMouseButtonDown(GLFW_MOUSE_BUTTON_LEFT) && debounce < 0)
         {
             int x = (int)Mouse.getScreenX();
             int y = (int)Mouse.getScreenY();
