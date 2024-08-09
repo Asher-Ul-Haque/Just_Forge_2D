@@ -1,6 +1,6 @@
 package Just_Forge_2D.Editor;
 
-import Just_Forge_2D.Core.ECS.Components.NonPickableComponent;
+import Just_Forge_2D.Core.ECS.Components.EditorComponents.NonPickableComponent;
 import Just_Forge_2D.Core.ECS.Components.PhysicsComponents.Collider.BoxColliderComponent;
 import Just_Forge_2D.Core.ECS.Components.PhysicsComponents.Collider.CircleColliderComponent;
 import Just_Forge_2D.Core.ECS.Components.PhysicsComponents.RigidBodyComponent;

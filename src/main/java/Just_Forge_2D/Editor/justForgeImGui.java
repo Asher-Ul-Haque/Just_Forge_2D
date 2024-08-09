@@ -26,6 +26,7 @@ public class justForgeImGui
     private final GameViewport gameViewport = new GameViewport();
     private final PropertiesWindow propertiesWindow;
     private MenuBar menuBar;
+    private SceneHierarchyWindow sceneHierarchyWindow;
 
 
     // - - - Functions - - -
@@ -36,6 +37,7 @@ public class justForgeImGui
         this.windowPtr = GLFW_WINDOW_POINTER;
         this.propertiesWindow = new PropertiesWindow(SELECTOR);
         this.menuBar = new MenuBar();
+        this.sceneHierarchyWindow = new SceneHierarchyWindow();
         Logger.FORGE_LOG_INFO("Created imgui for window " + GLFW_WINDOW_POINTER);
     }
 
@@ -233,6 +235,7 @@ public class justForgeImGui
         propertiesWindow.update(DELTA_TIME, SCENE);
         propertiesWindow.editorGUI();
         menuBar.editorGui();
+        sceneHierarchyWindow.editorGUI();
         ImGui.end();
         ImGui.render();
 

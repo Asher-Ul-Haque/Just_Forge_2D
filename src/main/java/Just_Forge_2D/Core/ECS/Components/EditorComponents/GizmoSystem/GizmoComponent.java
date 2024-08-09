@@ -1,7 +1,7 @@
 package Just_Forge_2D.Core.ECS.Components.EditorComponents.GizmoSystem;
 
 import Just_Forge_2D.Core.ECS.Components.Component;
-import Just_Forge_2D.Core.ECS.Components.NonPickableComponent;
+import Just_Forge_2D.Core.ECS.Components.EditorComponents.NonPickableComponent;
 import Just_Forge_2D.Core.ECS.Components.Sprite.Sprite;
 import Just_Forge_2D.Core.ECS.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.Core.ECS.GameObject;
@@ -11,7 +11,6 @@ import Just_Forge_2D.Core.ForgeDynamo;
 import Just_Forge_2D.Editor.Prefabs;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
-import org.lwjgl.glfw.GLFW;
 
 import static org.lwjgl.glfw.GLFW.*;
 
@@ -78,7 +77,7 @@ public class GizmoComponent extends Component
         if (this.activeGameObject != null)
         {
             this.activate();
-            if (Keyboard.isKeyPressed(GLFW_KEY_C) && Keyboard.isKeyBeginPress(GLFW_KEY_V))
+            if (Keyboard.isKeyPressed(GLFW_KEY_LEFT_CONTROL) && Keyboard.isKeyBeginPress(GLFW_KEY_C))
             {
                 GameObject newObj = this.activeGameObject.copy();
                 ForgeDynamo.getCurrentScene().addGameObject(newObj);

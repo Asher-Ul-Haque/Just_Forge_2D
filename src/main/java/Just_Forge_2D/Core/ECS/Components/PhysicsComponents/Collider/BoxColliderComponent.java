@@ -9,7 +9,7 @@ import org.joml.Vector3f;
 public class BoxColliderComponent extends Collider
 {
     // - - - private variables
-    private Vector2f halfSize = new Vector2f(1);
+    private Vector2f halfSize = new Vector2f(0.25f);
     private final Vector2f origin = new Vector2f();
 
 
