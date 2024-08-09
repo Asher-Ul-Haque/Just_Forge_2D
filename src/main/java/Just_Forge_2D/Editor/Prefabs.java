@@ -4,6 +4,7 @@ import Just_Forge_2D.Core.ECS.Components.Sprite.Sprite;
 import Just_Forge_2D.Core.ECS.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.Core.ECS.GameObject;
 import Just_Forge_2D.Core.ForgeDynamo;
+import org.joml.Vector4f;
 
 public class Prefabs
 {
@@ -21,6 +22,7 @@ public class Prefabs
         SpriteComponent sprite = new SpriteComponent();
         sprite.setSprite(SPRITE);
         block.addComponent(sprite);
+
         return block;
     }
 }

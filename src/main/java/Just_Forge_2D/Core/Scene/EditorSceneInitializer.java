@@ -14,13 +14,13 @@ import Just_Forge_2D.Utils.AssetPool;
 import imgui.ImGui;
 import imgui.ImVec2;
 import org.joml.Vector2f;
+import org.joml.Vector4f;
 
 
 // - - - Class to run the editor
 public class EditorSceneInitializer extends SceneInitializer
 {
     // - - - private variables
-    private GameObject master;
     private SpriteSheet sprites;
 
 
@@ -99,6 +99,7 @@ public class EditorSceneInitializer extends SceneInitializer
             if (ImGui.imageButton(id, spriteWidth, spriteHeight, texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y))
             {
                 GameObject object = Prefabs.generateSpriteObject(sprite, Configurations.GRID_WIDTH, Configurations.GRID_HEIGHT);
+//                object.getCompoent(SpriteComponent.class).setColor(new Vector4f(0.8f, 0.8f, 0.8f, 0.5f));
                 master.getCompoent(MouseControlComponent.class).pickupObject(object);
             }
             ImGui.popID();
