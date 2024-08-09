@@ -85,6 +85,7 @@ public class TransformComponent extends Component
     @Override
     public void editorGUI()
     {
+        this.gameObject.name = ForgeIsGUI.inputText("Name", this.gameObject.name);
         ForgeIsGUI.drawVec2Control("Position", this.position);
         ForgeIsGUI.drawVec2Control("Scale", this.scale, 32.0f);
         this.rotation = ForgeIsGUI.drawFloatControl("Rotation", this.rotation);

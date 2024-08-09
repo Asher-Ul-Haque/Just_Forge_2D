@@ -19,7 +19,7 @@ import java.util.List;
 public class GameObject
 {
     // - - - private variables
-    private final String name;
+    public String name;
     private final List<Component> components = new ArrayList<>();
     public transient TransformComponent transform; // transform is a mandatory component
     private static int ID_COUNTER = 0;

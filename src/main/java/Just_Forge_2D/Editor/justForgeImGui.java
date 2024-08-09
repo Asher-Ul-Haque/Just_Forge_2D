@@ -53,9 +53,8 @@ public class justForgeImGui
         final ImGuiIO io = ImGui.getIO();
 
         io.setIniFilename("Configurations/editorLayout.justForgeFile"); // We don't want to save .ini file
-        io.setConfigFlags(ImGuiConfigFlags.NavEnableKeyboard); // Navigation with keyboard
-        io.setConfigFlags(ImGuiConfigFlags.DockingEnable); // enable docking
-        io.setBackendFlags(ImGuiBackendFlags.HasMouseCursors); // Mouse cursors to display while resizing windows etc.
+        io.addConfigFlags(ImGuiConfigFlags.DockingEnable); // enable docking
+        io.addConfigFlags(ImGuiConfigFlags.ViewportsEnable); // enable docking
         io.setBackendPlatformName("imgui_java_impl_glfw");
 
 

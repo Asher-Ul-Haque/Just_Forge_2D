@@ -3,6 +3,7 @@ package Just_Forge_2D.Editor;
 import imgui.ImGui;
 import imgui.flag.ImGuiCol;
 import imgui.flag.ImGuiStyleVar;
+import imgui.type.ImString;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
@@ -235,5 +236,29 @@ public class ForgeIsGUI
         ImGui.popID();
 
         return result;
+    }
+
+    public static String inputText(String LABEL, String TEXT)
+    {
+        ImGui.pushID(LABEL);
+
+        ImGui.columns(2);
+        ImGui.setColumnWidth(0, defaultWidth);
+        ImGui.text(LABEL);
+        ImGui.nextColumn();
+
+        ImString outString = new ImString(TEXT, 256);
+        if (ImGui.inputText("##" + LABEL, outString))
+        {
+            ImGui.columns(1);
+            ImGui.popID();
+
+            return outString.get();
+        }
+
+        ImGui.columns(1);
+        ImGui.popID();
+
+        return TEXT;
     }
 }

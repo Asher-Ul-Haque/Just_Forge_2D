@@ -92,7 +92,7 @@
         }
       }
     ],
-    "uniqueID": 72,
+    "uniqueID": 0,
     "doSerialization": true,
     "isDead": false
   },
@@ -189,7 +189,7 @@
         }
       }
     ],
-    "uniqueID": 73,
+    "uniqueID": 1,
     "doSerialization": true,
     "isDead": false
   },
@@ -286,12 +286,12 @@
         }
       }
     ],
-    "uniqueID": 74,
+    "uniqueID": 2,
     "doSerialization": true,
     "isDead": false
   },
   {
-    "name": "Auto Generated",
+    "name": "Asher",
     "components": [
       {
         "type": "Just_Forge_2D.Core.ECS.Components.TransformComponent",
@@ -383,7 +383,7 @@
         }
       }
     ],
-    "uniqueID": 75,
+    "uniqueID": 3,
     "doSerialization": true,
     "isDead": false
   }
