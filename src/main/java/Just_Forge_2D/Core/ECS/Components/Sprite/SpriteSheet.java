@@ -69,4 +69,9 @@ public class SpriteSheet
         return this.sprites.size();
     }
 
+    public List<Sprite> getSprites()
+    {
+        return this.sprites;
+    }
+
 }

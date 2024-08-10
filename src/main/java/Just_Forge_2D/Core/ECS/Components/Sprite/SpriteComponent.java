@@ -3,6 +3,7 @@ package Just_Forge_2D.Core.ECS.Components.Sprite;
 import Just_Forge_2D.Core.ECS.Components.Component;
 import Just_Forge_2D.Editor.ForgeIsGUI;
 import Just_Forge_2D.Renderer.Texture;
+import Just_Forge_2D.Utils.AssetPool;
 import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.Core.ECS.Components.TransformComponent;
 import org.joml.Vector2f;
@@ -74,7 +75,10 @@ public class SpriteComponent extends Component
     @Override
     public void start()
     {
-        if (this.gameObject.transform == null) Logger.FORGE_LOG_ERROR(gameObject);
+        if (this.gameObject.transform == null)
+        {
+            this.sprite.setTexture(AssetPool.getTexture(this.sprite.getTexture().getFilepath()));
+        }
         this.lastTransform = gameObject.transform.copy();
     }
 

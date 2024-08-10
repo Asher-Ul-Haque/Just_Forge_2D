@@ -1,5 +1,6 @@
 package Just_Forge_2D.Core.ECS.Components.EditorComponents;
 
+import Just_Forge_2D.Core.Animations.StateMachine;
 import Just_Forge_2D.Core.ECS.Components.Component;
 import Just_Forge_2D.Core.ECS.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.Core.ECS.GameObject;
@@ -10,6 +11,8 @@ import Just_Forge_2D.Utils.Configurations;
 import Just_Forge_2D.Utils.Logger;
 import org.joml.Vector4f;
 
+import java.sql.Statement;
+
 import static org.lwjgl.glfw.GLFW.*;
 
 // - - - Component to make sure things can be picked up
@@ -17,7 +20,7 @@ public class MouseControlComponent extends Component
 {
     // - - - private variable for the thing being held
     GameObject holdingObject = null;
-    private final float debounceTime = 0.005f;
+    private final float debounceTime = 0.05f;
     private float debounce = debounceTime;
 
 
@@ -34,7 +37,7 @@ public class MouseControlComponent extends Component
         }
         this.holdingObject = GO;
         this.holdingObject.getCompoent(SpriteComponent.class).setColor(new Vector4f(0.8f, 0.8f, 0.8f, 0.5f));
-        //this.holdingObject.addComponent(new NonPickableComponent());
+        this.holdingObject.addComponent(new NonPickableComponent());
         ForgeDynamo.getCurrentScene().addGameObject(GO);
         Logger.FORGE_LOG_DEBUG("Picked up object: "+ this.holdingObject);
     }
@@ -43,8 +46,12 @@ public class MouseControlComponent extends Component
     {
         Logger.FORGE_LOG_DEBUG("Placed game object: " + this.holdingObject);
         GameObject newObj = this.holdingObject.copy();
+        if (newObj.getCompoent(StateMachine.class) != null)
+        {
+            newObj.getCompoent(StateMachine.class).refreshTextures();
+        }
         newObj.getCompoent(SpriteComponent.class).setColor(new Vector4f(1, 1, 1, 1));
-        //newObj.removeComponent(SpriteComponent.class);
+        newObj.removeComponent(SpriteComponent.class);
         ForgeDynamo.getCurrentScene().addGameObject(newObj);
     }
 
@@ -53,7 +60,7 @@ public class MouseControlComponent extends Component
     public void editorUpdate(float DELTA_TIME)
     {
         debounce -= DELTA_TIME;
-        if (holdingObject != null && debounce <= 0)
+        if (holdingObject != null && debounce <= 0f)
         {
             holdingObject.transform.position.x = (int)(Mouse.getWorldX() / Configurations.GRID_WIDTH) * Configurations.GRID_WIDTH + Configurations.GRID_WIDTH / 2f;
             holdingObject.transform.position.y = (int)(Mouse.getWorldY() / Configurations.GRID_HEIGHT) * Configurations.GRID_WIDTH + Configurations.GRID_HEIGHT / 2f;

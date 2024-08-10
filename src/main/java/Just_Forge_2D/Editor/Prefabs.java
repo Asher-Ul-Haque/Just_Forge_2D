@@ -1,10 +1,13 @@
 package Just_Forge_2D.Editor;
 
+import Just_Forge_2D.Core.Animations.AnimationState;
+import Just_Forge_2D.Core.Animations.StateMachine;
 import Just_Forge_2D.Core.ECS.Components.Sprite.Sprite;
 import Just_Forge_2D.Core.ECS.Components.Sprite.SpriteComponent;
+import Just_Forge_2D.Core.ECS.Components.Sprite.SpriteSheet;
 import Just_Forge_2D.Core.ECS.GameObject;
 import Just_Forge_2D.Core.ForgeDynamo;
-import org.joml.Vector4f;
+import Just_Forge_2D.Utils.AssetPool;
 
 public class Prefabs
 {
@@ -24,5 +27,28 @@ public class Prefabs
         block.addComponent(sprite);
 
         return block;
+    }
+
+    public static GameObject generateMario()
+    {
+        SpriteSheet playerSprites = AssetPool.getSpriteSheet("Assets/Textures/spritesheet.png");
+        GameObject mario = generateSpriteObject(playerSprites.getSprite(0), 0.25f, 0.25f);
+
+        AnimationState run = new AnimationState();
+        run.title = "Run";
+        float defaultFrameTime = 0.25f;
+        run.addFrame(playerSprites.getSprite(0), defaultFrameTime);
+        run.addFrame(playerSprites.getSprite(2), defaultFrameTime);
+        run.addFrame(playerSprites.getSprite(3), defaultFrameTime);
+        run.addFrame(playerSprites.getSprite(2), defaultFrameTime);
+        run.setLoop(true);
+
+        StateMachine stateMachine = new StateMachine();
+        stateMachine.addState(run);
+        stateMachine.setDefaultState(run.title);
+        mario.addComponent(stateMachine);
+
+
+        return mario;
     }
 }

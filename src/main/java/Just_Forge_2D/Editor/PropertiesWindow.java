@@ -106,4 +106,5 @@ public class PropertiesWindow
         this.activeGameObject = GO;
     }
 
+//    public
 }

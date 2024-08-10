@@ -6,93 +6,59 @@
         "type": "Just_Forge_2D.Core.ECS.Components.TransformComponent",
         "properties": {
           "position": {
-            "x": 2.144,
-            "y": 2.125
+            "x": 0.125,
+            "y": 3.125
           },
           "layer": 1,
           "scale": {
             "x": 0.25,
             "y": 0.25
           },
-          "rotation": 0.1,
-          "uniqueID": 19
+          "rotation": 0.0,
+          "uniqueID": 130
         }
       },
       {
         "type": "Just_Forge_2D.Core.ECS.Components.Sprite.SpriteComponent",
         "properties": {
           "color": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0,
-            "w": 1.0
+            "x": 0.8,
+            "y": 0.8,
+            "z": 0.8,
+            "w": 0.5
           },
           "sprite": {
             "width": 16.0,
             "height": 16.0,
             "texture": {
               "filepath": "Assets/Textures/spritesheet.png",
-              "width": 64,
-              "height": 64
+              "width": 224,
+              "height": 32
             },
             "textureCoordinates": [
               {
-                "x": 0.5,
-                "y": 0.75
+                "x": 0.42857143,
+                "y": 1.0
               },
               {
-                "x": 0.5,
+                "x": 0.42857143,
                 "y": 0.5
               },
               {
-                "x": 0.25,
+                "x": 0.35714287,
                 "y": 0.5
               },
               {
-                "x": 0.25,
-                "y": 0.75
+                "x": 0.35714287,
+                "y": 1.0
               }
             ]
           },
-          "uniqueID": 20
-        }
-      },
-      {
-        "type": "Just_Forge_2D.Core.ECS.Components.PhysicsComponents.RigidBodyComponent",
-        "properties": {
-          "velocity": {
-            "x": 0.0,
-            "y": 0.0
-          },
-          "angularDamping": 0.8,
-          "linearDamping": 0.9,
-          "mass": 3.2,
-          "bodyType": "Dynamic",
-          "fixedRotation": false,
-          "continuousCollision": true,
-          "uniqueID": 21
-        }
-      },
-      {
-        "type": "Just_Forge_2D.Core.ECS.Components.PhysicsComponents.Collider.BoxColliderComponent",
-        "properties": {
-          "halfSize": {
-            "x": 0.25,
-            "y": 0.25
-          },
-          "origin": {
-            "x": 0.0,
-            "y": 0.0
-          },
-          "offset": {
-            "x": 0.0,
-            "y": 0.0
-          },
-          "uniqueID": 22
+          "uniqueID": 131
         }
       }
     ],
-    "uniqueID": 36,
+    "uniqueID": 0,
     "doSerialization": true,
     "isDead": false
   },
@@ -103,16 +69,16 @@
         "type": "Just_Forge_2D.Core.ECS.Components.TransformComponent",
         "properties": {
           "position": {
-            "x": 1.5454916,
-            "y": 1.5783672
+            "x": 1.7909297,
+            "y": 2.375
           },
           "layer": 1,
           "scale": {
-            "x": 0.518811,
-            "y": 0.4667151
+            "x": 0.25,
+            "y": 0.25
           },
-          "rotation": 0.6,
-          "uniqueID": 23
+          "rotation": 0.0,
+          "uniqueID": 130
         }
       },
       {
@@ -129,67 +95,33 @@
             "height": 16.0,
             "texture": {
               "filepath": "Assets/Textures/spritesheet.png",
-              "width": 64,
-              "height": 64
+              "width": 224,
+              "height": 32
             },
             "textureCoordinates": [
               {
-                "x": 0.75,
+                "x": 0.42857143,
+                "y": 1.0
+              },
+              {
+                "x": 0.42857143,
                 "y": 0.5
               },
               {
-                "x": 0.75,
-                "y": 0.25
-              },
-              {
-                "x": 0.5,
-                "y": 0.25
-              },
-              {
-                "x": 0.5,
+                "x": 0.35714287,
                 "y": 0.5
+              },
+              {
+                "x": 0.35714287,
+                "y": 1.0
               }
             ]
           },
-          "uniqueID": 24
-        }
-      },
-      {
-        "type": "Just_Forge_2D.Core.ECS.Components.PhysicsComponents.RigidBodyComponent",
-        "properties": {
-          "velocity": {
-            "x": 0.0,
-            "y": 0.0
-          },
-          "angularDamping": 0.8,
-          "linearDamping": 0.9,
-          "mass": 0.0,
-          "bodyType": "Static",
-          "fixedRotation": false,
-          "continuousCollision": true,
-          "uniqueID": 25
-        }
-      },
-      {
-        "type": "Just_Forge_2D.Core.ECS.Components.PhysicsComponents.Collider.BoxColliderComponent",
-        "properties": {
-          "halfSize": {
-            "x": 0.519,
-            "y": 0.467
-          },
-          "origin": {
-            "x": 0.0,
-            "y": 0.0
-          },
-          "offset": {
-            "x": 0.0,
-            "y": 0.0
-          },
-          "uniqueID": 26
+          "uniqueID": 131
         }
       }
     ],
-    "uniqueID": 37,
+    "uniqueID": 1,
     "doSerialization": true,
     "isDead": false
   },
@@ -200,16 +132,16 @@
         "type": "Just_Forge_2D.Core.ECS.Components.TransformComponent",
         "properties": {
           "position": {
-            "x": 2.4119124,
-            "y": 0.8835916
+            "x": 2.625,
+            "y": 1.125
           },
           "layer": 1,
           "scale": {
-            "x": 0.45,
-            "y": 0.45
+            "x": 0.25,
+            "y": 0.25
           },
-          "rotation": -0.6,
-          "uniqueID": 46
+          "rotation": 0.0,
+          "uniqueID": 130
         }
       },
       {
@@ -226,78 +158,296 @@
             "height": 16.0,
             "texture": {
               "filepath": "Assets/Textures/spritesheet.png",
-              "width": 64,
-              "height": 64
+              "width": 224,
+              "height": 32
             },
             "textureCoordinates": [
               {
-                "x": 0.75,
+                "x": 0.42857143,
                 "y": 1.0
               },
               {
-                "x": 0.75,
-                "y": 0.75
+                "x": 0.42857143,
+                "y": 0.5
               },
               {
-                "x": 0.5,
-                "y": 0.75
+                "x": 0.35714287,
+                "y": 0.5
               },
               {
-                "x": 0.5,
+                "x": 0.35714287,
                 "y": 1.0
               }
             ]
           },
-          "uniqueID": 47
-        }
-      },
-      {
-        "type": "Just_Forge_2D.Core.ECS.Components.PhysicsComponents.RigidBodyComponent",
-        "properties": {
-          "velocity": {
-            "x": 0.0,
-            "y": 0.0
-          },
-          "angularDamping": 0.8,
-          "linearDamping": 0.9,
-          "mass": 0.0,
-          "bodyType": "Static",
-          "fixedRotation": false,
-          "continuousCollision": true,
-          "uniqueID": 67
-        }
-      },
-      {
-        "type": "Just_Forge_2D.Core.ECS.Components.PhysicsComponents.Collider.BoxColliderComponent",
-        "properties": {
-          "halfSize": {
-            "x": 0.25,
-            "y": 0.25
-          },
-          "origin": {
-            "x": 0.0,
-            "y": 0.0
-          },
-          "offset": {
-            "x": 0.0,
-            "y": 0.0
-          },
-          "uniqueID": 68
+          "uniqueID": 131
         }
       }
     ],
-    "uniqueID": 38,
+    "uniqueID": 8,
     "doSerialization": true,
     "isDead": false
   },
   {
-    "name": "Asher",
+    "name": "Auto Generated",
     "components": [
       {
         "type": "Just_Forge_2D.Core.ECS.Components.TransformComponent",
         "properties": {
           "position": {
-            "x": 2.165088,
+            "x": 2.625,
+            "y": 1.125
+          },
+          "layer": 1,
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "uniqueID": 130
+        }
+      },
+      {
+        "type": "Just_Forge_2D.Core.ECS.Components.Sprite.SpriteComponent",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16.0,
+            "height": 16.0,
+            "texture": {
+              "filepath": "Assets/Textures/spritesheet.png",
+              "width": 224,
+              "height": 32
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.42857143,
+                "y": 1.0
+              },
+              {
+                "x": 0.42857143,
+                "y": 0.5
+              },
+              {
+                "x": 0.35714287,
+                "y": 0.5
+              },
+              {
+                "x": 0.35714287,
+                "y": 1.0
+              }
+            ]
+          },
+          "uniqueID": 131
+        }
+      }
+    ],
+    "uniqueID": 9,
+    "doSerialization": true,
+    "isDead": false
+  },
+  {
+    "name": "Auto Generated",
+    "components": [
+      {
+        "type": "Just_Forge_2D.Core.ECS.Components.TransformComponent",
+        "properties": {
+          "position": {
+            "x": 2.625,
+            "y": 1.125
+          },
+          "layer": 1,
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "uniqueID": 130
+        }
+      },
+      {
+        "type": "Just_Forge_2D.Core.ECS.Components.Sprite.SpriteComponent",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16.0,
+            "height": 16.0,
+            "texture": {
+              "filepath": "Assets/Textures/spritesheet.png",
+              "width": 224,
+              "height": 32
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.42857143,
+                "y": 1.0
+              },
+              {
+                "x": 0.42857143,
+                "y": 0.5
+              },
+              {
+                "x": 0.35714287,
+                "y": 0.5
+              },
+              {
+                "x": 0.35714287,
+                "y": 1.0
+              }
+            ]
+          },
+          "uniqueID": 131
+        }
+      }
+    ],
+    "uniqueID": 10,
+    "doSerialization": true,
+    "isDead": false
+  },
+  {
+    "name": "Auto Generated",
+    "components": [
+      {
+        "type": "Just_Forge_2D.Core.ECS.Components.TransformComponent",
+        "properties": {
+          "position": {
+            "x": 2.625,
+            "y": 1.125
+          },
+          "layer": 1,
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "uniqueID": 130
+        }
+      },
+      {
+        "type": "Just_Forge_2D.Core.ECS.Components.Sprite.SpriteComponent",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16.0,
+            "height": 16.0,
+            "texture": {
+              "filepath": "Assets/Textures/spritesheet.png",
+              "width": 224,
+              "height": 32
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.42857143,
+                "y": 1.0
+              },
+              {
+                "x": 0.42857143,
+                "y": 0.5
+              },
+              {
+                "x": 0.35714287,
+                "y": 0.5
+              },
+              {
+                "x": 0.35714287,
+                "y": 1.0
+              }
+            ]
+          },
+          "uniqueID": 131
+        }
+      }
+    ],
+    "uniqueID": 11,
+    "doSerialization": true,
+    "isDead": false
+  },
+  {
+    "name": "Auto Generated",
+    "components": [
+      {
+        "type": "Just_Forge_2D.Core.ECS.Components.TransformComponent",
+        "properties": {
+          "position": {
+            "x": 2.625,
+            "y": 1.125
+          },
+          "layer": 1,
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "uniqueID": 130
+        }
+      },
+      {
+        "type": "Just_Forge_2D.Core.ECS.Components.Sprite.SpriteComponent",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16.0,
+            "height": 16.0,
+            "texture": {
+              "filepath": "Assets/Textures/spritesheet.png",
+              "width": 224,
+              "height": 32
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.42857143,
+                "y": 1.0
+              },
+              {
+                "x": 0.42857143,
+                "y": 0.5
+              },
+              {
+                "x": 0.35714287,
+                "y": 0.5
+              },
+              {
+                "x": 0.35714287,
+                "y": 1.0
+              }
+            ]
+          },
+          "uniqueID": 131
+        }
+      }
+    ],
+    "uniqueID": 12,
+    "doSerialization": true,
+    "isDead": false
+  },
+  {
+    "name": "Auto Generated",
+    "components": [
+      {
+        "type": "Just_Forge_2D.Core.ECS.Components.TransformComponent",
+        "properties": {
+          "position": {
+            "x": 3.375,
             "y": 1.875
           },
           "layer": 1,
@@ -306,7 +456,7 @@
             "y": 0.25
           },
           "rotation": 0.0,
-          "uniqueID": 88
+          "uniqueID": 130
         }
       },
       {
@@ -323,29 +473,470 @@
             "height": 16.0,
             "texture": {
               "filepath": "Assets/Textures/spritesheet.png",
-              "width": 64,
-              "height": 64
+              "width": 224,
+              "height": 32
             },
             "textureCoordinates": [
               {
-                "x": 0.25,
+                "x": 0.42857143,
                 "y": 1.0
               },
               {
-                "x": 0.25,
-                "y": 0.75
+                "x": 0.42857143,
+                "y": 0.5
               },
               {
-                "x": 0.0,
-                "y": 0.75
+                "x": 0.35714287,
+                "y": 0.5
               },
               {
-                "x": 0.0,
+                "x": 0.35714287,
                 "y": 1.0
               }
             ]
           },
-          "uniqueID": 89
+          "uniqueID": 131
+        }
+      }
+    ],
+    "uniqueID": 13,
+    "doSerialization": true,
+    "isDead": false
+  },
+  {
+    "name": "Auto Generated",
+    "components": [
+      {
+        "type": "Just_Forge_2D.Core.ECS.Components.TransformComponent",
+        "properties": {
+          "position": {
+            "x": 3.375,
+            "y": 1.875
+          },
+          "layer": 1,
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "uniqueID": 130
+        }
+      },
+      {
+        "type": "Just_Forge_2D.Core.ECS.Components.Sprite.SpriteComponent",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16.0,
+            "height": 16.0,
+            "texture": {
+              "filepath": "Assets/Textures/spritesheet.png",
+              "width": 224,
+              "height": 32
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.42857143,
+                "y": 1.0
+              },
+              {
+                "x": 0.42857143,
+                "y": 0.5
+              },
+              {
+                "x": 0.35714287,
+                "y": 0.5
+              },
+              {
+                "x": 0.35714287,
+                "y": 1.0
+              }
+            ]
+          },
+          "uniqueID": 131
+        }
+      }
+    ],
+    "uniqueID": 14,
+    "doSerialization": true,
+    "isDead": false
+  },
+  {
+    "name": "Auto Generated",
+    "components": [
+      {
+        "type": "Just_Forge_2D.Core.ECS.Components.TransformComponent",
+        "properties": {
+          "position": {
+            "x": 3.375,
+            "y": 1.875
+          },
+          "layer": 1,
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "uniqueID": 130
+        }
+      },
+      {
+        "type": "Just_Forge_2D.Core.ECS.Components.Sprite.SpriteComponent",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16.0,
+            "height": 16.0,
+            "texture": {
+              "filepath": "Assets/Textures/spritesheet.png",
+              "width": 224,
+              "height": 32
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.42857143,
+                "y": 1.0
+              },
+              {
+                "x": 0.42857143,
+                "y": 0.5
+              },
+              {
+                "x": 0.35714287,
+                "y": 0.5
+              },
+              {
+                "x": 0.35714287,
+                "y": 1.0
+              }
+            ]
+          },
+          "uniqueID": 131
+        }
+      }
+    ],
+    "uniqueID": 15,
+    "doSerialization": true,
+    "isDead": false
+  },
+  {
+    "name": "Auto Generated",
+    "components": [
+      {
+        "type": "Just_Forge_2D.Core.ECS.Components.TransformComponent",
+        "properties": {
+          "position": {
+            "x": 3.375,
+            "y": 1.875
+          },
+          "layer": 1,
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "uniqueID": 130
+        }
+      },
+      {
+        "type": "Just_Forge_2D.Core.ECS.Components.Sprite.SpriteComponent",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16.0,
+            "height": 16.0,
+            "texture": {
+              "filepath": "Assets/Textures/spritesheet.png",
+              "width": 224,
+              "height": 32
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.42857143,
+                "y": 1.0
+              },
+              {
+                "x": 0.42857143,
+                "y": 0.5
+              },
+              {
+                "x": 0.35714287,
+                "y": 0.5
+              },
+              {
+                "x": 0.35714287,
+                "y": 1.0
+              }
+            ]
+          },
+          "uniqueID": 131
+        }
+      }
+    ],
+    "uniqueID": 16,
+    "doSerialization": true,
+    "isDead": false
+  },
+  {
+    "name": "Auto Generated",
+    "components": [
+      {
+        "type": "Just_Forge_2D.Core.ECS.Components.TransformComponent",
+        "properties": {
+          "position": {
+            "x": 1.375,
+            "y": 1.875
+          },
+          "layer": 1,
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "uniqueID": 130
+        }
+      },
+      {
+        "type": "Just_Forge_2D.Core.ECS.Components.Sprite.SpriteComponent",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16.0,
+            "height": 16.0,
+            "texture": {
+              "filepath": "Assets/Textures/spritesheet.png",
+              "width": 224,
+              "height": 32
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.42857143,
+                "y": 1.0
+              },
+              {
+                "x": 0.42857143,
+                "y": 0.5
+              },
+              {
+                "x": 0.35714287,
+                "y": 0.5
+              },
+              {
+                "x": 0.35714287,
+                "y": 1.0
+              }
+            ]
+          },
+          "uniqueID": 131
+        }
+      }
+    ],
+    "uniqueID": 17,
+    "doSerialization": true,
+    "isDead": false
+  },
+  {
+    "name": "Auto Generated",
+    "components": [
+      {
+        "type": "Just_Forge_2D.Core.ECS.Components.TransformComponent",
+        "properties": {
+          "position": {
+            "x": 1.375,
+            "y": 1.875
+          },
+          "layer": 1,
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "uniqueID": 130
+        }
+      },
+      {
+        "type": "Just_Forge_2D.Core.ECS.Components.Sprite.SpriteComponent",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16.0,
+            "height": 16.0,
+            "texture": {
+              "filepath": "Assets/Textures/spritesheet.png",
+              "width": 224,
+              "height": 32
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.42857143,
+                "y": 1.0
+              },
+              {
+                "x": 0.42857143,
+                "y": 0.5
+              },
+              {
+                "x": 0.35714287,
+                "y": 0.5
+              },
+              {
+                "x": 0.35714287,
+                "y": 1.0
+              }
+            ]
+          },
+          "uniqueID": 131
+        }
+      }
+    ],
+    "uniqueID": 18,
+    "doSerialization": true,
+    "isDead": false
+  },
+  {
+    "name": "Auto Generated",
+    "components": [
+      {
+        "type": "Just_Forge_2D.Core.ECS.Components.TransformComponent",
+        "properties": {
+          "position": {
+            "x": 1.375,
+            "y": 1.875
+          },
+          "layer": 1,
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "uniqueID": 130
+        }
+      },
+      {
+        "type": "Just_Forge_2D.Core.ECS.Components.Sprite.SpriteComponent",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16.0,
+            "height": 16.0,
+            "texture": {
+              "filepath": "Assets/Textures/spritesheet.png",
+              "width": 224,
+              "height": 32
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.42857143,
+                "y": 1.0
+              },
+              {
+                "x": 0.42857143,
+                "y": 0.5
+              },
+              {
+                "x": 0.35714287,
+                "y": 0.5
+              },
+              {
+                "x": 0.35714287,
+                "y": 1.0
+              }
+            ]
+          },
+          "uniqueID": 131
+        }
+      }
+    ],
+    "uniqueID": 19,
+    "doSerialization": true,
+    "isDead": false
+  },
+  {
+    "name": "Auto Generated",
+    "components": [
+      {
+        "type": "Just_Forge_2D.Core.ECS.Components.TransformComponent",
+        "properties": {
+          "position": {
+            "x": 1.375,
+            "y": 1.875
+          },
+          "layer": 1,
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 1.4,
+          "uniqueID": 130
+        }
+      },
+      {
+        "type": "Just_Forge_2D.Core.ECS.Components.Sprite.SpriteComponent",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16.0,
+            "height": 16.0,
+            "texture": {
+              "filepath": "Assets/Textures/spritesheet.png",
+              "width": 224,
+              "height": 32
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.42857143,
+                "y": 1.0
+              },
+              {
+                "x": 0.42857143,
+                "y": 0.5
+              },
+              {
+                "x": 0.35714287,
+                "y": 0.5
+              },
+              {
+                "x": 0.35714287,
+                "y": 1.0
+              }
+            ]
+          },
+          "uniqueID": 131
         }
       },
       {
@@ -357,11 +948,11 @@
           },
           "angularDamping": 0.8,
           "linearDamping": 0.9,
-          "mass": 0.0,
-          "bodyType": "Static",
+          "mass": 1.8,
+          "bodyType": "Dynamic",
           "fixedRotation": false,
           "continuousCollision": true,
-          "uniqueID": 109
+          "uniqueID": 151
         }
       },
       {
@@ -379,11 +970,11 @@
             "x": 0.0,
             "y": 0.0
           },
-          "uniqueID": 110
+          "uniqueID": 152
         }
       }
     ],
-    "uniqueID": 39,
+    "uniqueID": 20,
     "doSerialization": true,
     "isDead": false
   }
