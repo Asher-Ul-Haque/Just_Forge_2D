@@ -24,12 +24,17 @@ import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.Utils.TimeKeeper;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
+import org.lwjgl.openal.AL;
+import org.lwjgl.openal.ALC;
+import org.lwjgl.openal.ALCCapabilities;
+import org.lwjgl.openal.ALCapabilities;
 import org.lwjgl.opengl.GL;
 
 import java.util.Objects;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.openal.ALC10.*;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
@@ -85,6 +90,9 @@ public class ForgeDynamo implements Observer
     // - - - shaders
     Shader defaultShader;
     Shader selectorShader;
+
+    private long audioContext;
+    private long audioDevicePtr;
 
 
     // - - - | Functions | - - -
@@ -221,6 +229,24 @@ public class ForgeDynamo implements Observer
         // - - - Show the window
         glfwShowWindow(glfwWindow);
 
+        // - - - Initialize audio
+        String defaultDeviceName = alcGetString(0, ALC_DEFAULT_DEVICE_SPECIFIER);
+        audioDevicePtr = alcOpenDevice(defaultDeviceName);
+
+        int[] attributes = {0};
+        audioContext = alcCreateContext(audioDevicePtr, attributes);
+        alcMakeContextCurrent(audioContext);
+
+        ALCCapabilities alcCapabilities = ALC.createCapabilities(audioDevicePtr);
+        ALCapabilities alCapabilities = AL.createCapabilities(alcCapabilities);
+
+        if (!alCapabilities.OpenAL10)
+        {
+            Logger.FORGE_LOG_ERROR("Audio Not supported");
+            assert false;
+        }
+
+
         // - - -Create capabilities
         // This line is critical for LWJGL's interoperation with GLFW's
         // OpenGL context, or any context that is managed externally.
@@ -254,6 +280,10 @@ public class ForgeDynamo implements Observer
     // - - - Cleanup after game
     public void finish()
     {
+        // - - - Destroy Audio Context
+        alcDestroyContext(audioContext);
+        alcCloseDevice(audioDevicePtr);
+
         // - - - Free the memory
         glfwFreeCallbacks(glfwWindow);
         glfwDestroyWindow(glfwWindow);

@@ -161,7 +161,10 @@ public class justForgeImGui
         {
             io.setMouseWheelH(io.getMouseWheelH() + (float) xOffset);
             io.setMouseWheel(io.getMouseWheel() + (float) yOffset);
-            Mouse.mouseScrollCallback(w, xOffset, yOffset);
+            if (!io.getWantCaptureMouse() || gameViewport.getWantCaptureMouse())
+            {
+                Mouse.mouseScrollCallback(w, xOffset, yOffset);
+            }
         });
         Logger.FORGE_LOG_INFO("editor gui input system callbacks assigned. Ready for immediate mode GUI");
 

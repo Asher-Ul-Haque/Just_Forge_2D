@@ -3,7 +3,10 @@ package Just_Forge_2D.Utils;
 import Just_Forge_2D.Core.ECS.Components.Sprite.SpriteSheet;
 import Just_Forge_2D.Renderer.Shader;
 import Just_Forge_2D.Renderer.Texture;
+import Just_Forge_2D.Sound.Sound;
+
 import java.io.File;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,6 +18,7 @@ public class AssetPool
     private static final Map<String, Shader> shaderPool = new HashMap<>();
     private static final Map<String, Texture> texturePool = new HashMap<>();
     private static final Map<String, SpriteSheet> spriteSheetPool = new HashMap<>();
+    private static final Map<String, Sound> soundPool = new HashMap<>();
 
 
     // - - - Functions - - -
@@ -79,5 +83,40 @@ public class AssetPool
             assert false;
         }
         return AssetPool.spriteSheetPool.get(file.getAbsolutePath());
+    }
+
+    public static Sound getSound(String FILE_PATH)
+    {
+        File file = new File(FILE_PATH);
+        if (soundPool.containsKey(file.getAbsolutePath()))
+        {
+            return soundPool.get(file.getAbsolutePath());
+        }
+        else
+        {
+            Logger.FORGE_LOG_ERROR("Sound file not added: " + FILE_PATH);
+            assert false;
+        }
+        return null;
+    }
+
+    public static Sound addSound(String FILE_PATH, boolean DOES_LOOP)
+    {
+        File file = new File(FILE_PATH);
+        if (soundPool.containsKey(file.getAbsolutePath()))
+        {
+            return soundPool.get(file.getAbsolutePath());
+        }
+        else
+        {
+            Sound sound = new Sound(file.getAbsolutePath(), DOES_LOOP);
+            AssetPool.soundPool.put(file.getAbsolutePath(), sound);
+            return sound;
+        }
+    }
+
+    public static Collection<Sound> getAllSounds()
+    {
+        return soundPool.values();
     }
 }

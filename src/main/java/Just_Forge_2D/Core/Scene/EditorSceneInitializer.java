@@ -10,12 +10,16 @@ import Just_Forge_2D.Core.ECS.GameObject;
 import Just_Forge_2D.Core.ECS.Components.EditorComponents.EditorCameraComponent;
 import Just_Forge_2D.Core.ECS.Components.EditorComponents.GizmoSystem.GizmoSystemComponent;
 import Just_Forge_2D.Editor.Prefabs;
+import Just_Forge_2D.Sound.Sound;
 import Just_Forge_2D.Utils.Configurations;
 import Just_Forge_2D.Utils.AssetPool;
 import imgui.ImGui;
 import imgui.ImVec2;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
+
+import java.io.File;
+import java.util.Collection;
 
 
 // - - - Class to run the editor
@@ -59,6 +63,22 @@ public class EditorSceneInitializer extends SceneInitializer
         AssetPool.addSpriteSheet("Assets/Textures/spritesheet.png", new SpriteSheet(AssetPool.getTexture("Assets/Textures/spritesheet.png"), 16, 16, 26, 0));
         AssetPool.addSpriteSheet("Assets/Textures/items.png", new SpriteSheet(AssetPool.getTexture("Assets/Textures/items.png"), 16, 16, 43, 0));
         AssetPool.addSpriteSheet("Assets/Textures/gizmos.png", new SpriteSheet(AssetPool.getTexture("Assets/Textures/gizmos.png"), 24, 48, 3, 0));
+
+        AssetPool.addSound("Assets/Sounds/main-theme-overworld.ogg", true);
+        AssetPool.addSound("Assets/Sounds/flagpole.ogg", false);
+        AssetPool.addSound("Assets/Sounds/break_block.ogg", false);
+        AssetPool.addSound("Assets/Sounds/bump.ogg", false);
+        AssetPool.addSound("Assets/Sounds/coin.ogg", false);
+        AssetPool.addSound("Assets/Sounds/gameover.ogg", false);
+        AssetPool.addSound("Assets/Sounds/jump-small.ogg", false);
+        AssetPool.addSound("Assets/Sounds/mario_die.ogg", false);
+        AssetPool.addSound("Assets/Sounds/pipe.ogg", false);
+        AssetPool.addSound("Assets/Sounds/powerup.ogg", false);
+        AssetPool.addSound("Assets/Sounds/powerup_appears.ogg", false);
+        AssetPool.addSound("Assets/Sounds/stage_clear.ogg", false);
+        AssetPool.addSound("Assets/Sounds/stomp.ogg", false);
+        AssetPool.addSound("Assets/Sounds/kick.ogg", false);
+        AssetPool.addSound("Assets/Sounds/invincible.ogg", false);
 
         for (GameObject g : SCENE.getGameObjects())
         {
@@ -141,10 +161,29 @@ public class EditorSceneInitializer extends SceneInitializer
                 ImGui.sameLine();
                 ImGui.endTabItem();
             }
+
+            if (ImGui.beginTabItem("Sounds"))
+            {
+                Collection<Sound> sounds = AssetPool.getAllSounds();
+                for (Sound sound : sounds)
+                {
+                    File tmp = new File(sound.getFIlePath());
+                    if (ImGui.button(tmp.getName()))
+                    {
+                        if (!sound.isPlaying())
+                        {
+                            sound.play();
+                        }
+                        else
+                        {
+                            sound.stop();
+                        }
+                    }
+                }
+                ImGui.endTabItem();
+            }
             ImGui.endTabBar();
         }
-
-
         ImGui.end();
     }
 }
