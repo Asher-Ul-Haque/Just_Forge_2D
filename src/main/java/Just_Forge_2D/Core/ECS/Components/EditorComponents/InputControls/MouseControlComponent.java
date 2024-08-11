@@ -1,7 +1,8 @@
-package Just_Forge_2D.Core.ECS.Components.EditorComponents;
+package Just_Forge_2D.Core.ECS.Components.EditorComponents.InputControls;
 
-import Just_Forge_2D.Core.Animations.StateMachine;
+import Just_Forge_2D.Core.AnimationSystem.StateMachine;
 import Just_Forge_2D.Core.ECS.Components.Component;
+import Just_Forge_2D.Core.ECS.Components.EditorComponents.NonPickableComponent;
 import Just_Forge_2D.Core.ECS.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.Core.ECS.GameObject;
 import Just_Forge_2D.Core.Input.Keyboard;
@@ -10,8 +11,6 @@ import Just_Forge_2D.Core.ForgeDynamo;
 import Just_Forge_2D.Utils.Configurations;
 import Just_Forge_2D.Utils.Logger;
 import org.joml.Vector4f;
-
-import java.sql.Statement;
 
 import static org.lwjgl.glfw.GLFW.*;
 

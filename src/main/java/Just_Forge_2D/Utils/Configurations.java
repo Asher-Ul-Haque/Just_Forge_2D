@@ -1,9 +1,6 @@
 package Just_Forge_2D.Utils;
 
 import org.jbox2d.common.Vec2;
-import org.jbox2d.dynamics.Body;
-import org.jbox2d.dynamics.BodyType;
-import org.joml.Vector2f;
 import org.joml.Vector3f;
 
 public class Configurations
@@ -26,4 +23,6 @@ public class Configurations
     public static final float DEFAULT_MASS = 0f;
     public static final boolean ROTATION_FIXED = false;
     public static final boolean CONTINUOUS_COLLISION = true;
+    public static final float DEFAULT_ROTATION = 0.0f;
+    public static final int DEFAULT_LAYER = 0;
 }

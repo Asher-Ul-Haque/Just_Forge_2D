@@ -1,4 +1,4 @@
-package Just_Forge_2D.Core.Animations;
+package Just_Forge_2D.Core.AnimationSystem;
 
 import Just_Forge_2D.Core.ECS.Components.Sprite.Sprite;
 import Just_Forge_2D.Utils.AssetPool;

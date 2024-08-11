@@ -1,19 +1,17 @@
-package Just_Forge_2D.Core.ECS.Components.EditorComponents;
+package Just_Forge_2D.Core.ECS.Components.EditorComponents.InputControls;
 
 import Just_Forge_2D.Core.ECS.Components.Component;
 import Just_Forge_2D.Core.ECS.GameObject;
 import Just_Forge_2D.Core.ForgeDynamo;
 import Just_Forge_2D.Core.Input.Keyboard;
 import Just_Forge_2D.Editor.PropertiesWindow;
-import Just_Forge_2D.Utils.Configurations;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.lwjgl.glfw.GLFW.*;
 
-public class KeyControls extends Component
+public class KeyboardControls extends Component
 {
     @Override
     public void editorUpdate(float DELTA_TIME)

@@ -150,7 +150,6 @@ public class AssetPool
 
     // - - - Sounds - - -
 
-
     public static void addSound(String NAME, String FILE_PATH, boolean DOES_LOOP)
     {
         File file = new File(FILE_PATH);

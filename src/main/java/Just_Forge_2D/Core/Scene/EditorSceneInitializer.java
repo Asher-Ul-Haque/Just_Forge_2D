@@ -1,12 +1,12 @@
 package Just_Forge_2D.Core.Scene;
 
-import Just_Forge_2D.Core.Animations.StateMachine;
+import Just_Forge_2D.Core.AnimationSystem.StateMachine;
 import Just_Forge_2D.Core.ECS.Components.EditorComponents.GridlinesComponent;
-import Just_Forge_2D.Core.ECS.Components.EditorComponents.KeyControls;
+import Just_Forge_2D.Core.ECS.Components.EditorComponents.InputControls.KeyboardControls;
 import Just_Forge_2D.Core.ECS.Components.Sprite.Sprite;
 import Just_Forge_2D.Core.ECS.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.Core.ECS.Components.Sprite.SpriteSheet;
-import Just_Forge_2D.Core.ECS.Components.EditorComponents.MouseControlComponent;
+import Just_Forge_2D.Core.ECS.Components.EditorComponents.InputControls.MouseControlComponent;
 import Just_Forge_2D.Core.ECS.GameObject;
 import Just_Forge_2D.Core.ECS.Components.EditorComponents.EditorCameraComponent;
 import Just_Forge_2D.Core.ECS.Components.EditorComponents.GizmoSystem.GizmoSystemComponent;
@@ -17,7 +17,6 @@ import Just_Forge_2D.Utils.AssetPool;
 import imgui.ImGui;
 import imgui.ImVec2;
 import org.joml.Vector2f;
-import org.joml.Vector4f;
 
 import java.io.File;
 import java.util.Collection;
@@ -45,11 +44,11 @@ public class EditorSceneInitializer extends SceneInitializer
     public void init(Scene SCENE)
     {
         sprites = AssetPool.getSpriteSheet("Decorations");
-        SpriteSheet gizmos = AssetPool.getSpriteSheet("Spritesheet");
+        SpriteSheet gizmos = AssetPool.getSpriteSheet("Gizmos");
 
         this.master = SCENE.createGameObject("Master");
         this.master.noSerialize();
-        master.addComponent(new KeyControls());
+        master.addComponent(new KeyboardControls());
         master.addComponent(new GridlinesComponent());
         master.addComponent(new MouseControlComponent());
         master.addComponent(new EditorCameraComponent(SCENE.getCamera()));

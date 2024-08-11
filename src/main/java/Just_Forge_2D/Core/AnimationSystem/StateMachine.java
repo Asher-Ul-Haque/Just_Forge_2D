@@ -1,10 +1,9 @@
-package Just_Forge_2D.Core.Animations;
+package Just_Forge_2D.Core.AnimationSystem;
 
 import Just_Forge_2D.Core.ECS.Components.Component;
 import Just_Forge_2D.Core.ECS.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.Utils.Logger;
 import imgui.ImGui;
-import imgui.type.ImBoolean;
 import imgui.type.ImString;
 
 import java.util.ArrayList;

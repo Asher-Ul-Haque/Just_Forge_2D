@@ -1,7 +1,7 @@
 package Just_Forge_2D.Editor;
 
-import Just_Forge_2D.Core.Animations.AnimationState;
-import Just_Forge_2D.Core.Animations.StateMachine;
+import Just_Forge_2D.Core.AnimationSystem.AnimationState;
+import Just_Forge_2D.Core.AnimationSystem.StateMachine;
 import Just_Forge_2D.Core.ECS.Components.Sprite.Sprite;
 import Just_Forge_2D.Core.ECS.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.Core.ECS.Components.Sprite.SpriteSheet;

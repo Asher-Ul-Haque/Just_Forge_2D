@@ -13,7 +13,7 @@ import org.joml.Vector4f;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
-// - - - Abstrasct class for components
+// - - - Abstract class for components
 public abstract class Component
 {
     // - - - Private variables
@@ -24,14 +24,14 @@ public abstract class Component
     // - - - Functions - - -
 
     // - - - use
-    public void update(float DELTA_TIME)
-    {
-    }
+    public void update(float DELTA_TIME) {}
     public void editorUpdate(float DELTA_TIME){}
     public void start(){}
     public void destroy(){}
 
-    // - - - make the IMGui PART
+
+    // - - - Editor Part - - -
+
     public void editorGUI()
     {
         try
@@ -65,7 +65,6 @@ public abstract class Component
                 else if (type == boolean.class)
                 {
                     boolean val = (boolean)value;
-                    boolean[] imBool = {val};
                     if (ImGui.checkbox(name + ": ", val))
                     {
                         val = !val;
@@ -87,7 +86,8 @@ public abstract class Component
                     Vector4f val = (Vector4f) value;
                     ForgeIsGUI.colorPicker4(name, val);
                 }
-                else if (type.isEnum()) {
+                else if (type.isEnum())
+                {
                     String[] enumValues = getEnumValues((Class<Enum>) type);
                     String enumType = ((Enum) value).name();
                     ImInt index = new ImInt(indexOf(enumType, enumValues));
@@ -95,7 +95,6 @@ public abstract class Component
                         field.set(this, type.getEnumConstants()[index.get()]);
                     }
                 }
-
 
                 if (isPrivate)
                 {
@@ -105,10 +104,37 @@ public abstract class Component
         }
         catch (IllegalAccessException e)
         {
-            Logger.FORGE_LOG_FATAL("Error loading GUI code: illegal access exception for component " + this.toString());
+            Logger.FORGE_LOG_FATAL("Error loading GUI code: illegal access exception for component " + this);
             Logger.FORGE_LOG_ERROR(e.getMessage());
         }
     }
+
+    public void editorUpdate(SpriteComponent SPRITE) {}
+
+    private <T extends Enum<T>> String[] getEnumValues(Class<T> enumType) {
+        String[] enumValues = new String[enumType.getEnumConstants().length];
+        int i = 0;
+        for (T enumIntegerValue : enumType.getEnumConstants()) {
+            enumValues[i] = enumIntegerValue.name();
+            i++;
+        }
+        return enumValues;
+    }
+
+    private int indexOf(String str, String[] arr)
+    {
+        for (int i=0; i < arr.length; i++)
+        {
+            if (str.equals(arr[i]))
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+
+    // - - - Unique initialization - - -
 
     public void generateID()
     {
@@ -127,28 +153,4 @@ public abstract class Component
     {
         ID_COUNTER = MAX_ID;
     }
-
-    public void editorUpdate(SpriteComponent SPRITE)
-    {}
-
-    private <T extends Enum<T>> String[] getEnumValues(Class<T> enumType) {
-        String[] enumValues = new String[enumType.getEnumConstants().length];
-        int i = 0;
-        for (T enumIntegerValue : enumType.getEnumConstants()) {
-            enumValues[i] = enumIntegerValue.name();
-            i++;
-        }
-        return enumValues;
-    }
-
-    private int indexOf(String str, String[] arr) {
-        for (int i=0; i < arr.length; i++) {
-            if (str.equals(arr[i])) {
-                return i;
-            }
-        }
-
-        return -1;
-    }
-
 }
