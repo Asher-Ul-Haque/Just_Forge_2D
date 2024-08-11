@@ -44,8 +44,8 @@ public class EditorSceneInitializer extends SceneInitializer
     @Override
     public void init(Scene SCENE)
     {
-        sprites = AssetPool.getSpriteSheet("Assets/Textures/decorationsAndBlocks.png");
-        SpriteSheet gizmos = AssetPool.getSpriteSheet("Assets/Textures/gizmos.png");
+        sprites = AssetPool.getSpriteSheet("Decorations");
+        SpriteSheet gizmos = AssetPool.getSpriteSheet("Spritesheet");
 
         this.master = SCENE.createGameObject("Master");
         this.master.noSerialize();
@@ -61,10 +61,10 @@ public class EditorSceneInitializer extends SceneInitializer
     public void loadResources(Scene SCENE)
     {
         AssetPool.getShader("Default");
-        AssetPool.addSpriteSheet("Assets/Textures/decorationsAndBlocks.png", new SpriteSheet(AssetPool.getTexture("Assets/Textures/decorationsAndBlocks.png"), 16, 16, 81, 0));
-        AssetPool.addSpriteSheet("Assets/Textures/spritesheet.png", new SpriteSheet(AssetPool.getTexture("Assets/Textures/spritesheet.png"), 16, 16, 26, 0));
-        AssetPool.addSpriteSheet("Assets/Textures/items.png", new SpriteSheet(AssetPool.getTexture("Assets/Textures/items.png"), 16, 16, 43, 0));
-        AssetPool.addSpriteSheet("Assets/Textures/gizmos.png", new SpriteSheet(AssetPool.getTexture("Assets/Textures/gizmos.png"), 24, 48, 3, 0));
+        AssetPool.addSpriteSheet("Decorations","Assets/Textures/decorationsAndBlocks.png", new SpriteSheet(AssetPool.getTexture("Assets/Textures/decorationsAndBlocks.png"), 16, 16, 81, 0));
+        AssetPool.addSpriteSheet("Spritesheet","Assets/Textures/spritesheet.png", new SpriteSheet(AssetPool.getTexture("Assets/Textures/spritesheet.png"), 16, 16, 26, 0));
+        AssetPool.addSpriteSheet("Items","Assets/Textures/items.png", new SpriteSheet(AssetPool.getTexture("Assets/Textures/items.png"), 16, 16, 43, 0));
+        AssetPool.addSpriteSheet("Gizmos","Assets/Textures/gizmos.png", new SpriteSheet(AssetPool.getTexture("Assets/Textures/gizmos.png"), 24, 48, 3, 0));
 
         AssetPool.addSound("Assets/Sounds/main-theme-overworld.ogg", true);
         AssetPool.addSound("Assets/Sounds/flagpole.ogg", false);
@@ -148,7 +148,7 @@ public class EditorSceneInitializer extends SceneInitializer
             }
             if (ImGui.beginTabItem("Prefabs"))
             {
-                SpriteSheet playerSprites = AssetPool.getSpriteSheet("Assets/Textures/spritesheet.png");
+                SpriteSheet playerSprites = AssetPool.getSpriteSheet("Spritesheet");
                 Sprite sprite = playerSprites.getSprite(0);
                 float spriteWidth = sprite.getWidth() * 4;
                 float spriteHeight = sprite.getHeight() * 4;

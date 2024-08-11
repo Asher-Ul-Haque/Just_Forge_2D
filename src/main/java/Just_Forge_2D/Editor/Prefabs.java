@@ -31,7 +31,7 @@ public class Prefabs
 
     public static GameObject generateMario()
     {
-        SpriteSheet playerSprites = AssetPool.getSpriteSheet("Assets/Textures/spritesheet.png");
+        SpriteSheet playerSprites = AssetPool.getSpriteSheet("Spritesheet.png");
         GameObject mario = generateSpriteObject(playerSprites.getSprite(0), 0.25f, 0.25f);
 
         AnimationState run = new AnimationState();

@@ -47,6 +47,7 @@ public class AssetPool
         String path = nameToFile.get(NAME);
         if (!nameToFile.containsKey(NAME) || !AssetPool.shaderPool.containsKey(path))
         {
+
             Logger.FORGE_LOG_ERROR("Shader : " + NAME + " does not exist");
             return null;
         }
@@ -118,28 +119,29 @@ public class AssetPool
 
     // - - - sprite sheets - - -
 
-    public static void addSpriteSheet(String FILE_PATH, SpriteSheet SPRITE_SHEET)
+    public static void addSpriteSheet(String NAME, String FILE_PATH, SpriteSheet SPRITE_SHEET)
     {
         File file = new File(FILE_PATH);
         if (!AssetPool.spriteSheetPool.containsKey(file.getAbsolutePath()))
         {
+            nameToFile.put(NAME, file.getAbsolutePath());
             AssetPool.spriteSheetPool.put(file.getAbsolutePath(), SPRITE_SHEET);
         }
         else
         {
-            Logger.FORGE_LOG_WARNING("Sprite Sheet: " + FILE_PATH + " is already present");
+            Logger.FORGE_LOG_WARNING("Sprite Sheet at: " + FILE_PATH + " already exists in Asset Pool");
         }
     }
 
-    public static SpriteSheet getSpriteSheet(String FILE_PATH)
+    public static SpriteSheet getSpriteSheet(String NAME)
     {
-        File file = new File(FILE_PATH);
-        if (!AssetPool.spriteSheetPool.containsKey(file.getAbsolutePath()))
+        String path = nameToFile.get(NAME);
+        if (!nameToFile.containsKey(NAME) || !AssetPool.spriteSheetPool.containsKey(path))
         {
-            Logger.FORGE_LOG_ERROR("Tried to access a sprite sheet : " + FILE_PATH + " before adding to the resource pool");
+            Logger.FORGE_LOG_ERROR("Spritesheet : " + NAME + " does not exist");
             assert false;
         }
-        return AssetPool.spriteSheetPool.get(file.getAbsolutePath());
+        return AssetPool.spriteSheetPool.get(path);
     }
 
 
