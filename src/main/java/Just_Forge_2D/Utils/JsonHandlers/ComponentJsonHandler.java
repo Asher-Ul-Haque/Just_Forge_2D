@@ -6,7 +6,7 @@ import com.google.gson.*;
 
 import java.lang.reflect.Type;
 
-public class justForgeComponentJsonHandler implements JsonSerializer<Component>, JsonDeserializer<Component>
+public class ComponentJsonHandler implements JsonSerializer<Component>, JsonDeserializer<Component>
 {
     @Override
     public JsonElement serialize(Component COMPONENT, Type type, JsonSerializationContext jsonSerializationContext)

@@ -27,7 +27,7 @@ public class DebugPencil
 
     // - - - rendering info
     private static final float[] vertexArray = new float[MAX_LINES * 6 * 2];
-    private static final Shader shader = AssetPool.getShader("Assets/Shaders/debug.glsl");
+    private static final Shader shader = AssetPool.getShader("Debug");
     private static int vaoID;
     private static int vboID;
 

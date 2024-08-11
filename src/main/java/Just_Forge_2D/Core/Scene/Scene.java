@@ -6,8 +6,8 @@ import Just_Forge_2D.Core.ECS.GameObject;
 import Just_Forge_2D.Core.Camera;
 import Just_Forge_2D.Physics.PhysicsSystem;
 import Just_Forge_2D.Renderer.Renderer;
-import Just_Forge_2D.Utils.JsonHandlers.justForgeComponentJsonHandler;
-import Just_Forge_2D.Utils.JsonHandlers.justForgeGameObjectJsonHandler;
+import Just_Forge_2D.Utils.JsonHandlers.ComponentJsonHandler;
+import Just_Forge_2D.Utils.JsonHandlers.GameObjectJsonHandler;
 import Just_Forge_2D.Utils.Logger;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -156,8 +156,8 @@ public class Scene
     {
         Gson gson = new GsonBuilder()
                 .setPrettyPrinting()
-                .registerTypeAdapter(Component.class, new justForgeComponentJsonHandler())
-                .registerTypeAdapter(GameObject.class, new justForgeGameObjectJsonHandler())
+                .registerTypeAdapter(Component.class, new ComponentJsonHandler())
+                .registerTypeAdapter(GameObject.class, new GameObjectJsonHandler())
                 .create();
         String inFile = "";
         try
@@ -216,8 +216,8 @@ public class Scene
     {
         Gson gson = new GsonBuilder()
                 .setPrettyPrinting()
-                .registerTypeAdapter(Component.class, new justForgeComponentJsonHandler())
-                .registerTypeAdapter(GameObject.class, new justForgeGameObjectJsonHandler())
+                .registerTypeAdapter(Component.class, new ComponentJsonHandler())
+                .registerTypeAdapter(GameObject.class, new GameObjectJsonHandler())
                 .create();
         Logger.FORGE_LOG_INFO("Saving scene...: " + this);
 

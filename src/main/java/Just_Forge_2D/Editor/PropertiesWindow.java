@@ -10,6 +10,10 @@ import Just_Forge_2D.Core.Scene.Scene;
 import Just_Forge_2D.Core.ForgeDynamo;
 import Just_Forge_2D.Utils.Logger;
 import imgui.ImGui;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_LEFT;
 
 
@@ -17,6 +21,7 @@ import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_LEFT;
 public class PropertiesWindow
 {
     // - - - private variables
+    private List<GameObject> activeGameObjects;
     private GameObject activeGameObject = null;
     private final ObjectSelector selector;
     private float debounce = 0.2f;
@@ -27,6 +32,7 @@ public class PropertiesWindow
     // - - - Constructor
     public PropertiesWindow(ObjectSelector SELECTOR)
     {
+        this.activeGameObjects = new ArrayList<>();
         this.selector = SELECTOR;
     }
 
@@ -43,7 +49,7 @@ public class PropertiesWindow
             if (picked != null && picked.getCompoent(NonPickableComponent.class) == null)
             {
                 Logger.FORGE_LOG_DEBUG("Currently active object: " + picked.toString());
-                this.activeGameObject = picked;
+                setActiveGameObject(picked);
             }
             else if (picked == null && !Mouse.isDragging())
             {
@@ -57,14 +63,39 @@ public class PropertiesWindow
     // - - - getter
     public GameObject getActiveGameObject()
     {
-        return this.activeGameObject;
+        return activeGameObjects.size() == 1 ? this.activeGameObjects.get(0) : null;
+    }
+
+    public List<GameObject> getActiveGameObjects()
+    {
+        return this.activeGameObjects;
+    }
+
+    public void clearSelection()
+    {
+        this.activeGameObjects.clear();
+    }
+
+    public void setActiveGameObject(GameObject GO)
+    {
+        if (GO != null)
+        {
+            clearSelection();
+            this.activeGameObjects.add(GO);
+        }
+    }
+
+    public void addActiveGameObject(GameObject GO)
+    {
+        this.activeGameObjects.add(GO);
     }
 
     // - - - ignore this, this is for the editor
     public void editorGUI()
     {
-        if (activeGameObject != null)
+        if (activeGameObjects.size() == 1 && activeGameObjects.get(0) != null)
         {
+            activeGameObject = activeGameObjects.get(0);
             ImGui.begin("Properties");
 
             if (ImGui.beginPopupContextWindow("Component Adder"))
@@ -99,11 +130,6 @@ public class PropertiesWindow
             activeGameObject.editorGUI();
             ImGui.end();
         }
-    }
-
-    public void setActiveGameObject(GameObject GO)
-    {
-        this.activeGameObject = GO;
     }
 
 //    public

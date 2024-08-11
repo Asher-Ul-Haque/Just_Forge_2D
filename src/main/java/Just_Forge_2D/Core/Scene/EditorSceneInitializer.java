@@ -2,6 +2,7 @@ package Just_Forge_2D.Core.Scene;
 
 import Just_Forge_2D.Core.Animations.StateMachine;
 import Just_Forge_2D.Core.ECS.Components.EditorComponents.GridlinesComponent;
+import Just_Forge_2D.Core.ECS.Components.EditorComponents.KeyControls;
 import Just_Forge_2D.Core.ECS.Components.Sprite.Sprite;
 import Just_Forge_2D.Core.ECS.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.Core.ECS.Components.Sprite.SpriteSheet;
@@ -48,6 +49,7 @@ public class EditorSceneInitializer extends SceneInitializer
 
         this.master = SCENE.createGameObject("Master");
         this.master.noSerialize();
+        master.addComponent(new KeyControls());
         master.addComponent(new GridlinesComponent());
         master.addComponent(new MouseControlComponent());
         master.addComponent(new EditorCameraComponent(SCENE.getCamera()));
@@ -58,7 +60,7 @@ public class EditorSceneInitializer extends SceneInitializer
     @Override
     public void loadResources(Scene SCENE)
     {
-        AssetPool.getShader("Assets/Shaders/default.glsl");
+        AssetPool.getShader("Default");
         AssetPool.addSpriteSheet("Assets/Textures/decorationsAndBlocks.png", new SpriteSheet(AssetPool.getTexture("Assets/Textures/decorationsAndBlocks.png"), 16, 16, 81, 0));
         AssetPool.addSpriteSheet("Assets/Textures/spritesheet.png", new SpriteSheet(AssetPool.getTexture("Assets/Textures/spritesheet.png"), 16, 16, 26, 0));
         AssetPool.addSpriteSheet("Assets/Textures/items.png", new SpriteSheet(AssetPool.getTexture("Assets/Textures/items.png"), 16, 16, 43, 0));

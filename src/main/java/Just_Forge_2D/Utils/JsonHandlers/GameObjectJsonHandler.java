@@ -7,7 +7,7 @@ import com.google.gson.*;
 
 import java.lang.reflect.Type;
 
-public class justForgeGameObjectJsonHandler implements JsonDeserializer<GameObject>
+public class GameObjectJsonHandler implements JsonDeserializer<GameObject>
 {
     @Override
     public GameObject deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException
