@@ -66,21 +66,21 @@ public class EditorSceneInitializer extends SceneInitializer
         AssetPool.addSpriteSheet("Items","Assets/Textures/items.png", new SpriteSheet(AssetPool.getTexture("Assets/Textures/items.png"), 16, 16, 43, 0));
         AssetPool.addSpriteSheet("Gizmos","Assets/Textures/gizmos.png", new SpriteSheet(AssetPool.getTexture("Assets/Textures/gizmos.png"), 24, 48, 3, 0));
 
-        AssetPool.addSound("Assets/Sounds/main-theme-overworld.ogg", true);
-        AssetPool.addSound("Assets/Sounds/flagpole.ogg", false);
-        AssetPool.addSound("Assets/Sounds/break_block.ogg", false);
-        AssetPool.addSound("Assets/Sounds/bump.ogg", false);
-        AssetPool.addSound("Assets/Sounds/coin.ogg", false);
-        AssetPool.addSound("Assets/Sounds/gameover.ogg", false);
-        AssetPool.addSound("Assets/Sounds/jump-small.ogg", false);
-        AssetPool.addSound("Assets/Sounds/mario_die.ogg", false);
-        AssetPool.addSound("Assets/Sounds/pipe.ogg", false);
-        AssetPool.addSound("Assets/Sounds/powerup.ogg", false);
-        AssetPool.addSound("Assets/Sounds/powerup_appears.ogg", false);
-        AssetPool.addSound("Assets/Sounds/stage_clear.ogg", false);
-        AssetPool.addSound("Assets/Sounds/stomp.ogg", false);
-        AssetPool.addSound("Assets/Sounds/kick.ogg", false);
-        AssetPool.addSound("Assets/Sounds/invincible.ogg", false);
+        AssetPool.addSound("Main Theme","Assets/Sounds/main-theme-overworld.ogg", true);
+        AssetPool.addSound("Flagpole","Assets/Sounds/flagpole.ogg", false);
+        AssetPool.addSound("Break Block", "Assets/Sounds/break_block.ogg", false);
+        AssetPool.addSound("Bump","Assets/Sounds/bump.ogg", false);
+        AssetPool.addSound("Coin", "Assets/Sounds/coin.ogg", false);
+        AssetPool.addSound("GameOver","Assets/Sounds/gameover.ogg", false);
+        AssetPool.addSound("Jump Small", "Assets/Sounds/jump-small.ogg", false);
+        AssetPool.addSound("Mario Die", "Assets/Sounds/mario_die.ogg", false);
+        AssetPool.addSound("Pipe", "Assets/Sounds/pipe.ogg", false);
+        AssetPool.addSound("Powerup", "Assets/Sounds/powerup.ogg", false);
+        AssetPool.addSound("Powerup Appears", "Assets/Sounds/powerup_appears.ogg", false);
+        AssetPool.addSound("Stage Clear", "Assets/Sounds/stage_clear.ogg", false);
+        AssetPool.addSound("Stomp", "Assets/Sounds/stomp.ogg", false);
+        AssetPool.addSound("Kick", "Assets/Sounds/kick.ogg", false);
+        AssetPool.addSound("Invincible", "Assets/Sounds/invincible.ogg", false);
 
         for (GameObject g : SCENE.getGameObjects())
         {
