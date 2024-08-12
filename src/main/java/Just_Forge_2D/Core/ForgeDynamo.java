@@ -343,7 +343,6 @@ public class ForgeDynamo implements Observer
 
         if (dt >= 0.0d)
         {
-            DebugPencil.draw();
             Renderer.bindShader(defaultShader);
             if (isRuntimePlaying)
             {
@@ -354,6 +353,7 @@ public class ForgeDynamo implements Observer
                 currentScene.editorUpdate(dt);
             }
             currentScene.render(dt);
+            DebugPencil.draw();
         }
 
         // - - - Finish drawing to texture so that imgui should be rendered to the window
@@ -361,6 +361,9 @@ public class ForgeDynamo implements Observer
 
         // - - - Update the editor
         this.editorLayer.update((float) dt, currentScene);
+
+        // - - - finish mouse frame
+        Mouse.endFrame();
 
         // - - - Swap buffer for next frame
         glfwSwapBuffers(glfwWindow);

@@ -24,7 +24,6 @@ public class PropertiesWindow
 {
     // - - - private variables
     private final List<GameObject> activeGameObjects;
-    private List<Vector4f> activeGameObjectsColors;
     private GameObject activeGameObject = null;
     private final ObjectSelector selector;
 
@@ -36,7 +35,6 @@ public class PropertiesWindow
     public PropertiesWindow(ObjectSelector SELECTOR)
     {
         this.activeGameObjects = new ArrayList<>();
-        this.activeGameObjectsColors = new ArrayList<>();
         this.selector = SELECTOR;
     }
 
@@ -99,21 +97,7 @@ public class PropertiesWindow
 
     public void clearSelection()
     {
-        if (!activeGameObjectsColors.isEmpty())
-        {
-            int i = 0;
-            for (GameObject go : activeGameObjects)
-            {
-                SpriteComponent spr = go.getCompoent(SpriteComponent.class);
-                if (spr != null)
-                {
-                    spr.setColor(activeGameObjectsColors.get(i));
-                }
-                i++;
-            }
-        }
         this.activeGameObjects.clear();
-        this.activeGameObjectsColors.clear();
     }
 
     public void setActiveGameObject(GameObject GO)
@@ -127,16 +111,6 @@ public class PropertiesWindow
 
     public void addActiveGameObject(GameObject GO)
     {
-        SpriteComponent spr = GO.getCompoent(SpriteComponent.class);
-        if (spr != null)
-        {
-            this.activeGameObjectsColors.add(new Vector4f(spr.getColor()));
-            spr.setColor(new Vector4f(0.8f, 0.8f, 0.0f, 0.8f));
-        }
-        else
-        {
-            this.activeGameObjectsColors.add(new Vector4f());
-        }
         this.activeGameObjects.add(GO);
     }
 

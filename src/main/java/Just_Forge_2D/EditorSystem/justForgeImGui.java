@@ -165,6 +165,10 @@ public class justForgeImGui
             {
                 Mouse.mouseScrollCallback(w, xOffset, yOffset);
             }
+            else
+            {
+                Mouse.clear();
+            }
         });
         Logger.FORGE_LOG_INFO("editor gui input system callbacks assigned. Ready for immediate mode GUI");
 
@@ -234,7 +238,6 @@ public class justForgeImGui
         setupDockSpace();
         SCENE.editorGUI();
         gameViewport.gui();
-        propertiesWindow.update(DELTA_TIME, SCENE);
         propertiesWindow.editorGUI();
         menuBar.editorGui();
         sceneHierarchyWindow.editorGUI();
@@ -302,5 +305,10 @@ public class justForgeImGui
     public PropertiesWindow getPropertiesWindow()
     {
         return this.propertiesWindow;
+    }
+
+    public GameViewport getGameViewport()
+    {
+        return this.gameViewport;
     }
 }

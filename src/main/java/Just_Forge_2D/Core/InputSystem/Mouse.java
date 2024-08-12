@@ -7,6 +7,8 @@ import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 
+import java.util.Arrays;
+
 import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
 import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
 
@@ -73,6 +75,12 @@ public class Mouse
     // - - - Update Mouse Move
     public static void mousePositionCallback(long WINDOW, double X_POSITION, double Y_POSITION)
     {
+        // - - - check if we need to clear the buffer
+        if (!ForgeDynamo.getEditor().getGameViewport().getWantCaptureMouse())
+        {
+            clear();
+        }
+
         // - - - save off mouse state
         get().xPrevious = get().xPosition;
         get().yPrevious = get().yPosition;
@@ -273,5 +281,62 @@ public class Mouse
     {
         get().gameViewportPos.set(GAME_VIEWPORT_POS);
         get().grameViewportSize.set(GAME_VIEWPORT_SIZE);
+    }
+
+
+    // - - - Conversion - - -
+
+    // - - - world to screen
+    public static Vector2f worldToScreen(Vector2f WORLD_COORDS)
+    {
+        Camera camera = ForgeDynamo.getCurrentScene().getCamera();
+        Vector4f ndcSpacePos = new Vector4f(WORLD_COORDS.x, WORLD_COORDS.y, 0, 1);
+        Matrix4f view = new Matrix4f(camera.getViewMatrix());
+        Matrix4f projection = new Matrix4f(camera.getProjectionMatrix());
+        ndcSpacePos.mul(projection.mul(view));
+        Vector2f windowSpace = new Vector2f(ndcSpacePos.x, ndcSpacePos.y).mul(1.0f / ndcSpacePos.w);
+        windowSpace.add(new Vector2f(1.0f, 1.0f)).mul(0.5f);
+        windowSpace.mul(new Vector2f(ForgeDynamo.getWidth(), ForgeDynamo.getHeight()));
+
+        return windowSpace;
+    }
+
+    // - - - screen to world
+    public static Vector2f screenToWorld(Vector2f SCREEN_COORDS)
+    {
+        Vector2f normalizedScreenCords = new Vector2f(
+                SCREEN_COORDS.x / ForgeDynamo.getWidth(),
+                SCREEN_COORDS.y / ForgeDynamo.getHeight()
+        );
+        normalizedScreenCords.mul(2.0f).sub(new Vector2f(1.0f, 1.0f));
+        Camera camera = ForgeDynamo.getCurrentScene().getCamera();
+        Vector4f tmp = new Vector4f(normalizedScreenCords.x, normalizedScreenCords.y, 0, 1);
+        Matrix4f inverseView = new Matrix4f(camera.getInverseViewMatrix());
+        Matrix4f inverseProjection = new Matrix4f(camera.getInverseProjectionMatrix());
+        tmp.mul(inverseView.mul(inverseProjection));
+
+        return new Vector2f(tmp.x, tmp.y);
+    }
+
+
+    // - - - clear
+    public static void clear()
+    {
+        get().xScroll = 0.0f;
+        get().yScroll = 0.0f;
+        get().xPosition = 0.0f;
+        get().yPosition = 0.0f;
+        get().xPrevious = 0.0f;
+        get().yPrevious = 0.0f;
+        get().xWorldPosition = 0.0f;
+        get().yWorldPosition = 0.0f;
+        get().xWorldPrevious = 0.0f;
+        get().yWorldPrevious = 0.0f;
+        get().mouseButtonDownCount = 0;
+        get().isDragging = false;
+        for (boolean b : get().isMouseButtonPressed)
+        {
+            b = false;
+        }
     }
 }

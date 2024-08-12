@@ -49,7 +49,7 @@ public class MouseControlComponent extends Component
         }
         this.holdingObject = GO;
         this.holdingObject.getCompoent(SpriteComponent.class).setColor(new Vector4f(0.8f, 0.8f, 0.8f, 0.5f));
-        this.holdingObject.addComponent(new NonPickableComponent());
+       // this.holdingObject.addComponent(new NonPickableComponent());
         ForgeDynamo.getCurrentScene().addGameObject(GO);
         Logger.FORGE_LOG_DEBUG("Picked up object: "+ this.holdingObject);
     }
@@ -63,7 +63,7 @@ public class MouseControlComponent extends Component
             newObj.getCompoent(StateMachine.class).refreshTextures();
         }
         newObj.getCompoent(SpriteComponent.class).setColor(new Vector4f(1, 1, 1, 1));
-        newObj.removeComponent(NonPickableComponent.class);
+       // newObj.removeComponent(NonPickableComponent.class);
         ForgeDynamo.getCurrentScene().addGameObject(newObj);
     }
 

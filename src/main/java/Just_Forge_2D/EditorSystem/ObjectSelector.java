@@ -1,6 +1,8 @@
 package Just_Forge_2D.EditorSystem;
 
 import Just_Forge_2D.Utils.Logger;
+import org.joml.Vector2i;
+
 import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
 import static org.lwjgl.opengl.GL11.glGetError;
 import static org.lwjgl.opengl.GL30.*;
@@ -84,6 +86,7 @@ public class ObjectSelector
 
 
     // - - - Reading - - -
+
     public int readPixel(int X, int Y)
     {
         glBindFramebuffer(GL_READ_FRAMEBUFFER, fbo);
@@ -93,5 +96,21 @@ public class ObjectSelector
         glReadPixels(X, Y, 1, 1, GL_RGB, GL_FLOAT, pixels);
 
         return (int)(pixels[0]) - 1;
+    }
+
+    public float[] readPixels(Vector2i START, Vector2i END)
+    {
+        glBindFramebuffer(GL_READ_FRAMEBUFFER, fbo);
+        glReadBuffer(GL_COLOR_ATTACHMENT0);
+
+        Vector2i size = new Vector2i(END).sub(START).absolute();
+        float[] pixels = new float[3 * size.x * size.y];
+        glReadPixels(START.x, START.y, size.x, size.y, GL_RGB, GL_FLOAT, pixels);
+        for (int i = 0; i < pixels.length; ++i)
+        {
+            pixels[i] -= 1;
+        }
+
+        return pixels;
     }
 }
