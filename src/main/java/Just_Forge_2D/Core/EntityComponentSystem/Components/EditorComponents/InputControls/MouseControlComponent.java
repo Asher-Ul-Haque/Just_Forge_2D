@@ -15,6 +15,7 @@ import Just_Forge_2D.Utils.Configurations;
 import Just_Forge_2D.Utils.Logger;
 import org.joml.Vector2f;
 import org.joml.Vector2i;
+import org.joml.Vector3f;
 import org.joml.Vector4f;
 
 import java.util.HashSet;
@@ -27,7 +28,7 @@ public class MouseControlComponent extends Component
 {
     // - - - private variable for the thing being held
     GameObject holdingObject = null;
-    private final float debounceTime = 0.05f;
+    private final float debounceTime = 0.5f;
     private float debounce = debounceTime;
 
     // - - - private variables for box selection
@@ -105,23 +106,24 @@ public class MouseControlComponent extends Component
                 ForgeDynamo.getEditor().getPropertiesWindow().clearSelection();
             }
 
-            this.debounce = 0.2f;
+            this.debounce = 0.5f;
         }
-        else if (Mouse.isDragging() && Mouse.isMouseButtonDown(GLFW_MOUSE_BUTTON_LEFT))
+        else if (Mouse.isDragging() && Mouse.isMouseButtonDown(GLFW_MOUSE_BUTTON_LEFT) && ForgeDynamo.getEditor().getPropertiesWindow().getActiveGameObject() == null && ForgeDynamo.getEditor().getPropertiesWindow().getActiveGameObjects().isEmpty())
         {
             if (!boxSelect)
             {
                 ForgeDynamo.getEditor().getPropertiesWindow().clearSelection();
-                boxSelectStart = new Vector2f(Mouse.getScreenX(), Mouse.getScreenY());
+                boxSelectStart = new Vector2f(Mouse.getWorldX(), Mouse.getWorldY());
+                Logger.FORGE_LOG_TRACE("Current Screen X and Y: " + Mouse.getScreenX() + " " + Mouse.getScreenY());
                 boxSelect = true;
             }
-            boxSelectEnd = new Vector2f(Mouse.getScreenX(), Mouse.getScreenY());
-            Vector2f boxSelectStartWorld = Mouse.screenToWorld(boxSelectStart);
-            Vector2f boxSelectEndWorld = Mouse.screenToWorld(boxSelectEnd);
-            Vector2f halfSize = (new Vector2f(boxSelectEndWorld).sub(boxSelectStartWorld)).mul(0.5f);
+            boxSelectEnd = new Vector2f(Mouse.getWorldX(), Mouse.getWorldY());
+            Vector2f halfSize = (new Vector2f(boxSelectEnd).sub(boxSelectStart)).mul(0.5f);
             DebugPencil.addBox(
-                    (new Vector2f(boxSelectStartWorld)).add(halfSize),
-                    new Vector2f(halfSize).mul(2.0f));
+                    (new Vector2f(boxSelectStart)).add(halfSize),
+                    new Vector2f(halfSize).mul(2.0f),
+                    new Vector3f(1, 1, 0));
+
         }
         else if (boxSelect)
         {

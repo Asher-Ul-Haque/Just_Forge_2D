@@ -65,12 +65,11 @@ public class GameObject
 
     public <T extends Component> void removeComponent(Class<T> COMPONENT_CLASS)
     {
-        //Logger.FORGE_LOG_TRACE("Removed Component at index " + i + ": " + components.get(i).toString());
-        Logger.FORGE_LOG_TRACE("Nice");
         for (int i = 0; i < components.size(); ++i)
         {
             if (COMPONENT_CLASS.isAssignableFrom(components.get(i).getClass()))
             {
+                Logger.FORGE_LOG_TRACE("Removed Component at index " + i + ": " + components.get(i).toString());
                 components.remove(i);
                 return;
             }
