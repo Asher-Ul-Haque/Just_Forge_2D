@@ -1,7 +1,7 @@
 package Just_Forge_2D.Renderer;
 
-import Just_Forge_2D.Core.ECS.Components.Sprite.SpriteComponent;
-import Just_Forge_2D.Core.ECS.GameObject;
+import Just_Forge_2D.Core.EntityComponentSystem.Components.Sprite.SpriteComponent;
+import Just_Forge_2D.Core.EntityComponentSystem.GameObject;
 import Just_Forge_2D.Core.ForgeDynamo;
 import Just_Forge_2D.Utils.Logger;
 import org.jetbrains.annotations.NotNull;

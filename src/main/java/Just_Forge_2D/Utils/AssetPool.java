@@ -1,11 +1,10 @@
 package Just_Forge_2D.Utils;
 
-import Just_Forge_2D.Core.ECS.Components.Sprite.SpriteSheet;
+import Just_Forge_2D.Core.EntityComponentSystem.Components.Sprite.SpriteSheet;
 import Just_Forge_2D.Renderer.Shader;
 import Just_Forge_2D.Renderer.Texture;
 import Just_Forge_2D.Sound.Sound;
 
-import javax.print.attribute.standard.MediaSize;
 import java.io.File;
 import java.util.Collection;
 import java.util.HashMap;

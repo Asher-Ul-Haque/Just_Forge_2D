@@ -1,10 +1,10 @@
 package Just_Forge_2D.Physics;
 
-import Just_Forge_2D.Core.ECS.Components.PhysicsComponents.Collider.BoxColliderComponent;
-import Just_Forge_2D.Core.ECS.Components.PhysicsComponents.Collider.CircleColliderComponent;
-import Just_Forge_2D.Core.ECS.Components.PhysicsComponents.RigidBodyComponent;
-import Just_Forge_2D.Core.ECS.Components.TransformComponent;
-import Just_Forge_2D.Core.ECS.GameObject;
+import Just_Forge_2D.Core.EntityComponentSystem.Components.PhysicsComponents.Collider.BoxColliderComponent;
+import Just_Forge_2D.Core.EntityComponentSystem.Components.PhysicsComponents.Collider.CircleColliderComponent;
+import Just_Forge_2D.Core.EntityComponentSystem.Components.PhysicsComponents.RigidBodyComponent;
+import Just_Forge_2D.Core.EntityComponentSystem.Components.TransformComponent;
+import Just_Forge_2D.Core.EntityComponentSystem.GameObject;
 import Just_Forge_2D.Utils.Configurations;
 import Just_Forge_2D.Utils.Logger;
 import org.jbox2d.collision.shapes.PolygonShape;

@@ -4,17 +4,17 @@ package Just_Forge_2D.Core;
 
 // - - - Internal
 
-import Just_Forge_2D.Core.ECS.GameObject;
-import Just_Forge_2D.Core.EventSystem.EventSystem;
+import Just_Forge_2D.Core.EntityComponentSystem.GameObject;
+import Just_Forge_2D.Core.EventSystem.EventManager;
 import Just_Forge_2D.Core.EventSystem.Events.Event;
 import Just_Forge_2D.Core.EventSystem.Observer;
-import Just_Forge_2D.Core.Input.Keyboard;
-import Just_Forge_2D.Core.Input.Mouse;
-import Just_Forge_2D.Core.Scene.EditorSceneInitializer;
-import Just_Forge_2D.Core.Scene.Scene;
-import Just_Forge_2D.Core.Scene.SceneInitializer;
-import Just_Forge_2D.Editor.ObjectSelector;
-import Just_Forge_2D.Editor.justForgeImGui;
+import Just_Forge_2D.Core.InputSystem.Keyboard;
+import Just_Forge_2D.Core.InputSystem.Mouse;
+import Just_Forge_2D.Core.SceneSystem.EditorSceneInitializer;
+import Just_Forge_2D.Core.SceneSystem.SceneManager;
+import Just_Forge_2D.Core.SceneSystem.SceneInitializer;
+import Just_Forge_2D.EditorSystem.ObjectSelector;
+import Just_Forge_2D.EditorSystem.justForgeImGui;
 import Just_Forge_2D.Renderer.DebugPencil;
 import Just_Forge_2D.Renderer.Framebuffer;
 import Just_Forge_2D.Renderer.Renderer;
@@ -73,7 +73,7 @@ public class ForgeDynamo implements Observer
     private boolean isRuntimePlaying = false;
 
     // - - - Systems
-    private static Scene currentScene;
+    private static SceneManager currentScene;
 
     // - - - Singleton
     private static ForgeDynamo forgeDynamo = null;
@@ -109,7 +109,7 @@ public class ForgeDynamo implements Observer
         this.b = 1.0f;
         this.a = 1.0f;
 
-        EventSystem.addObserver(this);
+        EventManager.addObserver(this);
 
         Logger.FORGE_LOG_INFO("Started Just Forge 2D");
     }
@@ -124,7 +124,7 @@ public class ForgeDynamo implements Observer
         }
         getEditor().getPropertiesWindow().setActiveGameObject(null);
 
-        currentScene = new Scene(INITIALIZER);
+        currentScene = new SceneManager(INITIALIZER);
         currentScene.load();
         currentScene.init();
         currentScene.start();
@@ -378,7 +378,7 @@ public class ForgeDynamo implements Observer
     // - - - | Getters Setters and Decoration | - - -
 
     // - - - scene
-    public static Scene getCurrentScene()
+    public static SceneManager getCurrentScene()
     {
         return get().currentScene;
     }

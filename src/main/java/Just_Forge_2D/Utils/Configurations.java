@@ -25,4 +25,10 @@ public class Configurations
     public static final boolean CONTINUOUS_COLLISION = true;
     public static final float DEFAULT_ROTATION = 0.0f;
     public static final int DEFAULT_LAYER = 0;
+    public static final float DEFAULT_EDITOR_CAMERA_DRAG_DEBOUNCE = 0.032f;
+    public static final float DEFAULT_EDITOR_CAMERA_LERP_TIME = 0.0f;
+    public static final float DEFAULT_EDITOR_CAMERA_DRAG_SENSITIVTY = 30.0f;
+    public static final float DEFAULT_EDITOR_CAMERA_SCROLL_SENSITIVITY = 0.1f;
+    public static final float DEFAULT_CAMERA_ZOOM = 1f;
+    public static final String DEFAULT_SAVE_FILE = "Configurations/Levels/level.justForgeFile";
 }
