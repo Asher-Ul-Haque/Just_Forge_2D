@@ -69,7 +69,7 @@ public class GameObject
         Logger.FORGE_LOG_TRACE("Nice");
         for (int i = 0; i < components.size(); ++i)
         {
-            if (COMPONENT_CLASS.isAssignableFrom(components.getClass()))
+            if (COMPONENT_CLASS.isAssignableFrom(components.get(i).getClass()))
             {
                 components.remove(i);
                 return;
