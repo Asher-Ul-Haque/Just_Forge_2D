@@ -60,11 +60,14 @@ public class EditorSceneInitializer extends SceneInitializer
     public void loadResources(SceneManager SCENE)
     {
         AssetPool.getShader("Default");
-        AssetPool.addSpriteSheet("Big Spritesheet", "Assets/Textures/bigSpritesheet.png", new SpriteSheet(AssetPool.getTexture("Assets/Textures/bigSpritesheet.png"), 16, 16, 16, 0));
-        AssetPool.addSpriteSheet("Decorations","Assets/Textures/decorationsAndBlocks.png", new SpriteSheet(AssetPool.getTexture("Assets/Textures/decorationsAndBlocks.png"), 16, 16, 81, 0));
-        AssetPool.addSpriteSheet("Spritesheet","Assets/Textures/spritesheet.png", new SpriteSheet(AssetPool.getTexture("Assets/Textures/spritesheet.png"), 16, 16, 26, 0));
-        AssetPool.addSpriteSheet("Items","Assets/Textures/items.png", new SpriteSheet(AssetPool.getTexture("Assets/Textures/items.png"), 16, 16, 43, 0));
-        AssetPool.addSpriteSheet("Gizmos","Assets/Textures/gizmos.png", new SpriteSheet(AssetPool.getTexture("Assets/Textures/gizmos.png"), 24, 48, 3, 0));
+
+        AssetPool.addTexture("Big Spritesheet", "Assets/Textures/bigSpritesheet.png");
+
+        AssetPool.addSpriteSheet("Big Spritesheet", new SpriteSheet(AssetPool.getTexture("Assets/Textures/bigSpritesheet.png"), 16, 16, 16, 0));
+        AssetPool.addSpriteSheet("Decorations",new SpriteSheet(AssetPool.getTexture("Assets/Textures/decorationsAndBlocks.png"), 16, 16, 81, 0));
+        AssetPool.addSpriteSheet("Spritesheet",new SpriteSheet(AssetPool.getTexture("Assets/Textures/spritesheet.png"), 16, 16, 26, 0));
+        AssetPool.addSpriteSheet("Items", new SpriteSheet(AssetPool.getTexture("Assets/Textures/items.png"), 16, 16, 43, 0));
+        AssetPool.addSpriteSheet("Gizmos", new SpriteSheet(AssetPool.getTexture("Assets/Textures/gizmos.png"), 24, 48, 3, 0));
 
         AssetPool.addSound("Main Theme","Assets/Sounds/main-theme-overworld.ogg", true);
         AssetPool.addSound("Flagpole","Assets/Sounds/flagpole.ogg", false);

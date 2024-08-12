@@ -120,18 +120,18 @@ public class AssetPool
 
     // - - - sprite sheets - - -
 
-    public static void addSpriteSheet(String NAME, String FILE_PATH, SpriteSheet SPRITE_SHEET)
+    public static void addSpriteSheet(String NAME, SpriteSheet SPRITE_SHEET)
     {
-        File file = new File(FILE_PATH);
+        File file = new File(SPRITE_SHEET.getTexture().getFilepath());
         if (!AssetPool.spriteSheetPool.containsKey(file.getAbsolutePath()))
         {
-            Logger.FORGE_LOG_DEBUG("Spritesheet with path: " + FILE_PATH + " Hashed in Asset Pool and loaded");
+            Logger.FORGE_LOG_DEBUG("Spritesheet with path: " + file.getAbsolutePath() + " Hashed in Asset Pool and loaded");
             nameToFile.put(NAME, file.getAbsolutePath());
             AssetPool.spriteSheetPool.put(file.getAbsolutePath(), SPRITE_SHEET);
         }
         else
         {
-            Logger.FORGE_LOG_WARNING("Sprite Sheet at: " + FILE_PATH + " already exists in Asset Pool");
+            Logger.FORGE_LOG_WARNING("Sprite Sheet at: " + file.getAbsolutePath() + " already exists in Asset Pool");
         }
     }
 

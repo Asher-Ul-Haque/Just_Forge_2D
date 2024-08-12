@@ -10,7 +10,7 @@ import java.util.List;
 public class SpriteSheet
 {
     // - - - private variables
-    private final Texture spriteSheet;
+    private final Texture texture;
     private final List<Sprite> sprites;
 
 
@@ -21,7 +21,7 @@ public class SpriteSheet
     public SpriteSheet(Texture SPRITE_SHEET, int SPRITE_WIDTH, int SPRITE_HEIGHT, int SPRITE_COUNT, int SPACING)
     {
         this.sprites = new ArrayList<>();
-        this.spriteSheet = SPRITE_SHEET;
+        this.texture = SPRITE_SHEET;
 
         int currentX = 0;
         int currentY = SPRITE_SHEET.getHeight() - SPRITE_HEIGHT; // bottom left corner of top left sprite
@@ -42,7 +42,7 @@ public class SpriteSheet
             };
 
             Sprite sprite = new Sprite();
-            sprite.setTexture(this.spriteSheet);
+            sprite.setTexture(this.texture);
             sprite.setTextureCoordinates(textureCoords);
             sprite.setWidth(SPRITE_WIDTH);
             sprite.setHeight(SPRITE_HEIGHT);
@@ -57,10 +57,16 @@ public class SpriteSheet
         }
     }
 
-    // - - - getter to get a sprite by the index
+    // - - - getter for sprites
+
     public Sprite getSprite(int INDEX)
     {
         return this.sprites.get(INDEX);
+    }
+
+    public List<Sprite> getSprites()
+    {
+        return this.sprites;
     }
 
     // - - - getter to get size
@@ -69,9 +75,12 @@ public class SpriteSheet
         return this.sprites.size();
     }
 
-    public List<Sprite> getSprites()
+    // - - - getter for texture
+    public Texture getTexture()
     {
-        return this.sprites;
+        return this.texture;
     }
+
+
 
 }
