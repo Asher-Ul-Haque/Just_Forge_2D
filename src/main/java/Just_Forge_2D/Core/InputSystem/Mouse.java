@@ -284,41 +284,6 @@ public class Mouse
     }
 
 
-    // - - - Conversion - - -
-
-    // - - - world to screen
-    public static Vector2f worldToScreen(Vector2f WORLD_COORDS)
-    {
-        Camera camera = ForgeDynamo.getCurrentScene().getCamera();
-        Vector4f ndcSpacePos = new Vector4f(WORLD_COORDS.x, WORLD_COORDS.y, 0, 1);
-        Matrix4f view = new Matrix4f(camera.getViewMatrix());
-        Matrix4f projection = new Matrix4f(camera.getProjectionMatrix());
-        ndcSpacePos.mul(projection.mul(view));
-        Vector2f windowSpace = new Vector2f(ndcSpacePos.x, ndcSpacePos.y).mul(1.0f / ndcSpacePos.w);
-        windowSpace.add(new Vector2f(1.0f, 1.0f)).mul(0.5f);
-        windowSpace.mul(new Vector2f(ForgeDynamo.getWidth(), ForgeDynamo.getHeight()));
-
-        return windowSpace;
-    }
-
-    // - - - screen to world
-    public static Vector2f screenToWorld(Vector2f SCREEN_COORDS)
-    {
-        Vector2f normalizedScreenCords = new Vector2f(
-                SCREEN_COORDS.x / ForgeDynamo.getWidth(),
-                SCREEN_COORDS.y / ForgeDynamo.getHeight()
-        );
-        normalizedScreenCords.mul(2.0f).sub(new Vector2f(1.0f, 1.0f));
-        Camera camera = ForgeDynamo.getCurrentScene().getCamera();
-        Vector4f tmp = new Vector4f(normalizedScreenCords.x, normalizedScreenCords.y, 0, 1);
-        Matrix4f inverseView = new Matrix4f(camera.getInverseViewMatrix());
-        Matrix4f inverseProjection = new Matrix4f(camera.getInverseProjectionMatrix());
-        tmp.mul(inverseView.mul(inverseProjection));
-
-        return new Vector2f(tmp.x, tmp.y);
-    }
-
-
     // - - - clear
     public static void clear()
     {
