@@ -362,8 +362,10 @@ public class ForgeDynamo implements Observer
         // - - - Update the editor
         this.editorLayer.update((float) dt, currentScene);
 
-        // - - - finish mouse frame
+
+        // - - - finish input frames
         Mouse.endFrame();
+        Keyboard.endFrame();
 
         // - - - Swap buffer for next frame
         glfwSwapBuffers(glfwWindow);

@@ -9,10 +9,7 @@ import Just_Forge_2D.Utils.Configurations;
 import Just_Forge_2D.Utils.Logger;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
-import org.jbox2d.dynamics.Body;
-import org.jbox2d.dynamics.BodyDef;
-import org.jbox2d.dynamics.BodyType;
-import org.jbox2d.dynamics.World;
+import org.jbox2d.dynamics.*;
 import org.joml.Vector2f;
 
 // - - - interface to communicate with Box2D
@@ -50,6 +47,7 @@ public class PhysicsSystem
             bodyDef.angularDamping = rb.getAngularDamping();
             bodyDef.linearDamping = rb.getLinearDamping();
             bodyDef.fixedRotation = rb.isFixedRotation();
+            bodyDef.userData = rb.gameObject;
             bodyDef.bullet = rb.isContinuousCollision();
 
             switch (rb.getBodyType())
@@ -71,31 +69,22 @@ public class PhysicsSystem
                     break;
             }
 
-            PolygonShape shape = new PolygonShape();
+            Body body = this.world.createBody(bodyDef);
             CircleColliderComponent circleCollider = OBJ.getCompoent(CircleColliderComponent.class);
             BoxColliderComponent boxCollider = OBJ.getCompoent(BoxColliderComponent.class);
 
+            /*
             if (circleCollider != null)
             {
                 shape.setRadius(circleCollider.getRadius());
             }
-            else if (boxCollider != null)
+            */
+            if (boxCollider != null)
             {
-                Vector2f halfSize = new Vector2f(boxCollider.getHalfSize()).mul(0.5f); // Dont ask me why half. I fine tuned in testing
-                Vector2f offset = boxCollider.getOffset();
-                Vector2f origin = new Vector2f(boxCollider.getOrigin());
-                shape.setAsBox(halfSize.x, halfSize.y, new Vec2(origin.x, origin.y), 0);
-
-                Vec2 pos = bodyDef.position;
-                float xPos = pos.x + offset.x;
-                float yPos = pos.y + offset.y;
-                bodyDef.position.set(xPos, yPos);
+                addBoxCollider(rb, boxCollider);
             }
 
-            Body body = this.world.createBody(bodyDef);
             rb.setRawBody(body);
-            body.createFixture(shape, rb.getMass());
-
             Logger.FORGE_LOG_DEBUG("Linked Box2D with " + OBJ);
         }
     }
@@ -120,10 +109,42 @@ public class PhysicsSystem
     {
         // - - - ensure that update happens only every 16 milliseconds. We increase only when we pass 16ms
         physicsTime += DELTA_TIME;
-        if (physicsTime >= 0.0f)
+        if (physicsTime > 0.0f)
         {
             physicsTime -= physicsTimeDelta;
             world.step(physicsTimeDelta, velocityIterations, positionIterations);
         }
+    }
+
+    public void addBoxCollider(RigidBodyComponent RB, BoxColliderComponent COLLIDER)
+    {
+        Body body = RB.getRawBody();
+        if (body == null)
+        {
+            Logger.FORGE_LOG_WARNING("Raw body must not be null, while adding a collider");
+            return;
+        }
+        PolygonShape shape = new PolygonShape();
+        Vector2f halfSize = new Vector2f(COLLIDER.getHalfSize()).mul(0.5f); // Dont ask me why half. I fine tuned in testing
+        Vector2f offset = COLLIDER.getOffset();
+        Vector2f origin = new Vector2f(COLLIDER.getOrigin());
+        shape.setAsBox(halfSize.x, halfSize.y, new Vec2(offset.x, offset.y), 0);
+
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = shape;
+        fixtureDef.density = 1.0f;
+//        fixtureDef.friction = RB.getLinearDamping();
+        fixtureDef.userData = COLLIDER.gameObject;
+        // fixtureDef.isSensor = RB.isSensor();
+        body.createFixture(fixtureDef);
+    }
+
+
+    // - - - Raycast
+
+    public RayCastInfo rayCast(GameObject REQUESTEE, Vector2f POINT_1, Vector2f POINT_2)
+    {
+        RayCastInfo callback = new RayCastInfo(REQUESTEE);
+        world.raycast(callback, POINT_1, POINT_2);
     }
 }

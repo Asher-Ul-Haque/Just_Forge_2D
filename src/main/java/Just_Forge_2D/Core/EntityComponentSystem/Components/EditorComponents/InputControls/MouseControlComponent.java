@@ -75,12 +75,14 @@ public class MouseControlComponent extends Component
         ObjectSelector selector = ForgeDynamo.getEditor().getPropertiesWindow().getSelector();
         SceneManager currentScene = ForgeDynamo.getCurrentScene();
 
-        if (holdingObject != null && debounce <= 0.0f)
+        if (holdingObject != null && debounce < 0.0f)
         {
             holdingObject.transform.position.x = (int)(Mouse.getWorldX() / Configurations.GRID_WIDTH) * Configurations.GRID_WIDTH + Configurations.GRID_WIDTH / 2f;
             holdingObject.transform.position.y = (int)(Mouse.getWorldY() / Configurations.GRID_HEIGHT) * Configurations.GRID_WIDTH + Configurations.GRID_HEIGHT / 2f;
-            if (Mouse.isMouseButtonDown(GLFW_MOUSE_BUTTON_LEFT))
+            if (Mouse.isMouseButtonDown(GLFW_MOUSE_BUTTON_LEFT) && debounce < 0.0f)
             {
+                float halfWidth = Configurations.GRID_WIDTH / 2.0f;
+                float halfHeight = Configurations.GRID_HEIGHT / 2.0f;
                 place();
                 debounce = debounceTime;
             }

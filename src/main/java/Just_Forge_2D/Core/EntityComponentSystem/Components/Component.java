@@ -6,6 +6,7 @@ import Just_Forge_2D.EditorSystem.ForgeIsGUI;
 import Just_Forge_2D.Utils.Logger;
 import imgui.ImGui;
 import imgui.type.ImInt;
+import org.jbox2d.dynamics.contacts.Contact;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
@@ -152,5 +153,28 @@ public abstract class Component
     public static void init(int MAX_ID)
     {
         ID_COUNTER = MAX_ID;
+    }
+
+
+    // - - - Physics
+    public void beginCollision(GameObject OBJ, Contact CONTACT, Vector2f NORMAL)
+    {
+
+    }
+
+    public void endCollision(GameObject OBJ, Contact CONTACT, Vector2f NORMAL)
+    {
+
+    }
+
+
+    public void beforeCollision(GameObject OBJ, Contact CONTACT, Vector2f NORMAL)
+    {
+
+    }
+
+    public void afterCollision(GameObject OBJ, Contact CONTACT, Vector2f NORMAL)
+    {
+
     }
 }

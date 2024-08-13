@@ -2,6 +2,8 @@ package Just_Forge_2D.Core.InputSystem;
 
 import Just_Forge_2D.Utils.Logger;
 
+import java.util.Arrays;
+
 import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
 import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
 
@@ -65,11 +67,12 @@ public class Keyboard
 
     public static boolean isKeyBeginPress(int KEYCODE)
     {
-        boolean result = get().isKeyBeginPress[KEYCODE];
-        if (result)
-        {
-            get().isKeyBeginPress[KEYCODE] = false;
-        }
-        return result;
+       return get().isKeyBeginPress[KEYCODE];
+    }
+
+    // - - - end frame
+    public static void endFrame()
+    {
+        Arrays.fill(get().isKeyBeginPress, false);
     }
 }
