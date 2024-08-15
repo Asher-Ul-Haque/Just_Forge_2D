@@ -83,6 +83,7 @@ public class PhysicsSystem
 
             CircleColliderComponent circleCollider = OBJ.getCompoent(CircleColliderComponent.class);
             BoxColliderComponent boxCollider = OBJ.getCompoent(BoxColliderComponent.class);
+            CylinderColliderComponent pillCollider = OBJ.getCompoent(CylinderColliderComponent.class);
 
             if (circleCollider != null)
             {
@@ -91,6 +92,10 @@ public class PhysicsSystem
             if (boxCollider != null)
             {
                 addBoxCollider(rb, boxCollider);
+            }
+            if (pillCollider != null)
+            {
+                addCylinderCollider(rb, pillCollider);
             }
 
             Logger.FORGE_LOG_DEBUG("Linked Box2D with " + OBJ);

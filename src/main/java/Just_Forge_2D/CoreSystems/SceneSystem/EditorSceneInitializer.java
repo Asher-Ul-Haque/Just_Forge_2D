@@ -63,7 +63,9 @@ public class EditorSceneInitializer extends SceneInitializer
 
         AssetPool.addTexture("Big Spritesheet", "Assets/Textures/bigSpritesheet.png");
 
-        AssetPool.addSpriteSheet("Big Spritesheet", new SpriteSheet(AssetPool.getTexture("Assets/Textures/bigSpritesheet.png"), 16, 16, 16, 0));
+        AssetPool.addSpriteSheet("Turtle", new SpriteSheet(AssetPool.getTexture("Assets/Textures/turtle.png"), 16, 24, 4, 0));
+        AssetPool.addSpriteSheet("Pipes", new SpriteSheet(AssetPool.getTexture("Assets/Textures/pipes.png"), 32, 32, 4, 0));
+        AssetPool.addSpriteSheet("Big Spritesheet", new SpriteSheet(AssetPool.getTexture("Assets/Textures/bigSpritesheet.png"), 16, 32, 42, 0));
         AssetPool.addSpriteSheet("Decorations",new SpriteSheet(AssetPool.getTexture("Assets/Textures/decorationsAndBlocks.png"), 16, 16, 81, 0));
         AssetPool.addSpriteSheet("Spritesheet",new SpriteSheet(AssetPool.getTexture("Assets/Textures/spritesheet.png"), 16, 16, 26, 0));
         AssetPool.addSpriteSheet("Items", new SpriteSheet(AssetPool.getTexture("Assets/Textures/items.png"), 16, 16, 43, 0));

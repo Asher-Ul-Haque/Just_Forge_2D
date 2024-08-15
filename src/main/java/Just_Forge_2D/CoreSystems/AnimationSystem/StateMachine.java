@@ -76,7 +76,7 @@ public class StateMachine extends Component
             {
                 if (stateTransfers.get(state) != null)
                 {
-                    int newStateIndex = states.indexOf(stateTransfers.get(state));
+                    int newStateIndex = statesIndexOf(stateTransfers.get(state));
                     if (newStateIndex > -1)
                     {
                         currentState = states.get(newStateIndex);
@@ -156,5 +156,19 @@ public class StateMachine extends Component
                 index++;
             }
         }
+    }
+
+    private int statesIndexOf(String TITLE)
+    {
+        int index = 0;
+        for (AnimationState state : states)
+        {
+            if (state.title.equals(TITLE))
+            {
+                return index;
+            }
+            ++index;
+        }
+        return -1;
     }
 }

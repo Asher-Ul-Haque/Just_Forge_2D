@@ -219,6 +219,7 @@ public class SceneManager
                 .setPrettyPrinting()
                 .registerTypeAdapter(Component.class, new ComponentJsonHandler())
                 .registerTypeAdapter(GameObject.class, new GameObjectJsonHandler())
+                .enableComplexMapKeySerialization()
                 .create();
         Logger.FORGE_LOG_INFO("Saving scene...: " + this.initializer);
 
