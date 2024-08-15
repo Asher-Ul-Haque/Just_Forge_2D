@@ -6,8 +6,8 @@
         "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.TransformComponent",
         "properties": {
           "position": {
-            "x": 1.875,
-            "y": 0.943519
+            "x": 0.125,
+            "y": 0.625
           },
           "layer": 0,
           "scale": {
@@ -15,7 +15,7 @@
             "y": 0.25
           },
           "rotation": 0.0,
-          "uniqueID": 20
+          "uniqueID": 98
         }
       },
       {
@@ -37,24 +37,224 @@
             },
             "textureCoordinates": [
               {
-                "x": 0.42857143,
-                "y": 0.8333333
+                "x": 0.14285715,
+                "y": 1.0
               },
               {
-                "x": 0.42857143,
-                "y": 0.75
+                "x": 0.14285715,
+                "y": 0.9166667
               },
               {
-                "x": 0.2857143,
-                "y": 0.75
+                "x": 0.0,
+                "y": 0.9166667
               },
               {
-                "x": 0.2857143,
-                "y": 0.8333333
+                "x": 0.0,
+                "y": 1.0
               }
             ]
           },
-          "uniqueID": 21
+          "uniqueID": 99
+        }
+      }
+    ],
+    "uniqueID": 242,
+    "doSerialization": true,
+    "isDead": false
+  },
+  {
+    "name": "Auto Generated",
+    "components": [
+      {
+        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.TransformComponent",
+        "properties": {
+          "position": {
+            "x": 0.875,
+            "y": 0.625
+          },
+          "layer": 0,
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "uniqueID": 98
+        }
+      },
+      {
+        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.Sprite.SpriteComponent",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16.0,
+            "height": 16.0,
+            "texture": {
+              "filepath": "Assets/Textures/decorationsAndBlocks.png",
+              "width": 112,
+              "height": 192
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.14285715,
+                "y": 1.0
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 1.0
+              }
+            ]
+          },
+          "uniqueID": 99
+        }
+      }
+    ],
+    "uniqueID": 243,
+    "doSerialization": true,
+    "isDead": false
+  },
+  {
+    "name": "Auto Generated",
+    "components": [
+      {
+        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.TransformComponent",
+        "properties": {
+          "position": {
+            "x": 0.375,
+            "y": 0.625
+          },
+          "layer": 0,
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "uniqueID": 98
+        }
+      },
+      {
+        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.Sprite.SpriteComponent",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16.0,
+            "height": 16.0,
+            "texture": {
+              "filepath": "Assets/Textures/decorationsAndBlocks.png",
+              "width": 112,
+              "height": 192
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.14285715,
+                "y": 1.0
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 1.0
+              }
+            ]
+          },
+          "uniqueID": 99
+        }
+      }
+    ],
+    "uniqueID": 244,
+    "doSerialization": true,
+    "isDead": false
+  },
+  {
+    "name": "Auto Generated",
+    "components": [
+      {
+        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.TransformComponent",
+        "properties": {
+          "position": {
+            "x": 0.625,
+            "y": 0.625
+          },
+          "layer": 0,
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "uniqueID": 98
+        }
+      },
+      {
+        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.Sprite.SpriteComponent",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16.0,
+            "height": 16.0,
+            "texture": {
+              "filepath": "Assets/Textures/decorationsAndBlocks.png",
+              "width": 112,
+              "height": 192
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.14285715,
+                "y": 1.0
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 1.0
+              }
+            ]
+          },
+          "uniqueID": 99
+        }
+      },
+      {
+        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.PhysicsComponents.Collider.CircleColliderComponent",
+        "properties": {
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "radius": 0.15,
+          "uniqueID": 127
         }
       },
       {
@@ -66,14 +266,862 @@
           },
           "angularDamping": 0.8,
           "linearDamping": 0.9,
-          "mass": 2.3,
+          "mass": 0.0,
           "bodyType": "Static",
           "fixedRotation": false,
           "continuousCollision": true,
           "angularVelocity": 0.0,
           "gravityScale": 1.0,
           "isSensor": false,
-          "uniqueID": 23
+          "uniqueID": 128
+        }
+      }
+    ],
+    "uniqueID": 245,
+    "doSerialization": true,
+    "isDead": false
+  },
+  {
+    "name": "Auto Generated",
+    "components": [
+      {
+        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.TransformComponent",
+        "properties": {
+          "position": {
+            "x": 1.125,
+            "y": 0.625
+          },
+          "layer": 0,
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "uniqueID": 101
+        }
+      },
+      {
+        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.Sprite.SpriteComponent",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16.0,
+            "height": 16.0,
+            "texture": {
+              "filepath": "Assets/Textures/decorationsAndBlocks.png",
+              "width": 112,
+              "height": 192
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.14285715,
+                "y": 1.0
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 1.0
+              }
+            ]
+          },
+          "uniqueID": 102
+        }
+      }
+    ],
+    "uniqueID": 246,
+    "doSerialization": true,
+    "isDead": false
+  },
+  {
+    "name": "Auto Generated",
+    "components": [
+      {
+        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.TransformComponent",
+        "properties": {
+          "position": {
+            "x": 1.375,
+            "y": 0.625
+          },
+          "layer": 0,
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "uniqueID": 101
+        }
+      },
+      {
+        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.Sprite.SpriteComponent",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16.0,
+            "height": 16.0,
+            "texture": {
+              "filepath": "Assets/Textures/decorationsAndBlocks.png",
+              "width": 112,
+              "height": 192
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.14285715,
+                "y": 1.0
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 1.0
+              }
+            ]
+          },
+          "uniqueID": 102
+        }
+      }
+    ],
+    "uniqueID": 247,
+    "doSerialization": true,
+    "isDead": false
+  },
+  {
+    "name": "Auto Generated",
+    "components": [
+      {
+        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.TransformComponent",
+        "properties": {
+          "position": {
+            "x": 1.625,
+            "y": 0.625
+          },
+          "layer": 0,
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "uniqueID": 101
+        }
+      },
+      {
+        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.Sprite.SpriteComponent",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16.0,
+            "height": 16.0,
+            "texture": {
+              "filepath": "Assets/Textures/decorationsAndBlocks.png",
+              "width": 112,
+              "height": 192
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.14285715,
+                "y": 1.0
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 1.0
+              }
+            ]
+          },
+          "uniqueID": 102
+        }
+      }
+    ],
+    "uniqueID": 248,
+    "doSerialization": true,
+    "isDead": false
+  },
+  {
+    "name": "Auto Generated",
+    "components": [
+      {
+        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.TransformComponent",
+        "properties": {
+          "position": {
+            "x": 1.875,
+            "y": 0.625
+          },
+          "layer": 0,
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "uniqueID": 101
+        }
+      },
+      {
+        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.Sprite.SpriteComponent",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16.0,
+            "height": 16.0,
+            "texture": {
+              "filepath": "Assets/Textures/decorationsAndBlocks.png",
+              "width": 112,
+              "height": 192
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.14285715,
+                "y": 1.0
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 1.0
+              }
+            ]
+          },
+          "uniqueID": 102
+        }
+      }
+    ],
+    "uniqueID": 249,
+    "doSerialization": true,
+    "isDead": false
+  },
+  {
+    "name": "Auto Generated",
+    "components": [
+      {
+        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.TransformComponent",
+        "properties": {
+          "position": {
+            "x": 2.125,
+            "y": 0.625
+          },
+          "layer": 0,
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "uniqueID": 101
+        }
+      },
+      {
+        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.Sprite.SpriteComponent",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16.0,
+            "height": 16.0,
+            "texture": {
+              "filepath": "Assets/Textures/decorationsAndBlocks.png",
+              "width": 112,
+              "height": 192
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.14285715,
+                "y": 1.0
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 1.0
+              }
+            ]
+          },
+          "uniqueID": 102
+        }
+      }
+    ],
+    "uniqueID": 250,
+    "doSerialization": true,
+    "isDead": false
+  },
+  {
+    "name": "Auto Generated",
+    "components": [
+      {
+        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.TransformComponent",
+        "properties": {
+          "position": {
+            "x": 2.375,
+            "y": 0.625
+          },
+          "layer": 0,
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "uniqueID": 101
+        }
+      },
+      {
+        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.Sprite.SpriteComponent",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16.0,
+            "height": 16.0,
+            "texture": {
+              "filepath": "Assets/Textures/decorationsAndBlocks.png",
+              "width": 112,
+              "height": 192
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.14285715,
+                "y": 1.0
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 1.0
+              }
+            ]
+          },
+          "uniqueID": 102
+        }
+      }
+    ],
+    "uniqueID": 251,
+    "doSerialization": true,
+    "isDead": false
+  },
+  {
+    "name": "Auto Generated",
+    "components": [
+      {
+        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.TransformComponent",
+        "properties": {
+          "position": {
+            "x": 2.625,
+            "y": 0.625
+          },
+          "layer": 0,
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "uniqueID": 101
+        }
+      },
+      {
+        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.Sprite.SpriteComponent",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16.0,
+            "height": 16.0,
+            "texture": {
+              "filepath": "Assets/Textures/decorationsAndBlocks.png",
+              "width": 112,
+              "height": 192
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.14285715,
+                "y": 1.0
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 1.0
+              }
+            ]
+          },
+          "uniqueID": 102
+        }
+      }
+    ],
+    "uniqueID": 252,
+    "doSerialization": true,
+    "isDead": false
+  },
+  {
+    "name": "Auto Generated",
+    "components": [
+      {
+        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.TransformComponent",
+        "properties": {
+          "position": {
+            "x": 2.875,
+            "y": 0.625
+          },
+          "layer": 0,
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "uniqueID": 101
+        }
+      },
+      {
+        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.Sprite.SpriteComponent",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16.0,
+            "height": 16.0,
+            "texture": {
+              "filepath": "Assets/Textures/decorationsAndBlocks.png",
+              "width": 112,
+              "height": 192
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.14285715,
+                "y": 1.0
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 1.0
+              }
+            ]
+          },
+          "uniqueID": 102
+        }
+      }
+    ],
+    "uniqueID": 253,
+    "doSerialization": true,
+    "isDead": false
+  },
+  {
+    "name": "Auto Generated",
+    "components": [
+      {
+        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.TransformComponent",
+        "properties": {
+          "position": {
+            "x": 3.125,
+            "y": 0.625
+          },
+          "layer": 0,
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "uniqueID": 101
+        }
+      },
+      {
+        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.Sprite.SpriteComponent",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16.0,
+            "height": 16.0,
+            "texture": {
+              "filepath": "Assets/Textures/decorationsAndBlocks.png",
+              "width": 112,
+              "height": 192
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.14285715,
+                "y": 1.0
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 1.0
+              }
+            ]
+          },
+          "uniqueID": 102
+        }
+      }
+    ],
+    "uniqueID": 254,
+    "doSerialization": true,
+    "isDead": false
+  },
+  {
+    "name": "Auto Generated",
+    "components": [
+      {
+        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.TransformComponent",
+        "properties": {
+          "position": {
+            "x": 0.125,
+            "y": 0.875
+          },
+          "layer": 0,
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "uniqueID": 104
+        }
+      },
+      {
+        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.Sprite.SpriteComponent",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16.0,
+            "height": 16.0,
+            "texture": {
+              "filepath": "Assets/Textures/spritesheet.png",
+              "width": 224,
+              "height": 32
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.071428575,
+                "y": 1.0
+              },
+              {
+                "x": 0.071428575,
+                "y": 0.5
+              },
+              {
+                "x": 0.0,
+                "y": 0.5
+              },
+              {
+                "x": 0.0,
+                "y": 1.0
+              }
+            ]
+          },
+          "uniqueID": 105
+        }
+      },
+      {
+        "type": "Just_Forge_2D.CoreSystems.AnimationSystem.StateMachine",
+        "properties": {
+          "stateTransfers": {},
+          "states": [
+            {
+              "title": "Run",
+              "animationFrames": [
+                {
+                  "sprite": {
+                    "width": 16.0,
+                    "height": 16.0,
+                    "texture": {
+                      "filepath": "Assets/Textures/spritesheet.png",
+                      "width": 224,
+                      "height": 32
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.071428575,
+                        "y": 1.0
+                      },
+                      {
+                        "x": 0.071428575,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.0,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.0,
+                        "y": 1.0
+                      }
+                    ]
+                  },
+                  "frameTime": 0.2
+                },
+                {
+                  "sprite": {
+                    "width": 16.0,
+                    "height": 16.0,
+                    "texture": {
+                      "filepath": "Assets/Textures/spritesheet.png",
+                      "width": 224,
+                      "height": 32
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.21428572,
+                        "y": 1.0
+                      },
+                      {
+                        "x": 0.21428572,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.14285715,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.14285715,
+                        "y": 1.0
+                      }
+                    ]
+                  },
+                  "frameTime": 0.2
+                },
+                {
+                  "sprite": {
+                    "width": 16.0,
+                    "height": 16.0,
+                    "texture": {
+                      "filepath": "Assets/Textures/spritesheet.png",
+                      "width": 224,
+                      "height": 32
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.2857143,
+                        "y": 1.0
+                      },
+                      {
+                        "x": 0.2857143,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.21428572,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.21428572,
+                        "y": 1.0
+                      }
+                    ]
+                  },
+                  "frameTime": 0.2
+                },
+                {
+                  "sprite": {
+                    "width": 16.0,
+                    "height": 16.0,
+                    "texture": {
+                      "filepath": "Assets/Textures/spritesheet.png",
+                      "width": 224,
+                      "height": 32
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.21428572,
+                        "y": 1.0
+                      },
+                      {
+                        "x": 0.21428572,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.14285715,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.14285715,
+                        "y": 1.0
+                      }
+                    ]
+                  },
+                  "frameTime": 0.2
+                }
+              ],
+              "doesLoop": true
+            }
+          ],
+          "defaultStateTitle": "Run",
+          "uniqueID": 106
+        }
+      }
+    ],
+    "uniqueID": 255,
+    "doSerialization": true,
+    "isDead": false
+  },
+  {
+    "name": "Auto Generated",
+    "components": [
+      {
+        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.TransformComponent",
+        "properties": {
+          "position": {
+            "x": 0.6783333,
+            "y": 2.125
+          },
+          "layer": 0,
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": -0.3,
+          "uniqueID": 129
+        }
+      },
+      {
+        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.Sprite.SpriteComponent",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16.0,
+            "height": 16.0,
+            "texture": {
+              "filepath": "Assets/Textures/decorationsAndBlocks.png",
+              "width": 112,
+              "height": 192
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.14285715,
+                "y": 0.8333333
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.75
+              },
+              {
+                "x": 0.0,
+                "y": 0.75
+              },
+              {
+                "x": 0.0,
+                "y": 0.8333333
+              }
+            ]
+          },
+          "uniqueID": 130
+        }
+      },
+      {
+        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.PhysicsComponents.RigidBodyComponent",
+        "properties": {
+          "velocity": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "angularDamping": 0.8,
+          "linearDamping": 0.9,
+          "mass": 6.6,
+          "bodyType": "Dynamic",
+          "fixedRotation": false,
+          "continuousCollision": true,
+          "angularVelocity": 0.0,
+          "gravityScale": 1.0,
+          "isSensor": false,
+          "uniqueID": 132
         }
       },
       {
@@ -91,104 +1139,11 @@
             "x": 0.0,
             "y": 0.0
           },
-          "uniqueID": 24
+          "uniqueID": 133
         }
       }
     ],
-    "uniqueID": 138,
-    "doSerialization": true,
-    "isDead": false
-  },
-  {
-    "name": "Auto Generated",
-    "components": [
-      {
-        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.TransformComponent",
-        "properties": {
-          "position": {
-            "x": 1.875,
-            "y": 2.375
-          },
-          "layer": 0,
-          "scale": {
-            "x": 0.25,
-            "y": 0.25
-          },
-          "rotation": 0.0,
-          "uniqueID": 70
-        }
-      },
-      {
-        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.Sprite.SpriteComponent",
-        "properties": {
-          "color": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0,
-            "w": 1.0
-          },
-          "sprite": {
-            "width": 16.0,
-            "height": 16.0,
-            "texture": {
-              "filepath": "Assets/Textures/decorationsAndBlocks.png",
-              "width": 112,
-              "height": 192
-            },
-            "textureCoordinates": [
-              {
-                "x": 0.14285715,
-                "y": 0.8333333
-              },
-              {
-                "x": 0.14285715,
-                "y": 0.75
-              },
-              {
-                "x": 0.0,
-                "y": 0.75
-              },
-              {
-                "x": 0.0,
-                "y": 0.8333333
-              }
-            ]
-          },
-          "uniqueID": 71
-        }
-      },
-      {
-        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.PhysicsComponents.RigidBodyComponent",
-        "properties": {
-          "velocity": {
-            "x": 0.0,
-            "y": 0.0
-          },
-          "angularDamping": 0.8,
-          "linearDamping": 0.9,
-          "mass": 0.0,
-          "bodyType": "Dynamic",
-          "fixedRotation": false,
-          "continuousCollision": true,
-          "angularVelocity": 0.0,
-          "gravityScale": 1.0,
-          "isSensor": false,
-          "uniqueID": 73
-        }
-      },
-      {
-        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.PhysicsComponents.Collider.CircleColliderComponent",
-        "properties": {
-          "radius": 0.1,
-          "offset": {
-            "x": 0.0,
-            "y": 0.0
-          },
-          "uniqueID": 74
-        }
-      }
-    ],
-    "uniqueID": 139,
+    "uniqueID": 256,
     "doSerialization": true,
     "isDead": false
   }

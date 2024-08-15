@@ -31,6 +31,10 @@ public class PhysicsSystem
 
     // - - - | Functions | - - -
 
+    public PhysicsSystem()
+    {
+        world.setContactListener(new CollisionDetector());
+    }
 
     // - - - Game Objects - - -
 
@@ -239,5 +243,6 @@ public class PhysicsSystem
             fixture = fixture.m_next;
         }
     }
+
 
 }

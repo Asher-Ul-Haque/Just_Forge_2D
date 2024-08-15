@@ -1,16 +1,23 @@
 package Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.PhysicsComponents.Collider;
 
+import Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.Renderer.DebugPencil;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 
 // - - - Box Collider
-public class BoxColliderComponent extends Collider
+public class BoxColliderComponent extends Component
 {
     // - - - private variables
     private Vector2f halfSize = new Vector2f(0.25f);
     private final Vector2f origin = new Vector2f();
 
+    private Vector2f offset = new Vector2f();
+
+    public Vector2f getOffset()
+    {
+        return this.offset;
+    }
 
     // - - - Functions - - -
 
