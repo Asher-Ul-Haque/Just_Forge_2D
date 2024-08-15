@@ -1,12 +1,12 @@
 package Just_Forge_2D.EditorSystem;
 
-import Just_Forge_2D.Core.AnimationSystem.AnimationState;
-import Just_Forge_2D.Core.AnimationSystem.StateMachine;
-import Just_Forge_2D.Core.EntityComponentSystem.Components.Sprite.Sprite;
-import Just_Forge_2D.Core.EntityComponentSystem.Components.Sprite.SpriteComponent;
-import Just_Forge_2D.Core.EntityComponentSystem.Components.Sprite.SpriteSheet;
-import Just_Forge_2D.Core.EntityComponentSystem.GameObject;
-import Just_Forge_2D.Core.ForgeDynamo;
+import Just_Forge_2D.CoreSystems.AnimationSystem.AnimationState;
+import Just_Forge_2D.CoreSystems.AnimationSystem.StateMachine;
+import Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.Sprite.Sprite;
+import Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.Sprite.SpriteComponent;
+import Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.Sprite.SpriteSheet;
+import Just_Forge_2D.CoreSystems.EntityComponentSystem.GameObject;
+import Just_Forge_2D.CoreSystems.ForgeDynamo;
 import Just_Forge_2D.Utils.AssetPool;
 
 public class Prefabs

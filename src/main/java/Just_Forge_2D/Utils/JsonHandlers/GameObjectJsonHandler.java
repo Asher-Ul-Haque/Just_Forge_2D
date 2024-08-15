@@ -1,8 +1,8 @@
 package Just_Forge_2D.Utils.JsonHandlers;
 
-import Just_Forge_2D.Core.EntityComponentSystem.Components.Component;
-import Just_Forge_2D.Core.EntityComponentSystem.GameObject;
-import Just_Forge_2D.Core.EntityComponentSystem.Components.TransformComponent;
+import Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.Component;
+import Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.TransformComponent;
+import Just_Forge_2D.CoreSystems.EntityComponentSystem.GameObject;
 import com.google.gson.*;
 
 import java.lang.reflect.Type;

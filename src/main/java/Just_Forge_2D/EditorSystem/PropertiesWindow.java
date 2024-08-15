@@ -1,22 +1,15 @@
 package Just_Forge_2D.EditorSystem;
 
-import Just_Forge_2D.Core.EntityComponentSystem.Components.EditorComponents.NonPickableComponent;
-import Just_Forge_2D.Core.EntityComponentSystem.Components.PhysicsComponents.Collider.BoxColliderComponent;
-import Just_Forge_2D.Core.EntityComponentSystem.Components.PhysicsComponents.Collider.CircleColliderComponent;
-import Just_Forge_2D.Core.EntityComponentSystem.Components.PhysicsComponents.RigidBodyComponent;
-import Just_Forge_2D.Core.EntityComponentSystem.Components.Sprite.SpriteComponent;
-import Just_Forge_2D.Core.EntityComponentSystem.GameObject;
-import Just_Forge_2D.Core.InputSystem.Mouse;
-import Just_Forge_2D.Core.SceneSystem.SceneManager;
-import Just_Forge_2D.Core.ForgeDynamo;
-import Just_Forge_2D.Utils.Logger;
+import Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.PhysicsComponents.Collider.BoxColliderComponent;
+import Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.PhysicsComponents.Collider.CircleColliderComponent;
+import Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.PhysicsComponents.RigidBodyComponent;
+import Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.Sprite.SpriteComponent;
+import Just_Forge_2D.CoreSystems.EntityComponentSystem.GameObject;
 import imgui.ImGui;
 import org.joml.Vector4f;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_LEFT;
 
 
 // - - - Properties Window
@@ -24,6 +17,7 @@ public class PropertiesWindow
 {
     // - - - private variables
     private final List<GameObject> activeGameObjects;
+    private final List<Vector4f> activeGameObjectsColors;
     private GameObject activeGameObject = null;
     private final ObjectSelector selector;
 
@@ -36,6 +30,7 @@ public class PropertiesWindow
     {
         this.activeGameObjects = new ArrayList<>();
         this.selector = SELECTOR;
+        this.activeGameObjectsColors = new ArrayList<>();
     }
 
 
@@ -97,7 +92,21 @@ public class PropertiesWindow
 
     public void clearSelection()
     {
+        if (!activeGameObjectsColors.isEmpty())
+        {
+            int i = 0;
+            for (GameObject go: activeGameObjects)
+            {
+                SpriteComponent spr = go.getCompoent(SpriteComponent.class);
+                if (spr != null)
+                {
+                    spr.setColor(activeGameObjectsColors.get(i));
+                }
+                ++i;
+            }
+        }
         this.activeGameObjects.clear();
+        this.activeGameObjectsColors.clear();
     }
 
     public void setActiveGameObject(GameObject GO)
@@ -111,6 +120,16 @@ public class PropertiesWindow
 
     public void addActiveGameObject(GameObject GO)
     {
+        SpriteComponent spr = GO.getCompoent(SpriteComponent.class);
+        if (spr != null)
+        {
+            this.activeGameObjectsColors.add(new Vector4f(spr.getColor()));
+            spr.setColor(new Vector4f(0.8f, 0.8f, 0.0f, 0.8f));
+        }
+        else
+        {
+            this.activeGameObjectsColors.add(new Vector4f());
+        }
         this.activeGameObjects.add(GO);
     }
 

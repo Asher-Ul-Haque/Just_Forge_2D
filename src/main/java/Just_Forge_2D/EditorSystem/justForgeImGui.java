@@ -1,9 +1,9 @@
 package Just_Forge_2D.EditorSystem;
 
-import Just_Forge_2D.Core.SceneSystem.SceneManager;
-import Just_Forge_2D.Core.ForgeDynamo;
+import Just_Forge_2D.CoreSystems.SceneSystem.SceneManager;
+import Just_Forge_2D.CoreSystems.ForgeDynamo;
 import Just_Forge_2D.Utils.Logger;
-import Just_Forge_2D.Core.InputSystem.*;
+import Just_Forge_2D.CoreSystems.InputSystem.*;
 import imgui.ImFontAtlas;
 import imgui.ImFontConfig;
 import imgui.ImGui;

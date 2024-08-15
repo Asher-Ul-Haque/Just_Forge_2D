@@ -1,6 +1,6 @@
 package Just_Forge_2D.Renderer;
 
-import Just_Forge_2D.Core.ForgeDynamo;
+import Just_Forge_2D.CoreSystems.ForgeDynamo;
 import Just_Forge_2D.Physics.Primitives.Line;
 import Just_Forge_2D.Utils.Configurations;
 import Just_Forge_2D.Utils.ForgeMath;

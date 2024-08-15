@@ -1,10 +1,10 @@
 package Just_Forge_2D.EditorSystem;
 
-import Just_Forge_2D.Core.EventSystem.EventManager;
-import Just_Forge_2D.Core.EventSystem.Events.Event;
-import Just_Forge_2D.Core.EventSystem.Events.EventTypes;
-import Just_Forge_2D.Core.InputSystem.Mouse;
-import Just_Forge_2D.Core.ForgeDynamo;
+import Just_Forge_2D.CoreSystems.EventSystem.EventManager;
+import Just_Forge_2D.CoreSystems.EventSystem.Events.Event;
+import Just_Forge_2D.CoreSystems.EventSystem.Events.EventTypes;
+import Just_Forge_2D.CoreSystems.InputSystem.Mouse;
+import Just_Forge_2D.CoreSystems.ForgeDynamo;
 import imgui.ImGui;
 import imgui.ImVec2;
 import imgui.flag.ImGuiWindowFlags;

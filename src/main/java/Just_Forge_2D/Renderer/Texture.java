@@ -25,12 +25,25 @@ public class Texture
         textureID = -1;
         width = -1;
         height = -1;
-        Logger.FORGE_LOG_WARNING("Not recommended to use the default constructor of texture. See documentation on github");
     }
 
     public Texture(int WIDTH, int HEIGHT)
     {
         this.filepath = "Assets/Textures/Generated";
+
+        // - - - Generate the texture on GPU
+        textureID = glGenTextures();
+        glBindTexture(GL_TEXTURE_2D, textureID);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+        // - - - sorry GPU, I cant give data because I dont have any.
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, WIDTH, HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
+    }
+
+    public Texture(int WIDTH, int HEIGHT, String FILE_PATH)
+    {
+        this.filepath = FILE_PATH;
 
         // - - - Generate the texture on GPU
         textureID = glGenTextures();
@@ -85,7 +98,7 @@ public class Texture
                 }
                 default ->
                 {
-                    Logger.FORGE_LOG_WARNING("Unkown picture type with " + channels.get(0) + " attributes");
+                    Logger.FORGE_LOG_ERROR("Unknown picture type with " + channels.get(0) + " attributes");
                     yield -1;
                 }
             };

@@ -1,12 +1,13 @@
 package Just_Forge_2D.Physics;
 
-import Just_Forge_2D.Core.EntityComponentSystem.Components.PhysicsComponents.Collider.BoxColliderComponent;
-import Just_Forge_2D.Core.EntityComponentSystem.Components.PhysicsComponents.Collider.CircleColliderComponent;
-import Just_Forge_2D.Core.EntityComponentSystem.Components.PhysicsComponents.RigidBodyComponent;
-import Just_Forge_2D.Core.EntityComponentSystem.Components.TransformComponent;
-import Just_Forge_2D.Core.EntityComponentSystem.GameObject;
+import Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.PhysicsComponents.Collider.BoxColliderComponent;
+import Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.PhysicsComponents.Collider.CircleColliderComponent;
+import Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.PhysicsComponents.RigidBodyComponent;
+import Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.TransformComponent;
+import Just_Forge_2D.CoreSystems.EntityComponentSystem.GameObject;
 import Just_Forge_2D.Utils.Configurations;
 import Just_Forge_2D.Utils.Logger;
+import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.*;
@@ -49,6 +50,9 @@ public class PhysicsSystem
             bodyDef.fixedRotation = rb.isFixedRotation();
             bodyDef.userData = rb.gameObject;
             bodyDef.bullet = rb.isContinuousCollision();
+            bodyDef.gravityScale = rb.gravityScale;
+            bodyDef.angularVelocity = rb.angularVelocity;
+            bodyDef.linearVelocity = rb.getLinearVelocity();
 
             switch (rb.getBodyType())
             {
@@ -70,15 +74,14 @@ public class PhysicsSystem
             }
 
             Body body = this.world.createBody(bodyDef);
+            body.m_mass = rb.getMass();
             CircleColliderComponent circleCollider = OBJ.getCompoent(CircleColliderComponent.class);
             BoxColliderComponent boxCollider = OBJ.getCompoent(BoxColliderComponent.class);
 
-            /*
             if (circleCollider != null)
             {
-                shape.setRadius(circleCollider.getRadius());
+                addCircleCollider(rb, circleCollider);
             }
-            */
             if (boxCollider != null)
             {
                 addBoxCollider(rb, boxCollider);
@@ -133,18 +136,108 @@ public class PhysicsSystem
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
         fixtureDef.density = 1.0f;
-//        fixtureDef.friction = RB.getLinearDamping();
+        fixtureDef.friction = RB.getLinearDamping();
         fixtureDef.userData = COLLIDER.gameObject;
-        // fixtureDef.isSensor = RB.isSensor();
+        fixtureDef.isSensor = RB.isSensor();
+        body.createFixture(fixtureDef);
+    }
+
+    public void addCircleCollider(RigidBodyComponent RB, CircleColliderComponent COLLIDER)
+    {
+        Body body = RB.getRawBody();
+        if (body == null)
+        {
+            Logger.FORGE_LOG_WARNING("Raw body must not be null, while adding a collider");
+            return;
+        }
+        CircleShape shape = new CircleShape();
+        shape.setRadius(COLLIDER.getRadius());
+        shape.m_p.set(COLLIDER.getOffset().x, COLLIDER.getOffset().y);
+
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = shape;
+        fixtureDef.density = 1.0f;
+        fixtureDef.friction = RB.getLinearDamping();
+        fixtureDef.userData = COLLIDER.gameObject;
+        fixtureDef.isSensor = RB.isSensor();
         body.createFixture(fixtureDef);
     }
 
 
-    // - - - Raycast
+    // - - - Ray cast
 
     public RayCastInfo rayCast(GameObject REQUESTEE, Vector2f POINT_1, Vector2f POINT_2)
     {
         RayCastInfo callback = new RayCastInfo(REQUESTEE);
-        world.raycast(callback, POINT_1, POINT_2);
+        world.raycast(callback, new Vec2(POINT_1.x, POINT_1.y), new Vec2(POINT_2.x, POINT_2.y));
+        return callback;
     }
+
+    public void resetCircleCollider(RigidBodyComponent RB, CircleColliderComponent COLLIDER)
+    {
+        Body body = RB.getRawBody();
+        if (body == null)
+        {
+            Logger.FORGE_LOG_ERROR("Tried to reset Circle Collider on a null physics body");
+            return;
+        }
+
+        int size = fixtureListSize(body);
+        for (int i = 0; i < size; ++i)
+        {
+            body.destroyFixture(body.getFixtureList());
+        }
+
+        addCircleCollider(RB, COLLIDER);
+        body.resetMassData();
+    }
+
+    public void resetBoxCollider(RigidBodyComponent RB, BoxColliderComponent COLLIDER)
+    {
+        Body body = RB.getRawBody();
+        if (body == null)
+        {
+            Logger.FORGE_LOG_ERROR("Tried to reset Circle Collider on a null physics body");
+            return;
+        }
+
+        int size = fixtureListSize(body);
+        for (int i = 0; i < size; ++i)
+        {
+            body.destroyFixture(body.getFixtureList());
+        }
+
+        addBoxCollider(RB, COLLIDER);
+        body.resetMassData();
+    }
+
+    private int fixtureListSize(Body BODY)
+    {
+        int size = 0;
+        Fixture fixture = BODY.getFixtureList();
+        while (fixture != null)
+        {
+            size++;
+            fixture = fixture.m_next;
+        }
+
+        return size;
+    }
+
+    public void setSensor(RigidBodyComponent RB, boolean REALLY)
+    {
+        Body body = RB.getRawBody();
+        if (body == null)
+        {
+            Logger.FORGE_LOG_ERROR("Cant set sensor on a null raw body");
+            return;
+        }
+        Fixture fixture = body.getFixtureList();
+        while (fixture != null)
+        {
+            fixture.m_isSensor = REALLY;
+            fixture = fixture.m_next;
+        }
+    }
+
 }

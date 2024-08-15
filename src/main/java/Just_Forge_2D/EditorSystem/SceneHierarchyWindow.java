@@ -1,7 +1,7 @@
 package Just_Forge_2D.EditorSystem;
 
-import Just_Forge_2D.Core.EntityComponentSystem.GameObject;
-import Just_Forge_2D.Core.ForgeDynamo;
+import Just_Forge_2D.CoreSystems.EntityComponentSystem.GameObject;
+import Just_Forge_2D.CoreSystems.ForgeDynamo;
 import Just_Forge_2D.Utils.Logger;
 import imgui.ImGui;
 import imgui.flag.ImGuiTreeNodeFlags;

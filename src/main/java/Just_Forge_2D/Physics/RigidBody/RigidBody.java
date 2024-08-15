@@ -1,7 +1,7 @@
 package Just_Forge_2D.Physics.RigidBody;
 
-import Just_Forge_2D.Core.EntityComponentSystem.Components.Component;
-import Just_Forge_2D.Core.EntityComponentSystem.Components.TransformComponent;
+import Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.Component;
+import Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.TransformComponent;
 import org.joml.Vector2f;
 
 public class RigidBody extends Component

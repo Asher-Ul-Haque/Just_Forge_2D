@@ -1,6 +1,6 @@
 package Just_Forge_2D.Utils;
 
-import Just_Forge_2D.Core.EntityComponentSystem.Components.Sprite.SpriteSheet;
+import Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.Sprite.SpriteSheet;
 import Just_Forge_2D.Renderer.Shader;
 import Just_Forge_2D.Renderer.Texture;
 import Just_Forge_2D.Sound.Sound;
@@ -78,29 +78,7 @@ public class AssetPool
 
     public static Texture getTexture(String FILE_PATH)
     {
-        /*
-        if (!nameToFile.containsKey(NAME))
-        {
-            Logger.FORGE_LOG_ERROR("Texture : " + NAME + " does not exist");
-            return null;
-        }
-        String path = nameToFile.get(NAME);
-        if (AssetPool.texturePool.containsKey(path))
-        {
-            Logger.FORGE_LOG_TRACE("Loaded texture: " + NAME);
-            return AssetPool.texturePool.get(path);
-        }
-        else
-        {
-            Logger.FORGE_LOG_DEBUG("Texture with path: " + path + " Hashed in shader Asset Pool and loaded");
-            Shader shader = new Shader(path);
-            shader.compile();
-            AssetPool.shaderPool.put(NAME, shader);
-            return shader;
-        }
-         */
         File file = new File(FILE_PATH);
-
 
         if (AssetPool.texturePool.containsKey(file.getAbsolutePath()))
         {

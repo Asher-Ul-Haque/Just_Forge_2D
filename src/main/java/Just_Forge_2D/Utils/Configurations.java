@@ -31,4 +31,7 @@ public class Configurations
     public static final float DEFAULT_EDITOR_CAMERA_SCROLL_SENSITIVITY = 0.1f;
     public static final float DEFAULT_CAMERA_ZOOM = 1f;
     public static final String DEFAULT_SAVE_FILE = "Configurations/Levels/level.justForgeFile";
+    public static final int DEFAULT_WINDOW_WIDTH = 1980;
+    public static final int DEFAULT_WINDOW_HEIGHT = 720;
+    public static final float DEFAULT_ASPECT_RATIO = 16f / 9f;
 }

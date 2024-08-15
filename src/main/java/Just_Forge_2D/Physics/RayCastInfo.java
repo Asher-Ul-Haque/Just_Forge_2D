@@ -1,6 +1,6 @@
 package Just_Forge_2D.Physics;
 
-import Just_Forge_2D.Core.EntityComponentSystem.GameObject;
+import Just_Forge_2D.CoreSystems.EntityComponentSystem.GameObject;
 import org.jbox2d.callbacks.RayCastCallback;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Fixture;
@@ -21,11 +21,27 @@ public class RayCastInfo implements RayCastCallback
         fixture = null;
         point = new Vector2f();
         normal = new Vector2f();
+        fraction = 0f;
+        hit = false;
+        hitObject = null;
+        this.requestee = OBJ;
     }
 
+
     @Override
-    public float reportFixture(Fixture FIXTURE, Vec2 POINT_1, Vec2 POINT_2, float v)
+    public float reportFixture(Fixture FIXTURE, Vec2 POINT, Vec2 NORMAL, float FRACTION)
     {
-        return 0;
+        if (FIXTURE.m_userData == requestee)
+        {
+            return 1;
+        }
+        this.fixture = FIXTURE;
+        this.point = new Vector2f(POINT.x, POINT.y);
+        this.normal = new Vector2f(NORMAL.x, NORMAL.y);
+        this.fraction = FRACTION;
+        this.hit = fraction != 0;
+        this.hitObject = (GameObject) fixture.m_userData;
+
+        return fraction;
     }
 }

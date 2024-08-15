@@ -1,7 +1,7 @@
 package Just_Forge_2D.Renderer;
 
-import Just_Forge_2D.Core.EntityComponentSystem.Components.Sprite.SpriteComponent;
-import Just_Forge_2D.Core.EntityComponentSystem.GameObject;
+import Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.Sprite.SpriteComponent;
+import Just_Forge_2D.CoreSystems.EntityComponentSystem.GameObject;
 import Just_Forge_2D.Utils.Configurations;
 import Just_Forge_2D.Utils.Logger;
 
