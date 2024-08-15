@@ -44,4 +44,9 @@ public class BoxColliderComponent extends Component
         Vector2f center = new Vector2f(this.gameObject.transform.position).add(this.offset);
         DebugPencil.addBox(center, this.halfSize, this.gameObject.transform.rotation, new Vector3f(1, 0, 0));
     }
+
+    public void setOffset(Vector2f OFFSET)
+    {
+        this.offset.set(OFFSET);
+    }
 }

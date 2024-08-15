@@ -2,6 +2,7 @@ package Just_Forge_2D.Physics;
 
 import Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.PhysicsComponents.Collider.BoxColliderComponent;
 import Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.PhysicsComponents.Collider.CircleColliderComponent;
+import Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.PhysicsComponents.Collider.CylinderColliderComponent;
 import Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.PhysicsComponents.RigidBodyComponent;
 import Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.TransformComponent;
 import Just_Forge_2D.CoreSystems.EntityComponentSystem.GameObject;
@@ -167,6 +168,20 @@ public class PhysicsSystem
         body.createFixture(fixtureDef);
     }
 
+    public void addCylinderCollider(RigidBodyComponent RB, CylinderColliderComponent COLLIDER)
+    {
+        Body body = RB.getRawBody();
+        if (body == null)
+        {
+            Logger.FORGE_LOG_WARNING("Raw body must not be null, while adding a collider");
+            return;
+        }
+
+        addBoxCollider(RB, COLLIDER.getBox());
+        addCircleCollider(RB, COLLIDER.getTopCircle());
+        addCircleCollider(RB, COLLIDER.getBottomCircle());
+    }
+
 
     // - - - Ray cast
 
@@ -215,6 +230,24 @@ public class PhysicsSystem
         body.resetMassData();
     }
 
+    public void resetCylinderCollider(RigidBodyComponent RB, CylinderColliderComponent COLLIDER)
+    {
+        Body body = RB.getRawBody();
+        if (body == null)
+        {
+            Logger.FORGE_LOG_ERROR("Tried to reset Circle Collider on a null physics body");
+            return;
+        }
+
+        int size = fixtureListSize(body);
+        for (int i = 0; i < size; ++i)
+        {
+            body.destroyFixture(body.getFixtureList());
+        }
+
+        addCylinderCollider(RB, COLLIDER);
+        body.resetMassData();
+    }
     private int fixtureListSize(Body BODY)
     {
         int size = 0;
@@ -242,6 +275,11 @@ public class PhysicsSystem
             fixture.m_isSensor = REALLY;
             fixture = fixture.m_next;
         }
+    }
+
+    public boolean isLocked()
+    {
+        return world.isLocked();
     }
 
 

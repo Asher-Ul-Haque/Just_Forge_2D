@@ -14,7 +14,13 @@ public class CircleColliderComponent extends Component
     {
         return this.offset;
     }
-    private float radius = 1f;
+
+    public void setOffset(Vector2f OFFSET)
+    {
+        this.offset.set(OFFSET);
+    }
+
+    private float radius = 0.125f;
 
     public float getRadius() {
         return radius;

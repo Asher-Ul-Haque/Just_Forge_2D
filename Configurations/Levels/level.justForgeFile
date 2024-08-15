@@ -58,7 +58,7 @@
         }
       }
     ],
-    "uniqueID": 242,
+    "uniqueID": 200,
     "doSerialization": true,
     "isDead": false
   },
@@ -119,9 +119,46 @@
           },
           "uniqueID": 99
         }
+      },
+      {
+        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.PhysicsComponents.Collider.BoxColliderComponent",
+        "properties": {
+          "halfSize": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "origin": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "uniqueID": 154
+        }
+      },
+      {
+        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.PhysicsComponents.RigidBodyComponent",
+        "properties": {
+          "velocity": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "angularDamping": 0.8,
+          "linearDamping": 0.9,
+          "mass": 0.0,
+          "bodyType": "Static",
+          "fixedRotation": false,
+          "continuousCollision": true,
+          "angularVelocity": 0.0,
+          "gravityScale": 1.0,
+          "isSensor": false,
+          "uniqueID": 155
+        }
       }
     ],
-    "uniqueID": 243,
+    "uniqueID": 201,
     "doSerialization": true,
     "isDead": false
   },
@@ -182,9 +219,46 @@
           },
           "uniqueID": 99
         }
+      },
+      {
+        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.PhysicsComponents.Collider.BoxColliderComponent",
+        "properties": {
+          "halfSize": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "origin": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "uniqueID": 176
+        }
+      },
+      {
+        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.PhysicsComponents.RigidBodyComponent",
+        "properties": {
+          "velocity": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "angularDamping": 0.8,
+          "linearDamping": 0.9,
+          "mass": 0.0,
+          "bodyType": "Static",
+          "fixedRotation": false,
+          "continuousCollision": true,
+          "angularVelocity": 0.0,
+          "gravityScale": 1.0,
+          "isSensor": false,
+          "uniqueID": 177
+        }
       }
     ],
-    "uniqueID": 244,
+    "uniqueID": 202,
     "doSerialization": true,
     "isDead": false
   },
@@ -277,7 +351,7 @@
         }
       }
     ],
-    "uniqueID": 245,
+    "uniqueID": 203,
     "doSerialization": true,
     "isDead": false
   },
@@ -340,7 +414,7 @@
         }
       }
     ],
-    "uniqueID": 246,
+    "uniqueID": 204,
     "doSerialization": true,
     "isDead": false
   },
@@ -403,7 +477,7 @@
         }
       }
     ],
-    "uniqueID": 247,
+    "uniqueID": 205,
     "doSerialization": true,
     "isDead": false
   },
@@ -466,7 +540,7 @@
         }
       }
     ],
-    "uniqueID": 248,
+    "uniqueID": 206,
     "doSerialization": true,
     "isDead": false
   },
@@ -529,7 +603,7 @@
         }
       }
     ],
-    "uniqueID": 249,
+    "uniqueID": 207,
     "doSerialization": true,
     "isDead": false
   },
@@ -592,7 +666,7 @@
         }
       }
     ],
-    "uniqueID": 250,
+    "uniqueID": 208,
     "doSerialization": true,
     "isDead": false
   },
@@ -655,7 +729,7 @@
         }
       }
     ],
-    "uniqueID": 251,
+    "uniqueID": 209,
     "doSerialization": true,
     "isDead": false
   },
@@ -718,7 +792,7 @@
         }
       }
     ],
-    "uniqueID": 252,
+    "uniqueID": 210,
     "doSerialization": true,
     "isDead": false
   },
@@ -781,7 +855,7 @@
         }
       }
     ],
-    "uniqueID": 253,
+    "uniqueID": 211,
     "doSerialization": true,
     "isDead": false
   },
@@ -844,7 +918,7 @@
         }
       }
     ],
-    "uniqueID": 254,
+    "uniqueID": 212,
     "doSerialization": true,
     "isDead": false
   },
@@ -886,19 +960,19 @@
             },
             "textureCoordinates": [
               {
-                "x": 0.071428575,
+                "x": 0.21428572,
                 "y": 1.0
               },
               {
-                "x": 0.071428575,
+                "x": 0.21428572,
                 "y": 0.5
               },
               {
-                "x": 0.0,
+                "x": 0.14285715,
                 "y": 0.5
               },
               {
-                "x": 0.0,
+                "x": 0.14285715,
                 "y": 1.0
               }
             ]
@@ -1043,7 +1117,7 @@
         }
       }
     ],
-    "uniqueID": 255,
+    "uniqueID": 213,
     "doSerialization": true,
     "isDead": false
   },
@@ -1143,7 +1217,7 @@
         }
       }
     ],
-    "uniqueID": 256,
+    "uniqueID": 214,
     "doSerialization": true,
     "isDead": false
   }
