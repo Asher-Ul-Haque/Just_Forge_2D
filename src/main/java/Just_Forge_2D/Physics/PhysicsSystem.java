@@ -52,7 +52,6 @@ public class PhysicsSystem
             bodyDef.bullet = rb.isContinuousCollision();
             bodyDef.gravityScale = rb.gravityScale;
             bodyDef.angularVelocity = rb.angularVelocity;
-            bodyDef.linearVelocity = rb.getLinearVelocity();
 
             switch (rb.getBodyType())
             {
@@ -75,6 +74,8 @@ public class PhysicsSystem
 
             Body body = this.world.createBody(bodyDef);
             body.m_mass = rb.getMass();
+            rb.setRawBody(body);
+
             CircleColliderComponent circleCollider = OBJ.getCompoent(CircleColliderComponent.class);
             BoxColliderComponent boxCollider = OBJ.getCompoent(BoxColliderComponent.class);
 
@@ -87,7 +88,6 @@ public class PhysicsSystem
                 addBoxCollider(rb, boxCollider);
             }
 
-            rb.setRawBody(body);
             Logger.FORGE_LOG_DEBUG("Linked Box2D with " + OBJ);
         }
     }
