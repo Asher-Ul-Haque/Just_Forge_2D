@@ -149,6 +149,19 @@ public class SceneManager
         return null;
     }
 
+    public GameObject getGameObject(String NAME)
+    {
+        for (GameObject object : gameObjects)
+        {
+            if (object.name.equals(NAME))
+            {
+                return object;
+            }
+        }
+        Logger.FORGE_LOG_WARNING("Found no game object with Name: " + NAME + " in scene: " + this);
+        return null;
+    }
+
     // - - - Getters and Setters - - -
 
     public Camera getCamera()

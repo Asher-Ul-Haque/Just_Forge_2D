@@ -96,6 +96,10 @@ public abstract class Component
                         field.set(this, type.getEnumConstants()[index.get()]);
                     }
                 }
+                else if (type == String.class)
+                {
+                    field.set(this, ForgeIsGUI.inputText(field.getName() + ": ", (String) value));
+                }
 
                 if (isPrivate)
                 {

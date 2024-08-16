@@ -60,5 +60,19 @@ public class KeyboardControls extends Component
             }
             propertiesWindow.clearSelection();
         }
+        else if (!activeGameObjects.isEmpty() && Keyboard.isKeyBeginPress(GLFW_KEY_PAGE_DOWN))
+        {
+            for (GameObject go: activeGameObjects)
+            {
+                go.transform.layer--;
+            }
+        }
+        else if (!activeGameObjects.isEmpty() && Keyboard.isKeyBeginPress(GLFW_KEY_PAGE_UP))
+        {
+            for (GameObject go: activeGameObjects)
+            {
+                go.transform.layer++;
+            }
+        }
     }
 }
