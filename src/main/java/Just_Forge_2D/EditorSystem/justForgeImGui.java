@@ -15,6 +15,9 @@ import imgui.gl3.ImGuiImplGl3;
 import imgui.type.ImBoolean;
 import org.lwjgl.glfw.GLFW;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 
 // - - - Class to manage imGUI
 public class justForgeImGui
@@ -212,12 +215,23 @@ public class justForgeImGui
         // Glyphs could be added per-font as well as per config used globally like here
         fontConfig.setGlyphRanges(fontAtlas.getGlyphRangesDefault());
 
-        final String fontPath = "Assets/Fonts/JetBrainsMono-Bold.ttf";
+        final String fontPath = "/Assets/Fonts/JetBrainsMono-Bold.ttf";
         final int fontSize = 16;
 
-        // Fonts merge example
+// Load the font as a resource from the JAR
+        try (InputStream fontStream = getClass().getResourceAsStream(fontPath)) {
+            if (fontStream != null) {
+                byte[] fontBytes = fontStream.readAllBytes();
+                fontAtlas.addFontFromMemoryTTF(fontBytes, fontSize, fontConfig);
+            } else {
+                Logger.FORGE_LOG_ERROR("Font file not found: " + fontPath);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+// Fonts merge example
         fontConfig.setPixelSnapH(true);
-        fontAtlas.addFontFromFileTTF(fontPath, fontSize, fontConfig);
 
         fontConfig.destroy(); // After all fonts were added we don't need this config more
         fontAtlas.build();

@@ -133,7 +133,7 @@ public class DebugPencil
         glEnableVertexAttribArray(1);
 
         // - - - draw the batch
-        glDrawArrays(GL_LINES, 0, lines.size() * 6 * 2); // openGL uses bresenham line algo
+        glDrawArrays(GL_LINES, 0, lines.size()); // openGL uses bresenham line algo
 
         //  - - - Disable the location
         glDisableVertexAttribArray(0);

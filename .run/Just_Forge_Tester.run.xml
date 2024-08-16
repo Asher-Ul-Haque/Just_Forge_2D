@@ -2,7 +2,7 @@
   <configuration default="false" name="Just_Forge_Tester" type="Application" factoryName="Application">
     <option name="ALTERNATIVE_JRE_PATH" value="17" />
     <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
-    <option name="MAIN_CLASS_NAME" value="Test_Game.Main" />
+    <option name="MAIN_CLASS_NAME" value="Just_Forge_2D.Main" />
     <module name="Just-Forge-2D.main" />
     <method v="2">
       <option name="Make" enabled="true" />

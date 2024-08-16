@@ -1,4 +1,4 @@
-package Test_Game;
+package Just_Forge_2D;
 
 import Just_Forge_2D.CoreSystems.ForgeDynamo;
 import imgui.app.Application;

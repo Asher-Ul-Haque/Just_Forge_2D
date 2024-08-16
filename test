@@ -1,22 +1,7 @@
-
 plugins {
-    id 'com.github.johnrengelman.shadow' version '8.1.1'
     id("java")
 }
 
-shadowJar {
-    archiveClassifier.set('all')
-    mergeServiceFiles()
-    manifest {
-        attributes 'Main-Class': 'Just_Forge_2D.Main'
-    }
-    from('Assets') {
-        into 'Assets'
-    }
-    from('libs') {
-        into 'libs'
-    }
-}
 group = "somebody.just"
 version = "1.0-SNAPSHOT"
 
@@ -96,3 +81,48 @@ dependencies {
     implementation "org.joml:joml:${jomlVersion}"
 }
 
+
+jar {
+    manifest {
+        attributes(
+                'Class-Path': configurations.runtimeClasspath.files.collect { it.toURI().toURL().toString() }.join(' '),
+                'Main-Class': 'Main' // Update with your actual main class
+        )
+    }
+
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+
+    // Include the compiled classes and resources from the source sets
+    from(sourceSets.main.output)
+}
+tasks.register('copyAssets', Copy) {
+    copy {
+        from "assets"
+        into "${buildDir}/libs/assets"
+    }
+
+    copy {
+        from "level.txt"
+        into "${buildDir}/libs"
+    }
+}
+
+tasks.register('fatJar', Jar) {
+    manifest.from jar.manifest
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    } {
+        exclude "META-INF/*.SF"
+        exclude "META-INF/*.DSA"
+        exclude "META-INF/*.RSA"
+    }
+    with jar
+}
+
+fatJar.dependsOn(copyAssets)
+
+artifacts {
+    archives fatJar
+}

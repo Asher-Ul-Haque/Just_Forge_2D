@@ -273,9 +273,9 @@ public class ForgeDynamo implements Observer
 
 
         // - - - compile shaders
-        AssetPool.addShader("Default", "Assets/Shaders/default.glsl");
-        AssetPool.addShader("Selector", "Assets/Shaders/selector.glsl");
-        AssetPool.addShader("Debug", "Assets/Shaders/debug.glsl");
+        AssetPool.addShader("Default", "/Assets/Shaders/default.glsl");
+        AssetPool.addShader("Selector", "/Assets/Shaders/selector.glsl");
+        AssetPool.addShader("Debug", "/Assets/Shaders/debug.glsl");
         this.defaultShader = AssetPool.getShader("Default");
         this.selectorShader = AssetPool.getShader("Selector");
 
