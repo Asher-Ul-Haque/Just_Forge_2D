@@ -38,6 +38,7 @@ public class SceneManager
 
     // - - - saving and loading
     private PhysicsSystem physics;
+    private List<GameObject> pendingObjects;
 
 
     // - - - | Functions | - - -
@@ -51,6 +52,7 @@ public class SceneManager
         this.renderer = new Renderer();
         this.gameObjects = new ArrayList<>();
         this.isRunning = false;
+        this.pendingObjects = new ArrayList<>();
     }
 
 
@@ -87,6 +89,15 @@ public class SceneManager
                 i--;
             }
         }
+
+        for (GameObject go : pendingObjects)
+        {
+            gameObjects.add(go);
+            go.start();
+            this.renderer.add(go);
+            this.physics.add(go);
+        }
+        pendingObjects.clear();
     }
 
     public void render(float DELTA_TIME)
@@ -115,12 +126,13 @@ public class SceneManager
 
     public void addGameObject(GameObject GAME_OBJECT)
     {
-        gameObjects.add(GAME_OBJECT);
         if (isRunning)
         {
-            GAME_OBJECT.start();
-            this.renderer.add(GAME_OBJECT);
-            this.physics.add(GAME_OBJECT);
+            pendingObjects.add(GAME_OBJECT);
+        }
+        else
+        {
+            gameObjects.add(GAME_OBJECT);
         }
     }
 
@@ -210,6 +222,15 @@ public class SceneManager
                 i--;
             }
         }
+
+        for (GameObject go : pendingObjects)
+        {
+            gameObjects.add(go);
+            go.start();
+            this.renderer.add(go);
+            this.physics.add(go);
+        }
+        pendingObjects.clear();
     }
 
     // - - - save

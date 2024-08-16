@@ -37,4 +37,13 @@ public class CircleColliderComponent extends Component
         Vector2f center = new Vector2f(this.gameObject.transform.position).add(this.offset);
         DebugPencil.addCircle(center, this.radius, new Vector3f(1, 0, 0));
     }
+
+    /*
+    @Override
+    public void update(float DELTA_tIME)
+    {
+        Vector2f center = new Vector2f(this.gameObject.transform.position).add(this.offset);
+        DebugPencil.addCircle(center, this.radius, new Vector3f(1, 0, 0));
+    }
+    */
 }

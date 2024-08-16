@@ -6,8 +6,8 @@
         "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.TransformComponent",
         "properties": {
           "position": {
-            "x": 1.3716664,
-            "y": 0.622117
+            "x": 1.875,
+            "y": 1.875
           },
           "layer": 0,
           "scale": {
@@ -15,7 +15,7 @@
             "y": 0.25
           },
           "rotation": 0.0,
-          "uniqueID": 246
+          "uniqueID": 20
         }
       },
       {
@@ -31,30 +31,188 @@
             "width": 16.0,
             "height": 16.0,
             "texture": {
-              "filepath": "Assets/Textures/decorationsAndBlocks.png",
+              "filepath": "Assets/Textures/items.png",
               "width": 112,
-              "height": 192
+              "height": 80
             },
             "textureCoordinates": [
               {
-                "x": 0.14285715,
-                "y": 0.8333333
+                "x": 0.2857143,
+                "y": 1.0
+              },
+              {
+                "x": 0.2857143,
+                "y": 0.8
               },
               {
                 "x": 0.14285715,
-                "y": 0.75
+                "y": 0.8
               },
               {
-                "x": 0.0,
-                "y": 0.75
-              },
-              {
-                "x": 0.0,
-                "y": 0.8333333
+                "x": 0.14285715,
+                "y": 1.0
               }
             ]
           },
-          "uniqueID": 247
+          "uniqueID": 21
+        }
+      },
+      {
+        "type": "Just_Forge_2D.CoreSystems.AnimationSystem.StateMachine",
+        "properties": {
+          "stateTransfers": [
+            [
+              {
+                "state": "Question",
+                "trigger": "setInactive"
+              },
+              "Inactive"
+            ]
+          ],
+          "states": [
+            {
+              "title": "Question",
+              "animationFrames": [
+                {
+                  "sprite": {
+                    "width": 16.0,
+                    "height": 16.0,
+                    "texture": {
+                      "filepath": "Assets/Textures/items.png",
+                      "width": 112,
+                      "height": 80
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.14285715,
+                        "y": 1.0
+                      },
+                      {
+                        "x": 0.14285715,
+                        "y": 0.8
+                      },
+                      {
+                        "x": 0.0,
+                        "y": 0.8
+                      },
+                      {
+                        "x": 0.0,
+                        "y": 1.0
+                      }
+                    ]
+                  },
+                  "frameTime": 0.57
+                },
+                {
+                  "sprite": {
+                    "width": 16.0,
+                    "height": 16.0,
+                    "texture": {
+                      "filepath": "Assets/Textures/items.png",
+                      "width": 112,
+                      "height": 80
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.2857143,
+                        "y": 1.0
+                      },
+                      {
+                        "x": 0.2857143,
+                        "y": 0.8
+                      },
+                      {
+                        "x": 0.14285715,
+                        "y": 0.8
+                      },
+                      {
+                        "x": 0.14285715,
+                        "y": 1.0
+                      }
+                    ]
+                  },
+                  "frameTime": 0.23
+                },
+                {
+                  "sprite": {
+                    "width": 16.0,
+                    "height": 16.0,
+                    "texture": {
+                      "filepath": "Assets/Textures/items.png",
+                      "width": 112,
+                      "height": 80
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.42857143,
+                        "y": 1.0
+                      },
+                      {
+                        "x": 0.42857143,
+                        "y": 0.8
+                      },
+                      {
+                        "x": 0.2857143,
+                        "y": 0.8
+                      },
+                      {
+                        "x": 0.2857143,
+                        "y": 1.0
+                      }
+                    ]
+                  },
+                  "frameTime": 0.23
+                }
+              ],
+              "doesLoop": true
+            },
+            {
+              "title": "Inactive",
+              "animationFrames": [
+                {
+                  "sprite": {
+                    "width": 16.0,
+                    "height": 16.0,
+                    "texture": {
+                      "filepath": "Assets/Textures/items.png",
+                      "width": 112,
+                      "height": 80
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.5714286,
+                        "y": 1.0
+                      },
+                      {
+                        "x": 0.5714286,
+                        "y": 0.8
+                      },
+                      {
+                        "x": 0.42857143,
+                        "y": 0.8
+                      },
+                      {
+                        "x": 0.42857143,
+                        "y": 1.0
+                      }
+                    ]
+                  },
+                  "frameTime": 0.1
+                }
+              ],
+              "doesLoop": false
+            }
+          ],
+          "defaultStateTitle": "Question",
+          "uniqueID": 22
+        }
+      },
+      {
+        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.QuestionBlock",
+        "properties": {
+          "blockType": "Coin",
+          "bobSpeed": 0.1,
+          "uniqueID": 23
         }
       },
       {
@@ -73,7 +231,7 @@
           "angularVelocity": 0.0,
           "gravityScale": 1.0,
           "isSensor": false,
-          "uniqueID": 271
+          "uniqueID": 24
         }
       },
       {
@@ -91,7 +249,7 @@
             "x": 0.0,
             "y": 0.0
           },
-          "uniqueID": 272
+          "uniqueID": 25
         }
       }
     ],
@@ -106,8 +264,8 @@
         "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.TransformComponent",
         "properties": {
           "position": {
-            "x": 1.625,
-            "y": 0.625
+            "x": 2.125,
+            "y": 1.875
           },
           "layer": 0,
           "scale": {
@@ -115,7 +273,7 @@
             "y": 0.25
           },
           "rotation": 0.0,
-          "uniqueID": 357
+          "uniqueID": 20
         }
       },
       {
@@ -131,30 +289,188 @@
             "width": 16.0,
             "height": 16.0,
             "texture": {
-              "filepath": "Assets/Textures/decorationsAndBlocks.png",
+              "filepath": "Assets/Textures/items.png",
               "width": 112,
-              "height": 192
+              "height": 80
             },
             "textureCoordinates": [
               {
-                "x": 0.14285715,
-                "y": 0.8333333
+                "x": 0.2857143,
+                "y": 1.0
+              },
+              {
+                "x": 0.2857143,
+                "y": 0.8
               },
               {
                 "x": 0.14285715,
-                "y": 0.75
+                "y": 0.8
               },
               {
-                "x": 0.0,
-                "y": 0.75
-              },
-              {
-                "x": 0.0,
-                "y": 0.8333333
+                "x": 0.14285715,
+                "y": 1.0
               }
             ]
           },
-          "uniqueID": 358
+          "uniqueID": 21
+        }
+      },
+      {
+        "type": "Just_Forge_2D.CoreSystems.AnimationSystem.StateMachine",
+        "properties": {
+          "stateTransfers": [
+            [
+              {
+                "state": "Question",
+                "trigger": "setInactive"
+              },
+              "Inactive"
+            ]
+          ],
+          "states": [
+            {
+              "title": "Question",
+              "animationFrames": [
+                {
+                  "sprite": {
+                    "width": 16.0,
+                    "height": 16.0,
+                    "texture": {
+                      "filepath": "Assets/Textures/items.png",
+                      "width": 112,
+                      "height": 80
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.14285715,
+                        "y": 1.0
+                      },
+                      {
+                        "x": 0.14285715,
+                        "y": 0.8
+                      },
+                      {
+                        "x": 0.0,
+                        "y": 0.8
+                      },
+                      {
+                        "x": 0.0,
+                        "y": 1.0
+                      }
+                    ]
+                  },
+                  "frameTime": 0.57
+                },
+                {
+                  "sprite": {
+                    "width": 16.0,
+                    "height": 16.0,
+                    "texture": {
+                      "filepath": "Assets/Textures/items.png",
+                      "width": 112,
+                      "height": 80
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.2857143,
+                        "y": 1.0
+                      },
+                      {
+                        "x": 0.2857143,
+                        "y": 0.8
+                      },
+                      {
+                        "x": 0.14285715,
+                        "y": 0.8
+                      },
+                      {
+                        "x": 0.14285715,
+                        "y": 1.0
+                      }
+                    ]
+                  },
+                  "frameTime": 0.23
+                },
+                {
+                  "sprite": {
+                    "width": 16.0,
+                    "height": 16.0,
+                    "texture": {
+                      "filepath": "Assets/Textures/items.png",
+                      "width": 112,
+                      "height": 80
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.42857143,
+                        "y": 1.0
+                      },
+                      {
+                        "x": 0.42857143,
+                        "y": 0.8
+                      },
+                      {
+                        "x": 0.2857143,
+                        "y": 0.8
+                      },
+                      {
+                        "x": 0.2857143,
+                        "y": 1.0
+                      }
+                    ]
+                  },
+                  "frameTime": 0.23
+                }
+              ],
+              "doesLoop": true
+            },
+            {
+              "title": "Inactive",
+              "animationFrames": [
+                {
+                  "sprite": {
+                    "width": 16.0,
+                    "height": 16.0,
+                    "texture": {
+                      "filepath": "Assets/Textures/items.png",
+                      "width": 112,
+                      "height": 80
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.5714286,
+                        "y": 1.0
+                      },
+                      {
+                        "x": 0.5714286,
+                        "y": 0.8
+                      },
+                      {
+                        "x": 0.42857143,
+                        "y": 0.8
+                      },
+                      {
+                        "x": 0.42857143,
+                        "y": 1.0
+                      }
+                    ]
+                  },
+                  "frameTime": 0.1
+                }
+              ],
+              "doesLoop": false
+            }
+          ],
+          "defaultStateTitle": "Question",
+          "uniqueID": 22
+        }
+      },
+      {
+        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.QuestionBlock",
+        "properties": {
+          "blockType": "Coin",
+          "bobSpeed": 0.1,
+          "uniqueID": 23
         }
       },
       {
@@ -173,7 +489,7 @@
           "angularVelocity": 0.0,
           "gravityScale": 1.0,
           "isSensor": false,
-          "uniqueID": 360
+          "uniqueID": 24
         }
       },
       {
@@ -191,7 +507,7 @@
             "x": 0.0,
             "y": 0.0
           },
-          "uniqueID": 361
+          "uniqueID": 25
         }
       }
     ],
@@ -206,8 +522,8 @@
         "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.TransformComponent",
         "properties": {
           "position": {
-            "x": 1.875,
-            "y": 0.625
+            "x": 2.375,
+            "y": 1.875
           },
           "layer": 0,
           "scale": {
@@ -215,7 +531,7 @@
             "y": 0.25
           },
           "rotation": 0.0,
-          "uniqueID": 357
+          "uniqueID": 20
         }
       },
       {
@@ -231,30 +547,188 @@
             "width": 16.0,
             "height": 16.0,
             "texture": {
-              "filepath": "Assets/Textures/decorationsAndBlocks.png",
+              "filepath": "Assets/Textures/items.png",
               "width": 112,
-              "height": 192
+              "height": 80
             },
             "textureCoordinates": [
               {
-                "x": 0.14285715,
-                "y": 0.8333333
+                "x": 0.2857143,
+                "y": 1.0
+              },
+              {
+                "x": 0.2857143,
+                "y": 0.8
               },
               {
                 "x": 0.14285715,
-                "y": 0.75
+                "y": 0.8
               },
               {
-                "x": 0.0,
-                "y": 0.75
-              },
-              {
-                "x": 0.0,
-                "y": 0.8333333
+                "x": 0.14285715,
+                "y": 1.0
               }
             ]
           },
-          "uniqueID": 358
+          "uniqueID": 21
+        }
+      },
+      {
+        "type": "Just_Forge_2D.CoreSystems.AnimationSystem.StateMachine",
+        "properties": {
+          "stateTransfers": [
+            [
+              {
+                "state": "Question",
+                "trigger": "setInactive"
+              },
+              "Inactive"
+            ]
+          ],
+          "states": [
+            {
+              "title": "Question",
+              "animationFrames": [
+                {
+                  "sprite": {
+                    "width": 16.0,
+                    "height": 16.0,
+                    "texture": {
+                      "filepath": "Assets/Textures/items.png",
+                      "width": 112,
+                      "height": 80
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.14285715,
+                        "y": 1.0
+                      },
+                      {
+                        "x": 0.14285715,
+                        "y": 0.8
+                      },
+                      {
+                        "x": 0.0,
+                        "y": 0.8
+                      },
+                      {
+                        "x": 0.0,
+                        "y": 1.0
+                      }
+                    ]
+                  },
+                  "frameTime": 0.57
+                },
+                {
+                  "sprite": {
+                    "width": 16.0,
+                    "height": 16.0,
+                    "texture": {
+                      "filepath": "Assets/Textures/items.png",
+                      "width": 112,
+                      "height": 80
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.2857143,
+                        "y": 1.0
+                      },
+                      {
+                        "x": 0.2857143,
+                        "y": 0.8
+                      },
+                      {
+                        "x": 0.14285715,
+                        "y": 0.8
+                      },
+                      {
+                        "x": 0.14285715,
+                        "y": 1.0
+                      }
+                    ]
+                  },
+                  "frameTime": 0.23
+                },
+                {
+                  "sprite": {
+                    "width": 16.0,
+                    "height": 16.0,
+                    "texture": {
+                      "filepath": "Assets/Textures/items.png",
+                      "width": 112,
+                      "height": 80
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.42857143,
+                        "y": 1.0
+                      },
+                      {
+                        "x": 0.42857143,
+                        "y": 0.8
+                      },
+                      {
+                        "x": 0.2857143,
+                        "y": 0.8
+                      },
+                      {
+                        "x": 0.2857143,
+                        "y": 1.0
+                      }
+                    ]
+                  },
+                  "frameTime": 0.23
+                }
+              ],
+              "doesLoop": true
+            },
+            {
+              "title": "Inactive",
+              "animationFrames": [
+                {
+                  "sprite": {
+                    "width": 16.0,
+                    "height": 16.0,
+                    "texture": {
+                      "filepath": "Assets/Textures/items.png",
+                      "width": 112,
+                      "height": 80
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.5714286,
+                        "y": 1.0
+                      },
+                      {
+                        "x": 0.5714286,
+                        "y": 0.8
+                      },
+                      {
+                        "x": 0.42857143,
+                        "y": 0.8
+                      },
+                      {
+                        "x": 0.42857143,
+                        "y": 1.0
+                      }
+                    ]
+                  },
+                  "frameTime": 0.1
+                }
+              ],
+              "doesLoop": false
+            }
+          ],
+          "defaultStateTitle": "Question",
+          "uniqueID": 22
+        }
+      },
+      {
+        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.QuestionBlock",
+        "properties": {
+          "blockType": "Coin",
+          "bobSpeed": 0.1,
+          "uniqueID": 23
         }
       },
       {
@@ -273,7 +747,7 @@
           "angularVelocity": 0.0,
           "gravityScale": 1.0,
           "isSensor": false,
-          "uniqueID": 362
+          "uniqueID": 24
         }
       },
       {
@@ -291,7 +765,7 @@
             "x": 0.0,
             "y": 0.0
           },
-          "uniqueID": 363
+          "uniqueID": 25
         }
       }
     ],
@@ -306,8 +780,8 @@
         "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.TransformComponent",
         "properties": {
           "position": {
-            "x": 2.125,
-            "y": 0.625
+            "x": 0.125,
+            "y": 1.125
           },
           "layer": 0,
           "scale": {
@@ -315,7 +789,7 @@
             "y": 0.25
           },
           "rotation": 0.0,
-          "uniqueID": 357
+          "uniqueID": 27
         }
       },
       {
@@ -354,7 +828,7 @@
               }
             ]
           },
-          "uniqueID": 358
+          "uniqueID": 28
         }
       },
       {
@@ -373,7 +847,7 @@
           "angularVelocity": 0.0,
           "gravityScale": 1.0,
           "isSensor": false,
-          "uniqueID": 364
+          "uniqueID": 30
         }
       },
       {
@@ -391,7 +865,7 @@
             "x": 0.0,
             "y": 0.0
           },
-          "uniqueID": 365
+          "uniqueID": 31
         }
       }
     ],
@@ -406,8 +880,8 @@
         "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.TransformComponent",
         "properties": {
           "position": {
-            "x": 2.375,
-            "y": 0.625
+            "x": 0.375,
+            "y": 1.125
           },
           "layer": 0,
           "scale": {
@@ -415,7 +889,7 @@
             "y": 0.25
           },
           "rotation": 0.0,
-          "uniqueID": 357
+          "uniqueID": 32
         }
       },
       {
@@ -454,7 +928,7 @@
               }
             ]
           },
-          "uniqueID": 358
+          "uniqueID": 33
         }
       },
       {
@@ -473,7 +947,7 @@
           "angularVelocity": 0.0,
           "gravityScale": 1.0,
           "isSensor": false,
-          "uniqueID": 366
+          "uniqueID": 35
         }
       },
       {
@@ -491,7 +965,7 @@
             "x": 0.0,
             "y": 0.0
           },
-          "uniqueID": 367
+          "uniqueID": 36
         }
       }
     ],
@@ -506,8 +980,8 @@
         "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.TransformComponent",
         "properties": {
           "position": {
-            "x": 2.625,
-            "y": 0.625
+            "x": 0.625,
+            "y": 1.125
           },
           "layer": 0,
           "scale": {
@@ -515,7 +989,7 @@
             "y": 0.25
           },
           "rotation": 0.0,
-          "uniqueID": 357
+          "uniqueID": 32
         }
       },
       {
@@ -554,7 +1028,7 @@
               }
             ]
           },
-          "uniqueID": 358
+          "uniqueID": 33
         }
       },
       {
@@ -573,7 +1047,7 @@
           "angularVelocity": 0.0,
           "gravityScale": 1.0,
           "isSensor": false,
-          "uniqueID": 368
+          "uniqueID": 57
         }
       },
       {
@@ -591,7 +1065,7 @@
             "x": 0.0,
             "y": 0.0
           },
-          "uniqueID": 369
+          "uniqueID": 58
         }
       }
     ],
@@ -606,8 +1080,8 @@
         "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.TransformComponent",
         "properties": {
           "position": {
-            "x": 2.875,
-            "y": 0.625
+            "x": 0.875,
+            "y": 1.125
           },
           "layer": 0,
           "scale": {
@@ -615,7 +1089,7 @@
             "y": 0.25
           },
           "rotation": 0.0,
-          "uniqueID": 357
+          "uniqueID": 32
         }
       },
       {
@@ -654,7 +1128,7 @@
               }
             ]
           },
-          "uniqueID": 358
+          "uniqueID": 33
         }
       },
       {
@@ -673,7 +1147,7 @@
           "angularVelocity": 0.0,
           "gravityScale": 1.0,
           "isSensor": false,
-          "uniqueID": 370
+          "uniqueID": 59
         }
       },
       {
@@ -691,7 +1165,7 @@
             "x": 0.0,
             "y": 0.0
           },
-          "uniqueID": 371
+          "uniqueID": 60
         }
       }
     ],
@@ -706,8 +1180,8 @@
         "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.TransformComponent",
         "properties": {
           "position": {
-            "x": 3.125,
-            "y": 0.625
+            "x": 1.125,
+            "y": 1.125
           },
           "layer": 0,
           "scale": {
@@ -715,7 +1189,7 @@
             "y": 0.25
           },
           "rotation": 0.0,
-          "uniqueID": 357
+          "uniqueID": 32
         }
       },
       {
@@ -754,7 +1228,7 @@
               }
             ]
           },
-          "uniqueID": 358
+          "uniqueID": 33
         }
       },
       {
@@ -773,7 +1247,7 @@
           "angularVelocity": 0.0,
           "gravityScale": 1.0,
           "isSensor": false,
-          "uniqueID": 372
+          "uniqueID": 61
         }
       },
       {
@@ -791,7 +1265,7 @@
             "x": 0.0,
             "y": 0.0
           },
-          "uniqueID": 373
+          "uniqueID": 62
         }
       }
     ],
@@ -806,8 +1280,8 @@
         "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.TransformComponent",
         "properties": {
           "position": {
-            "x": 3.375,
-            "y": 0.625
+            "x": 1.375,
+            "y": 1.125
           },
           "layer": 0,
           "scale": {
@@ -815,7 +1289,7 @@
             "y": 0.25
           },
           "rotation": 0.0,
-          "uniqueID": 357
+          "uniqueID": 32
         }
       },
       {
@@ -854,7 +1328,7 @@
               }
             ]
           },
-          "uniqueID": 358
+          "uniqueID": 33
         }
       },
       {
@@ -873,7 +1347,7 @@
           "angularVelocity": 0.0,
           "gravityScale": 1.0,
           "isSensor": false,
-          "uniqueID": 374
+          "uniqueID": 63
         }
       },
       {
@@ -891,7 +1365,7 @@
             "x": 0.0,
             "y": 0.0
           },
-          "uniqueID": 375
+          "uniqueID": 64
         }
       }
     ],
@@ -906,8 +1380,8 @@
         "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.TransformComponent",
         "properties": {
           "position": {
-            "x": 3.625,
-            "y": 0.61948466
+            "x": 1.625,
+            "y": 1.125
           },
           "layer": 0,
           "scale": {
@@ -915,7 +1389,7 @@
             "y": 0.25
           },
           "rotation": 0.0,
-          "uniqueID": 357
+          "uniqueID": 32
         }
       },
       {
@@ -954,7 +1428,7 @@
               }
             ]
           },
-          "uniqueID": 358
+          "uniqueID": 33
         }
       },
       {
@@ -973,7 +1447,7 @@
           "angularVelocity": 0.0,
           "gravityScale": 1.0,
           "isSensor": false,
-          "uniqueID": 376
+          "uniqueID": 65
         }
       },
       {
@@ -991,7 +1465,7 @@
             "x": 0.0,
             "y": 0.0
           },
-          "uniqueID": 377
+          "uniqueID": 66
         }
       }
     ],
@@ -1006,8 +1480,8 @@
         "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.TransformComponent",
         "properties": {
           "position": {
-            "x": 3.875,
-            "y": 0.625
+            "x": 1.875,
+            "y": 1.125
           },
           "layer": 0,
           "scale": {
@@ -1015,7 +1489,7 @@
             "y": 0.25
           },
           "rotation": 0.0,
-          "uniqueID": 357
+          "uniqueID": 32
         }
       },
       {
@@ -1054,7 +1528,7 @@
               }
             ]
           },
-          "uniqueID": 358
+          "uniqueID": 33
         }
       },
       {
@@ -1073,7 +1547,7 @@
           "angularVelocity": 0.0,
           "gravityScale": 1.0,
           "isSensor": false,
-          "uniqueID": 378
+          "uniqueID": 67
         }
       },
       {
@@ -1091,7 +1565,7 @@
             "x": 0.0,
             "y": 0.0
           },
-          "uniqueID": 379
+          "uniqueID": 68
         }
       }
     ],
@@ -1106,8 +1580,8 @@
         "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.TransformComponent",
         "properties": {
           "position": {
-            "x": 0.375,
-            "y": 1.2115073
+            "x": 2.125,
+            "y": 1.125
           },
           "layer": 0,
           "scale": {
@@ -1115,7 +1589,407 @@
             "y": 0.25
           },
           "rotation": 0.0,
-          "uniqueID": 380
+          "uniqueID": 32
+        }
+      },
+      {
+        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.Sprite.SpriteComponent",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16.0,
+            "height": 16.0,
+            "texture": {
+              "filepath": "Assets/Textures/decorationsAndBlocks.png",
+              "width": 112,
+              "height": 192
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.14285715,
+                "y": 0.8333333
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.75
+              },
+              {
+                "x": 0.0,
+                "y": 0.75
+              },
+              {
+                "x": 0.0,
+                "y": 0.8333333
+              }
+            ]
+          },
+          "uniqueID": 33
+        }
+      },
+      {
+        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.PhysicsComponents.RigidBodyComponent",
+        "properties": {
+          "velocity": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "angularDamping": 0.8,
+          "linearDamping": 0.9,
+          "mass": 0.0,
+          "bodyType": "Static",
+          "fixedRotation": false,
+          "continuousCollision": true,
+          "angularVelocity": 0.0,
+          "gravityScale": 1.0,
+          "isSensor": false,
+          "uniqueID": 69
+        }
+      },
+      {
+        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.PhysicsComponents.Collider.BoxColliderComponent",
+        "properties": {
+          "halfSize": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "origin": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "uniqueID": 70
+        }
+      }
+    ],
+    "uniqueID": 121,
+    "doSerialization": true,
+    "isDead": false
+  },
+  {
+    "name": "Auto Generated",
+    "components": [
+      {
+        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.TransformComponent",
+        "properties": {
+          "position": {
+            "x": 2.375,
+            "y": 1.125
+          },
+          "layer": 0,
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "uniqueID": 32
+        }
+      },
+      {
+        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.Sprite.SpriteComponent",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16.0,
+            "height": 16.0,
+            "texture": {
+              "filepath": "Assets/Textures/decorationsAndBlocks.png",
+              "width": 112,
+              "height": 192
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.14285715,
+                "y": 0.8333333
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.75
+              },
+              {
+                "x": 0.0,
+                "y": 0.75
+              },
+              {
+                "x": 0.0,
+                "y": 0.8333333
+              }
+            ]
+          },
+          "uniqueID": 33
+        }
+      },
+      {
+        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.PhysicsComponents.RigidBodyComponent",
+        "properties": {
+          "velocity": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "angularDamping": 0.8,
+          "linearDamping": 0.9,
+          "mass": 0.0,
+          "bodyType": "Static",
+          "fixedRotation": false,
+          "continuousCollision": true,
+          "angularVelocity": 0.0,
+          "gravityScale": 1.0,
+          "isSensor": false,
+          "uniqueID": 71
+        }
+      },
+      {
+        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.PhysicsComponents.Collider.BoxColliderComponent",
+        "properties": {
+          "halfSize": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "origin": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "uniqueID": 72
+        }
+      }
+    ],
+    "uniqueID": 122,
+    "doSerialization": true,
+    "isDead": false
+  },
+  {
+    "name": "Auto Generated",
+    "components": [
+      {
+        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.TransformComponent",
+        "properties": {
+          "position": {
+            "x": 2.625,
+            "y": 1.125
+          },
+          "layer": 0,
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "uniqueID": 32
+        }
+      },
+      {
+        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.Sprite.SpriteComponent",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16.0,
+            "height": 16.0,
+            "texture": {
+              "filepath": "Assets/Textures/decorationsAndBlocks.png",
+              "width": 112,
+              "height": 192
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.14285715,
+                "y": 0.8333333
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.75
+              },
+              {
+                "x": 0.0,
+                "y": 0.75
+              },
+              {
+                "x": 0.0,
+                "y": 0.8333333
+              }
+            ]
+          },
+          "uniqueID": 33
+        }
+      },
+      {
+        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.PhysicsComponents.RigidBodyComponent",
+        "properties": {
+          "velocity": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "angularDamping": 0.8,
+          "linearDamping": 0.9,
+          "mass": 0.0,
+          "bodyType": "Static",
+          "fixedRotation": false,
+          "continuousCollision": true,
+          "angularVelocity": 0.0,
+          "gravityScale": 1.0,
+          "isSensor": false,
+          "uniqueID": 73
+        }
+      },
+      {
+        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.PhysicsComponents.Collider.BoxColliderComponent",
+        "properties": {
+          "halfSize": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "origin": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "uniqueID": 74
+        }
+      }
+    ],
+    "uniqueID": 123,
+    "doSerialization": true,
+    "isDead": false
+  },
+  {
+    "name": "Auto Generated",
+    "components": [
+      {
+        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.TransformComponent",
+        "properties": {
+          "position": {
+            "x": 2.875,
+            "y": 1.125
+          },
+          "layer": 0,
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "uniqueID": 32
+        }
+      },
+      {
+        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.Sprite.SpriteComponent",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16.0,
+            "height": 16.0,
+            "texture": {
+              "filepath": "Assets/Textures/decorationsAndBlocks.png",
+              "width": 112,
+              "height": 192
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.14285715,
+                "y": 0.8333333
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.75
+              },
+              {
+                "x": 0.0,
+                "y": 0.75
+              },
+              {
+                "x": 0.0,
+                "y": 0.8333333
+              }
+            ]
+          },
+          "uniqueID": 33
+        }
+      },
+      {
+        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.PhysicsComponents.RigidBodyComponent",
+        "properties": {
+          "velocity": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "angularDamping": 0.8,
+          "linearDamping": 0.9,
+          "mass": 0.0,
+          "bodyType": "Static",
+          "fixedRotation": false,
+          "continuousCollision": true,
+          "angularVelocity": 0.0,
+          "gravityScale": 1.0,
+          "isSensor": false,
+          "uniqueID": 75
+        }
+      },
+      {
+        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.PhysicsComponents.Collider.BoxColliderComponent",
+        "properties": {
+          "halfSize": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "origin": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "uniqueID": 76
+        }
+      }
+    ],
+    "uniqueID": 124,
+    "doSerialization": true,
+    "isDead": false
+  },
+  {
+    "name": "Auto Generated",
+    "components": [
+      {
+        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.TransformComponent",
+        "properties": {
+          "position": {
+            "x": 0.375,
+            "y": 1.375
+          },
+          "layer": 0,
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "uniqueID": 77
         }
       },
       {
@@ -1154,7 +2028,7 @@
               }
             ]
           },
-          "uniqueID": 381
+          "uniqueID": 78
         }
       },
       {
@@ -2114,7 +2988,7 @@
             }
           ],
           "defaultStateTitle": "Idle",
-          "uniqueID": 382
+          "uniqueID": 79
         }
       },
       {
@@ -2133,19 +3007,25 @@
           "angularVelocity": 0.0,
           "gravityScale": 1.0,
           "isSensor": false,
-          "uniqueID": 383
+          "uniqueID": 80
         }
       },
       {
-        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.PhysicsComponents.Collider.CylinderColliderComponent",
+        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.PhysicsComponents.Collider.BoxColliderComponent",
         "properties": {
-          "width": 0.39,
-          "height": 0.15,
+          "halfSize": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "origin": {
+            "x": 0.0,
+            "y": 0.0
+          },
           "offset": {
             "x": 0.0,
             "y": 0.0
           },
-          "uniqueID": 384
+          "uniqueID": 81
         }
       },
       {
@@ -2160,1392 +3040,11 @@
             "x": 2.1,
             "y": 3.1
           },
-          "uniqueID": 385
-        }
-      }
-    ],
-    "uniqueID": 121,
-    "doSerialization": true,
-    "isDead": false
-  },
-  {
-    "name": "Auto Generated",
-    "components": [
-      {
-        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.TransformComponent",
-        "properties": {
-          "position": {
-            "x": 1.125,
-            "y": 0.625
-          },
-          "layer": 0,
-          "scale": {
-            "x": 0.25,
-            "y": 0.25
-          },
-          "rotation": 0.0,
-          "uniqueID": 406
-        }
-      },
-      {
-        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.Sprite.SpriteComponent",
-        "properties": {
-          "color": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0,
-            "w": 1.0
-          },
-          "sprite": {
-            "width": 16.0,
-            "height": 16.0,
-            "texture": {
-              "filepath": "Assets/Textures/decorationsAndBlocks.png",
-              "width": 112,
-              "height": 192
-            },
-            "textureCoordinates": [
-              {
-                "x": 0.14285715,
-                "y": 0.8333333
-              },
-              {
-                "x": 0.14285715,
-                "y": 0.75
-              },
-              {
-                "x": 0.0,
-                "y": 0.75
-              },
-              {
-                "x": 0.0,
-                "y": 0.8333333
-              }
-            ]
-          },
-          "uniqueID": 407
-        }
-      },
-      {
-        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.PhysicsComponents.RigidBodyComponent",
-        "properties": {
-          "velocity": {
-            "x": 0.0,
-            "y": 0.0
-          },
-          "angularDamping": 0.8,
-          "linearDamping": 0.9,
-          "mass": 0.0,
-          "bodyType": "Static",
-          "fixedRotation": false,
-          "continuousCollision": true,
-          "angularVelocity": 0.0,
-          "gravityScale": 1.0,
-          "isSensor": false,
-          "uniqueID": 417
-        }
-      },
-      {
-        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.PhysicsComponents.Collider.BoxColliderComponent",
-        "properties": {
-          "halfSize": {
-            "x": 0.25,
-            "y": 0.25
-          },
-          "origin": {
-            "x": 0.0,
-            "y": 0.0
-          },
-          "offset": {
-            "x": 0.0,
-            "y": 0.0
-          },
-          "uniqueID": 418
-        }
-      }
-    ],
-    "uniqueID": 122,
-    "doSerialization": true,
-    "isDead": false
-  },
-  {
-    "name": "Auto Generated",
-    "components": [
-      {
-        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.TransformComponent",
-        "properties": {
-          "position": {
-            "x": 0.875,
-            "y": 0.625
-          },
-          "layer": 0,
-          "scale": {
-            "x": 0.25,
-            "y": 0.25
-          },
-          "rotation": 0.0,
-          "uniqueID": 406
-        }
-      },
-      {
-        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.Sprite.SpriteComponent",
-        "properties": {
-          "color": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0,
-            "w": 1.0
-          },
-          "sprite": {
-            "width": 16.0,
-            "height": 16.0,
-            "texture": {
-              "filepath": "Assets/Textures/decorationsAndBlocks.png",
-              "width": 112,
-              "height": 192
-            },
-            "textureCoordinates": [
-              {
-                "x": 0.14285715,
-                "y": 0.8333333
-              },
-              {
-                "x": 0.14285715,
-                "y": 0.75
-              },
-              {
-                "x": 0.0,
-                "y": 0.75
-              },
-              {
-                "x": 0.0,
-                "y": 0.8333333
-              }
-            ]
-          },
-          "uniqueID": 407
-        }
-      },
-      {
-        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.PhysicsComponents.RigidBodyComponent",
-        "properties": {
-          "velocity": {
-            "x": 0.0,
-            "y": 0.0
-          },
-          "angularDamping": 0.8,
-          "linearDamping": 0.9,
-          "mass": 0.0,
-          "bodyType": "Static",
-          "fixedRotation": false,
-          "continuousCollision": true,
-          "angularVelocity": 0.0,
-          "gravityScale": 1.0,
-          "isSensor": false,
-          "uniqueID": 415
-        }
-      },
-      {
-        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.PhysicsComponents.Collider.BoxColliderComponent",
-        "properties": {
-          "halfSize": {
-            "x": 0.25,
-            "y": 0.25
-          },
-          "origin": {
-            "x": 0.0,
-            "y": 0.0
-          },
-          "offset": {
-            "x": 0.0,
-            "y": 0.0
-          },
-          "uniqueID": 416
-        }
-      }
-    ],
-    "uniqueID": 123,
-    "doSerialization": true,
-    "isDead": false
-  },
-  {
-    "name": "Auto Generated",
-    "components": [
-      {
-        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.TransformComponent",
-        "properties": {
-          "position": {
-            "x": 0.625,
-            "y": 0.625
-          },
-          "layer": 0,
-          "scale": {
-            "x": 0.25,
-            "y": 0.25
-          },
-          "rotation": 0.0,
-          "uniqueID": 406
-        }
-      },
-      {
-        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.Sprite.SpriteComponent",
-        "properties": {
-          "color": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0,
-            "w": 1.0
-          },
-          "sprite": {
-            "width": 16.0,
-            "height": 16.0,
-            "texture": {
-              "filepath": "Assets/Textures/decorationsAndBlocks.png",
-              "width": 112,
-              "height": 192
-            },
-            "textureCoordinates": [
-              {
-                "x": 0.14285715,
-                "y": 0.8333333
-              },
-              {
-                "x": 0.14285715,
-                "y": 0.75
-              },
-              {
-                "x": 0.0,
-                "y": 0.75
-              },
-              {
-                "x": 0.0,
-                "y": 0.8333333
-              }
-            ]
-          },
-          "uniqueID": 407
-        }
-      },
-      {
-        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.PhysicsComponents.RigidBodyComponent",
-        "properties": {
-          "velocity": {
-            "x": 0.0,
-            "y": 0.0
-          },
-          "angularDamping": 0.8,
-          "linearDamping": 0.9,
-          "mass": 0.0,
-          "bodyType": "Static",
-          "fixedRotation": false,
-          "continuousCollision": true,
-          "angularVelocity": 0.0,
-          "gravityScale": 1.0,
-          "isSensor": false,
-          "uniqueID": 413
-        }
-      },
-      {
-        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.PhysicsComponents.Collider.BoxColliderComponent",
-        "properties": {
-          "halfSize": {
-            "x": 0.25,
-            "y": 0.25
-          },
-          "origin": {
-            "x": 0.0,
-            "y": 0.0
-          },
-          "offset": {
-            "x": 0.0,
-            "y": 0.0
-          },
-          "uniqueID": 414
-        }
-      }
-    ],
-    "uniqueID": 124,
-    "doSerialization": true,
-    "isDead": false
-  },
-  {
-    "name": "Auto Generated",
-    "components": [
-      {
-        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.TransformComponent",
-        "properties": {
-          "position": {
-            "x": 0.375,
-            "y": 0.625
-          },
-          "layer": 0,
-          "scale": {
-            "x": 0.25,
-            "y": 0.25
-          },
-          "rotation": 0.0,
-          "uniqueID": 406
-        }
-      },
-      {
-        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.Sprite.SpriteComponent",
-        "properties": {
-          "color": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0,
-            "w": 1.0
-          },
-          "sprite": {
-            "width": 16.0,
-            "height": 16.0,
-            "texture": {
-              "filepath": "Assets/Textures/decorationsAndBlocks.png",
-              "width": 112,
-              "height": 192
-            },
-            "textureCoordinates": [
-              {
-                "x": 0.14285715,
-                "y": 0.8333333
-              },
-              {
-                "x": 0.14285715,
-                "y": 0.75
-              },
-              {
-                "x": 0.0,
-                "y": 0.75
-              },
-              {
-                "x": 0.0,
-                "y": 0.8333333
-              }
-            ]
-          },
-          "uniqueID": 407
-        }
-      },
-      {
-        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.PhysicsComponents.RigidBodyComponent",
-        "properties": {
-          "velocity": {
-            "x": 0.0,
-            "y": 0.0
-          },
-          "angularDamping": 0.8,
-          "linearDamping": 0.9,
-          "mass": 0.0,
-          "bodyType": "Static",
-          "fixedRotation": false,
-          "continuousCollision": true,
-          "angularVelocity": 0.0,
-          "gravityScale": 1.0,
-          "isSensor": false,
-          "uniqueID": 411
-        }
-      },
-      {
-        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.PhysicsComponents.Collider.BoxColliderComponent",
-        "properties": {
-          "halfSize": {
-            "x": 0.25,
-            "y": 0.25
-          },
-          "origin": {
-            "x": 0.0,
-            "y": 0.0
-          },
-          "offset": {
-            "x": 0.0,
-            "y": 0.0
-          },
-          "uniqueID": 412
+          "uniqueID": 82
         }
       }
     ],
     "uniqueID": 125,
-    "doSerialization": true,
-    "isDead": false
-  },
-  {
-    "name": "Auto Generated",
-    "components": [
-      {
-        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.TransformComponent",
-        "properties": {
-          "position": {
-            "x": 0.125,
-            "y": 0.625
-          },
-          "layer": 0,
-          "scale": {
-            "x": 0.25,
-            "y": 0.25
-          },
-          "rotation": 0.0,
-          "uniqueID": 406
-        }
-      },
-      {
-        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.Sprite.SpriteComponent",
-        "properties": {
-          "color": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0,
-            "w": 1.0
-          },
-          "sprite": {
-            "width": 16.0,
-            "height": 16.0,
-            "texture": {
-              "filepath": "Assets/Textures/decorationsAndBlocks.png",
-              "width": 112,
-              "height": 192
-            },
-            "textureCoordinates": [
-              {
-                "x": 0.14285715,
-                "y": 0.8333333
-              },
-              {
-                "x": 0.14285715,
-                "y": 0.75
-              },
-              {
-                "x": 0.0,
-                "y": 0.75
-              },
-              {
-                "x": 0.0,
-                "y": 0.8333333
-              }
-            ]
-          },
-          "uniqueID": 407
-        }
-      },
-      {
-        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.PhysicsComponents.RigidBodyComponent",
-        "properties": {
-          "velocity": {
-            "x": 0.0,
-            "y": 0.0
-          },
-          "angularDamping": 0.8,
-          "linearDamping": 0.9,
-          "mass": 0.0,
-          "bodyType": "Static",
-          "fixedRotation": false,
-          "continuousCollision": true,
-          "angularVelocity": 0.0,
-          "gravityScale": 1.0,
-          "isSensor": false,
-          "uniqueID": 409
-        }
-      },
-      {
-        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.PhysicsComponents.Collider.BoxColliderComponent",
-        "properties": {
-          "halfSize": {
-            "x": 0.25,
-            "y": 0.25
-          },
-          "origin": {
-            "x": 0.0,
-            "y": 0.0
-          },
-          "offset": {
-            "x": 0.0,
-            "y": 0.0
-          },
-          "uniqueID": 410
-        }
-      }
-    ],
-    "uniqueID": 126,
-    "doSerialization": true,
-    "isDead": false
-  },
-  {
-    "name": "Auto Generated",
-    "components": [
-      {
-        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.TransformComponent",
-        "properties": {
-          "position": {
-            "x": 1.375,
-            "y": 1.6186508
-          },
-          "layer": 0,
-          "scale": {
-            "x": 0.25,
-            "y": 0.25
-          },
-          "rotation": 0.0,
-          "uniqueID": 441
-        }
-      },
-      {
-        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.Sprite.SpriteComponent",
-        "properties": {
-          "color": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0,
-            "w": 1.0
-          },
-          "sprite": {
-            "width": 16.0,
-            "height": 16.0,
-            "texture": {
-              "filepath": "Assets/Textures/decorationsAndBlocks.png",
-              "width": 112,
-              "height": 192
-            },
-            "textureCoordinates": [
-              {
-                "x": 1.0,
-                "y": 0.9166667
-              },
-              {
-                "x": 1.0,
-                "y": 0.8333333
-              },
-              {
-                "x": 0.85714287,
-                "y": 0.8333333
-              },
-              {
-                "x": 0.85714287,
-                "y": 0.9166667
-              }
-            ]
-          },
-          "uniqueID": 442
-        }
-      },
-      {
-        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.PhysicsComponents.RigidBodyComponent",
-        "properties": {
-          "velocity": {
-            "x": 0.0,
-            "y": 0.0
-          },
-          "angularDamping": 0.8,
-          "linearDamping": 0.9,
-          "mass": 0.0,
-          "bodyType": "Static",
-          "fixedRotation": false,
-          "continuousCollision": true,
-          "angularVelocity": 0.0,
-          "gravityScale": 1.0,
-          "isSensor": false,
-          "uniqueID": 444
-        }
-      },
-      {
-        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.PhysicsComponents.Collider.BoxColliderComponent",
-        "properties": {
-          "halfSize": {
-            "x": 0.25,
-            "y": 0.25
-          },
-          "origin": {
-            "x": 0.0,
-            "y": 0.0
-          },
-          "offset": {
-            "x": 0.0,
-            "y": 0.0
-          },
-          "uniqueID": 445
-        }
-      },
-      {
-        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.BreakableBrick",
-        "properties": {
-          "bobSpeed": 0.4,
-          "uniqueID": 466
-        }
-      }
-    ],
-    "uniqueID": 128,
-    "doSerialization": true,
-    "isDead": false
-  },
-  {
-    "name": "Auto Generated",
-    "components": [
-      {
-        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.TransformComponent",
-        "properties": {
-          "position": {
-            "x": 2.125,
-            "y": 1.625
-          },
-          "layer": 0,
-          "scale": {
-            "x": 0.25,
-            "y": 0.25
-          },
-          "rotation": 0.0,
-          "uniqueID": 487
-        }
-      },
-      {
-        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.Sprite.SpriteComponent",
-        "properties": {
-          "color": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0,
-            "w": 1.0
-          },
-          "sprite": {
-            "width": 16.0,
-            "height": 16.0,
-            "texture": {
-              "filepath": "Assets/Textures/items.png",
-              "width": 112,
-              "height": 80
-            },
-            "textureCoordinates": [
-              {
-                "x": 0.42857143,
-                "y": 1.0
-              },
-              {
-                "x": 0.42857143,
-                "y": 0.8
-              },
-              {
-                "x": 0.2857143,
-                "y": 0.8
-              },
-              {
-                "x": 0.2857143,
-                "y": 1.0
-              }
-            ]
-          },
-          "uniqueID": 488
-        }
-      },
-      {
-        "type": "Just_Forge_2D.CoreSystems.AnimationSystem.StateMachine",
-        "properties": {
-          "stateTransfers": [
-            [
-              {
-                "state": "Question",
-                "trigger": "setInactive"
-              },
-              "Inactive"
-            ]
-          ],
-          "states": [
-            {
-              "title": "Question",
-              "animationFrames": [
-                {
-                  "sprite": {
-                    "width": 16.0,
-                    "height": 16.0,
-                    "texture": {
-                      "filepath": "Assets/Textures/items.png",
-                      "width": 112,
-                      "height": 80
-                    },
-                    "textureCoordinates": [
-                      {
-                        "x": 0.14285715,
-                        "y": 1.0
-                      },
-                      {
-                        "x": 0.14285715,
-                        "y": 0.8
-                      },
-                      {
-                        "x": 0.0,
-                        "y": 0.8
-                      },
-                      {
-                        "x": 0.0,
-                        "y": 1.0
-                      }
-                    ]
-                  },
-                  "frameTime": 0.57
-                },
-                {
-                  "sprite": {
-                    "width": 16.0,
-                    "height": 16.0,
-                    "texture": {
-                      "filepath": "Assets/Textures/items.png",
-                      "width": 112,
-                      "height": 80
-                    },
-                    "textureCoordinates": [
-                      {
-                        "x": 0.2857143,
-                        "y": 1.0
-                      },
-                      {
-                        "x": 0.2857143,
-                        "y": 0.8
-                      },
-                      {
-                        "x": 0.14285715,
-                        "y": 0.8
-                      },
-                      {
-                        "x": 0.14285715,
-                        "y": 1.0
-                      }
-                    ]
-                  },
-                  "frameTime": 0.23
-                },
-                {
-                  "sprite": {
-                    "width": 16.0,
-                    "height": 16.0,
-                    "texture": {
-                      "filepath": "Assets/Textures/items.png",
-                      "width": 112,
-                      "height": 80
-                    },
-                    "textureCoordinates": [
-                      {
-                        "x": 0.42857143,
-                        "y": 1.0
-                      },
-                      {
-                        "x": 0.42857143,
-                        "y": 0.8
-                      },
-                      {
-                        "x": 0.2857143,
-                        "y": 0.8
-                      },
-                      {
-                        "x": 0.2857143,
-                        "y": 1.0
-                      }
-                    ]
-                  },
-                  "frameTime": 0.23
-                }
-              ],
-              "doesLoop": true
-            },
-            {
-              "title": "Inactive",
-              "animationFrames": [
-                {
-                  "sprite": {
-                    "width": 16.0,
-                    "height": 16.0,
-                    "texture": {
-                      "filepath": "Assets/Textures/items.png",
-                      "width": 112,
-                      "height": 80
-                    },
-                    "textureCoordinates": [
-                      {
-                        "x": 0.5714286,
-                        "y": 1.0
-                      },
-                      {
-                        "x": 0.5714286,
-                        "y": 0.8
-                      },
-                      {
-                        "x": 0.42857143,
-                        "y": 0.8
-                      },
-                      {
-                        "x": 0.42857143,
-                        "y": 1.0
-                      }
-                    ]
-                  },
-                  "frameTime": 0.1
-                }
-              ],
-              "doesLoop": false
-            }
-          ],
-          "defaultStateTitle": "Question",
-          "uniqueID": 489
-        }
-      },
-      {
-        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.QuestionBlock",
-        "properties": {
-          "blockType": "Coin",
-          "bobSpeed": 0.1,
-          "uniqueID": 490
-        }
-      },
-      {
-        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.PhysicsComponents.RigidBodyComponent",
-        "properties": {
-          "velocity": {
-            "x": 0.0,
-            "y": 0.0
-          },
-          "angularDamping": 0.8,
-          "linearDamping": 0.9,
-          "mass": 0.0,
-          "bodyType": "Static",
-          "fixedRotation": false,
-          "continuousCollision": true,
-          "angularVelocity": 0.0,
-          "gravityScale": 1.0,
-          "isSensor": false,
-          "uniqueID": 491
-        }
-      },
-      {
-        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.PhysicsComponents.Collider.BoxColliderComponent",
-        "properties": {
-          "halfSize": {
-            "x": 0.25,
-            "y": 0.25
-          },
-          "origin": {
-            "x": 0.0,
-            "y": 0.0
-          },
-          "offset": {
-            "x": 0.0,
-            "y": 0.0
-          },
-          "uniqueID": 492
-        }
-      }
-    ],
-    "uniqueID": 129,
-    "doSerialization": true,
-    "isDead": false
-  },
-  {
-    "name": "Auto Generated",
-    "components": [
-      {
-        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.TransformComponent",
-        "properties": {
-          "position": {
-            "x": 2.375,
-            "y": 1.625
-          },
-          "layer": 0,
-          "scale": {
-            "x": 0.25,
-            "y": 0.25
-          },
-          "rotation": 0.0,
-          "uniqueID": 513
-        }
-      },
-      {
-        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.Sprite.SpriteComponent",
-        "properties": {
-          "color": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0,
-            "w": 1.0
-          },
-          "sprite": {
-            "width": 16.0,
-            "height": 16.0,
-            "texture": {
-              "filepath": "Assets/Textures/items.png",
-              "width": 112,
-              "height": 80
-            },
-            "textureCoordinates": [
-              {
-                "x": 0.42857143,
-                "y": 1.0
-              },
-              {
-                "x": 0.42857143,
-                "y": 0.8
-              },
-              {
-                "x": 0.2857143,
-                "y": 0.8
-              },
-              {
-                "x": 0.2857143,
-                "y": 1.0
-              }
-            ]
-          },
-          "uniqueID": 514
-        }
-      },
-      {
-        "type": "Just_Forge_2D.CoreSystems.AnimationSystem.StateMachine",
-        "properties": {
-          "stateTransfers": [
-            [
-              {
-                "state": "Question",
-                "trigger": "setInactive"
-              },
-              "Inactive"
-            ]
-          ],
-          "states": [
-            {
-              "title": "Question",
-              "animationFrames": [
-                {
-                  "sprite": {
-                    "width": 16.0,
-                    "height": 16.0,
-                    "texture": {
-                      "filepath": "Assets/Textures/items.png",
-                      "width": 112,
-                      "height": 80
-                    },
-                    "textureCoordinates": [
-                      {
-                        "x": 0.14285715,
-                        "y": 1.0
-                      },
-                      {
-                        "x": 0.14285715,
-                        "y": 0.8
-                      },
-                      {
-                        "x": 0.0,
-                        "y": 0.8
-                      },
-                      {
-                        "x": 0.0,
-                        "y": 1.0
-                      }
-                    ]
-                  },
-                  "frameTime": 0.57
-                },
-                {
-                  "sprite": {
-                    "width": 16.0,
-                    "height": 16.0,
-                    "texture": {
-                      "filepath": "Assets/Textures/items.png",
-                      "width": 112,
-                      "height": 80
-                    },
-                    "textureCoordinates": [
-                      {
-                        "x": 0.2857143,
-                        "y": 1.0
-                      },
-                      {
-                        "x": 0.2857143,
-                        "y": 0.8
-                      },
-                      {
-                        "x": 0.14285715,
-                        "y": 0.8
-                      },
-                      {
-                        "x": 0.14285715,
-                        "y": 1.0
-                      }
-                    ]
-                  },
-                  "frameTime": 0.23
-                },
-                {
-                  "sprite": {
-                    "width": 16.0,
-                    "height": 16.0,
-                    "texture": {
-                      "filepath": "Assets/Textures/items.png",
-                      "width": 112,
-                      "height": 80
-                    },
-                    "textureCoordinates": [
-                      {
-                        "x": 0.42857143,
-                        "y": 1.0
-                      },
-                      {
-                        "x": 0.42857143,
-                        "y": 0.8
-                      },
-                      {
-                        "x": 0.2857143,
-                        "y": 0.8
-                      },
-                      {
-                        "x": 0.2857143,
-                        "y": 1.0
-                      }
-                    ]
-                  },
-                  "frameTime": 0.23
-                }
-              ],
-              "doesLoop": true
-            },
-            {
-              "title": "Inactive",
-              "animationFrames": [
-                {
-                  "sprite": {
-                    "width": 16.0,
-                    "height": 16.0,
-                    "texture": {
-                      "filepath": "Assets/Textures/items.png",
-                      "width": 112,
-                      "height": 80
-                    },
-                    "textureCoordinates": [
-                      {
-                        "x": 0.5714286,
-                        "y": 1.0
-                      },
-                      {
-                        "x": 0.5714286,
-                        "y": 0.8
-                      },
-                      {
-                        "x": 0.42857143,
-                        "y": 0.8
-                      },
-                      {
-                        "x": 0.42857143,
-                        "y": 1.0
-                      }
-                    ]
-                  },
-                  "frameTime": 0.1
-                }
-              ],
-              "doesLoop": false
-            }
-          ],
-          "defaultStateTitle": "Question",
-          "uniqueID": 515
-        }
-      },
-      {
-        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.QuestionBlock",
-        "properties": {
-          "blockType": "Coin",
-          "bobSpeed": 0.1,
-          "uniqueID": 516
-        }
-      },
-      {
-        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.PhysicsComponents.RigidBodyComponent",
-        "properties": {
-          "velocity": {
-            "x": 0.0,
-            "y": 0.0
-          },
-          "angularDamping": 0.8,
-          "linearDamping": 0.9,
-          "mass": 0.0,
-          "bodyType": "Static",
-          "fixedRotation": false,
-          "continuousCollision": true,
-          "angularVelocity": 0.0,
-          "gravityScale": 1.0,
-          "isSensor": false,
-          "uniqueID": 517
-        }
-      },
-      {
-        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.PhysicsComponents.Collider.BoxColliderComponent",
-        "properties": {
-          "halfSize": {
-            "x": 0.25,
-            "y": 0.25
-          },
-          "origin": {
-            "x": 0.0,
-            "y": 0.0
-          },
-          "offset": {
-            "x": 0.0,
-            "y": 0.0
-          },
-          "uniqueID": 518
-        }
-      }
-    ],
-    "uniqueID": 130,
-    "doSerialization": true,
-    "isDead": false
-  },
-  {
-    "name": "Auto Generated",
-    "components": [
-      {
-        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.TransformComponent",
-        "properties": {
-          "position": {
-            "x": 2.625,
-            "y": 1.625
-          },
-          "layer": 0,
-          "scale": {
-            "x": 0.25,
-            "y": 0.25
-          },
-          "rotation": 0.0,
-          "uniqueID": 513
-        }
-      },
-      {
-        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.Sprite.SpriteComponent",
-        "properties": {
-          "color": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0,
-            "w": 1.0
-          },
-          "sprite": {
-            "width": 16.0,
-            "height": 16.0,
-            "texture": {
-              "filepath": "Assets/Textures/items.png",
-              "width": 112,
-              "height": 80
-            },
-            "textureCoordinates": [
-              {
-                "x": 0.42857143,
-                "y": 1.0
-              },
-              {
-                "x": 0.42857143,
-                "y": 0.8
-              },
-              {
-                "x": 0.2857143,
-                "y": 0.8
-              },
-              {
-                "x": 0.2857143,
-                "y": 1.0
-              }
-            ]
-          },
-          "uniqueID": 514
-        }
-      },
-      {
-        "type": "Just_Forge_2D.CoreSystems.AnimationSystem.StateMachine",
-        "properties": {
-          "stateTransfers": [
-            [
-              {
-                "state": "Question",
-                "trigger": "setInactive"
-              },
-              "Inactive"
-            ]
-          ],
-          "states": [
-            {
-              "title": "Question",
-              "animationFrames": [
-                {
-                  "sprite": {
-                    "width": 16.0,
-                    "height": 16.0,
-                    "texture": {
-                      "filepath": "Assets/Textures/items.png",
-                      "width": 112,
-                      "height": 80
-                    },
-                    "textureCoordinates": [
-                      {
-                        "x": 0.14285715,
-                        "y": 1.0
-                      },
-                      {
-                        "x": 0.14285715,
-                        "y": 0.8
-                      },
-                      {
-                        "x": 0.0,
-                        "y": 0.8
-                      },
-                      {
-                        "x": 0.0,
-                        "y": 1.0
-                      }
-                    ]
-                  },
-                  "frameTime": 0.57
-                },
-                {
-                  "sprite": {
-                    "width": 16.0,
-                    "height": 16.0,
-                    "texture": {
-                      "filepath": "Assets/Textures/items.png",
-                      "width": 112,
-                      "height": 80
-                    },
-                    "textureCoordinates": [
-                      {
-                        "x": 0.2857143,
-                        "y": 1.0
-                      },
-                      {
-                        "x": 0.2857143,
-                        "y": 0.8
-                      },
-                      {
-                        "x": 0.14285715,
-                        "y": 0.8
-                      },
-                      {
-                        "x": 0.14285715,
-                        "y": 1.0
-                      }
-                    ]
-                  },
-                  "frameTime": 0.23
-                },
-                {
-                  "sprite": {
-                    "width": 16.0,
-                    "height": 16.0,
-                    "texture": {
-                      "filepath": "Assets/Textures/items.png",
-                      "width": 112,
-                      "height": 80
-                    },
-                    "textureCoordinates": [
-                      {
-                        "x": 0.42857143,
-                        "y": 1.0
-                      },
-                      {
-                        "x": 0.42857143,
-                        "y": 0.8
-                      },
-                      {
-                        "x": 0.2857143,
-                        "y": 0.8
-                      },
-                      {
-                        "x": 0.2857143,
-                        "y": 1.0
-                      }
-                    ]
-                  },
-                  "frameTime": 0.23
-                }
-              ],
-              "doesLoop": true
-            },
-            {
-              "title": "Inactive",
-              "animationFrames": [
-                {
-                  "sprite": {
-                    "width": 16.0,
-                    "height": 16.0,
-                    "texture": {
-                      "filepath": "Assets/Textures/items.png",
-                      "width": 112,
-                      "height": 80
-                    },
-                    "textureCoordinates": [
-                      {
-                        "x": 0.5714286,
-                        "y": 1.0
-                      },
-                      {
-                        "x": 0.5714286,
-                        "y": 0.8
-                      },
-                      {
-                        "x": 0.42857143,
-                        "y": 0.8
-                      },
-                      {
-                        "x": 0.42857143,
-                        "y": 1.0
-                      }
-                    ]
-                  },
-                  "frameTime": 0.1
-                }
-              ],
-              "doesLoop": false
-            }
-          ],
-          "defaultStateTitle": "Question",
-          "uniqueID": 515
-        }
-      },
-      {
-        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.QuestionBlock",
-        "properties": {
-          "blockType": "Coin",
-          "bobSpeed": 0.1,
-          "uniqueID": 516
-        }
-      },
-      {
-        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.PhysicsComponents.RigidBodyComponent",
-        "properties": {
-          "velocity": {
-            "x": 0.0,
-            "y": 0.0
-          },
-          "angularDamping": 0.8,
-          "linearDamping": 0.9,
-          "mass": 0.0,
-          "bodyType": "Static",
-          "fixedRotation": false,
-          "continuousCollision": true,
-          "angularVelocity": 0.0,
-          "gravityScale": 1.0,
-          "isSensor": false,
-          "uniqueID": 517
-        }
-      },
-      {
-        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.PhysicsComponents.Collider.BoxColliderComponent",
-        "properties": {
-          "halfSize": {
-            "x": 0.25,
-            "y": 0.25
-          },
-          "origin": {
-            "x": 0.0,
-            "y": 0.0
-          },
-          "offset": {
-            "x": 0.0,
-            "y": 0.0
-          },
-          "uniqueID": 518
-        }
-      }
-    ],
-    "uniqueID": 131,
     "doSerialization": true,
     "isDead": false
   }

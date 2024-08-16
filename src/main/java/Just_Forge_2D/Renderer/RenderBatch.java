@@ -130,9 +130,17 @@ public class RenderBatch implements Comparable<RenderBatch>
             SpriteComponent sprite = sprites[i];
             if (sprite.isChanged())
             {
-                loadVertexProperties(i);
-                sprite.clean();
-                rebufferData = true;
+                if (!hasTexture(sprite.getTexture()))
+                {
+                    this.renderer.destroyGameObject(sprite.gameObject);
+                    this.renderer.add(sprite.gameObject);
+                }
+                else
+                {
+                    loadVertexProperties(i);
+                    sprite.clean();
+                    rebufferData = true;
+                }
             }
             if (sprite.gameObject.transform.layer != this.layer)
             {

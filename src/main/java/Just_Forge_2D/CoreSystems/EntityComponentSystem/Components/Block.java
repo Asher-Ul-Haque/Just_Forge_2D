@@ -67,7 +67,7 @@ public abstract class Block extends Component
 
     public void setInactive()
     {
-
+        this.active = false;
     }
 
     abstract void playerHit(PlayerControllerComponent CONTROLLER);

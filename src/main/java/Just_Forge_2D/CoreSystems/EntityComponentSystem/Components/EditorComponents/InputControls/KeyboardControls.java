@@ -1,5 +1,6 @@
 package Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.EditorComponents.InputControls;
 
+import Just_Forge_2D.CoreSystems.AnimationSystem.StateMachine;
 import Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.CoreSystems.EntityComponentSystem.GameObject;
 import Just_Forge_2D.CoreSystems.ForgeDynamo;
@@ -28,8 +29,12 @@ public class KeyboardControls extends Component
             ForgeDynamo.getCurrentScene().addGameObject(newObj);
             newObj.transform.position.add(0.1f, 0.1f);
             ForgeDynamo.getEditor().getPropertiesWindow().setActiveGameObject(newObj);
+            if (newObj.getCompoent(StateMachine.class) != null)
+            {
+                newObj.getCompoent(StateMachine.class).refreshTextures();
+            }
         }
-        else if (Keyboard.isKeyPressed(GLFW_KEY_LEFT_CONTROL) && Keyboard.isKeyPressed(GLFW_KEY_C) && activeGameObjects.size() > 1)
+        else if (Keyboard.isKeyPressed(GLFW_KEY_LEFT_CONTROL) && Keyboard.isKeyBeginPress(GLFW_KEY_C) && activeGameObjects.size() > 1)
         {
             List<GameObject> gameObjects = new ArrayList<>(activeGameObjects);
             propertiesWindow.clearSelection();
@@ -38,7 +43,12 @@ public class KeyboardControls extends Component
                 Logger.FORGE_LOG_DEBUG("Copying: " + go);
                 GameObject copy = go.copy();
                 ForgeDynamo.getCurrentScene().addGameObject(copy);
+                copy.transform.position.add(0.1f, 0.1f);
                 propertiesWindow.addActiveGameObject(copy);
+                if (go.getCompoent(StateMachine.class) != null)
+                {
+                    go.getCompoent(StateMachine.class).refreshTextures();
+                }
             }
         }
         else if (Keyboard.isKeyPressed(GLFW_KEY_DELETE))

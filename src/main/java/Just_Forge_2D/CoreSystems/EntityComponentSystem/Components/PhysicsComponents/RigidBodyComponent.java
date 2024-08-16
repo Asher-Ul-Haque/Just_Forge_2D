@@ -195,6 +195,15 @@ public class RigidBodyComponent extends Component
         }
     }
 
+    public void addVelocity(Vector2f VELOCITY)
+    {
+        if (rawBody == null)
+        {
+            Logger.FORGE_LOG_ERROR("Cant add velocity to a null raw body");
+            return;
+        }
+        rawBody.setLinearVelocity(rawBody.getLinearVelocity().add(new Vec2(VELOCITY.x, VELOCITY.y)));
+    }
     public void addForce(Vector2f FORCE)
     {
         if (rawBody == null)
