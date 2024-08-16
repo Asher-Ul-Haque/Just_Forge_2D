@@ -1,4 +1,3 @@
-
 plugins {
     id 'com.github.johnrengelman.shadow' version '8.1.1'
     id("java")
@@ -11,10 +10,10 @@ shadowJar {
         attributes 'Main-Class': 'Just_Forge_2D.Main'
     }
     from('Assets') {
-        into 'Assets'
+        into '${buildDir}/libs/Assets'
     }
     from('libs') {
-        into 'libs'
+        into '%{buildDir}/libs'
     }
 }
 group = "somebody.just"
