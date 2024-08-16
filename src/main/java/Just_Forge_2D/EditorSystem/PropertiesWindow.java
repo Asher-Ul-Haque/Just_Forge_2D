@@ -1,5 +1,6 @@
 package Just_Forge_2D.EditorSystem;
 
+import Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.BreakableBrick;
 import Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.PhysicsComponents.Collider.BoxColliderComponent;
 import Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.PhysicsComponents.Collider.CircleColliderComponent;
 import Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.PhysicsComponents.RigidBodyComponent;
@@ -61,7 +62,23 @@ public class PropertiesWindow
                     }
                 }
 
+                if (ImGui.menuItem("Add Breakable Brick"))
+                {
+                    if (activeGameObject.getCompoent(BreakableBrick.class) == null)
+                    {
+                        activeGameObject.addComponent(new BreakableBrick());
+                    }
+                }
+
                 if (ImGui.menuItem("Add Circle Collider"))
+                {
+                    if (activeGameObject.getCompoent(CircleColliderComponent.class) == null && activeGameObject.getCompoent(BoxColliderComponent.class) == null)
+                    {
+                        activeGameObject.addComponent(new CircleColliderComponent());
+                    }
+                }
+
+                if (ImGui.menuItem("Add Breakable Brick"))
                 {
                     if (activeGameObject.getCompoent(CircleColliderComponent.class) == null && activeGameObject.getCompoent(BoxColliderComponent.class) == null)
                     {

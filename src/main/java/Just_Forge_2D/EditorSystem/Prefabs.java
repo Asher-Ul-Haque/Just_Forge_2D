@@ -2,9 +2,12 @@ package Just_Forge_2D.EditorSystem;
 
 import Just_Forge_2D.CoreSystems.AnimationSystem.AnimationState;
 import Just_Forge_2D.CoreSystems.AnimationSystem.StateMachine;
+import Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.BlockCoin;
+import Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.PhysicsComponents.Collider.BoxColliderComponent;
 import Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.PhysicsComponents.Collider.CylinderColliderComponent;
 import Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.PhysicsComponents.RigidBodyComponent;
 import Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.PlayerControllerComponent;
+import Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.QuestionBlock;
 import Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.Sprite.Sprite;
 import Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.Sprite.SpriteSheet;
@@ -12,6 +15,7 @@ import Just_Forge_2D.CoreSystems.EntityComponentSystem.GameObject;
 import Just_Forge_2D.CoreSystems.ForgeDynamo;
 import Just_Forge_2D.Physics.Enums.BodyType;
 import Just_Forge_2D.Utils.AssetPool;
+import org.joml.Vector2f;
 
 public class Prefabs
 {
@@ -207,9 +211,67 @@ public class Prefabs
         rb.setMass(25.0f);
 
         mario.addComponent(rb);
-        mario.addComponent(pb);
+        //mario.addComponent(pb);
+        mario.addComponent(new BoxColliderComponent());
         mario.addComponent(new PlayerControllerComponent());
 
         return mario;
+    }
+
+    public static GameObject generateBlockCoin() {
+        SpriteSheet items = AssetPool.getSpriteSheet("Items");
+        GameObject coin = generateSpriteObject(items.getSprite(7), 0.25f, 0.25f);
+
+        AnimationState coinFlip = new AnimationState();
+        coinFlip.title = "CoinFlip";
+        float defaultFrameTime = 0.23f;
+        coinFlip.addFrame(items.getSprite(7), 0.57f);
+        coinFlip.addFrame(items.getSprite(8), defaultFrameTime);
+        coinFlip.addFrame(items.getSprite(9), defaultFrameTime);
+        coinFlip.setLoop(true);
+
+        StateMachine stateMachine = new StateMachine();
+        stateMachine.addState(coinFlip);
+        stateMachine.setDefaultState(coinFlip.title);
+        coin.addComponent(stateMachine);
+        coin.addComponent(new QuestionBlock());
+
+        coin.addComponent(new BlockCoin());
+
+        return coin;
+    }
+
+    public static GameObject generateQuestionBlock() {
+        SpriteSheet playerSprites = AssetPool.getSpriteSheet("Items");
+        GameObject questionBlock = generateSpriteObject(playerSprites.getSprite(0), 0.25f, 0.25f);
+
+        AnimationState flicker = new AnimationState();
+        flicker.title = "Question";
+        float defaultFrameTime = 0.23f;
+        flicker.addFrame(playerSprites.getSprite(0), 0.57f);
+        flicker.addFrame(playerSprites.getSprite(1), defaultFrameTime);
+        flicker.addFrame(playerSprites.getSprite(2), defaultFrameTime);
+        flicker.setLoop(true);
+
+        AnimationState inactive = new AnimationState();
+        inactive.title = "Inactive";
+        inactive.addFrame(playerSprites.getSprite(3), 0.1f);
+        inactive.setLoop(false);
+        StateMachine stateMachine = new StateMachine();
+        stateMachine.addState(flicker);
+        stateMachine.addState(inactive);
+        stateMachine.setDefaultState(flicker.title);
+        stateMachine.addState(flicker.title, inactive.title, "setInactive");
+        questionBlock.addComponent(stateMachine);
+        questionBlock.addComponent(new QuestionBlock());
+
+        RigidBodyComponent rb = new RigidBodyComponent();
+        rb.setBodyType(BodyType.Static);
+        questionBlock.addComponent(rb);
+        BoxColliderComponent b2d = new BoxColliderComponent();
+        b2d.setHalfSize(new Vector2f(0.25f, 0.25f));
+        questionBlock.addComponent(b2d);
+
+        return questionBlock;
     }
 }

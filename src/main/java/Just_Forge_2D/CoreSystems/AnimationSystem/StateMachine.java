@@ -85,7 +85,6 @@ public class StateMachine extends Component
                 return;
             }
         }
-        Logger.FORGE_LOG_ERROR("Unable to find trigger: " + TRIGGER);
     }
 
     @Override

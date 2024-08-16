@@ -17,6 +17,7 @@ import Just_Forge_2D.Utils.AssetPool;
 import imgui.ImGui;
 import imgui.ImVec2;
 import org.joml.Vector2f;
+import org.joml.Vector4f;
 
 import java.io.File;
 import java.util.Collection;
@@ -162,7 +163,20 @@ public class EditorSceneInitializer extends SceneInitializer
                 if (ImGui.imageButton(id, spriteWidth, spriteHeight, texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y))
                 {
                     GameObject object = Prefabs.generateMario();
-//                object.getCompoent(SpriteComponent.class).setColor(new Vector4f(0.8f, 0.8f, 0.8f, 0.5f));
+                    object.getCompoent(SpriteComponent.class).setColor(new Vector4f(0.8f, 0.8f, 0.8f, 0.5f));
+                    master.getCompoent(MouseControlComponent.class).pickupObject(object);
+                }
+
+                SpriteSheet items = AssetPool.getSpriteSheet("Items");
+                Sprite sprite2 = items.getSprite(0);
+                float sprite2Width = sprite2.getWidth() * 4;
+                float sprite2Height = sprite2.getHeight() * 4;
+                int id2 = sprite2.getTextureID();
+                Vector2f[] texCoords2 = sprite2.getTextureCoordinates();
+                if (ImGui.imageButton(id2, sprite2Width, sprite2Height, texCoords2[2].x, texCoords2[0].y, texCoords2[0].x, texCoords2[2].y))
+                {
+                    GameObject object = Prefabs.generateQuestionBlock();
+                    object.getCompoent(SpriteComponent.class).setColor(new Vector4f(0.8f, 0.8f, 0.8f, 0.5f));
                     master.getCompoent(MouseControlComponent.class).pickupObject(object);
                 }
                 ImGui.sameLine();

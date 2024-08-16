@@ -132,8 +132,9 @@ public class AssetPool
         File file = new File(FILE_PATH);
         if (!AssetPool.soundPool.containsKey(file.getAbsolutePath()))
         {
-            Logger.FORGE_LOG_TRACE("Sound with path: " + FILE_PATH + " Hashed in Asset Pool and loaded");
+            Logger.FORGE_LOG_DEBUG("Sound with path: " + FILE_PATH + " Hashed in Asset Pool and loaded");
             Sound sound = new Sound(file.getAbsolutePath(), DOES_LOOP);
+            nameToFile.put(NAME, file.getAbsolutePath());
             AssetPool.soundPool.put(file.getAbsolutePath(), sound);
         }
     }
