@@ -1,9 +1,9 @@
 package Just_Forge_2D.Utils;
 
-import Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.Sprite.SpriteSheet;
-import Just_Forge_2D.Renderer.Shader;
-import Just_Forge_2D.Renderer.Texture;
-import Just_Forge_2D.Sound.Sound;
+import Just_Forge_2D.AudioSystems.Sound;
+import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteSheet;
+import Just_Forge_2D.RenderingSystems.Shader;
+import Just_Forge_2D.RenderingSystems.Texture;
 
 import java.io.File;
 import java.util.Collection;

@@ -1,11 +1,11 @@
 package Just_Forge_2D.EditorSystem;
 
-import Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.BreakableBrick;
-import Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.PhysicsComponents.Collider.BoxColliderComponent;
-import Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.PhysicsComponents.Collider.CircleColliderComponent;
-import Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.PhysicsComponents.RigidBodyComponent;
-import Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.Sprite.SpriteComponent;
-import Just_Forge_2D.CoreSystems.EntityComponentSystem.GameObject;
+import Just_Forge_2D.EntityComponentSystem.Components.BreakableBrick;
+import Just_Forge_2D.EntityComponentSystem.Components.PhysicsComponents.Collider.BoxColliderComponent;
+import Just_Forge_2D.EntityComponentSystem.Components.PhysicsComponents.Collider.CircleColliderComponent;
+import Just_Forge_2D.EntityComponentSystem.Components.PhysicsComponents.RigidBodyComponent;
+import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
+import Just_Forge_2D.EntityComponentSystem.GameObject;
 import imgui.ImGui;
 import org.joml.Vector4f;
 

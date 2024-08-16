@@ -2,9 +2,18 @@ package Just_Forge_2D.Utils;
 
 import org.jbox2d.common.Vec2;
 import org.joml.Vector3f;
+import org.joml.Vector4f;
 
 public class Configurations
 {
+    public static final String DEFAULT_WINDOW_TITLE = "Just Forge 2D";
+    public static boolean DEFAULT_WINDOW_TRANSPARENCY_STATE = false;
+    public static boolean DEFAULT_WINDOW_MAXIMIZED_STATE = false;
+    public static boolean DEFAULT_WINDOW_VISIBLE_STATE = true;
+    public static boolean DEFAULT_WINDOW_DECORATION_STATE = true;
+    public static boolean DEFAULT_WINDOW_RESIZABLE_STATE = true;
+    public static boolean DEFAULT_VSYNC_ENABLE = true;
+
     public static final float GRID_WIDTH = 0.25f;
     public static final float GRID_HEIGHT = 0.25f;
     public static final int MAX_BATCH_SIZE = 1024;
@@ -31,7 +40,9 @@ public class Configurations
     public static final float DEFAULT_EDITOR_CAMERA_SCROLL_SENSITIVITY = 0.1f;
     public static final float DEFAULT_CAMERA_ZOOM = 1f;
     public static final String DEFAULT_SAVE_FILE = "Configurations/Levels/level.justForgeFile";
-    public static final int DEFAULT_WINDOW_WIDTH = 1980;
+    public static final int DEFAULT_WINDOW_WIDTH = 800;
     public static final int DEFAULT_WINDOW_HEIGHT = 720;
     public static final float DEFAULT_ASPECT_RATIO = 16f / 9f;
+    public static final int DEFAULT_FPS = 60;
+    public static final Vector4f DEFAULT_CLEAR_COLOR = new Vector4f(1.0f, 1.0f, 1.0f, 1.0f);
 }

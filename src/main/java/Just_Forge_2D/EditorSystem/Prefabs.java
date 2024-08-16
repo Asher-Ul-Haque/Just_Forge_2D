@@ -1,20 +1,20 @@
 package Just_Forge_2D.EditorSystem;
 
-import Just_Forge_2D.CoreSystems.AnimationSystem.AnimationState;
-import Just_Forge_2D.CoreSystems.AnimationSystem.StateMachine;
-import Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.BlockCoin;
-import Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.PhysicsComponents.Collider.BoxColliderComponent;
-import Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.PhysicsComponents.Collider.CylinderColliderComponent;
-import Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.PhysicsComponents.RigidBodyComponent;
-import Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.PlayerControllerComponent;
-import Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.QuestionBlock;
-import Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.Sprite.Sprite;
-import Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.Sprite.SpriteComponent;
-import Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.Sprite.SpriteSheet;
-import Just_Forge_2D.CoreSystems.EntityComponentSystem.GameObject;
-import Just_Forge_2D.CoreSystems.ForgeDynamo;
-import Just_Forge_2D.Physics.Enums.BodyType;
+import Just_Forge_2D.AnimationSystem.AnimationState;
+import Just_Forge_2D.AnimationSystem.StateMachine;
+import Just_Forge_2D.EntityComponentSystem.Components.BlockCoin;
+import Just_Forge_2D.EntityComponentSystem.Components.PhysicsComponents.Collider.BoxColliderComponent;
+import Just_Forge_2D.EntityComponentSystem.Components.PhysicsComponents.Collider.CylinderColliderComponent;
+import Just_Forge_2D.EntityComponentSystem.Components.PhysicsComponents.RigidBodyComponent;
+import Just_Forge_2D.EntityComponentSystem.Components.PlayerControllerComponent;
+import Just_Forge_2D.EntityComponentSystem.Components.QuestionBlock;
+import Just_Forge_2D.EntityComponentSystem.Components.Sprite.Sprite;
+import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
+import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteSheet;
+import Just_Forge_2D.EntityComponentSystem.GameObject;
+import Just_Forge_2D.PhysicsSystem.Enums.BodyType;
 import Just_Forge_2D.Utils.AssetPool;
+import Just_Forge_2D.Forge;
 import org.joml.Vector2f;
 
 public class Prefabs
@@ -28,7 +28,7 @@ public class Prefabs
 
     public static GameObject generateSpriteObject(String NAME, Sprite SPRITE, float SIZE_X, float SIZE_Y)
     {
-        GameObject block = ForgeDynamo.getCurrentScene().createGameObject(NAME);
+        GameObject block = Forge.getCurrentScene().createGameObject(NAME);
         block.transform.scale.x = SIZE_X;
         block.transform.scale.y = SIZE_Y;
         SpriteComponent sprite = new SpriteComponent();

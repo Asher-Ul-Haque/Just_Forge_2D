@@ -1,10 +1,10 @@
 package Just_Forge_2D.EditorSystem;
 
-import Just_Forge_2D.CoreSystems.EventSystem.EventManager;
-import Just_Forge_2D.CoreSystems.EventSystem.Events.Event;
-import Just_Forge_2D.CoreSystems.EventSystem.Events.EventTypes;
-import Just_Forge_2D.CoreSystems.InputSystem.Mouse;
-import Just_Forge_2D.CoreSystems.ForgeDynamo;
+import Just_Forge_2D.EventSystem.EventManager;
+import Just_Forge_2D.EventSystem.Events.Event;
+import Just_Forge_2D.EventSystem.Events.EventTypes;
+import Just_Forge_2D.InputSystem.Mouse;
+import Just_Forge_2D.Forge;
 import imgui.ImGui;
 import imgui.ImVec2;
 import imgui.flag.ImGuiWindowFlags;
@@ -47,7 +47,7 @@ public class GameViewport
 
         Mouse.setGameViewport(new Vector2f(topLeft.x, topLeft.y), new Vector2f(windowSize.x, windowSize.y));
 
-        int textureId = ForgeDynamo.getFramebuffer().getTextureID();
+        int textureId = Forge.getFramebuffer().getTextureID();
         ImGui.image(textureId, windowSize.x, windowSize.y, 0, 1, 1, 0);
 
         ImGui.end();
@@ -61,12 +61,12 @@ public class GameViewport
         windowSize.y -= ImGui.getScrollY();
 
         float aspectWidth = windowSize.x;
-        float aspectHeight = aspectWidth / ForgeDynamo.getAspectRatio();
+        float aspectHeight = aspectWidth / Forge.getAspectRatio();
         if (aspectHeight > windowSize.y)
         {
             // - - - switch to pillar mode
             aspectHeight = windowSize.y;
-            aspectWidth = aspectHeight * ForgeDynamo.getAspectRatio();
+            aspectWidth = aspectHeight * Forge.getAspectRatio();
         }
 
         return new ImVec2(aspectWidth, aspectHeight);
