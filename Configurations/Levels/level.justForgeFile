@@ -37,19 +37,19 @@
             },
             "textureCoordinates": [
               {
-                "x": 0.2857143,
+                "x": 0.14285715,
                 "y": 1.0
               },
               {
-                "x": 0.2857143,
-                "y": 0.8
-              },
-              {
                 "x": 0.14285715,
                 "y": 0.8
               },
               {
-                "x": 0.14285715,
+                "x": 0.0,
+                "y": 0.8
+              },
+              {
+                "x": 0.0,
                 "y": 1.0
               }
             ]
@@ -253,7 +253,7 @@
         }
       }
     ],
-    "uniqueID": 110,
+    "uniqueID": 87,
     "doSerialization": true,
     "isDead": false
   },
@@ -295,19 +295,19 @@
             },
             "textureCoordinates": [
               {
-                "x": 0.2857143,
+                "x": 0.14285715,
                 "y": 1.0
               },
               {
-                "x": 0.2857143,
-                "y": 0.8
-              },
-              {
                 "x": 0.14285715,
                 "y": 0.8
               },
               {
-                "x": 0.14285715,
+                "x": 0.0,
+                "y": 0.8
+              },
+              {
+                "x": 0.0,
                 "y": 1.0
               }
             ]
@@ -511,7 +511,7 @@
         }
       }
     ],
-    "uniqueID": 111,
+    "uniqueID": 88,
     "doSerialization": true,
     "isDead": false
   },
@@ -553,19 +553,19 @@
             },
             "textureCoordinates": [
               {
-                "x": 0.2857143,
+                "x": 0.14285715,
                 "y": 1.0
               },
               {
-                "x": 0.2857143,
-                "y": 0.8
-              },
-              {
                 "x": 0.14285715,
                 "y": 0.8
               },
               {
-                "x": 0.14285715,
+                "x": 0.0,
+                "y": 0.8
+              },
+              {
+                "x": 0.0,
                 "y": 1.0
               }
             ]
@@ -769,7 +769,7 @@
         }
       }
     ],
-    "uniqueID": 112,
+    "uniqueID": 89,
     "doSerialization": true,
     "isDead": false
   },
@@ -869,7 +869,7 @@
         }
       }
     ],
-    "uniqueID": 113,
+    "uniqueID": 90,
     "doSerialization": true,
     "isDead": false
   },
@@ -969,7 +969,7 @@
         }
       }
     ],
-    "uniqueID": 114,
+    "uniqueID": 91,
     "doSerialization": true,
     "isDead": false
   },
@@ -1069,7 +1069,7 @@
         }
       }
     ],
-    "uniqueID": 115,
+    "uniqueID": 92,
     "doSerialization": true,
     "isDead": false
   },
@@ -1169,7 +1169,7 @@
         }
       }
     ],
-    "uniqueID": 116,
+    "uniqueID": 93,
     "doSerialization": true,
     "isDead": false
   },
@@ -1269,7 +1269,7 @@
         }
       }
     ],
-    "uniqueID": 117,
+    "uniqueID": 94,
     "doSerialization": true,
     "isDead": false
   },
@@ -1369,7 +1369,7 @@
         }
       }
     ],
-    "uniqueID": 118,
+    "uniqueID": 95,
     "doSerialization": true,
     "isDead": false
   },
@@ -1469,7 +1469,7 @@
         }
       }
     ],
-    "uniqueID": 119,
+    "uniqueID": 96,
     "doSerialization": true,
     "isDead": false
   },
@@ -1569,7 +1569,7 @@
         }
       }
     ],
-    "uniqueID": 120,
+    "uniqueID": 97,
     "doSerialization": true,
     "isDead": false
   },
@@ -1669,7 +1669,7 @@
         }
       }
     ],
-    "uniqueID": 121,
+    "uniqueID": 98,
     "doSerialization": true,
     "isDead": false
   },
@@ -1769,7 +1769,7 @@
         }
       }
     ],
-    "uniqueID": 122,
+    "uniqueID": 99,
     "doSerialization": true,
     "isDead": false
   },
@@ -1869,7 +1869,7 @@
         }
       }
     ],
-    "uniqueID": 123,
+    "uniqueID": 100,
     "doSerialization": true,
     "isDead": false
   },
@@ -1969,7 +1969,7 @@
         }
       }
     ],
-    "uniqueID": 124,
+    "uniqueID": 101,
     "doSerialization": true,
     "isDead": false
   },
@@ -1980,7 +1980,7 @@
         "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.TransformComponent",
         "properties": {
           "position": {
-            "x": 0.375,
+            "x": 1.125,
             "y": 1.375
           },
           "layer": 0,
@@ -1989,7 +1989,7 @@
             "y": 0.25
           },
           "rotation": 0.0,
-          "uniqueID": 77
+          "uniqueID": 103
         }
       },
       {
@@ -2005,990 +2005,30 @@
             "width": 16.0,
             "height": 16.0,
             "texture": {
-              "filepath": "Assets/Textures/spritesheet.png",
-              "width": 224,
-              "height": 32
+              "filepath": "Assets/Textures/decorationsAndBlocks.png",
+              "width": 112,
+              "height": 192
             },
             "textureCoordinates": [
               {
-                "x": 0.071428575,
-                "y": 1.0
+                "x": 0.5714286,
+                "y": 0.8333333
               },
               {
-                "x": 0.071428575,
-                "y": 0.5
+                "x": 0.5714286,
+                "y": 0.75
               },
               {
-                "x": 0.0,
-                "y": 0.5
+                "x": 0.42857143,
+                "y": 0.75
               },
               {
-                "x": 0.0,
-                "y": 1.0
+                "x": 0.42857143,
+                "y": 0.8333333
               }
             ]
           },
-          "uniqueID": 78
-        }
-      },
-      {
-        "type": "Just_Forge_2D.CoreSystems.AnimationSystem.StateMachine",
-        "properties": {
-          "stateTransfers": [
-            [
-              {
-                "state": "Run",
-                "trigger": "Switch directions"
-              },
-              "Switch Directions"
-            ],
-            [
-              {
-                "state": "Fire Switch Direction",
-                "trigger": "stopRunning"
-              },
-              "FireIdle"
-            ],
-            [
-              {
-                "state": "BigRun",
-                "trigger": "damage"
-              },
-              "Run"
-            ],
-            [
-              {
-                "state": "Fire Switch Direction",
-                "trigger": "die"
-              },
-              "Big Switch Direction"
-            ],
-            [
-              {
-                "state": "Run",
-                "trigger": "stopRunning"
-              },
-              "Idle"
-            ],
-            [
-              {
-                "state": "Run",
-                "trigger": "powerup"
-              },
-              "BigRun"
-            ],
-            [
-              {
-                "state": "FireIdle",
-                "trigger": "die"
-              },
-              "BigIdle"
-            ],
-            [
-              {
-                "state": "FireRun",
-                "trigger": "damage"
-              },
-              "BigRun"
-            ],
-            [
-              {
-                "state": "BigIdle",
-                "trigger": "die"
-              },
-              "Idle"
-            ],
-            [
-              {
-                "state": "Idle",
-                "trigger": "jump"
-              },
-              "Jump"
-            ],
-            [
-              {
-                "state": "BigIdle",
-                "trigger": "powerup"
-              },
-              "FireIdle"
-            ],
-            [
-              {
-                "state": "Run",
-                "trigger": "die"
-              },
-              "Die"
-            ],
-            [
-              {
-                "state": "Jump",
-                "trigger": "stopJumping"
-              },
-              "Idle"
-            ],
-            [
-              {
-                "state": "Switch Directions",
-                "trigger": "jump"
-              },
-              "Jump"
-            ],
-            [
-              {
-                "state": "FireJump",
-                "trigger": "die"
-              },
-              "BigJump"
-            ],
-            [
-              {
-                "state": "FireIdle",
-                "trigger": "startRunning"
-              },
-              "FireRun"
-            ],
-            [
-              {
-                "state": "FireIdle",
-                "trigger": "jump"
-              },
-              "FireJump"
-            ],
-            [
-              {
-                "state": "Fire Switch Direction",
-                "trigger": "damage"
-              },
-              "Big Switch Direction"
-            ],
-            [
-              {
-                "state": "BigIdle",
-                "trigger": "startRunning"
-              },
-              "BigRun"
-            ],
-            [
-              {
-                "state": "Switch Directions",
-                "trigger": "startRunning"
-              },
-              "Run"
-            ],
-            [
-              {
-                "state": "Big Switch Direction",
-                "trigger": "jump"
-              },
-              "BigJump"
-            ],
-            [
-              {
-                "state": "Idle",
-                "trigger": "powerup"
-              },
-              "BigIdle"
-            ],
-            [
-              {
-                "state": "Jump",
-                "trigger": "powerup"
-              },
-              "BigJump"
-            ],
-            [
-              {
-                "state": "Run",
-                "trigger": "jump"
-              },
-              "Jump"
-            ],
-            [
-              {
-                "state": "BigIdle",
-                "trigger": "jump"
-              },
-              "BigJump"
-            ],
-            [
-              {
-                "state": "BigJump",
-                "trigger": "stopJumping"
-              },
-              "BigIdle"
-            ],
-            [
-              {
-                "state": "BigRun",
-                "trigger": "stopRunning"
-              },
-              "BigIdle"
-            ],
-            [
-              {
-                "state": "BigRun",
-                "trigger": "jump"
-              },
-              "BigJump"
-            ],
-            [
-              {
-                "state": "FireRun",
-                "trigger": "switchDirection"
-              },
-              "Fire Switch Direction"
-            ],
-            [
-              {
-                "state": "BigRun",
-                "trigger": "die"
-              },
-              "Run"
-            ],
-            [
-              {
-                "state": "FireRun",
-                "trigger": "jump"
-              },
-              "FireJump"
-            ],
-            [
-              {
-                "state": "FireRun",
-                "trigger": "die"
-              },
-              "BigRun"
-            ],
-            [
-              {
-                "state": "BigRun",
-                "trigger": "powerup"
-              },
-              "FireRun"
-            ],
-            [
-              {
-                "state": "Big Switch Direction",
-                "trigger": "startRunning"
-              },
-              "BigRun"
-            ],
-            [
-              {
-                "state": "Big Switch Direction",
-                "trigger": "die"
-              },
-              "Switch Directions"
-            ],
-            [
-              {
-                "state": "Idle",
-                "trigger": "startRunning"
-              },
-              "Run"
-            ],
-            [
-              {
-                "state": "Big Switch Direction",
-                "trigger": "powerup"
-              },
-              "Fire Switch Direction"
-            ],
-            [
-              {
-                "state": "BigRun",
-                "trigger": "switchDirection"
-              },
-              "Big Switch Direction"
-            ],
-            [
-              {
-                "state": "Big Switch Direction",
-                "trigger": "stopRunning"
-              },
-              "BigIdle"
-            ],
-            [
-              {
-                "state": "BigJump",
-                "trigger": "die"
-              },
-              "Jump"
-            ],
-            [
-              {
-                "state": "BigJump",
-                "trigger": "powerup"
-              },
-              "FireJump"
-            ],
-            [
-              {
-                "state": "Switch Directions",
-                "trigger": "powerup"
-              },
-              "Big Switch Direction"
-            ],
-            [
-              {
-                "state": "Switch Directions",
-                "trigger": "die"
-              },
-              "Die"
-            ],
-            [
-              {
-                "state": "FireJump",
-                "trigger": "damage"
-              },
-              "BigJump"
-            ],
-            [
-              {
-                "state": "Switch Directions",
-                "trigger": "stopRunning"
-              },
-              "Idle"
-            ],
-            [
-              {
-                "state": "FireRun",
-                "trigger": "stopRunning"
-              },
-              "FireIdle"
-            ],
-            [
-              {
-                "state": "BigJump",
-                "trigger": "damage"
-              },
-              "Jump"
-            ],
-            [
-              {
-                "state": "FireIdle",
-                "trigger": "damage"
-              },
-              "BigIdle"
-            ],
-            [
-              {
-                "state": "Fire Switch Direction",
-                "trigger": "jump"
-              },
-              "FireJump"
-            ],
-            [
-              {
-                "state": "FireJump",
-                "trigger": "stopJumping"
-              },
-              "FireIdle"
-            ],
-            [
-              {
-                "state": "Idle",
-                "trigger": "die"
-              },
-              "Die"
-            ],
-            [
-              {
-                "state": "Jump",
-                "trigger": "die"
-              },
-              "Die"
-            ],
-            [
-              {
-                "state": "Big Switch Direction",
-                "trigger": "damage"
-              },
-              "Switch Directions"
-            ],
-            [
-              {
-                "state": "BigIdle",
-                "trigger": "damage"
-              },
-              "Idle"
-            ],
-            [
-              {
-                "state": "Fire Switch Direction",
-                "trigger": "startRunning"
-              },
-              "FireRun"
-            ]
-          ],
-          "states": [
-            {
-              "title": "Run",
-              "animationFrames": [
-                {
-                  "sprite": {
-                    "width": 16.0,
-                    "height": 16.0,
-                    "texture": {
-                      "filepath": "Assets/Textures/spritesheet.png",
-                      "width": 224,
-                      "height": 32
-                    },
-                    "textureCoordinates": [
-                      {
-                        "x": 0.071428575,
-                        "y": 1.0
-                      },
-                      {
-                        "x": 0.071428575,
-                        "y": 0.5
-                      },
-                      {
-                        "x": 0.0,
-                        "y": 0.5
-                      },
-                      {
-                        "x": 0.0,
-                        "y": 1.0
-                      }
-                    ]
-                  },
-                  "frameTime": 0.2
-                },
-                {
-                  "sprite": {
-                    "width": 16.0,
-                    "height": 16.0,
-                    "texture": {
-                      "filepath": "Assets/Textures/spritesheet.png",
-                      "width": 224,
-                      "height": 32
-                    },
-                    "textureCoordinates": [
-                      {
-                        "x": 0.21428572,
-                        "y": 1.0
-                      },
-                      {
-                        "x": 0.21428572,
-                        "y": 0.5
-                      },
-                      {
-                        "x": 0.14285715,
-                        "y": 0.5
-                      },
-                      {
-                        "x": 0.14285715,
-                        "y": 1.0
-                      }
-                    ]
-                  },
-                  "frameTime": 0.2
-                },
-                {
-                  "sprite": {
-                    "width": 16.0,
-                    "height": 16.0,
-                    "texture": {
-                      "filepath": "Assets/Textures/spritesheet.png",
-                      "width": 224,
-                      "height": 32
-                    },
-                    "textureCoordinates": [
-                      {
-                        "x": 0.2857143,
-                        "y": 1.0
-                      },
-                      {
-                        "x": 0.2857143,
-                        "y": 0.5
-                      },
-                      {
-                        "x": 0.21428572,
-                        "y": 0.5
-                      },
-                      {
-                        "x": 0.21428572,
-                        "y": 1.0
-                      }
-                    ]
-                  },
-                  "frameTime": 0.2
-                },
-                {
-                  "sprite": {
-                    "width": 16.0,
-                    "height": 16.0,
-                    "texture": {
-                      "filepath": "Assets/Textures/spritesheet.png",
-                      "width": 224,
-                      "height": 32
-                    },
-                    "textureCoordinates": [
-                      {
-                        "x": 0.21428572,
-                        "y": 1.0
-                      },
-                      {
-                        "x": 0.21428572,
-                        "y": 0.5
-                      },
-                      {
-                        "x": 0.14285715,
-                        "y": 0.5
-                      },
-                      {
-                        "x": 0.14285715,
-                        "y": 1.0
-                      }
-                    ]
-                  },
-                  "frameTime": 0.2
-                }
-              ],
-              "doesLoop": true
-            },
-            {
-              "title": "Idle",
-              "animationFrames": [
-                {
-                  "sprite": {
-                    "width": 16.0,
-                    "height": 16.0,
-                    "texture": {
-                      "filepath": "Assets/Textures/spritesheet.png",
-                      "width": 224,
-                      "height": 32
-                    },
-                    "textureCoordinates": [
-                      {
-                        "x": 0.071428575,
-                        "y": 1.0
-                      },
-                      {
-                        "x": 0.071428575,
-                        "y": 0.5
-                      },
-                      {
-                        "x": 0.0,
-                        "y": 0.5
-                      },
-                      {
-                        "x": 0.0,
-                        "y": 1.0
-                      }
-                    ]
-                  },
-                  "frameTime": 0.1
-                }
-              ],
-              "doesLoop": false
-            },
-            {
-              "title": "Switch Directions",
-              "animationFrames": [
-                {
-                  "sprite": {
-                    "width": 16.0,
-                    "height": 16.0,
-                    "texture": {
-                      "filepath": "Assets/Textures/spritesheet.png",
-                      "width": 224,
-                      "height": 32
-                    },
-                    "textureCoordinates": [
-                      {
-                        "x": 0.35714287,
-                        "y": 1.0
-                      },
-                      {
-                        "x": 0.35714287,
-                        "y": 0.5
-                      },
-                      {
-                        "x": 0.2857143,
-                        "y": 0.5
-                      },
-                      {
-                        "x": 0.2857143,
-                        "y": 1.0
-                      }
-                    ]
-                  },
-                  "frameTime": 0.1
-                }
-              ],
-              "doesLoop": false
-            },
-            {
-              "title": "Jump",
-              "animationFrames": [
-                {
-                  "sprite": {
-                    "width": 16.0,
-                    "height": 16.0,
-                    "texture": {
-                      "filepath": "Assets/Textures/spritesheet.png",
-                      "width": 224,
-                      "height": 32
-                    },
-                    "textureCoordinates": [
-                      {
-                        "x": 0.42857143,
-                        "y": 1.0
-                      },
-                      {
-                        "x": 0.42857143,
-                        "y": 0.5
-                      },
-                      {
-                        "x": 0.35714287,
-                        "y": 0.5
-                      },
-                      {
-                        "x": 0.35714287,
-                        "y": 1.0
-                      }
-                    ]
-                  },
-                  "frameTime": 0.1
-                }
-              ],
-              "doesLoop": false
-            },
-            {
-              "title": "Die",
-              "animationFrames": [
-                {
-                  "sprite": {
-                    "width": 16.0,
-                    "height": 16.0,
-                    "texture": {
-                      "filepath": "Assets/Textures/spritesheet.png",
-                      "width": 224,
-                      "height": 32
-                    },
-                    "textureCoordinates": [
-                      {
-                        "x": 0.5,
-                        "y": 1.0
-                      },
-                      {
-                        "x": 0.5,
-                        "y": 0.5
-                      },
-                      {
-                        "x": 0.42857143,
-                        "y": 0.5
-                      },
-                      {
-                        "x": 0.42857143,
-                        "y": 1.0
-                      }
-                    ]
-                  },
-                  "frameTime": 0.1
-                }
-              ],
-              "doesLoop": false
-            },
-            {
-              "title": "BigRun",
-              "animationFrames": [
-                {
-                  "sprite": {
-                    "width": 16.0,
-                    "height": 16.0,
-                    "texture": {
-                      "filepath": "Assets/Textures/spritesheet.png",
-                      "width": 224,
-                      "height": 32
-                    },
-                    "textureCoordinates": [
-                      {
-                        "x": 0.42857143,
-                        "y": 1.0
-                      },
-                      {
-                        "x": 0.42857143,
-                        "y": 0.5
-                      },
-                      {
-                        "x": 0.35714287,
-                        "y": 0.5
-                      },
-                      {
-                        "x": 0.35714287,
-                        "y": 1.0
-                      }
-                    ]
-                  },
-                  "frameTime": 0.1
-                },
-                {
-                  "sprite": {
-                    "width": 16.0,
-                    "height": 32.0,
-                    "texture": {
-                      "filepath": "Assets/Textures/bigSpritesheet.png",
-                      "width": 336,
-                      "height": 64
-                    },
-                    "textureCoordinates": [
-                      {
-                        "x": 0.0952381,
-                        "y": 1.0
-                      },
-                      {
-                        "x": 0.0952381,
-                        "y": 0.5
-                      },
-                      {
-                        "x": 0.04761905,
-                        "y": 0.5
-                      },
-                      {
-                        "x": 0.04761905,
-                        "y": 1.0
-                      }
-                    ]
-                  },
-                  "frameTime": 0.2
-                },
-                {
-                  "sprite": {
-                    "width": 16.0,
-                    "height": 32.0,
-                    "texture": {
-                      "filepath": "Assets/Textures/bigSpritesheet.png",
-                      "width": 336,
-                      "height": 64
-                    },
-                    "textureCoordinates": [
-                      {
-                        "x": 0.14285715,
-                        "y": 1.0
-                      },
-                      {
-                        "x": 0.14285715,
-                        "y": 0.5
-                      },
-                      {
-                        "x": 0.0952381,
-                        "y": 0.5
-                      },
-                      {
-                        "x": 0.0952381,
-                        "y": 1.0
-                      }
-                    ]
-                  },
-                  "frameTime": 0.2
-                },
-                {
-                  "sprite": {
-                    "width": 16.0,
-                    "height": 32.0,
-                    "texture": {
-                      "filepath": "Assets/Textures/bigSpritesheet.png",
-                      "width": 336,
-                      "height": 64
-                    },
-                    "textureCoordinates": [
-                      {
-                        "x": 0.1904762,
-                        "y": 1.0
-                      },
-                      {
-                        "x": 0.1904762,
-                        "y": 0.5
-                      },
-                      {
-                        "x": 0.14285715,
-                        "y": 0.5
-                      },
-                      {
-                        "x": 0.14285715,
-                        "y": 1.0
-                      }
-                    ]
-                  },
-                  "frameTime": 0.2
-                },
-                {
-                  "sprite": {
-                    "width": 16.0,
-                    "height": 32.0,
-                    "texture": {
-                      "filepath": "Assets/Textures/bigSpritesheet.png",
-                      "width": 336,
-                      "height": 64
-                    },
-                    "textureCoordinates": [
-                      {
-                        "x": 0.14285715,
-                        "y": 1.0
-                      },
-                      {
-                        "x": 0.14285715,
-                        "y": 0.5
-                      },
-                      {
-                        "x": 0.0952381,
-                        "y": 0.5
-                      },
-                      {
-                        "x": 0.0952381,
-                        "y": 1.0
-                      }
-                    ]
-                  },
-                  "frameTime": 0.2
-                },
-                {
-                  "sprite": {
-                    "width": 16.0,
-                    "height": 32.0,
-                    "texture": {
-                      "filepath": "Assets/Textures/bigSpritesheet.png",
-                      "width": 336,
-                      "height": 64
-                    },
-                    "textureCoordinates": [
-                      {
-                        "x": 0.0952381,
-                        "y": 1.0
-                      },
-                      {
-                        "x": 0.0952381,
-                        "y": 0.5
-                      },
-                      {
-                        "x": 0.04761905,
-                        "y": 0.5
-                      },
-                      {
-                        "x": 0.04761905,
-                        "y": 1.0
-                      }
-                    ]
-                  },
-                  "frameTime": 0.2
-                }
-              ],
-              "doesLoop": true
-            },
-            {
-              "title": "BigIdle",
-              "animationFrames": [
-                {
-                  "sprite": {
-                    "width": 16.0,
-                    "height": 32.0,
-                    "texture": {
-                      "filepath": "Assets/Textures/bigSpritesheet.png",
-                      "width": 336,
-                      "height": 64
-                    },
-                    "textureCoordinates": [
-                      {
-                        "x": 0.04761905,
-                        "y": 1.0
-                      },
-                      {
-                        "x": 0.04761905,
-                        "y": 0.5
-                      },
-                      {
-                        "x": 0.0,
-                        "y": 0.5
-                      },
-                      {
-                        "x": 0.0,
-                        "y": 1.0
-                      }
-                    ]
-                  },
-                  "frameTime": 0.1
-                }
-              ],
-              "doesLoop": false
-            },
-            {
-              "title": "Big Switch Direction",
-              "animationFrames": [
-                {
-                  "sprite": {
-                    "width": 16.0,
-                    "height": 32.0,
-                    "texture": {
-                      "filepath": "Assets/Textures/bigSpritesheet.png",
-                      "width": 336,
-                      "height": 64
-                    },
-                    "textureCoordinates": [
-                      {
-                        "x": 0.23809524,
-                        "y": 1.0
-                      },
-                      {
-                        "x": 0.23809524,
-                        "y": 0.5
-                      },
-                      {
-                        "x": 0.1904762,
-                        "y": 0.5
-                      },
-                      {
-                        "x": 0.1904762,
-                        "y": 1.0
-                      }
-                    ]
-                  },
-                  "frameTime": 0.1
-                }
-              ],
-              "doesLoop": true
-            },
-            {
-              "title": "BigJump",
-              "animationFrames": [
-                {
-                  "sprite": {
-                    "width": 16.0,
-                    "height": 32.0,
-                    "texture": {
-                      "filepath": "Assets/Textures/bigSpritesheet.png",
-                      "width": 336,
-                      "height": 64
-                    },
-                    "textureCoordinates": [
-                      {
-                        "x": 0.2857143,
-                        "y": 1.0
-                      },
-                      {
-                        "x": 0.2857143,
-                        "y": 0.5
-                      },
-                      {
-                        "x": 0.23809524,
-                        "y": 0.5
-                      },
-                      {
-                        "x": 0.23809524,
-                        "y": 1.0
-                      }
-                    ]
-                  },
-                  "frameTime": 0.1
-                }
-              ],
-              "doesLoop": false
-            }
-          ],
-          "defaultStateTitle": "Idle",
-          "uniqueID": 79
+          "uniqueID": 104
         }
       },
       {
@@ -3000,14 +2040,14 @@
           },
           "angularDamping": 0.8,
           "linearDamping": 0.9,
-          "mass": 25.0,
+          "mass": 0.0,
           "bodyType": "Dynamic",
-          "fixedRotation": true,
-          "continuousCollision": false,
+          "fixedRotation": false,
+          "continuousCollision": true,
           "angularVelocity": 0.0,
           "gravityScale": 1.0,
           "isSensor": false,
-          "uniqueID": 80
+          "uniqueID": 106
         }
       },
       {
@@ -3025,26 +2065,11 @@
             "x": 0.0,
             "y": 0.0
           },
-          "uniqueID": 81
-        }
-      },
-      {
-        "type": "Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.PlayerControllerComponent",
-        "properties": {
-          "playerState": "Small",
-          "walkSpeed": 1.9,
-          "jumpBoost": 1.0,
-          "jumpImpulse": 3.0,
-          "slowDownForce": 0.05,
-          "terminalVelocity": {
-            "x": 2.1,
-            "y": 3.1
-          },
-          "uniqueID": 82
+          "uniqueID": 107
         }
       }
     ],
-    "uniqueID": 125,
+    "uniqueID": 102,
     "doSerialization": true,
     "isDead": false
   }

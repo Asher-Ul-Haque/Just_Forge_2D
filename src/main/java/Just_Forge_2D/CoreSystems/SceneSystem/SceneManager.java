@@ -3,7 +3,7 @@ package Just_Forge_2D.CoreSystems.SceneSystem;
 import Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.TransformComponent;
 import Just_Forge_2D.CoreSystems.EntityComponentSystem.GameObject;
-import Just_Forge_2D.Physics.PhysicsSystem;
+import Just_Forge_2D.Physics.PhysicsManager;
 import Just_Forge_2D.Renderer.Renderer;
 import Just_Forge_2D.Utils.Configurations;
 import Just_Forge_2D.Utils.JsonHandlers.ComponentJsonHandler;
@@ -37,7 +37,7 @@ public class SceneManager
     private SceneInitializer initializer;
 
     // - - - saving and loading
-    private PhysicsSystem physics;
+    private PhysicsManager physics;
     private List<GameObject> pendingObjects;
 
 
@@ -48,7 +48,7 @@ public class SceneManager
     public SceneManager(SceneInitializer INITIALIZER)
     {
         this.initializer = INITIALIZER;
-        this.physics = new PhysicsSystem();
+        this.physics = new PhysicsManager();
         this.renderer = new Renderer();
         this.gameObjects = new ArrayList<>();
         this.isRunning = false;
@@ -293,7 +293,7 @@ public class SceneManager
         Logger.FORGE_LOG_INFO("Scene Destroyed " + this.initializer);
     }
 
-    public PhysicsSystem getPhysics()
+    public PhysicsManager getPhysics()
     {
         return this.physics;
     }

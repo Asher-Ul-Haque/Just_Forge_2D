@@ -1,4 +1,4 @@
-package Just_Forge_2D.Physics.Primitives;
+package Just_Forge_2D.EditorSystem;
 
 import org.joml.Vector2f;
 import org.joml.Vector3f;

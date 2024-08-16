@@ -15,7 +15,7 @@ import org.jbox2d.dynamics.*;
 import org.joml.Vector2f;
 
 // - - - interface to communicate with Box2D
-public class PhysicsSystem
+public class PhysicsManager
 {
     // - - - private variables - - -
 
@@ -32,7 +32,7 @@ public class PhysicsSystem
 
     // - - - | Functions | - - -
 
-    public PhysicsSystem()
+    public PhysicsManager()
     {
         world.setContactListener(new CollisionDetector());
     }

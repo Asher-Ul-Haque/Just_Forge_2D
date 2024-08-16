@@ -15,7 +15,7 @@ import Just_Forge_2D.EditorSystem.justForgeImGui;
 import Just_Forge_2D.CoreSystems.EventSystem.Observer;
 import Just_Forge_2D.CoreSystems.InputSystem.Keyboard;
 import Just_Forge_2D.CoreSystems.InputSystem.Mouse;
-import Just_Forge_2D.Physics.PhysicsSystem;
+import Just_Forge_2D.Physics.PhysicsManager;
 import Just_Forge_2D.Renderer.DebugPencil;
 import Just_Forge_2D.Renderer.Framebuffer;
 import Just_Forge_2D.Utils.Configurations;
@@ -32,7 +32,6 @@ import org.lwjgl.openal.ALC;
 import org.lwjgl.openal.AL;
 import org.lwjgl.opengl.GL;
 
-import java.util.List;
 import java.util.Objects;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
@@ -590,7 +589,7 @@ public class ForgeDynamo implements Observer
         }
     }
 
-    public static PhysicsSystem getPhysicsSystem()
+    public static PhysicsManager getPhysicsSystem()
     {
         return getCurrentScene().getPhysics();
     }
