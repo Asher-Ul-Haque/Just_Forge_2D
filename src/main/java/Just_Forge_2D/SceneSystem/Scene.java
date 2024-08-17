@@ -30,10 +30,10 @@ public class Scene
     private boolean isRunning = false;
 
     // - - - ALl the objects
-    private List<GameObject> gameObjects;
+    private final List<GameObject> gameObjects;
 
     // - - - Scene Rendering
-    private final Renderer renderer;
+    private Renderer renderer;
     private final SceneInitializer initializer;
 
     // - - - saving and loading
@@ -49,7 +49,7 @@ public class Scene
     {
         this.initializer = INITIALIZER;
         this.physics = new PhysicsManager();
-        this.renderer = new Renderer("");
+        this.renderer = INITIALIZER.renderer;
         this.gameObjects = new ArrayList<>();
         this.isRunning = false;
         this.pendingObjects = new ArrayList<>();
@@ -65,7 +65,7 @@ public class Scene
         {
             GameObject go = gameObjects.get(i);
             go.start();
-            this.renderer.add(go);
+            this.renderer.addGameObject(go);
             this.physics.add(go);
         }
         isRunning = true;
@@ -95,7 +95,7 @@ public class Scene
         {
             gameObjects.add(go);
             go.start();
-            this.renderer.add(go);
+            this.renderer.addGameObject(go);
             this.physics.add(go);
         }
         pendingObjects.clear();
@@ -242,7 +242,7 @@ public class Scene
         {
             gameObjects.add(go);
             go.start();
-            this.renderer.add(go);
+            this.renderer.addGameObject(go);
             this.physics.add(go);
         }
         pendingObjects.clear();
@@ -298,5 +298,15 @@ public class Scene
     public PhysicsManager getPhysics()
     {
         return this.physics;
+    }
+
+    public void switchRenderer(Renderer RENDERER)
+    {
+        this.renderer = RENDERER;
+    }
+
+    public Renderer getRenderer()
+    {
+        return this.renderer;
     }
 }

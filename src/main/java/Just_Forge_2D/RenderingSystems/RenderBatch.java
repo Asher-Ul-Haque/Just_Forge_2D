@@ -60,7 +60,7 @@ public class RenderBatch implements Comparable<RenderBatch>
     private int vaoID, vboID;
     private final float[] vertices;
     private final int[] textureSlots = {0, 1, 2, 3, 4, 5, 6, 7};
-    private Renderer renderer;
+    private final Renderer renderer;
 
 
     // - - - Functions - - - -
@@ -133,7 +133,7 @@ public class RenderBatch implements Comparable<RenderBatch>
                 if (!hasTexture(sprite.getTexture()))
                 {
                     this.renderer.destroyGameObject(sprite.gameObject);
-                    this.renderer.add(sprite.gameObject);
+                    this.renderer.addGameObject(sprite.gameObject);
                 }
                 else
                 {
@@ -145,7 +145,7 @@ public class RenderBatch implements Comparable<RenderBatch>
             if (sprite.gameObject.transform.layer != this.layer)
             {
                 destroyIfExists(sprite.gameObject);
-                renderer.add(sprite.gameObject);
+                renderer.addGameObject(sprite.gameObject);
                 i--;
             }
         }

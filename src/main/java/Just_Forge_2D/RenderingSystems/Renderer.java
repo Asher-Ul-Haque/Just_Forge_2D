@@ -13,7 +13,7 @@ import java.util.List;
 public class Renderer
 {
     // - - - private variables
-    private String window;
+    private final String window;
     private final int MAX_BATCH_SIZE = Configurations.MAX_BATCH_SIZE;
     private final List<RenderBatch> batches;
     private static Shader currentShader;
@@ -25,28 +25,28 @@ public class Renderer
     // - - - constructor
     public Renderer(String WINDOW_TITLE)
     {
+        Logger.FORGE_LOG_INFO("Creating Rendering System for Window of title : " + WINDOW_TITLE);
         this.window = WINDOW_TITLE;
-        Logger.FORGE_LOG_INFO("Rendering System created for Window of title : " + window);
         this.batches = new ArrayList<>();
     }
 
 
     // - - - add Game Objects - - -
 
-    public void add(GameObject gameObject)
+    public void addGameObject(GameObject GAME_OBJECT)
     {
-        SpriteComponent sprite = gameObject.getCompoent(SpriteComponent.class);
+        Logger.FORGE_LOG_DEBUG("Adding " + GAME_OBJECT + " to renderer for window: " + this.window);
+        SpriteComponent sprite = GAME_OBJECT.getCompoent(SpriteComponent.class);
 
         if (sprite != null)
         {
-            add(sprite);
+            addSprite(sprite);
         }
     }
 
-    private void add(SpriteComponent SPRITE)
+    private void addSprite(SpriteComponent SPRITE)
     {
         boolean added = false;
-
         for (RenderBatch batch : batches)
         {
             if (batch.hasRoom && batch.getLayer() == SPRITE.gameObject.transform.layer)

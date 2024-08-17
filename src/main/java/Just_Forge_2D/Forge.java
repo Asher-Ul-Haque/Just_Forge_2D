@@ -1,17 +1,17 @@
 package Just_Forge_2D;
 
 import Just_Forge_2D.RenderingSystems.Renderer;
-import Just_Forge_2D.SceneSystem.SceneManager;
+import Just_Forge_2D.SceneSystem.Scene;
 import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.WindowSystem.Window;
 
 import java.util.HashMap;
-import java.util.Locale;
 
 public class Forge
 {
     private static final HashMap<Window, Renderer> windowRendererHashMap = new HashMap<>();
-    private static final SceneManager sceneManager = new SceneManager();
+    private static Scene currentScene;
+
     public static void assignRenderer(Window WINDOW, Renderer RENDERER)
     {
         Logger.FORGE_LOG_INFO("Linking " + WINDOW.getTitle() + " to Renderer " + RENDERER);
