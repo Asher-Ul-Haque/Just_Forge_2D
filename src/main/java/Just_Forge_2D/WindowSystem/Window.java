@@ -33,14 +33,13 @@ public class Window implements Observer
     float beginTime = 0;
     float endTime = 0;
     float dt = -1;
-    private long glfwWindowPtr;
+    protected long glfwWindowPtr;
     private boolean shouldClose = false;
 
 
     // - - - constructor
     public Window(WindowConfig CONFIG)
     {
-
         if (CONFIG == null)
         {
             Logger.FORGE_LOG_WARNING("No window configurations specified. Resorting to default configurations");

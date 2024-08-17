@@ -3,7 +3,8 @@ package Just_Forge_2D.EntityComponentSystem.Components;
 import Just_Forge_2D.AnimationSystem.StateMachine;
 import Just_Forge_2D.EditorSystem.Prefabs;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
-import Just_Forge_2D.EditorWindow;
+import Just_Forge_2D.Forge;
+import Just_Forge_2D.WindowSystem.EditorWindow;
 
 public class QuestionBlock extends Block
 {
@@ -42,7 +43,7 @@ public class QuestionBlock extends Block
         GameObject coin = Prefabs.generateBlockCoin();
         coin.transform.position.set(this.gameObject.transform.position);
         coin.transform.position.y += 0.25f;
-        EditorWindow.getCurrentScene().addGameObject(coin);
+        Forge.currentScene.addGameObject(coin);
     }
 
     private void doPowerup(PlayerControllerComponent CONTROLLER)

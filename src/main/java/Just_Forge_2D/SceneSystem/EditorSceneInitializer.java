@@ -12,11 +12,12 @@ import Just_Forge_2D.EntityComponentSystem.Components.Sprite.Sprite;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteSheet;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
+import Just_Forge_2D.Forge;
 import Just_Forge_2D.InputSystem.Keyboard;
 import Just_Forge_2D.Utils.AssetPool;
 import Just_Forge_2D.Utils.Configurations;
 import Just_Forge_2D.Utils.Logger;
-import Just_Forge_2D.EditorWindow;
+import Just_Forge_2D.WindowSystem.EditorWindow;
 import imgui.ImGui;
 import imgui.ImVec2;
 import org.joml.Vector2f;
@@ -43,6 +44,7 @@ public class EditorSceneInitializer extends SceneInitializer
     // - - - useless constructor
     public EditorSceneInitializer()
     {
+        this.renderer = Forge.getRenderer(Forge.window);
     }
 
     // - - - useful initialization
@@ -219,7 +221,7 @@ public class EditorSceneInitializer extends SceneInitializer
         if (Keyboard.isKeyBeginPress(GLFW_KEY_SPACE))
         {
             Logger.FORGE_LOG_WARNING("Chaning SCenes form EDITOR");
-            EditorWindow.changeScene(new TestSceneInitializer());
+            Forge.changeScene(new TestSceneInitializer());
         }
     }
 }

@@ -1,10 +1,11 @@
 package Just_Forge_2D.EditorSystem;
 
+import Just_Forge_2D.Forge;
 import Just_Forge_2D.InputSystem.Keyboard;
 import Just_Forge_2D.InputSystem.Mouse;
 import Just_Forge_2D.SceneSystem.Scene;
 import Just_Forge_2D.Utils.Logger;
-import Just_Forge_2D.EditorWindow;
+import Just_Forge_2D.WindowSystem.EditorWindow;
 import imgui.ImFontAtlas;
 import imgui.ImFontConfig;
 import imgui.ImGui;
@@ -251,8 +252,8 @@ public class justForgeImGui
     private void startFrame(final float DELTA_TIME)
     {
         // - - - Get window properties and mouse position
-        float[] winWidth = {EditorWindow.getWidth()};
-        float[] winHeight = {EditorWindow.getHeight()};
+        float[] winWidth = {Forge.window.getWidth()};
+        float[] winHeight = {Forge.window.getHeight()};
         double[] mousePosX = {0};
         double[] mousePosY = {0};
         GLFW.glfwGetCursorPos(windowPtr, mousePosX, mousePosY);
@@ -289,7 +290,7 @@ public class justForgeImGui
         int windowFlags = ImGuiWindowFlags.MenuBar | ImGuiWindowFlags.NoDocking;
 
         ImGui.setNextWindowPos(0.0f, 0.0f, ImGuiCond.Always);
-        ImGui.setNextWindowSize(EditorWindow.getWidth(), EditorWindow.getHeight());
+        ImGui.setNextWindowSize(Forge.window.getWidth(), Forge.window.getHeight());
         ImGui.pushStyleVar(ImGuiStyleVar.WindowRounding, 4.0f);
         ImGui.pushStyleVar(ImGuiStyleVar.WindowBorderSize, 0.0f);
 

@@ -1,1 +1,140 @@
-[]
+[
+  {
+    "name": "Auto Generated",
+    "components": [
+      {
+        "type": "Just_Forge_2D.EntityComponentSystem.Components.TransformComponent",
+        "properties": {
+          "position": {
+            "x": 0.125,
+            "y": 0.125
+          },
+          "layer": 0,
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "uniqueID": 20
+        }
+      },
+      {
+        "type": "Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent",
+        "properties": {
+          "color": {
+            "x": 0.8,
+            "y": 0.8,
+            "z": 0.8,
+            "w": 0.5
+          },
+          "sprite": {
+            "width": 16.0,
+            "height": 16.0,
+            "texture": {
+              "filepath": "Assets/Textures/decorationsAndBlocks.png",
+              "width": 112,
+              "height": 192
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.85714287,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.85714287,
+                "y": 0.8333333
+              },
+              {
+                "x": 0.71428573,
+                "y": 0.8333333
+              },
+              {
+                "x": 0.71428573,
+                "y": 0.9166667
+              }
+            ]
+          },
+          "uniqueID": 21
+        }
+      },
+      {
+        "type": "Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.NonPickableComponent",
+        "properties": {
+          "uniqueID": 22
+        }
+      }
+    ],
+    "uniqueID": 12,
+    "doSerialization": true,
+    "isDead": false
+  },
+  {
+    "name": "Auto Generated",
+    "components": [
+      {
+        "type": "Just_Forge_2D.EntityComponentSystem.Components.TransformComponent",
+        "properties": {
+          "position": {
+            "x": 0.125,
+            "y": 0.125
+          },
+          "layer": 0,
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "uniqueID": 49
+        }
+      },
+      {
+        "type": "Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent",
+        "properties": {
+          "color": {
+            "x": 0.8,
+            "y": 0.8,
+            "z": 0.8,
+            "w": 0.5
+          },
+          "sprite": {
+            "width": 16.0,
+            "height": 16.0,
+            "texture": {
+              "filepath": "Assets/Textures/decorationsAndBlocks.png",
+              "width": 112,
+              "height": 192
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.71428573,
+                "y": 0.6666667
+              },
+              {
+                "x": 0.71428573,
+                "y": 0.5833333
+              },
+              {
+                "x": 0.5714286,
+                "y": 0.5833333
+              },
+              {
+                "x": 0.5714286,
+                "y": 0.6666667
+              }
+            ]
+          },
+          "uniqueID": 50
+        }
+      },
+      {
+        "type": "Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.NonPickableComponent",
+        "properties": {
+          "uniqueID": 51
+        }
+      }
+    ],
+    "uniqueID": 20,
+    "doSerialization": true,
+    "isDead": false
+  }
+]

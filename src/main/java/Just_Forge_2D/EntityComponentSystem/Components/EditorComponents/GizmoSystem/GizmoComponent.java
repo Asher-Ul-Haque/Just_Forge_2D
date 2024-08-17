@@ -6,8 +6,9 @@ import Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.NonPickab
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.Sprite;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
+import Just_Forge_2D.Forge;
 import Just_Forge_2D.InputSystem.Mouse;
-import Just_Forge_2D.EditorWindow;
+import Just_Forge_2D.WindowSystem.EditorWindow;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 
@@ -59,8 +60,8 @@ public class GizmoComponent extends Component
         this.xAxisGizmo.addComponent(new NonPickableComponent());
         this.yAxisGizmo.addComponent(new NonPickableComponent());
 
-        EditorWindow.getCurrentScene().addGameObject(this.xAxisGizmo);
-        EditorWindow.getCurrentScene().addGameObject(this.yAxisGizmo);
+        Forge.currentScene.addGameObject(this.xAxisGizmo);
+        Forge.currentScene.addGameObject(this.yAxisGizmo);
     }
 
     // - - - start
@@ -85,7 +86,7 @@ public class GizmoComponent extends Component
         if (!using) return;
 
         // TODO: refactor
-        this.activeGameObject = EditorWindow.getEditor().getPropertiesWindow().getActiveGameObject(); //this.propertiesWindow.getActiveGameObject();
+        this.activeGameObject = Forge.editorLayer.getPropertiesWindow().getActiveGameObject(); //this.propertiesWindow.getActiveGameObject();
         if (this.activeGameObject != null)
         {
             this.activate();

@@ -1,10 +1,11 @@
 package Just_Forge_2D.RenderingSystems;
 
 import Just_Forge_2D.EditorSystem.Line;
+import Just_Forge_2D.Forge;
 import Just_Forge_2D.Utils.AssetPool;
 import Just_Forge_2D.Utils.Configurations;
 import Just_Forge_2D.Utils.ForgeMath;
-import Just_Forge_2D.EditorWindow;
+import Just_Forge_2D.WindowSystem.EditorWindow;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 
@@ -124,8 +125,8 @@ public class DebugPencil
 
         // - - - draw
         shader.use();
-        shader.uploadMatrix4f("uProjection", EditorWindow.getCurrentScene().getCamera().getProjectionMatrix());
-        shader.uploadMatrix4f("uView", EditorWindow.getCurrentScene().getCamera().getViewMatrix());
+        shader.uploadMatrix4f("uProjection", Forge.currentScene.getCamera().getProjectionMatrix());
+        shader.uploadMatrix4f("uView", Forge.currentScene.getCamera().getViewMatrix());
 
         // - - - bind the vao
         glBindVertexArray(vaoID);

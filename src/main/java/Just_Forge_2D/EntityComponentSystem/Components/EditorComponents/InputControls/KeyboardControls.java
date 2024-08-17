@@ -4,9 +4,10 @@ import Just_Forge_2D.AnimationSystem.StateMachine;
 import Just_Forge_2D.EditorSystem.PropertiesWindow;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
+import Just_Forge_2D.Forge;
 import Just_Forge_2D.InputSystem.Keyboard;
 import Just_Forge_2D.Utils.Logger;
-import Just_Forge_2D.EditorWindow;
+import Just_Forge_2D.WindowSystem.EditorWindow;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +20,7 @@ public class KeyboardControls extends Component
     @Override
     public void editorUpdate(float DELTA_TIME)
     {
-        PropertiesWindow propertiesWindow = EditorWindow.getEditor().getPropertiesWindow();;
+        PropertiesWindow propertiesWindow = Forge.editorLayer.getPropertiesWindow();;
         GameObject activeGameObject = propertiesWindow.getActiveGameObject();
         List<GameObject> activeGameObjects = propertiesWindow.getActiveGameObjects();
 
@@ -27,9 +28,9 @@ public class KeyboardControls extends Component
         {
             Logger.FORGE_LOG_DEBUG("Copying: " + activeGameObject);
             GameObject newObj = activeGameObject.copy();
-            EditorWindow.getCurrentScene().addGameObject(newObj);
+            Forge.currentScene.addGameObject(newObj);
             newObj.transform.position.add(0.1f, 0.1f);
-            EditorWindow.getEditor().getPropertiesWindow().setActiveGameObject(newObj);
+            Forge.editorLayer.getPropertiesWindow().setActiveGameObject(newObj);
             if (newObj.getCompoent(StateMachine.class) != null)
             {
                 newObj.getCompoent(StateMachine.class).refreshTextures();
@@ -43,7 +44,7 @@ public class KeyboardControls extends Component
             {
                 Logger.FORGE_LOG_DEBUG("Copying: " + go);
                 GameObject copy = go.copy();
-                EditorWindow.getCurrentScene().addGameObject(copy);
+                Forge.currentScene.addGameObject(copy);
                 copy.transform.position.add(0.1f, 0.1f);
                 propertiesWindow.addActiveGameObject(copy);
                 if (go.getCompoent(StateMachine.class) != null)

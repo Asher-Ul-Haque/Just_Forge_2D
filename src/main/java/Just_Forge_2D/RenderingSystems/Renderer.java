@@ -99,13 +99,13 @@ public class Renderer
 
     // - - - Shader - - -
 
-    public static void bindShader(Shader SHADER)
+    public void bindShader(Shader SHADER)
     {
         currentShader = SHADER;
         currentShader.use();
     }
 
-    public static Shader getCurrentShader()
+    public Shader getCurrentShader()
     {
         return currentShader;
     }
