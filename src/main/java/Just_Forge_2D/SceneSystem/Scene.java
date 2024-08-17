@@ -33,12 +33,12 @@ public class Scene
     private List<GameObject> gameObjects;
 
     // - - - Scene Rendering
-    private Renderer renderer;
-    private SceneInitializer initializer;
+    private final Renderer renderer;
+    private final SceneInitializer initializer;
 
     // - - - saving and loading
-    private PhysicsManager physics;
-    private List<GameObject> pendingObjects;
+    private final PhysicsManager physics;
+    private final List<GameObject> pendingObjects;
 
 
     // - - - | Functions | - - -
@@ -49,7 +49,7 @@ public class Scene
     {
         this.initializer = INITIALIZER;
         this.physics = new PhysicsManager();
-        this.renderer = new Renderer();
+        this.renderer = new Renderer("");
         this.gameObjects = new ArrayList<>();
         this.isRunning = false;
         this.pendingObjects = new ArrayList<>();

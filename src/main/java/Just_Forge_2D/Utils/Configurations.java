@@ -45,4 +45,6 @@ public class Configurations
     public static final float DEFAULT_ASPECT_RATIO = 16f / 9f;
     public static final int DEFAULT_FPS = 60;
     public static final Vector4f DEFAULT_CLEAR_COLOR = new Vector4f(1.0f, 1.0f, 1.0f, 1.0f);
+    public static final boolean DEFAULT_WINDOW_FLOAT_STATUS = false;
+    public static final String DEFAULT_ICON_PATH = "Assets/Textures/logo.png";
 }

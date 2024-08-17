@@ -2,7 +2,7 @@ package Just_Forge_2D.InputSystem;
 
 import Just_Forge_2D.SceneSystem.Camera;
 import Just_Forge_2D.Utils.Logger;
-import Just_Forge_2D.Forge;
+import Just_Forge_2D.EditorWindow;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
@@ -74,7 +74,7 @@ public class Mouse
     public static void mousePositionCallback(long WINDOW, double X_POSITION, double Y_POSITION)
     {
         // - - - check if we need to clear the buffer
-        if (!Forge.getEditor().getGameViewport().getWantCaptureMouse())
+        if (!EditorWindow.getEditor().getGameViewport().getWantCaptureMouse())
         {
             clear();
         }
@@ -205,7 +205,7 @@ public class Mouse
         float currentX = getX() - get().gameViewportPos.x;
         currentX = (currentX / get().grameViewportSize.x) * 2.0f - 1.0f;
         Vector4f temp = new Vector4f(currentX, 0, 0, 1);
-        Camera camera = Forge.getCurrentScene().getCamera();
+        Camera camera = EditorWindow.getCurrentScene().getCamera();
         Matrix4f viewProjection = new Matrix4f();
         camera.getInverseViewMatrix().mul(camera.getInverseProjectionMatrix(), viewProjection);
         temp.mul(viewProjection);
@@ -218,7 +218,7 @@ public class Mouse
         float currentY = getY() - get().gameViewportPos.y;
         currentY = -((currentY / get().grameViewportSize.y) * 2.0f - 1.0f);
         Vector4f temp = new Vector4f(0, currentY, 0, 1);
-        Camera camera = Forge.getCurrentScene().getCamera();
+        Camera camera = EditorWindow.getCurrentScene().getCamera();
         Matrix4f viewProjection = new Matrix4f();
         camera.getInverseViewMatrix().mul(camera.getInverseProjectionMatrix(), viewProjection);
         temp.mul(viewProjection);

@@ -4,7 +4,7 @@ import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.RenderingSystems.DebugPencil;
 import Just_Forge_2D.SceneSystem.Camera;
 import Just_Forge_2D.Utils.Configurations;
-import Just_Forge_2D.Forge;
+import Just_Forge_2D.EditorWindow;
 import org.joml.Vector2f;
 
 // - - - Grid Lines
@@ -13,7 +13,7 @@ public class GridlinesComponent extends Component
     @Override
     public void editorUpdate(float DELTA_TIME)
     {
-        Camera camera = Forge.getCurrentScene().getCamera();
+        Camera camera = EditorWindow.getCurrentScene().getCamera();
         Vector2f cameraPos = camera.position;
         Vector2f projectionSize = camera.getProjectionSize();
 

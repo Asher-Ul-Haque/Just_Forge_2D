@@ -6,7 +6,7 @@ import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.InputSystem.Keyboard;
 import Just_Forge_2D.Utils.Logger;
-import Just_Forge_2D.Forge;
+import Just_Forge_2D.EditorWindow;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +19,7 @@ public class KeyboardControls extends Component
     @Override
     public void editorUpdate(float DELTA_TIME)
     {
-        PropertiesWindow propertiesWindow = Forge.getEditor().getPropertiesWindow();;
+        PropertiesWindow propertiesWindow = EditorWindow.getEditor().getPropertiesWindow();;
         GameObject activeGameObject = propertiesWindow.getActiveGameObject();
         List<GameObject> activeGameObjects = propertiesWindow.getActiveGameObjects();
 
@@ -27,9 +27,9 @@ public class KeyboardControls extends Component
         {
             Logger.FORGE_LOG_DEBUG("Copying: " + activeGameObject);
             GameObject newObj = activeGameObject.copy();
-            Forge.getCurrentScene().addGameObject(newObj);
+            EditorWindow.getCurrentScene().addGameObject(newObj);
             newObj.transform.position.add(0.1f, 0.1f);
-            Forge.getEditor().getPropertiesWindow().setActiveGameObject(newObj);
+            EditorWindow.getEditor().getPropertiesWindow().setActiveGameObject(newObj);
             if (newObj.getCompoent(StateMachine.class) != null)
             {
                 newObj.getCompoent(StateMachine.class).refreshTextures();
@@ -43,7 +43,7 @@ public class KeyboardControls extends Component
             {
                 Logger.FORGE_LOG_DEBUG("Copying: " + go);
                 GameObject copy = go.copy();
-                Forge.getCurrentScene().addGameObject(copy);
+                EditorWindow.getCurrentScene().addGameObject(copy);
                 copy.transform.position.add(0.1f, 0.1f);
                 propertiesWindow.addActiveGameObject(copy);
                 if (go.getCompoent(StateMachine.class) != null)

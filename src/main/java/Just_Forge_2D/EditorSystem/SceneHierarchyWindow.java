@@ -2,7 +2,7 @@ package Just_Forge_2D.EditorSystem;
 
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.Utils.Logger;
-import Just_Forge_2D.Forge;
+import Just_Forge_2D.EditorWindow;
 import imgui.ImGui;
 import imgui.flag.ImGuiTreeNodeFlags;
 
@@ -14,7 +14,7 @@ public class SceneHierarchyWindow
     public void editorGUI()
     {
         ImGui.begin("Scene Hierarchy");
-        List<GameObject> gameObjectList = Forge.getCurrentScene().getGameObjects();
+        List<GameObject> gameObjectList = EditorWindow.getCurrentScene().getGameObjects();
         int index = 0;
         for (GameObject obj : gameObjectList)
         {

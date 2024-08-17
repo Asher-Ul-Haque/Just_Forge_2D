@@ -16,7 +16,7 @@ import Just_Forge_2D.InputSystem.Keyboard;
 import Just_Forge_2D.Utils.AssetPool;
 import Just_Forge_2D.Utils.Configurations;
 import Just_Forge_2D.Utils.Logger;
-import Just_Forge_2D.Forge;
+import Just_Forge_2D.EditorWindow;
 import imgui.ImGui;
 import imgui.ImVec2;
 import org.joml.Vector2f;
@@ -219,7 +219,7 @@ public class EditorSceneInitializer extends SceneInitializer
         if (Keyboard.isKeyBeginPress(GLFW_KEY_SPACE))
         {
             Logger.FORGE_LOG_WARNING("Chaning SCenes form EDITOR");
-            Forge.changeScene(new TestSceneInitializer());
+            EditorWindow.changeScene(new TestSceneInitializer());
         }
     }
 }

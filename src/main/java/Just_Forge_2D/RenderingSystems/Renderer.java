@@ -13,6 +13,7 @@ import java.util.List;
 public class Renderer
 {
     // - - - private variables
+    private String window;
     private final int MAX_BATCH_SIZE = Configurations.MAX_BATCH_SIZE;
     private final List<RenderBatch> batches;
     private static Shader currentShader;
@@ -22,8 +23,10 @@ public class Renderer
 
 
     // - - - constructor
-    public Renderer()
+    public Renderer(String WINDOW_TITLE)
     {
+        this.window = WINDOW_TITLE;
+        Logger.FORGE_LOG_INFO("Rendering System created for Window of title : " + window);
         this.batches = new ArrayList<>();
     }
 
@@ -105,6 +108,12 @@ public class Renderer
     public static Shader getCurrentShader()
     {
         return currentShader;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "Rendering System slave to " + this.window;
     }
 
 }
