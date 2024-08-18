@@ -1,39 +1,22 @@
-package Just_Forge_2D.WindowSystem;
+package Just_Forge_2D.EditorSystem;
 
 // - - - Imports | - - -
-import Just_Forge_2D.EditorSystem.ObjectSelector;
-import Just_Forge_2D.EditorSystem.justForgeImGui;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
-import Just_Forge_2D.EventSystem.EventManager;
 import Just_Forge_2D.EventSystem.Events.Event;
 import Just_Forge_2D.Forge;
 import Just_Forge_2D.InputSystem.Keyboard;
 import Just_Forge_2D.InputSystem.Mouse;
-import Just_Forge_2D.PhysicsSystem.PhysicsManager;
 import Just_Forge_2D.RenderingSystems.DebugPencil;
 import Just_Forge_2D.RenderingSystems.Framebuffer;
-import Just_Forge_2D.RenderingSystems.Renderer;
 import Just_Forge_2D.SceneSystem.EditorSceneInitializer;
-import Just_Forge_2D.SceneSystem.Scene;
+import Just_Forge_2D.SceneSystem.SceneSystemManager;
 import Just_Forge_2D.Utils.AssetPool;
-import Just_Forge_2D.Utils.Configurations;
 import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.Utils.TimeKeeper;
-import org.lwjgl.glfw.GLFWErrorCallback;
-import org.lwjgl.glfw.GLFWVidMode;
-import org.lwjgl.openal.AL;
-import org.lwjgl.openal.ALC;
-import org.lwjgl.openal.ALCCapabilities;
-import org.lwjgl.openal.ALCapabilities;
-import org.lwjgl.opengl.GL;
+import Just_Forge_2D.WindowSystem.Window;
 
-import java.util.Objects;
-
-import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
-import static org.lwjgl.openal.ALC10.*;
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.system.MemoryUtil.NULL;
 
 
 // - - - | Class | - - -
@@ -53,25 +36,29 @@ public class EditorWindow extends Window {
 
 
     // - - - Private Constructor for Singleton
-    public EditorWindow() {
+    public EditorWindow()
+    {
         super(null);
         Forge.setAudioSystem();
+        EditorSystemManager.editorWindow = this;
         Forge.window = this;
     }
 
     // - - - Run the game
-    public void run() {
+    public void run()
+    {
         Logger.FORGE_LOG_WARNING("Running Game Engine in automatic mode");
         init();
-        Forge.changeScene(new EditorSceneInitializer());
-        while (!shouldClose()) {
+        while (!shouldClose())
+        {
             loop();
         }
         close();
     }
 
     // - - - Initialize the window
-    public void init() {
+    public void init()
+    {
         this.framebuffer = new Framebuffer(1980, 720);
         Forge.selector = new ObjectSelector(1980, 720);
         glViewport(0, 0, 1980, 720);
@@ -91,17 +78,22 @@ public class EditorWindow extends Window {
 
         beginTime = (float) TimeKeeper.getTime();
         Logger.FORGE_LOG_INFO("Time keeping system Online");
+
+        SceneSystemManager.addScene(null, new EditorSceneInitializer(), EditorSystemManager.editorSceneName);
+        EditorSystemManager.editorScene = SceneSystemManager.getScene(EditorSystemManager.editorSceneName);
+        EditorSystemManager.editorScene.start();
     }
 
 
     // - - - Loop the game
     @Override
-    public void loop() {
+    public void loop()
+    {
         // - - - Poll events
         glfwPollEvents();
 
 
-        // - - - Renderpasses - - -
+        // - - - Render passes - - -
 
         // - - - 1: renderer to object picker
         glDisable(GL_BLEND);
@@ -111,7 +103,7 @@ public class EditorWindow extends Window {
         glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         Forge.getRenderer(this).bindShader(Forge.selectorShader);
-        Forge.currentScene.render(dt);
+        EditorSystemManager.editorScene.render(dt);
         Forge.selector.disableWriting();
 
         // - - - 2: render to monitor
@@ -130,11 +122,11 @@ public class EditorWindow extends Window {
         if (dt >= 0.0d) {
             Forge.getRenderer(this).bindShader(Forge.defaultShader);
             if (isRuntimePlaying) {
-                Forge.currentScene.update(dt);
+                EditorSystemManager.editorScene.update(dt);
             } else {
-                Forge.currentScene.editorUpdate(dt);
+                EditorSystemManager.editorScene.editorUpdate(dt);
             }
-            Forge.currentScene.render(dt);
+            EditorSystemManager.editorScene.render(dt);
             DebugPencil.draw();
         }
 
@@ -142,7 +134,7 @@ public class EditorWindow extends Window {
         this.framebuffer.unbind();
 
         // - - - Update the editor
-        Forge.editorLayer.update((float) dt, Forge.currentScene);
+        Forge.editorLayer.update((float) dt, EditorSystemManager.editorScene);
 
 
         // - - - finish input frames
@@ -178,23 +170,29 @@ public class EditorWindow extends Window {
             case ForgeStart:
                 Logger.FORGE_LOG_INFO("Starting Game");
                 this.isRuntimePlaying = true;
-                Forge.currentScene.save();
-                Forge.changeScene(new EditorSceneInitializer());
+                EditorSystemManager.editorScene.save();
+                SceneSystemManager.addScene(null, new EditorSceneInitializer(), EditorSystemManager.editorSceneName);
+                EditorSystemManager.editorScene = SceneSystemManager.getScene(EditorSystemManager.editorSceneName);
+                EditorSystemManager.editorScene.start();
                 break;
 
             case ForgeStop:
                 Logger.FORGE_LOG_INFO("Ending Game");
                 this.isRuntimePlaying = false;
-                Forge.changeScene(new EditorSceneInitializer());
+                EditorSystemManager.editorScene.save();
+                SceneSystemManager.addScene(null, new EditorSceneInitializer(), EditorSystemManager.editorSceneName);
+                EditorSystemManager.editorScene = SceneSystemManager.getScene(EditorSystemManager.editorSceneName);
+                EditorSystemManager.editorScene.start();
                 break;
 
             case SaveLevel:
-                Logger.FORGE_LOG_INFO("Saving Scene: " + Forge.currentScene);
-                Forge.currentScene.save();
+                Logger.FORGE_LOG_INFO("Saving Scene: " + EditorSystemManager.editorSceneName);
+                EditorSystemManager.editorScene.save();
                 break;
 
             case LoadLevel:
-                Forge.changeScene(new EditorSceneInitializer());
+                SceneSystemManager.addScene(EditorSystemManager.editorScene, new EditorSceneInitializer(), EditorSystemManager.editorSceneName);
+                EditorSystemManager.editorScene.start();
                 break;
         }
     }

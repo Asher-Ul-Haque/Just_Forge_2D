@@ -1,22 +1,11 @@
 package Just_Forge_2D.SceneSystem;
 
-import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.Components.TransformComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.PhysicsSystem.PhysicsManager;
 import Just_Forge_2D.RenderingSystems.Renderer;
-import Just_Forge_2D.Utils.Configurations;
-import Just_Forge_2D.Utils.JsonHandlers.ComponentJsonHandler;
-import Just_Forge_2D.Utils.JsonHandlers.GameObjectJsonHandler;
 import Just_Forge_2D.Utils.Logger;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import org.joml.Vector2f;
-
-import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,9 +16,9 @@ public class Scene
 
     // - - - Basic
     private Camera camera;
-    private boolean isRunning = false;
+    private boolean isRunning;
 
-    // - - - ALl the objects
+    // - - - All the objects
     private final List<GameObject> gameObjects;
 
     // - - - Scene Rendering
@@ -48,7 +37,7 @@ public class Scene
     public Scene(SceneInitializer INITIALIZER)
     {
         this.initializer = INITIALIZER;
-        this.physics = new PhysicsManager();
+        this.physics = new PhysicsManager(this);
         this.renderer = INITIALIZER.renderer;
         this.gameObjects = new ArrayList<>();
         this.isRunning = false;
@@ -61,6 +50,7 @@ public class Scene
     public void init()
     {
         Logger.FORGE_LOG_INFO("Initializing new scene: " + this.initializer);
+        this.renderer.setCurrentScene(this);
         this.camera = new Camera(new Vector2f(0, 0));
         this.initializer.loadResources(this);
         this.initializer.init(this);
@@ -70,9 +60,9 @@ public class Scene
     {
         Logger.FORGE_LOG_INFO("Starting Scene : " + this.initializer);
         // NOTE: do not change to enhanced for loop
-        for (int i = 0; i < gameObjects.size(); ++i)
+        for (int i = 0; i < this.gameObjects.size(); ++i)
         {
-            GameObject go = gameObjects.get(i);
+            GameObject go = this.gameObjects.get(i);
             go.start();
             this.renderer.addGameObject(go);
             this.physics.add(go);
@@ -82,6 +72,7 @@ public class Scene
 
     public void update(float DELTA_TIME)
     {
+        if (!this.isRunning) return;
         this.camera.adjustProjection();
         this.physics.update(DELTA_TIME);
         this.initializer.update(DELTA_TIME);
@@ -116,6 +107,7 @@ public class Scene
 
     public void editorUpdate(float DELTA_TIME)
     {
+        if (!this.isRunning) return;
         this.camera.adjustProjection();
         this.initializer.editorUpdate(DELTA_TIME);
         for (int i = 0; i < gameObjects.size(); ++i)
@@ -213,17 +205,36 @@ public class Scene
     // - - - load
     public void load()
     {
-        SceneLoader.load(this);
+        SceneSystemManager.load(this);
     }
 
     // - - - save
     public void save()
     {
-        SceneLoader.save(this);
+        SceneSystemManager.save(this);
     }
 
 
-    // - - - miscellaneous
+    // - - - Pause and Delete the Scene - - -
+
+    // - - - pause
+    public void pauseScene(boolean REALLY)
+    {
+        Logger.FORGE_LOG_DEBUG("Setting Pause status of Scene : " + this + " to : " + REALLY);
+        if (this.isRunning == REALLY)
+        {
+            Logger.FORGE_LOG_WARNING(this + " has its pause status already set to : " + this.isRunning);
+            return;
+        }
+        this.isRunning = REALLY;
+    }
+
+    public boolean getPause()
+    {
+        return this.isRunning;
+    }
+
+    // - - - destroy
     public void destroy()
     {
         for (GameObject go : this.gameObjects)
@@ -233,10 +244,14 @@ public class Scene
         Logger.FORGE_LOG_INFO("Scene Destroyed " + this.initializer);
     }
 
+    // - - - Physics System
     public PhysicsManager getPhysics()
     {
         return this.physics;
     }
+
+
+    // - - - Renderer - - -
 
     public void switchRenderer(Renderer RENDERER)
     {

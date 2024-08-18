@@ -6,6 +6,8 @@ import Just_Forge_2D.EntityComponentSystem.Components.PhysicsComponents.Collider
 import Just_Forge_2D.EntityComponentSystem.Components.PhysicsComponents.RigidBodyComponent;
 import Just_Forge_2D.EntityComponentSystem.Components.TransformComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
+import Just_Forge_2D.SceneSystem.Scene;
+import Just_Forge_2D.SceneSystem.SceneSystemManager;
 import Just_Forge_2D.Utils.Configurations;
 import Just_Forge_2D.Utils.Logger;
 import org.jbox2d.collision.shapes.CircleShape;
@@ -29,11 +31,14 @@ public class PhysicsManager
     private int velocityIterations = Configurations.VELOCITY_ITERATIONS;
     private int positionIterations = Configurations.POSITION_ITERATIONS;
 
+    private Scene owner;
+
 
     // - - - | Functions | - - -
 
-    public PhysicsManager()
+    public PhysicsManager(Scene SCENE)
     {
+        this.owner = SCENE;
         world.setContactListener(new CollisionDetector());
     }
 

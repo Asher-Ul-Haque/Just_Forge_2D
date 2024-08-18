@@ -4,12 +4,8 @@ import Just_Forge_2D.EditorSystem.ObjectSelector;
 import Just_Forge_2D.EditorSystem.justForgeImGui;
 import Just_Forge_2D.RenderingSystems.Renderer;
 import Just_Forge_2D.RenderingSystems.Shader;
-import Just_Forge_2D.SceneSystem.EditorSceneInitializer;
-import Just_Forge_2D.SceneSystem.Scene;
-import Just_Forge_2D.SceneSystem.SceneInitializer;
-import Just_Forge_2D.Utils.AssetPool;
 import Just_Forge_2D.Utils.Logger;
-import Just_Forge_2D.WindowSystem.EditorWindow;
+import Just_Forge_2D.EditorSystem.EditorWindow;
 import Just_Forge_2D.WindowSystem.Window;
 import org.lwjgl.openal.AL;
 import org.lwjgl.openal.ALC;
@@ -23,7 +19,6 @@ import static org.lwjgl.openal.ALC10.*;
 public class Forge
 {
     private static final HashMap<Window, Renderer> windowRendererHashMap = new HashMap<>();
-    public static Scene currentScene;
     public static EditorWindow window = null;
     public static justForgeImGui editorLayer;
     public static ObjectSelector selector;
@@ -33,36 +28,6 @@ public class Forge
 
     private static long audioContext;
     private static long audioDevicePtr;
-
-    public static void changeScene(SceneInitializer INITIALIZER)
-    {
-        if (currentScene != null)
-        {
-            Logger.FORGE_LOG_INFO("Clearing Scene Catch from previous run");
-            currentScene.destroy();
-        }
-
-     //   getEditor().getPropertiesWindow().setActiveGameObject(null);
-
-        currentScene = new Scene(INITIALIZER);
-        currentScene.load();
-        currentScene.init();
-        currentScene.start();
-    }
-
-    public static void run()
-    {
-        Window main = new Window(null);
-        AssetPool.addShader("Default", "Assets/Shaders/default.glsl");
-        AssetPool.addShader("Selector", "Assets/Shaders/selector.glsl");
-        AssetPool.addShader("Debug", "Assets/Shaders/debug.glsl");
-        changeScene(new EditorSceneInitializer());
-        while (!main.shouldClose())
-        {
-            main.loop();
-        }
-        main.close();
-    }
 
     public static void assignRenderer(Window WINDOW, Renderer RENDERER)
     {

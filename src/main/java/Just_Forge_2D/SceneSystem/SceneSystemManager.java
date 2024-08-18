@@ -8,17 +8,19 @@ import Just_Forge_2D.Utils.JsonHandlers.GameObjectJsonHandler;
 import Just_Forge_2D.Utils.Logger;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
-public class SceneLoader
+public class SceneSystemManager
 {
-    public static void save(Scene SCENE)
+    private static HashMap<String, Scene> allScenes = new HashMap<>();
+
+    protected static void save(Scene SCENE)
     {
         Gson gson = new GsonBuilder()
                 .setPrettyPrinting()
@@ -50,7 +52,7 @@ public class SceneLoader
         }
     }
 
-    public static void load(Scene SCENE)
+    protected static void load(Scene SCENE)
     {
         Gson gson = new GsonBuilder()
                 .setPrettyPrinting()
@@ -89,5 +91,31 @@ public class SceneLoader
             GameObject.init(maxGoId);
             Component.init(maxCompoId);
         }
+    }
+
+    public static void addScene(Scene SCENE, SceneInitializer INITIALIZER, String ID)
+    {
+        if (SCENE != null)
+        {
+            Logger.FORGE_LOG_INFO("Clearing Scene Catch from previous run");
+            SCENE.destroy();
+        }
+
+        Logger.FORGE_LOG_INFO("Adding " + SCENE + " to Scene Manager");
+
+        SCENE = new Scene(INITIALIZER);
+        allScenes.put(ID, SCENE);
+        SCENE.load();
+        SCENE.init();
+    }
+
+    public static Scene getScene(String ID)
+    {
+        Scene returnScene = allScenes.get(ID);
+        if (returnScene == null)
+        {
+            Logger.FORGE_LOG_ERROR("No such Scene in the Scene Manager");
+        }
+        return returnScene;
     }
 }

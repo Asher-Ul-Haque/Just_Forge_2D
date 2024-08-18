@@ -3,8 +3,6 @@ package Just_Forge_2D.SceneSystem;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.RenderingSystems.Renderer;
 
-import java.util.ArrayList;
-
 public abstract class SceneInitializer
 {
     public GameObject master;

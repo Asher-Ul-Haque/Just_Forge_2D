@@ -13,11 +13,8 @@ import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteSheet;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.Forge;
-import Just_Forge_2D.InputSystem.Keyboard;
 import Just_Forge_2D.Utils.AssetPool;
 import Just_Forge_2D.Utils.Configurations;
-import Just_Forge_2D.Utils.Logger;
-import Just_Forge_2D.WindowSystem.EditorWindow;
 import imgui.ImGui;
 import imgui.ImVec2;
 import org.joml.Vector2f;
@@ -25,8 +22,6 @@ import org.joml.Vector4f;
 
 import java.io.File;
 import java.util.Collection;
-
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_SPACE;
 
 
 // - - - Class to run the editor
@@ -215,13 +210,4 @@ public class EditorSceneInitializer extends SceneInitializer
         ImGui.end();
     }
 
-    @Override
-    public void update(float DELTA_TIME)
-    {
-        if (Keyboard.isKeyBeginPress(GLFW_KEY_SPACE))
-        {
-            Logger.FORGE_LOG_WARNING("Chaning SCenes form EDITOR");
-            Forge.changeScene(new TestSceneInitializer());
-        }
-    }
 }

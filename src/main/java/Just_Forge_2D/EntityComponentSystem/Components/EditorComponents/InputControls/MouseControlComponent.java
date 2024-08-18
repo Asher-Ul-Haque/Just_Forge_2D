@@ -1,6 +1,7 @@
 package Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.InputControls;
 
 import Just_Forge_2D.AnimationSystem.StateMachine;
+import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.EditorSystem.ObjectSelector;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.NonPickableComponent;
@@ -13,7 +14,6 @@ import Just_Forge_2D.RenderingSystems.DebugPencil;
 import Just_Forge_2D.SceneSystem.Scene;
 import Just_Forge_2D.Utils.Configurations;
 import Just_Forge_2D.Utils.Logger;
-import Just_Forge_2D.WindowSystem.EditorWindow;
 import org.joml.Vector2f;
 import org.joml.Vector2i;
 import org.joml.Vector3f;
@@ -55,7 +55,7 @@ public class MouseControlComponent extends Component
         this.holdingObject = GO;
         this.holdingObject.getCompoent(SpriteComponent.class).setColor(new Vector4f(0.8f, 0.8f, 0.8f, 0.5f));
         this.holdingObject.addComponent(new NonPickableComponent());
-        Forge.currentScene.addGameObject(GO);
+        EditorSystemManager.editorScene.addGameObject(GO);
         Logger.FORGE_LOG_DEBUG("Picked up object: "+ this.holdingObject);
     }
 
@@ -69,7 +69,7 @@ public class MouseControlComponent extends Component
         }
         newObj.getCompoent(SpriteComponent.class).setColor(new Vector4f(1, 1, 1, 1));
         newObj.removeComponent(NonPickableComponent.class);
-        Forge.currentScene.addGameObject(newObj);
+        EditorSystemManager.editorScene.addGameObject(newObj);
     }
 
     // - - - run
@@ -78,7 +78,7 @@ public class MouseControlComponent extends Component
     {
         debounce -= DELTA_TIME;
         ObjectSelector selector = Forge.editorLayer.getPropertiesWindow().getSelector();
-        Scene currentScene = Forge.currentScene;
+        Scene currentScene = EditorSystemManager.editorScene;
 
         if (holdingObject != null && debounce < 0.0f)
         {
@@ -167,7 +167,7 @@ public class MouseControlComponent extends Component
 
             for (Integer gameObjectID : uniqueGameObjectIDs)
             {
-                GameObject picked = Forge.currentScene.getGameObject(gameObjectID);
+                GameObject picked = EditorSystemManager.editorScene.getGameObject(gameObjectID);
                 if (picked != null && picked.getCompoent(NonPickableComponent.class) == null)
                 {
                     Forge.editorLayer.getPropertiesWindow().addActiveGameObject(picked);

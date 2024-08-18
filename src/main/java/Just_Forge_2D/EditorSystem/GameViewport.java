@@ -5,7 +5,6 @@ import Just_Forge_2D.EventSystem.Events.Event;
 import Just_Forge_2D.EventSystem.Events.EventTypes;
 import Just_Forge_2D.Forge;
 import Just_Forge_2D.InputSystem.Mouse;
-import Just_Forge_2D.WindowSystem.EditorWindow;
 import imgui.ImGui;
 import imgui.ImVec2;
 import imgui.flag.ImGuiWindowFlags;

@@ -1,9 +1,8 @@
 package Just_Forge_2D.EntityComponentSystem.Components.PhysicsComponents.Collider;
 
+import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.Components.PhysicsComponents.RigidBodyComponent;
-import Just_Forge_2D.Forge;
-import Just_Forge_2D.WindowSystem.EditorWindow;
 import org.joml.Vector2f;
 
 public class CylinderColliderComponent extends Component
@@ -53,7 +52,7 @@ public class CylinderColliderComponent extends Component
 
     public void resetFixtures()
     {
-        if (Forge.currentScene.getPhysics().isLocked())
+        if (EditorSystemManager.editorScene.getPhysics().isLocked())
         {
             resetFixtureNextFrame = true;
             return;
@@ -66,7 +65,7 @@ public class CylinderColliderComponent extends Component
             RigidBodyComponent rb = gameObject.getCompoent(RigidBodyComponent.class);
             if (rb != null)
             {
-                Forge.currentScene.getPhysics().resetCylinderCollider(rb, this);
+                EditorSystemManager.editorScene.getPhysics().resetCylinderCollider(rb, this);
             }
         }
     }

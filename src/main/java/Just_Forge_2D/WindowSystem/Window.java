@@ -7,7 +7,6 @@ import Just_Forge_2D.EventSystem.Observer;
 import Just_Forge_2D.Forge;
 import Just_Forge_2D.InputSystem.Keyboard;
 import Just_Forge_2D.InputSystem.Mouse;
-import Just_Forge_2D.RenderingSystems.Renderer;
 import Just_Forge_2D.Utils.Configurations;
 import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.Utils.TimeKeeper;
@@ -29,10 +28,10 @@ public class Window implements Observer
     // - - - private variables - - -
 
     private final WindowConfig config;
-    float fps = 0;
-    float beginTime = 0;
-    float endTime = 0;
-    float dt = -1;
+    protected float fps = 0;
+    protected float beginTime = 0;
+    protected float endTime = 0;
+    protected float dt = -1;
     protected long glfwWindowPtr;
     private boolean shouldClose = false;
 
@@ -84,9 +83,9 @@ public class Window implements Observer
 
         // - - - assign callbacks to input systems
         Logger.FORGE_LOG_DEBUG("Linking " + this.config.title + " with Mouse");
-//        glfwSetCursorPosCallback(this.glfwWindowPtr, Mouse::mousePositionCallback);
-//        glfwSetMouseButtonCallback(this.glfwWindowPtr, Mouse::mouseButtonCallback);
-//        glfwSetScrollCallback(this.glfwWindowPtr, Mouse::mouseScrollCallback);
+        glfwSetCursorPosCallback(this.glfwWindowPtr, Mouse::mousePositionCallback);
+        glfwSetMouseButtonCallback(this.glfwWindowPtr, Mouse::mouseButtonCallback);
+        glfwSetScrollCallback(this.glfwWindowPtr, Mouse::mouseScrollCallback);
         glfwSetWindowSizeCallback(this.glfwWindowPtr, (w, newWidth, newHeight) -> {
             this.config.width = newWidth;
             this.config.height = newHeight;
@@ -94,7 +93,7 @@ public class Window implements Observer
         });
 
         Logger.FORGE_LOG_DEBUG("Linking " + this.config.title + " with Keyboard");
-//        glfwSetKeyCallback(this.glfwWindowPtr, Keyboard::keyCallback);
+        glfwSetKeyCallback(this.glfwWindowPtr, Keyboard::keyCallback);
 
         // - - - Initializing openGL
         Logger.FORGE_LOG_DEBUG("Initializing OpenGL");
@@ -382,6 +381,25 @@ public class Window implements Observer
         this.config.decorated = DO;
     }
 
+
+    // - - - Handle Window Transparency Status - - -
+
+    public boolean isTransparent()
+    {
+        return this.config.transparent;
+    }
+
+    public void setTransparent(boolean DO)
+    {
+        Logger.FORGE_LOG_DEBUG("Setting transparency status of " + this.config.title + " to : " + DO);
+        if (this.config.decorated == DO)
+        {
+            Logger.FORGE_LOG_WARNING(this.config.title + " already has transparency status: " + this.config.decorated);
+            return;
+        }
+        glfwSetWindowAttrib(this.glfwWindowPtr, GLFW_TRANSPARENT_FRAMEBUFFER, DO ? GLFW_TRUE : GLFW_FALSE);
+        this.config.decorated = DO;
+    }
 
     // - - - Handle FPS - - -
 

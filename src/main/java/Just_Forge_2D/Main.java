@@ -1,10 +1,8 @@
 package Just_Forge_2D;
 
-import Just_Forge_2D.WindowSystem.EditorWindow;
-import Just_Forge_2D.WindowSystem.Window;
+import Just_Forge_2D.EditorSystem.EditorWindow;
 import imgui.app.Application;
 import imgui.app.Configuration;
-import org.joml.Vector4f;
 
 public class Main extends Application
 {

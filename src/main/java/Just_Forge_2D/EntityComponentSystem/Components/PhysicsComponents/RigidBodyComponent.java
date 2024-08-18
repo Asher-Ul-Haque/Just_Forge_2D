@@ -1,11 +1,10 @@
 package Just_Forge_2D.EntityComponentSystem.Components.PhysicsComponents;
 
+import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
-import Just_Forge_2D.Forge;
 import Just_Forge_2D.PhysicsSystem.Enums.BodyType;
 import Just_Forge_2D.Utils.Configurations;
 import Just_Forge_2D.Utils.Logger;
-import Just_Forge_2D.WindowSystem.EditorWindow;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.joml.Vector2f;
@@ -90,7 +89,7 @@ public class RigidBodyComponent extends Component
             Logger.FORGE_LOG_ERROR("Cant set or unset as sensor a null raw body");
             return;
         }
-        Forge.currentScene.getPhysics().setSensor(this, REALLY);
+        EditorSystemManager.editorScene.getPhysics().setSensor(this, REALLY);
     }
 
     public boolean isSensor()

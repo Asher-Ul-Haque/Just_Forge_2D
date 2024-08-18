@@ -1,8 +1,6 @@
 package Just_Forge_2D.SceneSystem;
 
-import Just_Forge_2D.Forge;
 import Just_Forge_2D.Utils.Logger;
-import Just_Forge_2D.WindowSystem.EditorWindow;
 
 public class TestSceneInitializer extends SceneInitializer{
     @Override

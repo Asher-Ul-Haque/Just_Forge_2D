@@ -2,6 +2,7 @@ package Just_Forge_2D.RenderingSystems;
 
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
+import Just_Forge_2D.SceneSystem.Scene;
 import Just_Forge_2D.Utils.Configurations;
 import Just_Forge_2D.Utils.Logger;
 
@@ -17,6 +18,7 @@ public class Renderer
     private final int MAX_BATCH_SIZE = Configurations.MAX_BATCH_SIZE;
     private final List<RenderBatch> batches;
     private static Shader currentShader;
+    protected Scene currentScene;
 
 
     // - - - | Functions | - - -
@@ -116,6 +118,23 @@ public class Renderer
         return "Rendering System slave to " + this.window;
     }
 
+    public void setCurrentScene(Scene CURRENT_SCENE)
+    {
+        Logger.FORGE_LOG_DEBUG(this + " Setting Current Scene to : " + CURRENT_SCENE);
+        if (CURRENT_SCENE == this.currentScene)
+        {
+            Logger.FORGE_LOG_WARNING(this + " already has current scene set to: " + CURRENT_SCENE);
+            return;
+        }
+        this.currentScene = CURRENT_SCENE;
+    }
+
+    public Scene getCurrentScene()
+    {
+        if (this.currentScene == null)
+        {
+            Logger.FORGE_LOG_WARNING("Current Scene is null for : " + this);
+        }
+        return this.currentScene;
+    }
 }
-
-
