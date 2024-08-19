@@ -9,10 +9,9 @@ import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.Forge;
 import Just_Forge_2D.InputSystem.Mouse;
+import Just_Forge_2D.InputSystem.MouseButtons;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
-
-import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_LEFT;
 
 // - - - Gizmo
 public class GizmoComponent extends Component
@@ -100,12 +99,12 @@ public class GizmoComponent extends Component
         boolean xAxisHot = checkXHoverState();
         boolean yAxisHot = checkYHoverState();
 
-        if ((xAxisHot || xAxisActive) && Mouse.isDragging() && Mouse.isMouseButtonDown(GLFW_MOUSE_BUTTON_LEFT))
+        if ((xAxisHot || xAxisActive) && Mouse.isDragging() && Mouse.isMouseButtonDown(MouseButtons.LEFT))
         {
             xAxisActive = true;
             yAxisActive = false;
         }
-        else if ((yAxisHot || yAxisActive) && Mouse.isMouseButtonDown(GLFW_MOUSE_BUTTON_LEFT))
+        else if ((yAxisHot || yAxisActive) && Mouse.isMouseButtonDown(MouseButtons.RIGHT))
         {
             xAxisActive = false;
             yAxisActive = true;
@@ -154,7 +153,7 @@ public class GizmoComponent extends Component
 
     private boolean checkXHoverState()
     {
-        Vector2f mousePos = new Vector2f(Mouse.getWorldX(), Mouse.getWorldY());
+        Vector2f mousePos = new Vector2f(EditorSystemManager.getWorldX(), EditorSystemManager.getWorldY());
 
         if (mousePos.x <= xAxisGizmo.transform.position.x + (gizmoHeight / 2.0f) &&
                 mousePos.x >= xAxisGizmo.transform.position.x - (gizmoWidth / 2.0f) &&
@@ -171,7 +170,7 @@ public class GizmoComponent extends Component
 
     private boolean checkYHoverState()
     {
-        Vector2f mousePos = new Vector2f(Mouse.getWorldX(), Mouse.getWorldY());
+        Vector2f mousePos = new Vector2f(EditorSystemManager.getWorldX(), EditorSystemManager.getWorldY());
 
         if (mousePos.x <= yAxisGizmo.transform.position.x + (gizmoWidth / 2f)&&
                 mousePos.x >= yAxisGizmo.transform.position.x - (gizmoWidth / 2f)&&

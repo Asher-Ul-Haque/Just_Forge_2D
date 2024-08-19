@@ -3,6 +3,7 @@ package Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.GizmoSys
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteSheet;
 import Just_Forge_2D.InputSystem.Keyboard;
+import Just_Forge_2D.InputSystem.Keys;
 import Just_Forge_2D.Utils.Logger;
 
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_S;
@@ -53,12 +54,12 @@ public class GizmoSystemComponent extends Component
                 break;
         }
 
-        if (Keyboard.isKeyPressed(GLFW_KEY_T))
+        if (Keyboard.isKeyPressed(Keys.T))
         {
             Logger.FORGE_LOG_INFO("Switched to Translate Gizmo");
             currentGizmo = 0;
         }
-        else if (Keyboard.isKeyPressed(GLFW_KEY_S))
+        else if (Keyboard.isKeyPressed(Keys.S))
         {
             Logger.FORGE_LOG_INFO("Switched to scale gizmo");
             currentGizmo = 1;

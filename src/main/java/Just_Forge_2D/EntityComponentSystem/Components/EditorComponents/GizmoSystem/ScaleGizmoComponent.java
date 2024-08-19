@@ -1,5 +1,6 @@
 package Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.GizmoSystem;
 
+import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.Sprite;
 import Just_Forge_2D.InputSystem.Mouse;
 import Just_Forge_2D.Utils.Logger;
@@ -24,11 +25,11 @@ public class ScaleGizmoComponent extends GizmoComponent
         {
             if (xAxisActive && !yAxisActive)
             {
-                activeGameObject.transform.scale.x -= Mouse.getWorldDeltaX();
+                activeGameObject.transform.scale.x -= EditorSystemManager.getWorldDeltaX();
             }
             else if (yAxisActive && !xAxisActive)
             {
-                activeGameObject.transform.scale.y -= Mouse.getWorldDeltaY();
+                activeGameObject.transform.scale.y -= EditorSystemManager.getWorldDeltaY();
             }
         }
         super.editorUpdate(DELTA_TIME);

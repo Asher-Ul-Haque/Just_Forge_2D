@@ -8,8 +8,9 @@ import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 
-import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
-import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
+import java.util.Arrays;
+
+import static org.lwjgl.glfw.GLFW.*;
 
 
 // - - - Mouse Input class
@@ -28,18 +29,11 @@ public class Mouse
     private double xPosition, yPosition;
     private double xPrevious, yPrevious;
 
-    // - - - Wrold Positions
-    private double xWorldPosition, yWorldPosition;
-    private double xWorldPrevious, yWorldPrevious;
-
     // - - - Mouse Buttons
-    private final int buttonCount = 9;
+    private final int buttonCount = GLFW_MOUSE_BUTTON_LAST;
     private int mouseButtonDownCount = 0;
     private final boolean[] isMouseButtonPressed = new boolean[buttonCount]; // left, middle, right
 
-    // - - - Relations
-    private Vector2f gameViewportPos = new Vector2f();
-    private Vector2f grameViewportSize = new Vector2f();
 
 
     // - - - | Functions | - - -
@@ -74,12 +68,6 @@ public class Mouse
     // - - - Update Mouse Move
     public static void mousePositionCallback(long WINDOW, double X_POSITION, double Y_POSITION)
     {
-        // - - - check if we need to clear the buffer
-        if (!Forge.editorLayer.getGameViewport().getWantCaptureMouse())
-        {
-            clear();
-        }
-
         // - - - save off mouse state
         get().xPrevious = get().xPosition;
         get().yPrevious = get().yPosition;
@@ -87,14 +75,6 @@ public class Mouse
         // - - - save the new mouse state
         get().yPosition = Y_POSITION;
         get().xPosition = X_POSITION;
-
-        // - - - save the world position
-        get().xWorldPrevious = get().xWorldPosition;
-        get().yWorldPrevious = get().yWorldPosition;
-
-        // - - - redo world calculations
-        calcWorldY();
-        calcWorldX();
 
         // - - - check drag
         if (get().mouseButtonDownCount > 0) get().isDragging = true;
@@ -141,9 +121,6 @@ public class Mouse
 
         get().xPrevious = get().xPosition;
         get().yPrevious = get().yPosition;
-
-        get().xWorldPrevious = get().xWorldPosition;
-        get().yWorldPrevious = get().yWorldPosition;
     }
 
 
@@ -175,74 +152,6 @@ public class Mouse
         return (float) (get().yPrevious - get().yPosition);
     }
 
-
-    // - - - World Space - - -
-
-    // - - - get coordinates
-    public static float getWorldX()
-    {
-        return (float) get().xWorldPosition;
-    }
-
-    public static float getWorldY()
-    {
-        return (float) get().yWorldPosition;
-    }
-
-    // - - - delta
-    public static float getWorldDeltaX()
-    {
-        return (float) (get().xWorldPrevious - get().xWorldPosition);
-    }
-
-    public static float getWorldDeltaY()
-    {
-        return (float) (get().yWorldPrevious - get().yWorldPosition);
-    }
-
-    // - - - set coordinates
-    private static void calcWorldX()
-    {
-        float currentX = getX() - get().gameViewportPos.x;
-        currentX = (currentX / get().grameViewportSize.x) * 2.0f - 1.0f;
-        Vector4f temp = new Vector4f(currentX, 0, 0, 1);
-        Camera camera = EditorSystemManager.editorScene.getCamera();
-        Matrix4f viewProjection = new Matrix4f();
-        camera.getInverseViewMatrix().mul(camera.getInverseProjectionMatrix(), viewProjection);
-        temp.mul(viewProjection);
-        get().xWorldPosition = temp.x;
-    }
-
-
-    public static void calcWorldY()
-    {
-        float currentY = getY() - get().gameViewportPos.y;
-        currentY = -((currentY / get().grameViewportSize.y) * 2.0f - 1.0f);
-        Vector4f temp = new Vector4f(0, currentY, 0, 1);
-        Camera camera = EditorSystemManager.editorScene.getCamera();
-        Matrix4f viewProjection = new Matrix4f();
-        camera.getInverseViewMatrix().mul(camera.getInverseProjectionMatrix(), viewProjection);
-        temp.mul(viewProjection);
-        get().yWorldPosition = temp.y;
-    }
-
-
-    // - - - Screen Space - - -
-
-    public static float getScreenX()
-    {
-        float currentX = getX() - get().gameViewportPos.x;
-        currentX = (currentX / get().grameViewportSize.x) * 1980;
-        return currentX;
-    }
-
-    public static float getScreenY()
-    {
-        float currentY = getY() - get().gameViewportPos.y;
-        currentY = 720f - ((currentY / get().grameViewportSize.y) * 720f);
-        return currentY;
-    }
-
     // - - - Scroll - - -
 
     public static float getScrollX()
@@ -263,25 +172,18 @@ public class Mouse
 
     // - - - Mouse buttons - - -
 
-    public static boolean isMouseButtonDown(int BUTTON)
+    public static boolean isMouseButtonDown(MouseButtons BUTTON)
     {
-        if (BUTTON >= get().isMouseButtonPressed.length)
+        if (BUTTON.buttonCode >= get().isMouseButtonPressed.length)
         {
             return false;
         }
 
-        return get().isMouseButtonPressed[BUTTON];
+        return get().isMouseButtonPressed[BUTTON.buttonCode];
     }
 
 
     // - - - View port - - -
-
-    public static void setGameViewport(Vector2f GAME_VIEWPORT_POS, Vector2f GAME_VIEWPORT_SIZE)
-    {
-        get().gameViewportPos.set(GAME_VIEWPORT_POS);
-        get().grameViewportSize.set(GAME_VIEWPORT_SIZE);
-    }
-
 
     // - - - clear
     public static void clear()
@@ -292,15 +194,8 @@ public class Mouse
         get().yPosition = 0.0f;
         get().xPrevious = 0.0f;
         get().yPrevious = 0.0f;
-        get().xWorldPosition = 0.0f;
-        get().yWorldPosition = 0.0f;
-        get().xWorldPrevious = 0.0f;
-        get().yWorldPrevious = 0.0f;
         get().mouseButtonDownCount = 0;
         get().isDragging = false;
-        for (boolean b : get().isMouseButtonPressed)
-        {
-            b = false;
-        }
+        Arrays.fill(get().isMouseButtonPressed, false);
     }
 }

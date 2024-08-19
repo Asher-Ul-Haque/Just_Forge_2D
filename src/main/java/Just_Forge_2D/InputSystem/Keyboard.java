@@ -4,8 +4,7 @@ import Just_Forge_2D.Utils.Logger;
 
 import java.util.Arrays;
 
-import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
-import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
+import static org.lwjgl.glfw.GLFW.*;
 
 
 // - - - Keyboard input class
@@ -18,10 +17,9 @@ public class Keyboard
     private static Keyboard keyboard;
 
     // - - - Key States
-    private final int totalKeys = 350;
+    private final int totalKeys = GLFW_KEY_LAST;
     private final boolean[] isKeyPressed = new boolean[totalKeys];
     private final boolean[] isKeyBeginPress = new boolean[totalKeys];
-
 
     // - - - Functions - - -
 
@@ -60,14 +58,14 @@ public class Keyboard
     }
 
     // - - - Get key state
-    public static boolean isKeyPressed(int KEYCODE)
+    public static boolean isKeyPressed(Keys KEY)
     {
-        return get().isKeyPressed[KEYCODE];
+        return get().isKeyPressed[KEY.keyCode];
     }
 
-    public static boolean isKeyBeginPress(int KEYCODE)
+    public static boolean isKeyBeginPress(Keys KEY)
     {
-       return get().isKeyBeginPress[KEYCODE];
+       return get().isKeyBeginPress[KEY.keyCode];
     }
 
     // - - - end frame

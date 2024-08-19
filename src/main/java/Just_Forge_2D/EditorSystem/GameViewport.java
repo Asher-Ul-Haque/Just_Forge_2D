@@ -45,7 +45,7 @@ public class GameViewport
         rightX = topLeft.x + windowSize.x;
         topY = topLeft.y + windowSize.y;
 
-        Mouse.setGameViewport(new Vector2f(topLeft.x, topLeft.y), new Vector2f(windowSize.x, windowSize.y));
+        EditorSystemManager.setGameViewport(new Vector2f(topLeft.x, topLeft.y), new Vector2f(windowSize.x, windowSize.y));
 
         int textureId = Forge.window.getFramebuffer().getTextureID();
         ImGui.image(textureId, windowSize.x, windowSize.y, 0, 1, 1, 0);

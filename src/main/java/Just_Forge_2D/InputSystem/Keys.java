@@ -1,0 +1,117 @@
+package Just_Forge_2D.InputSystem;
+
+import static org.lwjgl.glfw.GLFW.*;
+
+
+public enum Keys
+{
+    // - - - Alphabet Keys
+    A(GLFW_KEY_A),
+    B(GLFW_KEY_B),
+    C(GLFW_KEY_C),
+    D(GLFW_KEY_D),
+    E(GLFW_KEY_E),
+    F(GLFW_KEY_F),
+    G(GLFW_KEY_G),
+    H(GLFW_KEY_H),
+    I(GLFW_KEY_I),
+    J(GLFW_KEY_J),
+    K(GLFW_KEY_K),
+    L(GLFW_KEY_L),
+    M(GLFW_KEY_M),
+    N(GLFW_KEY_N),
+    O(GLFW_KEY_O),
+    P(GLFW_KEY_P),
+    Q(GLFW_KEY_Q),
+    R(GLFW_KEY_R),
+    S(GLFW_KEY_S),
+    T(GLFW_KEY_T),
+    U(GLFW_KEY_U),
+    V(GLFW_KEY_V),
+    W(GLFW_KEY_W),
+    X(GLFW_KEY_X),
+    Y(GLFW_KEY_Y),
+    Z(GLFW_KEY_Z),
+
+    // - - - Number Keys
+    NUM_0(GLFW_KEY_0),
+    NUM_1(GLFW_KEY_1),
+    NUM_2(GLFW_KEY_2),
+    NUM_3(GLFW_KEY_3),
+    NUM_4(GLFW_KEY_4),
+    NUM_5(GLFW_KEY_5),
+    NUM_6(GLFW_KEY_6),
+    NUM_7(GLFW_KEY_7),
+    NUM_8(GLFW_KEY_8),
+    NUM_9(GLFW_KEY_9),
+
+    // - - - Function Keys
+    F1(GLFW_KEY_F1),
+    F2(GLFW_KEY_F2),
+    F3(GLFW_KEY_F3),
+    F4(GLFW_KEY_F4),
+    F5(GLFW_KEY_F5),
+    F6(GLFW_KEY_F6),
+    F7(GLFW_KEY_F7),
+    F8(GLFW_KEY_F8),
+    F9(GLFW_KEY_F9),
+    F10(GLFW_KEY_F10),
+    F11(GLFW_KEY_F11),
+    F12(GLFW_KEY_F12),
+
+    // - - - Special Control Keys
+    ESCAPE(GLFW_KEY_ESCAPE),
+    LEFT_SHIFT(GLFW_KEY_LEFT_SHIFT),
+    RIGHT_SHIFT(GLFW_KEY_RIGHT_SHIFT),
+    LEFT_CONTROL(GLFW_KEY_LEFT_CONTROL),
+    RIGHT_CONTROL(GLFW_KEY_RIGHT_CONTROL),
+    LEFT_ALT(GLFW_KEY_LEFT_ALT),
+    RIGHT_ALT(GLFW_KEY_RIGHT_ALT),
+    TAB(GLFW_KEY_TAB),
+    CAPS_LOCK(GLFW_KEY_CAPS_LOCK),
+    BACKSPACE(GLFW_KEY_BACKSPACE),
+    ENTER(GLFW_KEY_ENTER),
+    SPACE(GLFW_KEY_SPACE),
+    DELETE(GLFW_KEY_DELETE),
+    HOME(GLFW_KEY_HOME),
+    END(GLFW_KEY_END),
+    PAGE_UP(GLFW_KEY_PAGE_UP),
+    PAGE_DOWN(GLFW_KEY_PAGE_DOWN),
+    ARROW_UP(GLFW_KEY_UP),
+    ARROW_DOWN(GLFW_KEY_DOWN),
+    ARROW_LEFT(GLFW_KEY_LEFT),
+    ARROW_RIGHT(GLFW_KEY_RIGHT),
+
+    // - - - Numpad keys
+    NUMPAD_0(GLFW_KEY_KP_0),
+    NUMPAD_1(GLFW_KEY_KP_1),
+    NUMPAD_2(GLFW_KEY_KP_2),
+    NUMPAD_3(GLFW_KEY_KP_3),
+    NUMPAD_4(GLFW_KEY_KP_4),
+    NUMPAD_5(GLFW_KEY_KP_5),
+    NUMPAD_6(GLFW_KEY_KP_6),
+    NUMPAD_7(GLFW_KEY_KP_7),
+    NUMPAD_8(GLFW_KEY_KP_8),
+    NUMPAD_9(GLFW_KEY_KP_9),
+    NUMPAD_DECIMAL(GLFW_KEY_KP_DECIMAL),
+    NUMPAD_DIVIDE(GLFW_KEY_KP_DIVIDE),
+    NUMPAD_MULTIPLY(GLFW_KEY_KP_MULTIPLY),
+    NUMPAD_SUBTRACT(GLFW_KEY_KP_SUBTRACT),
+    NUMPAD_ADD(GLFW_KEY_KP_ADD),
+    NUMPAD_ENTER(GLFW_KEY_KP_ENTER),
+    NUMPAD_EQUAL(GLFW_KEY_KP_EQUAL),
+
+    // - - - Weird keys
+    PRINT_SCREEN(GLFW_KEY_PRINT_SCREEN),
+    PAUSE(GLFW_KEY_PAUSE),
+    INSERT(GLFW_KEY_INSERT),
+    MENU(GLFW_KEY_MENU);
+
+    int keyCode = 0;
+
+    Keys(int glfwKey)
+    {
+        this.keyCode = glfwKey;
+    }
+}
+

@@ -42,6 +42,7 @@ public class EditorWindow extends Window {
         Forge.setAudioSystem();
         EditorSystemManager.editorWindow = this;
         Forge.window = this;
+        glfwSetCursorPosCallback(this.glfwWindowPtr, EditorSystemManager::mouseCallback);
     }
 
     // - - - Run the game

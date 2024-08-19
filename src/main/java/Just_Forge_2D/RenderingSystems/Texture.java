@@ -110,7 +110,7 @@ public class Texture
             Logger.FORGE_LOG_WARNING("Could not load image: " + filepath);
             assert false;
         }
-        Logger.FORGE_LOG_DEBUG("Loaded image sucessfully: " + filepath);
+        Logger.FORGE_LOG_DEBUG("Loaded image successfully: " + filepath);
         stbi_image_free(image);
     }
 
