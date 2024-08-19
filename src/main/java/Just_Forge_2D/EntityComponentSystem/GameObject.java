@@ -1,7 +1,7 @@
 package Just_Forge_2D.EntityComponentSystem;
 
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
-import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
+import Just_Forge_2D.EntityComponentSystem.Components.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.Components.TransformComponent;
 import Just_Forge_2D.Utils.AssetPool;
 import Just_Forge_2D.Utils.JsonHandlers.ComponentJsonHandler;
@@ -12,7 +12,9 @@ import com.google.gson.GsonBuilder;
 import imgui.ImGui;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 // - - - THe E of ECS
@@ -20,7 +22,7 @@ public class GameObject
 {
     // - - - private variables
     public String name;
-    private final List<Component> components = new ArrayList<>();
+    private final Map<Class<? extends Component>, Component> components = new HashMap<>();
     public transient TransformComponent transform; // transform is a mandatory component
     private static int ID_COUNTER = 0;
     private int uniqueID = -1;
@@ -34,60 +36,54 @@ public class GameObject
 
     public GameObject(String NAME)
     {
+        Logger.FORGE_LOG_DEBUG("Creating new Game Object : " + NAME);
         this.name = NAME;
         this.uniqueID = ID_COUNTER++;
-        Logger.FORGE_LOG_DEBUG("Created new Game Object : " + NAME);
+        this.transform = new TransformComponent();
+    }
+
+    public GameObject(String NAME, TransformComponent TRANSFORM)
+    {
+        Logger.FORGE_LOG_DEBUG("Creating new Game Object : " + NAME);
+        this.name = NAME;
+        this.uniqueID = ID_COUNTER++;
+        this.transform = TRANSFORM;
     }
 
 
     // - - - component management - - -
 
-    public <T extends Component> T getCompoent(Class<T> COMPONENT_CLASS)
+    public <T extends Component> T getComponent(Class<T> COMPONENT_CLASS)
     {
-        for (Component c : components)
+        T component = COMPONENT_CLASS.cast(this.components.get(COMPONENT_CLASS));
+        if (component == null)
         {
-            if (COMPONENT_CLASS.isAssignableFrom(c.getClass()))
-            {
-                try
-                {
-                    return COMPONENT_CLASS.cast(c);
-                }
-                catch (ClassCastException e)
-                {
-                    Logger.FORGE_LOG_ERROR("Failed component casting \n" + e.getMessage());
-                    assert false;
-                }
-            }
+            Logger.FORGE_LOG_ERROR("No such component in : " + this);
         }
-        Logger.FORGE_LOG_WARNING("Returning null on get Component on Game Object " + this.name + " for component of type" + COMPONENT_CLASS);
-        return null;
+        return component;
     }
 
     public <T extends Component> void removeComponent(Class<T> COMPONENT_CLASS)
     {
-        for (int i = 0; i < components.size(); ++i)
+        Logger.FORGE_LOG_DEBUG("Removing Component : " + COMPONENT_CLASS + " from : " + this);
+        if (!this.components.containsKey(COMPONENT_CLASS))
         {
-            if (COMPONENT_CLASS.isAssignableFrom(components.get(i).getClass()))
-            {
-                Logger.FORGE_LOG_TRACE("Removed Component at index " + i + ": " + components.get(i).toString());
-                components.remove(i);
-                return;
-            }
+            Logger.FORGE_LOG_ERROR("No such component in : " + this);
         }
-        Logger.FORGE_LOG_WARNING("No component of type: " + COMPONENT_CLASS + " To remove from game object " + this.name);
+        this.components.remove(COMPONENT_CLASS);
     }
 
     public void addComponent(Component COMPONENT)
     {
+        Logger.FORGE_LOG_DEBUG("Adding component: " + COMPONENT.getClass() + " to : " + this);
         COMPONENT.generateID();
-        this.components.add(COMPONENT);
+        this.components.put(COMPONENT.getClass(), COMPONENT);
         COMPONENT.gameObject = this;
-        Logger.FORGE_LOG_TRACE("Added component: " + COMPONENT + " to Game Object " + this);
     }
 
     public List<Component> getComponents()
     {
-        return this.components;
+        return new ArrayList<>(this.components.values());
     }
 
 
@@ -95,7 +91,7 @@ public class GameObject
 
     public void update(float DELTA_TIME)
     {
-        for (Component component : components)
+        for (Component component : this.components.values())
         {
             component.update(DELTA_TIME);
         }
@@ -103,25 +99,30 @@ public class GameObject
 
     public void start()
     {
-        // WARNING: DO not change to enhanced for loop
-        for (int i = 0; i < components.size(); ++i)
-        {
-            components.get(i).start();
-        }
-    }
+        List<Component> componentsToStart = new ArrayList<>(components.values());
 
-    // - - - Editor Stuff
-    public void editorGUI()
-    {
-        for (Component component : components)
+        for (int i = 0; i < componentsToStart.size(); ++i)
         {
-            if (ImGui.collapsingHeader(component.getClass().getSimpleName()))
+            Component component = componentsToStart.get(i);
+            component.start();
+
+            if (components.size() > componentsToStart.size())
             {
-                component.editorGUI();
+                Logger.FORGE_LOG_WARNING("Bro, why adding components at run time. You are making a headache for the game engine developer. Thats ME");
+                componentsToStart = new ArrayList<>(components.values());
             }
         }
     }
 
+    public void destroy()
+    {
+        this.isDead = true;
+        List<Component> list = getComponents();
+        for (int i = 0; i < components.size(); ++i)
+        {
+            list.get(i).destroy();
+        }
+    }
 
     // - - - Unique IDS - - -
 
@@ -136,20 +137,10 @@ public class GameObject
         ID_COUNTER = MAX_ID;
     }
 
-    public void destroy()
-    {
-        this.isDead = true;
-        for (int i = 0; i < components.size(); ++i)
-        {
-            components.get(i).destroy();
-        }
-    }
-
     public int getUniqueID()
     {
         return this.uniqueID;
     }
-
 
     // - - - Saving - - -
     public void noSerialize()
@@ -167,42 +158,12 @@ public class GameObject
         return this.isDead;
     }
 
-    public void editorUpdate(float DELTA_TIME)
-    {
-        for (int i = 0 ; i < components.size(); ++i)
-        {
-            components.get(i).editorUpdate(DELTA_TIME);
-        }
-    }
-
     public GameObject copy()
     {
-        // TODO: refactor
-        Gson gson = new GsonBuilder()
-                .setPrettyPrinting()
-                .registerTypeAdapter(Component.class, new ComponentJsonHandler())
-                .registerTypeAdapter(GameObject.class, new GameObjectJsonHandler())
-                .enableComplexMapKeySerialization()
-                .create();
-        String objAsJson = gson.toJson(this);
-        GameObject obj = gson.fromJson(objAsJson, GameObject.class);
-        obj.generateUniqueID();
-
-        for (Component c : obj.components)
-        {
-            c.generateID();
-        }
-
-        SpriteComponent sprite = obj.getCompoent(SpriteComponent.class);
-        if (sprite != null && sprite.getTexture() != null)
-        {
-            sprite.setTexture(AssetPool.getTexture(sprite.getTexture().getFilepath()));
-        }
-
-        return obj;
+       return GameObjectJsonHandler.copy(this);
     }
 
-    private void generateUniqueID()
+    public void generateUniqueID()
     {
         this.uniqueID = ID_COUNTER++;
     }

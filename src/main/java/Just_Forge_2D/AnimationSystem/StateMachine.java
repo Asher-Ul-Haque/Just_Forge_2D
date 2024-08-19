@@ -1,7 +1,7 @@
 package Just_Forge_2D.AnimationSystem;
 
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
-import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
+import Just_Forge_2D.EntityComponentSystem.Components.SpriteComponent;
 import Just_Forge_2D.Utils.Logger;
 import imgui.ImGui;
 import imgui.type.ImString;
@@ -106,7 +106,7 @@ public class StateMachine extends Component
         if (currentState != null)
         {
             currentState.update(DELTA_TIME);
-            SpriteComponent sprite = gameObject.getCompoent(SpriteComponent.class);
+            SpriteComponent sprite = gameObject.getComponent(SpriteComponent.class);
             if (sprite != null)
             {
                 sprite.setSprite(currentState.getCurrentSprite());
@@ -114,11 +114,6 @@ public class StateMachine extends Component
         }
     }
 
-    @Override
-    public void editorUpdate(float DELTA_TIME)
-    {
-        update(DELTA_TIME);
-    }
 
     public void setDefaultState(String TITLE)
     {
@@ -135,26 +130,6 @@ public class StateMachine extends Component
             }
         }
         Logger.FORGE_LOG_ERROR("UNable to find state : " + TITLE + " to set to defualt");
-    }
-
-    @Override
-    public void editorGUI()
-    {
-        for (AnimationState state : states)
-        {
-            ImString title = new ImString(state.title);
-            ImGui.inputText("State: ", title);
-            state.title = title.get();
-
-            int index = 0;
-            for (Frame frame: state.animationFrames)
-            {
-                float[] tmp = new float[1];
-                ImGui.dragFloat("Frame(" + index + ") Time: ", tmp, 0.01f);
-                frame.frameTime = tmp[0];
-                index++;
-            }
-        }
     }
 
     private int statesIndexOf(String TITLE)

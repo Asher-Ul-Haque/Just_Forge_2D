@@ -29,7 +29,7 @@ public class QuestionBlock extends Block
                 break;
         }
 
-        StateMachine machine = gameObject.getCompoent(StateMachine.class);
+        StateMachine machine = gameObject.getComponent(StateMachine.class);
         if (machine != null)
         {
             machine.trigger("setInactive");

@@ -56,7 +56,7 @@ public abstract class Block extends Component
     @Override
     public void beginCollision(GameObject OBJ, Contact CONTACT, Vector2f NORMAL)
     {
-        PlayerControllerComponent playerController = OBJ.getCompoent(PlayerControllerComponent.class);
+        PlayerControllerComponent playerController = OBJ.getComponent(PlayerControllerComponent.class);
         if (active && playerController != null && NORMAL.y < -0.8f)
         {
             doBopAnimation = true;

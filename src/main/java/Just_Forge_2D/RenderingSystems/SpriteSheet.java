@@ -1,6 +1,6 @@
-package Just_Forge_2D.EntityComponentSystem.Components.Sprite;
+package Just_Forge_2D.RenderingSystems;
 
-import Just_Forge_2D.RenderingSystems.Texture;
+import Just_Forge_2D.EntityComponentSystem.Components.Sprite;
 import org.joml.Vector2f;
 
 import java.util.ArrayList;
@@ -80,7 +80,4 @@ public class SpriteSheet
     {
         return this.texture;
     }
-
-
-
 }

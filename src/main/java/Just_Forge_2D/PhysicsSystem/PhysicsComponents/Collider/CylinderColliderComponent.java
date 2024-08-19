@@ -1,8 +1,8 @@
-package Just_Forge_2D.EntityComponentSystem.Components.PhysicsComponents.Collider;
+package Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider;
 
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
-import Just_Forge_2D.EntityComponentSystem.Components.PhysicsComponents.RigidBodyComponent;
+import Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent;
 import org.joml.Vector2f;
 
 public class CylinderColliderComponent extends Component
@@ -62,7 +62,7 @@ public class CylinderColliderComponent extends Component
 
         if (gameObject != null)
         {
-            RigidBodyComponent rb = gameObject.getCompoent(RigidBodyComponent.class);
+            RigidBodyComponent rb = gameObject.getComponent(RigidBodyComponent.class);
             if (rb != null)
             {
                 EditorSystemManager.editorScene.getPhysics().resetCylinderCollider(rb, this);
@@ -87,20 +87,6 @@ public class CylinderColliderComponent extends Component
     @Override
     public void update(float DELTA_TIME)
     {
-        if (resetFixtureNextFrame)
-        {
-            resetFixtures();
-            resetFixtureNextFrame = false;
-        }
-    }
-
-    @Override
-    public void editorUpdate(float DELTA_TIME)
-    {
-        topCircle.editorUpdate(DELTA_TIME);
-        bottomCircle.editorUpdate(DELTA_TIME);
-        box.editorUpdate(DELTA_TIME);
-
         if (resetFixtureNextFrame)
         {
             resetFixtures();

@@ -1,8 +1,6 @@
-package Just_Forge_2D.EntityComponentSystem.Components.Sprite;
+package Just_Forge_2D.EntityComponentSystem.Components;
 
 import Just_Forge_2D.EditorSystem.ForgeIsGUI;
-import Just_Forge_2D.EntityComponentSystem.Components.Component;
-import Just_Forge_2D.EntityComponentSystem.Components.TransformComponent;
 import Just_Forge_2D.RenderingSystems.Texture;
 import Just_Forge_2D.Utils.AssetPool;
 import Just_Forge_2D.Utils.Logger;
@@ -93,30 +91,6 @@ public class SpriteComponent extends Component
             this.isChanged = true;
         }
     }
-
-    @Override
-    public void editorUpdate(float DELTA_TIME)
-    {
-        if (this.gameObject.transform == null) Logger.FORGE_LOG_ERROR(gameObject);
-        if (!this.lastTransform.equals(this.gameObject.transform))
-        {
-            this.gameObject.transform.copy(this.lastTransform);
-            this.isChanged = true;
-        }
-    }
-
-
-    // - - - Editor Functionality - - -
-
-    @Override
-    public void editorGUI()
-    {
-        if (ForgeIsGUI.colorPicker4("Color Picker", this.color))
-        {
-            this.isChanged = true;
-        }
-    }
-
 
     // - - - modify properties
     public void setTexture(Texture TEXTURE)

@@ -1,10 +1,10 @@
-package Just_Forge_2D.EntityComponentSystem.Components.Sprite;
+package Just_Forge_2D.EntityComponentSystem.Components;
 
 import Just_Forge_2D.RenderingSystems.Texture;
 import org.joml.Vector2f;
 
 
-// - - - Utilities for renderering sprites. Need to rename this file
+// - - - Utilities for rendering sprites. Need to rename this file
 public class Sprite
 {
     // - - - private variables for texturing
@@ -19,28 +19,6 @@ public class Sprite
 
 
     // - - - | Functions | - - -
-
-
-    // - - - - Constructors
-
-    // - - - Not useless constructors for once, store textures, invent texture coordinate
-    /*public justForgeSprite(justForgeTexture TEXTURE)
-    {
-        this.texture = TEXTURE;
-        this.textureCoordinates = new Vector2f[]{
-                new Vector2f(1, 1),
-                new Vector2f(1, 0),
-                new Vector2f(0, 0),
-                new Vector2f(0, 1),
-                };
-    }
-
-    // - - - Store both texture and its coordinates
-    public justForgeSprite(justForgeTexture TEXTURE, Vector2f[] TEXTURE_COORDINATES)
-    {
-        this.texture = TEXTURE;
-        this.textureCoordinates = TEXTURE_COORDINATES;
-    }*/
 
 
     // - - - Getters - - -

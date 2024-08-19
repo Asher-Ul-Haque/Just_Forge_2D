@@ -1,11 +1,11 @@
-package Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.GizmoSystem;
+package Just_Forge_2D.EditorSystem.EditorComponents.GizmoSystem;
 
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.EditorSystem.Prefabs;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
-import Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.NonPickableComponent;
-import Just_Forge_2D.EntityComponentSystem.Components.Sprite.Sprite;
-import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
+import Just_Forge_2D.EditorSystem.EditorComponents.NonPickableComponent;
+import Just_Forge_2D.EntityComponentSystem.Components.Sprite;
+import Just_Forge_2D.EntityComponentSystem.Components.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.Forge;
 import Just_Forge_2D.InputSystem.Mouse;
@@ -52,8 +52,8 @@ public class GizmoComponent extends Component
     {
         this.xAxisGizmo = Prefabs.generateSpriteObject("X axis Gizmo", ARROW, gizmoWidth, gizmoHeight);
         this.yAxisGizmo = Prefabs.generateSpriteObject("Y axis Gizmo", ARROW, gizmoWidth, gizmoHeight);
-        this.xAxisSprite = this.xAxisGizmo.getCompoent(SpriteComponent.class);
-        this.yAxisSprite = this.yAxisGizmo.getCompoent(SpriteComponent.class);
+        this.xAxisSprite = this.xAxisGizmo.getComponent(SpriteComponent.class);
+        this.yAxisSprite = this.yAxisGizmo.getComponent(SpriteComponent.class);
         this.xAxisGizmo.transform.position.add(this.xAxisOffset);
         this.yAxisGizmo.transform.position.add(this.yAxisOffset);
         this.xAxisGizmo.addComponent(new NonPickableComponent());
@@ -79,57 +79,13 @@ public class GizmoComponent extends Component
     // - - - Usage - - -
 
     // - - - update
-    @Override
-    public void editorUpdate(float DELTA_TIME)
-    {
-        if (!using) return;
-
-        // TODO: refactor
-        this.activeGameObject = Forge.editorLayer.getPropertiesWindow().getActiveGameObject(); //this.propertiesWindow.getActiveGameObject();
-        if (this.activeGameObject != null)
-        {
-            this.activate();
-        }
-        else
-        {
-            this.inactivate();
-            return;
-        }
-
-        boolean xAxisHot = checkXHoverState();
-        boolean yAxisHot = checkYHoverState();
-
-        if ((xAxisHot || xAxisActive) && Mouse.isDragging() && Mouse.isMouseButtonDown(MouseButtons.LEFT))
-        {
-            xAxisActive = true;
-            yAxisActive = false;
-        }
-        else if ((yAxisHot || yAxisActive) && Mouse.isMouseButtonDown(MouseButtons.RIGHT))
-        {
-            xAxisActive = false;
-            yAxisActive = true;
-        }
-        else
-        {
-            xAxisActive = false;
-            yAxisActive = false;
-        }
-
-        if (this.activeGameObject != null)
-        {
-            this.yAxisGizmo.transform.position.set(this.activeGameObject.transform.position);
-            this.xAxisGizmo.transform.position.set(this.activeGameObject.transform.position);
-            this.xAxisGizmo.transform.position.add(this.xAxisOffset);
-            this.yAxisGizmo.transform.position.add(this.yAxisOffset);
-        }
-    }
 
     @Override
     public void update(float DELTA_TIME)
     {
         if (this.using) inactivate();
-        this.xAxisGizmo.getCompoent(SpriteComponent.class).setColor(new Vector4f(0, 0, 0, 0));
-        this.yAxisGizmo.getCompoent(SpriteComponent.class).setColor(new Vector4f(0, 0, 0, 0));
+        this.xAxisGizmo.getComponent(SpriteComponent.class).setColor(new Vector4f(0, 0, 0, 0));
+        this.yAxisGizmo.getComponent(SpriteComponent.class).setColor(new Vector4f(0, 0, 0, 0));
     }
 
 

@@ -1,0 +1,38 @@
+package Just_Forge_2D.EditorSystem.EditorComponents.GizmoSystem;
+
+import Just_Forge_2D.EntityComponentSystem.Components.Component;
+import Just_Forge_2D.RenderingSystems.SpriteSheet;
+import Just_Forge_2D.InputSystem.Keyboard;
+import Just_Forge_2D.InputSystem.Keys;
+import Just_Forge_2D.Utils.Logger;
+
+// - - - Gizmo System
+public class GizmoSystemComponent extends Component
+{
+    // - - - private variables
+    private final SpriteSheet gizmos;
+    private int currentGizmo = 0;
+
+
+    // - - - | Functions | - - -
+
+
+    // - - - Constructors and Starters - - -
+
+    public GizmoSystemComponent(SpriteSheet GIZMO_SPRITES)
+    {
+        gizmos = GIZMO_SPRITES;
+    }
+
+    @Override
+    public void start()
+    {
+        Logger.FORGE_LOG_INFO("Adding Gizmo System to " + gameObject);
+        gameObject.addComponent(new TranslationGizmoComponent(gizmos.getSprite(1)));
+        gameObject.addComponent(new ScaleGizmoComponent(gizmos.getSprite(2)));
+    }
+
+
+    // - - - Usage - - -
+
+}

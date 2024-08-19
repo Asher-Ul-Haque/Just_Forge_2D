@@ -37,7 +37,7 @@ public class Scene
     public Scene(SceneInitializer INITIALIZER)
     {
         this.initializer = INITIALIZER;
-        this.physics = new PhysicsManager(this);
+        this.physics = new PhysicsManager(this, initializer.physicsWorld);
         this.renderer = INITIALIZER.renderer;
         this.gameObjects = new ArrayList<>();
         this.isRunning = false;
@@ -113,7 +113,7 @@ public class Scene
         for (int i = 0; i < gameObjects.size(); ++i)
         {
             GameObject go = gameObjects.get(i);
-            go.editorUpdate(DELTA_TIME);
+//            go.editorUpdate(DELTA_TIME);
 
             if (go.isDead())
             {
@@ -140,7 +140,8 @@ public class Scene
     {
         GameObject go = new GameObject(NAME);
         go.addComponent(new TransformComponent());
-        go.transform = go.getCompoent(TransformComponent.class);
+        go.transform = go.getComponent(TransformComponent.class);
+        this.renderer.addGameObject(go);
         return go;
     }
 
@@ -153,6 +154,7 @@ public class Scene
         else
         {
             gameObjects.add(GAME_OBJECT);
+            renderer.addGameObject(GAME_OBJECT);
         }
     }
 

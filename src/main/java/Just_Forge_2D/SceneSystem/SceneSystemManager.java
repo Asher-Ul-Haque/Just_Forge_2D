@@ -93,7 +93,7 @@ public class SceneSystemManager
         }
     }
 
-    public static void addScene(Scene SCENE, SceneInitializer INITIALIZER, String ID)
+    public static Scene addScene(Scene SCENE, SceneInitializer INITIALIZER, String ID)
     {
         if (SCENE != null)
         {
@@ -107,6 +107,8 @@ public class SceneSystemManager
         allScenes.put(ID, SCENE);
         SCENE.load();
         SCENE.init();
+
+        return SCENE;
     }
 
     public static Scene getScene(String ID)

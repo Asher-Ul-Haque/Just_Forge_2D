@@ -31,7 +31,20 @@ public class WindowConfig
     // - - - Constructors - - -
 
     // - - - one with everything
-    public WindowConfig(int WIDTH, int HEIGHT, String TITLE, boolean VSYNC, int X_POS, int Y_POS, float ASPECT_RATIO, boolean TRANSPARENT, boolean MAXIMIZED, boolean VISIBLE, boolean DECORATED, boolean RESIZABLE, boolean TOP)
+    public WindowConfig(int WIDTH,
+                        int HEIGHT,
+                        String TITLE,
+                        boolean VSYNC,
+                        int X_POS,
+                        int Y_POS,
+                        float ASPECT_RATIO,
+                        boolean TRANSPARENT,
+                        boolean MAXIMIZED,
+                        boolean VISIBLE,
+                        boolean DECORATED,
+                        boolean RESIZABLE,
+                        boolean TOP,
+                        String ICON_PATH)
     {
         this.width = WIDTH;
         this.height = HEIGHT;
@@ -46,6 +59,7 @@ public class WindowConfig
         this.alwaysOnTop = TOP;
         this.x = X_POS;
         this.y = Y_POS;
+        this.iconPath = ICON_PATH;
         logCreation();
     }
 

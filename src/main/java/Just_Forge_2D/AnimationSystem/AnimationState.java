@@ -1,6 +1,6 @@
 package Just_Forge_2D.AnimationSystem;
 
-import Just_Forge_2D.EntityComponentSystem.Components.Sprite.Sprite;
+import Just_Forge_2D.EntityComponentSystem.Components.Sprite;
 import Just_Forge_2D.Utils.AssetPool;
 
 import java.util.ArrayList;

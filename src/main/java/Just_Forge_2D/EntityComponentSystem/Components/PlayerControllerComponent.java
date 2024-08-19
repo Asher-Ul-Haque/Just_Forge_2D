@@ -2,7 +2,7 @@ package Just_Forge_2D.EntityComponentSystem.Components;
 
 import Just_Forge_2D.AnimationSystem.StateMachine;
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
-import Just_Forge_2D.EntityComponentSystem.Components.PhysicsComponents.RigidBodyComponent;
+import Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.InputSystem.Keyboard;
 import Just_Forge_2D.InputSystem.Keys;
@@ -10,8 +10,6 @@ import Just_Forge_2D.PhysicsSystem.RayCastInfo;
 import Just_Forge_2D.Utils.AssetPool;
 import org.jbox2d.dynamics.contacts.Contact;
 import org.joml.Vector2f;
-
-import static org.lwjgl.glfw.GLFW.*;
 
 public class PlayerControllerComponent extends Component
 {
@@ -46,8 +44,8 @@ public class PlayerControllerComponent extends Component
     @Override
     public void start()
     {
-        this.rb = gameObject.getCompoent(RigidBodyComponent.class);
-        this.stateMachine = gameObject.getCompoent(StateMachine.class);
+        this.rb = gameObject.getComponent(RigidBodyComponent.class);
+        this.stateMachine = gameObject.getComponent(StateMachine.class);
     }
 
     @Override

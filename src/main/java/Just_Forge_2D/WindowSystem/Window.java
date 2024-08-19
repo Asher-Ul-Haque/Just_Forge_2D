@@ -89,7 +89,6 @@ public class Window implements Observer
         glfwSetWindowSizeCallback(this.glfwWindowPtr, (w, newWidth, newHeight) -> {
             this.config.width = newWidth;
             this.config.height = newHeight;
-            setSize(newWidth, newHeight);
         });
 
         Logger.FORGE_LOG_DEBUG("Linking " + this.config.title + " with Keyboard");
@@ -389,18 +388,6 @@ public class Window implements Observer
         return this.config.transparent;
     }
 
-    public void setTransparent(boolean DO)
-    {
-        Logger.FORGE_LOG_DEBUG("Setting transparency status of " + this.config.title + " to : " + DO);
-        if (this.config.decorated == DO)
-        {
-            Logger.FORGE_LOG_WARNING(this.config.title + " already has transparency status: " + this.config.decorated);
-            return;
-        }
-        glfwSetWindowAttrib(this.glfwWindowPtr, GLFW_TRANSPARENT_FRAMEBUFFER, DO ? GLFW_TRUE : GLFW_FALSE);
-        this.config.decorated = DO;
-    }
-
     // - - - Handle FPS - - -
 
     public void setVsync(boolean DO)
@@ -480,6 +467,8 @@ public class Window implements Observer
     {
         glfwPollEvents();
     }
+
+    public float getDeltaTime() {return this.dt;}
 
     @Override
     public String toString()

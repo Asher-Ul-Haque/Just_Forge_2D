@@ -1,4 +1,4 @@
-package Just_Forge_2D.EntityComponentSystem.Components.PhysicsComponents.Collider;
+package Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider;
 
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.RenderingSystems.DebugPencil;
@@ -29,13 +29,6 @@ public class CircleColliderComponent extends Component
     public void setRadius(float RADIUS)
     {
         this.radius = RADIUS;
-    }
-
-    @Override
-    public void editorUpdate(float DELTA_tIME)
-    {
-        Vector2f center = new Vector2f(this.gameObject.transform.position).add(this.offset);
-        DebugPencil.addCircle(center, this.radius, new Vector3f(1, 0, 0));
     }
 
     /*

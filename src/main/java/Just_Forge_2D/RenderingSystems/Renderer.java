@@ -1,6 +1,6 @@
 package Just_Forge_2D.RenderingSystems;
 
-import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
+import Just_Forge_2D.EntityComponentSystem.Components.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.SceneSystem.Scene;
 import Just_Forge_2D.Utils.Configurations;
@@ -38,7 +38,7 @@ public class Renderer
     public void addGameObject(GameObject GAME_OBJECT)
     {
         Logger.FORGE_LOG_DEBUG("Adding " + GAME_OBJECT + " to renderer for window: " + this.window);
-        SpriteComponent sprite = GAME_OBJECT.getCompoent(SpriteComponent.class);
+        SpriteComponent sprite = GAME_OBJECT.getComponent(SpriteComponent.class);
 
         if (sprite != null)
         {
@@ -78,7 +78,7 @@ public class Renderer
     public void destroyGameObject(GameObject GO)
     {
         Logger.FORGE_LOG_DEBUG("Destroying Game Object from the scene: " + GO);
-        if (GO.getCompoent(SpriteComponent.class) == null) return;
+        if (GO.getComponent(SpriteComponent.class) == null) return;
         for (RenderBatch batch: batches)
         {
             if (batch.destroyIfExists(GO))

@@ -3,16 +3,17 @@ package Just_Forge_2D.SceneSystem;
 import Just_Forge_2D.AnimationSystem.StateMachine;
 import Just_Forge_2D.AudioSystems.Sound;
 import Just_Forge_2D.EditorSystem.Prefabs;
-import Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.EditorCameraComponent;
-import Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.GizmoSystem.GizmoSystemComponent;
-import Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.GridlinesComponent;
-import Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.InputControls.KeyboardControls;
-import Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.InputControls.MouseControlComponent;
-import Just_Forge_2D.EntityComponentSystem.Components.Sprite.Sprite;
-import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
-import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteSheet;
+import Just_Forge_2D.EditorSystem.EditorComponents.EditorCameraComponent;
+import Just_Forge_2D.EditorSystem.EditorComponents.GizmoSystem.GizmoSystemComponent;
+import Just_Forge_2D.EditorSystem.EditorComponents.GridlinesComponent;
+import Just_Forge_2D.EditorSystem.EditorComponents.InputControls.KeyboardControls;
+import Just_Forge_2D.EditorSystem.EditorComponents.InputControls.MouseControlComponent;
+import Just_Forge_2D.EntityComponentSystem.Components.Sprite;
+import Just_Forge_2D.EntityComponentSystem.Components.SpriteComponent;
+import Just_Forge_2D.RenderingSystems.SpriteSheet;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.Forge;
+import Just_Forge_2D.PhysicsSystem.PhysicsWorld;
 import Just_Forge_2D.Utils.AssetPool;
 import Just_Forge_2D.Utils.Configurations;
 import imgui.ImGui;
@@ -40,6 +41,7 @@ public class EditorSceneInitializer extends SceneInitializer
     public EditorSceneInitializer()
     {
         this.renderer = Forge.getRenderer(Forge.window);
+        this.physicsWorld = new PhysicsWorld();
     }
 
     // - - - useful initialization
@@ -92,18 +94,18 @@ public class EditorSceneInitializer extends SceneInitializer
 
         for (GameObject g : SCENE.getGameObjects())
         {
-            if (g.getCompoent(SpriteComponent.class) != null)
+            if (g.getComponent(SpriteComponent.class) != null)
             {
-               SpriteComponent spr = g.getCompoent(SpriteComponent.class);
+               SpriteComponent spr = g.getComponent(SpriteComponent.class);
                if (spr.getTexture() != null)
                {
                    spr.setTexture(AssetPool.getTexture(spr.getTexture().getFilepath()));
                }
             }
 
-            if (g.getCompoent(StateMachine.class) != null)
+            if (g.getComponent(StateMachine.class) != null)
             {
-                StateMachine stateMachine = g.getCompoent(StateMachine.class);
+                StateMachine stateMachine = g.getComponent(StateMachine.class);
                 stateMachine.refreshTextures();
             }
         }
@@ -140,7 +142,7 @@ public class EditorSceneInitializer extends SceneInitializer
                     if (ImGui.imageButton(id, spriteWidth, spriteHeight, texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y)) {
                         GameObject object = Prefabs.generateSpriteObject(sprite, Configurations.GRID_WIDTH, Configurations.GRID_HEIGHT);
 //                object.getCompoent(SpriteComponent.class).setColor(new Vector4f(0.8f, 0.8f, 0.8f, 0.5f));
-                        master.getCompoent(MouseControlComponent.class).pickupObject(object);
+                        master.getComponent(MouseControlComponent.class).pickupObject(object);
                     }
                     ImGui.popID();
 
@@ -165,8 +167,8 @@ public class EditorSceneInitializer extends SceneInitializer
                 if (ImGui.imageButton(id, spriteWidth, spriteHeight, texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y))
                 {
                     GameObject object = Prefabs.generateMario();
-                    object.getCompoent(SpriteComponent.class).setColor(new Vector4f(0.8f, 0.8f, 0.8f, 0.5f));
-                    master.getCompoent(MouseControlComponent.class).pickupObject(object);
+                    object.getComponent(SpriteComponent.class).setColor(new Vector4f(0.8f, 0.8f, 0.8f, 0.5f));
+                    master.getComponent(MouseControlComponent.class).pickupObject(object);
                 }
 
                 SpriteSheet items = AssetPool.getSpriteSheet("Items");
@@ -178,8 +180,8 @@ public class EditorSceneInitializer extends SceneInitializer
                 if (ImGui.imageButton(id2, sprite2Width, sprite2Height, texCoords2[2].x, texCoords2[0].y, texCoords2[0].x, texCoords2[2].y))
                 {
                     GameObject object = Prefabs.generateQuestionBlock();
-                    object.getCompoent(SpriteComponent.class).setColor(new Vector4f(0.8f, 0.8f, 0.8f, 0.5f));
-                    master.getCompoent(MouseControlComponent.class).pickupObject(object);
+                    object.getComponent(SpriteComponent.class).setColor(new Vector4f(0.8f, 0.8f, 0.8f, 0.5f));
+                    master.getComponent(MouseControlComponent.class).pickupObject(object);
                 }
                 ImGui.sameLine();
                 ImGui.endTabItem();

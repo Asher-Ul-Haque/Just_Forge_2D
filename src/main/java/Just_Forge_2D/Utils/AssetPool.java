@@ -1,7 +1,7 @@
 package Just_Forge_2D.Utils;
 
 import Just_Forge_2D.AudioSystems.Sound;
-import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteSheet;
+import Just_Forge_2D.RenderingSystems.SpriteSheet;
 import Just_Forge_2D.RenderingSystems.Shader;
 import Just_Forge_2D.RenderingSystems.Texture;
 

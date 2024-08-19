@@ -1,10 +1,10 @@
 package Just_Forge_2D.EditorSystem;
 
 import Just_Forge_2D.EntityComponentSystem.Components.BreakableBrick;
-import Just_Forge_2D.EntityComponentSystem.Components.PhysicsComponents.Collider.BoxColliderComponent;
-import Just_Forge_2D.EntityComponentSystem.Components.PhysicsComponents.Collider.CircleColliderComponent;
-import Just_Forge_2D.EntityComponentSystem.Components.PhysicsComponents.RigidBodyComponent;
-import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
+import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.BoxColliderComponent;
+import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.CircleColliderComponent;
+import Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent;
+import Just_Forge_2D.EntityComponentSystem.Components.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import imgui.ImGui;
 import org.joml.Vector4f;
@@ -48,7 +48,7 @@ public class PropertiesWindow
             {
                 if (ImGui.menuItem("Add Rigid Body"))
                 {
-                    if (activeGameObject.getCompoent(RigidBodyComponent.class) == null)
+                    if (activeGameObject.getComponent(RigidBodyComponent.class) == null)
                     {
                         activeGameObject.addComponent(new RigidBodyComponent());
                     }
@@ -56,7 +56,7 @@ public class PropertiesWindow
 
                 if (ImGui.menuItem("Add Box Collider"))
                 {
-                    if (activeGameObject.getCompoent(BoxColliderComponent.class) == null && activeGameObject.getCompoent(CircleColliderComponent.class) == null)
+                    if (activeGameObject.getComponent(BoxColliderComponent.class) == null && activeGameObject.getComponent(CircleColliderComponent.class) == null)
                     {
                         activeGameObject.addComponent(new BoxColliderComponent());
                     }
@@ -64,7 +64,7 @@ public class PropertiesWindow
 
                 if (ImGui.menuItem("Add Breakable Brick"))
                 {
-                    if (activeGameObject.getCompoent(BreakableBrick.class) == null)
+                    if (activeGameObject.getComponent(BreakableBrick.class) == null)
                     {
                         activeGameObject.addComponent(new BreakableBrick());
                     }
@@ -72,7 +72,7 @@ public class PropertiesWindow
 
                 if (ImGui.menuItem("Add Circle Collider"))
                 {
-                    if (activeGameObject.getCompoent(CircleColliderComponent.class) == null && activeGameObject.getCompoent(BoxColliderComponent.class) == null)
+                    if (activeGameObject.getComponent(CircleColliderComponent.class) == null && activeGameObject.getComponent(BoxColliderComponent.class) == null)
                     {
                         activeGameObject.addComponent(new CircleColliderComponent());
                     }
@@ -80,7 +80,7 @@ public class PropertiesWindow
 
                 if (ImGui.menuItem("Add Breakable Brick"))
                 {
-                    if (activeGameObject.getCompoent(CircleColliderComponent.class) == null && activeGameObject.getCompoent(BoxColliderComponent.class) == null)
+                    if (activeGameObject.getComponent(CircleColliderComponent.class) == null && activeGameObject.getComponent(BoxColliderComponent.class) == null)
                     {
                         activeGameObject.addComponent(new CircleColliderComponent());
                     }
@@ -89,7 +89,7 @@ public class PropertiesWindow
                 ImGui.endPopup();
             }
 
-            activeGameObject.editorGUI();
+//            activeGameObject.editorGUI();
             ImGui.end();
         }
     }
@@ -114,7 +114,7 @@ public class PropertiesWindow
             int i = 0;
             for (GameObject go: activeGameObjects)
             {
-                SpriteComponent spr = go.getCompoent(SpriteComponent.class);
+                SpriteComponent spr = go.getComponent(SpriteComponent.class);
                 if (spr != null)
                 {
                     spr.setColor(activeGameObjectsColors.get(i));
@@ -137,7 +137,7 @@ public class PropertiesWindow
 
     public void addActiveGameObject(GameObject GO)
     {
-        SpriteComponent spr = GO.getCompoent(SpriteComponent.class);
+        SpriteComponent spr = GO.getComponent(SpriteComponent.class);
         if (spr != null)
         {
             this.activeGameObjectsColors.add(new Vector4f(spr.getColor()));
