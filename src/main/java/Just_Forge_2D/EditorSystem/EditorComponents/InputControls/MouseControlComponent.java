@@ -1,28 +1,14 @@
 package Just_Forge_2D.EditorSystem.EditorComponents.InputControls;
 
-import Just_Forge_2D.AnimationSystem.StateMachine;
+import Just_Forge_2D.AnimationSystem.AnimationComponent;
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
-import Just_Forge_2D.EditorSystem.ObjectSelector;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EditorSystem.EditorComponents.NonPickableComponent;
 import Just_Forge_2D.EntityComponentSystem.Components.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
-import Just_Forge_2D.Forge;
-import Just_Forge_2D.InputSystem.Keyboard;
-import Just_Forge_2D.InputSystem.Keys;
-import Just_Forge_2D.InputSystem.Mouse;
-import Just_Forge_2D.InputSystem.MouseButtons;
-import Just_Forge_2D.RenderingSystems.DebugPencil;
-import Just_Forge_2D.SceneSystem.Scene;
-import Just_Forge_2D.Utils.Configurations;
 import Just_Forge_2D.Utils.Logger;
 import org.joml.Vector2f;
-import org.joml.Vector2i;
-import org.joml.Vector3f;
 import org.joml.Vector4f;
-
-import java.util.HashSet;
-import java.util.Set;
 
 // - - - Component to make sure things can be picked up
 public class MouseControlComponent extends Component
@@ -62,9 +48,9 @@ public class MouseControlComponent extends Component
     {
         Logger.FORGE_LOG_DEBUG("Placed game object: " + this.holdingObject);
         GameObject newObj = this.holdingObject.copy();
-        if (newObj.getComponent(StateMachine.class) != null)
+        if (newObj.getComponent(AnimationComponent.class) != null)
         {
-            newObj.getComponent(StateMachine.class).refreshTextures();
+            newObj.getComponent(AnimationComponent.class).refreshTextures();
         }
         newObj.getComponent(SpriteComponent.class).setColor(new Vector4f(1, 1, 1, 1));
         newObj.removeComponent(NonPickableComponent.class);

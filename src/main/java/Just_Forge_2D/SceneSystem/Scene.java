@@ -67,7 +67,7 @@ public class Scene
             this.renderer.addGameObject(go);
             this.physics.add(go);
         }
-        isRunning = true;
+        this.isRunning = true;
     }
 
     public void update(float DELTA_TIME)
@@ -141,7 +141,6 @@ public class Scene
         GameObject go = new GameObject(NAME);
         go.addComponent(new TransformComponent());
         go.transform = go.getComponent(TransformComponent.class);
-        this.renderer.addGameObject(go);
         return go;
     }
 
@@ -154,7 +153,6 @@ public class Scene
         else
         {
             gameObjects.add(GAME_OBJECT);
-            renderer.addGameObject(GAME_OBJECT);
         }
     }
 

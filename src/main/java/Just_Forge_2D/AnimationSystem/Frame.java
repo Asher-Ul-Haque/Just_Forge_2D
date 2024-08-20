@@ -1,16 +1,12 @@
 package Just_Forge_2D.AnimationSystem;
 
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite;
+import Just_Forge_2D.Utils.Configurations;
 
 public class Frame
 {
-    public Sprite sprite;
-    public float frameTime;
-
-    public Frame()
-    {
-
-    }
+    public final Sprite sprite;
+    public final float frameTime;
 
     public Frame(Sprite SPRITE, float TIME)
     {

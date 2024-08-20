@@ -71,6 +71,7 @@ public class Window implements Observer
         glfwWindowHint(GLFW_MAXIMIZED, this.config.maximized ? GLFW_TRUE : GLFW_FALSE);
         glfwWindowHint(GLFW_DECORATED, this.config.decorated ? GLFW_TRUE : GLFW_FALSE);
         glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, this.config.transparent ? GLFW_TRUE : GLFW_FALSE);
+        glfwWindowHint(GLFW_FLOATING, this.config.alwaysOnTop ? GLFW_TRUE : GLFW_FALSE);
 
         // - - - Create the window
         this.glfwWindowPtr = glfwCreateWindow(this.config.width, this.config.height, this.config.title, 0, 0);
@@ -176,7 +177,7 @@ public class Window implements Observer
     // - - - tell if it should be closed
     public boolean shouldClose()
     {
-        return glfwWindowShouldClose(this.glfwWindowPtr) || this.shouldClose;
+        return this.shouldClose || glfwWindowShouldClose(this.glfwWindowPtr);
     }
 
 

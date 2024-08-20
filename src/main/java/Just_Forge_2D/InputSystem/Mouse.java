@@ -116,11 +116,11 @@ public class Mouse
     // - - - Cleanup
     public static void endFrame()
     {
-        get().xScroll = 0.0f;
-        get().yScroll = 0.0f;
-
         get().xPrevious = get().xPosition;
         get().yPrevious = get().yPosition;
+
+        get().xScroll = 0f;
+        get().yScroll = 0f;
     }
 
 

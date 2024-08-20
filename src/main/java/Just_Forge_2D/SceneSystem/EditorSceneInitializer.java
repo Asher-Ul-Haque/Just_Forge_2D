@@ -1,6 +1,6 @@
 package Just_Forge_2D.SceneSystem;
 
-import Just_Forge_2D.AnimationSystem.StateMachine;
+import Just_Forge_2D.AnimationSystem.AnimationComponent;
 import Just_Forge_2D.AudioSystems.Sound;
 import Just_Forge_2D.EditorSystem.Prefabs;
 import Just_Forge_2D.EditorSystem.EditorComponents.EditorCameraComponent;
@@ -103,10 +103,10 @@ public class EditorSceneInitializer extends SceneInitializer
                }
             }
 
-            if (g.getComponent(StateMachine.class) != null)
+            if (g.getComponent(AnimationComponent.class) != null)
             {
-                StateMachine stateMachine = g.getComponent(StateMachine.class);
-                stateMachine.refreshTextures();
+                AnimationComponent animationComponent = g.getComponent(AnimationComponent.class);
+                animationComponent.refreshTextures();
             }
         }
     }

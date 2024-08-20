@@ -1,6 +1,6 @@
 package Just_Forge_2D.EntityComponentSystem.Components;
 
-import Just_Forge_2D.AnimationSystem.StateMachine;
+import Just_Forge_2D.AnimationSystem.AnimationComponent;
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
@@ -32,7 +32,7 @@ public class PlayerControllerComponent extends Component
     private transient float groundDebounce = 0.0f;
     private transient float groundDebounceTime = 0.1f;
     private transient RigidBodyComponent rb;
-    private transient StateMachine stateMachine;
+    private transient AnimationComponent animationComponent;
     private transient float bigJumpBoostFactor = 1.05f;
     private transient float playerWidth = 0.25f;
     private transient int jumpTime = 0;
@@ -45,7 +45,7 @@ public class PlayerControllerComponent extends Component
     public void start()
     {
         this.rb = gameObject.getComponent(RigidBodyComponent.class);
-        this.stateMachine = gameObject.getComponent(StateMachine.class);
+        this.animationComponent = gameObject.getComponent(AnimationComponent.class);
     }
 
     @Override
@@ -58,12 +58,12 @@ public class PlayerControllerComponent extends Component
 
             if (this.velocity.x < 0)
             {
-                this.stateMachine.trigger("switchDirection");
+                this.animationComponent.trigger("switchDirection");
                 this.velocity.x += slowDownForce;
             }
             else
             {
-                this.stateMachine.trigger("startRunning");
+                this.animationComponent.trigger("startRunning");
             }
         }
         else if (Keyboard.isKeyPressed(Keys.ARROW_LEFT) || Keyboard.isKeyPressed(Keys.A))
@@ -73,12 +73,12 @@ public class PlayerControllerComponent extends Component
 
             if (this.velocity.x > 0)
             {
-                this.stateMachine.trigger("switchDirection");
+                this.animationComponent.trigger("switchDirection");
                 this.velocity.x -= slowDownForce;
             }
             else
             {
-                this.stateMachine.trigger("startRunning");
+                this.animationComponent.trigger("startRunning");
             }
         }
         else
@@ -95,7 +95,7 @@ public class PlayerControllerComponent extends Component
 
             if (this.velocity.x == 0)
             {
-                this.stateMachine.trigger("stopRunning");
+                this.animationComponent.trigger("stopRunning");
             }
         }
 
@@ -151,11 +151,11 @@ public class PlayerControllerComponent extends Component
 
         if (!onGround)
         {
-            stateMachine.trigger("jump");
+            animationComponent.trigger("jump");
         }
         else
         {
-            stateMachine.trigger("stopJumping");
+            animationComponent.trigger("stopJumping");
         }
     }
 

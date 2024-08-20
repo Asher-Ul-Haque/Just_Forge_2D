@@ -1,6 +1,6 @@
 package Just_Forge_2D.EntityComponentSystem.Components;
 
-import Just_Forge_2D.AnimationSystem.StateMachine;
+import Just_Forge_2D.AnimationSystem.AnimationComponent;
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.EditorSystem.Prefabs;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
@@ -29,7 +29,7 @@ public class QuestionBlock extends Block
                 break;
         }
 
-        StateMachine machine = gameObject.getComponent(StateMachine.class);
+        AnimationComponent machine = gameObject.getComponent(AnimationComponent.class);
         if (machine != null)
         {
             machine.trigger("setInactive");
