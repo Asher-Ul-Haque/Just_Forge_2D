@@ -20,7 +20,7 @@ import org.joml.Vector4f;
 public class Main {
     private static final WindowConfig CONFIG = new WindowConfig(
             160, 160, "Stuti Pet", true, 0, 0, 16f / 9f, true, false, true,
-            false, false, true, "/home/nadeem/Documents/Just_Forge_2D/src/main/java/Pet/Assets/Textures/icon.png"
+            false, true, true, "/home/nadeem/Documents/Just_Forge_2D/src/main/java/Pet/Assets/Textures/icon.png"
     );
     public static Window petWindow;
     public static Scene petScene;
@@ -43,7 +43,7 @@ public class Main {
         AssetPool.addShader("Default", "Assets/Shaders/default.glsl");
         petScene = SceneSystemManager.addScene(petScene, new PetSceneInitializer(), "Fox");
         petWindow.setPosition((int) Mouse.getX(), (int) Mouse.getY());
-        petWindow.setSize(180, 800);
+        petWindow.setSize(200, 200);
     }
 
     private static void createFox() {
