@@ -136,7 +136,7 @@ public class Prefabs
         animationComponent.addState(bigSwitchDirection);
         animationComponent.addState(bigJump);
 
-        animationComponent.setDefaultState(idle.title);
+        animationComponent.setDefaultState(idle);
         animationComponent.addStateTrigger(run.title, switchDirections.title, "Switch directions");
         animationComponent.addStateTrigger(run.title, idle.title, "stopRunning");
         animationComponent.addStateTrigger(run.title, jump.title, "jump");
@@ -231,7 +231,7 @@ public class Prefabs
 
         AnimationComponent animationComponent = new AnimationComponent();
         animationComponent.addState(coinFlip);
-        animationComponent.setDefaultState(coinFlip.title);
+        animationComponent.setDefaultState(coinFlip);
         coin.addComponent(animationComponent);
         coin.addComponent(new QuestionBlock());
 
@@ -259,7 +259,7 @@ public class Prefabs
         AnimationComponent animationComponent = new AnimationComponent();
         animationComponent.addState(flicker);
         animationComponent.addState(inactive);
-        animationComponent.setDefaultState(flicker.title);
+        animationComponent.setDefaultState(flicker);
         animationComponent.addStateTrigger(flicker.title, inactive.title, "setInactive");
         questionBlock.addComponent(animationComponent);
         questionBlock.addComponent(new QuestionBlock());

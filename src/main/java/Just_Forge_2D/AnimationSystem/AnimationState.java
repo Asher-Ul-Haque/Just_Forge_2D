@@ -3,11 +3,13 @@ package Just_Forge_2D.AnimationSystem;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite;
 import Just_Forge_2D.Utils.AssetPool;
 import Just_Forge_2D.Utils.Configurations;
+import Just_Forge_2D.Utils.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AnimationState {
+public class AnimationState
+{
     public String title;
     public List<Frame> animationFrames = new ArrayList<>();
 
@@ -15,65 +17,105 @@ public class AnimationState {
     private transient float timeTracker = 0.0f;
     private transient int currentSprite = 0;
     public boolean doesLoop = false;
-    public boolean isAnimationFinished = false;
+    public boolean isFinished = false;
+
+
+    // - - - Create animation state - - -
+
 
     public AnimationState() {}
 
-    public AnimationState(String TITLE, boolean LOOP) {
+    public AnimationState(String TITLE, boolean LOOP)
+    {
+        Logger.FORGE_LOG_DEBUG("Adding new animation state : " + TITLE);
         this.title = TITLE;
         this.doesLoop = LOOP;
         this.animationFrames = new ArrayList<>();
+        this.isFinished = false;
     }
 
-    public void refreshTextures() {
-        for (Frame frame : animationFrames) {
+
+    // - - - refresh textures
+    public void refreshTextures()
+    {
+        Logger.FORGE_LOG_DEBUG("Refreshing Textures");
+        for (Frame frame : animationFrames)
+        {
             frame.sprite.setTexture(AssetPool.getTexture(frame.sprite.getTexture().getFilepath()));
         }
     }
 
-    public void addFrame(Sprite SPRITE, float FRAME_TIME) {
+
+    // - - - Add frames - - -
+
+    public void addFrame(Sprite SPRITE, float FRAME_TIME)
+    {
         animationFrames.add(new Frame(SPRITE, FRAME_TIME));
     }
 
-    public void addFrame(Sprite SPRITE) {
+    public void addFrame(Sprite SPRITE)
+    {
         animationFrames.add(new Frame(SPRITE, Configurations.DEFAULT_FRAME_TIME));
     }
 
-    public void setLoop(boolean REALLY) {
-        this.doesLoop = REALLY;
-    }
-
-    public void addFrames(List<Sprite> SPRITES, float FRAME_TIME) {
-        for (Sprite sprite : SPRITES) {
+    public void addFrames(List<Sprite> SPRITES, float FRAME_TIME)
+    {
+        for (Sprite sprite : SPRITES)
+        {
             this.animationFrames.add(new Frame(sprite, FRAME_TIME));
         }
     }
 
-    public void update(float DELTA_TIME) {
-        if (currentSprite < animationFrames.size()) {
-            timeTracker -= DELTA_TIME;
-            if (timeTracker <= 0) {
-                boolean wasLastFrame = currentSprite == animationFrames.size() - 1;
-                currentSprite = (currentSprite + 1) % animationFrames.size();
-                timeTracker = animationFrames.get(currentSprite).frameTime;
 
-                if (wasLastFrame && !doesLoop)
+    // - - - Helper Functions - - -
+
+    public void setLoop(boolean REALLY)
+    {
+        this.doesLoop = REALLY;
+    }
+
+    public void update(float DELTA_TIME)
+    {
+        if (currentSprite < animationFrames.size())
+        {
+            timeTracker -= DELTA_TIME;
+            if (timeTracker <= 0)
+            {
+                if (!(currentSprite == animationFrames.size() - 1 && !doesLoop))
                 {
-                    this.isAnimationFinished = true;
+                    currentSprite = (currentSprite + 1) % animationFrames.size();
                 }
+                else if (!doesLoop)
+                {
+                    this.isFinished = true;
+                }
+                timeTracker = animationFrames.get(currentSprite).frameTime;
             }
+        }
+        else
+        {
+            this.isFinished = true;
         }
     }
 
-    public Sprite getCurrentSprite() {
-        if (currentSprite < animationFrames.size()) {
+    public Sprite getCurrentSprite()
+    {
+        if (currentSprite < animationFrames.size())
+        {
             return animationFrames.get(currentSprite).sprite;
         }
         return defaultSprite;
     }
 
-    protected boolean isAnimationFinished() {
-        // Notify AnimationComponent that this animation has finished
-        return isAnimationFinished;
+    public boolean isFinished()
+    {
+        return this.isFinished;
+    }
+
+    public void reset()
+    {
+        this.currentSprite = 0;
+        this.timeTracker = animationFrames.isEmpty() ? 0.0f : animationFrames.get(0).frameTime;
+        this.isFinished = false;
     }
 }

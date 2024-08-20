@@ -110,25 +110,14 @@ public class Main {
         animate.addState(rest);
 
         // Setting default state
-        animate.setDefaultState(idle.title);
-
-        // Adding state triggers
-        animate.addStateTrigger(idle.title, lookAround.title, "1");
-        animate.addStateTrigger(lookAround.title, walk.title, "2");
-        animate.addStateTrigger(walk.title, play.title, "3");
-        animate.addStateTrigger(play.title, frighten.title, "4");
-        animate.addStateTrigger(frighten.title, sleep.title, "5");
-        animate.addStateTrigger(sleep.title, rest.title, "6");
-        animate.addStateTrigger(rest.title, idle.title, "7");
-
-        animate.addStateTrigger(lookAround.title, idle.title, "animationFinished");
-        animate.addStateTrigger(frighten.title, idle.title, "animationFinished");
-        animate.addStateTrigger(rest.title, idle.title, "animationFinished");
-
+        animate.setDefaultState(idle);
+        animate.addStateTrigger(idle.title, lookAround.title, "look");
+        animate.addStateTrigger(idle.title, lookAround.title, "look-idle");
         return animate;
     }
 
-    private static void update() {
+    private static void update()
+    {
         petScene.getCamera().adjustProjection();
         petScene.update(petWindow.getDeltaTime());
         handleInput();
@@ -136,8 +125,10 @@ public class Main {
         petScene.render(petWindow.getDeltaTime());
     }
 
-    private static void handleInput() {
-        if (Keyboard.isKeyPressed(Keys.ESCAPE)) {
+    private static void handleInput()
+    {
+        if (Keyboard.isKeyPressed(Keys.ESCAPE))
+        {
             petWindow.close();
         }
 
@@ -149,20 +140,22 @@ public class Main {
         if (Keyboard.isKeyPressed(Keys.ARROW_UP)) y -= 5;
         if (Keyboard.isKeyPressed(Keys.ARROW_DOWN)) y += 5;
 
-        if (x != petWindow.getXPosition() || y != petWindow.getYPosition()) {
+        if (x != petWindow.getXPosition() || y != petWindow.getYPosition())
+        {
             petWindow.setPosition(x, y);
         }
 
         // Handling state changes based on number keys
-        if (Keyboard.isKeyPressed(Keys.NUM_1)) {
-            foxAnimation.trigger("1");
-            Logger.FORGE_LOG_TRACE("Chaing to Key 1 animation");
+        if (Keyboard.isKeyPressed(Keys.NUM_1))
+        {
+            foxAnimation.trigger("look");
+            Logger.FORGE_LOG_TRACE("Changing to Key 1 animation");
         }
-        if (Keyboard.isKeyPressed(Keys.NUM_2)) foxAnimation.trigger("2");
-        if (Keyboard.isKeyPressed(Keys.NUM_3)) foxAnimation.trigger("3");
-        if (Keyboard.isKeyPressed(Keys.NUM_4)) foxAnimation.trigger("4");
-        if (Keyboard.isKeyPressed(Keys.NUM_5)) foxAnimation.trigger("5");
-        if (Keyboard.isKeyPressed(Keys.NUM_6)) foxAnimation.trigger("6");
-        if (Keyboard.isKeyPressed(Keys.NUM_7)) foxAnimation.trigger("7");
+        if (Keyboard.isKeyPressed(Keys.NUM_2))
+        {
+            foxAnimation.trigger("look-idle");
+            Logger.FORGE_LOG_TRACE("Changing to Key 2 animation");
+        }
+
     }
 }
