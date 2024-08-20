@@ -47,5 +47,5 @@ public class Configurations
     public static final Vector4f DEFAULT_CLEAR_COLOR = new Vector4f(1.0f, 1.0f, 1.0f, 1.0f);
     public static final boolean DEFAULT_WINDOW_FLOAT_STATUS = false;
     public static final String DEFAULT_ICON_PATH = "Assets/Textures/logo.png";
-    public static final float DEFAULT_FRAME_TIME = 0.1f;
+    public static final float DEFAULT_FRAME_TIME = 0.12f;
 }

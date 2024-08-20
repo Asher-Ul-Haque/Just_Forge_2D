@@ -12,7 +12,7 @@ public class Camera
     // - - - projection
     private final Matrix4f projectionMatrix;
     private final Matrix4f inverseProjectionMatrix;
-    private final Vector2f projectionSize = new Vector2f(6, 3);
+    private final Vector2f projectionSize = new Vector2f(3, 3);
 
     // - - - view
     private final Matrix4f viewMatrix;

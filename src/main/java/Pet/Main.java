@@ -19,8 +19,8 @@ import org.joml.Vector4f;
 
 public class Main {
     private static final WindowConfig CONFIG = new WindowConfig(
-            160, 160, "Stuti Pet", true, 0, 0, 9f / 16f, true, false, true,
-            true, false, true, "/home/nadeem/Documents/Just_Forge_2D/src/main/java/Pet/Assets/Textures/icon.png"
+            160, 160, "Stuti Pet", true, 0, 0, 16f / 9f, true, false, true,
+            false, false, true, "/home/nadeem/Documents/Just_Forge_2D/src/main/java/Pet/Assets/Textures/icon.png"
     );
     public static Window petWindow;
     public static Scene petScene;
@@ -43,6 +43,7 @@ public class Main {
         AssetPool.addShader("Default", "Assets/Shaders/default.glsl");
         petScene = SceneSystemManager.addScene(petScene, new PetSceneInitializer(), "Fox");
         petWindow.setPosition((int) Mouse.getX(), (int) Mouse.getY());
+        petWindow.setSize(180, 800);
     }
 
     private static void createFox() {
@@ -54,8 +55,8 @@ public class Main {
         fox.addComponent(foxSpriteComponent);
         fox.addComponent(new TransformComponent());
 
-        fox.transform.position.set(2.5f, 3.0f);
-        fox.transform.scale.set(5.5f, 5f);
+        fox.transform.position.set(1.5f, 2.5f);
+        fox.transform.scale.set(4f, 4f);
 
         foxAnimation = addFoxAnimations();
         fox.addComponent(foxAnimation);
@@ -68,7 +69,7 @@ public class Main {
 
         AnimationState idle = new AnimationState("idle", true);
         for (int i = 0; i < 5; ++i) {
-            idle.addFrame(foxSprites.getSprite(i), 0.15f);
+            idle.addFrame(foxSprites.getSprite(i));
         }
 
         AnimationState lookAround = new AnimationState("look", false);
@@ -93,7 +94,7 @@ public class Main {
 
         AnimationState sleep = new AnimationState("sleep", true);
         for (int i = 0; i < 6; ++i) {
-            sleep.addFrame(foxSprites.getSprite((14 * 5) + i));
+            sleep.addFrame(foxSprites.getSprite((14 * 5) + i), 0.2f);
         }
 
         AnimationState rest = new AnimationState("rest", false);
@@ -112,7 +113,13 @@ public class Main {
         // Setting default state
         animate.setDefaultState(idle);
         animate.addStateTrigger(idle.title, lookAround.title, "look");
-        animate.addStateTrigger(idle.title, lookAround.title, "look-idle");
+        animate.addStateTrigger(idle.title, walk.title, "walk");
+        animate.addStateTrigger(idle.title, play.title, "play");
+        animate.addStateTrigger(idle.title, frighten.title, "frighten");
+        animate.addStateTrigger(idle.title, sleep.title, "sleep");
+        animate.addStateTrigger(idle.title, rest.title, "rest");
+        animate.addStateTrigger(idle.title, lookAround.title, "look");
+        animate.addStateTrigger(idle.title, lookAround.title, "look");
         return animate;
     }
 

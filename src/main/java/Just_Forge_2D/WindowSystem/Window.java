@@ -33,7 +33,6 @@ public class Window implements Observer
     protected float endTime = 0;
     protected float dt = -1;
     protected long glfwWindowPtr;
-    private boolean shouldClose = false;
 
 
     // - - - constructor
@@ -165,19 +164,13 @@ public class Window implements Observer
     public void close()
     {
         Logger.FORGE_LOG_INFO("Closing " + this.config.title);
-        this.shouldClose = true;
         glfwSetWindowShouldClose(this.glfwWindowPtr, true);
-        glfwFreeCallbacks(this.glfwWindowPtr);
-        glfwDestroyWindow(this.glfwWindowPtr);
-        glfwTerminate();
-        this.glfwWindowPtr = 0;
-        Objects.requireNonNull(glfwSetErrorCallback(null)).free();
     }
 
     // - - - tell if it should be closed
     public boolean shouldClose()
     {
-        return this.shouldClose || glfwWindowShouldClose(this.glfwWindowPtr);
+        return glfwWindowShouldClose(this.glfwWindowPtr);
     }
 
 
