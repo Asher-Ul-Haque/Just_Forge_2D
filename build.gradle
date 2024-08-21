@@ -51,11 +51,10 @@ switch (OperatingSystem.current()) {
         break
     case OperatingSystem.WINDOWS:
         project.ext.imguiNatives = "imgui-java-natives-windows"
-        project.ext.lwjglNatives = "natives-windows-x86"
+        project.ext.lwjglNatives = "natives-windows"
         break
 }
-project.ext.imguiNatives = "imgui-java-natives-windows"
-project.ext.lwjglNatives = "natives-windows-x86"
+
 
 dependencies {
 
