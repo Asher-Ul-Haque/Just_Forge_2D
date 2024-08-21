@@ -95,9 +95,9 @@ public class Mouse
                 if (!get().isMouseButtonPressed[BUTTON])
                 {
                     get().isMouseButtonBeginPressed[BUTTON] = true;
+                    get().mouseButtonDownCount++;
                 }
                 get().isMouseButtonPressed[BUTTON] = true;
-                get().mouseButtonDownCount++;
                 break;
 
             case GLFW_RELEASE:
@@ -196,6 +196,11 @@ public class Mouse
             return true;
         }
         return false;
+    }
+
+    public static boolean isAnyButtonDown()
+    {
+        return get().mouseButtonDownCount != 0;
     }
 
 

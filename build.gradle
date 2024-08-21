@@ -7,7 +7,7 @@ shadowJar {
     archiveClassifier.set('all')
     mergeServiceFiles()
     manifest {
-        attributes 'Main-Class': 'Just_Forge_2D.Main'
+        attributes 'Main-Class': 'Pet.Main'
     }
     from('Assets') {
         into '${buildDir}/libs/Assets'
@@ -54,6 +54,8 @@ switch (OperatingSystem.current()) {
         project.ext.lwjglNatives = "natives-windows-x86"
         break
 }
+project.ext.imguiNatives = "imgui-java-natives-windows"
+project.ext.lwjglNatives = "natives-windows-x86"
 
 dependencies {
 

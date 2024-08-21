@@ -19,9 +19,7 @@ public class PetSceneInitializer extends SceneInitializer
     public void loadResources(Scene SCENE)
     {
         AssetPool.getShader("Default");
-        AssetPool.addTexture("Fox", "/home/nadeem/Documents/Just_Forge_2D/src/main/java/Pet/Assets/Textures/Fox.png");
         AssetPool.addSpriteSheet("Fox Sprites", new SpriteSheet(AssetPool.getTexture("Assets/Textures/Fox Sprite Sheet.png"), 32, 32, 98, 0));
-        AssetPool.addSpriteSheet("Spritesheet",new SpriteSheet(AssetPool.getTexture("Assets/Textures/spritesheet.png"), 16, 16, 26, 0));
     }
 
     @Override

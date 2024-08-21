@@ -140,4 +140,14 @@ public class AnimationComponent extends Component
         }
         return -1;
     }
+
+    public AnimationState getCurrentState()
+    {
+        return this.currentState;
+    }
+
+    public String getCurrentStateTitle()
+    {
+        return this.currentState.title;
+    }
 }

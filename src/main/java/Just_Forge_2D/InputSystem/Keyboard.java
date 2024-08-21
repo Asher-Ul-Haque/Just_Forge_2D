@@ -18,6 +18,7 @@ public class Keyboard
     private final int totalKeys = GLFW_KEY_LAST;
     private final boolean[] isKeyPressed = new boolean[totalKeys];
     private final boolean[] isKeyBeginPress = new boolean[totalKeys];
+    private int keysDownCount = 0;
 
     // - - - Functions - - -
 
@@ -44,6 +45,7 @@ public class Keyboard
                 if (!get().isKeyPressed[KEY])
                 {
                     get().isKeyBeginPress[KEY] = true;
+                    get().keysDownCount++;
                 }
                 get().isKeyPressed[KEY] = true;
                 break;
@@ -51,6 +53,7 @@ public class Keyboard
             case GLFW_RELEASE:
                 get().isKeyPressed[KEY] = false;
                 get().isKeyBeginPress[KEY] = false; // Reset after release
+                get().keysDownCount--;
                 break;
 
             default:
@@ -70,6 +73,15 @@ public class Keyboard
         {
             get().isKeyBeginPress[KEY.keyCode] = false; // Reset for next check
             return true;
+        }
+        return false;
+    }
+
+    public static boolean isAnyKeyPressed()
+    {
+        for (boolean b : keyboard.isKeyPressed)
+        {
+            if (b) return b;
         }
         return false;
     }
