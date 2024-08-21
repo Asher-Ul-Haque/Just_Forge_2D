@@ -120,4 +120,9 @@ public class SceneSystemManager
         }
         return returnScene;
     }
+
+    public static List<Scene> getAllScenes()
+    {
+        return new ArrayList<>(allScenes.values());
+    }
 }

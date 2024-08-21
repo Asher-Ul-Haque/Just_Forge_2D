@@ -19,7 +19,7 @@ import org.joml.Vector4f;
 
 public class Main {
     private static final WindowConfig CONFIG = new WindowConfig(
-            160, 160, "Stuti Pet", true, 0, 0, 16f / 9f, true, false, true,
+            200, 200, "Stuti Pet", true, 0, 0, 16f / 9f, true, false, true,
             false, true, true, "/home/nadeem/Documents/Just_Forge_2D/src/main/java/Pet/Assets/Textures/icon.png"
     );
     public static Window petWindow;
@@ -43,7 +43,6 @@ public class Main {
         AssetPool.addShader("Default", "Assets/Shaders/default.glsl");
         petScene = SceneSystemManager.addScene(petScene, new PetSceneInitializer(), "Fox");
         petWindow.setPosition((int) Mouse.getX(), (int) Mouse.getY());
-        petWindow.setSize(200, 200);
     }
 
     private static void createFox() {
@@ -114,19 +113,19 @@ public class Main {
         animate.setDefaultState(idle);
         animate.addStateTrigger(idle.title, lookAround.title, "look");
         animate.addStateTrigger(idle.title, walk.title, "walk");
+        animate.addStateTrigger(walk.title, idle.title, "walk-idle");
         animate.addStateTrigger(idle.title, play.title, "play");
         animate.addStateTrigger(idle.title, frighten.title, "frighten");
         animate.addStateTrigger(idle.title, sleep.title, "sleep");
         animate.addStateTrigger(idle.title, rest.title, "rest");
-        animate.addStateTrigger(idle.title, lookAround.title, "look");
-        animate.addStateTrigger(idle.title, lookAround.title, "look");
+        animate.addStateTrigger(sleep.title, rest.title, "sleep-rest");
+        animate.addStateTrigger(rest.title, lookAround.title, "rest-look");
         return animate;
     }
 
     private static void update()
     {
-        petScene.getCamera().adjustProjection();
-        petScene.update(petWindow.getDeltaTime());
+        if (Keyboard.isKeyBeginPress(Keys.K)) Logger.FORGE_LOG_TRACE("");
         handleInput();
         petWindow.loop();
         petScene.render(petWindow.getDeltaTime());
@@ -153,16 +152,15 @@ public class Main {
         }
 
         // Handling state changes based on number keys
-        if (Keyboard.isKeyPressed(Keys.NUM_1))
-        {
-            foxAnimation.trigger("look");
-            Logger.FORGE_LOG_TRACE("Changing to Key 1 animation");
-        }
-        if (Keyboard.isKeyPressed(Keys.NUM_2))
-        {
-            foxAnimation.trigger("look-idle");
-            Logger.FORGE_LOG_TRACE("Changing to Key 2 animation");
-        }
+        if (Keyboard.isKeyPressed(Keys.NUM_1)) {foxAnimation.trigger("look");}
+        if (Keyboard.isKeyPressed(Keys.NUM_2)) {foxAnimation.trigger("walk");}
+        if (Keyboard.isKeyPressed(Keys.NUM_3)) {foxAnimation.trigger("play");}
+        if (Keyboard.isKeyPressed(Keys.NUM_4)) {foxAnimation.trigger("frighten");}
+        if (Keyboard.isKeyPressed(Keys.NUM_5)) {foxAnimation.trigger("sleep");}
+        if (Keyboard.isKeyPressed(Keys.NUM_6)) {foxAnimation.trigger("rest");}
+        if (Keyboard.isKeyPressed(Keys.NUM_7)) {foxAnimation.trigger("sleep-rest");}
+        if (Keyboard.isKeyPressed(Keys.NUM_8)) {foxAnimation.trigger("rest-look");}
+        if (Keyboard.isKeyPressed(Keys.NUM_9)) {foxAnimation.trigger("walk-idle");}
 
     }
 }

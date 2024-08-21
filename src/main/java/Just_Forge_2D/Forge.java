@@ -4,6 +4,8 @@ import Just_Forge_2D.EditorSystem.ObjectSelector;
 import Just_Forge_2D.EditorSystem.justForgeImGui;
 import Just_Forge_2D.RenderingSystems.Renderer;
 import Just_Forge_2D.RenderingSystems.Shader;
+import Just_Forge_2D.SceneSystem.Scene;
+import Just_Forge_2D.SceneSystem.SceneSystemManager;
 import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.EditorSystem.EditorWindow;
 import Just_Forge_2D.WindowSystem.Window;
@@ -12,6 +14,7 @@ import org.lwjgl.openal.ALC;
 import org.lwjgl.openal.ALCCapabilities;
 import org.lwjgl.openal.ALCapabilities;
 
+import javax.swing.*;
 import java.util.HashMap;
 
 import static org.lwjgl.openal.ALC10.*;
@@ -75,5 +78,12 @@ public class Forge
         alcCloseDevice(audioDevicePtr);
     }
 
-    public static void update(float DELTA_TIME){}
+    public static void update(float DELTA_TIME)
+    {
+        for (Scene scene : SceneSystemManager.getAllScenes())
+        {
+            scene.update(DELTA_TIME);
+            scene.getCamera().adjustProjection();
+        }
+    }
 }

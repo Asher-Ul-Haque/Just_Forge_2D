@@ -2,8 +2,6 @@ package Just_Forge_2D.InputSystem;
 
 import Just_Forge_2D.Utils.Logger;
 
-import java.util.Arrays;
-
 import static org.lwjgl.glfw.GLFW.*;
 
 
@@ -43,13 +41,16 @@ public class Keyboard
         switch (ACTION)
         {
             case GLFW_PRESS:
+                if (!get().isKeyPressed[KEY])
+                {
+                    get().isKeyBeginPress[KEY] = true;
+                }
                 get().isKeyPressed[KEY] = true;
-                get().isKeyBeginPress[KEY] = true;
                 break;
 
             case GLFW_RELEASE:
                 get().isKeyPressed[KEY] = false;
-                get().isKeyBeginPress[KEY] = false;
+                get().isKeyBeginPress[KEY] = false; // Reset after release
                 break;
 
             default:
@@ -65,12 +66,12 @@ public class Keyboard
 
     public static boolean isKeyBeginPress(Keys KEY)
     {
-       return get().isKeyBeginPress[KEY.keyCode];
+        if (get().isKeyBeginPress[KEY.keyCode])
+        {
+            get().isKeyBeginPress[KEY.keyCode] = false; // Reset for next check
+            return true;
+        }
+        return false;
     }
 
-    // - - - end frame
-    public static void endFrame()
-    {
-        Arrays.fill(get().isKeyBeginPress, false);
-    }
 }

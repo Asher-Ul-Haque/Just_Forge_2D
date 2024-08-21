@@ -140,7 +140,6 @@ public class EditorWindow extends Window {
 
         // - - - finish input frames
         Mouse.endFrame();
-        Keyboard.endFrame();
 
         // - - - Swap buffer for next frame
         glfwSwapBuffers(glfwWindowPtr);

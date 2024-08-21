@@ -418,9 +418,9 @@ public class Window implements Observer
     public void loop()
     {
         warnFPSspike();
+        manageInput();
         render();
         Forge.update(dt);
-        manageInput();
         finishInputFrames();
         keepTime();
     }
@@ -451,7 +451,6 @@ public class Window implements Observer
     protected void finishInputFrames()
     {
         Mouse.endFrame();
-        Keyboard.endFrame();
         glfwSwapBuffers(this.glfwWindowPtr);
     }
 
