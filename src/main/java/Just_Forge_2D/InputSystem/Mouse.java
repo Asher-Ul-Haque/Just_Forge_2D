@@ -33,6 +33,7 @@ public class Mouse
     private final int buttonCount = GLFW_MOUSE_BUTTON_LAST;
     private int mouseButtonDownCount = 0;
     private final boolean[] isMouseButtonPressed = new boolean[buttonCount]; // left, middle, right
+    private final boolean[] isMouseButtonBeginPressed = new boolean[buttonCount];
 
 
 
@@ -91,12 +92,17 @@ public class Mouse
         switch(ACTION)
         {
             case GLFW_PRESS:
+                if (!get().isMouseButtonPressed[BUTTON])
+                {
+                    get().isMouseButtonBeginPressed[BUTTON] = true;
+                }
                 get().isMouseButtonPressed[BUTTON] = true;
                 get().mouseButtonDownCount++;
                 break;
 
             case GLFW_RELEASE:
                 get().isMouseButtonPressed[BUTTON] = false;
+                get().isMouseButtonBeginPressed[BUTTON] = false;
                 get().isDragging = false;
                 get().mouseButtonDownCount--;
                 break;
@@ -180,6 +186,16 @@ public class Mouse
         }
 
         return get().isMouseButtonPressed[BUTTON.buttonCode];
+    }
+
+    public static boolean isMouseButtonBeginPress(MouseButtons BUTTON)
+    {
+        if (get().isMouseButtonBeginPressed[BUTTON.buttonCode])
+        {
+            get().isMouseButtonBeginPressed[BUTTON.buttonCode] = false; // Reset for next check
+            return true;
+        }
+        return false;
     }
 
 
