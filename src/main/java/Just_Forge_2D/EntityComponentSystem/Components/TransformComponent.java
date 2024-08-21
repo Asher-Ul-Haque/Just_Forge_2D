@@ -1,6 +1,5 @@
 package Just_Forge_2D.EntityComponentSystem.Components;
-import Just_Forge_2D.EditorSystem.ForgeIsGUI;
-import Just_Forge_2D.Utils.Configurations;
+import Just_Forge_2D.Utils.DefaultValues;
 import org.joml.Vector2f;
 
 // - - - class to store data regarding position and scale
@@ -10,7 +9,7 @@ public class TransformComponent extends Component
     public Vector2f position;
     public int layer;
     public Vector2f scale;
-    public float rotation = Configurations.DEFAULT_ROTATION;
+    public float rotation = DefaultValues.DEFAULT_ROTATION;
 
 
     // - - - | Functions | - - -
@@ -27,17 +26,17 @@ public class TransformComponent extends Component
 
     public TransformComponent()
     {
-        init(new Vector2f(), new Vector2f(), Configurations.DEFAULT_LAYER);
+        init(new Vector2f(), new Vector2f(), DefaultValues.DEFAULT_LAYER);
     }
 
     public TransformComponent(Vector2f POSITION)
     {
-        init(POSITION, new Vector2f(), Configurations.DEFAULT_LAYER);
+        init(POSITION, new Vector2f(), DefaultValues.DEFAULT_LAYER);
     }
 
     public TransformComponent(Vector2f POSITION, Vector2f SCALE)
     {
-        init(POSITION, SCALE, Configurations.DEFAULT_LAYER);
+        init(POSITION, SCALE, DefaultValues.DEFAULT_LAYER);
     }
 
     public TransformComponent(Vector2f POSITION, Vector2f SCALE, int LAYER)
@@ -47,7 +46,7 @@ public class TransformComponent extends Component
 
     public TransformComponent(Vector2f POSITION, int LAYER)
     {
-        init(POSITION, new Vector2f(), Configurations.DEFAULT_LAYER);
+        init(POSITION, new Vector2f(), DefaultValues.DEFAULT_LAYER);
     }
 
 

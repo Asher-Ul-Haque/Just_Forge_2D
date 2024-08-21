@@ -2,7 +2,7 @@ package Just_Forge_2D.AnimationSystem;
 
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite;
 import Just_Forge_2D.Utils.AssetPool;
-import Just_Forge_2D.Utils.Configurations;
+import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.Logger;
 
 import java.util.ArrayList;
@@ -55,7 +55,7 @@ public class AnimationState
 
     public void addFrame(Sprite SPRITE)
     {
-        animationFrames.add(new Frame(SPRITE, Configurations.DEFAULT_FRAME_TIME));
+        animationFrames.add(new Frame(SPRITE, DefaultValues.DEFAULT_FRAME_TIME));
     }
 
     public void addFrames(List<Sprite> SPRITES, float FRAME_TIME)

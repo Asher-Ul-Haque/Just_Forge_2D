@@ -15,7 +15,7 @@ import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.Forge;
 import Just_Forge_2D.PhysicsSystem.PhysicsWorld;
 import Just_Forge_2D.Utils.AssetPool;
-import Just_Forge_2D.Utils.Configurations;
+import Just_Forge_2D.Utils.DefaultValues;
 import imgui.ImGui;
 import imgui.ImVec2;
 import org.joml.Vector2f;
@@ -140,7 +140,7 @@ public class EditorSceneInitializer extends SceneInitializer
 
                     ImGui.pushID(i);
                     if (ImGui.imageButton(id, spriteWidth, spriteHeight, texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y)) {
-                        GameObject object = Prefabs.generateSpriteObject(sprite, Configurations.GRID_WIDTH, Configurations.GRID_HEIGHT);
+                        GameObject object = Prefabs.generateSpriteObject(sprite, DefaultValues.GRID_WIDTH, DefaultValues.GRID_HEIGHT);
 //                object.getCompoent(SpriteComponent.class).setColor(new Vector4f(0.8f, 0.8f, 0.8f, 0.5f));
                         master.getComponent(MouseControlComponent.class).pickupObject(object);
                     }

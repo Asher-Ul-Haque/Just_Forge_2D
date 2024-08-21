@@ -2,7 +2,7 @@ package Just_Forge_2D.SceneSystem;
 
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
-import Just_Forge_2D.Utils.Configurations;
+import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.JsonHandlers.ComponentJsonHandler;
 import Just_Forge_2D.Utils.JsonHandlers.GameObjectJsonHandler;
 import Just_Forge_2D.Utils.Logger;
@@ -62,11 +62,11 @@ public class SceneSystemManager
         String inFile = "";
         try
         {
-            inFile = new String(Files.readAllBytes(Paths.get(Configurations.DEFAULT_SAVE_FILE)));
+            inFile = new String(Files.readAllBytes(Paths.get(DefaultValues.DEFAULT_SAVE_FILE)));
         }
         catch (IOException e)
         {
-            Logger.FORGE_LOG_ERROR("Couldn't read from file: " + Configurations.DEFAULT_SAVE_FILE);
+            Logger.FORGE_LOG_ERROR("Couldn't read from file: " + DefaultValues.DEFAULT_SAVE_FILE);
             Logger.FORGE_LOG_ERROR(e.getMessage());
         }
 

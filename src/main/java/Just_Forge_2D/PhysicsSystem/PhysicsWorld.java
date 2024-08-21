@@ -1,6 +1,6 @@
 package Just_Forge_2D.PhysicsSystem;
 
-import Just_Forge_2D.Utils.Configurations;
+import Just_Forge_2D.Utils.DefaultValues;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
 import org.joml.Vector2f;
@@ -9,9 +9,9 @@ public class PhysicsWorld
 {
     protected final World world;
     private float physicsTime = 0.0f;
-    private float physicsDeltaTime = Configurations.PHYSICS_DELTA_TIME;
-    private int velocityIterations = Configurations.VELOCITY_ITERATIONS;
-    private int positionIterations = Configurations.POSITION_ITERATIONS;
+    private float physicsDeltaTime = DefaultValues.PHYSICS_DELTA_TIME;
+    private int velocityIterations = DefaultValues.VELOCITY_ITERATIONS;
+    private int positionIterations = DefaultValues.POSITION_ITERATIONS;
 
     public PhysicsWorld(Vector2f GRAVITY, float DELTA_TIME, int VELOCITY_ITERATIONS, int POSITION_ITERATIONS)
     {
@@ -24,7 +24,7 @@ public class PhysicsWorld
 
     public PhysicsWorld()
     {
-        this.world = new World(Configurations.GRAVITY);
+        this.world = new World(DefaultValues.GRAVITY);
         this.world.setContactListener(new CollisionDetector());
     }
 

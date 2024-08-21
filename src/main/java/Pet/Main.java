@@ -5,6 +5,8 @@ import Just_Forge_2D.AnimationSystem.AnimationState;
 import Just_Forge_2D.EntityComponentSystem.Components.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.Components.TransformComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
+import Just_Forge_2D.ForgeEditor.EditorManager;
+import Just_Forge_2D.ForgeEditor.Windows.SplashScreen;
 import Just_Forge_2D.InputSystem.Keyboard;
 import Just_Forge_2D.InputSystem.Keys;
 import Just_Forge_2D.InputSystem.Mouse;
@@ -40,6 +42,7 @@ public class Main {
     private static Vector2f targetPosition = null;
 
     public static void main(String[] args) {
+        EditorManager.run();
         initialize();
         createFox();
         petScene.start();

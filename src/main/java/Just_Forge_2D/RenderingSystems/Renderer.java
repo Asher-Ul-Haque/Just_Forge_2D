@@ -3,7 +3,8 @@ package Just_Forge_2D.RenderingSystems;
 import Just_Forge_2D.EntityComponentSystem.Components.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.SceneSystem.Scene;
-import Just_Forge_2D.Utils.Configurations;
+import Just_Forge_2D.Utils.AssetPool;
+import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.Logger;
 
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ public class Renderer
 {
     // - - - private variables
     private final String window;
-    private final int MAX_BATCH_SIZE = Configurations.MAX_BATCH_SIZE;
+    private final int MAX_BATCH_SIZE = DefaultValues.MAX_BATCH_SIZE;
     private final List<RenderBatch> batches;
     private static Shader currentShader;
     protected Scene currentScene;
@@ -30,6 +31,11 @@ public class Renderer
         Logger.FORGE_LOG_INFO("Creating Rendering System for Window of title : " + WINDOW_TITLE);
         this.window = WINDOW_TITLE;
         this.batches = new ArrayList<>();
+        if (currentShader == null)
+        {
+            AssetPool.addShader("Default", "Assets/Shaders/default.glsl");
+            currentShader = AssetPool.getShader("Default");
+        }
     }
 
 

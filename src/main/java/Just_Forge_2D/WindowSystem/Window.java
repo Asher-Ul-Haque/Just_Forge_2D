@@ -7,7 +7,8 @@ import Just_Forge_2D.EventSystem.Observer;
 import Just_Forge_2D.Forge;
 import Just_Forge_2D.InputSystem.Keyboard;
 import Just_Forge_2D.InputSystem.Mouse;
-import Just_Forge_2D.Utils.Configurations;
+import Just_Forge_2D.RenderingSystems.Renderer;
+import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.Utils.TimeKeeper;
 import org.joml.Vector4f;
@@ -18,8 +19,7 @@ import org.lwjgl.opengl.GL;
 import org.lwjgl.stb.STBImage;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
-import java.util.Objects;
-import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
+
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11C.*;
 
@@ -167,6 +167,7 @@ public class Window implements Observer
     {
         Logger.FORGE_LOG_INFO("Closing " + this.config.title);
         glfwSetWindowShouldClose(this.glfwWindowPtr, true);
+        glfwDestroyWindow(this.glfwWindowPtr);
     }
 
     // - - - tell if it should be closed
@@ -433,7 +434,7 @@ public class Window implements Observer
 
     protected void warnFPSspike()
     {
-        if (Math.abs(this.fps - (int) ( 1.0f / dt)) >= Configurations.DEFAULT_FPS)
+        if (Math.abs(this.fps - (int) ( 1.0f / dt)) >= DefaultValues.DEFAULT_FPS)
         {
             this.fps = (int) (1.0f / dt);
             Logger.FORGE_LOG_WARNING(this.config.title + " Experiencing lag spike. Current fps: " + this.fps);

@@ -3,7 +3,7 @@ package Just_Forge_2D.PhysicsSystem.PhysicsComponents;
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.PhysicsSystem.Enums.BodyType;
-import Just_Forge_2D.Utils.Configurations;
+import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.Logger;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
@@ -14,12 +14,12 @@ public class RigidBodyComponent extends Component
 {
     // - - - private variables
     public Vector2f velocity = new Vector2f();
-    private float angularDamping = Configurations.ANGULAR_DAMPING;
-    private float linearDamping = Configurations.LINEAR_DAMPING;
-    private float mass = Configurations.DEFAULT_MASS;
+    private float angularDamping = DefaultValues.ANGULAR_DAMPING;
+    private float linearDamping = DefaultValues.LINEAR_DAMPING;
+    private float mass = DefaultValues.DEFAULT_MASS;
     private BodyType bodyType = BodyType.Dynamic;
-    private boolean fixedRotation = Configurations.ROTATION_FIXED;
-    private boolean continuousCollision = Configurations.CONTINUOUS_COLLISION;
+    private boolean fixedRotation = DefaultValues.ROTATION_FIXED;
+    private boolean continuousCollision = DefaultValues.CONTINUOUS_COLLISION;
     private transient Body rawBody = null;
     public float angularVelocity = 0.0f;
     public float gravityScale = 1.0f;

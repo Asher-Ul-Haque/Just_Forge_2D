@@ -4,7 +4,7 @@ import org.jbox2d.common.Vec2;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 
-public class Configurations
+public class DefaultValues
 {
     public static final String DEFAULT_WINDOW_TITLE = "Just Forge 2D";
     public static boolean DEFAULT_WINDOW_TRANSPARENCY_STATE = false;
@@ -48,4 +48,6 @@ public class Configurations
     public static final boolean DEFAULT_WINDOW_FLOAT_STATUS = false;
     public static final String DEFAULT_ICON_PATH = "Assets/Textures/logo.png";
     public static final float DEFAULT_FRAME_TIME = 0.12f;
+    public static final String DEFAULT_SHADER_PATH = "Assets/Shaders/default.glsl";
+    public static final String DEFAULT_TEXTURE_PATH = "Assets/Textures/default.png";
 }

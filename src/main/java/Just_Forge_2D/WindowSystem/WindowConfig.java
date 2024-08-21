@@ -1,31 +1,30 @@
 package Just_Forge_2D.WindowSystem;
-import Just_Forge_2D.Utils.Configurations;
+import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.Logger;
-import org.joml.Random;
 import org.joml.Vector4f;
 
 public class WindowConfig
 {
     // - - - basic size and title
-    protected int width = Configurations.DEFAULT_WINDOW_WIDTH;
-    protected int height = Configurations.DEFAULT_WINDOW_HEIGHT;
-    protected String title = Configurations.DEFAULT_WINDOW_TITLE;
+    protected int width = DefaultValues.DEFAULT_WINDOW_WIDTH;
+    protected int height = DefaultValues.DEFAULT_WINDOW_HEIGHT;
+    protected String title = DefaultValues.DEFAULT_WINDOW_TITLE;
 
     // - - - medium config
-    protected Vector4f clearColor = Configurations.DEFAULT_CLEAR_COLOR;
-    protected String iconPath = Configurations.DEFAULT_ICON_PATH;
+    protected Vector4f clearColor = DefaultValues.DEFAULT_CLEAR_COLOR;
+    protected String iconPath = DefaultValues.DEFAULT_ICON_PATH;
     protected int x = 0;
     protected int y = 0;
 
     // - - - advanced configuration
-    protected float aspectRatio = Configurations.DEFAULT_ASPECT_RATIO;
-    protected boolean vsync = Configurations.DEFAULT_VSYNC_ENABLE;
-    protected boolean transparent = Configurations.DEFAULT_WINDOW_TRANSPARENCY_STATE;
-    protected boolean maximized = Configurations.DEFAULT_WINDOW_MAXIMIZED_STATE;
-    protected boolean visible = Configurations.DEFAULT_WINDOW_VISIBLE_STATE;
-    protected boolean decorated = Configurations.DEFAULT_WINDOW_DECORATION_STATE;
-    protected boolean resizable = Configurations.DEFAULT_WINDOW_RESIZABLE_STATE;
-    protected boolean alwaysOnTop = Configurations.DEFAULT_WINDOW_FLOAT_STATUS;
+    protected float aspectRatio = DefaultValues.DEFAULT_ASPECT_RATIO;
+    protected boolean vsync = DefaultValues.DEFAULT_VSYNC_ENABLE;
+    protected boolean transparent = DefaultValues.DEFAULT_WINDOW_TRANSPARENCY_STATE;
+    protected boolean maximized = DefaultValues.DEFAULT_WINDOW_MAXIMIZED_STATE;
+    protected boolean visible = DefaultValues.DEFAULT_WINDOW_VISIBLE_STATE;
+    protected boolean decorated = DefaultValues.DEFAULT_WINDOW_DECORATION_STATE;
+    protected boolean resizable = DefaultValues.DEFAULT_WINDOW_RESIZABLE_STATE;
+    protected boolean alwaysOnTop = DefaultValues.DEFAULT_WINDOW_FLOAT_STATUS;
 
 
     // - - - Constructors - - -
