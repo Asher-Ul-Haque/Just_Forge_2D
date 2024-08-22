@@ -2,6 +2,7 @@ package Just_Forge_2D.ForgeEditor;
 
 
 import Just_Forge_2D.ForgeEditor.Configurations.ConfigFlags;
+import Just_Forge_2D.ForgeEditor.Configurations.WidgetConfigurationManager;
 import Just_Forge_2D.InputSystem.Keyboard;
 import Just_Forge_2D.InputSystem.Keys;
 import Just_Forge_2D.InputSystem.Mouse;
@@ -14,11 +15,13 @@ import imgui.ImGuiIO;
 import imgui.callback.ImStrConsumer;
 import imgui.callback.ImStrSupplier;
 import imgui.flag.ImGuiConfigFlags;
+import imgui.flag.ImGuiInputTextFlags;
 import imgui.flag.ImGuiKey;
 import imgui.flag.ImGuiMouseCursor;
 import imgui.gl3.ImGuiImplGl3;
 import imgui.glfw.ImGuiImplGlfw;
 import imgui.internal.ImGuiContext;
+import imgui.type.ImString;
 import org.lwjgl.glfw.GLFW;
 
 import static org.lwjgl.glfw.GLFW.*;
@@ -210,12 +213,24 @@ public class ImGuiManager
     private static void endFrame()
     {
         imGuiGl3.renderDrawData(ImGui.getDrawData());
+
+        if (ConfigFlags.viewportsEnable)
+        {
+            ImGui.updatePlatformWindows();
+            ImGui.renderPlatformWindowsDefault();
+        }
     }
 
     public static void update(float DELTA_TIME)
     {
         startFrame(DELTA_TIME);
-        ImGui.text("Hello, World!");
+        WidgetConfigurationManager.configureTextBox();
+        ImGui.inputText("Text Box", new ImString("nice", 256), ImGuiInputTextFlags.None);
+
+        WidgetConfigurationManager.configureSlider();
+        float[] sliderValue = {0.5f};
+        ImGui.sliderFloat("Slider", sliderValue, 0.0f, 1.0f);
+
         ImGui.render();
         ImGui.endFrame();
 
