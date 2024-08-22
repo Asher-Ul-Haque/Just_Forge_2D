@@ -13,7 +13,6 @@ public class DefaultValues
     public static boolean DEFAULT_WINDOW_DECORATION_STATE = true;
     public static boolean DEFAULT_WINDOW_RESIZABLE_STATE = true;
     public static boolean DEFAULT_VSYNC_ENABLE = true;
-
     public static final float GRID_WIDTH = 0.25f;
     public static final float GRID_HEIGHT = 0.25f;
     public static final int MAX_BATCH_SIZE = 1024;
@@ -50,4 +49,5 @@ public class DefaultValues
     public static final float DEFAULT_FRAME_TIME = 0.12f;
     public static final String DEFAULT_SHADER_PATH = "Assets/Shaders/default.glsl";
     public static final String DEFAULT_TEXTURE_PATH = "Assets/Textures/default.png";
+    public static final String DEFAULT_EDITOR_LAYOUT_PATH = "Configurations/editorLayout.justForgeFile";
 }

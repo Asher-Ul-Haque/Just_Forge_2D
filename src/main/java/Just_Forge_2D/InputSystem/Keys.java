@@ -107,7 +107,7 @@ public enum Keys
     INSERT(GLFW_KEY_INSERT),
     MENU(GLFW_KEY_MENU);
 
-    int keyCode = 0;
+    public int keyCode = 0;
 
     Keys(int glfwKey)
     {

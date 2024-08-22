@@ -17,7 +17,7 @@ import org.lwjgl.opengl.GL;
 import org.lwjgl.stb.STBImage;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
-import java.util.Objects;
+
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
@@ -33,6 +33,7 @@ public class Window implements Observer
     protected float endTime = 0;
     protected float dt = -1;
     protected long glfwWindowPtr;
+    protected boolean shouldClose;
 
 
     // - - - constructor
@@ -103,6 +104,7 @@ public class Window implements Observer
         {
             glfwSwapInterval(0);
         }
+        this.shouldClose = false;
 
         // - - - set position
         Logger.FORGE_LOG_DEBUG("Setting position for " + this.config.title + " to : " + this.config.x + " : " + this.config.y);
@@ -162,6 +164,7 @@ public class Window implements Observer
     {
         Logger.FORGE_LOG_INFO("Closing " + this.config.title);
         glfwSetWindowShouldClose(this.glfwWindowPtr, true);
+        this.shouldClose = true;
     }
 
     public void finish()
@@ -475,5 +478,10 @@ public class Window implements Observer
     public String toString()
     {
         return this.config.title;
+    }
+
+    public long getGlfwWindowPtr()
+    {
+        return this.glfwWindowPtr;
     }
 }
