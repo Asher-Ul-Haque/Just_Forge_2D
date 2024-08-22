@@ -7,19 +7,19 @@ import Just_Forge_2D.EventSystem.Observer;
 import Just_Forge_2D.Forge;
 import Just_Forge_2D.InputSystem.Keyboard;
 import Just_Forge_2D.InputSystem.Mouse;
-import Just_Forge_2D.RenderingSystems.Renderer;
 import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.Utils.TimeKeeper;
 import org.joml.Vector4f;
 import org.lwjgl.BufferUtils;
-import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWImage;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.stb.STBImage;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
+import java.util.Objects;
 
+import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11C.*;
 
@@ -38,6 +38,11 @@ public class Window implements Observer
     // - - - constructor
     public Window(WindowConfig CONFIG)
     {
+        if (!WindowSystemManager.isOnline())
+        {
+            WindowSystemManager.initialize();
+        }
+
         if (CONFIG == null)
         {
             Logger.FORGE_LOG_WARNING("No window configurations specified. Resorting to default configurations");
@@ -52,16 +57,6 @@ public class Window implements Observer
         EventManager.addObserver(this);
         Logger.FORGE_LOG_INFO("Creating new Window: " + this.config.title);
 
-        // - - - Setup error callbacks for GLFW
-        GLFWErrorCallback.createPrint(System.err).set();
-        Logger.FORGE_LOG_DEBUG("Error callback assigned for GLFW");
-
-        // - - - Initialize GLFW for the window
-        Logger.FORGE_LOG_DEBUG("Initializing GLFW");
-        if (!glfwInit())
-        {
-            Logger.FORGE_LOG_FATAL("Unable to initialize window : " + this.config.title);
-        }
 
         // - - - configure GLFW
         glfwDefaultWindowHints();
@@ -167,6 +162,13 @@ public class Window implements Observer
     {
         Logger.FORGE_LOG_INFO("Closing " + this.config.title);
         glfwSetWindowShouldClose(this.glfwWindowPtr, true);
+    }
+
+    public void finish()
+    {
+        glfwFreeCallbacks(this.glfwWindowPtr);
+        Logger.FORGE_LOG_INFO("Cleaning up window memory");
+
         glfwDestroyWindow(this.glfwWindowPtr);
     }
 
@@ -446,7 +448,7 @@ public class Window implements Observer
         glClearColor(this.config.clearColor.x, this.config.clearColor.y, this
                 .config.clearColor.z, this.config.clearColor.w);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        Forge.getRenderer(this).render();
+        WindowSystemManager.getRenderer(this).render();
     }
 
     protected void finishInputFrames()

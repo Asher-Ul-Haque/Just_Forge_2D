@@ -16,6 +16,7 @@ import Just_Forge_2D.Forge;
 import Just_Forge_2D.PhysicsSystem.PhysicsWorld;
 import Just_Forge_2D.Utils.AssetPool;
 import Just_Forge_2D.Utils.DefaultValues;
+import Just_Forge_2D.WindowSystem.WindowSystemManager;
 import imgui.ImGui;
 import imgui.ImVec2;
 import org.joml.Vector2f;
@@ -40,7 +41,7 @@ public class EditorSceneInitializer extends SceneInitializer
     // - - - useless constructor
     public EditorSceneInitializer()
     {
-        this.renderer = Forge.getRenderer(Forge.window);
+        this.renderer = WindowSystemManager.getRenderer(Forge.window);
         this.physicsWorld = new PhysicsWorld();
     }
 

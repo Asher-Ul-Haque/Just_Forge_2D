@@ -4,7 +4,6 @@ package Just_Forge_2D.EditorSystem;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.EventSystem.Events.Event;
 import Just_Forge_2D.Forge;
-import Just_Forge_2D.InputSystem.Keyboard;
 import Just_Forge_2D.InputSystem.Mouse;
 import Just_Forge_2D.RenderingSystems.DebugPencil;
 import Just_Forge_2D.RenderingSystems.Framebuffer;
@@ -14,6 +13,7 @@ import Just_Forge_2D.Utils.AssetPool;
 import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.Utils.TimeKeeper;
 import Just_Forge_2D.WindowSystem.Window;
+import Just_Forge_2D.WindowSystem.WindowSystemManager;
 
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
@@ -103,7 +103,7 @@ public class EditorWindow extends Window {
         glViewport(0, 0, 1980, 720);
         glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        Forge.getRenderer(this).bindShader(Forge.selectorShader);
+        WindowSystemManager.getRenderer(this).bindShader(Forge.selectorShader);
         EditorSystemManager.editorScene.render(dt);
         Forge.selector.disableWriting();
 
@@ -121,7 +121,7 @@ public class EditorWindow extends Window {
         glClear(GL_COLOR_BUFFER_BIT);
 
         if (dt >= 0.0d) {
-            Forge.getRenderer(this).bindShader(Forge.defaultShader);
+            WindowSystemManager.getRenderer(this).bindShader(Forge.defaultShader);
             if (isRuntimePlaying) {
                 EditorSystemManager.editorScene.update(dt);
             } else {

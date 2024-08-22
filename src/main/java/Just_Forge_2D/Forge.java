@@ -32,28 +32,9 @@ public class Forge
     private static long audioContext;
     private static long audioDevicePtr;
 
-    public static void assignRenderer(Window WINDOW, Renderer RENDERER)
-    {
-        Logger.FORGE_LOG_INFO("Linking " + WINDOW.getTitle() + " to Renderer " + RENDERER);
-        windowRendererHashMap.put(WINDOW, RENDERER);
-    }
-
-    public static Renderer getRenderer(Window WINDOW)
-    {
-        Renderer renderer = windowRendererHashMap.get(WINDOW);
-        if (renderer == null)
-        {
-            Logger.FORGE_LOG_WARNING("No renderer has been assigned to : " + WINDOW);
-            Renderer newRenderer = new Renderer(WINDOW.getTitle());
-            assignRenderer(WINDOW, newRenderer);
-            return newRenderer;
-        }
-        return renderer;
-    }
 
     public static void setAudioSystem()
     {
-
         String defaultDeviceName = alcGetString(0, ALC_DEFAULT_DEVICE_SPECIFIER);
         assert defaultDeviceName != null;
         audioDevicePtr = alcOpenDevice(defaultDeviceName);

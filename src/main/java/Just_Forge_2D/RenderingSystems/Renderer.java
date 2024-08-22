@@ -18,7 +18,7 @@ public class Renderer
     private final String window;
     private final int MAX_BATCH_SIZE = DefaultValues.MAX_BATCH_SIZE;
     private final List<RenderBatch> batches;
-    private static Shader currentShader;
+    private Shader currentShader;
     protected Scene currentScene;
 
 
@@ -33,7 +33,7 @@ public class Renderer
         this.batches = new ArrayList<>();
         if (currentShader == null)
         {
-            AssetPool.addShader("Default", "Assets/Shaders/default.glsl");
+            if (!AssetPool.containsShader("Default"))  AssetPool.addShader("Default", "Assets/Shaders/default.glsl");
             currentShader = AssetPool.getShader("Default");
         }
     }

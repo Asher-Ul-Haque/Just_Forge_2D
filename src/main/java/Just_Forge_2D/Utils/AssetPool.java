@@ -56,6 +56,25 @@ public class AssetPool
         return AssetPool.shaderPool.get(path);
     }
 
+    public static void removeShader(String NAME)
+    {
+        String path = nameToFile.get(NAME);
+        if (!nameToFile.containsKey(NAME) || !AssetPool.shaderPool.containsKey(path))
+        {
+            Logger.FORGE_LOG_ERROR("Shader : " + NAME + " does not exist");
+            return;
+        }
+        Logger.FORGE_LOG_TRACE("Removing shader : " + NAME);
+        AssetPool.shaderPool.remove(path);
+        nameToFile.remove(NAME);
+    }
+
+    public static boolean containsShader(String NAME)
+    {
+        String path = nameToFile.get(NAME);
+        return AssetPool.shaderPool.containsKey(path);
+    }
+
 
     // - - - texture - - -
 
