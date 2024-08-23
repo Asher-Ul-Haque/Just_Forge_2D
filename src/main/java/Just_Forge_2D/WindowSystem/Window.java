@@ -184,6 +184,17 @@ public class Window implements Observer
 
     // - - - Manage Window size - - -
 
+    public void setResizable(boolean DO)
+    {
+        Logger.FORGE_LOG_DEBUG("Setting + " + this.config.title + " to : " + DO);
+        if (this.config.resizable == DO)
+        {
+            Logger.FORGE_LOG_WARNING(this.config.title + " already has resizable status set to : " + DO);
+            return;
+        }
+        this.config.resizable = DO;
+    }
+
     public void setSize(int WIDTH, int HEIGHT)
     {
         if (WIDTH <= 0 || HEIGHT <= 0)

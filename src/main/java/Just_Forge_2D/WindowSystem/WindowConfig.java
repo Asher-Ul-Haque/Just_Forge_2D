@@ -29,6 +29,126 @@ public class WindowConfig
 
     // - - - Constructors - - -
 
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public Vector4f getClearColor() {
+        return clearColor;
+    }
+
+    public void setClearColor(Vector4f clearColor) {
+        this.clearColor = clearColor;
+    }
+
+    public String getIconPath() {
+        return iconPath;
+    }
+
+    public void setIconPath(String iconPath) {
+        this.iconPath = iconPath;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public float getAspectRatio() {
+        return aspectRatio;
+    }
+
+    public void setAspectRatio(float aspectRatio) {
+        this.aspectRatio = aspectRatio;
+    }
+
+    public boolean isVsync() {
+        return vsync;
+    }
+
+    public void setVsync(boolean vsync) {
+        this.vsync = vsync;
+    }
+
+    public boolean isTransparent() {
+        return transparent;
+    }
+
+    public void setTransparent(boolean transparent) {
+        this.transparent = transparent;
+    }
+
+    public boolean isMaximized() {
+        return maximized;
+    }
+
+    public void setMaximized(boolean maximized) {
+        this.maximized = maximized;
+    }
+
+    public boolean isVisible() {
+        return visible;
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
+    }
+
+    public boolean isDecorated() {
+        return decorated;
+    }
+
+    public void setDecorated(boolean decorated) {
+        this.decorated = decorated;
+    }
+
+    public boolean isResizable() {
+        return resizable;
+    }
+
+    public void setResizable(boolean resizable) {
+        this.resizable = resizable;
+    }
+
+    public boolean isAlwaysOnTop() {
+        return alwaysOnTop;
+    }
+
+    public void setAlwaysOnTop(boolean alwaysOnTop) {
+        this.alwaysOnTop = alwaysOnTop;
+    }
+
     // - - - one with everything
     public WindowConfig(int WIDTH,
                         int HEIGHT,

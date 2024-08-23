@@ -16,33 +16,25 @@ public class EditorManager
 {
     protected static WindowConfig splashScreenConfig = new WindowConfig(600, 400, "Just-Forge-2D", true, WindowSystemManager.getMonitorSize().x, WindowSystemManager.getMonitorSize().y,  1f, true, false, true, true, false, true, DefaultValues.DEFAULT_ICON_PATH);
     protected static WindowConfig editorScreenConfig = new WindowConfig();
-    protected static Window splashScreen;
-    protected static Window editorScreen;
+     static Window editorScreen;
     protected static Scene currentScene;
     protected static List<GameObject> currentGameObjects = new ArrayList<>();
     protected static Scene testScene;
+    protected static boolean isSplashScreen = true;
 
     public static void run()
     {
         WindowSystemManager.initialize();
-        splashScreen = new Window(splashScreenConfig);
-
-        while (!splashScreen.shouldClose())
-        {
-            splashScreen.loop();
-//            if (!Keyboard.isKeyPressed(Keys.ESCAPE)) continue;
-
-        }
-        splashScreen.finish();
-        splashScreen.close();
-
+        editorScreenConfig.setTransparent(true);
         editorScreen = new EditorWindow(editorScreenConfig);
+        SplashScreen.setWindowConfig();
 
         ImGuiManager.initialize(editorScreen.getGlfwWindowPtr());
         testScene = SceneSystemManager.addScene(testScene, new TestSceneInitializer(), "Test");
         GameObject g1 = new GameObject("Test Obj");
         testScene.addGameObject(g1);
         testScene.start();
+        editorScreen.setVisible(true);
         while (!editorScreen.shouldClose())
         {
             editorScreen.loop();

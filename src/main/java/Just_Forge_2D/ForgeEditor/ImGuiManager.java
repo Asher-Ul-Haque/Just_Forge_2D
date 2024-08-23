@@ -201,7 +201,7 @@ public class ImGuiManager
     {
         imGuiGlfw.newFrame();
         ImGui.newFrame();
-        setupDockspace();
+        if (ConfigFlags.dockingEnable && !EditorManager.isSplashScreen) setupDockspace();
     }
 
     private static void endFrame()
@@ -219,9 +219,15 @@ public class ImGuiManager
     public static void update(float DELTA_TIME)
     {
         startFrame(DELTA_TIME);
-        SceneHierarchyPanel.render();
-        PropertiesWindow.render();
-        ImGui.end();
+        if (EditorManager.isSplashScreen)
+        {
+            SplashScreen.render();
+        }
+        else
+        {
+            SceneHierarchyPanel.render();
+            PropertiesWindow.render();
+        }
         ImGui.render();
         endFrame();
     }
