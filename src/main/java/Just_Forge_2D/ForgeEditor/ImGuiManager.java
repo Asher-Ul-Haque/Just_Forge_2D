@@ -220,6 +220,7 @@ public class ImGuiManager
     {
         startFrame(DELTA_TIME);
         SceneHierarchyPanel.render();
+        PropertiesWindow.render();
         ImGui.end();
         ImGui.render();
         endFrame();
