@@ -12,6 +12,13 @@ public abstract class SceneInitializer
     public abstract void init(Scene SCENE);
     public abstract void loadResources(Scene SCENE);
     public abstract void editorGUI();
+    public abstract void assignRenderingSystem();
+    public abstract void assignPhysicsSystem();
     public void update(float DELTA_TIME){}
     public void editorUpdate(float DELTA_TIME){}
+    public SceneInitializer()
+    {
+        assignRenderingSystem();
+        assignPhysicsSystem();
+    }
 }

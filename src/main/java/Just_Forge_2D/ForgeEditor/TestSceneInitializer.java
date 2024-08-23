@@ -24,9 +24,14 @@ public class TestSceneInitializer extends SceneInitializer {
     {
     }
 
-    public TestSceneInitializer()
-    {
+    @Override
+    public void assignRenderingSystem() {
         this.renderer = WindowSystemManager.getRenderer(EditorManager.editorScreen);
+
+    }
+
+    @Override
+    public void assignPhysicsSystem() {
         this.physicsWorld = new PhysicsWorld();
     }
 }

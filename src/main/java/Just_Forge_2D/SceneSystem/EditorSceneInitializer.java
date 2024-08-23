@@ -213,4 +213,14 @@ public class EditorSceneInitializer extends SceneInitializer
         ImGui.end();
     }
 
+    @Override
+    public void assignRenderingSystem() {
+
+    }
+
+    @Override
+    public void assignPhysicsSystem() {
+
+    }
+
 }

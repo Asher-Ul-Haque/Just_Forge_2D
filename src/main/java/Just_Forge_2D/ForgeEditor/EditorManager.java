@@ -8,6 +8,9 @@ import Just_Forge_2D.WindowSystem.Window;
 import Just_Forge_2D.WindowSystem.WindowConfig;
 import Just_Forge_2D.WindowSystem.WindowSystemManager;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class EditorManager
 {
@@ -16,7 +19,7 @@ public class EditorManager
     protected static Window splashScreen;
     protected static Window editorScreen;
     protected static Scene currentScene;
-    protected static GameObject currentGameObject;
+    protected static List<GameObject> currentGameObjects = new ArrayList<>();
     protected static Scene testScene;
 
     public static void run()
