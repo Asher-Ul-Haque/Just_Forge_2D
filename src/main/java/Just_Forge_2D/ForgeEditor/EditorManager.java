@@ -1,8 +1,8 @@
 package Just_Forge_2D.ForgeEditor;
 
-import Just_Forge_2D.ForgeEditor.Configurations.ColorScheme;
-import Just_Forge_2D.InputSystem.Keyboard;
-import Just_Forge_2D.InputSystem.Keys;
+import Just_Forge_2D.EntityComponentSystem.GameObject;
+import Just_Forge_2D.SceneSystem.Scene;
+import Just_Forge_2D.SceneSystem.SceneSystemManager;
 import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.WindowSystem.Window;
 import Just_Forge_2D.WindowSystem.WindowConfig;
@@ -15,6 +15,9 @@ public class EditorManager
     protected static WindowConfig editorScreenConfig = new WindowConfig();
     protected static Window splashScreen;
     protected static Window editorScreen;
+    protected static Scene currentScene;
+    protected static GameObject currentGameObject;
+    protected static Scene testScene;
 
     public static void run()
     {
@@ -31,7 +34,12 @@ public class EditorManager
         splashScreen.close();
 
         editorScreen = new EditorWindow(editorScreenConfig);
+
         ImGuiManager.initialize(editorScreen.getGlfwWindowPtr());
+        testScene = SceneSystemManager.addScene(testScene, new TestSceneInitializer(), "Test");
+        GameObject g1 = new GameObject("Test Obj");
+        testScene.addGameObject(g1);
+        testScene.start();
         while (!editorScreen.shouldClose())
         {
             editorScreen.loop();

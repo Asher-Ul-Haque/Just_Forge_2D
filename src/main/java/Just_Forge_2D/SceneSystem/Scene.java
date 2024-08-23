@@ -29,12 +29,13 @@ public class Scene
     private final PhysicsManager physics;
     private final List<GameObject> pendingObjects;
 
+    protected final String ID;
 
     // - - - | Functions | - - -
 
 
     // - - - Now presenting: useful constructor
-    public Scene(SceneInitializer INITIALIZER)
+    public Scene(SceneInitializer INITIALIZER, String ID)
     {
         this.initializer = INITIALIZER;
         this.physics = new PhysicsManager(this, initializer.physicsWorld);
@@ -42,6 +43,7 @@ public class Scene
         this.gameObjects = new ArrayList<>();
         this.isRunning = false;
         this.pendingObjects = new ArrayList<>();
+        this.ID = ID;
     }
 
 
@@ -261,5 +263,13 @@ public class Scene
     public Renderer getRenderer()
     {
         return this.renderer;
+    }
+
+
+    // - - - ID - - -
+
+    public String getID()
+    {
+        return this.ID;
     }
 }

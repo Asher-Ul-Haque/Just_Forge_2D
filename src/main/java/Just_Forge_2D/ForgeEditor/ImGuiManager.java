@@ -2,26 +2,19 @@ package Just_Forge_2D.ForgeEditor;
 
 
 import Just_Forge_2D.ForgeEditor.Configurations.ConfigFlags;
-import Just_Forge_2D.ForgeEditor.Configurations.WidgetConfigurationManager;
 import Just_Forge_2D.InputSystem.Keyboard;
 import Just_Forge_2D.InputSystem.Keys;
 import Just_Forge_2D.InputSystem.Mouse;
-import Just_Forge_2D.InputSystem.MouseButtons;
-import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.Logger;
-import Just_Forge_2D.WindowSystem.WindowSystemManager;
 import imgui.ImGui;
 import imgui.ImGuiIO;
 import imgui.callback.ImStrConsumer;
 import imgui.callback.ImStrSupplier;
-import imgui.flag.ImGuiConfigFlags;
-import imgui.flag.ImGuiInputTextFlags;
-import imgui.flag.ImGuiKey;
-import imgui.flag.ImGuiMouseCursor;
+import imgui.flag.*;
 import imgui.gl3.ImGuiImplGl3;
 import imgui.glfw.ImGuiImplGlfw;
 import imgui.internal.ImGuiContext;
-import imgui.type.ImString;
+import imgui.type.ImBoolean;
 import org.lwjgl.glfw.GLFW;
 
 import static org.lwjgl.glfw.GLFW.*;
@@ -41,7 +34,7 @@ public class ImGuiManager
 
         // - - - save imGUI save file
         Logger.FORGE_LOG_INFO("Creating ImGUI Context");
-        io.setIniFilename(DefaultValues.DEFAULT_EDITOR_LAYOUT_PATH);
+        io.setIniFilename("Layout.txt");
 
         // - - - Enable docking and viewports
         Logger.FORGE_LOG_DEBUG("Docking enabled : " + ConfigFlags.dockingEnable);
@@ -208,10 +201,12 @@ public class ImGuiManager
     {
         imGuiGlfw.newFrame();
         ImGui.newFrame();
+        setupDockspace();
     }
 
     private static void endFrame()
     {
+        ImGui.endFrame();
         imGuiGl3.renderDrawData(ImGui.getDrawData());
 
         if (ConfigFlags.viewportsEnable)
@@ -224,16 +219,9 @@ public class ImGuiManager
     public static void update(float DELTA_TIME)
     {
         startFrame(DELTA_TIME);
-        WidgetConfigurationManager.configureTextBox();
-        ImGui.inputText("Text Box", new ImString("nice", 256), ImGuiInputTextFlags.None);
-
-        WidgetConfigurationManager.configureSlider();
-        float[] sliderValue = {0.5f};
-        ImGui.sliderFloat("Slider", sliderValue, 0.0f, 1.0f);
-
+        SceneHierarchyPanel.render();
+        ImGui.end();
         ImGui.render();
-        ImGui.endFrame();
-
         endFrame();
     }
 
@@ -242,5 +230,23 @@ public class ImGuiManager
         Logger.FORGE_LOG_INFO("Disposing off ImGUI");
         imGuiGl3.dispose();
         ImGui.destroyContext();
+    }
+
+    private static void setupDockspace()
+    {
+        int windowFlags = ImGuiWindowFlags.MenuBar | ImGuiWindowFlags.NoDocking;
+
+        ImGui.setNextWindowPos(0.0f, 0.0f, ImGuiCond.Always);
+        ImGui.setNextWindowSize(io.getDisplaySizeX(), io.getDisplaySizeY());
+        ImGui.pushStyleVar(ImGuiStyleVar.WindowRounding, 0.0f);
+        ImGui.pushStyleVar(ImGuiStyleVar.WindowBorderSize, 0.0f);
+
+        windowFlags |= ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoMove | ImGuiWindowFlags.NoBringToFrontOnFocus | ImGuiWindowFlags.NoNavFocus;
+
+        ImGui.begin("Dockspace Demo", new ImBoolean(true), windowFlags);
+        ImGui.popStyleVar(2);
+
+        // - - - SETUP DOCKSPACE
+        ImGui.dockSpace(ImGui.getID("Dockspace"));
     }
 }

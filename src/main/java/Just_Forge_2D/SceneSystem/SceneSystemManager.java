@@ -103,7 +103,7 @@ public class SceneSystemManager
 
         Logger.FORGE_LOG_INFO("Adding " + SCENE + " to Scene Manager");
 
-        SCENE = new Scene(INITIALIZER);
+        SCENE = new Scene(INITIALIZER, ID);
         allScenes.put(ID, SCENE);
         SCENE.load();
         SCENE.init();
