@@ -230,6 +230,7 @@ public class ImGuiManager
         {
             SceneHierarchyPanel.render();
             PropertiesWindow.render();
+            EditorManager.viewport.render();
         }
         ImGui.render();
         endFrame();

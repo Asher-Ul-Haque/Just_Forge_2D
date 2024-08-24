@@ -77,7 +77,7 @@ public class EditorSceneInitializer extends SceneInitializer
         AssetPool.addSpriteSheet("Items", new SpriteSheet(AssetPool.getTexture("Assets/Textures/items.png"), 16, 16, 43, 0));
         AssetPool.addSpriteSheet("Gizmos", new SpriteSheet(AssetPool.getTexture("Assets/Textures/gizmos.png"), 24, 48, 3, 0));
 
-        AssetPool.addSound("Main Theme","Assets/Sounds/main-theme-overworld.ogg", true);
+        AssetPool.addSound("Just_Forge_2D.Main Theme","Assets/Sounds/main-theme-overworld.ogg", true);
         AssetPool.addSound("Flagpole","Assets/Sounds/flagpole.ogg", false);
         AssetPool.addSound("Break Block", "Assets/Sounds/break_block.ogg", false);
         AssetPool.addSound("Bump","Assets/Sounds/bump.ogg", false);

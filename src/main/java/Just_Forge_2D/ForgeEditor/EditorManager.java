@@ -1,16 +1,22 @@
 package Just_Forge_2D.ForgeEditor;
 
+import Just_Forge_2D.EntityComponentSystem.Components.SpriteComponent;
+import Just_Forge_2D.EntityComponentSystem.Components.TransformComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.ForgeEditor.Themes.IntelliTheme;
 import Just_Forge_2D.ForgeEditor.Themes.Theme;
 import Just_Forge_2D.ForgeEditor.Windows.EditorWindow;
 import Just_Forge_2D.ForgeEditor.Windows.SplashScreen;
+import Just_Forge_2D.Main;
+import Just_Forge_2D.RenderingSystems.Texture;
 import Just_Forge_2D.SceneSystem.Scene;
 import Just_Forge_2D.SceneSystem.SceneSystemManager;
 import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.WindowSystem.Window;
 import Just_Forge_2D.WindowSystem.WindowConfig;
 import Just_Forge_2D.WindowSystem.WindowSystemManager;
+import org.joml.Vector2f;
+import org.joml.Vector4f;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +24,6 @@ import java.util.List;
 
 public class EditorManager
 {
-    public static WindowConfig splashScreenConfig = new WindowConfig(600, 400, "Just-Forge-2D", true, WindowSystemManager.getMonitorSize().x, WindowSystemManager.getMonitorSize().y,  1f, true, false, true, true, false, true, DefaultValues.DEFAULT_ICON_PATH);
     public static WindowConfig editorScreenConfig = new WindowConfig();
     public static Window editorScreen;
     public static Scene currentScene;
@@ -27,26 +32,29 @@ public class EditorManager
     public static boolean isSplashScreen = true;
     public static Theme currentTheme;
     public static String projectPath;
+    public static GameViewport viewport;
+    public static Window test;
 
     public static void run()
     {
         WindowSystemManager.initialize();
+        test = new Window(new WindowConfig());
+
+        test.setClearColor(new Vector4f(1.0f, 1.0f, 1.0f, 1.0f));
         editorScreenConfig.setTransparent(true);
         editorScreenConfig.setVisible(false);
         editorScreen = new EditorWindow(editorScreenConfig);
         SplashScreen.setWindowConfig();
-
+//
         ImGuiManager.initialize(editorScreen.getGlfwWindowPtr());
         currentTheme = new IntelliTheme();
 
-        testScene = SceneSystemManager.addScene(testScene, new TestSceneInitializer(), "Test");
-        GameObject g1 = new GameObject("Test Obj");
-        testScene.addGameObject(g1);
-        testScene.start();
         editorScreen.setVisible(true);
-        while (!editorScreen.shouldClose())
+        viewport = new GameViewport(Main.petWindow);
+        while (!test.shouldClose())
         {
             editorScreen.loop();
+            Main.update();
             //ImGuiManager.update(splashScreen.getDeltaTime());
         }
         editorScreen.finish();

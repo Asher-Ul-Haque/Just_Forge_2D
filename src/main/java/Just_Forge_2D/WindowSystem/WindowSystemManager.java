@@ -51,7 +51,7 @@ public class WindowSystemManager
         // - - - terminate glfw and free the error callback
         glfwTerminate();
         GLFWErrorCallback callback = glfwSetErrorCallback(null);
-        if (callback != null);
+        if (callback != null)
         {
             callback.free();
         }

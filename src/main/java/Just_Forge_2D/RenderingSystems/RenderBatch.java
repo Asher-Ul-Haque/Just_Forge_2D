@@ -129,7 +129,7 @@ public class RenderBatch implements Comparable<RenderBatch>
             SpriteComponent sprite = sprites[i];
             if (sprite.isChanged())
             {
-                if (!hasTexture(sprite.getTexture()))
+                if (!hasTexture(sprite.getTexture()) && sprite.getTexture() != null)
                 {
                     this.renderer.destroyGameObject(sprite.gameObject);
                     this.renderer.addGameObject(sprite.gameObject);

@@ -50,4 +50,5 @@ public class DefaultValues
     public static final String DEFAULT_SHADER_PATH = "Assets/Shaders/default.glsl";
     public static final String DEFAULT_TEXTURE_PATH = "Assets/Textures/default.png";
     public static final String DEFAULT_EDITOR_LAYOUT_PATH = "Configurations/editorLayout.justForgeFile";
+    public static final boolean IS_RELEASE = false;
 }

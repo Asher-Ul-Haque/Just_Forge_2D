@@ -9,6 +9,7 @@ public class Framebuffer
     // private variables
     private final int fboID;
     private final Texture texture;
+    private final int width, height;
 
 
     // - - - | Functions | - - -
@@ -17,6 +18,8 @@ public class Framebuffer
     // - - - constructor
     public Framebuffer(int WIDTH, int HEIGHT)
     {
+        this.width = WIDTH;
+        this.height = HEIGHT;
         // - - - generate frame buffer
         fboID = glGenFramebuffers();
         glBindFramebuffer(GL_FRAMEBUFFER, fboID);
@@ -33,8 +36,34 @@ public class Framebuffer
 
         if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
         {
-            Logger.FORGE_LOG_ERROR("Frame buffer not complete");
-            Logger.FORGE_LOG_ERROR(glGetError());
+            int status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+            Logger.FORGE_LOG_ERROR("Frame buffer not complete, status: " + status);
+            switch (status)
+            {
+                case GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT:
+                    Logger.FORGE_LOG_ERROR("Framebuffer incomplete attachment.");
+                    break;
+
+                case GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT:
+                    Logger.FORGE_LOG_ERROR("Framebuffer missing attachment.");
+                    break;
+
+                case GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER:
+                    Logger.FORGE_LOG_ERROR("Framebuffer incomplete draw buffer.");
+                    break;
+
+                case GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER:
+                    Logger.FORGE_LOG_ERROR("Framebuffer incomplete read buffer.");
+                    break;
+
+                case GL_FRAMEBUFFER_UNSUPPORTED:
+                    Logger.FORGE_LOG_ERROR("Framebuffer unsupported format.");
+                    break;
+
+                default:
+                    Logger.FORGE_LOG_ERROR("Framebuffer error.");
+                    break;
+            }
             assert false;
         }
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -65,5 +94,18 @@ public class Framebuffer
     public int getTextureID()
     {
         return texture.getID();
+    }
+
+
+    // - - - width and height - - -
+
+    public int getWidth()
+    {
+        return this.width;
+    }
+
+    public int getHeight()
+    {
+        return this.height;
     }
 }
