@@ -1,6 +1,7 @@
-package Just_Forge_2D.ForgeEditor;
+package Just_Forge_2D.ForgeEditor.Windows;
 
 import Just_Forge_2D.EntityComponentSystem.GameObject;
+import Just_Forge_2D.ForgeEditor.EditorManager;
 import Just_Forge_2D.SceneSystem.Scene;
 import Just_Forge_2D.SceneSystem.SceneSystemManager;
 import Just_Forge_2D.Utils.Logger;

@@ -1,7 +1,8 @@
-package Just_Forge_2D.ForgeEditor;
+package Just_Forge_2D.ForgeEditor.Windows;
 
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
+import Just_Forge_2D.ForgeEditor.EditorManager;
 import imgui.ImGui;
 
 public class PropertiesWindow

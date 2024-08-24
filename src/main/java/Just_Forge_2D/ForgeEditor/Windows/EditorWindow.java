@@ -1,6 +1,7 @@
-package Just_Forge_2D.ForgeEditor;
+package Just_Forge_2D.ForgeEditor.Windows;
 
 import Just_Forge_2D.Forge;
+import Just_Forge_2D.ForgeEditor.ImGuiManager;
 import Just_Forge_2D.WindowSystem.Window;
 import Just_Forge_2D.WindowSystem.WindowConfig;
 

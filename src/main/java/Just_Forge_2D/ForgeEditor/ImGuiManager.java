@@ -2,6 +2,9 @@ package Just_Forge_2D.ForgeEditor;
 
 
 import Just_Forge_2D.ForgeEditor.Configurations.ConfigFlags;
+import Just_Forge_2D.ForgeEditor.Windows.PropertiesWindow;
+import Just_Forge_2D.ForgeEditor.Windows.SceneHierarchyPanel;
+import Just_Forge_2D.ForgeEditor.Windows.SplashScreen;
 import Just_Forge_2D.InputSystem.Keyboard;
 import Just_Forge_2D.InputSystem.Keys;
 import Just_Forge_2D.InputSystem.Mouse;
