@@ -25,22 +25,18 @@ import java.util.List;
 public class EditorManager
 {
     public static WindowConfig editorScreenConfig = new WindowConfig();
-    public static Window editorScreen;
+    public static EditorWindow editorScreen;
     public static Scene currentScene;
     public static List<GameObject> currentGameObjects = new ArrayList<>();
     public static Scene testScene;
     public static boolean isSplashScreen = true;
     public static Theme currentTheme;
     public static String projectPath;
-    public static GameViewport viewport;
-    public static Window test;
+    public static GameViewport viewport = null;
 
     public static void run()
     {
         WindowSystemManager.initialize();
-        test = new Window(new WindowConfig());
-
-        test.setClearColor(new Vector4f(1.0f, 1.0f, 1.0f, 1.0f));
         editorScreenConfig.setTransparent(true);
         editorScreenConfig.setVisible(false);
         editorScreen = new EditorWindow(editorScreenConfig);
@@ -50,11 +46,10 @@ public class EditorManager
         currentTheme = new IntelliTheme();
 
         editorScreen.setVisible(true);
-        viewport = new GameViewport(Main.petWindow);
-        while (!test.shouldClose())
+        viewport = new GameViewport();
+        while (!editorScreen.shouldClose())
         {
             editorScreen.loop();
-            Main.update();
             //ImGuiManager.update(splashScreen.getDeltaTime());
         }
         editorScreen.finish();

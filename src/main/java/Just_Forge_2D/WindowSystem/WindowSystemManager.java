@@ -1,6 +1,8 @@
 package Just_Forge_2D.WindowSystem;
 
+import Just_Forge_2D.ForgeEditor.EditorManager;
 import Just_Forge_2D.RenderingSystems.Renderer;
+import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.Logger;
 import org.joml.Vector2f;
 import org.joml.Vector2i;
@@ -79,6 +81,12 @@ public class WindowSystemManager
     public static void assignRenderer(Window WINDOW, Renderer RENDERER)
     {
         Logger.FORGE_LOG_INFO("Linking " + WINDOW.getTitle() + " to Renderer " + RENDERER);
+        if (DefaultValues.IS_RELEASE && WINDOW.getGlfwWindowPtr() != EditorManager.editorScreen.getGlfwWindowPtr())
+        {
+            Logger.FORGE_LOG_FATAL("All renderers are getting pipleined to the editor screen for rendering");
+            windowRendererHashMap.put(WINDOW, getRenderer(EditorManager.editorScreen));
+            return;
+        }
         windowRendererHashMap.put(WINDOW, RENDERER);
     }
 

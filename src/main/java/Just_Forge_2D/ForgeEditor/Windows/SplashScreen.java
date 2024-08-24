@@ -161,7 +161,9 @@ public class SplashScreen
             gearTexture = null;
             logoTexture = null;
         }
+        DefaultValues.IS_RELEASE = false;
         EditorManager.editorScreen.setVisible(true);
+
     }
 
 }

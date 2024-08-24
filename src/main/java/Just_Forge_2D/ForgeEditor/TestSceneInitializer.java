@@ -25,9 +25,9 @@ public class TestSceneInitializer extends SceneInitializer {
     }
 
     @Override
-    public void assignRenderingSystem() {
-        this.renderer = WindowSystemManager.getRenderer(EditorManager.test);
-
+    public void assignRenderingSystem()
+    {
+        this.renderer = WindowSystemManager.getRenderer(EditorManager.editorScreen);
     }
 
     @Override

@@ -40,14 +40,7 @@ public class Main {
 
     public static void main(String[] args)
     {
-        initialize();
-        createFox();
-        petScene.start();
-        //EditorManager.run();
-
-        while (!petWindow.shouldClose()) {
-            update();
-        }
+        EditorManager.run();
     }
 
     private static void initialize() {

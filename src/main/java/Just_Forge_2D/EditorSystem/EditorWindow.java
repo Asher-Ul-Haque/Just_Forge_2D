@@ -22,7 +22,8 @@ import static org.lwjgl.opengl.GL11.*;
 // - - - | Class | - - -
 
 
-public class EditorWindow extends Window {
+public class EditorWindow extends Window
+{
     private Framebuffer framebuffer;
     private boolean isRuntimePlaying = false;
 
@@ -43,6 +44,7 @@ public class EditorWindow extends Window {
         EditorSystemManager.editorWindow = this;
         Forge.window = this;
         glfwSetCursorPosCallback(this.glfwWindowPtr, EditorSystemManager::mouseCallback);
+        this.framebuffer = new Framebuffer(this.getWidth(), this.getHeight());
     }
 
     // - - - Run the game

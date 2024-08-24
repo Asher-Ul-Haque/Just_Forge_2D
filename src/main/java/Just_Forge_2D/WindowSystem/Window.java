@@ -23,21 +23,18 @@ import java.nio.IntBuffer;
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11C.*;
-import static org.lwjgl.opengl.GL30C.*;
 
 public class Window implements Observer
 {
     // - - - private variables - - -
 
-    private final WindowConfig config;
+    protected final WindowConfig config;
     protected float fps = 0;
     protected float beginTime = 0;
     protected float endTime = 0;
     protected float dt = -1;
     protected long glfwWindowPtr;
     protected boolean shouldClose;
-    protected Framebuffer frame;
-
 
     // - - - constructor
     public Window(WindowConfig CONFIG)
@@ -124,8 +121,6 @@ public class Window implements Observer
         glfwSetWindowSize(this.glfwWindowPtr, this.config.width, this.config.height);
         glViewport(0, 0, this.config.width, this.config.height);
 
-        Logger.FORGE_LOG_TRACE("Assigning Framebuffer for : " + this.toString());
-        this.frame = new Framebuffer(this.getWidth(), this.getHeight());
     }
 
 
@@ -444,15 +439,7 @@ public class Window implements Observer
         manageInput();
         Forge.update(dt);
         render();
-        if (!DefaultValues.IS_RELEASE)
-        {
-            glBindFramebuffer(GL_READ_FRAMEBUFFER, this.frame.getFboID());
-            glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0); // Default framebuffer (the screen)
-            glBlitFramebuffer(0, 0, this.frame.getWidth(), this.frame.getHeight(),
-                    0, 0, getWidth(), getHeight(),
-                    GL_COLOR_BUFFER_BIT, GL_NEAREST);
-            glBindFramebuffer(GL_FRAMEBUFFER, 0);
-        }
+
         finishInputFrames();
         keepTime();
     }
@@ -474,23 +461,12 @@ public class Window implements Observer
 
     protected void render()
     {
-        this.frame.bind();
-        // Set viewport to the framebuffer size
-        glViewport(0, 0, this.frame.getWidth(), this.frame.getHeight());
-
-        // Clear the framebuffer with the specified clear color
-        Vector4f clearColor = this.config.clearColor;
+        Vector4f clearColor = this.config.getClearColor();
         glClearColor(clearColor.x, clearColor.y, clearColor.z, clearColor.w);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         // Perform rendering to the framebuffer
         WindowSystemManager.getRenderer(this).render();
-
-        // Unbind framebuffer to ensure that subsequent operations affect the default framebuffer
-        this.frame.unbind();
-
-        // Restore viewport to the window size for further rendering to screen (if needed)
-//        glViewport(0, 0, getWidth(), getHeight());
     }
 
     protected void finishInputFrames()
@@ -522,13 +498,5 @@ public class Window implements Observer
     public long getGlfwWindowPtr()
     {
         return this.glfwWindowPtr;
-    }
-
-
-    // - - - GET framebuffer
-
-    public Framebuffer getFramebuffer()
-    {
-        return this.frame;
     }
 }

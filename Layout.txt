@@ -1,6 +1,6 @@
 [Window][Dockspace Demo]
 Pos=0,0
-Size=1024,532
+Size=1366,724
 Collapsed=0
 
 [Window][Debug##Default]
@@ -14,14 +14,14 @@ Size=382,683
 Collapsed=0
 
 [Window][Scene Hierarchy Panel]
-Pos=538,25
-Size=482,503
+Pos=944,25
+Size=418,695
 Collapsed=0
 DockId=0x00000002,0
 
 [Window][Inspector]
 Pos=4,25
-Size=240,503
+Size=258,695
 Collapsed=0
 DockId=0x00000003,0
 
@@ -42,17 +42,17 @@ Collapsed=0
 DockId=0x00000005,0
 
 [Window][Framebuffer Viewer]
-Pos=246,25
-Size=290,503
+Pos=264,25
+Size=678,695
 Collapsed=0
 DockId=0x00000007,0
 
 [Docking][Data]
-DockSpace       ID=0x6D3A3A6E Window=0x091AB4BE Pos=4,25 Size=1016,503 Split=X
-  DockNode      ID=0x00000001 Parent=0x6D3A3A6E SizeRef=532,695 Split=X
-    DockNode    ID=0x00000003 Parent=0x00000001 SizeRef=240,695 HiddenTabBar=1 Selected=0xF02CD328
-    DockNode    ID=0x00000004 Parent=0x00000001 SizeRef=290,695 Split=Y Selected=0x795CB480
+DockSpace       ID=0x6D3A3A6E Window=0x091AB4BE Pos=4,25 Size=1358,695 Split=X
+  DockNode      ID=0x00000001 Parent=0x6D3A3A6E SizeRef=938,695 Split=X
+    DockNode    ID=0x00000003 Parent=0x00000001 SizeRef=258,695 Selected=0xF02CD328
+    DockNode    ID=0x00000004 Parent=0x00000001 SizeRef=678,695 Split=Y Selected=0x795CB480
       DockNode  ID=0x00000005 Parent=0x00000004 SizeRef=848,343 Selected=0x795CB480
       DockNode  ID=0x00000007 Parent=0x00000004 SizeRef=848,350 CentralNode=1 Selected=0x76D54546
-  DockNode      ID=0x00000002 Parent=0x6D3A3A6E SizeRef=482,695 Selected=0x1C66985D
+  DockNode      ID=0x00000002 Parent=0x6D3A3A6E SizeRef=418,695 Selected=0x1C66985D
 
