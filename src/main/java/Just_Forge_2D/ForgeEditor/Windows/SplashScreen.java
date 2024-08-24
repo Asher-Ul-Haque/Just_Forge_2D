@@ -4,6 +4,7 @@ import Just_Forge_2D.ForgeEditor.EditorManager;
 import Just_Forge_2D.ForgeEditor.ProjectManager;
 import Just_Forge_2D.RenderingSystems.Texture;
 import Just_Forge_2D.Utils.DefaultValues;
+import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.WindowSystem.WindowSystemManager;
 import imgui.ImGui;
 import imgui.flag.ImGuiCol;
@@ -129,22 +130,38 @@ public class SplashScreen
         ImGui.setCursorPos(buttonX, buttonY);
         if (ImGui.button("Create New Project", buttonWidth, buttonHeight))
         {
-            ProjectManager.createNewProject();
+            if (ProjectManager.createNewProject())
+            {
+                cleanup();
+            };
+
         }
         buttonY += buttonHeight + 36.0f;
         ImGui.setCursorPos(buttonX, buttonY);
         if (ImGui.button("Open Existing Project", buttonWidth, buttonHeight))
         {
-            ProjectManager.openExistingProject();
+            if (ProjectManager.openExistingProject())
+            {
+                cleanup();
+            };
         }
     }
 
     public static void cleanup()
     {
+        EditorManager.editorScreen.setVisible(false);
+        Logger.FORGE_LOG_TRACE("Project Path : " + EditorManager.projectPath);
+        EditorManager.isSplashScreen = false;
+        EditorManager.editorScreen.setSize(WindowSystemManager.getMonitorSize().x, WindowSystemManager.getMonitorSize().y);
+        EditorManager.editorScreen.setPosition(0, 0);
         if (logoTexture != null)
         {
             logoTexture.detach();
+            gearTexture.detach();
+            gearTexture = null;
             logoTexture = null;
         }
+        EditorManager.editorScreen.setVisible(true);
     }
+
 }

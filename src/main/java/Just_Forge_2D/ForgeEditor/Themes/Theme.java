@@ -33,19 +33,19 @@ public abstract class Theme
     public void applyWindowTheme()
     {
         // - - - background
-        ImGui.getStyle().getColor(ImGuiCol.WindowBg).set(windowBgColor);
-        ImGui.getStyle().getColor(ImGuiCol.ChildBg).set(windowChildBgColor);
-        ImGui.getStyle().getColor(ImGuiCol.PopupBg).set(popupBgColor);
+        ImGui.getStyle().setColor(ImGuiCol.WindowBg, windowBgColor.x, windowBgColor.y, windowBgColor.z, windowBgColor.w);
+        ImGui.getStyle().setColor(ImGuiCol.ChildBg, windowChildBgColor.x, windowChildBgColor.y, windowChildBgColor.z, windowChildBgColor.w);
+        ImGui.getStyle().setColor(ImGuiCol.PopupBg, popupBgColor.x, popupBgColor.y, popupBgColor.z, popupBgColor.w);
 
         // - - - border
         ImGui.getStyle().setWindowBorderSize(windowBorderSize);
-        ImGui.getStyle().getColor(ImGuiCol.Border).set(windowBorderColor);
-        ImGui.getStyle().getColor(ImGuiCol.BorderShadow).set(windowBorderShadowColor);
+        ImGui.getStyle().setColor(ImGuiCol.Border, windowBorderColor.x, windowBorderColor.y, windowBorderColor.z, windowBorderColor.w);
+        ImGui.getStyle().setColor(ImGuiCol.BorderShadow, windowBorderShadowColor.x, windowBorderShadowColor.y, windowBorderShadowColor.z, windowBorderShadowColor.w);
 
         // - - - title bar
-        ImGui.getStyle().getColor(ImGuiCol.TitleBg).set(windowTitleBgColor);
-        ImGui.getStyle().getColor(ImGuiCol.TitleBgActive).set(windowTitleBgActiveColor);
-        ImGui.getStyle().getColor(ImGuiCol.TitleBgCollapsed).set(windowTitleBgCollapsedColor);
+        ImGui.getStyle().setColor(ImGuiCol.TitleBg, windowTitleBgColor.x, windowTitleBgColor.y, windowTitleBgColor.z, windowTitleBgColor.w);
+        ImGui.getStyle().setColor(ImGuiCol.TitleBgActive, windowTitleBgActiveColor.x, windowTitleBgActiveColor.y, windowTitleBgColor.z, windowTitleBgColor.w);
+        ImGui.getStyle().setColor(ImGuiCol.TitleBgCollapsed, windowTitleBgCollapsedColor.x, windowTitleBgCollapsedColor.y, windowTitleBgCollapsedColor.z, windowTitleBgCollapsedColor.w);
         ImGui.getStyle().setWindowRounding(windowRounding);
 
         // - - - padding and miscellaneous
@@ -75,7 +75,7 @@ public abstract class Theme
         ImGui.getStyle().setColor(ImGuiCol.ButtonHovered, buttonBgHoverColor.x, buttonBgHoverColor.y, buttonBgHoverColor.z, buttonBgHoverColor.w);
 
         // - - - text
-        ImGui.getStyle().getColor(ImGuiCol.Text).set(buttonTextColor);
+        ImGui.getStyle().setColor(ImGuiCol.Text, buttonTextColor.x, buttonTextColor.y, buttonTextColor.z, buttonTextColor.w);
 
         // - - - padding
         ImGui.getStyle().setFramePadding(framePadding.x, framePadding.y);

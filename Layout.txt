@@ -1,5 +1,6 @@
 [Window][Dockspace Demo]
-Size=800,720
+Pos=0,0
+Size=1366,724
 Collapsed=0
 
 [Window][Debug##Default]
@@ -13,19 +14,31 @@ Size=382,683
 Collapsed=0
 
 [Window][Scene Hierarchy Panel]
-Pos=397,27
-Size=395,685
+Pos=967,25
+Size=395,695
 Collapsed=0
+DockId=0x00000005,0
 
 [Window][Inspector]
-Pos=8,27
-Size=295,685
+Pos=4,25
+Size=240,695
 Collapsed=0
+DockId=0x00000003,0
 
 [Window][Splash Screen]
+Pos=0,0
+Size=600,556
+Collapsed=0
+
+[Window][Project Name]
 Pos=60,60
-Size=600,400
+Size=32,50
 Collapsed=0
 
 [Docking][Data]
+DockSpace     ID=0x6D3A3A6E Window=0x091AB4BE Pos=4,25 Size=1358,695 Split=X
+  DockNode    ID=0x00000001 Parent=0x6D3A3A6E SizeRef=961,695 Split=X
+    DockNode  ID=0x00000003 Parent=0x00000001 SizeRef=240,695 Selected=0xF02CD328
+    DockNode  ID=0x00000004 Parent=0x00000001 SizeRef=1116,695 CentralNode=1
+  DockNode    ID=0x00000005 Parent=0x6D3A3A6E SizeRef=395,695 Selected=0x1C66985D
 

@@ -26,11 +26,13 @@ public class EditorManager
     public static Scene testScene;
     public static boolean isSplashScreen = true;
     public static Theme currentTheme;
+    public static String projectPath;
 
     public static void run()
     {
         WindowSystemManager.initialize();
         editorScreenConfig.setTransparent(true);
+        editorScreenConfig.setVisible(false);
         editorScreen = new EditorWindow(editorScreenConfig);
         SplashScreen.setWindowConfig();
 
