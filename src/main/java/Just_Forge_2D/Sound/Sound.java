@@ -16,7 +16,7 @@ public class Sound
 {
     private int bufferID;
     private int sourceID;
-    private String filepath;
+    private final String filepath;
 
     private boolean isPlaying = false;
 

@@ -1,4 +1,4 @@
-package Just_Forge_2D.SceneSystem;
+package Just_Forge_2D.EditorSystem;
 
 import Just_Forge_2D.AnimationSystem.AnimationComponent;
 import Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.GridlinesComponent;
@@ -10,9 +10,10 @@ import Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.InputCont
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.EditorCameraComponent;
 import Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.GizmoSystem.GizmoSystemComponent;
-import Just_Forge_2D.EditorSystem.Prefabs;
 import Just_Forge_2D.Physics.PhysicsSystem;
 import Just_Forge_2D.Renderer.Renderer;
+import Just_Forge_2D.SceneSystem.Scene;
+import Just_Forge_2D.SceneSystem.SceneInitializer;
 import Just_Forge_2D.Sound.Sound;
 import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.AssetPool;

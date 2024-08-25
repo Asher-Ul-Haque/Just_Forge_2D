@@ -1,5 +1,6 @@
 package Just_Forge_2D;
 
+import Just_Forge_2D.EditorSystem.EditorWindow;
 import imgui.app.Application;
 import imgui.app.Configuration;
 
@@ -17,7 +18,7 @@ public class Main extends Application
 
     public static void main(String[] args)
     {
-        Window window = Window.get();
+        EditorWindow window = EditorWindow.get();
         window.run();
     }
 }

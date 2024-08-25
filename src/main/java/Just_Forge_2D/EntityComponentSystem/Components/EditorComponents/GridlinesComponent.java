@@ -2,7 +2,7 @@ package Just_Forge_2D.EntityComponentSystem.Components.EditorComponents;
 
 import Just_Forge_2D.SceneSystem.Camera;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
-import Just_Forge_2D.Window;
+import Just_Forge_2D.EditorSystem.EditorWindow;
 import Just_Forge_2D.Renderer.DebugPencil;
 import Just_Forge_2D.Utils.DefaultValues;
 import org.joml.Vector2f;
@@ -13,7 +13,7 @@ public class GridlinesComponent extends Component
     @Override
     public void editorUpdate(float DELTA_TIME)
     {
-        Camera camera = Window.getCurrentScene().getCamera();
+        Camera camera = EditorWindow.getCurrentScene().getCamera();
         Vector2f cameraPos = camera.position;
         Vector2f projectionSize = camera.getProjectionSize();
 

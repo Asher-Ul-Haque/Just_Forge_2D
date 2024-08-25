@@ -12,7 +12,6 @@ import Just_Forge_2D.EntityComponentSystem.Components.Sprite.Sprite;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteSheet;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
-import Just_Forge_2D.Window;
 import Just_Forge_2D.Physics.Enums.BodyType;
 import Just_Forge_2D.Utils.AssetPool;
 import org.joml.Vector2f;
@@ -28,7 +27,7 @@ public class Prefabs
 
     public static GameObject generateSpriteObject(String NAME, Sprite SPRITE, float SIZE_X, float SIZE_Y)
     {
-        GameObject block = Window.getCurrentScene().createGameObject(NAME);
+        GameObject block = EditorWindow.getCurrentScene().createGameObject(NAME);
         block.transform.scale.x = SIZE_X;
         block.transform.scale.y = SIZE_Y;
         SpriteComponent sprite = new SpriteComponent();

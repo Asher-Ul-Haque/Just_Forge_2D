@@ -3,6 +3,7 @@ package Just_Forge_2D.Utils;
 import org.jbox2d.common.Vec2;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
+import org.joml.Vector4f;
 
 public class DefaultValues
 {
@@ -37,4 +38,15 @@ public class DefaultValues
     public static final float DEFAULT_ASPECT_RATIO = 16f / 9f;
     public static final float DEFAULT_FRAME_TIME = 0.12f;
     public static final Vector2f DEFAULT_CAMERA_PROJECTION_SIZE = new Vector2f(16f / 3f, 9f / 3f);
+    public static final float DEFAULT_FPS = 60.0f;
+    public static final String DEFAULT_WINDOW_TITLE = "Just Forge 2D";
+    public static final Vector4f DEFAULT_CLEAR_COLOR = new Vector4f(1.0f);
+    public static final String DEFAULT_ICON_PATH = "Assets/Textures/logo.png";
+    public static final boolean DEFAULT_VSYNC_ENABLE = true;
+    public static final boolean DEFAULT_WINDOW_TRANSPARENCY_STATE = false;
+    public static final boolean DEFAULT_WINDOW_MAXIMIZED_STATE = true;
+    public static final boolean DEFAULT_WINDOW_VISIBLE_STATE = true;
+    public static final boolean DEFAULT_WINDOW_DECORATION_STATE = true;
+    public static final boolean DEFAULT_WINDOW_RESIZABLE_STATE = true;
+    public static final boolean DEFAULT_WINDOW_FLOAT_STATUS = false;
 }

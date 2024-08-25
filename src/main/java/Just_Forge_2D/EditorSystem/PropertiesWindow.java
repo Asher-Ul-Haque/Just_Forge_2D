@@ -39,10 +39,10 @@ public class PropertiesWindow
 
     public void editorGUI()
     {
+        ImGui.begin("Properties");
         if (activeGameObjects.size() == 1 && activeGameObjects.get(0) != null)
         {
             activeGameObject = activeGameObjects.get(0);
-            ImGui.begin("Properties");
 
             if (ImGui.beginPopupContextWindow("Component Adder"))
             {
@@ -90,8 +90,12 @@ public class PropertiesWindow
             }
 
             activeGameObject.editorGUI();
-            ImGui.end();
         }
+        else
+        {
+            ImGui.text("No Game Object selected");
+        }
+        ImGui.end();
     }
 
 

@@ -6,7 +6,6 @@ import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.JsonHandlers.ComponentJsonHandler;
 import Just_Forge_2D.Utils.JsonHandlers.GameObjectJsonHandler;
 import Just_Forge_2D.Utils.Logger;
-import Just_Forge_2D.Window;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 

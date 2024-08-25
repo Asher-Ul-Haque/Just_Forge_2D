@@ -4,14 +4,12 @@ import Just_Forge_2D.AnimationSystem.AnimationComponent;
 import Just_Forge_2D.EntityComponentSystem.Components.PhysicsComponents.RigidBodyComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.InputSystem.Keys;
-import Just_Forge_2D.Window;
+import Just_Forge_2D.EditorSystem.EditorWindow;
 import Just_Forge_2D.InputSystem.Keyboard;
 import Just_Forge_2D.Physics.RayCastInfo;
 import Just_Forge_2D.Utils.AssetPool;
 import org.jbox2d.dynamics.contacts.Contact;
 import org.joml.Vector2f;
-
-import static org.lwjgl.glfw.GLFW.*;
 
 public class PlayerControllerComponent extends Component
 {
@@ -169,11 +167,11 @@ public class PlayerControllerComponent extends Component
         float yVal = playerState == PlayerState.Small ? -0.14f : -0.24f;
         Vector2f raycastEnd = new Vector2f(raycastBegin).add(0.0f, yVal);
 
-        RayCastInfo info = Window.getPhysicsSystem().rayCast(gameObject, raycastBegin, raycastEnd);
+        RayCastInfo info = EditorWindow.getPhysicsSystem().rayCast(gameObject, raycastBegin, raycastEnd);
 
         Vector2f raycast2Begin = new Vector2f(raycastBegin).add(innerPlayerWidth, 0.0f);
         Vector2f raycast2End = new Vector2f(raycastEnd).add(innerPlayerWidth, 0.0f);
-        RayCastInfo info2 = Window.getPhysicsSystem().rayCast(gameObject, raycast2Begin, raycast2End);
+        RayCastInfo info2 = EditorWindow.getPhysicsSystem().rayCast(gameObject, raycast2Begin, raycast2End);
 
         onGround = ((info.hit || info2.hit) && info.hitObject != null);
     }

@@ -1,7 +1,7 @@
 package Just_Forge_2D.EntityComponentSystem.Components.PhysicsComponents;
 
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
-import Just_Forge_2D.Window;
+import Just_Forge_2D.EditorSystem.EditorWindow;
 import Just_Forge_2D.Physics.Enums.BodyType;
 import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.Logger;
@@ -89,7 +89,7 @@ public class RigidBodyComponent extends Component
             Logger.FORGE_LOG_ERROR("Cant set or unset as sensor a null raw body");
             return;
         }
-        Window.getPhysicsSystem().setSensor(this, REALLY);
+        EditorWindow.getPhysicsSystem().setSensor(this, REALLY);
     }
 
     public boolean isSensor()

@@ -1,7 +1,6 @@
 package Just_Forge_2D.SceneSystem;
 
 import Just_Forge_2D.Utils.DefaultValues;
-import Just_Forge_2D.Window;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
