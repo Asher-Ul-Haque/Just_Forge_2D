@@ -43,6 +43,7 @@ public class AnimationComponent extends Component
     private final List<AnimationState> states = new ArrayList<>();
     private transient AnimationState currentState = null;
     private String defaultStateTitle = "";
+    private boolean revertToDefault = false;
 
 
     // - - - | Functions | - - -
@@ -99,6 +100,16 @@ public class AnimationComponent extends Component
         }
     }
 
+    public void setRevertToDefault(boolean REALLY)
+    {
+        if (this.revertToDefault == REALLY)
+        {
+            Logger.FORGE_LOG_WARNING(this + " already has revertToDefaultStatus : " + REALLY);
+            return;
+        }
+        this.revertToDefault = REALLY;
+    }
+
     @Override
     public void start()
     {
@@ -119,7 +130,7 @@ public class AnimationComponent extends Component
         {
             currentState.update(DELTA_TIME);
 
-            if (!currentState.isLooping() && currentState.isFinished())
+            if (!currentState.isLooping() && currentState.isFinished() && revertToDefault)
             {
                 currentState = getStateByName(defaultStateTitle);
             }
