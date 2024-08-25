@@ -6,6 +6,7 @@ import Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.NonPickab
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.InputSystem.Keyboard;
+import Just_Forge_2D.InputSystem.Keys;
 import Just_Forge_2D.InputSystem.Mouse;
 import Just_Forge_2D.Window;
 import Just_Forge_2D.SceneSystem.SceneManager;
@@ -86,7 +87,7 @@ public class MouseControlComponent extends Component
                 place();
                 debounce = debounceTime;
             }
-            if (Keyboard.isKeyPressed(GLFW_KEY_ESCAPE))
+            if (Keyboard.isKeyPressed(Keys.ESCAPE))
             {
                 holdingObject.destroy();
                 holdingObject = (null);
@@ -94,8 +95,8 @@ public class MouseControlComponent extends Component
         }
         else if (!Mouse.isDragging() && Mouse.isMouseButtonDown(GLFW_MOUSE_BUTTON_LEFT) && debounce < 0)
         {
-            int x = (int)Mouse.getScreenX();
-            int y = (int)Mouse.getScreenY();
+            int x = (int)Mouse.getScreenX(DefaultValues.DEFAULT_WINDOW_WIDTH);
+            int y = (int)Mouse.getScreenY(DefaultValues.DEFAULT_WINDOW_HEIGHT);
             int gameObjectID = selector.readPixel(x, y);
             GameObject picked = currentScene.getGameObject(gameObjectID);
             if (picked != null && picked.getCompoent(NonPickableComponent.class) == null)
@@ -114,11 +115,11 @@ public class MouseControlComponent extends Component
             if (!boxSelect)
             {
                 Window.getEditor().getPropertiesWindow().clearSelection();
-                boxSelectStart = new Vector2f(Mouse.getScreenX(), Mouse.getScreenY());
+                boxSelectStart = new Vector2f(Mouse.getScreenX(DefaultValues.DEFAULT_WINDOW_WIDTH), Mouse.getScreenY(DefaultValues.DEFAULT_WINDOW_HEIGHT));
                 boxSelectWorldStart = new Vector2f(Mouse.getWorldX(), Mouse.getWorldY());
                 boxSelect = true;
             }
-            boxSelectEnd = new Vector2f(Mouse.getScreenX(), Mouse.getScreenY());
+            boxSelectEnd = new Vector2f(Mouse.getScreenX(DefaultValues.DEFAULT_WINDOW_WIDTH), Mouse.getScreenY(DefaultValues.DEFAULT_WINDOW_HEIGHT));
             boxSelectWorldEnd = new Vector2f(Mouse.getWorldX(), Mouse.getWorldY());
             Vector2f halfSize = (new Vector2f(boxSelectWorldEnd).sub(boxSelectWorldStart)).mul(0.5f);
             DebugPencil.addBox(

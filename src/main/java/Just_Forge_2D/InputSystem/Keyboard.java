@@ -4,8 +4,7 @@ import Just_Forge_2D.Utils.Logger;
 
 import java.util.Arrays;
 
-import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
-import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
+import static org.lwjgl.glfw.GLFW.*;
 
 
 // - - - Keyboard input class
@@ -18,7 +17,7 @@ public class Keyboard
     private static Keyboard keyboard;
 
     // - - - Key States
-    private final int totalKeys = 350;
+    private final int totalKeys = GLFW_KEY_LAST + 1;
     private final boolean[] isKeyPressed = new boolean[totalKeys];
     private final boolean[] isKeyBeginPress = new boolean[totalKeys];
 
@@ -45,13 +44,16 @@ public class Keyboard
         switch (ACTION)
         {
             case GLFW_PRESS:
+                if (!get().isKeyPressed[KEY])
+                {
+                    get().isKeyBeginPress[KEY] = true;
+                }
                 get().isKeyPressed[KEY] = true;
-                get().isKeyBeginPress[KEY] = true;
                 break;
 
             case GLFW_RELEASE:
                 get().isKeyPressed[KEY] = false;
-                get().isKeyBeginPress[KEY] = false;
+                get().isKeyBeginPress[KEY] = false; // Reset after release
                 break;
 
             default:
@@ -60,19 +62,28 @@ public class Keyboard
     }
 
     // - - - Get key state
-    public static boolean isKeyPressed(int KEYCODE)
+    public static boolean isKeyPressed(Keys KEY)
     {
-        return get().isKeyPressed[KEYCODE];
+        return get().isKeyPressed[KEY.keyCode];
     }
 
-    public static boolean isKeyBeginPress(int KEYCODE)
+    public static boolean isKeyBeginPress(Keys KEY)
     {
-       return get().isKeyBeginPress[KEYCODE];
+        if (get().isKeyBeginPress[KEY.keyCode])
+        {
+            get().isKeyBeginPress[KEY.keyCode] = false; // Reset for next check
+            return true;
+        }
+        return false;
     }
 
-    // - - - end frame
-    public static void endFrame()
+    // - - - ANY PRESSED
+    public static boolean isAnyKeyPressed()
     {
-        Arrays.fill(get().isKeyBeginPress, false);
+        for (boolean b : keyboard.isKeyPressed)
+        {
+            if (b) return b;
+        }
+        return false;
     }
 }

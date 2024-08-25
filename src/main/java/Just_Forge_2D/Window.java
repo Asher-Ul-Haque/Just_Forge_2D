@@ -151,7 +151,6 @@ public class Window implements Observer
         {
             init();
         }
-        changeScene(new EditorSceneInitializer());
         while (!Window.shouldClose())
         {
             window.gameLoop();
@@ -280,6 +279,9 @@ public class Window implements Observer
 
         beginTime = (float) TimeKeeper.getTime();
         Logger.FORGE_LOG_INFO("Time keeping system Online");
+
+        changeScene(new EditorSceneInitializer());
+        Mouse.setCamera(getCurrentScene().getCamera());
     }
 
     // - - - Cleanup after game
@@ -367,7 +369,6 @@ public class Window implements Observer
 
         // - - - finish input frames
         Mouse.endFrame();
-        Keyboard.endFrame();
 
         // - - - Swap buffer for next frame
         glfwSwapBuffers(glfwWindow);

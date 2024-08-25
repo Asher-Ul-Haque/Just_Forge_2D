@@ -1,5 +1,6 @@
 package Just_Forge_2D.EntityComponentSystem.Components.EditorComponents;
 
+import Just_Forge_2D.InputSystem.Keys;
 import Just_Forge_2D.SceneSystem.Camera;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.InputSystem.Keyboard;
@@ -66,7 +67,7 @@ public class EditorCameraComponent extends Component
 
         }
 
-        if (Keyboard.isKeyPressed(GLFW_KEY_0))
+        if (Keyboard.isKeyPressed(Keys.NUM_0))
         {
             reset = true;
         }

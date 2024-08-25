@@ -3,6 +3,7 @@ package Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.InputCon
 import Just_Forge_2D.AnimationSystem.AnimationComponent;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
+import Just_Forge_2D.InputSystem.Keys;
 import Just_Forge_2D.Window;
 import Just_Forge_2D.InputSystem.Keyboard;
 import Just_Forge_2D.EditorSystem.PropertiesWindow;
@@ -22,7 +23,7 @@ public class KeyboardControls extends Component
         GameObject activeGameObject = propertiesWindow.getActiveGameObject();
         List<GameObject> activeGameObjects = propertiesWindow.getActiveGameObjects();
 
-        if (Keyboard.isKeyPressed(GLFW_KEY_LEFT_CONTROL) && Keyboard.isKeyBeginPress(GLFW_KEY_C) && activeGameObject != null)
+        if (Keyboard.isKeyPressed(Keys.LEFT_CONTROL) && Keyboard.isKeyBeginPress(Keys.C) && activeGameObject != null)
         {
             Logger.FORGE_LOG_DEBUG("Copying: " + activeGameObject);
             GameObject newObj = activeGameObject.copy();
@@ -34,7 +35,7 @@ public class KeyboardControls extends Component
                 newObj.getCompoent(AnimationComponent.class).refreshTextures();
             }
         }
-        else if (Keyboard.isKeyPressed(GLFW_KEY_LEFT_CONTROL) && Keyboard.isKeyBeginPress(GLFW_KEY_C) && activeGameObjects.size() > 1)
+        else if (Keyboard.isKeyPressed(Keys.LEFT_CONTROL) && Keyboard.isKeyBeginPress(Keys.C) && activeGameObjects.size() > 1)
         {
             List<GameObject> gameObjects = new ArrayList<>(activeGameObjects);
             propertiesWindow.clearSelection();
@@ -51,7 +52,7 @@ public class KeyboardControls extends Component
                 }
             }
         }
-        else if (Keyboard.isKeyPressed(GLFW_KEY_DELETE))
+        else if (Keyboard.isKeyPressed(Keys.DELETE))
         {
             for (GameObject go : activeGameObjects)
             {
@@ -60,14 +61,14 @@ public class KeyboardControls extends Component
             }
             propertiesWindow.clearSelection();
         }
-        else if (!activeGameObjects.isEmpty() && Keyboard.isKeyBeginPress(GLFW_KEY_PAGE_DOWN))
+        else if (!activeGameObjects.isEmpty() && Keyboard.isKeyBeginPress(Keys.PAGE_DOWN))
         {
             for (GameObject go: activeGameObjects)
             {
                 go.transform.layer--;
             }
         }
-        else if (!activeGameObjects.isEmpty() && Keyboard.isKeyBeginPress(GLFW_KEY_PAGE_UP))
+        else if (!activeGameObjects.isEmpty() && Keyboard.isKeyBeginPress(Keys.PAGE_UP))
         {
             for (GameObject go: activeGameObjects)
             {

@@ -3,6 +3,7 @@ package Just_Forge_2D.EntityComponentSystem.Components;
 import Just_Forge_2D.AnimationSystem.AnimationComponent;
 import Just_Forge_2D.EntityComponentSystem.Components.PhysicsComponents.RigidBodyComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
+import Just_Forge_2D.InputSystem.Keys;
 import Just_Forge_2D.Window;
 import Just_Forge_2D.InputSystem.Keyboard;
 import Just_Forge_2D.Physics.RayCastInfo;
@@ -52,7 +53,7 @@ public class PlayerControllerComponent extends Component
     @Override
     public void update(float DELTA_TIME)
     {
-        if (Keyboard.isKeyPressed(GLFW_KEY_RIGHT) || Keyboard.isKeyPressed(GLFW_KEY_D))
+        if (Keyboard.isKeyPressed(Keys.ARROW_RIGHT) || Keyboard.isKeyPressed(Keys.D))
         {
             this.gameObject.transform.scale.x = playerWidth;
             this.acceleration.x = walkSpeed;
@@ -67,7 +68,7 @@ public class PlayerControllerComponent extends Component
                 this.stateMachine.trigger("startRunning");
             }
         }
-        else if (Keyboard.isKeyPressed(GLFW_KEY_LEFT) || Keyboard.isKeyPressed(GLFW_KEY_A))
+        else if (Keyboard.isKeyPressed(Keys.ARROW_LEFT) || Keyboard.isKeyPressed(Keys.A))
         {
             this.gameObject.transform.scale.x = -playerWidth;
             this.acceleration.x = -walkSpeed;
@@ -101,7 +102,7 @@ public class PlayerControllerComponent extends Component
         }
 
         checkOnGround();
-        if ((Keyboard.isKeyPressed(GLFW_KEY_SPACE)) && ((jumpTime > 0) || (groundDebounce > 0 ) || (onGround)))
+        if ((Keyboard.isKeyPressed(Keys.SPACE)) && ((jumpTime > 0) || (groundDebounce > 0 ) || (onGround)))
         {
             if ((onGround || groundDebounce > 0) && jumpTime == 0)
             {

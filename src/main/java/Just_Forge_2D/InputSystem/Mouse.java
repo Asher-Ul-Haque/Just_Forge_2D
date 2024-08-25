@@ -7,8 +7,9 @@ import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 
-import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
-import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
+import java.util.Arrays;
+
+import static org.lwjgl.glfw.GLFW.*;
 
 
 // - - - Mouse Input class
@@ -27,18 +28,20 @@ public class Mouse
     private double xPosition, yPosition;
     private double xPrevious, yPrevious;
 
-    // - - - Wrold Positions
+    // - - - World Positions
     private double xWorldPosition, yWorldPosition;
     private double xWorldPrevious, yWorldPrevious;
 
     // - - - Mouse Buttons
-    private final int buttonCount = 9;
+    private final int buttonCount = GLFW_MOUSE_BUTTON_LAST + 1;
     private int mouseButtonDownCount = 0;
     private final boolean[] isMouseButtonPressed = new boolean[buttonCount]; // left, middle, right
 
     // - - - Relations
-    private Vector2f gameViewportPos = new Vector2f();
-    private Vector2f grameViewportSize = new Vector2f();
+    private final Vector2f gameViewportPos = new Vector2f();
+    private final Vector2f gameViewportSize = new Vector2f();
+
+    private Camera worldCamera;
 
 
     // - - - | Functions | - - -
@@ -62,6 +65,7 @@ public class Mouse
         if (Mouse.mouse == null)
         {
             Mouse.mouse = new Mouse();
+            Logger.FORGE_LOG_WARNING("Going with editor camera in absence of a supplied camera");
             Logger.FORGE_LOG_INFO("Mouse Input System Online");
         }
         return Mouse.mouse;
@@ -203,11 +207,10 @@ public class Mouse
     private static void calcWorldX()
     {
         float currentX = getX() - get().gameViewportPos.x;
-        currentX = (currentX / get().grameViewportSize.x) * 2.0f - 1.0f;
+        currentX = (currentX / get().gameViewportSize.x) * 2.0f - 1.0f;
         Vector4f temp = new Vector4f(currentX, 0, 0, 1);
-        Camera camera = Window.getCurrentScene().getCamera();
         Matrix4f viewProjection = new Matrix4f();
-        camera.getInverseViewMatrix().mul(camera.getInverseProjectionMatrix(), viewProjection);
+        get().worldCamera.getInverseViewMatrix().mul(get().worldCamera.getInverseProjectionMatrix(), viewProjection);
         temp.mul(viewProjection);
         get().xWorldPosition = temp.x;
     }
@@ -216,11 +219,10 @@ public class Mouse
     public static void calcWorldY()
     {
         float currentY = getY() - get().gameViewportPos.y;
-        currentY = -((currentY / get().grameViewportSize.y) * 2.0f - 1.0f);
+        currentY = -((currentY / get().gameViewportSize.y) * 2.0f - 1.0f);
         Vector4f temp = new Vector4f(0, currentY, 0, 1);
-        Camera camera = Window.getCurrentScene().getCamera();
         Matrix4f viewProjection = new Matrix4f();
-        camera.getInverseViewMatrix().mul(camera.getInverseProjectionMatrix(), viewProjection);
+        get().worldCamera.getInverseViewMatrix().mul(get().worldCamera.getInverseProjectionMatrix(), viewProjection);
         temp.mul(viewProjection);
         get().yWorldPosition = temp.y;
     }
@@ -228,17 +230,17 @@ public class Mouse
 
     // - - - Screen Space - - -
 
-    public static float getScreenX()
+    public static float getScreenX(int SCREEN_WIDTH)
     {
         float currentX = getX() - get().gameViewportPos.x;
-        currentX = (currentX / get().grameViewportSize.x) * 1980;
+        currentX = (currentX / get().gameViewportSize.x) * SCREEN_WIDTH;
         return currentX;
     }
 
-    public static float getScreenY()
+    public static float getScreenY(int SCREEN_HEIGHT)
     {
         float currentY = getY() - get().gameViewportPos.y;
-        currentY = 720f - ((currentY / get().grameViewportSize.y) * 720f);
+        currentY = 720f - ((currentY / get().gameViewportSize.y) * SCREEN_HEIGHT);
         return currentY;
     }
 
@@ -278,7 +280,7 @@ public class Mouse
     public static void setGameViewport(Vector2f GAME_VIEWPORT_POS, Vector2f GAME_VIEWPORT_SIZE)
     {
         get().gameViewportPos.set(GAME_VIEWPORT_POS);
-        get().grameViewportSize.set(GAME_VIEWPORT_SIZE);
+        get().gameViewportSize.set(GAME_VIEWPORT_SIZE);
     }
 
 
@@ -297,9 +299,17 @@ public class Mouse
         get().yWorldPrevious = 0.0f;
         get().mouseButtonDownCount = 0;
         get().isDragging = false;
-        for (boolean b : get().isMouseButtonPressed)
+        Arrays.fill(get().isMouseButtonPressed, false);
+    }
+
+    // - - - set camera
+    public static void setCamera(Camera CAMERA)
+    {
+        Logger.FORGE_LOG_DEBUG("Switching world camera");
+        if (CAMERA != null)
         {
-            b = false;
+            Logger.FORGE_LOG_ERROR("Cannot assign null as world camera");
+            get().worldCamera = CAMERA;
         }
     }
 }
