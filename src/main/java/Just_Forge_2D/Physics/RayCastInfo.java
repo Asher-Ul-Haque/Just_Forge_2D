@@ -1,6 +1,6 @@
 package Just_Forge_2D.Physics;
 
-import Just_Forge_2D.CoreSystems.EntityComponentSystem.GameObject;
+import Just_Forge_2D.EntityComponentSystem.GameObject;
 import org.jbox2d.callbacks.RayCastCallback;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Fixture;

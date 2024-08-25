@@ -1,7 +1,7 @@
 package Just_Forge_2D.EditorSystem;
 
-import Just_Forge_2D.CoreSystems.EntityComponentSystem.GameObject;
-import Just_Forge_2D.CoreSystems.ForgeDynamo;
+import Just_Forge_2D.EntityComponentSystem.GameObject;
+import Just_Forge_2D.Window;
 import Just_Forge_2D.Utils.Logger;
 import imgui.ImGui;
 import imgui.flag.ImGuiTreeNodeFlags;
@@ -14,7 +14,7 @@ public class SceneHierarchyWindow
     public void editorGUI()
     {
         ImGui.begin("Scene Hierarchy");
-        List<GameObject> gameObjectList = ForgeDynamo.getCurrentScene().getGameObjects();
+        List<GameObject> gameObjectList = Window.getCurrentScene().getGameObjects();
         int index = 0;
         for (GameObject obj : gameObjectList)
         {

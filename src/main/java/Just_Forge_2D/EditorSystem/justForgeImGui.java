@@ -1,9 +1,9 @@
 package Just_Forge_2D.EditorSystem;
 
-import Just_Forge_2D.CoreSystems.SceneSystem.SceneManager;
-import Just_Forge_2D.CoreSystems.ForgeDynamo;
+import Just_Forge_2D.SceneSystem.SceneManager;
+import Just_Forge_2D.Window;
 import Just_Forge_2D.Utils.Logger;
-import Just_Forge_2D.CoreSystems.InputSystem.*;
+import Just_Forge_2D.InputSystem.*;
 import imgui.ImFontAtlas;
 import imgui.ImFontConfig;
 import imgui.ImGui;
@@ -14,9 +14,6 @@ import imgui.flag.*;
 import imgui.gl3.ImGuiImplGl3;
 import imgui.type.ImBoolean;
 import org.lwjgl.glfw.GLFW;
-
-import java.io.IOException;
-import java.io.InputStream;
 
 
 // - - - Class to manage imGUI
@@ -253,8 +250,8 @@ public class justForgeImGui
     private void startFrame(final float DELTA_TIME)
     {
         // - - - Get window properties and mouse position
-        float[] winWidth = {ForgeDynamo.getWidth()};
-        float[] winHeight = {ForgeDynamo.getHeight()};
+        float[] winWidth = {Window.getWidth()};
+        float[] winHeight = {Window.getHeight()};
         double[] mousePosX = {0};
         double[] mousePosY = {0};
         GLFW.glfwGetCursorPos(windowPtr, mousePosX, mousePosY);
@@ -291,7 +288,7 @@ public class justForgeImGui
         int windowFlags = ImGuiWindowFlags.MenuBar | ImGuiWindowFlags.NoDocking;
 
         ImGui.setNextWindowPos(0.0f, 0.0f, ImGuiCond.Always);
-        ImGui.setNextWindowSize(ForgeDynamo.getWidth(), ForgeDynamo.getHeight());
+        ImGui.setNextWindowSize(Window.getWidth(), Window.getHeight());
         ImGui.pushStyleVar(ImGuiStyleVar.WindowRounding, 4.0f);
         ImGui.pushStyleVar(ImGuiStyleVar.WindowBorderSize, 0.0f);
 

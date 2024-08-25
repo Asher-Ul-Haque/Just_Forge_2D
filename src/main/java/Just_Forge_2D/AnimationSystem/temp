@@ -1,0 +1,179 @@
+package Just_Forge_2D.AnimationSystem;
+
+import Just_Forge_2D.EntityComponentSystem.Components.Component;
+import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
+import Just_Forge_2D.Utils.Logger;
+import imgui.ImGui;
+import imgui.type.ImString;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Objects;
+
+public class AnimationComponent extends Component
+{
+    // - - - embedded class to add trigger
+    private static class StateTrigger
+    {
+        public final String state;
+        public final String trigger;
+
+        public StateTrigger(String STATE, String TRIGGER)
+        {
+            this.state = STATE;
+            this.trigger = TRIGGER;
+        }
+
+        @Override
+        public boolean equals(Object OTHER)
+        {
+            if (OTHER.getClass() != StateTrigger.class) return false;
+            StateTrigger t2 = (StateTrigger) OTHER;
+            return t2.trigger.equals(this.trigger) && t2.state.equals(this.state);
+        }
+
+        @Override
+        public int hashCode()
+        {
+            return Objects.hash(state, trigger);
+        }
+    }
+
+    // - - - private variables
+    public AnimationState defaultState;
+    private final HashMap<StateTrigger, String> stateTransfers = new HashMap<>();
+    private final List<AnimationState> states = new ArrayList<>();
+    private transient AnimationState currentState = null;
+
+    public void refreshTextures()
+    {
+        Logger.FORGE_LOG_DEBUG("Refreshing textures for : " + this.gameObject);
+        for (AnimationState state: states)
+        {
+            state.refreshTextures();
+        }
+    }
+
+    public void addState(AnimationState STATE)
+    {
+        this.states.add(STATE);
+    }
+
+    public void addStateTrigger(String FROM, String TO, String TRIGGER)
+    {
+        this.stateTransfers.put(new StateTrigger(FROM, TRIGGER), TO);
+    }
+
+    public void trigger(String TRIGGER)
+    {
+        if (currentState == null)
+        {
+            Logger.FORGE_LOG_ERROR("No current state");
+            currentState = defaultState;
+            return;
+        }
+        for (StateTrigger stateTrigger : stateTransfers.keySet())
+        {
+            if (stateTrigger.state.equals(currentState.title) && stateTrigger.trigger.equals(TRIGGER))
+            {
+                if (stateTransfers.get(stateTrigger) != null)
+                {
+                    int newStateIndex = statesIndexOf(stateTransfers.get(stateTrigger));
+                    if (newStateIndex > -1)
+                    {
+                        currentState = states.get(newStateIndex);
+                        currentState.reset();
+                    }
+                }
+                return;
+            }
+        }
+        Logger.FORGE_LOG_WARNING("Trigger failed : " + TRIGGER);
+    }
+
+    @Override
+    public void start()
+    {
+        currentState = defaultState;
+    }
+
+    @Override
+    public void update(float DELTA_TIME)
+    {
+        if (currentState != null)
+        {
+            currentState.update(DELTA_TIME);
+            SpriteComponent sprite = gameObject.getCompoent(SpriteComponent.class);
+            if (sprite != null)
+            {
+                sprite.setSprite(currentState.getCurrentSprite());
+            }
+        }
+    }
+
+    @Override
+    public void editorUpdate(float DELTA_TIME)
+    {
+        update(DELTA_TIME);
+    }
+
+    public void setDefaultState(AnimationState STATE)
+    {
+        Logger.FORGE_LOG_DEBUG("Setting default animation of : " + this.gameObject + " to : " + STATE.title);
+        for (AnimationState state : states)
+        {
+            if (state.title.equals(STATE.title))
+            {
+                defaultState = STATE;
+                currentState = STATE;
+                break;
+            }
+        }
+        Logger.FORGE_LOG_ERROR("Unable to find state : " + STATE + " to set to defualt");
+    }
+
+    @Override
+    public void editorGUI()
+    {
+        for (AnimationState state : states)
+        {
+            ImString title = new ImString(state.title);
+            ImGui.inputText("State: ", title);
+            state.title = title.get();
+
+            int index = 0;
+            for (Frame frame: state.animationFrames)
+            {
+                float[] tmp = new float[1];
+                ImGui.dragFloat("Frame(" + index + ") Time: ", tmp, 0.01f);
+                frame.frameTime = tmp[0];
+                index++;
+            }
+        }
+    }
+
+    private int statesIndexOf(String TITLE)
+    {
+        int index = 0;
+        for (AnimationState state : states)
+        {
+            if (state.title.equals(TITLE))
+            {
+                return index;
+            }
+            ++index;
+        }
+        return -1;
+    }
+
+    public AnimationState getCurrentState()
+    {
+        return this.currentState;
+    }
+
+    public String getCurrentStateTitle()
+    {
+        return this.currentState.title;
+    }
+}

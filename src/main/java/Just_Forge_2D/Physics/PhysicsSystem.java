@@ -1,12 +1,12 @@
 package Just_Forge_2D.Physics;
 
-import Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.PhysicsComponents.Collider.BoxColliderComponent;
-import Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.PhysicsComponents.Collider.CircleColliderComponent;
-import Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.PhysicsComponents.Collider.CylinderColliderComponent;
-import Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.PhysicsComponents.RigidBodyComponent;
-import Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.TransformComponent;
-import Just_Forge_2D.CoreSystems.EntityComponentSystem.GameObject;
-import Just_Forge_2D.Utils.Configurations;
+import Just_Forge_2D.EntityComponentSystem.Components.PhysicsComponents.Collider.BoxColliderComponent;
+import Just_Forge_2D.EntityComponentSystem.Components.PhysicsComponents.Collider.CircleColliderComponent;
+import Just_Forge_2D.EntityComponentSystem.Components.PhysicsComponents.Collider.CylinderColliderComponent;
+import Just_Forge_2D.EntityComponentSystem.Components.PhysicsComponents.RigidBodyComponent;
+import Just_Forge_2D.EntityComponentSystem.Components.TransformComponent;
+import Just_Forge_2D.EntityComponentSystem.GameObject;
+import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.Logger;
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.collision.shapes.PolygonShape;
@@ -20,14 +20,14 @@ public class PhysicsSystem
     // - - - private variables - - -
 
     // - - - world settings
-    private final Vec2 gravity = Configurations.GRAVITY;
+    private final Vec2 gravity = DefaultValues.GRAVITY;
     private final World world = new World(gravity);
     private float physicsTime = 0.0f;
 
     // - - - world precisions
-    private float physicsTimeDelta = Configurations.PHYSICS_DELTA_TIME;
-    private int velocityIterations = Configurations.VELOCITY_ITERATIONS;
-    private int positionIterations = Configurations.POSITION_ITERATIONS;
+    private float physicsTimeDelta = DefaultValues.PHYSICS_DELTA_TIME;
+    private int velocityIterations = DefaultValues.VELOCITY_ITERATIONS;
+    private int positionIterations = DefaultValues.POSITION_ITERATIONS;
 
 
     // - - - | Functions | - - -

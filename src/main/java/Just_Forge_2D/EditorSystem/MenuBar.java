@@ -1,8 +1,8 @@
 package Just_Forge_2D.EditorSystem;
 
-import Just_Forge_2D.CoreSystems.EventSystem.EventManager;
-import Just_Forge_2D.CoreSystems.EventSystem.Events.Event;
-import Just_Forge_2D.CoreSystems.EventSystem.Events.EventTypes;
+import Just_Forge_2D.EventSystem.EventManager;
+import Just_Forge_2D.EventSystem.Events.Event;
+import Just_Forge_2D.EventSystem.Events.EventTypes;
 import imgui.ImGui;
 
 public class MenuBar

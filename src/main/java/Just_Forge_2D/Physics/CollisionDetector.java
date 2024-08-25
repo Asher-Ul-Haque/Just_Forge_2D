@@ -1,7 +1,7 @@
 package Just_Forge_2D.Physics;
 
-import Just_Forge_2D.CoreSystems.EntityComponentSystem.Components.Component;
-import Just_Forge_2D.CoreSystems.EntityComponentSystem.GameObject;
+import Just_Forge_2D.EntityComponentSystem.Components.Component;
+import Just_Forge_2D.EntityComponentSystem.GameObject;
 import org.jbox2d.callbacks.ContactImpulse;
 import org.jbox2d.callbacks.ContactListener;
 import org.jbox2d.collision.Manifold;
