@@ -7,7 +7,7 @@ package Just_Forge_2D;
 import Just_Forge_2D.SceneSystem.EditorSceneInitializer;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.SceneSystem.SceneInitializer;
-import Just_Forge_2D.SceneSystem.SceneManager;
+import Just_Forge_2D.SceneSystem.Scene;
 import Just_Forge_2D.EventSystem.EventManager;
 import Just_Forge_2D.EventSystem.Events.Event;
 import Just_Forge_2D.EditorSystem.ObjectSelector;
@@ -18,6 +18,7 @@ import Just_Forge_2D.InputSystem.Mouse;
 import Just_Forge_2D.Physics.PhysicsSystem;
 import Just_Forge_2D.Renderer.DebugPencil;
 import Just_Forge_2D.Renderer.Framebuffer;
+import Just_Forge_2D.SceneSystem.SceneSystemManager;
 import Just_Forge_2D.Utils.DefaultValues;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.openal.ALCCapabilities;
@@ -32,6 +33,7 @@ import org.lwjgl.openal.ALC;
 import org.lwjgl.openal.AL;
 import org.lwjgl.opengl.GL;
 
+import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
@@ -75,7 +77,7 @@ public class Window implements Observer
     private boolean isRuntimePlaying = false;
 
     // - - - Systems
-    private static SceneManager currentScene;
+    private static Scene currentScene;
 
     // - - - Singleton
     private static Window window = null;
@@ -122,12 +124,12 @@ public class Window implements Observer
         if (currentScene != null)
         {
             Logger.FORGE_LOG_INFO("Clearing Scene Catch from previous run");
-            currentScene.destroy();
+            SceneSystemManager.destroy(currentScene);
         }
         getEditor().getPropertiesWindow().setActiveGameObject(null);
 
-        currentScene = new SceneManager(INITIALIZER);
-        currentScene.load();
+        currentScene = new Scene(INITIALIZER, "Editor SCene");
+        SceneSystemManager.load(currentScene);
         currentScene.init();
         currentScene.start();
     }
@@ -386,7 +388,7 @@ public class Window implements Observer
     // - - - | Getters Setters and Decoration | - - -
 
     // - - - scene
-    public static SceneManager getCurrentScene()
+    public static Scene getCurrentScene()
     {
         return get().currentScene;
     }
@@ -569,7 +571,7 @@ public class Window implements Observer
             case ForgeStart:
                 Logger.FORGE_LOG_INFO("Starting Game");
                 this.isRuntimePlaying = true;
-                currentScene.save();
+                SceneSystemManager.save(currentScene);
                 Window.changeScene(new EditorSceneInitializer());
                 break;
 
@@ -581,7 +583,7 @@ public class Window implements Observer
 
             case SaveLevel:
                 Logger.FORGE_LOG_INFO("Saving Scene: " + currentScene);
-                currentScene.save();
+                SceneSystemManager.save(currentScene);
                 break;
 
             case LoadLevel:

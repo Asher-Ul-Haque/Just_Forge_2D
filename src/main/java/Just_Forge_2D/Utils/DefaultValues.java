@@ -1,6 +1,7 @@
 package Just_Forge_2D.Utils;
 
 import org.jbox2d.common.Vec2;
+import org.joml.Vector2f;
 import org.joml.Vector3f;
 
 public class DefaultValues
@@ -35,4 +36,5 @@ public class DefaultValues
     public static final int DEFAULT_WINDOW_HEIGHT = 720;
     public static final float DEFAULT_ASPECT_RATIO = 16f / 9f;
     public static final float DEFAULT_FRAME_TIME = 0.12f;
+    public static final Vector2f DEFAULT_CAMERA_PROJECTION_SIZE = new Vector2f(16f / 3f, 9f / 3f);
 }

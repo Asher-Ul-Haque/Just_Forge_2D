@@ -21,38 +21,41 @@ import java.util.ArrayList;
 import java.util.List;
 
 // - - - Abstract class for all the scenes
-public class SceneManager
+public class Scene
 {
     // - - - Private Variables - - -
 
     // - - - Basic
     private Camera camera;
-    private boolean isRunning = false;
+    protected boolean isRunning = false;
 
     // - - - ALl the objects
-    private List<GameObject> gameObjects;
+    private final List<GameObject> gameObjects;
 
     // - - - Scene Rendering
-    private Renderer renderer;
-    private SceneInitializer initializer;
+    private final Renderer renderer;
+    private final SceneInitializer initializer;
 
     // - - - saving and loading
-    private PhysicsSystem physics;
-    private List<GameObject> pendingObjects;
+    private final PhysicsSystem physics;
+    private final List<GameObject> pendingObjects;
+
+    private final String name;
 
 
     // - - - | Functions | - - -
 
 
     // - - - Now presenting: useful constructor
-    public SceneManager(SceneInitializer INITIALIZER)
+    public Scene(SceneInitializer INITIALIZER, String NAME)
     {
         this.initializer = INITIALIZER;
-        this.physics = new PhysicsSystem();
-        this.renderer = new Renderer();
+        this.physics = INITIALIZER.physicsSystem;
+        this.renderer = INITIALIZER.renderer;
         this.gameObjects = new ArrayList<>();
         this.isRunning = false;
         this.pendingObjects = new ArrayList<>();
+        this.name = NAME;
     }
 
 
@@ -60,22 +63,23 @@ public class SceneManager
 
     public void start()
     {
-        // NOTE: do not change to enhanced for loop
+        Logger.FORGE_LOG_INFO("Starting Scene : " + this.initializer);
         for (int i = 0; i < gameObjects.size(); ++i)
         {
             GameObject go = gameObjects.get(i);
             go.start();
-            this.renderer.add(go);
-            this.physics.add(go);
+            if (this.renderer != null) this.renderer.add(go);
+            if (this.physics != null) this.physics.add(go);
         }
         isRunning = true;
-        Logger.FORGE_LOG_INFO("Scene: " + this.initializer + " Started");
+        Logger.FORGE_LOG_INFO("Scene: " + this + " Started");
     }
 
     public void update(float DELTA_TIME)
     {
         this.camera.adjustProjection();
-        this.physics.update(DELTA_TIME);
+        if (!this.isRunning) return;
+        if (this.physics != null) this.physics.update(DELTA_TIME);
         for (int i = 0; i < gameObjects.size(); ++i)
         {
             GameObject go = gameObjects.get(i);
@@ -84,8 +88,8 @@ public class SceneManager
             if (go.isDead())
             {
                 gameObjects.remove(i);
-                this.renderer.destroyGameObject(go);
-                this.physics.destroyGameObject(go);
+                if (this.renderer != null) this.renderer.destroyGameObject(go);
+                if (this.physics != null) this.physics.destroyGameObject(go);
                 i--;
             }
         }
@@ -94,15 +98,15 @@ public class SceneManager
         {
             gameObjects.add(go);
             go.start();
-            this.renderer.add(go);
-            this.physics.add(go);
+            if (this.renderer != null) this.renderer.add(go);
+            if (this.physics != null) this.physics.add(go);
         }
         pendingObjects.clear();
     }
 
     public void render(float DELTA_TIME)
     {
-        this.renderer.render();
+        if (this.renderer != null) this.renderer.render();
     }
 
     public void init()
@@ -176,52 +180,10 @@ public class SceneManager
     }
 
 
-    // - - - Loading and Saving - - -
-
-    public void load()
-    {
-        Gson gson = new GsonBuilder()
-                .setPrettyPrinting()
-                .registerTypeAdapter(Component.class, new ComponentJsonHandler())
-                .registerTypeAdapter(GameObject.class, new GameObjectJsonHandler())
-                .create();
-        String inFile = "";
-        try
-        {
-            inFile = new String(Files.readAllBytes(Paths.get(DefaultValues.DEFAULT_SAVE_FILE)));
-        }
-        catch (IOException e)
-        {
-            Logger.FORGE_LOG_ERROR("Couldn't read from file: " + DefaultValues.DEFAULT_SAVE_FILE);
-            Logger.FORGE_LOG_ERROR(e.getMessage());
-        }
-
-        if (!inFile.isEmpty())
-        {
-            int maxGoId = -1;
-            int maxCompoId = -1;
-            GameObject[] objects = gson.fromJson(inFile, GameObject[].class);
-            for (GameObject object : objects)
-            {
-                addGameObject(object);
-
-                for (Component component : object.getComponents())
-                {
-                    maxCompoId = Math.max(maxCompoId, component.getUniqueID());
-                }
-                maxGoId = Math.max(maxGoId, object.getUniqueID());
-            }
-
-            maxGoId++;
-            maxCompoId++;
-            GameObject.init(maxGoId);
-            Component.init(maxCompoId);
-        }
-    }
-
     public void editorUpdate(float DELTA_TIME)
     {
         this.camera.adjustProjection();
+        if (!this.isRunning) return;
         for (int i = 0; i < gameObjects.size(); ++i)
         {
             GameObject go = gameObjects.get(i);
@@ -230,8 +192,8 @@ public class SceneManager
             if (go.isDead())
             {
                 gameObjects.remove(i);
-                this.renderer.destroyGameObject(go);
-                this.physics.destroyGameObject(go);
+                if (this.renderer != null) this.renderer.destroyGameObject(go);
+                if (this.physics != null) this.physics.destroyGameObject(go);
                 i--;
             }
         }
@@ -240,61 +202,26 @@ public class SceneManager
         {
             gameObjects.add(go);
             go.start();
-            this.renderer.add(go);
-            this.physics.add(go);
+            if (this.renderer != null) this.renderer.add(go);
+            if (this.physics != null) this.physics.add(go);
         }
         pendingObjects.clear();
     }
 
-    // - - - save
-    public void save()
-    {
-        Gson gson = new GsonBuilder()
-                .setPrettyPrinting()
-                .registerTypeAdapter(Component.class, new ComponentJsonHandler())
-                .registerTypeAdapter(GameObject.class, new GameObjectJsonHandler())
-                .enableComplexMapKeySerialization()
-                .create();
-        Logger.FORGE_LOG_INFO("Saving scene...: " + this.initializer);
-
-        try
-        {
-            FileWriter writer = new FileWriter("Configurations/Levels/level.justForgeFile");
-            List<GameObject> toSerialize = new ArrayList<>();
-            for (GameObject obj : this.gameObjects)
-            {
-                if (obj.getSerializationStatus())
-                {
-                    toSerialize.add(obj);
-                }
-            }
-            writer.write(gson.toJson(toSerialize));
-            writer.close();
-            Logger.FORGE_LOG_INFO("Saved scene: " + this.initializer);
-        }
-        catch (IOException e)
-        {
-            Logger.FORGE_LOG_ERROR("Couldn't write to file");
-            Logger.FORGE_LOG_ERROR(e.getMessage());
-        }
-    }
 
     public List<GameObject> getGameObjects()
     {
         return this.gameObjects;
     }
 
-    public void destroy()
-    {
-        for (GameObject go : this.gameObjects)
-        {
-            go.destroy();
-        }
-        Logger.FORGE_LOG_INFO("Scene Destroyed " + this.initializer);
-    }
-
     public PhysicsSystem getPhysics()
     {
         return this.physics;
+    }
+
+    @Override
+    public String toString()
+    {
+        return this.name;
     }
 }

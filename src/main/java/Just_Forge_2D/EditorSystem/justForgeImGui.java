@@ -1,6 +1,6 @@
 package Just_Forge_2D.EditorSystem;
 
-import Just_Forge_2D.SceneSystem.SceneManager;
+import Just_Forge_2D.SceneSystem.Scene;
 import Just_Forge_2D.Window;
 import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.InputSystem.*;
@@ -231,7 +231,7 @@ public class justForgeImGui
 
     // - - - GUI usage functions - - -
 
-    public void update(float DELTA_TIME, SceneManager SCENE)
+    public void update(float DELTA_TIME, Scene SCENE)
     {
         startFrame(DELTA_TIME);
         ImGui.newFrame();

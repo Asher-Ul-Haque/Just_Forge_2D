@@ -11,6 +11,8 @@ import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.EditorCameraComponent;
 import Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.GizmoSystem.GizmoSystemComponent;
 import Just_Forge_2D.EditorSystem.Prefabs;
+import Just_Forge_2D.Physics.PhysicsSystem;
+import Just_Forge_2D.Renderer.Renderer;
 import Just_Forge_2D.Sound.Sound;
 import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.AssetPool;
@@ -42,7 +44,7 @@ public class EditorSceneInitializer extends SceneInitializer
 
     // - - - useful initialization
     @Override
-    public void init(SceneManager SCENE)
+    public void init(Scene SCENE)
     {
         sprites = AssetPool.getSpriteSheet("Decorations");
         SpriteSheet gizmos = AssetPool.getSpriteSheet("Gizmos");
@@ -58,7 +60,7 @@ public class EditorSceneInitializer extends SceneInitializer
     }
 
     @Override
-    public void loadResources(SceneManager SCENE)
+    public void loadResources(Scene SCENE)
     {
         AssetPool.getShader("Default");
 
@@ -206,5 +208,17 @@ public class EditorSceneInitializer extends SceneInitializer
             ImGui.endTabBar();
         }
         ImGui.end();
+    }
+
+    @Override
+    public void assignRenderingSystem()
+    {
+        this.renderer = new Renderer();
+    }
+
+    @Override
+    public void assignPhysicsSystem()
+    {
+        this.physicsSystem = new PhysicsSystem();
     }
 }

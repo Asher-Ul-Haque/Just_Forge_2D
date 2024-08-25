@@ -9,7 +9,7 @@ import Just_Forge_2D.InputSystem.Keyboard;
 import Just_Forge_2D.InputSystem.Keys;
 import Just_Forge_2D.InputSystem.Mouse;
 import Just_Forge_2D.Window;
-import Just_Forge_2D.SceneSystem.SceneManager;
+import Just_Forge_2D.SceneSystem.Scene;
 import Just_Forge_2D.EditorSystem.ObjectSelector;
 import Just_Forge_2D.Renderer.DebugPencil;
 import Just_Forge_2D.Utils.DefaultValues;
@@ -74,7 +74,7 @@ public class MouseControlComponent extends Component
     {
         debounce -= DELTA_TIME;
         ObjectSelector selector = Window.getEditor().getPropertiesWindow().getSelector();
-        SceneManager currentScene = Window.getCurrentScene();
+        Scene currentScene = Window.getCurrentScene();
 
         if (holdingObject != null && debounce < 0.0f)
         {

@@ -1,5 +1,7 @@
 package Just_Forge_2D.SceneSystem;
 
+import Just_Forge_2D.Utils.DefaultValues;
+import Just_Forge_2D.Window;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
@@ -12,7 +14,7 @@ public class Camera
     // - - - projection
     private final Matrix4f projectionMatrix;
     private final Matrix4f inverseProjectionMatrix;
-    private final Vector2f projectionSize = new Vector2f(6, 3);
+    private final Vector2f projectionSize = DefaultValues.DEFAULT_CAMERA_PROJECTION_SIZE;
 
     // - - - view
     private final Matrix4f viewMatrix;
@@ -20,7 +22,7 @@ public class Camera
 
     // - - - position and zoom
     public Vector2f position;
-    private float zoom = 1.0f;
+    private float zoom = DefaultValues.DEFAULT_CAMERA_ZOOM;
 
 
     // - - - Functions - - -

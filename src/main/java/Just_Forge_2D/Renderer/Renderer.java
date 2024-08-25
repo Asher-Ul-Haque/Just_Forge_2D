@@ -106,7 +106,6 @@ public class Renderer
     {
         return currentShader;
     }
-
 }
 
 
