@@ -1,6 +1,7 @@
 package Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.InputControls;
 
 import Just_Forge_2D.AnimationSystem.AnimationComponent;
+import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.NonPickableComponent;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
@@ -73,7 +74,7 @@ public class MouseControlComponent extends Component
     public void editorUpdate(float DELTA_TIME)
     {
         debounce -= DELTA_TIME;
-        ObjectSelector selector = EditorWindow.getEditor().getPropertiesWindow().getSelector();
+        ObjectSelector selector = EditorSystemManager.getEditor().getPropertiesWindow().getSelector();
         Scene currentScene = EditorWindow.getCurrentScene();
 
         if (holdingObject != null && debounce < 0.0f)
@@ -101,20 +102,20 @@ public class MouseControlComponent extends Component
             GameObject picked = currentScene.getGameObject(gameObjectID);
             if (picked != null && picked.getCompoent(NonPickableComponent.class) == null)
             {
-                EditorWindow.getEditor().getPropertiesWindow().setActiveGameObject(picked);
+                EditorSystemManager.getEditor().getPropertiesWindow().setActiveGameObject(picked);
             }
             else if (picked == null && !Mouse.isDragging())
             {
-                EditorWindow.getEditor().getPropertiesWindow().clearSelection();
+                EditorSystemManager.getEditor().getPropertiesWindow().clearSelection();
             }
 
             this.debounce = this.debounceTime;
         }
-        else if (Mouse.isDragging() && Mouse.isMouseButtonDown(GLFW_MOUSE_BUTTON_LEFT) && EditorWindow.getEditor().getPropertiesWindow().getActiveGameObject() == null && EditorWindow.getEditor().getPropertiesWindow().getActiveGameObjects().isEmpty())
+        else if (Mouse.isDragging() && Mouse.isMouseButtonDown(GLFW_MOUSE_BUTTON_LEFT) && EditorSystemManager.getEditor().getPropertiesWindow().getActiveGameObject() == null && EditorSystemManager.getEditor().getPropertiesWindow().getActiveGameObjects().isEmpty())
         {
             if (!boxSelect)
             {
-                EditorWindow.getEditor().getPropertiesWindow().clearSelection();
+                EditorSystemManager.getEditor().getPropertiesWindow().clearSelection();
                 boxSelectStart = new Vector2f(Mouse.getScreenX(DefaultValues.DEFAULT_WINDOW_WIDTH), Mouse.getScreenY(DefaultValues.DEFAULT_WINDOW_HEIGHT));
                 boxSelectWorldStart = new Vector2f(Mouse.getWorldX(), Mouse.getWorldY());
                 boxSelect = true;
@@ -166,7 +167,7 @@ public class MouseControlComponent extends Component
                 GameObject picked = EditorWindow.getCurrentScene().getGameObject(gameObjectID);
                 if (picked != null && picked.getCompoent(NonPickableComponent.class) == null)
                 {
-                    EditorWindow.getEditor().getPropertiesWindow().addActiveGameObject(picked);
+                    EditorSystemManager.getEditor().getPropertiesWindow().addActiveGameObject(picked);
                 }
             }
         }

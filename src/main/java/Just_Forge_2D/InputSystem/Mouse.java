@@ -1,7 +1,6 @@
 package Just_Forge_2D.InputSystem;
 
 import Just_Forge_2D.SceneSystem.Camera;
-import Just_Forge_2D.EditorSystem.EditorWindow;
 import Just_Forge_2D.Utils.Logger;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
@@ -77,12 +76,6 @@ public class Mouse
     // - - - Update Mouse Move
     public static void mousePositionCallback(long WINDOW, double X_POSITION, double Y_POSITION)
     {
-        // - - - check if we need to clear the buffer
-        if (!EditorWindow.getEditor().getGameViewport().getWantCaptureMouse())
-        {
-            clear();
-        }
-
         // - - - save off mouse state
         get().xPrevious = get().xPosition;
         get().yPrevious = get().yPosition;

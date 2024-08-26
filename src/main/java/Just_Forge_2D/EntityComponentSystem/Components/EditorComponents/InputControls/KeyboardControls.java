@@ -1,6 +1,7 @@
 package Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.InputControls;
 
 import Just_Forge_2D.AnimationSystem.AnimationComponent;
+import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.InputSystem.Keys;
@@ -18,7 +19,7 @@ public class KeyboardControls extends Component
     @Override
     public void editorUpdate(float DELTA_TIME)
     {
-        PropertiesWindow propertiesWindow = EditorWindow.getEditor().getPropertiesWindow();;
+        PropertiesWindow propertiesWindow = EditorSystemManager.getEditor().getPropertiesWindow();;
         GameObject activeGameObject = propertiesWindow.getActiveGameObject();
         List<GameObject> activeGameObjects = propertiesWindow.getActiveGameObjects();
 
@@ -28,7 +29,7 @@ public class KeyboardControls extends Component
             GameObject newObj = activeGameObject.copy();
             EditorWindow.getCurrentScene().addGameObject(newObj);
             newObj.transform.position.add(0.1f, 0.1f);
-            EditorWindow.getEditor().getPropertiesWindow().setActiveGameObject(newObj);
+            EditorSystemManager.getEditor().getPropertiesWindow().setActiveGameObject(newObj);
             if (newObj.getCompoent(AnimationComponent.class) != null)
             {
                 newObj.getCompoent(AnimationComponent.class).refreshTextures();

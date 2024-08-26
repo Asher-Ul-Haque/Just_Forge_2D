@@ -24,6 +24,7 @@ public class AudioSystemManager
         }
 
         // - - - Initialize audio
+
         String defaultDeviceName = alcGetString(0, ALC_DEFAULT_DEVICE_SPECIFIER);
         assert defaultDeviceName != null;
         audioDevicePtr = alcOpenDevice(defaultDeviceName);
@@ -40,6 +41,7 @@ public class AudioSystemManager
             Logger.FORGE_LOG_ERROR("Audio Not supported");
             assert false;
         }
+        isOpenALinitialized = true;
     }
 
 
@@ -53,5 +55,7 @@ public class AudioSystemManager
         // - - - Destroy Audio Context
         alcDestroyContext(audioContext);
         alcCloseDevice(audioDevicePtr);
+
+        isOpenALinitialized = false;
     }
 }

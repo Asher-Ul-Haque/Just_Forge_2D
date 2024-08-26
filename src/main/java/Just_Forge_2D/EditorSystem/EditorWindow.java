@@ -8,28 +8,16 @@ import Just_Forge_2D.AudioSsstem.AudioSystemManager;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.SceneSystem.SceneInitializer;
 import Just_Forge_2D.SceneSystem.Scene;
-
 import Just_Forge_2D.EventSystem.Events.Event;
-
-
 import Just_Forge_2D.InputSystem.Mouse;
 import Just_Forge_2D.PhysicsSystem.PhysicsSystem;
 import Just_Forge_2D.RenderingSystem.DebugPencil;
-import Just_Forge_2D.RenderingSystem.Framebuffer;
 import Just_Forge_2D.SceneSystem.SceneSystemManager;
 import Just_Forge_2D.WindowSystem.Window;
 import Just_Forge_2D.WindowSystem.WindowConfig;
-import org.lwjgl.openal.ALCCapabilities;
 import Just_Forge_2D.RenderingSystem.Renderer;
-import org.lwjgl.openal.ALCapabilities;
 import Just_Forge_2D.Utils.TimeKeeper;
-import Just_Forge_2D.RenderingSystem.Shader;
-import Just_Forge_2D.Utils.AssetPool;
 import Just_Forge_2D.Utils.Logger;
-import org.lwjgl.openal.ALC;
-import org.lwjgl.openal.AL;
-
-import static org.lwjgl.openal.ALC10.*;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.glfw.GLFW.*;
 
@@ -41,13 +29,8 @@ public class EditorWindow extends Window
 {
     // - - - | Private Variables | - - -
 
-
     // - - - Window variables - - -
     private boolean isInitialized = false;
-
-
-    private Framebuffer framebuffer;
-    private boolean isRuntimePlaying = false;
 
     // - - - Systems
     private static Scene currentScene;
@@ -56,13 +39,6 @@ public class EditorWindow extends Window
     private static EditorWindow window = null;
 
     // - - - Editor
-    private justForgeImGui editorLayer;
-    private ObjectSelector selector;
-
-    // - - - shaders
-    Shader defaultShader;
-    Shader selectorShader;
-
 
 
     // - - - | Functions | - - -
@@ -83,7 +59,7 @@ public class EditorWindow extends Window
             Logger.FORGE_LOG_INFO("Clearing Scene Catch from previous run");
             SceneSystemManager.destroy(currentScene);
         }
-        getEditor().getPropertiesWindow().setActiveGameObject(null);
+        EditorSystemManager.getEditor().getPropertiesWindow().setActiveGameObject(null);
 
         currentScene = new Scene(INITIALIZER, "Editor Scene");
         SceneSystemManager.load(currentScene);
@@ -125,22 +101,19 @@ public class EditorWindow extends Window
 
         isInitialized = true;
 
-        this.framebuffer = new Framebuffer(1980, 720);
-        this.selector = new ObjectSelector(1980, 720);
+        EditorSystemManager.setFramebuffer();
+        EditorSystemManager.setSelector();
         glViewport(0, 0, 1980, 720);
         Logger.FORGE_LOG_INFO("Framebuffer created and assigned for offscreen rendering");
 
-        this.editorLayer = new justForgeImGui(this.glfwWindowPtr, this.selector);
-        this.editorLayer.initImGui();
+        EditorSystemManager.setEditorLayer();
         Logger.FORGE_LOG_INFO("Editor linked with window");
 
 
         // - - - compile shaders
-        AssetPool.addShader("Default", "Assets/Shaders/default.glsl");
-        AssetPool.addShader("Selector", "Assets/Shaders/selector.glsl");
-        AssetPool.addShader("Debug", "Assets/Shaders/debug.glsl");
-        this.defaultShader = AssetPool.getShader("Default");
-        this.selectorShader = AssetPool.getShader("Selector");
+
+        EditorSystemManager.compileShaders();
+
 
         beginTime = (float) TimeKeeper.getTime();
         Logger.FORGE_LOG_INFO("Time keeping system Online");
@@ -158,11 +131,7 @@ public class EditorWindow extends Window
     // - - - Loop the game
     public void gameLoop()
     {
-        if (Math.abs(fps - (int) (1.0d / dt)) >= 600)
-        {
-            fps = (int) (1.0d / dt);
-            Logger.FORGE_LOG_WARNING("Experienced fps spike. FPS: " + fps);
-        }
+        warnFPSSpike();
 
         // - - - Poll events
         glfwPollEvents();
@@ -172,14 +141,14 @@ public class EditorWindow extends Window
 
         // - - - 1: renderer to object picker
         glDisable(GL_BLEND);
-        selector.enableWriting();
+        EditorSystemManager.getSelector().enableWriting();
 
         glViewport(0, 0, 1980, 720);
         glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        Renderer.bindShader(selectorShader);
+        Renderer.bindShader(EditorSystemManager.selectorShader);
         currentScene.render(dt);
-        selector.disableWriting();
+        EditorSystemManager.getSelector().disableWriting();
 
         // - - - 2: render to monitor
 
@@ -189,14 +158,14 @@ public class EditorWindow extends Window
         DebugPencil.beginFrame();
 
         // - - - Framebuffer
-        this.framebuffer.bind();
+        EditorSystemManager.getFramebuffer().bind();
 
         this.clear();
 
         if (dt >= 0.0d)
         {
-            Renderer.bindShader(defaultShader);
-            if (isRuntimePlaying)
+            Renderer.bindShader(EditorSystemManager.defaultShader);
+            if (EditorSystemManager.isRuntimePlaying)
             {
                 currentScene.update(dt);
             }
@@ -209,11 +178,10 @@ public class EditorWindow extends Window
         }
 
         // - - - Finish drawing to texture so that imgui should be rendered to the window
-        this.framebuffer.unbind();
+        EditorSystemManager.getFramebuffer().unbind();
 
         // - - - Update the editor
-        this.editorLayer.update((float) dt, currentScene);
-
+        EditorSystemManager.getEditor().update(dt, currentScene);
 
         // - - - finish input frames
         finishInputFrames();
@@ -225,20 +193,9 @@ public class EditorWindow extends Window
     // - - - scene
     public static Scene getCurrentScene()
     {
-        return get().currentScene;
+        return currentScene;
     }
 
-    // - - - framebuffer
-    public static Framebuffer getFramebuffer()
-    {
-        return get().framebuffer;
-    }
-
-    // - - - editor realted - - -
-    public static justForgeImGui getEditor()
-    {
-        return get().editorLayer;
-    }
 
     @Override
     public void onNotify(GameObject OBJECT, Event EVENT)
@@ -247,14 +204,14 @@ public class EditorWindow extends Window
         {
             case ForgeStart:
                 Logger.FORGE_LOG_INFO("Starting Game");
-                this.isRuntimePlaying = true;
+                EditorSystemManager.isRuntimePlaying = true;
                 SceneSystemManager.save(currentScene);
                 EditorWindow.changeScene(new EditorSceneInitializer());
                 break;
 
             case ForgeStop:
                 Logger.FORGE_LOG_INFO("Ending Game");
-                this.isRuntimePlaying = false;
+                EditorSystemManager.isRuntimePlaying = false;
                 EditorWindow.changeScene(new EditorSceneInitializer());
                 break;
 
