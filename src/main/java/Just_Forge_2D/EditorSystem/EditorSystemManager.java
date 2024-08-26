@@ -6,22 +6,28 @@ import Just_Forge_2D.EditorSystem.Windows.ObjectSelector;
 import Just_Forge_2D.RenderingSystem.Framebuffer;
 import Just_Forge_2D.RenderingSystem.Shader;
 import Just_Forge_2D.Utils.AssetPool;
+import Just_Forge_2D.WindowSystem.WindowConfig;
+
+
 
 public class EditorSystemManager
 {
     private static Framebuffer framebuffer;
     private static ObjectSelector selector;
     private static Theme currentTheme;
-    private static EditorWindow window;
-
-
-    // - - - shaders
     protected static Shader defaultShader;
     protected static Shader selectorShader;
-
     protected static ImGUIManager editorLayer;
-
     protected static boolean isRuntimePlaying = false;
+    protected static WindowConfig editorWindowConfig;
+    protected static state currentState = state.isEditor;
+
+    protected static enum state
+    {
+        isEditor,
+        isSplashScreen,
+        isSelector
+    }
 
 
     public static Framebuffer getFramebuffer()
@@ -60,7 +66,7 @@ public class EditorSystemManager
 
     public static void setEditorLayer()
     {
-        ImGUIManager.initImGui(EditorWindow.get().getGlfwWindowPtr(), EditorSystemManager.getSelector());
+        ImGUIManager.initImGui(EditorWindow.get().getGlfwWindowPtr(), selector);
     }
 
     public static Theme getCurrentTheme()
@@ -75,8 +81,10 @@ public class EditorSystemManager
 
     public static void run()
     {
+        editorWindowConfig = new WindowConfig();
+        editorWindowConfig.setHeight(800);
         if (currentTheme == null) currentTheme = new IntelliTheme();
-        window = EditorWindow.get();
+        EditorWindow window = EditorWindow.get();
         EditorSystemManager.setSelector();
         setEditorLayer();
         window.run();

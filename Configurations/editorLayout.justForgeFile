@@ -1,5 +1,5 @@
 [Window][Debug##Default]
-Pos=60,60
+Pos=304,60
 Size=400,400
 Collapsed=0
 
@@ -54,6 +54,11 @@ DockId=0x00000002,0
 [Window][Dockspace]
 Pos=0,0
 Size=1366,724
+Collapsed=0
+
+[Window][Sample]
+Pos=387,209
+Size=375,67
 Collapsed=0
 
 [Docking][Data]

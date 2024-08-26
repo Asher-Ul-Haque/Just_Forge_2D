@@ -44,7 +44,7 @@ public class DefaultValues
     public static final String DEFAULT_ICON_PATH = "Assets/Textures/logo.png";
     public static final boolean DEFAULT_VSYNC_ENABLE = true;
     public static final boolean DEFAULT_WINDOW_TRANSPARENCY_STATE = false;
-    public static final boolean DEFAULT_WINDOW_MAXIMIZED_STATE = true;
+    public static final boolean DEFAULT_WINDOW_MAXIMIZED_STATE = false;
     public static final boolean DEFAULT_WINDOW_VISIBLE_STATE = true;
     public static final boolean DEFAULT_WINDOW_DECORATION_STATE = true;
     public static final boolean DEFAULT_WINDOW_RESIZABLE_STATE = true;

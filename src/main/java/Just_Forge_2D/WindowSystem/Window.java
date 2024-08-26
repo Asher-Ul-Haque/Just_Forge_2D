@@ -88,6 +88,7 @@ public class Window implements Observer
         glfwSetWindowSizeCallback(this.glfwWindowPtr, (w, newWidth, newHeight) -> {
             this.config.width = newWidth;
             this.config.height = newHeight;
+            //setSize(newWidth, newHeight);
         });
 
         Logger.FORGE_LOG_DEBUG("Linking " + this.config.title + " with Keyboard");

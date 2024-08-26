@@ -5,6 +5,7 @@ package Just_Forge_2D.EditorSystem;
 // - - - Internal
 
 import Just_Forge_2D.AudioSystem.AudioSystemManager;
+import Just_Forge_2D.EditorSystem.Windows.EditorWindowConfig;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.SceneSystem.SceneInitializer;
 import Just_Forge_2D.SceneSystem.Scene;
@@ -44,9 +45,9 @@ public class EditorWindow extends Window
 
 
     // - - - Private Constructor for Singleton
-    private EditorWindow()
+    EditorWindow(WindowConfig CONFIG)
     {
-        super(new WindowConfig());
+        super(CONFIG);
         Logger.FORGE_LOG_INFO("Started Just Forge 2D");
     }
 
@@ -58,7 +59,7 @@ public class EditorWindow extends Window
             Logger.FORGE_LOG_INFO("Clearing Scene Catch from previous run");
             SceneSystemManager.destroy(get().currentScene);
         }
-        ImGUIManager.getPropertiesWindow().setActiveGameObject(null);
+        if (ImGUIManager.getPropertiesWindow() != null) ImGUIManager.getPropertiesWindow().setActiveGameObject(null);
 
         get().currentScene = new Scene(INITIALIZER, "Editor Scene");
         SceneSystemManager.load(get().currentScene);
@@ -71,8 +72,8 @@ public class EditorWindow extends Window
     {
         if (EditorWindow.window == null)
         {
-            EditorWindow.window = new EditorWindow();
-            Logger.FORGE_LOG_INFO("Window system restarted");
+            Logger.FORGE_LOG_ERROR("No Window config specififed");
+            EditorWindow.window = new EditorWindow(new EditorWindowConfig());
         }
         return EditorWindow.window;
     }
@@ -126,62 +127,89 @@ public class EditorWindow extends Window
     }
 
     // - - - Loop the game
+    @Override
     public void gameLoop()
     {
-        warnFPSSpike();
-
-        // - - - Poll events
-        glfwPollEvents();
-
-
-        // - - - Renderpasses - - -
-
-        // - - - 1: renderer to object picker
-        glDisable(GL_BLEND);
-        EditorSystemManager.getSelector().enableWriting();
-
-        glViewport(0, 0, 1980, 720);
-        clear();
-        Renderer.bindShader(EditorSystemManager.selectorShader);
-        currentScene.render(dt);
-        EditorSystemManager.getSelector().disableWriting();
-
-        // - - - 2: render to monitor
-
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
-        // - - - Debug Drawing
-        DebugPencil.beginFrame();
-
-        // - - - Framebuffer
-        EditorSystemManager.getFramebuffer().bind();
-
-        this.clear();
-
-        if (dt >= 0.0d)
+        switch (EditorSystemManager.currentState)
         {
-            Renderer.bindShader(EditorSystemManager.defaultShader);
-            if (EditorSystemManager.isRuntimePlaying)
-            {
-                currentScene.update(dt);
-            }
-            else
-            {
-                currentScene.editorUpdate(dt);
-            }
-            currentScene.render(dt);
-            DebugPencil.draw();
+            case isEditor:
+                warnFPSSpike();
+
+                // - - - Poll events
+                glfwPollEvents();
+
+
+                // - - - Renderpasses - - -
+
+                // - - - 1: renderer to object picker
+                glDisable(GL_BLEND);
+                EditorSystemManager.getSelector().enableWriting();
+
+                glViewport(0, 0, 1980, 720);
+                clear();
+                Renderer.bindShader(EditorSystemManager.selectorShader);
+                currentScene.render(dt);
+                EditorSystemManager.getSelector().disableWriting();
+
+                // - - - 2: render to monitor
+
+                glEnable(GL_BLEND);
+                glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+                // - - - Debug Drawing
+                DebugPencil.beginFrame();
+
+                // - - - Framebuffer
+                EditorSystemManager.getFramebuffer().bind();
+
+                this.clear();
+
+                if (dt >= 0.0d)
+                {
+                    Renderer.bindShader(EditorSystemManager.defaultShader);
+                    if (EditorSystemManager.isRuntimePlaying)
+                    {
+                        currentScene.update(dt);
+                    }
+                    else
+                    {
+                        currentScene.editorUpdate(dt);
+                    }
+                    currentScene.render(dt);
+                    DebugPencil.draw();
+                }
+
+                // - - - Finish drawing to texture so that imgui should be rendered to the window
+                EditorSystemManager.getFramebuffer().unbind();
+
+                // - - - Update the editor
+                ImGUIManager.update(dt, currentScene);
+
+                // - - - finish input frames
+                finishInputFrames();
+                keepTime();
+                break;
+
+            case isSplashScreen:
+                Logger.FORGE_LOG_INFO("Splashing");
+                warnFPSSpike();
+
+                // - - - Poll events
+                glfwPollEvents();
+
+                // - - - 2: render to monitor
+
+                glEnable(GL_BLEND);
+                glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+                this.clear();
+
+                ImGUIManager.update(dt, currentScene);
+
+                // - - - finish input frames
+                finishInputFrames();
+                keepTime();
+                break;
         }
 
-        // - - - Finish drawing to texture so that imgui should be rendered to the window
-        EditorSystemManager.getFramebuffer().unbind();
-
-        // - - - Update the editor
-        ImGUIManager.update(dt, currentScene);
-
-        // - - - finish input frames
-        finishInputFrames();
-        keepTime();
     }
 
 
