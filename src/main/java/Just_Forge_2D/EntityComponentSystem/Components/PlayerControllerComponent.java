@@ -6,7 +6,7 @@ import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.InputSystem.Keys;
 import Just_Forge_2D.EditorSystem.EditorWindow;
 import Just_Forge_2D.InputSystem.Keyboard;
-import Just_Forge_2D.Physics.RayCastInfo;
+import Just_Forge_2D.PhysicsSystem.RayCastInfo;
 import Just_Forge_2D.Utils.AssetPool;
 import org.jbox2d.dynamics.contacts.Contact;
 import org.joml.Vector2f;

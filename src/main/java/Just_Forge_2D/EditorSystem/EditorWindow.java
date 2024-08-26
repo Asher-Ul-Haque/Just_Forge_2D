@@ -4,6 +4,7 @@ package Just_Forge_2D.EditorSystem;
 
 // - - - Internal
 
+import Just_Forge_2D.AudioSsstem.AudioSystemManager;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.SceneSystem.SceneInitializer;
 import Just_Forge_2D.SceneSystem.Scene;
@@ -12,17 +13,17 @@ import Just_Forge_2D.EventSystem.Events.Event;
 
 
 import Just_Forge_2D.InputSystem.Mouse;
-import Just_Forge_2D.Physics.PhysicsSystem;
-import Just_Forge_2D.Renderer.DebugPencil;
-import Just_Forge_2D.Renderer.Framebuffer;
+import Just_Forge_2D.PhysicsSystem.PhysicsSystem;
+import Just_Forge_2D.RenderingSystem.DebugPencil;
+import Just_Forge_2D.RenderingSystem.Framebuffer;
 import Just_Forge_2D.SceneSystem.SceneSystemManager;
 import Just_Forge_2D.WindowSystem.Window;
 import Just_Forge_2D.WindowSystem.WindowConfig;
 import org.lwjgl.openal.ALCCapabilities;
-import Just_Forge_2D.Renderer.Renderer;
+import Just_Forge_2D.RenderingSystem.Renderer;
 import org.lwjgl.openal.ALCapabilities;
 import Just_Forge_2D.Utils.TimeKeeper;
-import Just_Forge_2D.Renderer.Shader;
+import Just_Forge_2D.RenderingSystem.Shader;
 import Just_Forge_2D.Utils.AssetPool;
 import Just_Forge_2D.Utils.Logger;
 import org.lwjgl.openal.ALC;
@@ -62,8 +63,6 @@ public class EditorWindow extends Window
     Shader defaultShader;
     Shader selectorShader;
 
-    private long audioContext;
-    private long audioDevicePtr;
 
 
     // - - - | Functions | - - -
@@ -122,23 +121,7 @@ public class EditorWindow extends Window
     // - - - Initialize the window
     public void init()
     {
-        // - - - Initialize audio
-        String defaultDeviceName = alcGetString(0, ALC_DEFAULT_DEVICE_SPECIFIER);
-        assert defaultDeviceName != null;
-        audioDevicePtr = alcOpenDevice(defaultDeviceName);
-
-        int[] attributes = {0};
-        audioContext = alcCreateContext(audioDevicePtr, attributes);
-        alcMakeContextCurrent(audioContext);
-
-        ALCCapabilities alcCapabilities = ALC.createCapabilities(audioDevicePtr);
-        ALCapabilities alCapabilities = AL.createCapabilities(alcCapabilities);
-
-        if (!alCapabilities.OpenAL10)
-        {
-            Logger.FORGE_LOG_ERROR("Audio Not supported");
-            assert false;
-        }
+        AudioSystemManager.initialize();
 
         isInitialized = true;
 
@@ -169,9 +152,7 @@ public class EditorWindow extends Window
     // - - - Cleanup after game
     public void finish()
     {
-        // - - - Destroy Audio Context
-        alcDestroyContext(audioContext);
-        alcCloseDevice(audioDevicePtr);
+        AudioSystemManager.terminate();
     }
 
     // - - - Loop the game

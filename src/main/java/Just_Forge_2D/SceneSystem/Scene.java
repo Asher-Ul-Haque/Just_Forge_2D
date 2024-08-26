@@ -1,22 +1,12 @@
 package Just_Forge_2D.SceneSystem;
 
-import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.Components.TransformComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
-import Just_Forge_2D.Physics.PhysicsSystem;
-import Just_Forge_2D.Renderer.Renderer;
-import Just_Forge_2D.Utils.DefaultValues;
-import Just_Forge_2D.Utils.JsonHandlers.ComponentJsonHandler;
-import Just_Forge_2D.Utils.JsonHandlers.GameObjectJsonHandler;
+import Just_Forge_2D.PhysicsSystem.PhysicsSystem;
+import Just_Forge_2D.RenderingSystem.Renderer;
 import Just_Forge_2D.Utils.Logger;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import org.joml.Vector2f;
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 

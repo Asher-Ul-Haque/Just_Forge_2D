@@ -11,7 +11,7 @@ import Just_Forge_2D.InputSystem.Mouse;
 import Just_Forge_2D.EditorSystem.EditorWindow;
 import Just_Forge_2D.SceneSystem.Scene;
 import Just_Forge_2D.EditorSystem.ObjectSelector;
-import Just_Forge_2D.Renderer.DebugPencil;
+import Just_Forge_2D.RenderingSystem.DebugPencil;
 import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.Logger;
 import org.joml.*;

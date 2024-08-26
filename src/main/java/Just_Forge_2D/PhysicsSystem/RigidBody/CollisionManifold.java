@@ -1,4 +1,4 @@
-package Just_Forge_2D.Physics.RigidBody;
+package Just_Forge_2D.PhysicsSystem.RigidBody;
 
 import org.joml.Vector2f;
 

@@ -3,7 +3,7 @@ package Just_Forge_2D.EntityComponentSystem.Components.EditorComponents;
 import Just_Forge_2D.SceneSystem.Camera;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EditorSystem.EditorWindow;
-import Just_Forge_2D.Renderer.DebugPencil;
+import Just_Forge_2D.RenderingSystem.DebugPencil;
 import Just_Forge_2D.Utils.DefaultValues;
 import org.joml.Vector2f;
 

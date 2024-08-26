@@ -1,4 +1,4 @@
-package Just_Forge_2D.Physics;
+package Just_Forge_2D.PhysicsSystem;
 
 import Just_Forge_2D.EntityComponentSystem.Components.PhysicsComponents.Collider.BoxColliderComponent;
 import Just_Forge_2D.EntityComponentSystem.Components.PhysicsComponents.Collider.CircleColliderComponent;

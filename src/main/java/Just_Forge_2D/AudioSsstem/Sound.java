@@ -1,7 +1,6 @@
-package Just_Forge_2D.Sound;
+package Just_Forge_2D.AudioSsstem;
 
 import Just_Forge_2D.Utils.Logger;
-import org.lwjgl.openal.AL;
 
 import java.nio.IntBuffer;
 import java.nio.ShortBuffer;

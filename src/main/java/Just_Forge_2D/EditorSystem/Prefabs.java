@@ -12,7 +12,7 @@ import Just_Forge_2D.EntityComponentSystem.Components.Sprite.Sprite;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteSheet;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
-import Just_Forge_2D.Physics.Enums.BodyType;
+import Just_Forge_2D.PhysicsSystem.Enums.BodyType;
 import Just_Forge_2D.Utils.AssetPool;
 import org.joml.Vector2f;
 

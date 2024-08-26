@@ -1,4 +1,4 @@
-package Just_Forge_2D.Physics.Primitives;
+package Just_Forge_2D.PhysicsSystem.Primitives;
 
 import org.joml.Vector2f;
 

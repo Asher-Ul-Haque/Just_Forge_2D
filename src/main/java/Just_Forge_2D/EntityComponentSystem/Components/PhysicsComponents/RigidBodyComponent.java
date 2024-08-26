@@ -2,7 +2,7 @@ package Just_Forge_2D.EntityComponentSystem.Components.PhysicsComponents;
 
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EditorSystem.EditorWindow;
-import Just_Forge_2D.Physics.Enums.BodyType;
+import Just_Forge_2D.PhysicsSystem.Enums.BodyType;
 import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.Logger;
 import org.jbox2d.common.Vec2;

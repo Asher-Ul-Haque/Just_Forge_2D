@@ -1,6 +1,6 @@
-package Just_Forge_2D.Physics.RigidBody;
+package Just_Forge_2D.PhysicsSystem.RigidBody;
 
-import Just_Forge_2D.Physics.Primitives.Circle;
+import Just_Forge_2D.PhysicsSystem.Primitives.Circle;
 import org.joml.Vector2f;
 
 public class Collisions

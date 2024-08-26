@@ -1,4 +1,4 @@
-package Just_Forge_2D.Physics;
+package Just_Forge_2D.PhysicsSystem;
 
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import org.jbox2d.callbacks.RayCastCallback;

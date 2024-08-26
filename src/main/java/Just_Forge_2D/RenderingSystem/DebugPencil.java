@@ -1,7 +1,7 @@
-package Just_Forge_2D.Renderer;
+package Just_Forge_2D.RenderingSystem;
 
 import Just_Forge_2D.EditorSystem.EditorWindow;
-import Just_Forge_2D.Physics.Primitives.Line;
+import Just_Forge_2D.PhysicsSystem.Primitives.Line;
 import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.ForgeMath;
 import Just_Forge_2D.Utils.AssetPool;

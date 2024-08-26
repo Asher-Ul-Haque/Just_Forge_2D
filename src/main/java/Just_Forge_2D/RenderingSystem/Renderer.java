@@ -1,4 +1,4 @@
-package Just_Forge_2D.Renderer;
+package Just_Forge_2D.RenderingSystem;
 
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;

@@ -1,6 +1,6 @@
-package Just_Forge_2D.Physics.Primitives;
+package Just_Forge_2D.PhysicsSystem.Primitives;
 
-import Just_Forge_2D.Physics.RigidBody.RigidBody;
+import Just_Forge_2D.PhysicsSystem.RigidBody.RigidBody;
 import Just_Forge_2D.Utils.ForgeMath;
 import org.joml.Vector2f;
 

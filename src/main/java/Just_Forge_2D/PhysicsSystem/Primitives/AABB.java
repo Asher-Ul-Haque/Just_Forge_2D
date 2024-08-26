@@ -1,6 +1,5 @@
-package Just_Forge_2D.Physics.Primitives;
+package Just_Forge_2D.PhysicsSystem.Primitives;
 
-import Just_Forge_2D.Physics.RigidBody.RigidBody;
 import org.joml.Vector2f;
 
 public class AABB extends Primitive

@@ -1,4 +1,4 @@
-package Just_Forge_2D.Physics.RigidBody;
+package Just_Forge_2D.PhysicsSystem.RigidBody;
 
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.Components.TransformComponent;

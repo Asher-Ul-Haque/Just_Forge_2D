@@ -1,7 +1,7 @@
 package Just_Forge_2D.EntityComponentSystem.Components.PhysicsComponents.Collider;
 
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
-import Just_Forge_2D.Renderer.DebugPencil;
+import Just_Forge_2D.RenderingSystem.DebugPencil;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 

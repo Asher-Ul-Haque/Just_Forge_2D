@@ -2,7 +2,7 @@ package Just_Forge_2D.EntityComponentSystem.Components.Sprite;
 
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EditorSystem.ForgeIsGUI;
-import Just_Forge_2D.Renderer.Texture;
+import Just_Forge_2D.RenderingSystem.Texture;
 import Just_Forge_2D.Utils.AssetPool;
 import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.EntityComponentSystem.Components.TransformComponent;

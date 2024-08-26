@@ -1,13 +1,9 @@
 package Just_Forge_2D.WindowSystem;
 
-import Just_Forge_2D.Renderer.Renderer;
-import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.Logger;
 import org.joml.Vector2i;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
-
-import java.util.HashMap;
 
 import static org.lwjgl.glfw.GLFW.*;
 
