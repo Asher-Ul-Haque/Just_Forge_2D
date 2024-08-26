@@ -21,6 +21,9 @@ import java.nio.IntBuffer;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
+import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
+import static org.lwjgl.opengl.GL11.glClear;
 import static org.lwjgl.opengl.GL11C.*;
 
 public class Window implements Observer
@@ -34,6 +37,7 @@ public class Window implements Observer
     protected float dt = 0.1f;
     protected long glfwWindowPtr;
     protected boolean shouldClose;
+    protected Scene currentScene;
 
     // - - - constructor
     public Window(WindowConfig CONFIG)
@@ -431,11 +435,22 @@ public class Window implements Observer
 
     // - - - Basic Usage - - -
 
-    @Override
-    public void onNotify(GameObject OBJECT, Event EVENT)
+    public void gameLoop()
     {
-
+        warnFPSSpike();
+        manageInput();
+        if (currentScene != null)
+        {
+            currentScene.update(dt);
+            currentScene.render(dt);
+        }
+        clear();
+        finishInputFrames();
+        keepTime();
     }
+
+    @Override
+    public void onNotify(GameObject OBJECT, Event EVENT) {}
 
     protected void warnFPSSpike()
     {
@@ -482,5 +497,16 @@ public class Window implements Observer
     public long getGlfwWindowPtr()
     {
         return this.glfwWindowPtr;
+    }
+
+    // - - - scene
+    public void setCurrentScene(Scene SCENE)
+    {
+        this.currentScene = SCENE;
+    }
+
+    public Scene getScene()
+    {
+        return this.currentScene;
     }
 }

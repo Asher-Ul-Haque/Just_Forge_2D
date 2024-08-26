@@ -2,6 +2,7 @@ package Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.InputCon
 
 import Just_Forge_2D.AnimationSystem.AnimationComponent;
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
+import Just_Forge_2D.EditorSystem.ImGUIManager;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.NonPickableComponent;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
@@ -11,7 +12,7 @@ import Just_Forge_2D.InputSystem.Keys;
 import Just_Forge_2D.InputSystem.Mouse;
 import Just_Forge_2D.EditorSystem.EditorWindow;
 import Just_Forge_2D.SceneSystem.Scene;
-import Just_Forge_2D.EditorSystem.ObjectSelector;
+import Just_Forge_2D.EditorSystem.Windows.ObjectSelector;
 import Just_Forge_2D.RenderingSystem.DebugPencil;
 import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.Logger;
@@ -74,7 +75,7 @@ public class MouseControlComponent extends Component
     public void editorUpdate(float DELTA_TIME)
     {
         debounce -= DELTA_TIME;
-        ObjectSelector selector = EditorSystemManager.getEditor().getPropertiesWindow().getSelector();
+        ObjectSelector selector = ImGUIManager.getPropertiesWindow().getSelector();
         Scene currentScene = EditorWindow.getCurrentScene();
 
         if (holdingObject != null && debounce < 0.0f)

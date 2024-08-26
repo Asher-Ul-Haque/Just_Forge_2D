@@ -2,7 +2,7 @@ package Just_Forge_2D.EntityComponentSystem.Components;
 
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
-import Just_Forge_2D.EditorSystem.ForgeIsGUI;
+import Just_Forge_2D.EditorSystem.Widgets;
 import Just_Forge_2D.Utils.Logger;
 import imgui.ImGui;
 import imgui.type.ImInt;
@@ -56,12 +56,12 @@ public abstract class Component
                 if (type == int.class)
                 {
                     int val = (int) value;
-                    field.set(this, ForgeIsGUI.drawIntControl(name, val));
+                    field.set(this, Widgets.drawIntControl(name, val));
                 }
                 else if (type == float.class)
                 {
                     float val = (float) value;
-                    field.set(this, ForgeIsGUI.drawFloatControl(name, val));
+                    field.set(this, Widgets.drawFloatControl(name, val));
                 }
                 else if (type == boolean.class)
                 {
@@ -75,17 +75,17 @@ public abstract class Component
                 else if (type == Vector2f.class)
                 {
                     Vector2f val = (Vector2f) value;
-                    ForgeIsGUI.drawVec2Control(name, val);
+                    Widgets.drawVec2Control(name, val);
                 }
                 else if (type == Vector3f.class)
                 {
                     Vector3f val = (Vector3f) value;
-                    ForgeIsGUI.drawVec3(name, val);
+                    Widgets.drawVec3(name, val);
                 }
                 else if (type == Vector4f.class)
                 {
                     Vector4f val = (Vector4f) value;
-                    ForgeIsGUI.colorPicker4(name, val);
+                    Widgets.colorPicker4(name, val);
                 }
                 else if (type.isEnum())
                 {
@@ -98,7 +98,7 @@ public abstract class Component
                 }
                 else if (type == String.class)
                 {
-                    field.set(this, ForgeIsGUI.inputText(field.getName() + ": ", (String) value));
+                    field.set(this, Widgets.inputText(field.getName() + ": ", (String) value));
                 }
 
                 if (isPrivate)

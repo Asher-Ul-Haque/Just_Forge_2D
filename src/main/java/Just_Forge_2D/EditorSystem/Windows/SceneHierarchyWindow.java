@@ -1,5 +1,6 @@
-package Just_Forge_2D.EditorSystem;
+package Just_Forge_2D.EditorSystem.Windows;
 
+import Just_Forge_2D.EditorSystem.EditorWindow;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.Utils.Logger;
 import imgui.ImGui;

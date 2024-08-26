@@ -3,7 +3,7 @@ package Just_Forge_2D.EntityComponentSystem.Components;
 import Just_Forge_2D.AnimationSystem.AnimationComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.EditorSystem.EditorWindow;
-import Just_Forge_2D.EditorSystem.Prefabs;
+import Just_Forge_2D.EditorSystem.Windows.Prefabs;
 
 public class QuestionBlock extends Block
 {

@@ -4,7 +4,7 @@ package Just_Forge_2D.EditorSystem;
 
 // - - - Internal
 
-import Just_Forge_2D.AudioSsstem.AudioSystemManager;
+import Just_Forge_2D.AudioSystem.AudioSystemManager;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.SceneSystem.SceneInitializer;
 import Just_Forge_2D.SceneSystem.Scene;
@@ -33,7 +33,6 @@ public class EditorWindow extends Window
     private boolean isInitialized = false;
 
     // - - - Systems
-    private static Scene currentScene;
 
     // - - - Singleton
     private static EditorWindow window = null;
@@ -54,17 +53,17 @@ public class EditorWindow extends Window
     // - - - Systems function to change the scene
     public static void changeScene(SceneInitializer INITIALIZER)
     {
-        if (currentScene != null)
+        if (get().currentScene != null)
         {
             Logger.FORGE_LOG_INFO("Clearing Scene Catch from previous run");
-            SceneSystemManager.destroy(currentScene);
+            SceneSystemManager.destroy(get().currentScene);
         }
-        EditorSystemManager.getEditor().getPropertiesWindow().setActiveGameObject(null);
+        ImGUIManager.getPropertiesWindow().setActiveGameObject(null);
 
-        currentScene = new Scene(INITIALIZER, "Editor Scene");
-        SceneSystemManager.load(currentScene);
-        currentScene.init();
-        currentScene.start();
+        get().currentScene = new Scene(INITIALIZER, "Editor Scene");
+        SceneSystemManager.load(get().currentScene);
+        get().currentScene.init();
+        get().currentScene.start();
     }
 
     // - - - Get the window
@@ -102,11 +101,9 @@ public class EditorWindow extends Window
         isInitialized = true;
 
         EditorSystemManager.setFramebuffer();
-        EditorSystemManager.setSelector();
         glViewport(0, 0, 1980, 720);
         Logger.FORGE_LOG_INFO("Framebuffer created and assigned for offscreen rendering");
 
-        EditorSystemManager.setEditorLayer();
         Logger.FORGE_LOG_INFO("Editor linked with window");
 
 
@@ -144,8 +141,7 @@ public class EditorWindow extends Window
         EditorSystemManager.getSelector().enableWriting();
 
         glViewport(0, 0, 1980, 720);
-        glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        clear();
         Renderer.bindShader(EditorSystemManager.selectorShader);
         currentScene.render(dt);
         EditorSystemManager.getSelector().disableWriting();
@@ -181,10 +177,11 @@ public class EditorWindow extends Window
         EditorSystemManager.getFramebuffer().unbind();
 
         // - - - Update the editor
-        EditorSystemManager.getEditor().update(dt, currentScene);
+        ImGUIManager.update(dt, currentScene);
 
         // - - - finish input frames
         finishInputFrames();
+        keepTime();
     }
 
 
@@ -193,7 +190,7 @@ public class EditorWindow extends Window
     // - - - scene
     public static Scene getCurrentScene()
     {
-        return currentScene;
+        return get().getScene();
     }
 
 
@@ -217,7 +214,7 @@ public class EditorWindow extends Window
 
             case SaveLevel:
                 Logger.FORGE_LOG_INFO("Saving Scene: " + currentScene);
-                SceneSystemManager.save(currentScene);
+                SceneSystemManager.save(get().currentScene);
                 break;
 
             case LoadLevel:

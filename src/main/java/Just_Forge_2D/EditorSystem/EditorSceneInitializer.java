@@ -1,6 +1,7 @@
 package Just_Forge_2D.EditorSystem;
 
 import Just_Forge_2D.AnimationSystem.AnimationComponent;
+import Just_Forge_2D.EditorSystem.Windows.Prefabs;
 import Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.GridlinesComponent;
 import Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.InputControls.KeyboardControls;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.Sprite;
@@ -14,7 +15,7 @@ import Just_Forge_2D.PhysicsSystem.PhysicsSystem;
 import Just_Forge_2D.RenderingSystem.Renderer;
 import Just_Forge_2D.SceneSystem.Scene;
 import Just_Forge_2D.SceneSystem.SceneInitializer;
-import Just_Forge_2D.AudioSsstem.Sound;
+import Just_Forge_2D.AudioSystem.Sound;
 import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.AssetPool;
 import imgui.ImGui;

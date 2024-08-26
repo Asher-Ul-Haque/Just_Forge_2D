@@ -1,5 +1,8 @@
 package Just_Forge_2D.EditorSystem;
 
+import Just_Forge_2D.EditorSystem.Themes.IntelliTheme;
+import Just_Forge_2D.EditorSystem.Themes.Theme;
+import Just_Forge_2D.EditorSystem.Windows.ObjectSelector;
 import Just_Forge_2D.RenderingSystem.Framebuffer;
 import Just_Forge_2D.RenderingSystem.Shader;
 import Just_Forge_2D.Utils.AssetPool;
@@ -8,13 +11,15 @@ public class EditorSystemManager
 {
     private static Framebuffer framebuffer;
     private static ObjectSelector selector;
+    private static Theme currentTheme;
+    private static EditorWindow window;
 
 
     // - - - shaders
     protected static Shader defaultShader;
     protected static Shader selectorShader;
 
-    protected static justForgeImGui editorLayer;
+    protected static ImGUIManager editorLayer;
 
     protected static boolean isRuntimePlaying = false;
 
@@ -48,14 +53,33 @@ public class EditorSystemManager
         EditorSystemManager.selectorShader = AssetPool.getShader("Selector");
     }
 
-    public static justForgeImGui getEditor()
+    public static ImGUIManager getEditor()
     {
         return editorLayer;
     }
 
     public static void setEditorLayer()
     {
-        editorLayer = new justForgeImGui(EditorWindow.get().getGlfwWindowPtr(), EditorSystemManager.getSelector());
-        editorLayer.initImGui();
+        ImGUIManager.initImGui(EditorWindow.get().getGlfwWindowPtr(), EditorSystemManager.getSelector());
+    }
+
+    public static Theme getCurrentTheme()
+    {
+        return currentTheme;
+    }
+
+    public void setTheme(Theme THEME)
+    {
+        currentTheme = THEME;
+    }
+
+    public static void run()
+    {
+        if (currentTheme == null) currentTheme = new IntelliTheme();
+        window = EditorWindow.get();
+        EditorSystemManager.setSelector();
+        setEditorLayer();
+        window.run();
+        ImGUIManager.destroyImGui();
     }
 }

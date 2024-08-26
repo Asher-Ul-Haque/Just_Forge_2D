@@ -1,4 +1,4 @@
-package Just_Forge_2D.EditorSystem;
+package Just_Forge_2D.EditorSystem.Windows;
 
 import Just_Forge_2D.EntityComponentSystem.Components.BreakableBrick;
 import Just_Forge_2D.EntityComponentSystem.Components.PhysicsComponents.Collider.BoxColliderComponent;

@@ -64,7 +64,7 @@
         }
       }
     ],
-    "uniqueID": 18,
+    "uniqueID": 257,
     "doSerialization": true,
     "isDead": false
   },
@@ -127,7 +127,7 @@
         }
       }
     ],
-    "uniqueID": 19,
+    "uniqueID": 258,
     "doSerialization": true,
     "isDead": false
   },
@@ -190,7 +190,7 @@
         }
       }
     ],
-    "uniqueID": 20,
+    "uniqueID": 259,
     "doSerialization": true,
     "isDead": false
   },
@@ -253,7 +253,7 @@
         }
       }
     ],
-    "uniqueID": 21,
+    "uniqueID": 260,
     "doSerialization": true,
     "isDead": false
   },
@@ -316,7 +316,7 @@
         }
       }
     ],
-    "uniqueID": 22,
+    "uniqueID": 261,
     "doSerialization": true,
     "isDead": false
   },
@@ -379,7 +379,7 @@
         }
       }
     ],
-    "uniqueID": 23,
+    "uniqueID": 262,
     "doSerialization": true,
     "isDead": false
   },
@@ -442,7 +442,7 @@
         }
       }
     ],
-    "uniqueID": 24,
+    "uniqueID": 263,
     "doSerialization": true,
     "isDead": false
   },
@@ -484,19 +484,19 @@
             },
             "textureCoordinates": [
               {
-                "x": 0.42857143,
+                "x": 0.071428575,
                 "y": 1.0
               },
               {
-                "x": 0.42857143,
+                "x": 0.071428575,
                 "y": 0.5
               },
               {
-                "x": 0.35714287,
+                "x": 0.0,
                 "y": 0.5
               },
               {
-                "x": 0.35714287,
+                "x": 0.0,
                 "y": 1.0
               }
             ]
@@ -1527,7 +1527,7 @@
         }
       }
     ],
-    "uniqueID": 25,
+    "uniqueID": 264,
     "doSerialization": true,
     "isDead": false
   },
@@ -1569,19 +1569,19 @@
             },
             "textureCoordinates": [
               {
-                "x": 0.2857143,
+                "x": 0.14285715,
                 "y": 1.0
               },
               {
-                "x": 0.2857143,
-                "y": 0.8
-              },
-              {
                 "x": 0.14285715,
                 "y": 0.8
               },
               {
-                "x": 0.14285715,
+                "x": 0.0,
+                "y": 0.8
+              },
+              {
+                "x": 0.0,
                 "y": 1.0
               }
             ]
@@ -1788,7 +1788,7 @@
         }
       }
     ],
-    "uniqueID": 26,
+    "uniqueID": 265,
     "doSerialization": true,
     "isDead": false
   },
@@ -1830,19 +1830,19 @@
             },
             "textureCoordinates": [
               {
-                "x": 0.2857143,
+                "x": 0.14285715,
                 "y": 1.0
               },
               {
-                "x": 0.2857143,
-                "y": 0.8
-              },
-              {
                 "x": 0.14285715,
                 "y": 0.8
               },
               {
-                "x": 0.14285715,
+                "x": 0.0,
+                "y": 0.8
+              },
+              {
+                "x": 0.0,
                 "y": 1.0
               }
             ]
@@ -2049,7 +2049,7 @@
         }
       }
     ],
-    "uniqueID": 27,
+    "uniqueID": 266,
     "doSerialization": true,
     "isDead": false
   },
@@ -2091,19 +2091,19 @@
             },
             "textureCoordinates": [
               {
-                "x": 0.2857143,
+                "x": 0.14285715,
                 "y": 1.0
               },
               {
-                "x": 0.2857143,
-                "y": 0.8
-              },
-              {
                 "x": 0.14285715,
                 "y": 0.8
               },
               {
-                "x": 0.14285715,
+                "x": 0.0,
+                "y": 0.8
+              },
+              {
+                "x": 0.0,
                 "y": 1.0
               }
             ]
@@ -2310,7 +2310,7 @@
         }
       }
     ],
-    "uniqueID": 28,
+    "uniqueID": 267,
     "doSerialization": true,
     "isDead": false
   },
@@ -2352,19 +2352,19 @@
             },
             "textureCoordinates": [
               {
-                "x": 0.5714286,
+                "x": 0.14285715,
                 "y": 1.0
               },
               {
-                "x": 0.5714286,
+                "x": 0.14285715,
                 "y": 0.8
               },
               {
-                "x": 0.42857143,
+                "x": 0.0,
                 "y": 0.8
               },
               {
-                "x": 0.42857143,
+                "x": 0.0,
                 "y": 1.0
               }
             ]
@@ -2543,7 +2543,7 @@
           "angularDamping": 0.8,
           "linearDamping": 0.9,
           "mass": 0.0,
-          "bodyType": "Static",
+          "bodyType": "Kinematic",
           "fixedRotation": false,
           "continuousCollision": true,
           "angularVelocity": 0.0,
@@ -2571,7 +2571,7 @@
         }
       }
     ],
-    "uniqueID": 29,
+    "uniqueID": 268,
     "doSerialization": true,
     "isDead": false
   },
@@ -2583,7 +2583,7 @@
         "properties": {
           "position": {
             "x": 2.125,
-            "y": 0.875
+            "y": 0.8873709
           },
           "layer": 0,
           "scale": {
@@ -2634,7 +2634,1778 @@
         }
       }
     ],
-    "uniqueID": 30,
+    "uniqueID": 269,
+    "doSerialization": true,
+    "isDead": false
+  },
+  {
+    "name": "Auto Generated",
+    "components": [
+      {
+        "type": "Just_Forge_2D.EntityComponentSystem.Components.TransformComponent",
+        "properties": {
+          "position": {
+            "x": 2.875,
+            "y": 0.62513036
+          },
+          "layer": 0,
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "uniqueID": 791
+        }
+      },
+      {
+        "type": "Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16.0,
+            "height": 16.0,
+            "texture": {
+              "filepath": "Assets/Textures/decorationsAndBlocks.png",
+              "width": 112,
+              "height": 192
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.14285715,
+                "y": 1.0
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 1.0
+              }
+            ]
+          },
+          "uniqueID": 792
+        }
+      },
+      {
+        "type": "Just_Forge_2D.EntityComponentSystem.Components.PhysicsComponents.RigidBodyComponent",
+        "properties": {
+          "velocity": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "angularDamping": 0.8,
+          "linearDamping": 0.9,
+          "mass": 0.0,
+          "bodyType": "Static",
+          "fixedRotation": false,
+          "continuousCollision": true,
+          "angularVelocity": 0.0,
+          "gravityScale": 1.0,
+          "isSensor": false,
+          "uniqueID": 794
+        }
+      },
+      {
+        "type": "Just_Forge_2D.EntityComponentSystem.Components.PhysicsComponents.Collider.BoxColliderComponent",
+        "properties": {
+          "halfSize": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "origin": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "uniqueID": 795
+        }
+      }
+    ],
+    "uniqueID": 270,
+    "doSerialization": true,
+    "isDead": false
+  },
+  {
+    "name": "Auto Generated",
+    "components": [
+      {
+        "type": "Just_Forge_2D.EntityComponentSystem.Components.TransformComponent",
+        "properties": {
+          "position": {
+            "x": 1.375,
+            "y": 1.125
+          },
+          "layer": 0,
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "uniqueID": 894
+        }
+      },
+      {
+        "type": "Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16.0,
+            "height": 16.0,
+            "texture": {
+              "filepath": "Assets/Textures/spritesheet.png",
+              "width": 224,
+              "height": 32
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.071428575,
+                "y": 1.0
+              },
+              {
+                "x": 0.071428575,
+                "y": 0.5
+              },
+              {
+                "x": 0.0,
+                "y": 0.5
+              },
+              {
+                "x": 0.0,
+                "y": 1.0
+              }
+            ]
+          },
+          "uniqueID": 895
+        }
+      },
+      {
+        "type": "Just_Forge_2D.AnimationSystem.AnimationComponent",
+        "properties": {
+          "stateTransfers": [
+            [
+              {
+                "state": "Run",
+                "trigger": "Switch directions"
+              },
+              "Switch Directions"
+            ],
+            [
+              {
+                "state": "Fire Switch Direction",
+                "trigger": "stopRunning"
+              },
+              "FireIdle"
+            ],
+            [
+              {
+                "state": "BigRun",
+                "trigger": "damage"
+              },
+              "Run"
+            ],
+            [
+              {
+                "state": "Fire Switch Direction",
+                "trigger": "die"
+              },
+              "Big Switch Direction"
+            ],
+            [
+              {
+                "state": "Run",
+                "trigger": "stopRunning"
+              },
+              "Idle"
+            ],
+            [
+              {
+                "state": "Run",
+                "trigger": "powerup"
+              },
+              "BigRun"
+            ],
+            [
+              {
+                "state": "FireIdle",
+                "trigger": "die"
+              },
+              "BigIdle"
+            ],
+            [
+              {
+                "state": "FireRun",
+                "trigger": "damage"
+              },
+              "BigRun"
+            ],
+            [
+              {
+                "state": "BigIdle",
+                "trigger": "die"
+              },
+              "Idle"
+            ],
+            [
+              {
+                "state": "Idle",
+                "trigger": "jump"
+              },
+              "Jump"
+            ],
+            [
+              {
+                "state": "BigIdle",
+                "trigger": "powerup"
+              },
+              "FireIdle"
+            ],
+            [
+              {
+                "state": "Run",
+                "trigger": "die"
+              },
+              "Die"
+            ],
+            [
+              {
+                "state": "Jump",
+                "trigger": "stopJumping"
+              },
+              "Idle"
+            ],
+            [
+              {
+                "state": "Switch Directions",
+                "trigger": "jump"
+              },
+              "Jump"
+            ],
+            [
+              {
+                "state": "FireJump",
+                "trigger": "die"
+              },
+              "BigJump"
+            ],
+            [
+              {
+                "state": "FireIdle",
+                "trigger": "startRunning"
+              },
+              "FireRun"
+            ],
+            [
+              {
+                "state": "FireIdle",
+                "trigger": "jump"
+              },
+              "FireJump"
+            ],
+            [
+              {
+                "state": "Fire Switch Direction",
+                "trigger": "damage"
+              },
+              "Big Switch Direction"
+            ],
+            [
+              {
+                "state": "BigIdle",
+                "trigger": "startRunning"
+              },
+              "BigRun"
+            ],
+            [
+              {
+                "state": "Switch Directions",
+                "trigger": "startRunning"
+              },
+              "Run"
+            ],
+            [
+              {
+                "state": "Big Switch Direction",
+                "trigger": "jump"
+              },
+              "BigJump"
+            ],
+            [
+              {
+                "state": "Idle",
+                "trigger": "powerup"
+              },
+              "BigIdle"
+            ],
+            [
+              {
+                "state": "Jump",
+                "trigger": "powerup"
+              },
+              "BigJump"
+            ],
+            [
+              {
+                "state": "Run",
+                "trigger": "jump"
+              },
+              "Jump"
+            ],
+            [
+              {
+                "state": "BigIdle",
+                "trigger": "jump"
+              },
+              "BigJump"
+            ],
+            [
+              {
+                "state": "BigJump",
+                "trigger": "stopJumping"
+              },
+              "BigIdle"
+            ],
+            [
+              {
+                "state": "BigRun",
+                "trigger": "stopRunning"
+              },
+              "BigIdle"
+            ],
+            [
+              {
+                "state": "BigRun",
+                "trigger": "jump"
+              },
+              "BigJump"
+            ],
+            [
+              {
+                "state": "FireRun",
+                "trigger": "switchDirection"
+              },
+              "Fire Switch Direction"
+            ],
+            [
+              {
+                "state": "BigRun",
+                "trigger": "die"
+              },
+              "Run"
+            ],
+            [
+              {
+                "state": "FireRun",
+                "trigger": "jump"
+              },
+              "FireJump"
+            ],
+            [
+              {
+                "state": "FireRun",
+                "trigger": "die"
+              },
+              "BigRun"
+            ],
+            [
+              {
+                "state": "BigRun",
+                "trigger": "powerup"
+              },
+              "FireRun"
+            ],
+            [
+              {
+                "state": "Big Switch Direction",
+                "trigger": "startRunning"
+              },
+              "BigRun"
+            ],
+            [
+              {
+                "state": "Big Switch Direction",
+                "trigger": "die"
+              },
+              "Switch Directions"
+            ],
+            [
+              {
+                "state": "Idle",
+                "trigger": "startRunning"
+              },
+              "Run"
+            ],
+            [
+              {
+                "state": "Big Switch Direction",
+                "trigger": "powerup"
+              },
+              "Fire Switch Direction"
+            ],
+            [
+              {
+                "state": "BigRun",
+                "trigger": "switchDirection"
+              },
+              "Big Switch Direction"
+            ],
+            [
+              {
+                "state": "Big Switch Direction",
+                "trigger": "stopRunning"
+              },
+              "BigIdle"
+            ],
+            [
+              {
+                "state": "BigJump",
+                "trigger": "die"
+              },
+              "Jump"
+            ],
+            [
+              {
+                "state": "BigJump",
+                "trigger": "powerup"
+              },
+              "FireJump"
+            ],
+            [
+              {
+                "state": "Switch Directions",
+                "trigger": "powerup"
+              },
+              "Big Switch Direction"
+            ],
+            [
+              {
+                "state": "Switch Directions",
+                "trigger": "die"
+              },
+              "Die"
+            ],
+            [
+              {
+                "state": "FireJump",
+                "trigger": "damage"
+              },
+              "BigJump"
+            ],
+            [
+              {
+                "state": "Switch Directions",
+                "trigger": "stopRunning"
+              },
+              "Idle"
+            ],
+            [
+              {
+                "state": "FireRun",
+                "trigger": "stopRunning"
+              },
+              "FireIdle"
+            ],
+            [
+              {
+                "state": "BigJump",
+                "trigger": "damage"
+              },
+              "Jump"
+            ],
+            [
+              {
+                "state": "FireIdle",
+                "trigger": "damage"
+              },
+              "BigIdle"
+            ],
+            [
+              {
+                "state": "Fire Switch Direction",
+                "trigger": "jump"
+              },
+              "FireJump"
+            ],
+            [
+              {
+                "state": "FireJump",
+                "trigger": "stopJumping"
+              },
+              "FireIdle"
+            ],
+            [
+              {
+                "state": "Idle",
+                "trigger": "die"
+              },
+              "Die"
+            ],
+            [
+              {
+                "state": "Jump",
+                "trigger": "die"
+              },
+              "Die"
+            ],
+            [
+              {
+                "state": "Big Switch Direction",
+                "trigger": "damage"
+              },
+              "Switch Directions"
+            ],
+            [
+              {
+                "state": "BigIdle",
+                "trigger": "damage"
+              },
+              "Idle"
+            ],
+            [
+              {
+                "state": "Fire Switch Direction",
+                "trigger": "startRunning"
+              },
+              "FireRun"
+            ]
+          ],
+          "states": [
+            {
+              "title": "Run",
+              "animationFrames": [
+                {
+                  "sprite": {
+                    "width": 16.0,
+                    "height": 16.0,
+                    "texture": {
+                      "filepath": "Assets/Textures/spritesheet.png",
+                      "width": 224,
+                      "height": 32
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.071428575,
+                        "y": 1.0
+                      },
+                      {
+                        "x": 0.071428575,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.0,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.0,
+                        "y": 1.0
+                      }
+                    ]
+                  },
+                  "frameTime": 0.2
+                },
+                {
+                  "sprite": {
+                    "width": 16.0,
+                    "height": 16.0,
+                    "texture": {
+                      "filepath": "Assets/Textures/spritesheet.png",
+                      "width": 224,
+                      "height": 32
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.21428572,
+                        "y": 1.0
+                      },
+                      {
+                        "x": 0.21428572,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.14285715,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.14285715,
+                        "y": 1.0
+                      }
+                    ]
+                  },
+                  "frameTime": 0.2
+                },
+                {
+                  "sprite": {
+                    "width": 16.0,
+                    "height": 16.0,
+                    "texture": {
+                      "filepath": "Assets/Textures/spritesheet.png",
+                      "width": 224,
+                      "height": 32
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.2857143,
+                        "y": 1.0
+                      },
+                      {
+                        "x": 0.2857143,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.21428572,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.21428572,
+                        "y": 1.0
+                      }
+                    ]
+                  },
+                  "frameTime": 0.2
+                },
+                {
+                  "sprite": {
+                    "width": 16.0,
+                    "height": 16.0,
+                    "texture": {
+                      "filepath": "Assets/Textures/spritesheet.png",
+                      "width": 224,
+                      "height": 32
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.21428572,
+                        "y": 1.0
+                      },
+                      {
+                        "x": 0.21428572,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.14285715,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.14285715,
+                        "y": 1.0
+                      }
+                    ]
+                  },
+                  "frameTime": 0.2
+                }
+              ],
+              "doesLoop": true,
+              "isFinished": false
+            },
+            {
+              "title": "Idle",
+              "animationFrames": [
+                {
+                  "sprite": {
+                    "width": 16.0,
+                    "height": 16.0,
+                    "texture": {
+                      "filepath": "Assets/Textures/spritesheet.png",
+                      "width": 224,
+                      "height": 32
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.071428575,
+                        "y": 1.0
+                      },
+                      {
+                        "x": 0.071428575,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.0,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.0,
+                        "y": 1.0
+                      }
+                    ]
+                  },
+                  "frameTime": 0.1
+                }
+              ],
+              "doesLoop": false,
+              "isFinished": true
+            },
+            {
+              "title": "Switch Directions",
+              "animationFrames": [
+                {
+                  "sprite": {
+                    "width": 16.0,
+                    "height": 16.0,
+                    "texture": {
+                      "filepath": "Assets/Textures/spritesheet.png",
+                      "width": 224,
+                      "height": 32
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.35714287,
+                        "y": 1.0
+                      },
+                      {
+                        "x": 0.35714287,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.2857143,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.2857143,
+                        "y": 1.0
+                      }
+                    ]
+                  },
+                  "frameTime": 0.1
+                }
+              ],
+              "doesLoop": false,
+              "isFinished": false
+            },
+            {
+              "title": "Jump",
+              "animationFrames": [
+                {
+                  "sprite": {
+                    "width": 16.0,
+                    "height": 16.0,
+                    "texture": {
+                      "filepath": "Assets/Textures/spritesheet.png",
+                      "width": 224,
+                      "height": 32
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.42857143,
+                        "y": 1.0
+                      },
+                      {
+                        "x": 0.42857143,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.35714287,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.35714287,
+                        "y": 1.0
+                      }
+                    ]
+                  },
+                  "frameTime": 0.1
+                }
+              ],
+              "doesLoop": false,
+              "isFinished": false
+            },
+            {
+              "title": "Die",
+              "animationFrames": [
+                {
+                  "sprite": {
+                    "width": 16.0,
+                    "height": 16.0,
+                    "texture": {
+                      "filepath": "Assets/Textures/spritesheet.png",
+                      "width": 224,
+                      "height": 32
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.5,
+                        "y": 1.0
+                      },
+                      {
+                        "x": 0.5,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.42857143,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.42857143,
+                        "y": 1.0
+                      }
+                    ]
+                  },
+                  "frameTime": 0.1
+                }
+              ],
+              "doesLoop": false,
+              "isFinished": false
+            },
+            {
+              "title": "BigRun",
+              "animationFrames": [
+                {
+                  "sprite": {
+                    "width": 16.0,
+                    "height": 16.0,
+                    "texture": {
+                      "filepath": "Assets/Textures/spritesheet.png",
+                      "width": 224,
+                      "height": 32
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.42857143,
+                        "y": 1.0
+                      },
+                      {
+                        "x": 0.42857143,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.35714287,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.35714287,
+                        "y": 1.0
+                      }
+                    ]
+                  },
+                  "frameTime": 0.1
+                },
+                {
+                  "sprite": {
+                    "width": 16.0,
+                    "height": 32.0,
+                    "texture": {
+                      "filepath": "Assets/Textures/bigSpritesheet.png",
+                      "width": 336,
+                      "height": 64
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.0952381,
+                        "y": 1.0
+                      },
+                      {
+                        "x": 0.0952381,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.04761905,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.04761905,
+                        "y": 1.0
+                      }
+                    ]
+                  },
+                  "frameTime": 0.2
+                },
+                {
+                  "sprite": {
+                    "width": 16.0,
+                    "height": 32.0,
+                    "texture": {
+                      "filepath": "Assets/Textures/bigSpritesheet.png",
+                      "width": 336,
+                      "height": 64
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.14285715,
+                        "y": 1.0
+                      },
+                      {
+                        "x": 0.14285715,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.0952381,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.0952381,
+                        "y": 1.0
+                      }
+                    ]
+                  },
+                  "frameTime": 0.2
+                },
+                {
+                  "sprite": {
+                    "width": 16.0,
+                    "height": 32.0,
+                    "texture": {
+                      "filepath": "Assets/Textures/bigSpritesheet.png",
+                      "width": 336,
+                      "height": 64
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.1904762,
+                        "y": 1.0
+                      },
+                      {
+                        "x": 0.1904762,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.14285715,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.14285715,
+                        "y": 1.0
+                      }
+                    ]
+                  },
+                  "frameTime": 0.2
+                },
+                {
+                  "sprite": {
+                    "width": 16.0,
+                    "height": 32.0,
+                    "texture": {
+                      "filepath": "Assets/Textures/bigSpritesheet.png",
+                      "width": 336,
+                      "height": 64
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.14285715,
+                        "y": 1.0
+                      },
+                      {
+                        "x": 0.14285715,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.0952381,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.0952381,
+                        "y": 1.0
+                      }
+                    ]
+                  },
+                  "frameTime": 0.2
+                },
+                {
+                  "sprite": {
+                    "width": 16.0,
+                    "height": 32.0,
+                    "texture": {
+                      "filepath": "Assets/Textures/bigSpritesheet.png",
+                      "width": 336,
+                      "height": 64
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.0952381,
+                        "y": 1.0
+                      },
+                      {
+                        "x": 0.0952381,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.04761905,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.04761905,
+                        "y": 1.0
+                      }
+                    ]
+                  },
+                  "frameTime": 0.2
+                }
+              ],
+              "doesLoop": true,
+              "isFinished": false
+            },
+            {
+              "title": "BigIdle",
+              "animationFrames": [
+                {
+                  "sprite": {
+                    "width": 16.0,
+                    "height": 32.0,
+                    "texture": {
+                      "filepath": "Assets/Textures/bigSpritesheet.png",
+                      "width": 336,
+                      "height": 64
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.04761905,
+                        "y": 1.0
+                      },
+                      {
+                        "x": 0.04761905,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.0,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.0,
+                        "y": 1.0
+                      }
+                    ]
+                  },
+                  "frameTime": 0.1
+                }
+              ],
+              "doesLoop": false,
+              "isFinished": false
+            },
+            {
+              "title": "Big Switch Direction",
+              "animationFrames": [
+                {
+                  "sprite": {
+                    "width": 16.0,
+                    "height": 32.0,
+                    "texture": {
+                      "filepath": "Assets/Textures/bigSpritesheet.png",
+                      "width": 336,
+                      "height": 64
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.23809524,
+                        "y": 1.0
+                      },
+                      {
+                        "x": 0.23809524,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.1904762,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.1904762,
+                        "y": 1.0
+                      }
+                    ]
+                  },
+                  "frameTime": 0.1
+                }
+              ],
+              "doesLoop": true,
+              "isFinished": false
+            },
+            {
+              "title": "BigJump",
+              "animationFrames": [
+                {
+                  "sprite": {
+                    "width": 16.0,
+                    "height": 32.0,
+                    "texture": {
+                      "filepath": "Assets/Textures/bigSpritesheet.png",
+                      "width": 336,
+                      "height": 64
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.2857143,
+                        "y": 1.0
+                      },
+                      {
+                        "x": 0.2857143,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.23809524,
+                        "y": 0.5
+                      },
+                      {
+                        "x": 0.23809524,
+                        "y": 1.0
+                      }
+                    ]
+                  },
+                  "frameTime": 0.1
+                }
+              ],
+              "doesLoop": false,
+              "isFinished": false
+            }
+          ],
+          "defaultStateTitle": "Idle",
+          "revertToDefault": false,
+          "uniqueID": 896
+        }
+      },
+      {
+        "type": "Just_Forge_2D.EntityComponentSystem.Components.PhysicsComponents.RigidBodyComponent",
+        "properties": {
+          "velocity": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "angularDamping": 0.8,
+          "linearDamping": 0.9,
+          "mass": 25.0,
+          "bodyType": "Dynamic",
+          "fixedRotation": false,
+          "continuousCollision": false,
+          "angularVelocity": 0.0,
+          "gravityScale": 1.0,
+          "isSensor": false,
+          "uniqueID": 897
+        }
+      },
+      {
+        "type": "Just_Forge_2D.EntityComponentSystem.Components.PhysicsComponents.Collider.BoxColliderComponent",
+        "properties": {
+          "halfSize": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "origin": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "uniqueID": 898
+        }
+      },
+      {
+        "type": "Just_Forge_2D.EntityComponentSystem.Components.PlayerControllerComponent",
+        "properties": {
+          "playerState": "Small",
+          "walkSpeed": 1.9,
+          "jumpBoost": 1.0,
+          "jumpImpulse": 3.0,
+          "slowDownForce": 0.05,
+          "terminalVelocity": {
+            "x": 2.1,
+            "y": 3.1
+          },
+          "uniqueID": 899
+        }
+      }
+    ],
+    "uniqueID": 271,
+    "doSerialization": true,
+    "isDead": false
+  },
+  {
+    "name": "Auto Generated",
+    "components": [
+      {
+        "type": "Just_Forge_2D.EntityComponentSystem.Components.TransformComponent",
+        "properties": {
+          "position": {
+            "x": 3.125,
+            "y": 0.625
+          },
+          "layer": 0,
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "uniqueID": 920
+        }
+      },
+      {
+        "type": "Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16.0,
+            "height": 16.0,
+            "texture": {
+              "filepath": "Assets/Textures/decorationsAndBlocks.png",
+              "width": 112,
+              "height": 192
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.14285715,
+                "y": 1.0
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 1.0
+              }
+            ]
+          },
+          "uniqueID": 921
+        }
+      },
+      {
+        "type": "Just_Forge_2D.EntityComponentSystem.Components.PhysicsComponents.RigidBodyComponent",
+        "properties": {
+          "velocity": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "angularDamping": 0.8,
+          "linearDamping": 0.9,
+          "mass": 0.0,
+          "bodyType": "Static",
+          "fixedRotation": false,
+          "continuousCollision": true,
+          "angularVelocity": 0.0,
+          "gravityScale": 1.0,
+          "isSensor": false,
+          "uniqueID": 923
+        }
+      },
+      {
+        "type": "Just_Forge_2D.EntityComponentSystem.Components.PhysicsComponents.Collider.BoxColliderComponent",
+        "properties": {
+          "halfSize": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "origin": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "uniqueID": 924
+        }
+      }
+    ],
+    "uniqueID": 272,
+    "doSerialization": true,
+    "isDead": false
+  },
+  {
+    "name": "Auto Generated",
+    "components": [
+      {
+        "type": "Just_Forge_2D.EntityComponentSystem.Components.TransformComponent",
+        "properties": {
+          "position": {
+            "x": 3.375,
+            "y": 0.625
+          },
+          "layer": 0,
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "uniqueID": 920
+        }
+      },
+      {
+        "type": "Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16.0,
+            "height": 16.0,
+            "texture": {
+              "filepath": "Assets/Textures/decorationsAndBlocks.png",
+              "width": 112,
+              "height": 192
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.14285715,
+                "y": 1.0
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 1.0
+              }
+            ]
+          },
+          "uniqueID": 921
+        }
+      },
+      {
+        "type": "Just_Forge_2D.EntityComponentSystem.Components.PhysicsComponents.RigidBodyComponent",
+        "properties": {
+          "velocity": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "angularDamping": 0.8,
+          "linearDamping": 0.9,
+          "mass": 0.0,
+          "bodyType": "Static",
+          "fixedRotation": false,
+          "continuousCollision": true,
+          "angularVelocity": 0.0,
+          "gravityScale": 1.0,
+          "isSensor": false,
+          "uniqueID": 925
+        }
+      },
+      {
+        "type": "Just_Forge_2D.EntityComponentSystem.Components.PhysicsComponents.Collider.BoxColliderComponent",
+        "properties": {
+          "halfSize": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "origin": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "uniqueID": 926
+        }
+      }
+    ],
+    "uniqueID": 273,
+    "doSerialization": true,
+    "isDead": false
+  },
+  {
+    "name": "Auto Generated",
+    "components": [
+      {
+        "type": "Just_Forge_2D.EntityComponentSystem.Components.TransformComponent",
+        "properties": {
+          "position": {
+            "x": 3.625,
+            "y": 0.625
+          },
+          "layer": 0,
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "uniqueID": 920
+        }
+      },
+      {
+        "type": "Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16.0,
+            "height": 16.0,
+            "texture": {
+              "filepath": "Assets/Textures/decorationsAndBlocks.png",
+              "width": 112,
+              "height": 192
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.14285715,
+                "y": 1.0
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 1.0
+              }
+            ]
+          },
+          "uniqueID": 921
+        }
+      },
+      {
+        "type": "Just_Forge_2D.EntityComponentSystem.Components.PhysicsComponents.RigidBodyComponent",
+        "properties": {
+          "velocity": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "angularDamping": 0.8,
+          "linearDamping": 0.9,
+          "mass": 0.0,
+          "bodyType": "Static",
+          "fixedRotation": false,
+          "continuousCollision": true,
+          "angularVelocity": 0.0,
+          "gravityScale": 1.0,
+          "isSensor": false,
+          "uniqueID": 927
+        }
+      },
+      {
+        "type": "Just_Forge_2D.EntityComponentSystem.Components.PhysicsComponents.Collider.BoxColliderComponent",
+        "properties": {
+          "halfSize": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "origin": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "uniqueID": 928
+        }
+      }
+    ],
+    "uniqueID": 274,
+    "doSerialization": true,
+    "isDead": false
+  },
+  {
+    "name": "Auto Generated",
+    "components": [
+      {
+        "type": "Just_Forge_2D.EntityComponentSystem.Components.TransformComponent",
+        "properties": {
+          "position": {
+            "x": 3.875,
+            "y": 0.625
+          },
+          "layer": 0,
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "uniqueID": 920
+        }
+      },
+      {
+        "type": "Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16.0,
+            "height": 16.0,
+            "texture": {
+              "filepath": "Assets/Textures/decorationsAndBlocks.png",
+              "width": 112,
+              "height": 192
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.14285715,
+                "y": 1.0
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 1.0
+              }
+            ]
+          },
+          "uniqueID": 921
+        }
+      },
+      {
+        "type": "Just_Forge_2D.EntityComponentSystem.Components.PhysicsComponents.RigidBodyComponent",
+        "properties": {
+          "velocity": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "angularDamping": 0.8,
+          "linearDamping": 0.9,
+          "mass": 0.0,
+          "bodyType": "Static",
+          "fixedRotation": false,
+          "continuousCollision": true,
+          "angularVelocity": 0.0,
+          "gravityScale": 1.0,
+          "isSensor": false,
+          "uniqueID": 929
+        }
+      },
+      {
+        "type": "Just_Forge_2D.EntityComponentSystem.Components.PhysicsComponents.Collider.BoxColliderComponent",
+        "properties": {
+          "halfSize": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "origin": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "uniqueID": 930
+        }
+      }
+    ],
+    "uniqueID": 275,
+    "doSerialization": true,
+    "isDead": false
+  },
+  {
+    "name": "Auto Generated",
+    "components": [
+      {
+        "type": "Just_Forge_2D.EntityComponentSystem.Components.TransformComponent",
+        "properties": {
+          "position": {
+            "x": 2.875,
+            "y": 5.405
+          },
+          "layer": 0,
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.9,
+          "uniqueID": 951
+        }
+      },
+      {
+        "type": "Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16.0,
+            "height": 16.0,
+            "texture": {
+              "filepath": "Assets/Textures/decorationsAndBlocks.png",
+              "width": 112,
+              "height": 192
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.14285715,
+                "y": 1.0
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 1.0
+              }
+            ]
+          },
+          "uniqueID": 952
+        }
+      },
+      {
+        "type": "Just_Forge_2D.EntityComponentSystem.Components.PhysicsComponents.RigidBodyComponent",
+        "properties": {
+          "velocity": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "angularDamping": 0.8,
+          "linearDamping": 0.9,
+          "mass": 0.0,
+          "bodyType": "Dynamic",
+          "fixedRotation": false,
+          "continuousCollision": true,
+          "angularVelocity": 0.0,
+          "gravityScale": 1.0,
+          "isSensor": false,
+          "uniqueID": 954
+        }
+      },
+      {
+        "type": "Just_Forge_2D.EntityComponentSystem.Components.PhysicsComponents.Collider.CircleColliderComponent",
+        "properties": {
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "radius": 0.125,
+          "uniqueID": 955
+        }
+      }
+    ],
+    "uniqueID": 276,
+    "doSerialization": true,
+    "isDead": false
+  },
+  {
+    "name": "Auto Generated",
+    "components": [
+      {
+        "type": "Just_Forge_2D.EntityComponentSystem.Components.TransformComponent",
+        "properties": {
+          "position": {
+            "x": 2.975,
+            "y": 5.505
+          },
+          "layer": 0,
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.9,
+          "uniqueID": 951
+        }
+      },
+      {
+        "type": "Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16.0,
+            "height": 16.0,
+            "texture": {
+              "filepath": "Assets/Textures/decorationsAndBlocks.png",
+              "width": 112,
+              "height": 192
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.14285715,
+                "y": 1.0
+              },
+              {
+                "x": 0.14285715,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 1.0
+              }
+            ]
+          },
+          "uniqueID": 952
+        }
+      },
+      {
+        "type": "Just_Forge_2D.EntityComponentSystem.Components.PhysicsComponents.RigidBodyComponent",
+        "properties": {
+          "velocity": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "angularDamping": 0.8,
+          "linearDamping": 0.9,
+          "mass": 0.0,
+          "bodyType": "Dynamic",
+          "fixedRotation": false,
+          "continuousCollision": true,
+          "angularVelocity": 0.0,
+          "gravityScale": 1.0,
+          "isSensor": false,
+          "uniqueID": 954
+        }
+      },
+      {
+        "type": "Just_Forge_2D.EntityComponentSystem.Components.PhysicsComponents.Collider.CircleColliderComponent",
+        "properties": {
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "radius": 0.125,
+          "uniqueID": 955
+        }
+      }
+    ],
+    "uniqueID": 277,
     "doSerialization": true,
     "isDead": false
   }

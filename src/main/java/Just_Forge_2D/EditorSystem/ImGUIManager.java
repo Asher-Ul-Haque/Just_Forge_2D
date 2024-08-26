@@ -1,5 +1,7 @@
 package Just_Forge_2D.EditorSystem;
 
+import Just_Forge_2D.EditorSystem.Themes.ConfigFlags;
+import Just_Forge_2D.EditorSystem.Windows.*;
 import Just_Forge_2D.SceneSystem.Scene;
 import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.InputSystem.*;
@@ -16,47 +18,24 @@ import org.lwjgl.glfw.GLFW;
 
 
 // - - - Class to manage imGUI
-public class justForgeImGui
+public class ImGUIManager
 {
     // - - - private variables
-    private final long[] mouseCursors = new long[ImGuiMouseCursor.COUNT];
-    private final ImGuiImplGl3 imGuiGl3 = new ImGuiImplGl3();
-    private final long windowPtr;
-    private final GameViewport gameViewport = new GameViewport();
-    private final PropertiesWindow propertiesWindow;
-    private MenuBar menuBar;
-    private SceneHierarchyWindow sceneHierarchyWindow;
+    private static final long[] mouseCursors = new long[ImGuiMouseCursor.COUNT];
+    private static final ImGuiImplGl3 imGuiGl3 = new ImGuiImplGl3();
+    private static long windowPtr;
+    private static SceneHierarchyWindow sceneHierarchyWindow;
+    private static final GameViewport gameViewport = new GameViewport();
+    private static PropertiesWindow propertiesWindow;
+    private static MenuBar menuBar;
+    private static ImGuiIO io;
 
 
     // - - - Functions - - -
 
-    // - - - Constructor
-    public justForgeImGui(long GLFW_WINDOW_POINTER, ObjectSelector SELECTOR)
+
+    private static void setInputMapping()
     {
-        this.windowPtr = GLFW_WINDOW_POINTER;
-        this.propertiesWindow = new PropertiesWindow(SELECTOR);
-        this.menuBar = new MenuBar();
-        this.sceneHierarchyWindow = new SceneHierarchyWindow();
-        Logger.FORGE_LOG_INFO("Created imgui for window " + GLFW_WINDOW_POINTER);
-    }
-
-    // - - - start function because constructors are pointless
-    public void initImGui()
-    {
-        // IMPORTANT!!
-        // This line is critical for Dear ImGui to work.
-        ImGui.createContext();
-        Logger.FORGE_LOG_INFO("context created for imgui rendering");
-
-        // - - - Initialize ImGuiIO config
-        final ImGuiIO io = ImGui.getIO();
-
-        io.setIniFilename("Configurations/editorLayout.justForgeFile"); // We don't want to save .ini file
-        io.addConfigFlags(ImGuiConfigFlags.DockingEnable); // enable docking
-        io.addConfigFlags(ImGuiConfigFlags.ViewportsEnable); // enable docking
-        io.setBackendPlatformName("imgui_java_impl_glfw");
-
-
         // - - - Input mapping - - -
 
         // - - - Keyboard mapping. ImGui will use those indices to peek into the io.KeysDown[] array.
@@ -97,10 +76,10 @@ public class justForgeImGui
         mouseCursors[ImGuiMouseCursor.NotAllowed] = GLFW.glfwCreateStandardCursor(GLFW.GLFW_ARROW_CURSOR);
 
         Logger.FORGE_LOG_INFO("Input system mapped with editor gui");
+    }
 
-        // - - - Callbacks - - -
-
-        // - - - Callback for key press
+    private static void setKeyboardCallbacks()
+    {
         GLFW.glfwSetKeyCallback(windowPtr, (w, key, scancode, action, mods) ->
         {
             if (action == GLFW.GLFW_PRESS)
@@ -131,8 +110,10 @@ public class justForgeImGui
                 io.addInputCharacter(c);
             }
         });
+    }
 
-        // - - - callback for click
+    private static void setMouseCallbacks()
+    {
         GLFW.glfwSetMouseButtonCallback(windowPtr, (w, button, action, mods) ->
         {
             final boolean[] mouseDown = new boolean[5];
@@ -170,10 +151,10 @@ public class justForgeImGui
             }
         });
         Logger.FORGE_LOG_INFO("editor gui input system callbacks assigned. Ready for immediate mode GUI");
+    }
 
-
-        // - - - Clipboard management - - -
-
+    private static void setClipboardCallbacks()
+    {
         io.setSetClipboardTextFn(new ImStrConsumer()
         {
             @Override
@@ -200,10 +181,10 @@ public class justForgeImGui
             }
         });
         Logger.FORGE_LOG_INFO("editor gui clipboard reading activated");
+    }
 
-
-        // - - - Fonts - - -
-
+    private static void setFontAtlas()
+    {
         // - - - spritesheet but for fonts
         final ImFontAtlas fontAtlas = io.getFonts();
         final ImFontConfig fontConfig = new ImFontConfig(); // Natively allocated object, should be explicitly destroyed
@@ -221,8 +202,36 @@ public class justForgeImGui
         fontConfig.destroy(); // After all fonts were added we don't need this config more
         fontAtlas.build();
 
-        Logger.FORGE_LOG_INFO("Custom font read and assigned: " + fontPath + " with font size: " + fontSize);
+    }
 
+    // - - - start function because constructors are pointless
+    public static void initImGui(long HANDLE, ObjectSelector SELECTOR)
+    {
+        windowPtr = HANDLE;
+        propertiesWindow = new PropertiesWindow(SELECTOR);
+        menuBar = new MenuBar();
+        sceneHierarchyWindow = new SceneHierarchyWindow();
+        Logger.FORGE_LOG_INFO("Created imgui for window " + HANDLE);
+        // IMPORTANT!!
+        // This line is critical for Dear ImGui to work.
+        ImGui.createContext();
+        Logger.FORGE_LOG_INFO("context created for imgui rendering");
+
+        // - - - Initialize ImGuiIO config
+        io = ImGui.getIO();
+
+        io.setIniFilename("Configurations/editorLayout.justForgeFile"); // We don't want to save .ini file
+        if (ConfigFlags.dockingEnable) io.addConfigFlags(ImGuiConfigFlags.DockingEnable); // enable docking
+        if (ConfigFlags.viewportsEnable) io.addConfigFlags(ImGuiConfigFlags.ViewportsEnable); // enable docking
+        io.setBackendPlatformName("imgui_java_impl_glfw");
+
+        setInputMapping();
+        setKeyboardCallbacks();
+        setMouseCallbacks();
+        setClipboardCallbacks();
+        setFontAtlas();
+
+        EditorSystemManager.getCurrentTheme().applyTheme();
         imGuiGl3.init("#version 450 core");
         Logger.FORGE_LOG_INFO("Editor GUI ready");
     }
@@ -230,11 +239,11 @@ public class justForgeImGui
 
     // - - - GUI usage functions - - -
 
-    public void update(float DELTA_TIME, Scene SCENE)
+    public static void update(float DELTA_TIME, Scene SCENE)
     {
         startFrame(DELTA_TIME);
         ImGui.newFrame();
-        setupDockSpace();
+        if (ConfigFlags.dockingEnable) setupDockSpace();
         SCENE.editorGUI();
         gameViewport.gui();
         propertiesWindow.editorGUI();
@@ -246,7 +255,7 @@ public class justForgeImGui
         endFrame();
     }
 
-    private void startFrame(final float DELTA_TIME)
+    private static void startFrame(final float DELTA_TIME)
     {
         // - - - Get window properties and mouse position
         float[] winWidth = {EditorWindow.get().getWidth()};
@@ -268,21 +277,19 @@ public class justForgeImGui
         GLFW.glfwSetInputMode(windowPtr, GLFW.GLFW_CURSOR, GLFW.GLFW_CURSOR_NORMAL);
     }
 
-    private void endFrame()
+    private static void endFrame()
     {
-        // After Dear ImGui prepared a draw data, we use it in the LWJGL3 renderer.
-        // At that moment ImGui will be rendered to the current OpenGL context.
         imGuiGl3.renderDrawData(ImGui.getDrawData());
     }
 
-    private void destroyImGui()
+    public static void destroyImGui()
     {
         imGuiGl3.dispose();
         ImGui.destroyContext();
         Logger.FORGE_LOG_INFO("Editor GUI destroyed");
     }
 
-    private void setupDockSpace()
+    private static void setupDockSpace()
     {
         int windowFlags = ImGuiWindowFlags.MenuBar | ImGuiWindowFlags.NoDocking;
 
@@ -293,7 +300,7 @@ public class justForgeImGui
 
         windowFlags |= ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoMove | ImGuiWindowFlags.NoBringToFrontOnFocus | ImGuiWindowFlags.NoNavFocus;
 
-        ImGui.begin("Dockspace Demo", new ImBoolean(true), windowFlags);
+        ImGui.begin("Dockspace", new ImBoolean(true), windowFlags);
         ImGui.popStyleVar(2);
 
         // - - - SETUP DOCKSPACE
@@ -301,13 +308,13 @@ public class justForgeImGui
     }
 
     // - - - properties panel
-    public PropertiesWindow getPropertiesWindow()
+    public static PropertiesWindow getPropertiesWindow()
     {
-        return this.propertiesWindow;
+        return propertiesWindow;
     }
 
-    public GameViewport getGameViewport()
+    public static GameViewport getGameViewport()
     {
-        return this.gameViewport;
+        return gameViewport;
     }
 }

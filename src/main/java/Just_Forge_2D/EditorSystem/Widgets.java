@@ -9,7 +9,7 @@ import org.joml.Vector3f;
 import org.joml.Vector4f;
 
 // - - - Custom ImGUI
-public class ForgeIsGUI
+public class Widgets
 {
     // - - - private variables
     private static final float defaultWidth = 110.0f;

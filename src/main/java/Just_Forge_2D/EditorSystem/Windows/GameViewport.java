@@ -1,5 +1,7 @@
-package Just_Forge_2D.EditorSystem;
+package Just_Forge_2D.EditorSystem.Windows;
 
+import Just_Forge_2D.EditorSystem.EditorSystemManager;
+import Just_Forge_2D.EditorSystem.EditorWindow;
 import Just_Forge_2D.EventSystem.EventManager;
 import Just_Forge_2D.EventSystem.Events.Event;
 import Just_Forge_2D.EventSystem.Events.EventTypes;

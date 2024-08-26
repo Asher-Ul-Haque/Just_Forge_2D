@@ -1,7 +1,7 @@
 package Just_Forge_2D.EntityComponentSystem.Components.Sprite;
 
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
-import Just_Forge_2D.EditorSystem.ForgeIsGUI;
+import Just_Forge_2D.EditorSystem.Widgets;
 import Just_Forge_2D.RenderingSystem.Texture;
 import Just_Forge_2D.Utils.AssetPool;
 import Just_Forge_2D.Utils.Logger;
@@ -111,7 +111,7 @@ public class SpriteComponent extends Component
     @Override
     public void editorGUI()
     {
-        if (ForgeIsGUI.colorPicker4("Color Picker", this.color))
+        if (Widgets.colorPicker4("Color Picker", this.color))
         {
             this.isChanged = true;
         }

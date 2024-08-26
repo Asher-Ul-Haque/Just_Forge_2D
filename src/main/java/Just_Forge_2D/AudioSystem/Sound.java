@@ -1,4 +1,4 @@
-package Just_Forge_2D.AudioSsstem;
+package Just_Forge_2D.AudioSystem;
 
 import Just_Forge_2D.Utils.Logger;
 
