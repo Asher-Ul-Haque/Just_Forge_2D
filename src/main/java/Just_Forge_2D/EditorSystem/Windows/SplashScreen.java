@@ -2,6 +2,7 @@ package Just_Forge_2D.EditorSystem.Windows;
 
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.EditorSystem.EditorWindow;
+import Just_Forge_2D.EditorSystem.ProjectManager;
 import Just_Forge_2D.RenderingSystem.Texture;
 import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.Logger;
@@ -90,20 +91,20 @@ public class SplashScreen
         ImGui.setCursorPos(buttonX, buttonY);
         if (ImGui.button("Create New Project", buttonWidth, buttonHeight))
         {
-            cleanup();
+            if (ProjectManager.createNewProject()) cleanup();
         }
         buttonY += buttonHeight + 36.0f;
         ImGui.setCursorPos(buttonX, buttonY);
         if (ImGui.button("Open Existing Project", buttonWidth, buttonHeight))
         {
-            cleanup();
+            if (ProjectManager.openExistingProject()) cleanup();
         }
     }
 
     public static void cleanup()
     {
         EditorWindow.get().setVisible(false);
-//        Logger.FORGE_LOG_TRACE("Project Path : " + EditorManager.projectPath);
+        Logger.FORGE_LOG_TRACE("Project Path : " + EditorSystemManager.projectDir);
         EditorSystemManager.setCurrentState(EditorSystemManager.state.isEditor);
         EditorWindow.get().setSize(WindowSystemManager.getMonitorSize().x, WindowSystemManager.getMonitorSize().y);
         EditorWindow.get().setPosition(0, 0);

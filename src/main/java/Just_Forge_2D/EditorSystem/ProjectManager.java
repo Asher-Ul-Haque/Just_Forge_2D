@@ -15,13 +15,27 @@ public class ProjectManager
     public static boolean createNewProject()
     {
         String NAME = TinyFileDialogs.tinyfd_inputBox("Project name : ", null, "newProject");
-        dirPath += "/" + NAME;
         createProjectsDir();
         if (NAME != null && !NAME.isEmpty())
         {
             dirPath = TinyFileDialogs.tinyfd_selectFolderDialog("Select Project Directory", dirPath);
             if (dirPath != null)
             {
+                dirPath += "/" + NAME;
+                File hostDir = new File(dirPath);
+                if (!hostDir.exists())
+                {
+                    if (!hostDir.mkdir())
+                    {
+                        Logger.FORGE_LOG_ERROR("Could create host directory : " + hostDir.getAbsolutePath());
+                        return false;
+                    }
+                }
+                else
+                {
+                    TinyFileDialogs.tinyfd_notifyPopup("Error in creating project", hostDir.getName() + " already exists", "error");
+                    return false;
+                }
                 for (String dir : projectDirs)
                 {
                     File file = new File(dirPath, dir);

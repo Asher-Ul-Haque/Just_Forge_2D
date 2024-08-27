@@ -64,7 +64,7 @@
         }
       }
     ],
-    "uniqueID": 107,
+    "uniqueID": 0,
     "doSerialization": true,
     "isDead": false
   },
@@ -127,7 +127,7 @@
         }
       }
     ],
-    "uniqueID": 108,
+    "uniqueID": 1,
     "doSerialization": true,
     "isDead": false
   },
@@ -190,7 +190,7 @@
         }
       }
     ],
-    "uniqueID": 109,
+    "uniqueID": 2,
     "doSerialization": true,
     "isDead": false
   },
@@ -253,7 +253,7 @@
         }
       }
     ],
-    "uniqueID": 110,
+    "uniqueID": 3,
     "doSerialization": true,
     "isDead": false
   },
@@ -316,7 +316,7 @@
         }
       }
     ],
-    "uniqueID": 111,
+    "uniqueID": 4,
     "doSerialization": true,
     "isDead": false
   },
@@ -379,7 +379,7 @@
         }
       }
     ],
-    "uniqueID": 112,
+    "uniqueID": 5,
     "doSerialization": true,
     "isDead": false
   },
@@ -442,7 +442,7 @@
         }
       }
     ],
-    "uniqueID": 113,
+    "uniqueID": 6,
     "doSerialization": true,
     "isDead": false
   },
@@ -1527,7 +1527,7 @@
         }
       }
     ],
-    "uniqueID": 114,
+    "uniqueID": 7,
     "doSerialization": true,
     "isDead": false
   },
@@ -1569,19 +1569,19 @@
             },
             "textureCoordinates": [
               {
-                "x": 0.2857143,
+                "x": 0.14285715,
                 "y": 1.0
               },
               {
-                "x": 0.2857143,
-                "y": 0.8
-              },
-              {
                 "x": 0.14285715,
                 "y": 0.8
               },
               {
-                "x": 0.14285715,
+                "x": 0.0,
+                "y": 0.8
+              },
+              {
+                "x": 0.0,
                 "y": 1.0
               }
             ]
@@ -1788,7 +1788,7 @@
         }
       }
     ],
-    "uniqueID": 115,
+    "uniqueID": 8,
     "doSerialization": true,
     "isDead": false
   },
@@ -1830,19 +1830,19 @@
             },
             "textureCoordinates": [
               {
-                "x": 0.2857143,
+                "x": 0.14285715,
                 "y": 1.0
               },
               {
-                "x": 0.2857143,
-                "y": 0.8
-              },
-              {
                 "x": 0.14285715,
                 "y": 0.8
               },
               {
-                "x": 0.14285715,
+                "x": 0.0,
+                "y": 0.8
+              },
+              {
+                "x": 0.0,
                 "y": 1.0
               }
             ]
@@ -2049,7 +2049,7 @@
         }
       }
     ],
-    "uniqueID": 116,
+    "uniqueID": 9,
     "doSerialization": true,
     "isDead": false
   },
@@ -2091,19 +2091,19 @@
             },
             "textureCoordinates": [
               {
-                "x": 0.2857143,
+                "x": 0.14285715,
                 "y": 1.0
               },
               {
-                "x": 0.2857143,
-                "y": 0.8
-              },
-              {
                 "x": 0.14285715,
                 "y": 0.8
               },
               {
-                "x": 0.14285715,
+                "x": 0.0,
+                "y": 0.8
+              },
+              {
+                "x": 0.0,
                 "y": 1.0
               }
             ]
@@ -2310,7 +2310,7 @@
         }
       }
     ],
-    "uniqueID": 117,
+    "uniqueID": 10,
     "doSerialization": true,
     "isDead": false
   },
@@ -2410,7 +2410,7 @@
         }
       }
     ],
-    "uniqueID": 119,
+    "uniqueID": 11,
     "doSerialization": true,
     "isDead": false
   },
@@ -2510,7 +2510,7 @@
         }
       }
     ],
-    "uniqueID": 120,
+    "uniqueID": 12,
     "doSerialization": true,
     "isDead": false
   },
@@ -2610,7 +2610,7 @@
         }
       }
     ],
-    "uniqueID": 121,
+    "uniqueID": 13,
     "doSerialization": true,
     "isDead": false
   },
@@ -2710,7 +2710,7 @@
         }
       }
     ],
-    "uniqueID": 122,
+    "uniqueID": 14,
     "doSerialization": true,
     "isDead": false
   },
@@ -2803,7 +2803,7 @@
         }
       }
     ],
-    "uniqueID": 123,
+    "uniqueID": 15,
     "doSerialization": true,
     "isDead": false
   },
@@ -2896,7 +2896,7 @@
         }
       }
     ],
-    "uniqueID": 124,
+    "uniqueID": 16,
     "doSerialization": true,
     "isDead": false
   },
@@ -2938,19 +2938,19 @@
             },
             "textureCoordinates": [
               {
-                "x": 0.2857143,
+                "x": 0.14285715,
                 "y": 1.0
               },
               {
-                "x": 0.2857143,
-                "y": 0.8
-              },
-              {
                 "x": 0.14285715,
                 "y": 0.8
               },
               {
-                "x": 0.14285715,
+                "x": 0.0,
+                "y": 0.8
+              },
+              {
+                "x": 0.0,
                 "y": 1.0
               }
             ]
@@ -3157,7 +3157,7 @@
         }
       }
     ],
-    "uniqueID": 125,
+    "uniqueID": 17,
     "doSerialization": true,
     "isDead": false
   },
@@ -3199,19 +3199,19 @@
             },
             "textureCoordinates": [
               {
-                "x": 0.2857143,
+                "x": 0.14285715,
                 "y": 1.0
               },
               {
-                "x": 0.2857143,
-                "y": 0.8
-              },
-              {
                 "x": 0.14285715,
                 "y": 0.8
               },
               {
-                "x": 0.14285715,
+                "x": 0.0,
+                "y": 0.8
+              },
+              {
+                "x": 0.0,
                 "y": 1.0
               }
             ]
@@ -3418,7 +3418,7 @@
         }
       }
     ],
-    "uniqueID": 126,
+    "uniqueID": 18,
     "doSerialization": true,
     "isDead": false
   },
@@ -4503,7 +4503,7 @@
         }
       }
     ],
-    "uniqueID": 127,
+    "uniqueID": 19,
     "doSerialization": true,
     "isDead": false
   },
@@ -5588,7 +5588,7 @@
         }
       }
     ],
-    "uniqueID": 135,
+    "uniqueID": 20,
     "doSerialization": true,
     "isDead": false
   }

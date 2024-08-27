@@ -19,9 +19,10 @@ public class EditorSystemManager
     protected static ImGUIManager editorLayer;
     protected static boolean isRuntimePlaying = false;
     protected static WindowConfig editorWindowConfig;
-    protected static String projectDir;
+    public static String projectDir;
 
-    public static state getCurrentState() {
+    public static state getCurrentState()
+    {
         return currentState;
     }
 
