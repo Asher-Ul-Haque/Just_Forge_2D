@@ -13,7 +13,6 @@ import Just_Forge_2D.WindowSystem.WindowConfig;
 public class EditorSystemManager
 {
     private static Framebuffer framebuffer;
-    private static ObjectSelector selector;
     private static Theme currentTheme;
     protected static Shader defaultShader;
     protected static Shader selectorShader;
@@ -40,14 +39,9 @@ public class EditorSystemManager
         framebuffer = new Framebuffer(1980, 720);
     }
 
-    public static ObjectSelector getSelector()
-    {
-        return selector;
-    }
-
     public static void setSelector()
     {
-        selector = new ObjectSelector(1980, 720);
+        ObjectSelector.init(1980, 720);
     }
 
     public static void compileShaders()
@@ -66,7 +60,7 @@ public class EditorSystemManager
 
     public static void setEditorLayer()
     {
-        ImGUIManager.initImGui(EditorWindow.get().getGlfwWindowPtr(), selector);
+        ImGUIManager.initImGui(EditorWindow.get().getGlfwWindowPtr());
     }
 
     public static Theme getCurrentTheme()

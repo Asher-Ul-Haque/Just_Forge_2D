@@ -11,10 +11,7 @@ import static org.lwjgl.opengl.GL30.GL_FRAMEBUFFER;
 // - - - Object Selector
 public class ObjectSelector
 {
-    // - - - private variables
-    private int objectTextureId;
-    private int fbo;
-    private int depthTexture;
+    private static int fbo;
 
 
     // - - - | Functions | - - -
@@ -22,33 +19,27 @@ public class ObjectSelector
 
     // - - - Constructors and initialization - - -
 
-    public ObjectSelector(int WIDTH, int HEIGHT)
-    {
-        if (!init(WIDTH, HEIGHT))
-        {
-            Logger.FORGE_LOG_ERROR("Error initalizing object picker");
-        }
-    }
 
-    public boolean init(int WIDTH, int HEIGHT)
+    public static boolean init(int WIDTH, int HEIGHT)
     {
         // - - - generate framebuffer
         fbo = glGenFramebuffers();
         glBindFramebuffer(GL_FRAMEBUFFER, fbo);
 
         // - - - create the texture
-        objectTextureId = glGenTextures();
+        // - - - private variables
+        int objectTextureId = glGenTextures();
         glBindTexture(GL_TEXTURE_2D, objectTextureId);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F, WIDTH, HEIGHT, 0, GL_RGB, GL_FLOAT, 0);
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, this.objectTextureId, 0); //not sure why 0
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, objectTextureId, 0); //not sure why 0
 
         // - - - create a texture object for the depth buffer
         glEnable(GL_TEXTURE_2D);
-        depthTexture = glGenTextures();
+        int depthTexture = glGenTextures();
         glBindTexture(GL_TEXTURE_2D, depthTexture);
         glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, WIDTH, HEIGHT, 0, GL_DEPTH_COMPONENT, GL_FLOAT, 0);
         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthTexture, 0);
@@ -74,12 +65,12 @@ public class ObjectSelector
 
     // - - - Writing - - -
 
-    public void enableWriting()
+    public static void enableWriting()
     {
         glBindFramebuffer(GL_DRAW_FRAMEBUFFER, fbo);
     }
 
-    public void disableWriting()
+    public static void disableWriting()
     {
         glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
     }
@@ -87,7 +78,7 @@ public class ObjectSelector
 
     // - - - Reading - - -
 
-    public int readPixel(int X, int Y)
+    public static int readPixel(int X, int Y)
     {
         glBindFramebuffer(GL_READ_FRAMEBUFFER, fbo);
         glReadBuffer(GL_COLOR_ATTACHMENT0);
@@ -98,7 +89,7 @@ public class ObjectSelector
         return (int)(pixels[0]) - 1;
     }
 
-    public float[] readPixels(Vector2i START, Vector2i END)
+    public static float[] readPixels(Vector2i START, Vector2i END)
     {
         glBindFramebuffer(GL_READ_FRAMEBUFFER, fbo);
         glReadBuffer(GL_COLOR_ATTACHMENT0);

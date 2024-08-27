@@ -1,8 +1,7 @@
-package Just_Forge_2D.EditorSystem.Windows;
+package Just_Forge_2D.EditorSystem;
 
 import Just_Forge_2D.AnimationSystem.AnimationComponent;
 import Just_Forge_2D.AnimationSystem.AnimationState;
-import Just_Forge_2D.EditorSystem.EditorWindow;
 import Just_Forge_2D.EntityComponentSystem.Components.BlockCoin;
 import Just_Forge_2D.EntityComponentSystem.Components.PhysicsComponents.Collider.BoxColliderComponent;
 import Just_Forge_2D.EntityComponentSystem.Components.PhysicsComponents.Collider.CylinderColliderComponent;

@@ -6,6 +6,8 @@ package Just_Forge_2D.EditorSystem;
 
 import Just_Forge_2D.AudioSystem.AudioSystemManager;
 import Just_Forge_2D.EditorSystem.Windows.EditorWindowConfig;
+import Just_Forge_2D.EditorSystem.Windows.ObjectSelector;
+import Just_Forge_2D.EditorSystem.Windows.PropertiesWindow;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.SceneSystem.SceneInitializer;
 import Just_Forge_2D.SceneSystem.Scene;
@@ -59,7 +61,7 @@ public class EditorWindow extends Window
             Logger.FORGE_LOG_INFO("Clearing Scene Catch from previous run");
             SceneSystemManager.destroy(get().currentScene);
         }
-        if (ImGUIManager.getPropertiesWindow() != null) ImGUIManager.getPropertiesWindow().setActiveGameObject(null);
+        PropertiesWindow.setActiveGameObject(null);
 
         get().currentScene = new Scene(INITIALIZER, "Editor Scene");
         SceneSystemManager.load(get().currentScene);
@@ -143,13 +145,13 @@ public class EditorWindow extends Window
 
                 // - - - 1: renderer to object picker
                 glDisable(GL_BLEND);
-                EditorSystemManager.getSelector().enableWriting();
+                ObjectSelector.enableWriting();
 
                 glViewport(0, 0, 1980, 720);
                 clear();
                 Renderer.bindShader(EditorSystemManager.selectorShader);
                 currentScene.render(dt);
-                EditorSystemManager.getSelector().disableWriting();
+                ObjectSelector.disableWriting();
 
                 // - - - 2: render to monitor
 

@@ -1,7 +1,6 @@
 package Just_Forge_2D.EditorSystem;
 
 import Just_Forge_2D.AnimationSystem.AnimationComponent;
-import Just_Forge_2D.EditorSystem.Windows.Prefabs;
 import Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.GridlinesComponent;
 import Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.InputControls.KeyboardControls;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.Sprite;

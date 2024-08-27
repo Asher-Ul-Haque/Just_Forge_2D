@@ -10,8 +10,7 @@ import java.util.List;
 
 public class SceneHierarchyWindow
 {
-    private static String payloadType = "Scene Hierarchy";
-    public void editorGUI()
+    public static void editorGUI()
     {
         ImGui.begin("Scene Hierarchy");
         List<GameObject> gameObjectList = EditorWindow.getCurrentScene().getGameObjects();
@@ -33,6 +32,7 @@ public class SceneHierarchyWindow
             );
             ImGui.popID();
 
+            String payloadType = "Scene Hierarchy";
             if (ImGui.beginDragDropSource())
             {
                 ImGui.setDragDropPayload(payloadType, obj);

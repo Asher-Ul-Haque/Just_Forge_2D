@@ -24,11 +24,8 @@ public class ImGUIManager
     private static final long[] mouseCursors = new long[ImGuiMouseCursor.COUNT];
     private static final ImGuiImplGl3 imGuiGl3 = new ImGuiImplGl3();
     private static long windowPtr;
-    private static SceneHierarchyWindow sceneHierarchyWindow;
-    private static final GameViewport gameViewport = new GameViewport();
-    private static PropertiesWindow propertiesWindow;
-    private static MenuBar menuBar;
     private static ImGuiIO io;
+    static float timer = 0f;
 
 
     // - - - Functions - - -
@@ -130,7 +127,7 @@ public class ImGUIManager
             {
                 ImGui.setWindowFocus(null);
             }
-            if (!io.getWantCaptureMouse() || gameViewport.getWantCaptureMouse())
+            if (!io.getWantCaptureMouse() || GameViewport.getWantCaptureMouse())
             {
                 Mouse.mouseButtonCallback(w, button, action, mods);
             }
@@ -141,7 +138,7 @@ public class ImGUIManager
         {
             io.setMouseWheelH(io.getMouseWheelH() + (float) xOffset);
             io.setMouseWheel(io.getMouseWheel() + (float) yOffset);
-            if (!io.getWantCaptureMouse() || gameViewport.getWantCaptureMouse())
+            if (!io.getWantCaptureMouse() || GameViewport.getWantCaptureMouse())
             {
                 Mouse.mouseScrollCallback(w, xOffset, yOffset);
             }
@@ -205,12 +202,9 @@ public class ImGUIManager
     }
 
     // - - - start function because constructors are pointless
-    public static void initImGui(long HANDLE, ObjectSelector SELECTOR)
+    public static void initImGui(long HANDLE)
     {
         windowPtr = HANDLE;
-        propertiesWindow = new PropertiesWindow(SELECTOR);
-        menuBar = new MenuBar();
-        sceneHierarchyWindow = new SceneHierarchyWindow();
         Logger.FORGE_LOG_INFO("Created imgui for window " + HANDLE);
         // IMPORTANT!!
         // This line is critical for Dear ImGui to work.
@@ -241,14 +235,24 @@ public class ImGUIManager
 
     public static void update(float DELTA_TIME, Scene SCENE)
     {
+        timer += DELTA_TIME;
         startFrame(DELTA_TIME);
         ImGui.newFrame();
         if (ConfigFlags.dockingEnable) setupDockSpace();
-        SCENE.editorGUI();
-        gameViewport.gui();
-        propertiesWindow.editorGUI();
-        menuBar.editorGui();
-        sceneHierarchyWindow.editorGUI();
+        if (timer > 5f)
+        {
+            SCENE.editorGUI();
+            GameViewport.render();
+            PropertiesWindow.render();
+            MenuBar.render();
+            SceneHierarchyWindow.editorGUI();
+        }
+        else
+        {
+            ImGui.begin("Sample");
+            ImGui.text("S");
+            ImGui.end();
+        }
         ImGui.end();
         ImGui.render();
 
@@ -305,16 +309,5 @@ public class ImGUIManager
 
         // - - - SETUP DOCKSPACE
         ImGui.dockSpace(ImGui.getID("Dockspace"));
-    }
-
-    // - - - properties panel
-    public static PropertiesWindow getPropertiesWindow()
-    {
-        return propertiesWindow;
-    }
-
-    public static GameViewport getGameViewport()
-    {
-        return gameViewport;
     }
 }

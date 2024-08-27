@@ -7,7 +7,7 @@ import imgui.ImGui;
 
 public class MenuBar
 {
-    public void editorGui()
+    public static void render()
     {
         ImGui.beginMainMenuBar();
         if (ImGui.beginMenu("File"))

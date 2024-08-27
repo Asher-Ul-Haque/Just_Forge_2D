@@ -17,32 +17,20 @@ import java.util.List;
 public class PropertiesWindow
 {
     // - - - private variables
-    private final List<GameObject> activeGameObjects;
-    private final List<Vector4f> activeGameObjectsColors;
-    private GameObject activeGameObject = null;
-    private final ObjectSelector selector;
+    private static final List<GameObject> activeGameObjects = new ArrayList<>();
+    private static final List<Vector4f> activeGameObjectsColors = new ArrayList<>();
 
 
     // - - - Functions - - -
 
-
-    // - - - Constructor - - -
-    public PropertiesWindow(ObjectSelector SELECTOR)
-    {
-        this.activeGameObjects = new ArrayList<>();
-        this.selector = SELECTOR;
-        this.activeGameObjectsColors = new ArrayList<>();
-    }
-
-
     // - - - Update - - -
 
-    public void editorGUI()
+    public static void render()
     {
         ImGui.begin("Properties");
         if (activeGameObjects.size() == 1 && activeGameObjects.get(0) != null)
         {
-            activeGameObject = activeGameObjects.get(0);
+            GameObject activeGameObject = activeGameObjects.get(0);
 
             if (ImGui.beginPopupContextWindow("Component Adder"))
             {
@@ -101,17 +89,17 @@ public class PropertiesWindow
 
     // - - - Active Game Objects - - -
 
-    public GameObject getActiveGameObject()
+    public static GameObject getActiveGameObject()
     {
-        return activeGameObjects.size() == 1 ? this.activeGameObjects.get(0) : null;
+        return activeGameObjects.size() == 1 ? activeGameObjects.get(0) : null;
     }
 
-    public List<GameObject> getActiveGameObjects()
+    public static List<GameObject> getActiveGameObjects()
     {
-        return this.activeGameObjects;
+        return activeGameObjects;
     }
 
-    public void clearSelection()
+    public static void clearSelection()
     {
         if (!activeGameObjectsColors.isEmpty())
         {
@@ -126,38 +114,31 @@ public class PropertiesWindow
                 ++i;
             }
         }
-        this.activeGameObjects.clear();
-        this.activeGameObjectsColors.clear();
+        activeGameObjects.clear();
+        activeGameObjectsColors.clear();
     }
 
-    public void setActiveGameObject(GameObject GO)
+    public static void setActiveGameObject(GameObject GO)
     {
         if (GO != null)
         {
             clearSelection();
-            this.activeGameObjects.add(GO);
+            activeGameObjects.add(GO);
         }
     }
 
-    public void addActiveGameObject(GameObject GO)
+    public static void addActiveGameObject(GameObject GO)
     {
         SpriteComponent spr = GO.getCompoent(SpriteComponent.class);
         if (spr != null)
         {
-            this.activeGameObjectsColors.add(new Vector4f(spr.getColor()));
+            activeGameObjectsColors.add(new Vector4f(spr.getColor()));
             spr.setColor(new Vector4f(0.8f, 0.8f, 0.0f, 0.8f));
         }
         else
         {
-            this.activeGameObjectsColors.add(new Vector4f());
+            activeGameObjectsColors.add(new Vector4f());
         }
-        this.activeGameObjects.add(GO);
-    }
-
-
-    // - - - selector
-    public ObjectSelector getSelector()
-    {
-        return this.selector;
+        activeGameObjects.add(GO);
     }
 }

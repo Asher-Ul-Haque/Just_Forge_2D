@@ -19,9 +19,8 @@ public class KeyboardControls extends Component
     @Override
     public void editorUpdate(float DELTA_TIME)
     {
-        PropertiesWindow propertiesWindow = EditorSystemManager.getEditor().getPropertiesWindow();;
-        GameObject activeGameObject = propertiesWindow.getActiveGameObject();
-        List<GameObject> activeGameObjects = propertiesWindow.getActiveGameObjects();
+        GameObject activeGameObject = PropertiesWindow.getActiveGameObject();
+        List<GameObject> activeGameObjects = PropertiesWindow.getActiveGameObjects();
 
         if (Keyboard.isKeyPressed(Keys.LEFT_CONTROL) && Keyboard.isKeyBeginPress(Keys.C) && activeGameObject != null)
         {
@@ -29,7 +28,7 @@ public class KeyboardControls extends Component
             GameObject newObj = activeGameObject.copy();
             EditorWindow.getCurrentScene().addGameObject(newObj);
             newObj.transform.position.add(0.1f, 0.1f);
-            EditorSystemManager.getEditor().getPropertiesWindow().setActiveGameObject(newObj);
+            PropertiesWindow.setActiveGameObject(newObj);
             if (newObj.getCompoent(AnimationComponent.class) != null)
             {
                 newObj.getCompoent(AnimationComponent.class).refreshTextures();
@@ -38,14 +37,14 @@ public class KeyboardControls extends Component
         else if (Keyboard.isKeyPressed(Keys.LEFT_CONTROL) && Keyboard.isKeyBeginPress(Keys.C) && activeGameObjects.size() > 1)
         {
             List<GameObject> gameObjects = new ArrayList<>(activeGameObjects);
-            propertiesWindow.clearSelection();
+            PropertiesWindow.clearSelection();
             for (GameObject go : gameObjects)
             {
                 Logger.FORGE_LOG_DEBUG("Copying: " + go);
                 GameObject copy = go.copy();
                 EditorWindow.getCurrentScene().addGameObject(copy);
                 copy.transform.position.add(0.1f, 0.1f);
-                propertiesWindow.addActiveGameObject(copy);
+                PropertiesWindow.addActiveGameObject(copy);
                 if (go.getCompoent(AnimationComponent.class) != null)
                 {
                     go.getCompoent(AnimationComponent.class).refreshTextures();
@@ -59,7 +58,7 @@ public class KeyboardControls extends Component
                 Logger.FORGE_LOG_DEBUG("Destroying game object: "+ go);
                 go.destroy();
             }
-            propertiesWindow.clearSelection();
+            PropertiesWindow.clearSelection();
         }
         else if (!activeGameObjects.isEmpty() && Keyboard.isKeyBeginPress(Keys.PAGE_DOWN))
         {
