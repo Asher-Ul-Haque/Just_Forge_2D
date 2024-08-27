@@ -72,7 +72,7 @@ public class Window implements Observer
         glfwWindowHint(GLFW_FLOATING, this.config.alwaysOnTop ? GLFW_TRUE : GLFW_FALSE);
 
         // - - - Create the window
-        this.glfwWindowPtr = glfwCreateWindow(this.config.width, this.config.height, this.config.title, 0, 0);
+        this.glfwWindowPtr = glfwCreateWindow(100, 100, this.config.title, 0, 0);
         if (this.glfwWindowPtr == 0)
         {
             Logger.FORGE_LOG_FATAL("Unable to use GLFW to create Window!!!");
@@ -88,7 +88,6 @@ public class Window implements Observer
         glfwSetWindowSizeCallback(this.glfwWindowPtr, (w, newWidth, newHeight) -> {
             this.config.width = newWidth;
             this.config.height = newHeight;
-            //setSize(newWidth, newHeight);
         });
 
         Logger.FORGE_LOG_DEBUG("Linking " + this.config.title + " with Keyboard");
@@ -122,6 +121,7 @@ public class Window implements Observer
         glEnable(GL_BLEND);
         glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
         Logger.FORGE_LOG_INFO(this.config.title + " Online");
+        glfwSetWindowSize(this.glfwWindowPtr, this.config.width, this.config.height);
         glViewport(0, 0, this.config.width, this.config.height);
 
     }
@@ -366,6 +366,11 @@ public class Window implements Observer
         {
             glfwHideWindow(this.glfwWindowPtr);
         }
+    }
+
+    public boolean isVisible()
+    {
+        return this.config.visible;
     }
 
     // - - - clear color

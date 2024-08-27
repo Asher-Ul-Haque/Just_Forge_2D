@@ -235,27 +235,16 @@ public class ImGUIManager
 
     public static void update(float DELTA_TIME, Scene SCENE)
     {
-        timer += DELTA_TIME;
         startFrame(DELTA_TIME);
         ImGui.newFrame();
         if (ConfigFlags.dockingEnable) setupDockSpace();
-        if (timer > 5f)
-        {
-            SCENE.editorGUI();
-            GameViewport.render();
-            PropertiesWindow.render();
-            MenuBar.render();
-            SceneHierarchyWindow.editorGUI();
-        }
-        else
-        {
-            ImGui.begin("Sample");
-            ImGui.text("S");
-            ImGui.end();
-        }
+        SCENE.editorGUI();
+        GameViewport.render();
+        PropertiesWindow.render();
+        MenuBar.render();
+        SceneHierarchyWindow.editorGUI();
         ImGui.end();
         ImGui.render();
-
         endFrame();
     }
 
@@ -298,13 +287,13 @@ public class ImGUIManager
         int windowFlags = ImGuiWindowFlags.MenuBar | ImGuiWindowFlags.NoDocking;
 
         ImGui.setNextWindowPos(0.0f, 0.0f, ImGuiCond.Always);
-        ImGui.setNextWindowSize(EditorWindow.get().getWidth(), EditorWindow.get().getHeight());
-        ImGui.pushStyleVar(ImGuiStyleVar.WindowRounding, 4.0f);
+        ImGui.setNextWindowSize(io.getDisplaySizeX(), io.getDisplaySizeY());
+        ImGui.pushStyleVar(ImGuiStyleVar.WindowRounding, 0.0f);
         ImGui.pushStyleVar(ImGuiStyleVar.WindowBorderSize, 0.0f);
 
         windowFlags |= ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoMove | ImGuiWindowFlags.NoBringToFrontOnFocus | ImGuiWindowFlags.NoNavFocus;
 
-        ImGui.begin("Dockspace", new ImBoolean(true), windowFlags);
+        ImGui.begin("Dockspace Demo", new ImBoolean(true), windowFlags);
         ImGui.popStyleVar(2);
 
         // - - - SETUP DOCKSPACE

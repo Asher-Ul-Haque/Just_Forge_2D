@@ -192,6 +192,8 @@ public class EditorWindow extends Window
                 break;
 
             case isSplashScreen:
+                if (get().getWidth() != 600 || get().getHeight() != 400) get().setSize(600, 600);
+                if (!get().isVisible()) get().setVisible(true);
                 Logger.FORGE_LOG_INFO("Splashing");
                 warnFPSSpike();
 
