@@ -16,11 +16,15 @@ import Just_Forge_2D.InputSystem.Mouse;
 import Just_Forge_2D.PhysicsSystem.PhysicsSystem;
 import Just_Forge_2D.RenderingSystem.DebugPencil;
 import Just_Forge_2D.SceneSystem.SceneSystemManager;
+import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.WindowSystem.Window;
 import Just_Forge_2D.WindowSystem.WindowConfig;
 import Just_Forge_2D.RenderingSystem.Renderer;
 import Just_Forge_2D.Utils.TimeKeeper;
 import Just_Forge_2D.Utils.Logger;
+import Just_Forge_2D.WindowSystem.WindowSystemManager;
+import org.joml.Vector4f;
+
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.glfw.GLFW.*;
 
@@ -192,18 +196,12 @@ public class EditorWindow extends Window
                 break;
 
             case isSplashScreen:
-                if (get().getWidth() != 600 || get().getHeight() != 400) get().setSize(600, 600);
-                if (!get().isVisible()) get().setVisible(true);
-                Logger.FORGE_LOG_INFO("Splashing");
+
                 warnFPSSpike();
 
                 // - - - Poll events
                 glfwPollEvents();
 
-                // - - - 2: render to monitor
-
-                glEnable(GL_BLEND);
-                glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
                 this.clear();
 
                 ImGUIManager.update(dt, currentScene);

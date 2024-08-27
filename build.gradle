@@ -7,7 +7,7 @@ shadowJar {
     archiveClassifier.set('all')
     mergeServiceFiles()
     manifest {
-        attributes 'Main-Class': 'Just_Forge_2D.Main'
+        attributes 'Main-Class': 'Pet.Main'
     }
     from('Assets') {
         into '${buildDir}/libs/Assets'
@@ -17,7 +17,7 @@ shadowJar {
     }
 }
 group = "somebody.just"
-version = "1.0-SNAPSHOT"
+version = "1.2-SNAPSHOT"
 
 repositories {
     flatDir{
@@ -51,9 +51,10 @@ switch (OperatingSystem.current()) {
         break
     case OperatingSystem.WINDOWS:
         project.ext.imguiNatives = "imgui-java-natives-windows"
-        project.ext.lwjglNatives = "natives-windows-x86"
+        project.ext.lwjglNatives = "natives-windows"
         break
 }
+
 
 dependencies {
 
@@ -85,6 +86,7 @@ dependencies {
     implementation "org.lwjgl:lwjgl-openal"
     implementation "org.lwjgl:lwjgl-opengl"
     implementation "org.lwjgl:lwjgl-stb"
+    implementation "org.lwjgl:lwjgl-tinyfd"
     runtimeOnly "org.lwjgl:lwjgl::$lwjglNatives"
     runtimeOnly "org.lwjgl:lwjgl-assimp::$lwjglNatives"
     runtimeOnly "org.lwjgl:lwjgl-glfw::$lwjglNatives"
@@ -92,6 +94,7 @@ dependencies {
     runtimeOnly "org.lwjgl:lwjgl-openal::$lwjglNatives"
     runtimeOnly "org.lwjgl:lwjgl-opengl::$lwjglNatives"
     runtimeOnly "org.lwjgl:lwjgl-stb::$lwjglNatives"
+    runtimeOnly "org.lwjgl:lwjgl-tinyfd::$lwjglNatives"
     implementation "org.joml:joml:${jomlVersion}"
 }
 

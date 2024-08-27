@@ -19,9 +19,19 @@ public class EditorSystemManager
     protected static ImGUIManager editorLayer;
     protected static boolean isRuntimePlaying = false;
     protected static WindowConfig editorWindowConfig;
+    protected static String projectDir;
+
+    public static state getCurrentState() {
+        return currentState;
+    }
+
+    public static void setCurrentState(state currentState) {
+        EditorSystemManager.currentState = currentState;
+    }
+
     protected static state currentState = state.isSplashScreen;
 
-    protected static enum state
+    public static enum state
     {
         isEditor,
         isSplashScreen,

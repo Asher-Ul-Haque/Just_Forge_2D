@@ -7,8 +7,9 @@ public class EditorWindowConfig extends WindowConfig
     public EditorWindowConfig()
     {
         super();
-        this.x = 100;
-        this.y = 100;
+        this.x = 600;
+        this.y = 400;
+        this.setTransparent(true);
         this.visible = false;
     }
 }

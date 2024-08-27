@@ -236,14 +236,24 @@ public class ImGUIManager
     public static void update(float DELTA_TIME, Scene SCENE)
     {
         startFrame(DELTA_TIME);
-        ImGui.newFrame();
-        if (ConfigFlags.dockingEnable) setupDockSpace();
-        SCENE.editorGUI();
-        GameViewport.render();
-        PropertiesWindow.render();
-        MenuBar.render();
-        SceneHierarchyWindow.editorGUI();
-        ImGui.end();
+        switch (EditorSystemManager.currentState)
+        {
+            case isEditor:
+                if (ConfigFlags.dockingEnable) setupDockSpace();
+                SCENE.editorGUI();
+                GameViewport.render();
+                PropertiesWindow.render();
+                MenuBar.render();
+                SceneHierarchyWindow.editorGUI();
+                ImGui.end();
+                break;
+
+            case isSplashScreen:
+                SplashScreen.intiailize();
+                SplashScreen.render();
+                break;
+        }
+
         ImGui.render();
         endFrame();
     }
@@ -268,6 +278,8 @@ public class ImGUIManager
         final int imguiCursor = ImGui.getMouseCursor();
         GLFW.glfwSetCursor(windowPtr, mouseCursors[imguiCursor]);
         GLFW.glfwSetInputMode(windowPtr, GLFW.GLFW_CURSOR, GLFW.GLFW_CURSOR_NORMAL);
+
+        ImGui.newFrame();
     }
 
     private static void endFrame()

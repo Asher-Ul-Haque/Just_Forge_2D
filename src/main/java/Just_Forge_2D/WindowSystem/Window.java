@@ -123,7 +123,6 @@ public class Window implements Observer
         Logger.FORGE_LOG_INFO(this.config.title + " Online");
         glfwSetWindowSize(this.glfwWindowPtr, this.config.width, this.config.height);
         glViewport(0, 0, this.config.width, this.config.height);
-
     }
 
 
