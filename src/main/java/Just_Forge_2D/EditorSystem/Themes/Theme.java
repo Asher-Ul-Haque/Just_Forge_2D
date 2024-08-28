@@ -59,7 +59,6 @@ public abstract class Theme
     public ImVec4 buttonBgActiveColor;
 
     // - - - text
-    public ImVec4 buttonTextColor;
 
     // - - - padding and rounding
     public ImVec2 framePadding;
@@ -71,9 +70,6 @@ public abstract class Theme
         ImGui.getStyle().setColor(ImGuiCol.Button, buttonBgColor.x, buttonBgColor.y, buttonBgColor.z, buttonBgColor.w);
         ImGui.getStyle().setColor(ImGuiCol.ButtonActive, buttonBgActiveColor.x, buttonBgActiveColor.y, buttonBgActiveColor.z, buttonBgActiveColor.w);
         ImGui.getStyle().setColor(ImGuiCol.ButtonHovered, buttonBgHoverColor.x, buttonBgHoverColor.y, buttonBgHoverColor.z, buttonBgHoverColor.w);
-
-        // - - - text
-        ImGui.getStyle().setColor(ImGuiCol.Text, buttonTextColor.x, buttonTextColor.y, buttonTextColor.z, buttonTextColor.w);
 
         // - - - padding
         ImGui.getStyle().setFramePadding(framePadding.x, framePadding.y);

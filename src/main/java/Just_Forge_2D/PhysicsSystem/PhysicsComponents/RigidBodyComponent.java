@@ -1,4 +1,4 @@
-package Just_Forge_2D.EntityComponentSystem.Components.PhysicsComponents;
+package Just_Forge_2D.PhysicsSystem.PhysicsComponents;
 
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EditorSystem.EditorWindow;
@@ -204,6 +204,7 @@ public class RigidBodyComponent extends Component
         }
         rawBody.setLinearVelocity(rawBody.getLinearVelocity().add(new Vec2(VELOCITY.x, VELOCITY.y)));
     }
+
     public void addForce(Vector2f FORCE)
     {
         if (rawBody == null)

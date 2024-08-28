@@ -1,7 +1,7 @@
-package Just_Forge_2D.EntityComponentSystem.Components.PhysicsComponents.Collider;
+package Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider;
 
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
-import Just_Forge_2D.EntityComponentSystem.Components.PhysicsComponents.RigidBodyComponent;
+import Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent;
 import Just_Forge_2D.EditorSystem.EditorWindow;
 import org.joml.Vector2f;
 

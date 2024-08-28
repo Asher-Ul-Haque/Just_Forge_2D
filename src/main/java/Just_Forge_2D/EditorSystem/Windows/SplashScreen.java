@@ -49,14 +49,14 @@ public class SplashScreen
         ImGui.setNextWindowBgAlpha(0f);
 
         // - - - create the logo
-        float imageX = (EditorWindow.get().getWidth() - (float) logoTexture.getWidth() / 4) / 2.0f;
-        float imageY = (EditorWindow.get().getHeight() - (float) logoTexture.getWidth() / 4) / 2.0f;
+        float imageX = (EditorWindow.get().getWidth() - (float) logoTexture.getWidth() / 2) / 2.0f;
+        float imageY = (EditorWindow.get().getHeight() - (float) logoTexture.getWidth() / 2) / 2.0f;
         if (timer > 5.2f)
         {
             imageY -= ((float) EditorWindow.get().getHeight() / 4);
         }
         ImGui.setCursorPos(imageX, imageY);
-        ImGui.image(logoTexture.getID(), (float) logoTexture.getWidth() / 4, (float) logoTexture.getWidth() / 4, 0, 1, 1, 0);
+        ImGui.image(logoTexture.getID(), (float) logoTexture.getWidth() / 2, (float) logoTexture.getWidth() / 2, 0, 1, 1, 0);
 
         if (timer > 5f)
         {
@@ -83,10 +83,10 @@ public class SplashScreen
 
         float windowWidth = EditorWindow.get().getWidth();
         float windowHeight = EditorWindow.get().getHeight();
-        float buttonWidth = windowWidth / 4;
+        float buttonWidth = windowWidth / 3;
         float buttonHeight = windowHeight / 8;
         float buttonX = (windowWidth - buttonWidth) / 2.0f;
-        float buttonY = (windowHeight * 0.64f);
+        float buttonY = (windowHeight * 0.6f);
 
         ImGui.setCursorPos(buttonX, buttonY);
         if (ImGui.button("Create New Project", buttonWidth, buttonHeight))

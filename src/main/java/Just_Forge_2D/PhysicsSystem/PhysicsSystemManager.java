@@ -1,12 +1,12 @@
 package Just_Forge_2D.PhysicsSystem;
 
-import Just_Forge_2D.EntityComponentSystem.Components.PhysicsComponents.Collider.BoxColliderComponent;
-import Just_Forge_2D.EntityComponentSystem.Components.PhysicsComponents.Collider.CircleColliderComponent;
-import Just_Forge_2D.EntityComponentSystem.Components.PhysicsComponents.Collider.CylinderColliderComponent;
-import Just_Forge_2D.EntityComponentSystem.Components.PhysicsComponents.RigidBodyComponent;
+import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.BoxColliderComponent;
+import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.CircleColliderComponent;
+import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.CylinderColliderComponent;
+import Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent;
 import Just_Forge_2D.EntityComponentSystem.Components.TransformComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
-import Just_Forge_2D.Utils.DefaultValues;
+import Just_Forge_2D.SceneSystem.Scene;
 import Just_Forge_2D.Utils.Logger;
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.collision.shapes.PolygonShape;
@@ -15,26 +15,22 @@ import org.jbox2d.dynamics.*;
 import org.joml.Vector2f;
 
 // - - - interface to communicate with Box2D
-public class PhysicsSystem
+public class PhysicsSystemManager
 {
     // - - - private variables - - -
 
     // - - - world settings
-    private final Vec2 gravity = DefaultValues.GRAVITY;
-    private final World world = new World(gravity);
-    private float physicsTime = 0.0f;
 
-    // - - - world precisions
-    private float physicsTimeDelta = DefaultValues.PHYSICS_DELTA_TIME;
-    private int velocityIterations = DefaultValues.VELOCITY_ITERATIONS;
-    private int positionIterations = DefaultValues.POSITION_ITERATIONS;
+    private Scene owner;
+    private PhysicsWorld myWorld;
 
 
     // - - - | Functions | - - -
 
-    public PhysicsSystem()
+    public PhysicsSystemManager(Scene SCENE, PhysicsWorld WORLD)
     {
-        world.setContactListener(new CollisionDetector());
+        this.owner = SCENE;
+        myWorld = WORLD;
     }
 
     // - - - Game Objects - - -
@@ -77,7 +73,7 @@ public class PhysicsSystem
                     break;
             }
 
-            Body body = this.world.createBody(bodyDef);
+            Body body = myWorld.getWorld().createBody(bodyDef);
             body.m_mass = rb.getMass();
             rb.setRawBody(body);
 
@@ -111,7 +107,7 @@ public class PhysicsSystem
         {
             if (rb.getRawBody() != null)
             {
-                world.destroyBody(rb.getRawBody());
+                myWorld.getWorld().destroyBody(rb.getRawBody());
                 rb.setRawBody(null);
             }
         }
@@ -121,12 +117,7 @@ public class PhysicsSystem
     public void update(float DELTA_TIME)
     {
         // - - - ensure that update happens only every 16 milliseconds. We increase only when we pass 16ms
-        physicsTime += DELTA_TIME;
-        if (physicsTime > 0.0f)
-        {
-            physicsTime -= physicsTimeDelta;
-            world.step(physicsTimeDelta, velocityIterations, positionIterations);
-        }
+        myWorld.step(DELTA_TIME);
     }
 
     public void addBoxCollider(RigidBodyComponent RB, BoxColliderComponent COLLIDER)
@@ -193,7 +184,7 @@ public class PhysicsSystem
     public RayCastInfo rayCast(GameObject REQUESTEE, Vector2f POINT_1, Vector2f POINT_2)
     {
         RayCastInfo callback = new RayCastInfo(REQUESTEE);
-        world.raycast(callback, new Vec2(POINT_1.x, POINT_1.y), new Vec2(POINT_2.x, POINT_2.y));
+        myWorld.getWorld().raycast(callback, new Vec2(POINT_1.x, POINT_1.y), new Vec2(POINT_2.x, POINT_2.y));
         return callback;
     }
 
@@ -284,8 +275,6 @@ public class PhysicsSystem
 
     public boolean isLocked()
     {
-        return world.isLocked();
+        return myWorld.getWorld().isLocked();
     }
-
-
 }

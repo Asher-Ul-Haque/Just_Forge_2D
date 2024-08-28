@@ -6,6 +6,7 @@ import Just_Forge_2D.RenderingSystem.Texture;
 import Just_Forge_2D.Utils.AssetPool;
 import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.EntityComponentSystem.Components.TransformComponent;
+import imgui.ImGui;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 
@@ -111,6 +112,11 @@ public class SpriteComponent extends Component
     @Override
     public void editorGUI()
     {
+        if (ImGui.button("Destroy"))
+        {
+            this.gameObject.removeComponent(this.getClass());
+            this.isChanged = true;
+        }
         if (Widgets.colorPicker4("Color Picker", this.color))
         {
             this.isChanged = true;

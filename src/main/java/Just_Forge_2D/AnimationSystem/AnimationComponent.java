@@ -163,6 +163,10 @@ public class AnimationComponent extends Component
     @Override
     public void editorGUI()
     {
+        if (ImGui.button("Destroy"))
+        {
+            this.gameObject.removeComponent(this.getClass());
+        }
         for (AnimationState state : states)
         {
             ImString title = new ImString(state.title);

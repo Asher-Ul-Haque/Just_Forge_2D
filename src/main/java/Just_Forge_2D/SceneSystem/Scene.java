@@ -2,7 +2,7 @@ package Just_Forge_2D.SceneSystem;
 
 import Just_Forge_2D.EntityComponentSystem.Components.TransformComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
-import Just_Forge_2D.PhysicsSystem.PhysicsSystem;
+import Just_Forge_2D.PhysicsSystem.PhysicsSystemManager;
 import Just_Forge_2D.RenderingSystem.Renderer;
 import Just_Forge_2D.Utils.Logger;
 import org.joml.Vector2f;
@@ -27,7 +27,7 @@ public class Scene
     private final SceneInitializer initializer;
 
     // - - - saving and loading
-    private final PhysicsSystem physics;
+    private final PhysicsSystemManager physics;
     private final List<GameObject> pendingObjects;
 
     private final String name;
@@ -40,7 +40,7 @@ public class Scene
     public Scene(SceneInitializer INITIALIZER, String NAME)
     {
         this.initializer = INITIALIZER;
-        this.physics = INITIALIZER.physicsSystem;
+        this.physics = new PhysicsSystemManager(this, INITIALIZER.physicsWorld);
         this.renderer = INITIALIZER.renderer;
         this.gameObjects = new ArrayList<>();
         this.isRunning = false;
@@ -204,7 +204,7 @@ public class Scene
         return this.gameObjects;
     }
 
-    public PhysicsSystem getPhysics()
+    public PhysicsSystemManager getPhysics()
     {
         return this.physics;
     }

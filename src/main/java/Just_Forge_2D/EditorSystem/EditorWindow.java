@@ -13,17 +13,14 @@ import Just_Forge_2D.SceneSystem.SceneInitializer;
 import Just_Forge_2D.SceneSystem.Scene;
 import Just_Forge_2D.EventSystem.Events.Event;
 import Just_Forge_2D.InputSystem.Mouse;
-import Just_Forge_2D.PhysicsSystem.PhysicsSystem;
+import Just_Forge_2D.PhysicsSystem.PhysicsSystemManager;
 import Just_Forge_2D.RenderingSystem.DebugPencil;
 import Just_Forge_2D.SceneSystem.SceneSystemManager;
-import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.WindowSystem.Window;
 import Just_Forge_2D.WindowSystem.WindowConfig;
 import Just_Forge_2D.RenderingSystem.Renderer;
 import Just_Forge_2D.Utils.TimeKeeper;
 import Just_Forge_2D.Utils.Logger;
-import Just_Forge_2D.WindowSystem.WindowSystemManager;
-import org.joml.Vector4f;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.glfw.GLFW.*;
@@ -253,7 +250,7 @@ public class EditorWindow extends Window
         }
     }
 
-    public static PhysicsSystem getPhysicsSystem()
+    public static PhysicsSystemManager getPhysicsSystem()
     {
         return getCurrentScene().getPhysics();
     }

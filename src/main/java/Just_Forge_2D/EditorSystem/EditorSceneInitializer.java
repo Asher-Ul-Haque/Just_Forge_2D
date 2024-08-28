@@ -10,7 +10,7 @@ import Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.InputCont
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.EditorCameraComponent;
 import Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.GizmoSystem.GizmoSystemComponent;
-import Just_Forge_2D.PhysicsSystem.PhysicsSystem;
+import Just_Forge_2D.PhysicsSystem.PhysicsWorld;
 import Just_Forge_2D.RenderingSystem.Renderer;
 import Just_Forge_2D.SceneSystem.Scene;
 import Just_Forge_2D.SceneSystem.SceneInitializer;
@@ -220,6 +220,6 @@ public class EditorSceneInitializer extends SceneInitializer
     @Override
     public void assignPhysicsSystem()
     {
-        this.physicsSystem = new PhysicsSystem();
+        this.physicsWorld = new PhysicsWorld();
     }
 }

@@ -1,4 +1,4 @@
-package Just_Forge_2D.EntityComponentSystem.Components.PhysicsComponents.Collider;
+package Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider;
 
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.RenderingSystem.DebugPencil;

@@ -1,7 +1,7 @@
 package Just_Forge_2D.EntityComponentSystem.Components;
 
 import Just_Forge_2D.AnimationSystem.AnimationComponent;
-import Just_Forge_2D.EntityComponentSystem.Components.PhysicsComponents.RigidBodyComponent;
+import Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.InputSystem.Keys;
 import Just_Forge_2D.EditorSystem.EditorWindow;

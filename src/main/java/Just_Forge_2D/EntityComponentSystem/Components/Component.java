@@ -37,6 +37,10 @@ public abstract class Component
     {
         try
         {
+            if (ImGui.button("Destroy"))
+            {
+                this.gameObject.removeComponent(this.getClass());
+            }
             Field[] fields = this.getClass().getDeclaredFields();
             for (Field field : fields)
             {
@@ -105,6 +109,7 @@ public abstract class Component
                 {
                     field.setAccessible(false);
                 }
+
             }
         }
         catch (IllegalAccessException e)
