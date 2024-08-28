@@ -3,6 +3,9 @@ package Just_Forge_2D.EditorSystem.Windows;
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.EditorSystem.EditorWindow;
 import Just_Forge_2D.EditorSystem.ProjectManager;
+import Just_Forge_2D.EventSystem.EventManager;
+import Just_Forge_2D.EventSystem.Events.Event;
+import Just_Forge_2D.EventSystem.Events.EventTypes;
 import Just_Forge_2D.RenderingSystem.Texture;
 import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.Logger;
@@ -51,16 +54,16 @@ public class SplashScreen
         // - - - create the logo
         float imageX = (EditorWindow.get().getWidth() - (float) logoTexture.getWidth() / 2) / 2.0f;
         float imageY = (EditorWindow.get().getHeight() - (float) logoTexture.getWidth() / 2) / 2.0f;
-        if (timer > 5.2f)
+        if (timer > 3.2f)
         {
             imageY -= ((float) EditorWindow.get().getHeight() / 4);
         }
         ImGui.setCursorPos(imageX, imageY);
         ImGui.image(logoTexture.getID(), (float) logoTexture.getWidth() / 2, (float) logoTexture.getWidth() / 2, 0, 1, 1, 0);
 
-        if (timer > 5f)
+        if (timer > 3f)
         {
-            if (timer > 5.2f)
+            if (timer > 3.2f)
             {
                 displayWelcomePage();
             }
@@ -79,6 +82,13 @@ public class SplashScreen
             EditorWindow.get().setDecorated(true);
             EditorWindow.get().setAlwaysOnTop(false);
             EditorWindow.get().setVisible(true);
+        }
+
+        if (EditorSystemManager.isRelease)
+        {
+            EventManager.notify(null, new Event(EventTypes.ForgeStart));
+            cleanup();
+            return;
         }
 
         float windowWidth = EditorWindow.get().getWidth();
@@ -108,7 +118,6 @@ public class SplashScreen
         EditorSystemManager.setCurrentState(EditorSystemManager.state.isEditor);
         EditorWindow.get().setSize(WindowSystemManager.getMonitorSize().x, WindowSystemManager.getMonitorSize().y);
         EditorWindow.get().setPosition(0, 0);
-        EditorWindow.get().setClearColor(new Vector4f(0.0f, 0.541f, 0.772f, 1.0f));
         if (logoTexture != null)
         {
             logoTexture.detach();

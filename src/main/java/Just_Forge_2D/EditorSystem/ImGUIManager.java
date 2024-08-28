@@ -246,6 +246,7 @@ public class ImGUIManager
                 MenuBar.render();
                 SceneHierarchyWindow.editorGUI();
                 ImGui.end();
+
                 break;
 
             case isSplashScreen:

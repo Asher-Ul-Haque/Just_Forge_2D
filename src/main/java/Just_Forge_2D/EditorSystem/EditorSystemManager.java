@@ -18,8 +18,9 @@ public class EditorSystemManager
     protected static Shader selectorShader;
     protected static ImGUIManager editorLayer;
     protected static boolean isRuntimePlaying = false;
-    protected static WindowConfig editorWindowConfig;
+    public static WindowConfig editorWindowConfig;
     public static String projectDir;
+    public static boolean isRelease = true;
 
     public static state getCurrentState()
     {

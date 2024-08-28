@@ -144,28 +144,30 @@ public class EditorWindow extends Window
 
                 // - - - Renderpasses - - -
 
-                // - - - 1: renderer to object picker
-                glDisable(GL_BLEND);
-                ObjectSelector.enableWriting();
+                if (!EditorSystemManager.isRelease) {
 
-                glViewport(0, 0, 1980, 720);
-                clear();
-                Renderer.bindShader(EditorSystemManager.selectorShader);
-                currentScene.render(dt);
-                ObjectSelector.disableWriting();
+                    // - - - 1: renderer to object picker
+                    glDisable(GL_BLEND);
+                    ObjectSelector.enableWriting();
 
-                // - - - 2: render to monitor
+                    glViewport(0, 0, 1980, 720);
+                    clear();
+                    Renderer.bindShader(EditorSystemManager.selectorShader);
+                    currentScene.render(dt);
+                    ObjectSelector.disableWriting();
 
-                glEnable(GL_BLEND);
-                glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
-                // - - - Debug Drawing
-                DebugPencil.beginFrame();
+                    // - - - 2: render to monitor
 
-                // - - - Framebuffer
-                EditorSystemManager.getFramebuffer().bind();
+                    glEnable(GL_BLEND);
+                    glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+                    // - - - Debug Drawing
+                    DebugPencil.beginFrame();
 
+                    // - - - Framebuffer
+                    EditorSystemManager.getFramebuffer().bind();
+
+                }
                 this.clear();
-
                 if (dt >= 0.0d)
                 {
                     Renderer.bindShader(EditorSystemManager.defaultShader);
@@ -173,21 +175,24 @@ public class EditorWindow extends Window
                     {
                         currentScene.update(dt);
                     }
-                    else
+                    else if (!EditorSystemManager.isRelease)
                     {
                         currentScene.editorUpdate(dt);
                     }
                     currentScene.render(dt);
-                    DebugPencil.draw();
+                    if (!EditorSystemManager.isRelease) DebugPencil.draw();
                 }
 
                 // - - - Finish drawing to texture so that imgui should be rendered to the window
-                EditorSystemManager.getFramebuffer().unbind();
+                if (!EditorSystemManager.isRelease)
+                {
+                    EditorSystemManager.getFramebuffer().unbind();
 
                 // - - - Update the editor
-                ImGUIManager.update(dt, currentScene);
+                    ImGUIManager.update(dt, currentScene);
 
                 // - - - finish input frames
+                }
                 finishInputFrames();
                 keepTime();
                 break;
