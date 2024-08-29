@@ -64,7 +64,6 @@ public class EditorCameraComponent extends Component
             float addValue = (float)Math.pow(Math.abs(Mouse.getScrollY() * this.scrollSensitivity), 1 / this.editorCamera.getZoom());
             addValue *= -Math.signum(Mouse.getScrollY());
             editorCamera.addZoom(addValue);
-
         }
 
         if (Keyboard.isKeyPressed(Keys.NUM_0))

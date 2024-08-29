@@ -8,19 +8,14 @@ import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 
+import static Just_Forge_2D.EditorSystem.Themes.Theme.resetDefaultTextColor;
+import static Just_Forge_2D.EditorSystem.Themes.Theme.setDefaultTextColor;
+
 public class Widgets {
 
     private static final float DEFAULT_WIDTH = 128.0f;
     private static final float DEFAULT_RESET = 0.0f;
 
-    // - - - Utility method for setting default text color - - -
-    private static void setDefaultTextColor() {
-        ImGui.pushStyleColor(ImGuiCol.Text, 0.0f, 0.0f, 0.0f, 1.0f);  // Always set text color to black
-    }
-
-    private static void resetDefaultTextColor() {
-        ImGui.popStyleColor();
-    }
 
     // - - - Vec2 Control - - -
     public static void drawVec2Control(String label, Vector2f values, float resetValue, float columnWidth)
@@ -28,7 +23,7 @@ public class Widgets {
         ImGui.pushID(label);
         ImGui.columns(2);
         ImGui.setColumnWidth(0, columnWidth);
-        setDefaultTextColor();
+        setDefaultTextColor(EditorSystemManager.getCurrentTheme().tertiaryColor);
         ImGui.text(label);
         resetDefaultTextColor();
         ImGui.nextColumn();
@@ -83,7 +78,7 @@ public class Widgets {
         ImGui.pushID(label);
         ImGui.columns(2);
         ImGui.setColumnWidth(0, columnWidth);
-        setDefaultTextColor();
+        setDefaultTextColor(EditorSystemManager.getCurrentTheme().tertiaryColor);
         ImGui.text(label);
         resetDefaultTextColor();
         ImGui.nextColumn();
@@ -151,7 +146,7 @@ public class Widgets {
         ImGui.pushID(label);
         ImGui.columns(2);
         ImGui.setColumnWidth(0, DEFAULT_WIDTH);
-        setDefaultTextColor();
+        setDefaultTextColor(EditorSystemManager.getCurrentTheme().tertiaryColor);
         ImGui.text(label);
         resetDefaultTextColor();
         ImGui.nextColumn();
@@ -170,7 +165,7 @@ public class Widgets {
         ImGui.pushID(label);
         ImGui.columns(2);
         ImGui.setColumnWidth(0, DEFAULT_WIDTH);
-        setDefaultTextColor();
+        setDefaultTextColor(EditorSystemManager.getCurrentTheme().tertiaryColor);
         ImGui.text(label);
         resetDefaultTextColor();
         ImGui.nextColumn();
@@ -189,7 +184,7 @@ public class Widgets {
         ImGui.pushID(label);
         ImGui.columns(2);
         ImGui.setColumnWidth(0, DEFAULT_WIDTH);
-        setDefaultTextColor();
+        setDefaultTextColor(EditorSystemManager.getCurrentTheme().tertiaryColor);
         ImGui.text(label);
         resetDefaultTextColor();
         ImGui.nextColumn();
@@ -207,11 +202,12 @@ public class Widgets {
     }
 
     // - - - Text Input - - -
-    public static String inputText(String label, String text) {
+    public static String inputText(String label, String text)
+    {
         ImGui.pushID(label);
         ImGui.columns(2);
         ImGui.setColumnWidth(0, DEFAULT_WIDTH);
-        setDefaultTextColor();
+        setDefaultTextColor(EditorSystemManager.getCurrentTheme().tertiaryColor);
         ImGui.text(label);
         resetDefaultTextColor();
         ImGui.nextColumn();
@@ -228,7 +224,8 @@ public class Widgets {
     }
 
     // - - - Utility method to set button styles - - -
-    private static void setButtonStyle(float r, float g, float b) {
+    private static void setButtonStyle(float r, float g, float b)
+    {
         ImGui.pushStyleColor(ImGuiCol.Button, r, g, b, 1.0f);
         ImGui.pushStyleColor(ImGuiCol.ButtonHovered, r - 0.0f, g - 0.05f, b - 0.05f, 1.0f);
         ImGui.pushStyleColor(ImGuiCol.ButtonActive, r + 0.05f, g + 0.05f, b + 0.05f, 1.0f);

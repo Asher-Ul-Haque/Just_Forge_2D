@@ -9,6 +9,7 @@ import Just_Forge_2D.EditorSystem.Windows.EditorWindowConfig;
 import Just_Forge_2D.EditorSystem.Windows.ObjectSelector;
 import Just_Forge_2D.EditorSystem.Windows.PropertiesWindow;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
+import Just_Forge_2D.SceneSystem.Camera;
 import Just_Forge_2D.SceneSystem.SceneInitializer;
 import Just_Forge_2D.SceneSystem.Scene;
 import Just_Forge_2D.EventSystem.Events.Event;
@@ -21,6 +22,7 @@ import Just_Forge_2D.WindowSystem.WindowConfig;
 import Just_Forge_2D.RenderingSystem.Renderer;
 import Just_Forge_2D.Utils.TimeKeeper;
 import Just_Forge_2D.Utils.Logger;
+import org.joml.Vector2f;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.glfw.GLFW.*;
@@ -119,8 +121,8 @@ public class EditorWindow extends Window
         beginTime = (float) TimeKeeper.getTime();
         Logger.FORGE_LOG_INFO("Time keeping system Online");
 
+        Mouse.setCamera(new Camera(new Vector2f(0, 0)));
         changeScene(new EditorSceneInitializer());
-        Mouse.setCamera(getCurrentScene().getCamera());
     }
 
     // - - - Cleanup after game

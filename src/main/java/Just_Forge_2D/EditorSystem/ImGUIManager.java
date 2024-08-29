@@ -244,6 +244,7 @@ public class ImGUIManager
                 GameViewport.render();
                 PropertiesWindow.render();
                 MenuBar.render();
+                CameraControlWindow.render();
                 SceneHierarchyWindow.editorGUI();
                 ImGui.end();
 

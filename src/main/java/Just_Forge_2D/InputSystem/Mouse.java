@@ -40,7 +40,7 @@ public class Mouse
     private final Vector2f gameViewportPos = new Vector2f();
     private final Vector2f gameViewportSize = new Vector2f();
 
-    private Camera worldCamera;
+    private static Camera worldCamera;
 
 
     // - - - | Functions | - - -
@@ -203,7 +203,7 @@ public class Mouse
         currentX = (currentX / get().gameViewportSize.x) * 2.0f - 1.0f;
         Vector4f temp = new Vector4f(currentX, 0, 0, 1);
         Matrix4f viewProjection = new Matrix4f();
-        get().worldCamera.getInverseViewMatrix().mul(get().worldCamera.getInverseProjectionMatrix(), viewProjection);
+        worldCamera.getInverseViewMatrix().mul(worldCamera.getInverseProjectionMatrix(), viewProjection);
         temp.mul(viewProjection);
         get().xWorldPosition = temp.x;
     }
@@ -215,7 +215,7 @@ public class Mouse
         currentY = -((currentY / get().gameViewportSize.y) * 2.0f - 1.0f);
         Vector4f temp = new Vector4f(0, currentY, 0, 1);
         Matrix4f viewProjection = new Matrix4f();
-        get().worldCamera.getInverseViewMatrix().mul(get().worldCamera.getInverseProjectionMatrix(), viewProjection);
+        worldCamera.getInverseViewMatrix().mul(worldCamera.getInverseProjectionMatrix(), viewProjection);
         temp.mul(viewProjection);
         get().yWorldPosition = temp.y;
     }
@@ -302,7 +302,12 @@ public class Mouse
         if (CAMERA != null)
         {
             Logger.FORGE_LOG_ERROR("Cannot assign null as world camera");
-            get().worldCamera = CAMERA;
+            worldCamera = CAMERA;
         }
+    }
+
+    public static Camera getWorldCamera()
+    {
+        return worldCamera;
     }
 }

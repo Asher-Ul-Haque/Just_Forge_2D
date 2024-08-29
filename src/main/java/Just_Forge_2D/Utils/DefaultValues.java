@@ -12,7 +12,7 @@ public class DefaultValues
     public static final int MAX_BATCH_SIZE = 1024;
     public static final int DEBUG_PENCIL_MAX_LINES = 512;
     public static final int DEBUG_PENCIL_DEFAULT_LIFE = 1;
-    public static final Vector3f DEBUG_PENCIL_DEFAULT_COLOR = new Vector3f(0, 1, 0);
+    public static final Vector3f DEBUG_PENCIL_DEFAULT_COLOR = new Vector3f(1, 1, 1);
     public static final int DEBUG_PENCIL_DEFAULT_WIDTH = 2;
     public static final int DEBUG_PENCIL_DEFAULT_CIRCLE_PRECISION = 20;
     public static final float DEBUG_PENCIL_DEFAULT_ROTATION = 0f;
@@ -30,7 +30,7 @@ public class DefaultValues
     public static final float DEFAULT_EDITOR_CAMERA_DRAG_DEBOUNCE = 0.032f;
     public static final float DEFAULT_EDITOR_CAMERA_LERP_TIME = 0.0f;
     public static final float DEFAULT_EDITOR_CAMERA_DRAG_SENSITIVTY = 30.0f;
-    public static final float DEFAULT_EDITOR_CAMERA_SCROLL_SENSITIVITY = 0.1f;
+    public static final float DEFAULT_EDITOR_CAMERA_SCROLL_SENSITIVITY = 0.05f;
     public static final float DEFAULT_CAMERA_ZOOM = 1f;
     public static final String DEFAULT_SAVE_FILE = "Configurations/Levels/level.justForgeFile";
     public static final int DEFAULT_WINDOW_WIDTH = 1980;

@@ -142,6 +142,26 @@ public abstract class Theme
     }
 
 
+    // - - - Menu bar BG - - -
+
+    public ImVec4 menuBarBg;
+
+    public void applyMenuBarTheme()
+    {
+        ImGui.getStyle().setColor(ImGuiCol.MenuBarBg, menuBarBg.x, menuBarBg.y, menuBarBg.z, menuBarBg.w);
+    }
+
+
+    // - - - Pop Up - - -
+
+    public ImVec4 popupBg;
+
+    public void applyPopupBg()
+    {
+        ImGui.getStyle().setColor(ImGuiCol.PopupBg, popupBg.x, popupBg.y, popupBg.z, popupBg.w);
+    }
+
+
     // - - - Checkbox - - -
 
     public ImVec4 checkMarkColor;
@@ -162,5 +182,17 @@ public abstract class Theme
         applyCheckboxTheme();
         applyTabTheme();
         applyFrameTheme();
+        applyMenuBarTheme();
+        applyPopupBg();
+    }
+
+    public static void setDefaultTextColor(ImVec4 COLOR)
+    {
+        ImGui.pushStyleColor(ImGuiCol.Text, COLOR.x, COLOR.y, COLOR.z, COLOR.w);
+    }
+
+    public static void resetDefaultTextColor()
+    {
+        ImGui.popStyleColor();
     }
 }

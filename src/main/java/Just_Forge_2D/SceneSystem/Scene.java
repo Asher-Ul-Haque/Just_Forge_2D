@@ -2,6 +2,7 @@ package Just_Forge_2D.SceneSystem;
 
 import Just_Forge_2D.EntityComponentSystem.Components.TransformComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
+import Just_Forge_2D.InputSystem.Mouse;
 import Just_Forge_2D.PhysicsSystem.PhysicsSystemManager;
 import Just_Forge_2D.RenderingSystem.Renderer;
 import Just_Forge_2D.Utils.Logger;
@@ -101,7 +102,7 @@ public class Scene
 
     public void init()
     {
-        this.camera = new Camera(new Vector2f(0, 0));
+        this.camera = Mouse.getWorldCamera();
         this.initializer.loadResources(this);
         this.initializer.init(this);
         Logger.FORGE_LOG_INFO("Scene: " + this.initializer + " Initialized");

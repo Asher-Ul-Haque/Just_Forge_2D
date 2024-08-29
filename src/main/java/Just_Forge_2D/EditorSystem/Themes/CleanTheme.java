@@ -34,7 +34,7 @@ public class CleanTheme extends Theme
         this.framePadding = new ImVec2(4.0f, 4.0f);
         this.frameRounding = 0.0f;
 
-        this.dockingBorderColor = primaryColor;
+        this.dockingBorderColor = tertiaryColor;
         this.dockingBgColor = primaryColor;
         this.dockGripperColor = secondaryColor;
 
@@ -42,7 +42,7 @@ public class CleanTheme extends Theme
         this.treeNodeTextColor = secondaryColor;
         this.treeNodeIndent = 20f;
 
-        this.tabBgColor = primaryColor;
+        this.tabBgColor = tertiaryColor;
         this.tabHoveredColor = tertiaryColor;
         this.tabActiveColor = tertiaryColor;
         this.tabUnfocusedColor = primaryColor;
@@ -51,8 +51,11 @@ public class CleanTheme extends Theme
         this.tabBorder = 4f;
 
         this.checkMarkColor = this.secondaryColor;
-        this.frameBgColor = this.primaryColor;
+        this.frameBgColor = this.tertiaryColor;
         this.frameActiveColor = this.tertiaryColor;
         this.frameHoverColor = this.tertiaryColor;
+
+        this.menuBarBg = this.tertiaryColor;
+        this.popupBg = this.primaryColor;
     }
 }
