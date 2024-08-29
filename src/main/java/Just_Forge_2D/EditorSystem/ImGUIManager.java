@@ -24,7 +24,7 @@ public class ImGUIManager
     private static final long[] mouseCursors = new long[ImGuiMouseCursor.COUNT];
     private static final ImGuiImplGl3 imGuiGl3 = new ImGuiImplGl3();
     private static long windowPtr;
-    private static ImGuiIO io;
+    public static ImGuiIO io;
     static float timer = 0f;
 
 

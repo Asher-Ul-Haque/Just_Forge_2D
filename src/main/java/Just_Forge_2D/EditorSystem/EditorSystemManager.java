@@ -1,6 +1,6 @@
 package Just_Forge_2D.EditorSystem;
 
-import Just_Forge_2D.EditorSystem.Themes.IntelliTheme;
+import Just_Forge_2D.EditorSystem.Themes.CleanTheme;
 import Just_Forge_2D.EditorSystem.Themes.Theme;
 import Just_Forge_2D.EditorSystem.Windows.ObjectSelector;
 import Just_Forge_2D.RenderingSystem.Framebuffer;
@@ -20,7 +20,7 @@ public class EditorSystemManager
     protected static boolean isRuntimePlaying = false;
     public static WindowConfig editorWindowConfig;
     public static String projectDir;
-    public static boolean isRelease = true;
+    public static boolean isRelease = false;
 
     public static state getCurrentState()
     {
@@ -89,7 +89,7 @@ public class EditorSystemManager
     {
         editorWindowConfig = new WindowConfig();
         editorWindowConfig.setHeight(800);
-        if (currentTheme == null) currentTheme = new IntelliTheme();
+        if (currentTheme == null) currentTheme = new CleanTheme();
         EditorWindow window = EditorWindow.get();
         EditorSystemManager.setSelector();
         setEditorLayer();

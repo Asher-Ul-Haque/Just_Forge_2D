@@ -58,6 +58,8 @@ public class EditorSceneInitializer extends SceneInitializer
         master.addComponent(new EditorCameraComponent(SCENE.getCamera()));
         master.addComponent(new GizmoSystemComponent(gizmos));
         SCENE.addGameObject(this.master);
+
+        EditorWindow.get().setClearColor(new Vector4f(0.5f, 0.5f, 0.8f, 1.0f));
     }
 
     @Override

@@ -84,7 +84,7 @@ public abstract class Component
                 else if (type == Vector3f.class)
                 {
                     Vector3f val = (Vector3f) value;
-                    Widgets.drawVec3(name, val);
+                    Widgets.drawVec3Control(name, val);
                 }
                 else if (type == Vector4f.class)
                 {

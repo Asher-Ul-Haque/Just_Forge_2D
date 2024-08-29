@@ -7,6 +7,11 @@ import imgui.flag.ImGuiCol;
 
 public abstract class Theme
 {
+    public ImVec4 primaryColor;
+    public ImVec4 secondaryColor;
+    public ImVec4 tertiaryColor;
+    public ImVec4 quaternaryColor;
+
     // - - - Window Styling - - -
 
     // - - - background
@@ -51,6 +56,35 @@ public abstract class Theme
     }
 
 
+    // - - - Docking - - -
+
+    public ImVec4 dockingBgColor;
+    public ImVec4 dockingBorderColor;
+    public ImVec4 dockGripperColor;
+
+    public void applyDockingTheme()
+    {
+        ImGui.getStyle().setColor(ImGuiCol.DockingEmptyBg, dockingBgColor.x, dockingBgColor.y, dockingBgColor.z, dockingBgColor.w);
+        ImGui.getStyle().setColor(ImGuiCol.DockingPreview, dockingBorderColor.x, dockingBorderColor.y, dockingBorderColor.z, dockingBorderColor.w);
+        ImGui.getStyle().setColor(ImGuiCol.ResizeGrip, dockGripperColor.x, dockGripperColor.y, dockGripperColor.z, dockGripperColor.w);
+    }
+
+
+    // - - - Tree Node - - -
+
+    public ImVec4 treeNodeBgColor;
+    public ImVec4 treeNodeTextColor;
+    public float treeNodeIndent;
+
+    public void applyTreeNodeTheme()
+    {
+        ImGui.getStyle().setColor(ImGuiCol.Header, treeNodeBgColor.x, treeNodeBgColor.y, treeNodeBgColor.z, treeNodeBgColor.w);
+        ImGui.getStyle().setColor(ImGuiCol.Text, treeNodeTextColor.x, treeNodeTextColor.y, treeNodeTextColor.z, treeNodeTextColor.w);
+        ImGui.getStyle().setIndentSpacing(treeNodeIndent);
+    }
+
+
+
     // - - - Button - - -
 
     // - - - background
@@ -58,22 +92,63 @@ public abstract class Theme
     public ImVec4 buttonBgHoverColor;
     public ImVec4 buttonBgActiveColor;
 
-    // - - - text
-
-    // - - - padding and rounding
-    public ImVec2 framePadding;
-    public float frameRounding;
-
     public void applyButtonTheme()
     {
         // - - - background
         ImGui.getStyle().setColor(ImGuiCol.Button, buttonBgColor.x, buttonBgColor.y, buttonBgColor.z, buttonBgColor.w);
         ImGui.getStyle().setColor(ImGuiCol.ButtonActive, buttonBgActiveColor.x, buttonBgActiveColor.y, buttonBgActiveColor.z, buttonBgActiveColor.w);
         ImGui.getStyle().setColor(ImGuiCol.ButtonHovered, buttonBgHoverColor.x, buttonBgHoverColor.y, buttonBgHoverColor.z, buttonBgHoverColor.w);
+    }
+
+
+    // - - - Frame - - -
+    public ImVec2 framePadding;
+    public float frameRounding;
+    public ImVec4 frameBgColor;
+    public ImVec4 frameActiveColor;
+    public ImVec4 frameHoverColor;
+
+    public void applyFrameTheme()
+    {
+        ImGui.getStyle().setColor(ImGuiCol.FrameBg, frameBgColor.x, frameBgColor.y, frameBgColor.z, frameBgColor.w);
+        ImGui.getStyle().setColor(ImGuiCol.FrameBgHovered, frameHoverColor.x, frameHoverColor.y, frameHoverColor.z, frameHoverColor.w);
+        ImGui.getStyle().setColor(ImGuiCol.FrameBgHovered, frameActiveColor.x, frameActiveColor.y, frameActiveColor.z, frameActiveColor.w);
 
         // - - - padding
         ImGui.getStyle().setFramePadding(framePadding.x, framePadding.y);
         ImGui.getStyle().setFrameRounding(frameRounding);
+    }
+
+
+    // - - - Tabs - - -
+
+    public ImVec4 tabBgColor;
+    public ImVec4 tabHoveredColor;
+    public ImVec4 tabActiveColor;
+    public ImVec4 tabUnfocusedColor;
+    public ImVec4 tabUnfocusedActiveColor;
+    public float tabRounding;
+    public float tabBorder;
+
+    public void applyTabTheme()
+    {
+        ImGui.getStyle().setColor(ImGuiCol.Tab, tabBgColor.x, tabBgColor.y, tabBgColor.z, tabBgColor.w);
+        ImGui.getStyle().setColor(ImGuiCol.TabHovered, tabHoveredColor.x, tabHoveredColor.y, tabHoveredColor.z, tabHoveredColor.w);
+        ImGui.getStyle().setColor(ImGuiCol.TabActive, tabActiveColor.x, tabActiveColor.y, tabActiveColor.z, tabActiveColor.w);
+        ImGui.getStyle().setColor(ImGuiCol.TabUnfocused, tabUnfocusedColor.x, tabUnfocusedColor.y, tabUnfocusedColor.z, tabUnfocusedColor.w);
+        ImGui.getStyle().setColor(ImGuiCol.TabUnfocusedActive, tabUnfocusedActiveColor.x, tabUnfocusedActiveColor.y, tabUnfocusedActiveColor.z, tabUnfocusedActiveColor.w);
+        ImGui.getStyle().setTabRounding(tabRounding);
+        ImGui.getStyle().setTabBorderSize(tabBorder);
+    }
+
+
+    // - - - Checkbox - - -
+
+    public ImVec4 checkMarkColor;
+
+    public void applyCheckboxTheme()
+    {
+        ImGui.getStyle().setColor(ImGuiCol.CheckMark, checkMarkColor.x, checkMarkColor.y, checkMarkColor.z, checkMarkColor.w);
     }
 
 
@@ -82,5 +157,10 @@ public abstract class Theme
     {
         applyWindowTheme();
         applyButtonTheme();
+        applyTreeNodeTheme();
+        applyDockingTheme();
+        applyCheckboxTheme();
+        applyTabTheme();
+        applyFrameTheme();
     }
 }
