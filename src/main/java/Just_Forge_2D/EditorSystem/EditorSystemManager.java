@@ -3,6 +3,7 @@ package Just_Forge_2D.EditorSystem;
 import Just_Forge_2D.EditorSystem.Themes.CleanTheme;
 import Just_Forge_2D.EditorSystem.Themes.Theme;
 import Just_Forge_2D.EditorSystem.Windows.ObjectSelector;
+import Just_Forge_2D.EntityComponentSystem.Components.ComponentList;
 import Just_Forge_2D.RenderingSystem.Framebuffer;
 import Just_Forge_2D.RenderingSystem.Shader;
 import Just_Forge_2D.Utils.AssetPool;
@@ -93,6 +94,7 @@ public class EditorSystemManager
         MainWindow window = MainWindow.get();
         EditorSystemManager.setSelector();
         setEditorLayer();
+        ComponentList.initialize();
         window.run();
         ImGUIManager.destroyImGui();
     }

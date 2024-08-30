@@ -4,8 +4,10 @@ import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.EditorSystem.MainWindow;
 import Just_Forge_2D.EditorSystem.Themes.Theme;
 import imgui.ImGui;
+import imgui.ImVec4;
 import imgui.extension.implot.ImPlot;
 import imgui.extension.implot.ImPlotContext;
+import imgui.extension.implot.flag.ImPlotCol;
 import imgui.type.ImBoolean;
 
 public class FPSGraph
@@ -15,7 +17,7 @@ public class FPSGraph
     private static final Float[] fpsSamplesWrapper = new Float[MAX_SAMPLES];
     private static final Float[] xValuesWrapper = new Float[MAX_SAMPLES];
     private static int currentSampleIndex = 0;
-    private static ImBoolean vysnc = new ImBoolean();
+    private static final ImBoolean vsync = new ImBoolean();
 
     private static ImPlotContext imPlotContext;
 
@@ -24,7 +26,7 @@ public class FPSGraph
         if (imPlotContext == null)
         {
             imPlotContext = ImPlot.createContext();
-            vysnc.set(MainWindow.get().isVsync());
+            vsync.set(MainWindow.get().isVsync());
         }
     }
 
@@ -46,19 +48,19 @@ public class FPSGraph
             ImGui.begin("FPS");
             ImGui.setCursorPos(ImGui.getCursorPosX() + EditorSystemManager.getCurrentTheme().framePadding.x , ImGui.getCursorPosY() + EditorSystemManager.getCurrentTheme().framePadding.y);
             Theme.setDefaultTextColor(EditorSystemManager.getCurrentTheme().tertiaryColor);
-            ImGui.checkbox("Vsync", vysnc);
+            ImGui.checkbox("Vsync", vsync);
             Theme.resetDefaultTextColor();
-            if (vysnc.get() != MainWindow.get().isVsync())
+            if (vsync.get() != MainWindow.get().isVsync())
             {
-                MainWindow.get().setVsync(vysnc.get());
+                MainWindow.get().setVsync(vsync.get());
             }
 
 
-            ImPlot.setNextPlotLimitsY(0, vysnc.get() ? 120.0f : 600.0f, 1);
+            ImPlot.setNextPlotLimitsY(0, vsync.get() ? 120.0f : 600.0f, 1);
             ImPlot.setNextPlotFormatX("");
             if (ImPlot.beginPlot("FPS Plot"))
             {
-                ImPlot.plotLine("FPS", fpsSamplesWrapper, xValuesWrapper);
+                ImPlot.plotLine("", fpsSamplesWrapper, xValuesWrapper);
 
                 ImPlot.endPlot();
             }

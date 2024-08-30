@@ -25,18 +25,19 @@ Collapsed=0
 DockId=0x00000003,0
 
 [Window][Dockspace Demo]
+Pos=0,0
 Size=1366,724
 Collapsed=0
 
 [Window][Game Viewport]
 Pos=238,24
-Size=706,469
+Size=755,352
 Collapsed=0
 DockId=0x00000007,0
 
 [Window][Properties]
-Pos=946,24
-Size=420,457
+Pos=995,24
+Size=371,352
 Collapsed=0
 DockId=0x00000001,0
 
@@ -46,8 +47,8 @@ Size=461,343
 Collapsed=0
 
 [Window][Scene Hierarchy]
-Pos=946,483
-Size=420,241
+Pos=995,378
+Size=371,346
 Collapsed=0
 DockId=0x00000002,0
 
@@ -66,8 +67,8 @@ Size=600,400
 Collapsed=0
 
 [Window][Camera Controls]
-Pos=238,495
-Size=706,229
+Pos=238,378
+Size=755,346
 Collapsed=0
 DockId=0x00000009,0
 
@@ -78,19 +79,19 @@ Collapsed=0
 DockId=0x00000007,0
 
 [Window][FPS]
-Pos=238,495
-Size=706,229
+Pos=238,378
+Size=755,346
 Collapsed=0
 DockId=0x00000009,1
 
 [Docking][Data]
-DockSpace       ID=0x6D3A3A6E Pos=0,24 Size=1366,700 Split=X
-  DockNode      ID=0x00000005 Parent=0x6D3A3A6E SizeRef=944,700 Split=X
+DockSpace       ID=0x6D3A3A6E Window=0x091AB4BE Pos=0,24 Size=1366,700 Split=X
+  DockNode      ID=0x00000005 Parent=0x6D3A3A6E SizeRef=993,700 Split=X
     DockNode    ID=0x00000003 Parent=0x00000005 SizeRef=236,700 Selected=0xA9416207
-    DockNode    ID=0x00000004 Parent=0x00000005 SizeRef=706,700 Split=Y
-      DockNode  ID=0x00000007 Parent=0x00000004 SizeRef=799,469 CentralNode=1 Selected=0xAE7BB42F
-      DockNode  ID=0x00000009 Parent=0x00000004 SizeRef=799,229 Selected=0xC38F757A
-  DockNode      ID=0x00000006 Parent=0x6D3A3A6E SizeRef=420,700 Split=Y Selected=0xC89E3217
-    DockNode    ID=0x00000001 Parent=0x00000006 SizeRef=336,457 Selected=0xC89E3217
-    DockNode    ID=0x00000002 Parent=0x00000006 SizeRef=336,241 Selected=0x9A68760C
+    DockNode    ID=0x00000004 Parent=0x00000005 SizeRef=755,700 Split=Y
+      DockNode  ID=0x00000007 Parent=0x00000004 SizeRef=799,352 CentralNode=1 Selected=0xAE7BB42F
+      DockNode  ID=0x00000009 Parent=0x00000004 SizeRef=799,346 Selected=0xC38F757A
+  DockNode      ID=0x00000006 Parent=0x6D3A3A6E SizeRef=371,700 Split=Y Selected=0xC89E3217
+    DockNode    ID=0x00000001 Parent=0x00000006 SizeRef=336,352 Selected=0xC89E3217
+    DockNode    ID=0x00000002 Parent=0x00000006 SizeRef=336,346 Selected=0x9A68760C
 

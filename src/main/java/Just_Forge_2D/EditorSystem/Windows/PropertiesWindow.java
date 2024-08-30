@@ -1,5 +1,8 @@
 package Just_Forge_2D.EditorSystem.Windows;
 
+import Just_Forge_2D.EntityComponentSystem.Components.Component;
+import Just_Forge_2D.EntityComponentSystem.Components.ComponentList;
+import Just_Forge_2D.Utils.Logger;
 import SampleMario.Components.BreakableBrick;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.BoxColliderComponent;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.CircleColliderComponent;
@@ -34,49 +37,27 @@ public class PropertiesWindow
 
             if (ImGui.beginPopupContextWindow("Component Adder"))
             {
-                if (ImGui.menuItem("Add Rigid Body"))
+                String message = "Add Component";
+                ImGui.setCursorPosX((ImGui.getContentRegionAvailX() - (message.length() * ImGui.getFontSize()))/ 2f);
+                ImGui.text(message);
+                for (Class<? extends Component> type : ComponentList.types)
                 {
-                    if (activeGameObject.getCompoent(RigidBodyComponent.class) == null)
+                    if (activeGameObject.getCompoent(type) != null) continue;
+                    if (ImGui.menuItem(type.getSimpleName()))
                     {
-                        activeGameObject.addComponent(new RigidBodyComponent());
+                        try
+                        {
+                            Component component = type.getDeclaredConstructor().newInstance();
+                            activeGameObject.addComponent(component);
+                        }
+                        catch (Exception e)
+                        {
+                            Logger.FORGE_LOG_ERROR("Cant add component : " + type.getSimpleName());
+                        }
                     }
                 }
-
-                if (ImGui.menuItem("Add Box Collider"))
-                {
-                    if (activeGameObject.getCompoent(BoxColliderComponent.class) == null && activeGameObject.getCompoent(CircleColliderComponent.class) == null)
-                    {
-                        activeGameObject.addComponent(new BoxColliderComponent());
-                    }
-                }
-
-                if (ImGui.menuItem("Add Breakable Brick"))
-                {
-                    if (activeGameObject.getCompoent(BreakableBrick.class) == null)
-                    {
-                        activeGameObject.addComponent(new BreakableBrick());
-                    }
-                }
-
-                if (ImGui.menuItem("Add Circle Collider"))
-                {
-                    if (activeGameObject.getCompoent(CircleColliderComponent.class) == null && activeGameObject.getCompoent(BoxColliderComponent.class) == null)
-                    {
-                        activeGameObject.addComponent(new CircleColliderComponent());
-                    }
-                }
-
-                if (ImGui.menuItem("Add Breakable Brick"))
-                {
-                    if (activeGameObject.getCompoent(CircleColliderComponent.class) == null && activeGameObject.getCompoent(BoxColliderComponent.class) == null)
-                    {
-                        activeGameObject.addComponent(new CircleColliderComponent());
-                    }
-                }
-
                 ImGui.endPopup();
             }
-
             activeGameObject.editorGUI();
         }
         else
