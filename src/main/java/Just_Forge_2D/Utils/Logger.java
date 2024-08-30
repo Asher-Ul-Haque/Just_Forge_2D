@@ -1,6 +1,7 @@
 package Just_Forge_2D.Utils;
 
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
+import org.lwjgl.util.tinyfd.TinyFileDialogs;
 
 public class Logger
 {
@@ -23,7 +24,11 @@ public class Logger
 
     public static void FORGE_LOG_ERROR(Object... ARGS)
     {
-        if (!EditorSystemManager.isRelease) System.out.println(ANSI_RED + "[ERROR]:   \t" + formatMessage(ARGS) + ANSI_RESET);
+        if (!EditorSystemManager.isRelease)
+        {
+            System.out.println(ANSI_RED + "[ERROR]:   \t" + formatMessage(ARGS) + ANSI_RESET);
+            TinyFileDialogs.tinyfd_notifyPopup("Error", formatMessage(ARGS), "error");
+        }
     }
 
     public static void FORGE_LOG_WARNING(Object... ARGS)

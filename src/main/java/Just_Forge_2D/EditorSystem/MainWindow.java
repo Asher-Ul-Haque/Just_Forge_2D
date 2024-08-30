@@ -78,7 +78,7 @@ public class MainWindow extends Window
     {
         if (MainWindow.window == null)
         {
-            Logger.FORGE_LOG_ERROR("No Window config specififed");
+            Logger.FORGE_LOG_ERROR("No Window config specified");
             MainWindow.window = new MainWindow(new EditorWindowConfig());
         }
         return MainWindow.window;
@@ -145,9 +145,10 @@ public class MainWindow extends Window
                 glfwPollEvents();
 
 
-                // - - - Renderpasses - - -
+                // - - - Render passes - - -
 
-                if (!EditorSystemManager.isRelease) {
+                if (!EditorSystemManager.isRelease)
+                {
 
                     // - - - 1: renderer to object picker
                     glDisable(GL_BLEND);

@@ -30,7 +30,7 @@ public class SceneSystemManager
 
         try
         {
-            FileWriter writer = new FileWriter("Configurations/Levels/level.justForgeFile");
+            FileWriter writer = new FileWriter(SCENE.getSavePath());
             List<GameObject> toSerialize = new ArrayList<>();
             for (GameObject obj : SCENE.getGameObjects())
             {
@@ -60,11 +60,11 @@ public class SceneSystemManager
         String inFile = "";
         try
         {
-            inFile = new String(Files.readAllBytes(Paths.get(DefaultValues.DEFAULT_SAVE_FILE)));
+            inFile = new String(Files.readAllBytes(Paths.get(SCENE.getSavePath())));
         }
         catch (IOException e)
         {
-            Logger.FORGE_LOG_ERROR("Couldn't read from file: " + DefaultValues.DEFAULT_SAVE_FILE);
+            Logger.FORGE_LOG_ERROR("Couldn't read from file: " + SCENE.getSavePath());
             Logger.FORGE_LOG_ERROR(e.getMessage());
         }
 

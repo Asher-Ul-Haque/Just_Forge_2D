@@ -215,4 +215,14 @@ public class Scene
     {
         return this.name;
     }
+
+    public String getSavePath()
+    {
+        return this.initializer.savePath;
+    }
+
+    public void setSavePath(String PATH)
+    {
+        this.initializer.savePath = PATH;
+    }
 }

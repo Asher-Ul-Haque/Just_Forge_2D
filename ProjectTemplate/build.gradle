@@ -1,0 +1,100 @@
+plugins {
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
+    id("java")
+}
+
+shadowJar {
+    archiveClassifier.set('all')
+    mergeServiceFiles()
+    manifest {
+        attributes 'Main-Class': 'Pet.Main'
+    }
+    from('Assets') {
+        into '${buildDir}/libs/Assets'
+    }
+    from('libs') {
+        into '%{buildDir}/libs'
+    }
+}
+group = "somebody.just"
+version = "1.2-SNAPSHOT"
+
+repositories {
+    flatDir{
+        dirs 'libs'
+    }
+    mavenCentral()
+}
+
+import org.gradle.internal.os.OperatingSystem
+
+project.ext.lwjglVersion = "3.3.4"
+project.ext.jomlVersion = "1.10.7"
+project.ext.imguiVersion = "1.86.11"
+
+switch (OperatingSystem.current()) {
+    case OperatingSystem.LINUX:
+        project.ext.lwjglNatives = "natives-linux"
+        project.ext.imguiNatives = "imgui-java-natives-linux"
+        def osArch = System.getProperty("os.arch")
+        if (osArch.startsWith("arm") || osArch.startsWith("aarch64")) {
+            project.ext.lwjglNatives += osArch.contains("64") || osArch.startsWith("armv8") ? "-arm64" : "-arm32"
+        } else if  (osArch.startsWith("ppc")) {
+            project.ext.lwjglNatives += "-ppc64le"
+        } else if  (osArch.startsWith("riscv")) {
+            project.ext.lwjglNatives += "-riscv64"
+        }
+        break
+    case OperatingSystem.MAC_OS:
+        project.ext.imguiNatives = "imgui-java-natives-macos"
+        project.ext.lwjglNatives = "natives-macos-arm64"
+        break
+    case OperatingSystem.WINDOWS:
+        project.ext.imguiNatives = "imgui-java-natives-windows"
+        project.ext.lwjglNatives = "natives-windows"
+        break
+}
+
+
+dependencies {
+
+    // Box 2d
+    implementation name: 'jbox2d-library'
+
+    // GSON
+    implementation 'com.google.code.gson:gson:2.11.0'
+
+    // ImGui stuff
+    implementation "io.github.spair:imgui-java-binding:$imguiVersion"
+    implementation "io.github.spair:imgui-java-lwjgl3:$imguiVersion"
+    implementation "io.github.spair:$imguiNatives:$imguiVersion"
+    implementation "io.github.spair:imgui-java-app:$imguiVersion"
+    implementation platform("org.lwjgl:lwjgl-bom:$lwjglVersion")
+
+    // LWJGL
+    implementation platform("org.lwjgl:lwjgl-bom:$lwjglVersion")
+
+    ['', '-opengl', '-glfw'].each {
+        implementation "org.lwjgl:lwjgl$it:$lwjglVersion"
+        implementation "org.lwjgl:lwjgl$it:$lwjglNatives"
+    }
+
+    implementation "org.lwjgl:lwjgl"
+    implementation "org.lwjgl:lwjgl-assimp"
+    implementation "org.lwjgl:lwjgl-glfw"
+    implementation "org.lwjgl:lwjgl-nfd"
+    implementation "org.lwjgl:lwjgl-openal"
+    implementation "org.lwjgl:lwjgl-opengl"
+    implementation "org.lwjgl:lwjgl-stb"
+    implementation "org.lwjgl:lwjgl-tinyfd"
+    runtimeOnly "org.lwjgl:lwjgl::$lwjglNatives"
+    runtimeOnly "org.lwjgl:lwjgl-assimp::$lwjglNatives"
+    runtimeOnly "org.lwjgl:lwjgl-glfw::$lwjglNatives"
+    runtimeOnly "org.lwjgl:lwjgl-nfd::$lwjglNatives"
+    runtimeOnly "org.lwjgl:lwjgl-openal::$lwjglNatives"
+    runtimeOnly "org.lwjgl:lwjgl-opengl::$lwjglNatives"
+    runtimeOnly "org.lwjgl:lwjgl-stb::$lwjglNatives"
+    runtimeOnly "org.lwjgl:lwjgl-tinyfd::$lwjglNatives"
+    implementation "org.joml:joml:${jomlVersion}"
+}
+

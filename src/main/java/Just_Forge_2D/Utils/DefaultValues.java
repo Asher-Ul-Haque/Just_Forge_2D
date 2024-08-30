@@ -1,5 +1,6 @@
 package Just_Forge_2D.Utils;
 
+import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import org.jbox2d.common.Vec2;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
@@ -49,4 +50,5 @@ public class DefaultValues
     public static final boolean DEFAULT_WINDOW_DECORATION_STATE = true;
     public static final boolean DEFAULT_WINDOW_RESIZABLE_STATE = true;
     public static final boolean DEFAULT_WINDOW_FLOAT_STATUS = false;
+    public static final String DEFAULT_SAVE_DIR = "/Saves";
 }

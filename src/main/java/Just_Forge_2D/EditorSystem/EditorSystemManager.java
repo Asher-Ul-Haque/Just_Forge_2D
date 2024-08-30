@@ -7,8 +7,10 @@ import Just_Forge_2D.EntityComponentSystem.Components.ComponentList;
 import Just_Forge_2D.RenderingSystem.Framebuffer;
 import Just_Forge_2D.RenderingSystem.Shader;
 import Just_Forge_2D.Utils.AssetPool;
+import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.WindowSystem.WindowConfig;
 
+import java.io.IOException;
 
 
 public class EditorSystemManager
@@ -20,7 +22,7 @@ public class EditorSystemManager
     protected static ImGUIManager editorLayer;
     protected static boolean isRuntimePlaying = false;
     public static WindowConfig editorWindowConfig;
-    public static String projectDir;
+    public static String projectDir = System.getProperty("user.dir");
     public static boolean isRelease = false;
 
     public static state getCurrentState()

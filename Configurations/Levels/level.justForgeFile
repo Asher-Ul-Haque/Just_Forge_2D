@@ -58,7 +58,7 @@
         }
       }
     ],
-    "uniqueID": 0,
+    "uniqueID": 244,
     "doSerialization": true,
     "isDead": false
   },
@@ -121,7 +121,7 @@
         }
       }
     ],
-    "uniqueID": 1,
+    "uniqueID": 245,
     "doSerialization": true,
     "isDead": false
   },
@@ -184,7 +184,7 @@
         }
       }
     ],
-    "uniqueID": 2,
+    "uniqueID": 246,
     "doSerialization": true,
     "isDead": false
   },
@@ -226,19 +226,19 @@
             },
             "textureCoordinates": [
               {
-                "x": 0.14285715,
+                "x": 0.2857143,
                 "y": 1.0
               },
               {
+                "x": 0.2857143,
+                "y": 0.8
+              },
+              {
                 "x": 0.14285715,
                 "y": 0.8
               },
               {
-                "x": 0.0,
-                "y": 0.8
-              },
-              {
-                "x": 0.0,
+                "x": 0.14285715,
                 "y": 1.0
               }
             ]
@@ -445,7 +445,7 @@
         }
       }
     ],
-    "uniqueID": 3,
+    "uniqueID": 247,
     "doSerialization": true,
     "isDead": false
   },
@@ -487,19 +487,19 @@
             },
             "textureCoordinates": [
               {
-                "x": 0.14285715,
+                "x": 0.2857143,
                 "y": 1.0
               },
               {
+                "x": 0.2857143,
+                "y": 0.8
+              },
+              {
                 "x": 0.14285715,
                 "y": 0.8
               },
               {
-                "x": 0.0,
-                "y": 0.8
-              },
-              {
-                "x": 0.0,
+                "x": 0.14285715,
                 "y": 1.0
               }
             ]
@@ -706,7 +706,7 @@
         }
       }
     ],
-    "uniqueID": 4,
+    "uniqueID": 248,
     "doSerialization": true,
     "isDead": false
   },
@@ -1791,7 +1791,7 @@
         }
       }
     ],
-    "uniqueID": 5,
+    "uniqueID": 249,
     "doSerialization": true,
     "isDead": false
   },
@@ -1833,19 +1833,19 @@
             },
             "textureCoordinates": [
               {
-                "x": 0.14285715,
+                "x": 0.2857143,
                 "y": 1.0
               },
               {
+                "x": 0.2857143,
+                "y": 0.8
+              },
+              {
                 "x": 0.14285715,
                 "y": 0.8
               },
               {
-                "x": 0.0,
-                "y": 0.8
-              },
-              {
-                "x": 0.0,
+                "x": 0.14285715,
                 "y": 1.0
               }
             ]
@@ -2052,7 +2052,170 @@
         }
       }
     ],
-    "uniqueID": 6,
+    "uniqueID": 250,
+    "doSerialization": true,
+    "isDead": false
+  },
+  {
+    "name": "Auto Generated",
+    "components": [
+      {
+        "type": "Just_Forge_2D.EntityComponentSystem.Components.TransformComponent",
+        "properties": {
+          "position": {
+            "x": 1.625,
+            "y": 1.625
+          },
+          "layer": 0,
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "uniqueID": 101
+        }
+      },
+      {
+        "type": "Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16.0,
+            "height": 16.0,
+            "texture": {
+              "filepath": "Assets/Textures/decorationsAndBlocks.png",
+              "width": 112,
+              "height": 192
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.42857143,
+                "y": 0.25
+              },
+              {
+                "x": 0.42857143,
+                "y": 0.16666667
+              },
+              {
+                "x": 0.2857143,
+                "y": 0.16666667
+              },
+              {
+                "x": 0.2857143,
+                "y": 0.25
+              }
+            ]
+          },
+          "uniqueID": 102
+        }
+      },
+      {
+        "type": "Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent",
+        "properties": {
+          "velocity": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "angularDamping": 0.8,
+          "linearDamping": 0.9,
+          "mass": 0.0,
+          "bodyType": "Static",
+          "fixedRotation": false,
+          "continuousCollision": true,
+          "angularVelocity": 0.0,
+          "gravityScale": 1.0,
+          "isSensor": false,
+          "uniqueID": 107
+        }
+      },
+      {
+        "type": "Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.BoxColliderComponent",
+        "properties": {
+          "halfSize": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "origin": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "uniqueID": 108
+        }
+      }
+    ],
+    "uniqueID": 251,
+    "doSerialization": true,
+    "isDead": false
+  },
+  {
+    "name": "Auto Generated",
+    "components": [
+      {
+        "type": "Just_Forge_2D.EntityComponentSystem.Components.TransformComponent",
+        "properties": {
+          "position": {
+            "x": 1.875,
+            "y": 1.625
+          },
+          "layer": 0,
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "uniqueID": 104
+        }
+      },
+      {
+        "type": "Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16.0,
+            "height": 16.0,
+            "texture": {
+              "filepath": "Assets/Textures/decorationsAndBlocks.png",
+              "width": 112,
+              "height": 192
+            },
+            "textureCoordinates": [
+              {
+                "x": 0.5714286,
+                "y": 0.25
+              },
+              {
+                "x": 0.5714286,
+                "y": 0.16666667
+              },
+              {
+                "x": 0.42857143,
+                "y": 0.16666667
+              },
+              {
+                "x": 0.42857143,
+                "y": 0.25
+              }
+            ]
+          },
+          "uniqueID": 105
+        }
+      }
+    ],
+    "uniqueID": 252,
     "doSerialization": true,
     "isDead": false
   }

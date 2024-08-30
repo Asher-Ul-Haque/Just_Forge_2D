@@ -4,6 +4,9 @@ import org.lwjgl.util.tinyfd.TinyFileDialogs;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 
 public class ProjectManager
@@ -18,62 +21,31 @@ public class ProjectManager
         createProjectsDir();
         if (NAME != null && !NAME.isEmpty())
         {
-            dirPath = TinyFileDialogs.tinyfd_selectFolderDialog("Select Project Directory", dirPath);
-            if (dirPath != null)
+            String destinationDirPath = TinyFileDialogs.tinyfd_selectFolderDialog("Select Project Directory", dirPath);
+            if (destinationDirPath != null)
             {
-                dirPath += "/" + NAME;
-                File hostDir = new File(dirPath);
-                if (!hostDir.exists())
+                destinationDirPath += "/" + NAME;
+                File destinationDir = new File(destinationDirPath);
+                if (!destinationDir.exists())
                 {
-                    if (!hostDir.mkdir())
+                    try
                     {
-                        Logger.FORGE_LOG_ERROR("Could create host directory : " + hostDir.getAbsolutePath());
+                        copyDirectory("ProjectTemplate", destinationDirPath);
+                        Logger.FORGE_LOG_INFO("Project created successfully at: " + destinationDir.getAbsolutePath());
+                    }
+                    catch (IOException e)
+                    {
+                        Logger.FORGE_LOG_ERROR("Could not create project: " + e.getMessage());
                         return false;
                     }
                 }
                 else
                 {
-                    TinyFileDialogs.tinyfd_notifyPopup("Error in creating project", hostDir.getName() + " already exists", "error");
+                    TinyFileDialogs.tinyfd_notifyPopup("Error in creating project", destinationDir.getName() + " already exists", "error");
                     return false;
                 }
-                for (String dir : projectDirs)
-                {
-                    File file = new File(dirPath, dir);
-                    if (file.exists()) continue;
-                    if (file.mkdir())
-                    {
-                        Logger.FORGE_LOG_INFO("Creating directory : " + dir);
-                    }
-                    else
-                    {
-                        Logger.FORGE_LOG_ERROR("Couldn't create directory : " + dir);
-                        return false;
-                    }
-                }
-                for (String files : projectFiles)
-                {
-                    File file = new File(dirPath, files);
-                    if (file.exists()) continue;
-                    try
-                    {
-                        if (file.createNewFile())
-                        {
-                            Logger.FORGE_LOG_INFO("Creating file : " + files);
-                        }
-                        else
-                        {
-                            Logger.FORGE_LOG_ERROR("Couldn't create file : " + files);
-                            return false;
-                        }
-                    }
-                    catch (IOException e)
-                    {
-                        Logger.FORGE_LOG_FATAL("Couldn't create file : " + files);
-                        return false;
-                    }
-                }
             }
-            EditorSystemManager.projectDir = dirPath;
+            EditorSystemManager.projectDir = destinationDirPath;
             return true;
         }
         return false;
@@ -105,5 +77,20 @@ public class ProjectManager
                 Logger.FORGE_LOG_FATAL("Security exception : " + e.getMessage());
             }
         }
+    }
+
+    public static void copyDirectory(String sourceDirectoryLocation, String destinationDirectoryLocation)
+            throws IOException
+    {
+        Files.walk(Paths.get(sourceDirectoryLocation))
+                .forEach(source -> {
+                    Path destination = Paths.get(destinationDirectoryLocation, source.toString()
+                            .substring(sourceDirectoryLocation.length()));
+                    try {
+                        Files.copy(source, destination);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
     }
 }
