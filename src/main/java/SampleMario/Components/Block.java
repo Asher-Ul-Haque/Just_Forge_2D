@@ -1,5 +1,6 @@
-package Just_Forge_2D.EntityComponentSystem.Components;
+package SampleMario.Components;
 
+import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.Utils.AssetPool;
 import org.jbox2d.dynamics.contacts.Contact;

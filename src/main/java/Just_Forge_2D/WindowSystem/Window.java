@@ -432,7 +432,7 @@ public class Window implements Observer
         }
     }
 
-    public boolean isVysnc()
+    public boolean isVsync()
     {
         return this.config.vsync;
     }

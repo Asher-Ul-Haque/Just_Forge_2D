@@ -1,6 +1,5 @@
 package Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.GizmoSystem;
 
-import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.EditorSystem.Windows.PropertiesWindow;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.NonPickableComponent;
@@ -8,8 +7,8 @@ import Just_Forge_2D.EntityComponentSystem.Components.Sprite.Sprite;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.InputSystem.Mouse;
-import Just_Forge_2D.EditorSystem.EditorWindow;
-import Just_Forge_2D.EditorSystem.Prefabs;
+import Just_Forge_2D.EditorSystem.MainWindow;
+import SampleMario.GameCode.Prefabs;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 
@@ -61,8 +60,8 @@ public class GizmoComponent extends Component
         this.xAxisGizmo.addComponent(new NonPickableComponent());
         this.yAxisGizmo.addComponent(new NonPickableComponent());
 
-        EditorWindow.getCurrentScene().addGameObject(this.xAxisGizmo);
-        EditorWindow.getCurrentScene().addGameObject(this.yAxisGizmo);
+        MainWindow.getCurrentScene().addGameObject(this.xAxisGizmo);
+        MainWindow.getCurrentScene().addGameObject(this.yAxisGizmo);
     }
 
     // - - - start

@@ -1,4 +1,4 @@
-package Just_Forge_2D.EntityComponentSystem.Components;
+package SampleMario.Components;
 
 import Just_Forge_2D.Utils.AssetPool;
 

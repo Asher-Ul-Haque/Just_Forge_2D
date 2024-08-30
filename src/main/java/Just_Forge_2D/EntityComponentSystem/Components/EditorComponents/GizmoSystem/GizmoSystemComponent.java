@@ -1,11 +1,10 @@
 package Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.GizmoSystem;
 
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
-import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteSheet;
+import Just_Forge_2D.RenderingSystem.SpriteSheet;
 import Just_Forge_2D.InputSystem.Keyboard;
 import Just_Forge_2D.InputSystem.Keys;
 import Just_Forge_2D.Utils.Logger;
-import static org.lwjgl.glfw.GLFW.*;
 
 // - - - Gizmo System
 public class GizmoSystemComponent extends Component

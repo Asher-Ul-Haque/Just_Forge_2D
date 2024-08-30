@@ -1,11 +1,10 @@
 package Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.InputControls;
 
 import Just_Forge_2D.AnimationSystem.AnimationComponent;
-import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.InputSystem.Keys;
-import Just_Forge_2D.EditorSystem.EditorWindow;
+import Just_Forge_2D.EditorSystem.MainWindow;
 import Just_Forge_2D.InputSystem.Keyboard;
 import Just_Forge_2D.EditorSystem.Windows.PropertiesWindow;
 import Just_Forge_2D.Utils.Logger;
@@ -26,7 +25,7 @@ public class KeyboardControls extends Component
         {
             Logger.FORGE_LOG_DEBUG("Copying: " + activeGameObject);
             GameObject newObj = activeGameObject.copy();
-            EditorWindow.getCurrentScene().addGameObject(newObj);
+            MainWindow.getCurrentScene().addGameObject(newObj);
             newObj.transform.position.add(0.1f, 0.1f);
             PropertiesWindow.setActiveGameObject(newObj);
             if (newObj.getCompoent(AnimationComponent.class) != null)
@@ -42,7 +41,7 @@ public class KeyboardControls extends Component
             {
                 Logger.FORGE_LOG_DEBUG("Copying: " + go);
                 GameObject copy = go.copy();
-                EditorWindow.getCurrentScene().addGameObject(copy);
+                MainWindow.getCurrentScene().addGameObject(copy);
                 copy.transform.position.add(0.1f, 0.1f);
                 PropertiesWindow.addActiveGameObject(copy);
                 if (go.getCompoent(AnimationComponent.class) != null)

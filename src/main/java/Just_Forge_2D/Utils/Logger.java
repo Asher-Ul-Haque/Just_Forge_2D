@@ -1,5 +1,7 @@
 package Just_Forge_2D.Utils;
 
+import Just_Forge_2D.EditorSystem.EditorSystemManager;
+
 public class Logger
 {
     private static final String ANSI_RESET = "\u001B[0m";
@@ -16,48 +18,48 @@ public class Logger
     // - - - Logging functions - - -
     public static void FORGE_LOG_FATAL(Object... ARGS)
     {
-        System.out.println(ANSI_RESET + ANSI_RED_BG + "[FATAL]:   \t" + formatMessage(ARGS) + ANSI_RESET);
+        if (!EditorSystemManager.isRelease) System.out.println(ANSI_RESET + ANSI_RED_BG + "[FATAL]:   \t" + formatMessage(ARGS) + ANSI_RESET);
     }
 
     public static void FORGE_LOG_ERROR(Object... ARGS)
     {
-        System.out.println(ANSI_RED + "[ERROR]:   \t" + formatMessage(ARGS) + ANSI_RESET);
+        if (!EditorSystemManager.isRelease) System.out.println(ANSI_RED + "[ERROR]:   \t" + formatMessage(ARGS) + ANSI_RESET);
     }
 
     public static void FORGE_LOG_WARNING(Object... ARGS)
     {
-        System.out.println(ANSI_PASTEL_RED + "[WARNING]: \t" + formatMessage(ARGS) + ANSI_RESET);
+        if (!EditorSystemManager.isRelease) System.out.println(ANSI_PASTEL_RED + "[WARNING]: \t" + formatMessage(ARGS) + ANSI_RESET);
     }
 
     public static void FORGE_LOG_DEBUG(Object... ARGS)
     {
-        System.out.println(ANSI_BLUE + "[DEBUG]:   \t" + formatMessage(ARGS) + ANSI_RESET);
+        if (!EditorSystemManager.isRelease) System.out.println(ANSI_BLUE + "[DEBUG]:   \t" + formatMessage(ARGS) + ANSI_RESET);
     }
 
     public static void FORGE_LOG_TRACE(Object... ARGS)
     {
-        System.out.println(ANSI_PURPLE + "[TRACE]:   \t" + formatMessage(ARGS) + ANSI_RESET);
+        if (!EditorSystemManager.isRelease) System.out.println(ANSI_PURPLE + "[TRACE]:   \t" + formatMessage(ARGS) + ANSI_RESET);
     }
 
     public static void FORGE_LOG_INFO(Object... ARGS)
     {
-        System.out.println(ANSI_GREEN + "[INFO]:    \t" + formatMessage(ARGS) + ANSI_RESET);
+        if (!EditorSystemManager.isRelease) System.out.println(ANSI_GREEN + "[INFO]:    \t" + formatMessage(ARGS) + ANSI_RESET);
     }
 
     private static String formatMessage(Object... ARGS)
     {
-        String message = "";
+        StringBuilder message = new StringBuilder();
         for (Object o : ARGS)
         {
             try
             {
-                message += o.toString();
+                message.append(o.toString());
             }
             catch (Exception e)
             {
-                FORGE_LOG_WARNING("Tried to use Just_Forge_2D.Core.logger to log nonesense that cant be converted to string");
+                FORGE_LOG_WARNING("Tried to use Logger to log nonsense that cant be converted to string");
             }
         }
-        return message;
+        return message.toString();
     }
 }

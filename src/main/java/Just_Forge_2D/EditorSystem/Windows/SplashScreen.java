@@ -1,7 +1,7 @@
 package Just_Forge_2D.EditorSystem.Windows;
 
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
-import Just_Forge_2D.EditorSystem.EditorWindow;
+import Just_Forge_2D.EditorSystem.MainWindow;
 import Just_Forge_2D.EditorSystem.ProjectManager;
 import Just_Forge_2D.EventSystem.EventManager;
 import Just_Forge_2D.EventSystem.Events.Event;
@@ -24,39 +24,39 @@ public class SplashScreen
     {
         if (!isInitialized)
         {
-            EditorWindow.get().setClearColor(new Vector4f(0.5f));
-            EditorWindow.get().setAlwaysOnTop(true);
-            EditorWindow.get().setDecorated(false);
-            EditorWindow.get().setSize(600, 400);
-            EditorWindow.get().setPosition(
-                    (WindowSystemManager.getMonitorSize().x - EditorWindow.get().getWidth()) / 2,
-                    (WindowSystemManager.getMonitorSize().y - EditorWindow.get().getHeight()) / 2
+            MainWindow.get().setClearColor(new Vector4f(0.5f));
+            MainWindow.get().setAlwaysOnTop(true);
+            MainWindow.get().setDecorated(false);
+            MainWindow.get().setSize(600, 400);
+            MainWindow.get().setPosition(
+                    (WindowSystemManager.getMonitorSize().x - MainWindow.get().getWidth()) / 2,
+                    (WindowSystemManager.getMonitorSize().y - MainWindow.get().getHeight()) / 2
             );
             if (logoTexture == null)
             {
                 logoTexture = new Texture();
                 logoTexture.init(DefaultValues.DEFAULT_ICON_PATH);
             }
-            EditorWindow.get().setVisible(true);
+            MainWindow.get().setVisible(true);
             isInitialized = true;
         }
     }
 
     public static void render()
     {
-        timer += EditorWindow.get().getDeltaTime();
+        timer += MainWindow.get().getDeltaTime();
         // - - - create splash screen window
         ImGui.begin("Splash Screen", ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoMove);
         ImGui.setWindowPos(0, 0);
-        ImGui.setWindowSize(EditorWindow.get().getWidth(), EditorWindow.get().getHeight());
+        ImGui.setWindowSize(MainWindow.get().getWidth(), MainWindow.get().getHeight());
         ImGui.setNextWindowBgAlpha(0f);
 
         // - - - create the logo
-        float imageX = (EditorWindow.get().getWidth() - (float) logoTexture.getWidth() / 2) / 2.0f;
-        float imageY = (EditorWindow.get().getHeight() - (float) logoTexture.getWidth() / 2) / 2.0f;
+        float imageX = (MainWindow.get().getWidth() - (float) logoTexture.getWidth() / 2) / 2.0f;
+        float imageY = (MainWindow.get().getHeight() - (float) logoTexture.getWidth() / 2) / 2.0f;
         if (timer > 3.2f)
         {
-            imageY -= ((float) EditorWindow.get().getHeight() / 4);
+            imageY -= ((float) MainWindow.get().getHeight() / 4);
         }
         ImGui.setCursorPos(imageX, imageY);
         ImGui.image(logoTexture.getID(), (float) logoTexture.getWidth() / 2, (float) logoTexture.getWidth() / 2, 0, 1, 1, 0);
@@ -69,7 +69,7 @@ public class SplashScreen
             }
             else
             {
-                EditorWindow.get().setVisible(false);
+                MainWindow.get().setVisible(false);
             }
         }
         ImGui.end();
@@ -77,11 +77,11 @@ public class SplashScreen
 
     private static void displayWelcomePage()
     {
-        if (!EditorWindow.get().isDecorated())
+        if (!MainWindow.get().isDecorated())
         {
-            EditorWindow.get().setDecorated(true);
-            EditorWindow.get().setAlwaysOnTop(false);
-            EditorWindow.get().setVisible(true);
+            MainWindow.get().setDecorated(true);
+            MainWindow.get().setAlwaysOnTop(false);
+            MainWindow.get().setVisible(true);
         }
 
         if (EditorSystemManager.isRelease)
@@ -91,8 +91,8 @@ public class SplashScreen
             return;
         }
 
-        float windowWidth = EditorWindow.get().getWidth();
-        float windowHeight = EditorWindow.get().getHeight();
+        float windowWidth = MainWindow.get().getWidth();
+        float windowHeight = MainWindow.get().getHeight();
         float buttonWidth = windowWidth / 3;
         float buttonHeight = windowHeight / 8;
         float buttonX = (windowWidth - buttonWidth) / 2.0f;
@@ -113,16 +113,16 @@ public class SplashScreen
 
     public static void cleanup()
     {
-        EditorWindow.get().setVisible(false);
+        MainWindow.get().setVisible(false);
         Logger.FORGE_LOG_TRACE("Project Path : " + EditorSystemManager.projectDir);
         EditorSystemManager.setCurrentState(EditorSystemManager.state.isEditor);
-        EditorWindow.get().setSize(WindowSystemManager.getMonitorSize().x, WindowSystemManager.getMonitorSize().y);
-        EditorWindow.get().setPosition(0, 0);
+        MainWindow.get().setSize(WindowSystemManager.getMonitorSize().x, WindowSystemManager.getMonitorSize().y);
+        MainWindow.get().setPosition(0, 0);
         if (logoTexture != null)
         {
             logoTexture.detach();
             logoTexture = null;
         }
-        EditorWindow.get().setVisible(true);
+        MainWindow.get().setVisible(true);
     }
 }

@@ -22,6 +22,7 @@ import Just_Forge_2D.WindowSystem.WindowConfig;
 import Just_Forge_2D.RenderingSystem.Renderer;
 import Just_Forge_2D.Utils.TimeKeeper;
 import Just_Forge_2D.Utils.Logger;
+import SampleMario.GameCode.EditorSceneInitializer;
 import org.joml.Vector2f;
 
 import static org.lwjgl.opengl.GL11.*;
@@ -31,7 +32,7 @@ import static org.lwjgl.glfw.GLFW.*;
 // - - - | Class | - - -
 
 
-public class EditorWindow extends Window
+public class MainWindow extends Window
 {
     // - - - | Private Variables | - - -
 
@@ -41,7 +42,7 @@ public class EditorWindow extends Window
     // - - - Systems
 
     // - - - Singleton
-    private static EditorWindow window = null;
+    private static MainWindow window = null;
 
     // - - - Editor
 
@@ -50,7 +51,7 @@ public class EditorWindow extends Window
 
 
     // - - - Private Constructor for Singleton
-    EditorWindow(WindowConfig CONFIG)
+    MainWindow(WindowConfig CONFIG)
     {
         super(CONFIG);
         Logger.FORGE_LOG_INFO("Started Just Forge 2D");
@@ -73,14 +74,14 @@ public class EditorWindow extends Window
     }
 
     // - - - Get the window
-    public static EditorWindow get()
+    public static MainWindow get()
     {
-        if (EditorWindow.window == null)
+        if (MainWindow.window == null)
         {
             Logger.FORGE_LOG_ERROR("No Window config specififed");
-            EditorWindow.window = new EditorWindow(new EditorWindowConfig());
+            MainWindow.window = new MainWindow(new EditorWindowConfig());
         }
-        return EditorWindow.window;
+        return MainWindow.window;
     }
 
     // - - - Run the game
@@ -237,13 +238,13 @@ public class EditorWindow extends Window
                 Logger.FORGE_LOG_INFO("Starting Game");
                 EditorSystemManager.isRuntimePlaying = true;
                 SceneSystemManager.save(currentScene);
-                EditorWindow.changeScene(new EditorSceneInitializer());
+                MainWindow.changeScene(new EditorSceneInitializer());
                 break;
 
             case ForgeStop:
                 Logger.FORGE_LOG_INFO("Ending Game");
                 EditorSystemManager.isRuntimePlaying = false;
-                EditorWindow.changeScene(new EditorSceneInitializer());
+                MainWindow.changeScene(new EditorSceneInitializer());
                 break;
 
             case SaveLevel:
@@ -252,7 +253,7 @@ public class EditorWindow extends Window
                 break;
 
             case LoadLevel:
-                EditorWindow.changeScene(new EditorSceneInitializer());
+                MainWindow.changeScene(new EditorSceneInitializer());
                 break;
         }
     }

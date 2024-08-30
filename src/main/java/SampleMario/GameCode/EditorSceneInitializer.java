@@ -1,16 +1,16 @@
-package Just_Forge_2D.EditorSystem;
+package SampleMario.GameCode;
 
 import Just_Forge_2D.AnimationSystem.AnimationComponent;
+import Just_Forge_2D.EditorSystem.MainWindow;
 import Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.GridlinesComponent;
 import Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.InputControls.KeyboardControls;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.Sprite;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
-import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteSheet;
+import Just_Forge_2D.RenderingSystem.SpriteSheet;
 import Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.InputControls.MouseControlComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.EditorCameraComponent;
 import Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.GizmoSystem.GizmoSystemComponent;
-import Just_Forge_2D.InputSystem.Mouse;
 import Just_Forge_2D.PhysicsSystem.PhysicsWorld;
 import Just_Forge_2D.RenderingSystem.Renderer;
 import Just_Forge_2D.SceneSystem.Scene;
@@ -60,7 +60,7 @@ public class EditorSceneInitializer extends SceneInitializer
         master.addComponent(new GizmoSystemComponent(gizmos));
         SCENE.addGameObject(this.master);
 
-        EditorWindow.get().setClearColor(new Vector4f(0.5f, 0.5f, 0.8f, 1.0f));
+        MainWindow.get().setClearColor(new Vector4f(0.5f, 0.5f, 0.8f, 1.0f));
     }
 
     @Override

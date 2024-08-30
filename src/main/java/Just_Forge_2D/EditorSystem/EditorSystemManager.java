@@ -72,7 +72,7 @@ public class EditorSystemManager
 
     public static void setEditorLayer()
     {
-        ImGUIManager.initImGui(EditorWindow.get().getGlfwWindowPtr());
+        ImGUIManager.initImGui(MainWindow.get().getGlfwWindowPtr());
     }
 
     public static Theme getCurrentTheme()
@@ -90,7 +90,7 @@ public class EditorSystemManager
         editorWindowConfig = new WindowConfig();
         editorWindowConfig.setHeight(800);
         if (currentTheme == null) currentTheme = new CleanTheme();
-        EditorWindow window = EditorWindow.get();
+        MainWindow window = MainWindow.get();
         EditorSystemManager.setSelector();
         setEditorLayer();
         window.run();

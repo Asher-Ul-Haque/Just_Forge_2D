@@ -1,14 +1,12 @@
 package Just_Forge_2D.EditorSystem.Windows;
 
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
-import Just_Forge_2D.EditorSystem.EditorWindow;
+import Just_Forge_2D.EditorSystem.MainWindow;
 import Just_Forge_2D.EditorSystem.Themes.Theme;
 import imgui.ImGui;
 import imgui.extension.implot.ImPlot;
 import imgui.extension.implot.ImPlotContext;
 import imgui.type.ImBoolean;
-
-import java.util.Arrays;
 
 public class FPSGraph
 {
@@ -26,16 +24,16 @@ public class FPSGraph
         if (imPlotContext == null)
         {
             imPlotContext = ImPlot.createContext();
-            vysnc.set(EditorWindow.get().isVysnc());
+            vysnc.set(MainWindow.get().isVsync());
         }
     }
 
     public static void render()
     {
-        if (EditorWindow.get() != null)
+        if (MainWindow.get() != null)
         {
             initializeImPlot();
-            fpsSamples[currentSampleIndex] = EditorWindow.get().getFPS();
+            fpsSamples[currentSampleIndex] = MainWindow.get().getFPS();
 
             for (int i = 0; i < MAX_SAMPLES; i++)
             {
@@ -50,9 +48,9 @@ public class FPSGraph
             Theme.setDefaultTextColor(EditorSystemManager.getCurrentTheme().tertiaryColor);
             ImGui.checkbox("Vsync", vysnc);
             Theme.resetDefaultTextColor();
-            if (vysnc.get() != EditorWindow.get().isVysnc())
+            if (vysnc.get() != MainWindow.get().isVsync())
             {
-                EditorWindow.get().setVsync(vysnc.get());
+                MainWindow.get().setVsync(vysnc.get());
             }
 
 

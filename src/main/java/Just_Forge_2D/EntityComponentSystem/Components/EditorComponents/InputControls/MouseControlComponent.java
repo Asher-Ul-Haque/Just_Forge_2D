@@ -1,8 +1,6 @@
 package Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.InputControls;
 
 import Just_Forge_2D.AnimationSystem.AnimationComponent;
-import Just_Forge_2D.EditorSystem.EditorSystemManager;
-import Just_Forge_2D.EditorSystem.ImGUIManager;
 import Just_Forge_2D.EditorSystem.Windows.PropertiesWindow;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.NonPickableComponent;
@@ -11,7 +9,7 @@ import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.InputSystem.Keyboard;
 import Just_Forge_2D.InputSystem.Keys;
 import Just_Forge_2D.InputSystem.Mouse;
-import Just_Forge_2D.EditorSystem.EditorWindow;
+import Just_Forge_2D.EditorSystem.MainWindow;
 import Just_Forge_2D.SceneSystem.Scene;
 import Just_Forge_2D.EditorSystem.Windows.ObjectSelector;
 import Just_Forge_2D.RenderingSystem.DebugPencil;
@@ -54,7 +52,7 @@ public class MouseControlComponent extends Component
         this.holdingObject = GO;
         this.holdingObject.getCompoent(SpriteComponent.class).setColor(new Vector4f(0.8f, 0.8f, 0.8f, 0.5f));
         this.holdingObject.addComponent(new NonPickableComponent());
-        EditorWindow.getCurrentScene().addGameObject(GO);
+        MainWindow.getCurrentScene().addGameObject(GO);
         Logger.FORGE_LOG_DEBUG("Picked up object: "+ this.holdingObject);
     }
 
@@ -68,7 +66,7 @@ public class MouseControlComponent extends Component
         }
         newObj.getCompoent(SpriteComponent.class).setColor(new Vector4f(1, 1, 1, 1));
         newObj.removeComponent(NonPickableComponent.class);
-        EditorWindow.getCurrentScene().addGameObject(newObj);
+        MainWindow.getCurrentScene().addGameObject(newObj);
     }
 
     // - - - run
@@ -76,7 +74,7 @@ public class MouseControlComponent extends Component
     public void editorUpdate(float DELTA_TIME)
     {
         debounce -= DELTA_TIME;
-        Scene currentScene = EditorWindow.getCurrentScene();
+        Scene currentScene = MainWindow.getCurrentScene();
 
         if (holdingObject != null && debounce < 0.0f)
         {
@@ -165,7 +163,7 @@ public class MouseControlComponent extends Component
 
             for (Integer gameObjectID : uniqueGameObjectIDs)
             {
-                GameObject picked = EditorWindow.getCurrentScene().getGameObject(gameObjectID);
+                GameObject picked = MainWindow.getCurrentScene().getGameObject(gameObjectID);
                 if (picked != null && picked.getCompoent(NonPickableComponent.class) == null)
                 {
                     PropertiesWindow.addActiveGameObject(picked);

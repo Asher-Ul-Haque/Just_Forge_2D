@@ -1,16 +1,17 @@
-package Just_Forge_2D.EditorSystem;
+package SampleMario.GameCode;
 
 import Just_Forge_2D.AnimationSystem.AnimationComponent;
 import Just_Forge_2D.AnimationSystem.AnimationState;
-import Just_Forge_2D.EntityComponentSystem.Components.BlockCoin;
+import Just_Forge_2D.EditorSystem.MainWindow;
+import SampleMario.Components.BlockCoin;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.BoxColliderComponent;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.CylinderColliderComponent;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent;
-import Just_Forge_2D.EntityComponentSystem.Components.PlayerControllerComponent;
-import Just_Forge_2D.EntityComponentSystem.Components.QuestionBlock;
+import SampleMario.Components.PlayerControllerComponent;
+import SampleMario.Components.QuestionBlock;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.Sprite;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
-import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteSheet;
+import Just_Forge_2D.RenderingSystem.SpriteSheet;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.PhysicsSystem.Enums.BodyType;
 import Just_Forge_2D.Utils.AssetPool;
@@ -27,7 +28,7 @@ public class Prefabs
 
     public static GameObject generateSpriteObject(String NAME, Sprite SPRITE, float SIZE_X, float SIZE_Y)
     {
-        GameObject block = EditorWindow.getCurrentScene().createGameObject(NAME);
+        GameObject block = MainWindow.getCurrentScene().createGameObject(NAME);
         block.transform.scale.x = SIZE_X;
         block.transform.scale.y = SIZE_Y;
         SpriteComponent sprite = new SpriteComponent();

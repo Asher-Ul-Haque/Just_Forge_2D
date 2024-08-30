@@ -264,8 +264,8 @@ public class ImGUIManager
     private static void startFrame(final float DELTA_TIME)
     {
         // - - - Get window properties and mouse position
-        float[] winWidth = {EditorWindow.get().getWidth()};
-        float[] winHeight = {EditorWindow.get().getHeight()};
+        float[] winWidth = {MainWindow.get().getWidth()};
+        float[] winHeight = {MainWindow.get().getHeight()};
         double[] mousePosX = {0};
         double[] mousePosY = {0};
         GLFW.glfwGetCursorPos(windowPtr, mousePosX, mousePosY);

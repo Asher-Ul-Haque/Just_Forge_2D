@@ -1,9 +1,9 @@
-package Just_Forge_2D.EntityComponentSystem.Components;
+package SampleMario.Components;
 
 import Just_Forge_2D.AnimationSystem.AnimationComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
-import Just_Forge_2D.EditorSystem.EditorWindow;
-import Just_Forge_2D.EditorSystem.Prefabs;
+import Just_Forge_2D.EditorSystem.MainWindow;
+import SampleMario.GameCode.Prefabs;
 
 public class QuestionBlock extends Block
 {
@@ -42,7 +42,7 @@ public class QuestionBlock extends Block
         GameObject coin = Prefabs.generateBlockCoin();
         coin.transform.position.set(this.gameObject.transform.position);
         coin.transform.position.y += 0.25f;
-        EditorWindow.getCurrentScene().addGameObject(coin);
+        MainWindow.getCurrentScene().addGameObject(coin);
     }
 
     private void doPowerup(PlayerControllerComponent CONTROLLER)

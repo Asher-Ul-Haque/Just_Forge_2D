@@ -1,9 +1,6 @@
-package Just_Forge_2D;
+package SampleMario.GameCode;
 
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
-import Just_Forge_2D.EditorSystem.EditorWindow;
-import imgui.app.Application;
-import imgui.app.Configuration;
 
 public class Main
 {

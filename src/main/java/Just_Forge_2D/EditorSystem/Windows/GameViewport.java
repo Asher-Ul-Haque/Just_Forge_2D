@@ -1,8 +1,7 @@
 package Just_Forge_2D.EditorSystem.Windows;
 
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
-import Just_Forge_2D.EditorSystem.EditorWindow;
-import Just_Forge_2D.EditorSystem.ImGUIManager;
+import Just_Forge_2D.EditorSystem.MainWindow;
 import Just_Forge_2D.EventSystem.EventManager;
 import Just_Forge_2D.EventSystem.Events.Event;
 import Just_Forge_2D.EventSystem.Events.EventTypes;
@@ -63,12 +62,12 @@ public class GameViewport
         windowSize.y -= ImGui.getScrollY();
 
         float aspectWidth = windowSize.x;
-        float aspectHeight = aspectWidth / EditorWindow.get().getAspectRatio();
+        float aspectHeight = aspectWidth / MainWindow.get().getAspectRatio();
         if (aspectHeight > windowSize.y)
         {
             // - - - switch to pillar mode
             aspectHeight = windowSize.y;
-            aspectWidth = aspectHeight * EditorWindow.get().getAspectRatio();
+            aspectWidth = aspectHeight * MainWindow.get().getAspectRatio();
         }
 
         return new ImVec2(aspectWidth, aspectHeight);

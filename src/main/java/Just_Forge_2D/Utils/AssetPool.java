@@ -1,6 +1,6 @@
 package Just_Forge_2D.Utils;
 
-import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteSheet;
+import Just_Forge_2D.RenderingSystem.SpriteSheet;
 import Just_Forge_2D.RenderingSystem.Shader;
 import Just_Forge_2D.RenderingSystem.Texture;
 import Just_Forge_2D.AudioSystem.Sound;
@@ -56,6 +56,27 @@ public class AssetPool
         return AssetPool.shaderPool.get(path);
     }
 
+    public static void removeShader(String NAME)
+    {
+        String path = nameToFile.get(NAME);
+        if (nameToFile.containsKey(NAME) && AssetPool.shaderPool.containsKey(path))
+        {
+            shaderPool.remove(path);
+            nameToFile.remove(NAME);
+            Logger.FORGE_LOG_DEBUG("Shader: " + NAME + " removed from AssetPool");
+        }
+        else
+        {
+            Logger.FORGE_LOG_WARNING("Shader: " + NAME + " doesn't exist in AssetPool");
+        }
+    }
+
+    public static void clearShaderPool()
+    {
+        Logger.FORGE_LOG_WARNING("Clearing Shader Pool");
+        shaderPool.clear();
+    }
+
 
     // - - - texture - - -
 
@@ -103,7 +124,7 @@ public class AssetPool
         File file = new File(SPRITE_SHEET.getTexture().getFilepath());
         if (!AssetPool.spriteSheetPool.containsKey(file.getAbsolutePath()))
         {
-            Logger.FORGE_LOG_DEBUG("Spritesheet with path: " + file.getAbsolutePath() + " Hashed in Asset Pool and loaded");
+            Logger.FORGE_LOG_DEBUG("Sprite sheet with path: " + file.getAbsolutePath() + " Hashed in Asset Pool and loaded");
             nameToFile.put(NAME, file.getAbsolutePath());
             AssetPool.spriteSheetPool.put(file.getAbsolutePath(), SPRITE_SHEET);
         }
@@ -118,10 +139,31 @@ public class AssetPool
         String path = nameToFile.get(NAME);
         if (!nameToFile.containsKey(NAME) || !AssetPool.spriteSheetPool.containsKey(path))
         {
-            Logger.FORGE_LOG_ERROR("Spritesheet : " + NAME + " does not exist");
+            Logger.FORGE_LOG_ERROR("Sprite sheet : " + NAME + " does not exist");
             return null;
         }
         return AssetPool.spriteSheetPool.get(path);
+    }
+
+    public static void removeSpriteSheet(String NAME)
+    {
+        String path = nameToFile.get(NAME);
+        if (nameToFile.containsKey(NAME) && AssetPool.spriteSheetPool.containsKey(path))
+        {
+            spriteSheetPool.remove(path);
+            nameToFile.remove(NAME);
+            Logger.FORGE_LOG_DEBUG("Sprite Sheet: " + NAME + " removed from AssetPool");
+        }
+        else
+        {
+            Logger.FORGE_LOG_WARNING("Sprite Sheet: " + NAME + " doesn't exist in AssetPool");
+        }
+    }
+
+    public static void clearSpriteSheetPool()
+    {
+        Logger.FORGE_LOG_WARNING("Clearing Sprite Sheet Pool");
+        spriteSheetPool.clear();
     }
 
 
@@ -150,8 +192,32 @@ public class AssetPool
         return AssetPool.soundPool.get(path);
     }
 
+    public static void removeSound(String NAME)
+    {
+        String path = nameToFile.get(NAME);
+        if (nameToFile.containsKey(NAME) && AssetPool.soundPool.containsKey(path))
+        {
+            soundPool.get(path).delete();
+            soundPool.remove(path);
+            nameToFile.remove(NAME);
+            Logger.FORGE_LOG_DEBUG("Sound: " + NAME + " removed from AssetPool");
+        }
+        else
+        {
+            Logger.FORGE_LOG_WARNING("Sound: " + NAME + " doesn't exist in AssetPool");
+        }
+    }
+
+    public static void clearSoundPool()
+    {
+        Logger.FORGE_LOG_WARNING("Clearing Sound Pool");
+        soundPool.clear();
+    }
+
     public static Collection<Sound> getAllSounds()
     {
         return soundPool.values();
     }
+
+    public static Map<String, Sound> getSoundMap() { return soundPool; };
 }

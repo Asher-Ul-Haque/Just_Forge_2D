@@ -1,10 +1,11 @@
-package Just_Forge_2D.EntityComponentSystem.Components;
+package SampleMario.Components;
 
 import Just_Forge_2D.AnimationSystem.AnimationComponent;
+import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.InputSystem.Keys;
-import Just_Forge_2D.EditorSystem.EditorWindow;
+import Just_Forge_2D.EditorSystem.MainWindow;
 import Just_Forge_2D.InputSystem.Keyboard;
 import Just_Forge_2D.PhysicsSystem.RayCastInfo;
 import Just_Forge_2D.Utils.AssetPool;
@@ -167,11 +168,11 @@ public class PlayerControllerComponent extends Component
         float yVal = playerState == PlayerState.Small ? -0.14f : -0.24f;
         Vector2f raycastEnd = new Vector2f(raycastBegin).add(0.0f, yVal);
 
-        RayCastInfo info = EditorWindow.getPhysicsSystem().rayCast(gameObject, raycastBegin, raycastEnd);
+        RayCastInfo info = MainWindow.getPhysicsSystem().rayCast(gameObject, raycastBegin, raycastEnd);
 
         Vector2f raycast2Begin = new Vector2f(raycastBegin).add(innerPlayerWidth, 0.0f);
         Vector2f raycast2End = new Vector2f(raycastEnd).add(innerPlayerWidth, 0.0f);
-        RayCastInfo info2 = EditorWindow.getPhysicsSystem().rayCast(gameObject, raycast2Begin, raycast2End);
+        RayCastInfo info2 = MainWindow.getPhysicsSystem().rayCast(gameObject, raycast2Begin, raycast2End);
 
         onGround = ((info.hit || info2.hit) && info.hitObject != null);
     }
