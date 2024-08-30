@@ -1,5 +1,7 @@
 package Just_Forge_2D.EntityComponentSystem.Components;
 
+import Just_Forge_2D.EditorSystem.EditorSystemManager;
+import Just_Forge_2D.EditorSystem.Themes.Theme;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.EditorSystem.Widgets;
@@ -70,11 +72,13 @@ public abstract class Component
                 else if (type == boolean.class)
                 {
                     boolean val = (boolean)value;
+                    Theme.setDefaultTextColor(EditorSystemManager.getCurrentTheme().tertiaryColor);
                     if (ImGui.checkbox(name + ": ", val))
                     {
                         val = !val;
                         field.set(this, val);
                     }
+                    Theme.resetDefaultTextColor();
                 }
                 else if (type == Vector2f.class)
                 {

@@ -71,7 +71,7 @@ public class AnimationState
                 {
                     currentSprite = (currentSprite + 1) % animationFrames.size();
                 }
-                else if (!doesLoop)
+                else
                 {
                     this.isFinished = true;
                 }

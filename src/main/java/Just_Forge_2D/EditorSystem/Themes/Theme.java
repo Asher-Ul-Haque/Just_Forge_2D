@@ -112,7 +112,7 @@ public abstract class Theme
     {
         ImGui.getStyle().setColor(ImGuiCol.FrameBg, frameBgColor.x, frameBgColor.y, frameBgColor.z, frameBgColor.w);
         ImGui.getStyle().setColor(ImGuiCol.FrameBgHovered, frameHoverColor.x, frameHoverColor.y, frameHoverColor.z, frameHoverColor.w);
-        ImGui.getStyle().setColor(ImGuiCol.FrameBgHovered, frameActiveColor.x, frameActiveColor.y, frameActiveColor.z, frameActiveColor.w);
+        ImGui.getStyle().setColor(ImGuiCol.FrameBgActive, frameActiveColor.x, frameActiveColor.y, frameActiveColor.z, frameActiveColor.w);
 
         // - - - padding
         ImGui.getStyle().setFramePadding(framePadding.x, framePadding.y);

@@ -11,13 +11,13 @@ import static org.lwjgl.openal.ALC10.alcMakeContextCurrent;
 
 public class AudioSystemManager
 {
-    private static boolean isOpenALinitialized = false;
+    private static boolean isOpenAInitialized = false;
     private static long audioContext;
     private static long audioDevicePtr;
 
     public static void initialize()
     {
-        if (isOpenALinitialized)
+        if (isOpenAInitialized)
         {
             Logger.FORGE_LOG_WARNING("Audio System is already online");
             return;
@@ -41,13 +41,13 @@ public class AudioSystemManager
             Logger.FORGE_LOG_ERROR("Audio Not supported");
             assert false;
         }
-        isOpenALinitialized = true;
+        isOpenAInitialized = true;
     }
 
 
     public static void terminate()
     {
-        if (!isOpenALinitialized)
+        if (!isOpenAInitialized)
         {
             Logger.FORGE_LOG_ERROR("Audio System is already offline");
             return;
@@ -56,6 +56,6 @@ public class AudioSystemManager
         alcDestroyContext(audioContext);
         alcCloseDevice(audioDevicePtr);
 
-        isOpenALinitialized = false;
+        isOpenAInitialized = false;
     }
 }

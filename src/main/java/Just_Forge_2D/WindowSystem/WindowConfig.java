@@ -27,7 +27,7 @@ public class WindowConfig
     protected boolean alwaysOnTop = DefaultValues.DEFAULT_WINDOW_FLOAT_STATUS;
 
 
-    // - - - Constructors - - -
+    // - - - Functions - - -
 
     public int getWidth() {
         return width;

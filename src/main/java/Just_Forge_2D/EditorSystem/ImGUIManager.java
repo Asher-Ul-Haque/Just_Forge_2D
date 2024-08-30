@@ -245,6 +245,7 @@ public class ImGUIManager
                 PropertiesWindow.render();
                 MenuBar.render();
                 CameraControlWindow.render();
+                FPSGraph.render();
                 SceneHierarchyWindow.editorGUI();
                 ImGui.end();
 

@@ -6,7 +6,6 @@ import java.nio.IntBuffer;
 import java.nio.ShortBuffer;
 
 import static org.lwjgl.openal.AL10.*;
-import static org.lwjgl.opengl.GL15.glGenBuffers;
 import static org.lwjgl.stb.STBVorbis.stb_vorbis_decode_filename;
 import static org.lwjgl.system.MemoryStack.*;
 import static org.lwjgl.system.libc.LibCStdlib.free;
@@ -40,7 +39,7 @@ public class Sound
 
         // - - - retrieve the extra information that was store d on the buffers
         int channels = channelsBuffer.get();
-        int sampleRtae = sampleRateBuffer.get();
+        int sampleRate = sampleRateBuffer.get();
 
         // - - - free
         stackPop();
@@ -58,7 +57,7 @@ public class Sound
         }
 
         bufferID = alGenBuffers();
-        alBufferData(bufferID, format, rawAudioBuffer, sampleRtae);
+        alBufferData(bufferID, format, rawAudioBuffer, sampleRate);
 
         // - - - generate the source
         sourceID = alGenSources();

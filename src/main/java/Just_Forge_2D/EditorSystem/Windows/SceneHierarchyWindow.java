@@ -1,5 +1,6 @@
 package Just_Forge_2D.EditorSystem.Windows;
 
+import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.EditorSystem.EditorWindow;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
@@ -21,7 +22,8 @@ public class SceneHierarchyWindow
             {
                 continue;
             }
-            ImGui.setCursorPosX(ImGui.getContentRegionAvailX() / 2f);
+            ImGui.setCursorPosX(EditorSystemManager.getCurrentTheme().framePadding.x);
+            ImGui.setCursorPosY(ImGui.getCursorPosY() + EditorSystemManager.getCurrentTheme().framePadding.y);
             if (ImGui.button(obj.name))
             {
                 PropertiesWindow.clearSelection();

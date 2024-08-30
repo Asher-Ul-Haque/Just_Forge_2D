@@ -18,10 +18,10 @@ public class EditorCameraComponent extends Component
     private final Camera editorCamera;
 
     // - - - sensitivity
-    private float dragDebounce = DefaultValues.DEFAULT_EDITOR_CAMERA_DRAG_DEBOUNCE;
-    private float lerpTime = DefaultValues.DEFAULT_EDITOR_CAMERA_LERP_TIME;
-    private float dragSensitivity = DefaultValues.DEFAULT_EDITOR_CAMERA_DRAG_SENSITIVTY;
-    private float scrollSensitivity = DefaultValues.DEFAULT_EDITOR_CAMERA_SCROLL_SENSITIVITY;
+    public static float dragDebounce = DefaultValues.DEFAULT_EDITOR_CAMERA_DRAG_DEBOUNCE;
+    public static float lerpTime = DefaultValues.DEFAULT_EDITOR_CAMERA_LERP_TIME;
+    public static float dragSensitivity = DefaultValues.DEFAULT_EDITOR_CAMERA_DRAG_SENSITIVTY;
+    public static float scrollSensitivity = DefaultValues.DEFAULT_EDITOR_CAMERA_SCROLL_SENSITIVITY;
 
     // - - - everything else
     private Vector2f clickOrigin = new Vector2f();
@@ -51,7 +51,7 @@ public class EditorCameraComponent extends Component
         {
             Vector2f mousePos = new Vector2f(Mouse.getWorldX(), Mouse.getWorldY());
             Vector2f delta = new Vector2f(mousePos).sub(this.clickOrigin);
-            this.editorCamera.position.sub(delta.mul(DELTA_TIME).mul(this.dragSensitivity));
+            this.editorCamera.position.sub(delta.mul(DELTA_TIME).mul(dragSensitivity));
             this.clickOrigin.lerp(mousePos, DELTA_TIME);
         }
         if (dragDebounce <= 0.0f && !Mouse.isMouseButtonDown(GLFW_MOUSE_BUTTON_RIGHT))
@@ -61,7 +61,7 @@ public class EditorCameraComponent extends Component
 
         if (Mouse.getScrollY() != 0.0f)
         {
-            float addValue = (float)Math.pow(Math.abs(Mouse.getScrollY() * this.scrollSensitivity), 1 / this.editorCamera.getZoom());
+            float addValue = (float)Math.pow(Math.abs(Mouse.getScrollY() * scrollSensitivity), 1 / this.editorCamera.getZoom());
             addValue *= -Math.signum(Mouse.getScrollY());
             editorCamera.addZoom(addValue);
         }
@@ -74,12 +74,12 @@ public class EditorCameraComponent extends Component
         {
             editorCamera.position.lerp(new Vector2f(), lerpTime);
             editorCamera.setZoom(editorCamera.getZoom() + (DefaultValues.DEFAULT_CAMERA_ZOOM - editorCamera.getZoom()) * lerpTime);
-            this.lerpTime += 0.1f * DELTA_TIME;
+            lerpTime += 0.1f * DELTA_TIME;
             if (Math.abs(editorCamera.position.x) <= 1f && Math.abs(editorCamera.position.y) <= 1f)
             {
                 editorCamera.position.set(0f, 0f);
                 reset = false;
-                this.lerpTime = DefaultValues.DEFAULT_EDITOR_CAMERA_LERP_TIME;
+                lerpTime = DefaultValues.DEFAULT_EDITOR_CAMERA_LERP_TIME;
                 this.editorCamera.setZoom(DefaultValues.DEFAULT_CAMERA_ZOOM);
             }
         }

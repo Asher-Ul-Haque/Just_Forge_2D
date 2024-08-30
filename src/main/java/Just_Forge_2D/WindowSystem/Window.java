@@ -432,6 +432,11 @@ public class Window implements Observer
         }
     }
 
+    public boolean isVysnc()
+    {
+        return this.config.vsync;
+    }
+
     public float getFPS()
     {
         return this.fps;
@@ -461,7 +466,6 @@ public class Window implements Observer
     {
         if (Math.abs(this.fps - (int) ( 1.0f / dt)) >= DefaultValues.DEFAULT_FPS)
         {
-            this.fps = (int) (1.0f / dt);
             Logger.FORGE_LOG_WARNING(this.config.title + " Experiencing lag spike. Current fps: " + this.fps);
         }
     }
@@ -484,6 +488,7 @@ public class Window implements Observer
         endTime = (float) TimeKeeper.getTime();
         dt = endTime - beginTime;
         beginTime = endTime;
+        fps = (int) (1.0f / dt);
     }
 
     protected void manageInput()

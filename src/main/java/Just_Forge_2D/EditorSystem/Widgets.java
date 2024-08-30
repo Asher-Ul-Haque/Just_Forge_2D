@@ -28,17 +28,19 @@ public class Widgets {
         resetDefaultTextColor();
         ImGui.nextColumn();
 
-        ImGui.pushStyleVar(ImGuiStyleVar.ItemSpacing, 0, 0);
-        float lineHeight = ImGui.getFontSize() + ImGui.getStyle().getFramePaddingY() * 2.0f;
+        float lineHeight = ImGui.getFontSize() + EditorSystemManager.getCurrentTheme().framePadding.y * 2.0f;
         Vector2f buttonSize = new Vector2f(lineHeight + 8.0f, lineHeight);
         float widthEach = (ImGui.calcItemWidth() - buttonSize.x * 2.0f) / 2.0f;
 
         // X Control
         ImGui.pushItemWidth(widthEach);
         setButtonStyle(0.8f, 0.1f, 0.15f);
-        if (ImGui.button("X", buttonSize.x, buttonSize.y)) {
+        ImGui.setCursorPos(ImGui.getCursorPosX() + EditorSystemManager.getCurrentTheme().framePadding.x ,ImGui.getCursorPosY() + EditorSystemManager.getCurrentTheme().framePadding.y);
+        if (ImGui.button("X", buttonSize.x, buttonSize.y))
+        {
             values.x = resetValue;
         }
+
         ImGui.popStyleColor(3);
         ImGui.sameLine();
         float[] vecValuesX = {values.x};
@@ -49,7 +51,8 @@ public class Widgets {
         // Y Control
         ImGui.pushItemWidth(widthEach);
         setButtonStyle(0.2f, 0.7f, 0.2f);
-        if (ImGui.button("Y", buttonSize.x, buttonSize.y)) {
+        if (ImGui.button("Y", buttonSize.x, buttonSize.y))
+        {
             values.y = resetValue;
         }
         ImGui.popStyleColor(3);
@@ -60,7 +63,6 @@ public class Widgets {
 
         values.set(vecValuesX[0], vecValuesY[0]);
 
-        ImGui.popStyleVar();
         ImGui.columns(1);
         ImGui.popID();
     }
@@ -83,15 +85,16 @@ public class Widgets {
         resetDefaultTextColor();
         ImGui.nextColumn();
 
-        ImGui.pushStyleVar(ImGuiStyleVar.ItemSpacing, 0, 0);
         float lineHeight = ImGui.getFontSize() + ImGui.getStyle().getFramePaddingY() * 2.0f;
         Vector2f buttonSize = new Vector2f(lineHeight + 3.0f, lineHeight);
         float widthEach = (ImGui.calcItemWidth() - buttonSize.x * 3.0f) / 3.0f;
 
         // X Control
         ImGui.pushItemWidth(widthEach);
+        ImGui.setCursorPos(ImGui.getCursorPosX() + EditorSystemManager.getCurrentTheme().framePadding.x ,ImGui.getCursorPosY() + EditorSystemManager.getCurrentTheme().framePadding.y);
         setButtonStyle(0.8f, 0.1f, 0.15f);
-        if (ImGui.button("X", buttonSize.x, buttonSize.y)) {
+        if (ImGui.button("X", buttonSize.x, buttonSize.y))
+        {
             values.x = resetValue;
         }
         ImGui.popStyleColor(3);
@@ -128,7 +131,6 @@ public class Widgets {
 
         values.set(vecValuesX[0], vecValuesY[0], vecValuesZ[0]);
 
-        ImGui.popStyleVar();
         ImGui.columns(1);
         ImGui.popID();
     }
@@ -152,6 +154,7 @@ public class Widgets {
         ImGui.nextColumn();
 
         float[] valArr = {value};
+        ImGui.setCursorPos(ImGui.getCursorPosX() + EditorSystemManager.getCurrentTheme().framePadding.x ,ImGui.getCursorPosY() + EditorSystemManager.getCurrentTheme().framePadding.y);
         ImGui.dragFloat("##DragFloat", valArr, 0.1f);
 
         ImGui.columns(1);
@@ -171,6 +174,7 @@ public class Widgets {
         ImGui.nextColumn();
 
         int[] valArr = {value};
+        ImGui.setCursorPos(ImGui.getCursorPosX() + EditorSystemManager.getCurrentTheme().framePadding.x ,ImGui.getCursorPosY() + EditorSystemManager.getCurrentTheme().framePadding.y);
         ImGui.dragInt("##DragInt", valArr, 1);
 
         ImGui.columns(1);
@@ -213,7 +217,8 @@ public class Widgets {
         ImGui.nextColumn();
 
         ImString imString = new ImString(text, 256);
-        if (ImGui.inputText("##" + label, imString)) {
+        if (ImGui.inputText("##" + label, imString))
+        {
             text = imString.get();
         }
 

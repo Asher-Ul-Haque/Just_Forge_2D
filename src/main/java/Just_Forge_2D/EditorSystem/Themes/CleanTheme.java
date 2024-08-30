@@ -40,9 +40,9 @@ public class CleanTheme extends Theme
 
         this.treeNodeBgColor = primaryColor;
         this.treeNodeTextColor = secondaryColor;
-        this.treeNodeIndent = 20f;
+        this.treeNodeIndent = 16f;
 
-        this.tabBgColor = tertiaryColor;
+        this.tabBgColor = primaryColor;
         this.tabHoveredColor = tertiaryColor;
         this.tabActiveColor = tertiaryColor;
         this.tabUnfocusedColor = primaryColor;
