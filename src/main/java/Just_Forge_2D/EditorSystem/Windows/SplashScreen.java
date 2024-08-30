@@ -86,7 +86,6 @@ public class SplashScreen
 
         if (EditorSystemManager.isRelease)
         {
-            EventManager.notify(null, new Event(EventTypes.ForgeStart));
             cleanup();
             return;
         }
@@ -124,5 +123,7 @@ public class SplashScreen
             logoTexture = null;
         }
         MainWindow.get().setVisible(true);
+        if (EditorSystemManager.isRelease) EventManager.notify(null, new Event(EventTypes.ForgeStart));
+        else EventManager.notify(null, new Event(EventTypes.ForgeStop));
     }
 }

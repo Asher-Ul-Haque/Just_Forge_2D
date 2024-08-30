@@ -14,7 +14,7 @@ public class DefaultValues
     public static final int DEBUG_PENCIL_MAX_LINES = 512;
     public static final int DEBUG_PENCIL_DEFAULT_LIFE = 1;
     public static final Vector3f DEBUG_PENCIL_DEFAULT_COLOR = new Vector3f(1, 1, 1);
-    public static final int DEBUG_PENCIL_DEFAULT_WIDTH = 2;
+    public static final int DEBUG_PENCIL_DEFAULT_WIDTH = 4;
     public static final int DEBUG_PENCIL_DEFAULT_CIRCLE_PRECISION = 20;
     public static final float DEBUG_PENCIL_DEFAULT_ROTATION = 0f;
     public static final Vec2 GRAVITY = new Vec2(0, -10f);
@@ -33,7 +33,6 @@ public class DefaultValues
     public static final float DEFAULT_EDITOR_CAMERA_DRAG_SENSITIVTY = 30.0f;
     public static final float DEFAULT_EDITOR_CAMERA_SCROLL_SENSITIVITY = 0.05f;
     public static final float DEFAULT_CAMERA_ZOOM = 1f;
-    public static final String DEFAULT_SAVE_FILE = "Configurations/Levels/level.justForgeFile";
     public static final int DEFAULT_WINDOW_WIDTH = 1980;
     public static final int DEFAULT_WINDOW_HEIGHT = 720;
     public static final float DEFAULT_ASPECT_RATIO = 16f / 9f;

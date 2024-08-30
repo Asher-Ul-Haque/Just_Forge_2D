@@ -3,11 +3,10 @@ package SampleMario.GameCode;
 import Just_Forge_2D.AnimationSystem.AnimationComponent;
 import Just_Forge_2D.EditorSystem.MainWindow;
 import Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.GridlinesComponent;
-import Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.InputControls.KeyboardControls;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.Sprite;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.RenderingSystem.SpriteSheet;
-import Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.InputControls.MouseControlComponent;
+import Just_Forge_2D.EditorSystem.InputControls.MouseControlComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.EditorCameraComponent;
 import Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.GizmoSystem.GizmoSystemComponent;
@@ -53,9 +52,7 @@ public class EditorSceneInitializer extends SceneInitializer
 
         this.master = SCENE.createGameObject("Master");
         this.master.noSerialize();
-//        master.addComponent(new KeyboardControls());
         master.addComponent(new GridlinesComponent());
-//        master.addComponent(new MouseControlComponent());
         master.addComponent(new EditorCameraComponent(SCENE.getCamera()));
         master.addComponent(new GizmoSystemComponent(gizmos));
         SCENE.addGameObject(this.master);
@@ -160,7 +157,7 @@ public class EditorSceneInitializer extends SceneInitializer
             }
             if (ImGui.beginTabItem("Prefabs"))
             {
-                SpriteSheet playerSprites = AssetPool.getSpriteSheet("Spritesheet");
+                SpriteSheet playerSprites = AssetPool.getSpriteSheet("Sprite sheet");
                 Sprite sprite = playerSprites.getSprite(0);
                 float spriteWidth = sprite.getWidth() * 4;
                 float spriteHeight = sprite.getHeight() * 4;

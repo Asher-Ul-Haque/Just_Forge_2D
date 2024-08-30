@@ -19,13 +19,43 @@
         }
       },
       {
+        "type": "Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.NonPickableComponent",
+        "properties": {
+          "uniqueID": 20
+        }
+      }
+    ],
+    "uniqueID": 0,
+    "doSerialization": true,
+    "isDead": false
+  },
+  {
+    "name": "Auto Generated",
+    "components": [
+      {
+        "type": "Just_Forge_2D.EntityComponentSystem.Components.TransformComponent",
+        "properties": {
+          "position": {
+            "x": 2.44079,
+            "y": 1.625
+          },
+          "layer": 0,
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "uniqueID": 39
+        }
+      },
+      {
         "type": "Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent",
         "properties": {
           "color": {
-            "x": 0.8,
-            "y": 0.8,
-            "z": 0.8,
-            "w": 0.5
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
           },
           "sprite": {
             "width": 16.0,
@@ -37,16 +67,110 @@
             },
             "textureCoordinates": [
               {
+                "x": 0.5714286,
+                "y": 0.8333333
+              },
+              {
+                "x": 0.5714286,
+                "y": 0.75
+              },
+              {
+                "x": 0.42857143,
+                "y": 0.75
+              },
+              {
+                "x": 0.42857143,
+                "y": 0.8333333
+              }
+            ]
+          },
+          "uniqueID": 40
+        }
+      },
+      {
+        "type": "Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.CylinderColliderComponent",
+        "properties": {
+          "width": 0.1,
+          "height": 0.2,
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "uniqueID": 42
+        }
+      },
+      {
+        "type": "Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent",
+        "properties": {
+          "velocity": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "angularDamping": 0.8,
+          "linearDamping": 0.9,
+          "mass": 0.0,
+          "bodyType": "Dynamic",
+          "fixedRotation": false,
+          "continuousCollision": true,
+          "angularVelocity": 0.0,
+          "gravityScale": 1.0,
+          "isSensor": false,
+          "uniqueID": 43
+        }
+      }
+    ],
+    "uniqueID": 8,
+    "doSerialization": true,
+    "isDead": false
+  },
+  {
+    "name": "Auto Generated",
+    "components": [
+      {
+        "type": "Just_Forge_2D.EntityComponentSystem.Components.TransformComponent",
+        "properties": {
+          "position": {
+            "x": 2.375,
+            "y": 0.625
+          },
+          "layer": 0,
+          "scale": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "rotation": 0.0,
+          "uniqueID": 44
+        }
+      },
+      {
+        "type": "Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "width": 16.0,
+            "height": 16.0,
+            "texture": {
+              "filepath": "Assets/Textures/items.png",
+              "width": 112,
+              "height": 80
+            },
+            "textureCoordinates": [
+              {
                 "x": 0.14285715,
                 "y": 1.0
               },
               {
                 "x": 0.14285715,
-                "y": 0.9166667
+                "y": 0.8
               },
               {
                 "x": 0.0,
-                "y": 0.9166667
+                "y": 0.8
               },
               {
                 "x": 0.0,
@@ -54,17 +178,209 @@
               }
             ]
           },
-          "uniqueID": 19
+          "uniqueID": 45
         }
       },
       {
-        "type": "Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.NonPickableComponent",
+        "type": "Just_Forge_2D.AnimationSystem.AnimationComponent",
         "properties": {
-          "uniqueID": 20
+          "stateTransfers": [
+            [
+              {
+                "state": "Question",
+                "trigger": "setInactive"
+              },
+              "Inactive"
+            ]
+          ],
+          "states": [
+            {
+              "title": "Question",
+              "animationFrames": [
+                {
+                  "sprite": {
+                    "width": 16.0,
+                    "height": 16.0,
+                    "texture": {
+                      "filepath": "Assets/Textures/items.png",
+                      "width": 112,
+                      "height": 80
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.14285715,
+                        "y": 1.0
+                      },
+                      {
+                        "x": 0.14285715,
+                        "y": 0.8
+                      },
+                      {
+                        "x": 0.0,
+                        "y": 0.8
+                      },
+                      {
+                        "x": 0.0,
+                        "y": 1.0
+                      }
+                    ]
+                  },
+                  "frameTime": 0.57
+                },
+                {
+                  "sprite": {
+                    "width": 16.0,
+                    "height": 16.0,
+                    "texture": {
+                      "filepath": "Assets/Textures/items.png",
+                      "width": 112,
+                      "height": 80
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.2857143,
+                        "y": 1.0
+                      },
+                      {
+                        "x": 0.2857143,
+                        "y": 0.8
+                      },
+                      {
+                        "x": 0.14285715,
+                        "y": 0.8
+                      },
+                      {
+                        "x": 0.14285715,
+                        "y": 1.0
+                      }
+                    ]
+                  },
+                  "frameTime": 0.23
+                },
+                {
+                  "sprite": {
+                    "width": 16.0,
+                    "height": 16.0,
+                    "texture": {
+                      "filepath": "Assets/Textures/items.png",
+                      "width": 112,
+                      "height": 80
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.42857143,
+                        "y": 1.0
+                      },
+                      {
+                        "x": 0.42857143,
+                        "y": 0.8
+                      },
+                      {
+                        "x": 0.2857143,
+                        "y": 0.8
+                      },
+                      {
+                        "x": 0.2857143,
+                        "y": 1.0
+                      }
+                    ]
+                  },
+                  "frameTime": 0.23
+                }
+              ],
+              "doesLoop": true,
+              "isFinished": false
+            },
+            {
+              "title": "Inactive",
+              "animationFrames": [
+                {
+                  "sprite": {
+                    "width": 16.0,
+                    "height": 16.0,
+                    "texture": {
+                      "filepath": "Assets/Textures/items.png",
+                      "width": 112,
+                      "height": 80
+                    },
+                    "textureCoordinates": [
+                      {
+                        "x": 0.5714286,
+                        "y": 1.0
+                      },
+                      {
+                        "x": 0.5714286,
+                        "y": 0.8
+                      },
+                      {
+                        "x": 0.42857143,
+                        "y": 0.8
+                      },
+                      {
+                        "x": 0.42857143,
+                        "y": 1.0
+                      }
+                    ]
+                  },
+                  "frameTime": 0.1
+                }
+              ],
+              "doesLoop": false,
+              "isFinished": false
+            }
+          ],
+          "defaultStateTitle": "Question",
+          "revertToDefault": false,
+          "uniqueID": 46
+        }
+      },
+      {
+        "type": "SampleMario.Components.QuestionBlock",
+        "properties": {
+          "blockType": "Coin",
+          "bobSpeed": 0.1,
+          "uniqueID": 47
+        }
+      },
+      {
+        "type": "Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent",
+        "properties": {
+          "velocity": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "angularDamping": 0.8,
+          "linearDamping": 0.9,
+          "mass": 0.0,
+          "bodyType": "Static",
+          "fixedRotation": false,
+          "continuousCollision": true,
+          "angularVelocity": 0.0,
+          "gravityScale": 1.0,
+          "isSensor": false,
+          "uniqueID": 48
+        }
+      },
+      {
+        "type": "Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.BoxColliderComponent",
+        "properties": {
+          "halfSize": {
+            "x": 0.25,
+            "y": 0.25
+          },
+          "origin": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "offset": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "uniqueID": 49
         }
       }
     ],
-    "uniqueID": 5,
+    "uniqueID": 11,
     "doSerialization": true,
     "isDead": false
   }

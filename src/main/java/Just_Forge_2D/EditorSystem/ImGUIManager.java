@@ -2,8 +2,9 @@ package Just_Forge_2D.EditorSystem;
 
 import Just_Forge_2D.EditorSystem.Themes.ConfigFlags;
 import Just_Forge_2D.EditorSystem.Windows.*;
-import Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.InputControls.KeyboardControls;
-import Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.InputControls.MouseControlComponent;
+import Just_Forge_2D.EditorSystem.InputControls.KeyboardControls;
+import Just_Forge_2D.EditorSystem.InputControls.MouseControlComponent;
+import Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.GridlinesComponent;
 import Just_Forge_2D.SceneSystem.Scene;
 import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.InputSystem.*;
@@ -250,6 +251,7 @@ public class ImGUIManager
                 MenuBar.render();
                 CameraControlWindow.render();
                 FPSGraph.render();
+                GridControls.render();
                 SceneHierarchyWindow.editorGUI();
                 ImGui.end();
 

@@ -97,6 +97,7 @@ public class CylinderColliderComponent extends Component
     @Override
     public void editorUpdate(float DELTA_TIME)
     {
+        if (topCircle.gameObject == null || bottomCircle.gameObject == null || box.gameObject == null) start();
         topCircle.editorUpdate(DELTA_TIME);
         bottomCircle.editorUpdate(DELTA_TIME);
         box.editorUpdate(DELTA_TIME);

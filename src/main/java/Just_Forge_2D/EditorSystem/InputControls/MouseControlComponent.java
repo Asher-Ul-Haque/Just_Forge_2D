@@ -1,4 +1,4 @@
-package Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.InputControls;
+package Just_Forge_2D.EditorSystem.InputControls;
 
 import Just_Forge_2D.AnimationSystem.AnimationComponent;
 import Just_Forge_2D.EditorSystem.Windows.PropertiesWindow;
@@ -25,7 +25,7 @@ public class MouseControlComponent
 {
     // - - - private variable for the thing being held
     static GameObject holdingObject = null;
-    static private final float debounceTime = 0.5f;
+    static private final float debounceTime = 0.4f;
     static private float debounce = debounceTime;
 
     // - - - private variables for box selection
@@ -79,7 +79,6 @@ public class MouseControlComponent
             holdingObject.transform.position.y = (int)(Mouse.getWorldY() / DefaultValues.GRID_HEIGHT) * DefaultValues.GRID_WIDTH + DefaultValues.GRID_HEIGHT / 2f;
             if (Mouse.isMouseButtonDown(GLFW_MOUSE_BUTTON_LEFT) && debounce < 0.0f)
             {
-
                 place();
                 debounce = debounceTime;
             }
@@ -106,7 +105,7 @@ public class MouseControlComponent
 
             debounce = debounceTime;
         }
-        else if (Mouse.isDragging() && Mouse.isMouseButtonDown(GLFW_MOUSE_BUTTON_LEFT) && holdingObject == null)
+        else if (Mouse.isDragging() && Mouse.isMouseButtonDown(GLFW_MOUSE_BUTTON_LEFT) && holdingObject == null && PropertiesWindow.getActiveGameObjects().isEmpty())
         {
             if (!boxSelect)
             {
@@ -121,7 +120,7 @@ public class MouseControlComponent
             DebugPencil.addBox(
                     (new Vector2f(boxSelectWorldStart)).add(halfSize),
                     new Vector2f(halfSize).mul(2.0f),
-                    new Vector3f(1, 0, 1));
+                    new Vector3f(1, 0, 0));
 
         }
         else if (boxSelect)
