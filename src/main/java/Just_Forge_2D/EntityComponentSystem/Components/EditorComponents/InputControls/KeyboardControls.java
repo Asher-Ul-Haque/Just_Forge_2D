@@ -13,10 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 // - - - Key control class
-public class KeyboardControls extends Component
+public class KeyboardControls
 {
-    @Override
-    public void editorUpdate(float DELTA_TIME)
+    public static void editorUpdate()
     {
         GameObject activeGameObject = PropertiesWindow.getActiveGameObject();
         List<GameObject> activeGameObjects = PropertiesWindow.getActiveGameObjects();

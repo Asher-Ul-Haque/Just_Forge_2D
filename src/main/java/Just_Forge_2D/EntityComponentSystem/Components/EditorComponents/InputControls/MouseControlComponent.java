@@ -2,7 +2,6 @@ package Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.InputCon
 
 import Just_Forge_2D.AnimationSystem.AnimationComponent;
 import Just_Forge_2D.EditorSystem.Windows.PropertiesWindow;
-import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.NonPickableComponent;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
@@ -22,20 +21,19 @@ import java.util.Set;
 
 import static org.lwjgl.glfw.GLFW.*;
 
-// - - - Component to make sure things can be picked up
-public class MouseControlComponent extends Component
+public class MouseControlComponent
 {
     // - - - private variable for the thing being held
-    GameObject holdingObject = null;
-    private final float debounceTime = 0.5f;
-    private float debounce = debounceTime;
+    static GameObject holdingObject = null;
+    static private final float debounceTime = 0.5f;
+    static private float debounce = debounceTime;
 
     // - - - private variables for box selection
-    private boolean boxSelect = false;
-    private Vector2f boxSelectStart = new Vector2f();
-    private Vector2f boxSelectEnd = new Vector2f();
-    private Vector2f boxSelectWorldStart = new Vector2f();
-    private Vector2f boxSelectWorldEnd = new Vector2f();
+    private static boolean boxSelect = false;
+    private static Vector2f boxSelectStart = new Vector2f();
+    private static Vector2f boxSelectEnd = new Vector2f();
+    private static Vector2f boxSelectWorldStart = new Vector2f();
+    private static Vector2f boxSelectWorldEnd = new Vector2f();
 
 
     // - - - | Functions | - - -
@@ -43,23 +41,23 @@ public class MouseControlComponent extends Component
 
     // - - - Pick and Drop - - -
 
-    public void pickupObject(GameObject GO)
+    public static void pickupObject(GameObject GO)
     {
-        if (this.holdingObject != null)
+        if (holdingObject != null)
         {
-            this.holdingObject.destroy();
+            holdingObject.destroy();
         }
-        this.holdingObject = GO;
-        this.holdingObject.getCompoent(SpriteComponent.class).setColor(new Vector4f(0.8f, 0.8f, 0.8f, 0.5f));
-        this.holdingObject.addComponent(new NonPickableComponent());
+        holdingObject = GO;
+        holdingObject.getCompoent(SpriteComponent.class).setColor(new Vector4f(0.8f, 0.8f, 0.8f, 0.5f));
+        holdingObject.addComponent(new NonPickableComponent());
         MainWindow.getCurrentScene().addGameObject(GO);
-        Logger.FORGE_LOG_DEBUG("Picked up object: "+ this.holdingObject);
+        Logger.FORGE_LOG_DEBUG("Picked up object: "+ holdingObject);
     }
 
-    public void place()
+    public static void place()
     {
-        Logger.FORGE_LOG_DEBUG("Placed game object: " + this.holdingObject);
-        GameObject newObj = this.holdingObject.copy();
+        Logger.FORGE_LOG_DEBUG("Placed game object: " + holdingObject);
+        GameObject newObj = holdingObject.copy();
         if (newObj.getCompoent(AnimationComponent.class) != null)
         {
             newObj.getCompoent(AnimationComponent.class).refreshTextures();
@@ -70,8 +68,7 @@ public class MouseControlComponent extends Component
     }
 
     // - - - run
-    @Override
-    public void editorUpdate(float DELTA_TIME)
+    public static void editorUpdate(float DELTA_TIME)
     {
         debounce -= DELTA_TIME;
         Scene currentScene = MainWindow.getCurrentScene();
@@ -82,8 +79,7 @@ public class MouseControlComponent extends Component
             holdingObject.transform.position.y = (int)(Mouse.getWorldY() / DefaultValues.GRID_HEIGHT) * DefaultValues.GRID_WIDTH + DefaultValues.GRID_HEIGHT / 2f;
             if (Mouse.isMouseButtonDown(GLFW_MOUSE_BUTTON_LEFT) && debounce < 0.0f)
             {
-                float halfWidth = DefaultValues.GRID_WIDTH / 2.0f;
-                float halfHeight = DefaultValues.GRID_HEIGHT / 2.0f;
+
                 place();
                 debounce = debounceTime;
             }
@@ -108,9 +104,9 @@ public class MouseControlComponent extends Component
                 PropertiesWindow.clearSelection();
             }
 
-            this.debounce = this.debounceTime;
+            debounce = debounceTime;
         }
-        else if (Mouse.isDragging() && Mouse.isMouseButtonDown(GLFW_MOUSE_BUTTON_LEFT) && PropertiesWindow.getActiveGameObject() == null && PropertiesWindow.getActiveGameObjects().isEmpty())
+        else if (Mouse.isDragging() && Mouse.isMouseButtonDown(GLFW_MOUSE_BUTTON_LEFT) && holdingObject == null)
         {
             if (!boxSelect)
             {

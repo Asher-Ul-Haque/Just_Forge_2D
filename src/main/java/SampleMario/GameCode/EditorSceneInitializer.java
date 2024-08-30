@@ -53,9 +53,9 @@ public class EditorSceneInitializer extends SceneInitializer
 
         this.master = SCENE.createGameObject("Master");
         this.master.noSerialize();
-        master.addComponent(new KeyboardControls());
+//        master.addComponent(new KeyboardControls());
         master.addComponent(new GridlinesComponent());
-        master.addComponent(new MouseControlComponent());
+//        master.addComponent(new MouseControlComponent());
         master.addComponent(new EditorCameraComponent(SCENE.getCamera()));
         master.addComponent(new GizmoSystemComponent(gizmos));
         SCENE.addGameObject(this.master);
@@ -144,7 +144,7 @@ public class EditorSceneInitializer extends SceneInitializer
                     if (ImGui.imageButton(id, spriteWidth, spriteHeight, texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y)) {
                         GameObject object = Prefabs.generateSpriteObject(sprite, DefaultValues.GRID_WIDTH, DefaultValues.GRID_HEIGHT);
 //                object.getCompoent(SpriteComponent.class).setColor(new Vector4f(0.8f, 0.8f, 0.8f, 0.5f));
-                        master.getCompoent(MouseControlComponent.class).pickupObject(object);
+                        MouseControlComponent.pickupObject(object);
                     }
                     ImGui.popID();
 
@@ -170,7 +170,7 @@ public class EditorSceneInitializer extends SceneInitializer
                 {
                     GameObject object = Prefabs.generateMario();
                     object.getCompoent(SpriteComponent.class).setColor(new Vector4f(0.8f, 0.8f, 0.8f, 0.5f));
-                    master.getCompoent(MouseControlComponent.class).pickupObject(object);
+                    MouseControlComponent.pickupObject(object);
                 }
 
                 SpriteSheet items = AssetPool.getSpriteSheet("Items");
@@ -183,7 +183,7 @@ public class EditorSceneInitializer extends SceneInitializer
                 {
                     GameObject object = Prefabs.generateQuestionBlock();
                     object.getCompoent(SpriteComponent.class).setColor(new Vector4f(0.8f, 0.8f, 0.8f, 0.5f));
-                    master.getCompoent(MouseControlComponent.class).pickupObject(object);
+                    MouseControlComponent.pickupObject(object);
                 }
                 ImGui.sameLine();
                 ImGui.endTabItem();

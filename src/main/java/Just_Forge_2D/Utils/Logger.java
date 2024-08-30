@@ -27,7 +27,7 @@ public class Logger
         if (!EditorSystemManager.isRelease)
         {
             System.out.println(ANSI_RED + "[ERROR]:   \t" + formatMessage(ARGS) + ANSI_RESET);
-            TinyFileDialogs.tinyfd_notifyPopup("Error", formatMessage(ARGS), "error");
+//            TinyFileDialogs.tinyfd_notifyPopup("Error", formatMessage(ARGS), "error");
         }
     }
 

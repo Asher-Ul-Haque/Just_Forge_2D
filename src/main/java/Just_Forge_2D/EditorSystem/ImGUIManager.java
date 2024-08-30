@@ -2,6 +2,8 @@ package Just_Forge_2D.EditorSystem;
 
 import Just_Forge_2D.EditorSystem.Themes.ConfigFlags;
 import Just_Forge_2D.EditorSystem.Windows.*;
+import Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.InputControls.KeyboardControls;
+import Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.InputControls.MouseControlComponent;
 import Just_Forge_2D.SceneSystem.Scene;
 import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.InputSystem.*;
@@ -240,6 +242,8 @@ public class ImGUIManager
         {
             case isEditor:
                 if (ConfigFlags.dockingEnable) setupDockSpace();
+                KeyboardControls.editorUpdate();
+                MouseControlComponent.editorUpdate(DELTA_TIME);
                 SCENE.editorGUI();
                 GameViewport.render();
                 PropertiesWindow.render();
