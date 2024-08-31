@@ -4,7 +4,6 @@ package Just_Forge_2D.EditorSystem;
 
 // - - - Internal
 
-import Just_Forge_2D.AudioSystem.AudioSystemManager;
 import Just_Forge_2D.EditorSystem.Windows.EditorWindowConfig;
 import Just_Forge_2D.EditorSystem.Windows.ObjectSelector;
 import Just_Forge_2D.EditorSystem.Windows.PropertiesWindow;
@@ -22,7 +21,6 @@ import Just_Forge_2D.WindowSystem.WindowConfig;
 import Just_Forge_2D.RenderingSystem.Renderer;
 import Just_Forge_2D.Utils.TimeKeeper;
 import Just_Forge_2D.Utils.Logger;
-import SampleMario.GameCode.EditorSceneInitializer;
 import org.joml.Vector2f;
 
 import static org.lwjgl.opengl.GL11.*;
@@ -121,7 +119,14 @@ public class MainWindow extends Window
         Logger.FORGE_LOG_INFO("Time keeping system Online");
 
         Mouse.setCamera(new Camera(new Vector2f(0, 0)));
-        changeScene(new EditorSceneInitializer());
+        try
+        {
+            MainWindow.changeScene(EditorSystemManager.currentSceneInitializer.getDeclaredConstructor().newInstance());
+        }
+        catch (Exception e)
+        {
+            Logger.FORGE_LOG_FATAL(e.getCause());
+        }
     }
 
     // - - - Loop the game
@@ -231,13 +236,27 @@ public class MainWindow extends Window
                 Logger.FORGE_LOG_INFO("Starting Game");
                 EditorSystemManager.isRuntimePlaying = true;
                 SceneSystemManager.save(currentScene);
-                MainWindow.changeScene(new EditorSceneInitializer());
+                try
+                {
+                    MainWindow.changeScene(EditorSystemManager.currentSceneInitializer.getDeclaredConstructor().newInstance());
+                }
+                catch (Exception e)
+                {
+                    Logger.FORGE_LOG_FATAL(e.getCause());
+                }
                 break;
 
             case ForgeStop:
                 Logger.FORGE_LOG_INFO("Ending Game");
                 EditorSystemManager.isRuntimePlaying = false;
-                MainWindow.changeScene(new EditorSceneInitializer());
+                try
+                {
+                    MainWindow.changeScene(EditorSystemManager.currentSceneInitializer.getDeclaredConstructor().newInstance());
+                }
+                catch (Exception e)
+                {
+                    Logger.FORGE_LOG_FATAL(e.getCause());
+                }
                 break;
 
             case SaveLevel:
@@ -246,7 +265,14 @@ public class MainWindow extends Window
                 break;
 
             case LoadLevel:
-                MainWindow.changeScene(new EditorSceneInitializer());
+                try
+                {
+                    MainWindow.changeScene(EditorSystemManager.currentSceneInitializer.getDeclaredConstructor().newInstance());
+                }
+                catch (Exception e)
+                {
+                    Logger.FORGE_LOG_FATAL(e.getCause());
+                }
                 break;
         }
     }

@@ -1,13 +1,13 @@
 plugins {
     id 'com.github.johnrengelman.shadow' version '8.1.1'
-    id("java")
+    id("java-library")
 }
 
 shadowJar {
     archiveClassifier.set('all')
     mergeServiceFiles()
     manifest {
-        attributes 'Main-Class': 'Pet.Main'
+        attributes 'Main-Class': 'Just_Forge_2D.Main'
     }
     from('Assets') {
         into '${buildDir}/libs/Assets'
@@ -97,4 +97,3 @@ dependencies {
     runtimeOnly "org.lwjgl:lwjgl-tinyfd::$lwjglNatives"
     implementation "org.joml:joml:${jomlVersion}"
 }
-

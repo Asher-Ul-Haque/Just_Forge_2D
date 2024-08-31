@@ -1,6 +1,7 @@
 package Just_Forge_2D.EditorSystem.Windows;
 
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
+import Just_Forge_2D.EditorSystem.GameManager;
 import Just_Forge_2D.EditorSystem.MainWindow;
 import Just_Forge_2D.EditorSystem.ProjectManager;
 import Just_Forge_2D.EventSystem.EventManager;
@@ -125,5 +126,7 @@ public class SplashScreen
         MainWindow.get().setVisible(true);
         if (EditorSystemManager.isRelease) EventManager.notify(null, new Event(EventTypes.ForgeStart));
         else EventManager.notify(null, new Event(EventTypes.ForgeStop));
+        GameManager.buildUserCode();
+        GameManager.init();
     }
 }

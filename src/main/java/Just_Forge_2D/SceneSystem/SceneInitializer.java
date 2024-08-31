@@ -14,8 +14,14 @@ public abstract class SceneInitializer
     public abstract void init(Scene SCENE);
     public abstract void loadResources(Scene SCENE);
     public void editorGUI(){};
-    public abstract void assignRenderingSystem();
-    public abstract void assignPhysicsSystem();
+    public void assignRenderingSystem()
+    {
+        this.renderer = new Renderer();
+    }
+    public void assignPhysicsSystem()
+    {
+        this.physicsWorld = new PhysicsWorld();
+    }
     public SceneInitializer()
     {
         assignRenderingSystem();

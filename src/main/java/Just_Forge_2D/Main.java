@@ -1,4 +1,4 @@
-package SampleMario.GameCode;
+package Just_Forge_2D;
 
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
 

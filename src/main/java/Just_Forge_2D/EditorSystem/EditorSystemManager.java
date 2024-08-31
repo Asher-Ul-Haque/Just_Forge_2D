@@ -8,6 +8,7 @@ import Just_Forge_2D.EntityComponentSystem.Components.ComponentList;
 import Just_Forge_2D.RenderingSystem.Framebuffer;
 import Just_Forge_2D.RenderingSystem.Shader;
 import Just_Forge_2D.RenderingSystem.SpriteSheet;
+import Just_Forge_2D.SceneSystem.EmptySceneInitializer;
 import Just_Forge_2D.SceneSystem.SceneInitializer;
 import Just_Forge_2D.Utils.AssetPool;
 import Just_Forge_2D.Utils.Logger;
@@ -27,7 +28,23 @@ public class EditorSystemManager
     protected static ImGUIManager editorLayer;
     protected static boolean isRuntimePlaying = false;
     public static WindowConfig editorWindowConfig;
-    public static SceneInitializer currentSceneInitializer = new EditorSceneInitializer();
+
+    public static Class<? extends SceneInitializer> getCurrentSceneInitializer()
+    {
+        return currentSceneInitializer;
+    }
+
+    public static void setCurrentSceneInitializer(Class<? extends SceneInitializer> INITIALIZER)
+    {
+        if (INITIALIZER == null)
+        {
+            Logger.FORGE_LOG_ERROR("Cant assign null as initializer");
+            return;
+        }
+        EditorSystemManager.currentSceneInitializer = INITIALIZER;
+    }
+
+    public static Class<? extends SceneInitializer> currentSceneInitializer = EditorSceneInitializer.class;
     public static String projectDir = System.getProperty("user.dir");
     public static boolean isRelease = false;
 

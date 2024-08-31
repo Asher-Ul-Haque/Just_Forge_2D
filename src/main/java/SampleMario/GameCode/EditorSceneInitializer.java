@@ -86,39 +86,5 @@ public class EditorSceneInitializer extends SceneInitializer
         AssetPool.addSound("Stomp", "Assets/Sounds/stomp.ogg", false);
         AssetPool.addSound("Kick", "Assets/Sounds/kick.ogg", false);
         AssetPool.addSound("Invincible", "Assets/Sounds/invincible.ogg", false);
-
-        for (GameObject g : SCENE.getGameObjects())
-        {
-            if (g.getCompoent(SpriteComponent.class) != null)
-            {
-               SpriteComponent spr = g.getCompoent(SpriteComponent.class);
-               if (spr.getTexture() != null)
-               {
-                   spr.setTexture(AssetPool.getTexture(spr.getTexture().getFilepath()));
-               }
-            }
-
-            if (g.getCompoent(AnimationComponent.class) != null)
-            {
-                AnimationComponent stateMachine = g.getCompoent(AnimationComponent.class);
-                stateMachine.refreshTextures();
-            }
-        }
-    }
-
-
-    // - - - Scene usage - - -
-
-
-    @Override
-    public void assignRenderingSystem()
-    {
-        this.renderer = new Renderer();
-    }
-
-    @Override
-    public void assignPhysicsSystem()
-    {
-        this.physicsWorld = new PhysicsWorld();
     }
 }

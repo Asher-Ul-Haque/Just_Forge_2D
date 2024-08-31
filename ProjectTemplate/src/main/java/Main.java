@@ -1,7 +1,25 @@
-public class Main
+import Just_Forge_2D.Game.GameApplication;
+
+public class MainGame implements Game
 {
-    public static void main(String[] args)
+    @Override
+    public void init()
     {
-        EditorSystemManager.run();
+        // Initialize game resources
+        System.out.println("Game initialized!");
+    }
+
+    @Override
+    public void update(float deltaTime)
+    {
+        // Update game state
+        System.out.println("Game updated!");
+    }
+
+    @Override
+    public void end()
+    {
+        // Cleanup game resources
+        System.out.println("Game ended!");
     }
 }

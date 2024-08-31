@@ -1,10 +1,13 @@
 package Just_Forge_2D.SceneSystem;
 
+import Just_Forge_2D.AnimationSystem.AnimationComponent;
+import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.Components.TransformComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.InputSystem.Mouse;
 import Just_Forge_2D.PhysicsSystem.PhysicsSystemManager;
 import Just_Forge_2D.RenderingSystem.Renderer;
+import Just_Forge_2D.Utils.AssetPool;
 import Just_Forge_2D.Utils.Logger;
 import org.joml.Vector2f;
 
@@ -104,6 +107,23 @@ public class Scene
     {
         this.camera = Mouse.getWorldCamera();
         this.initializer.loadResources(this);
+        for (GameObject g : this.getGameObjects())
+        {
+            if (g.getCompoent(SpriteComponent.class) != null)
+            {
+                SpriteComponent spr = g.getCompoent(SpriteComponent.class);
+                if (spr.getTexture() != null)
+                {
+                    spr.setTexture(AssetPool.getTexture(spr.getTexture().getFilepath()));
+                }
+            }
+
+            if (g.getCompoent(AnimationComponent.class) != null)
+            {
+                AnimationComponent stateMachine = g.getCompoent(AnimationComponent.class);
+                stateMachine.refreshTextures();
+            }
+        }
         this.initializer.init(this);
         SceneSystemManager.createMaster(this);
         Logger.FORGE_LOG_INFO("Scene: " + this.initializer + " Initialized");

@@ -13,7 +13,7 @@ public class ProjectManager
 {
     static String dirPath = System.getProperty("user.home") + "/Documents/ForgeProjects";
     static String[] projectDirs = {"Assets", "Assets/Textures", "Assets/Sounds", "Assets/Shaders", "src", "src/main", "src/main/java", "build"};
-    static String[] projectFiles = {"src/main/java/SampleMario.GameCode.Main.java"};
+    static String[] projectFiles = {"src/main/java/Just_Forge_2D.Main.java"};
 
     public static boolean createNewProject()
     {
