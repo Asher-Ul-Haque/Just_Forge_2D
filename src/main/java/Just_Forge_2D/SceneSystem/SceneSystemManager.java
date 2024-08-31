@@ -1,6 +1,10 @@
 package Just_Forge_2D.SceneSystem;
 
+import Just_Forge_2D.EditorSystem.InputControls.MouseControlComponent;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
+import Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.EditorCameraComponent;
+import Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.GizmoSystem.GizmoSystemComponent;
+import Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.GridlinesComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.JsonHandlers.ComponentJsonHandler;
@@ -114,5 +118,16 @@ public class SceneSystemManager
     public static boolean isRunning(Scene SCENE)
     {
         return SCENE.isRunning;
+    }
+
+    public static void createMaster(Scene SCENE)
+    {
+        GameObject master = new GameObject("Master");
+        master.noSerialize();
+        master.addComponent(new GridlinesComponent());
+        master.addComponent(new EditorCameraComponent(SCENE.getCamera()));
+        master.addComponent(new GizmoSystemComponent());
+        master.addComponent(new MouseControlComponent());
+        SCENE.addGameObject(master);
     }
 }

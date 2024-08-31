@@ -96,14 +96,12 @@ public class MainWindow extends Window
         {
             window.gameLoop();
         }
-        finish();
         close();
     }
 
     // - - - Initialize the window
     public void init()
     {
-        AudioSystemManager.initialize();
 
         isInitialized = true;
 
@@ -124,12 +122,6 @@ public class MainWindow extends Window
 
         Mouse.setCamera(new Camera(new Vector2f(0, 0)));
         changeScene(new EditorSceneInitializer());
-    }
-
-    // - - - Cleanup after game
-    public void finish()
-    {
-        AudioSystemManager.terminate();
     }
 
     // - - - Loop the game

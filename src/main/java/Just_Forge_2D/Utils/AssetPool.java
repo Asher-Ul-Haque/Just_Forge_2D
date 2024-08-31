@@ -1,5 +1,6 @@
 package Just_Forge_2D.Utils;
 
+import Just_Forge_2D.PrefabSystem.SpritePrefab;
 import Just_Forge_2D.RenderingSystem.SpriteSheet;
 import Just_Forge_2D.RenderingSystem.Shader;
 import Just_Forge_2D.RenderingSystem.Texture;
@@ -164,6 +165,11 @@ public class AssetPool
     {
         Logger.FORGE_LOG_WARNING("Clearing Sprite Sheet Pool");
         spriteSheetPool.clear();
+    }
+
+    public static Collection<SpriteSheet> getAllSpriteSheets()
+    {
+        return spriteSheetPool.values();
     }
 
 

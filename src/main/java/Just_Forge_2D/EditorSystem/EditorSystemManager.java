@@ -1,14 +1,17 @@
 package Just_Forge_2D.EditorSystem;
 
+import Just_Forge_2D.AudioSystem.AudioSystemManager;
 import Just_Forge_2D.EditorSystem.Themes.CleanTheme;
 import Just_Forge_2D.EditorSystem.Themes.Theme;
 import Just_Forge_2D.EditorSystem.Windows.ObjectSelector;
 import Just_Forge_2D.EntityComponentSystem.Components.ComponentList;
 import Just_Forge_2D.RenderingSystem.Framebuffer;
 import Just_Forge_2D.RenderingSystem.Shader;
+import Just_Forge_2D.RenderingSystem.SpriteSheet;
 import Just_Forge_2D.Utils.AssetPool;
 import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.WindowSystem.WindowConfig;
+import Just_Forge_2D.WindowSystem.WindowSystemManager;
 
 import java.io.IOException;
 
@@ -23,6 +26,7 @@ public class EditorSystemManager
     protected static boolean isRuntimePlaying = false;
     public static WindowConfig editorWindowConfig;
     public static String projectDir = System.getProperty("user.dir");
+//    public static String projectDir = "/home/nadeem/Documents/ForgeProjects/mario";
     public static boolean isRelease = false;
 
     public static state getCurrentState()
@@ -90,14 +94,28 @@ public class EditorSystemManager
 
     public static void run()
     {
+        start();
+        MainWindow.get().run();
+        end();
+    }
+
+    public static void start()
+    {
+        AudioSystemManager.initialize();
+        WindowSystemManager.initialize();
         editorWindowConfig = new WindowConfig();
         editorWindowConfig.setHeight(800);
         if (currentTheme == null) currentTheme = new CleanTheme();
-        MainWindow window = MainWindow.get();
+        MainWindow.get();
+        AssetPool.addSpriteSheet("Gizmos", new SpriteSheet(AssetPool.getTexture("Assets/Textures/gizmos.png"), 24, 48, 3, 0));
         EditorSystemManager.setSelector();
         setEditorLayer();
         ComponentList.initialize();
-        window.run();
+    }
+
+    public static void end()
+    {
+        AudioSystemManager.terminate();
         ImGUIManager.destroyImGui();
     }
 }

@@ -13,7 +13,7 @@ public abstract class SceneInitializer
     public String savePath = EditorSystemManager.projectDir + "/Saves/" + this.getClass().getSimpleName() + ".justForgeFile";
     public abstract void init(Scene SCENE);
     public abstract void loadResources(Scene SCENE);
-    public abstract void editorGUI();
+    public void editorGUI(){};
     public abstract void assignRenderingSystem();
     public abstract void assignPhysicsSystem();
     public SceneInitializer()

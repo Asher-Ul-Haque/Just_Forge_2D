@@ -2,6 +2,7 @@ package Just_Forge_2D.EditorSystem.InputControls;
 
 import Just_Forge_2D.AnimationSystem.AnimationComponent;
 import Just_Forge_2D.EditorSystem.Windows.PropertiesWindow;
+import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.NonPickableComponent;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
@@ -21,7 +22,7 @@ import java.util.Set;
 
 import static org.lwjgl.glfw.GLFW.*;
 
-public class MouseControlComponent
+public class MouseControlComponent extends Component
 {
     // - - - private variable for the thing being held
     static GameObject holdingObject = null;
@@ -33,7 +34,6 @@ public class MouseControlComponent
     private static Vector2f boxSelectStart = new Vector2f();
     private static Vector2f boxSelectEnd = new Vector2f();
     private static Vector2f boxSelectWorldStart = new Vector2f();
-    private static Vector2f boxSelectWorldEnd = new Vector2f();
 
 
     // - - - | Functions | - - -
@@ -68,7 +68,8 @@ public class MouseControlComponent
     }
 
     // - - - run
-    public static void editorUpdate(float DELTA_TIME)
+    @Override
+    public void editorUpdate(float DELTA_TIME)
     {
         debounce -= DELTA_TIME;
         Scene currentScene = MainWindow.getCurrentScene();
@@ -115,7 +116,7 @@ public class MouseControlComponent
                 boxSelect = true;
             }
             boxSelectEnd = new Vector2f(Mouse.getScreenX(DefaultValues.DEFAULT_WINDOW_WIDTH), Mouse.getScreenY(DefaultValues.DEFAULT_WINDOW_HEIGHT));
-            boxSelectWorldEnd = new Vector2f(Mouse.getWorldX(), Mouse.getWorldY());
+            Vector2f boxSelectWorldEnd = new Vector2f(Mouse.getWorldX(), Mouse.getWorldY());
             Vector2f halfSize = (new Vector2f(boxSelectWorldEnd).sub(boxSelectWorldStart)).mul(0.5f);
             DebugPencil.addBox(
                     (new Vector2f(boxSelectWorldStart)).add(halfSize),

@@ -4,13 +4,14 @@ import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.RenderingSystem.SpriteSheet;
 import Just_Forge_2D.InputSystem.Keyboard;
 import Just_Forge_2D.InputSystem.Keys;
+import Just_Forge_2D.Utils.AssetPool;
 import Just_Forge_2D.Utils.Logger;
 
 // - - - Gizmo System
 public class GizmoSystemComponent extends Component
 {
     // - - - private variables
-    private final SpriteSheet gizmos;
+    private final SpriteSheet gizmos = AssetPool.getSpriteSheet("Gizmos");
     private int currentGizmo = 0;
 
 
@@ -18,11 +19,6 @@ public class GizmoSystemComponent extends Component
 
 
     // - - - Constructors and Starters - - -
-
-    public GizmoSystemComponent(SpriteSheet GIZMO_SPRITES)
-    {
-        gizmos = GIZMO_SPRITES;
-    }
 
     @Override
     public void start()

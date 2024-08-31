@@ -5,6 +5,7 @@ import Just_Forge_2D.EditorSystem.Windows.*;
 import Just_Forge_2D.EditorSystem.InputControls.KeyboardControls;
 import Just_Forge_2D.EditorSystem.InputControls.MouseControlComponent;
 import Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.GridlinesComponent;
+import Just_Forge_2D.PrefabSystem.PrefabManager;
 import Just_Forge_2D.SceneSystem.Scene;
 import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.InputSystem.*;
@@ -244,7 +245,6 @@ public class ImGUIManager
             case isEditor:
                 if (ConfigFlags.dockingEnable) setupDockSpace();
                 KeyboardControls.editorUpdate();
-                MouseControlComponent.editorUpdate(DELTA_TIME);
                 SCENE.editorGUI();
                 GameViewport.render();
                 PropertiesWindow.render();
@@ -252,7 +252,9 @@ public class ImGUIManager
                 CameraControlWindow.render();
                 FPSGraph.render();
                 GridControls.render();
+                AssetPoolDisplay.render();
                 SceneHierarchyWindow.editorGUI();
+                PrefabManager.render();
                 ImGui.end();
 
                 break;

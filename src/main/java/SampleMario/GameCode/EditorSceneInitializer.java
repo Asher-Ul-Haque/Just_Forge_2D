@@ -5,6 +5,7 @@ import Just_Forge_2D.EditorSystem.MainWindow;
 import Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.GridlinesComponent;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.Sprite;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
+import Just_Forge_2D.PrefabSystem.PrefabManager;
 import Just_Forge_2D.RenderingSystem.SpriteSheet;
 import Just_Forge_2D.EditorSystem.InputControls.MouseControlComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
@@ -17,6 +18,8 @@ import Just_Forge_2D.SceneSystem.SceneInitializer;
 import Just_Forge_2D.AudioSystem.Sound;
 import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.AssetPool;
+import SampleMario.BlockCoinPrefab;
+import SampleMario.MarioPrefabs;
 import imgui.ImGui;
 import imgui.ImVec2;
 import org.joml.Vector2f;
@@ -48,16 +51,10 @@ public class EditorSceneInitializer extends SceneInitializer
     public void init(Scene SCENE)
     {
         sprites = AssetPool.getSpriteSheet("Decorations");
-        SpriteSheet gizmos = AssetPool.getSpriteSheet("Gizmos");
-
-        this.master = SCENE.createGameObject("Master");
-        this.master.noSerialize();
-        master.addComponent(new GridlinesComponent());
-        master.addComponent(new EditorCameraComponent(SCENE.getCamera()));
-        master.addComponent(new GizmoSystemComponent(gizmos));
-        SCENE.addGameObject(this.master);
-
         MainWindow.get().setClearColor(new Vector4f(0.5f, 0.5f, 0.8f, 1.0f));
+        PrefabManager.registerPrefab("Mario", new MarioPrefabs());
+        PrefabManager.registerPrefab("Question Block", new QuestionBlockPrefab());
+        PrefabManager.registerPrefab("Coin Prefab", new BlockCoinPrefab());
     }
 
     @Override
@@ -73,7 +70,6 @@ public class EditorSceneInitializer extends SceneInitializer
         AssetPool.addSpriteSheet("Decorations",new SpriteSheet(AssetPool.getTexture("Assets/Textures/decorationsAndBlocks.png"), 16, 16, 81, 0));
         AssetPool.addSpriteSheet("Spritesheet",new SpriteSheet(AssetPool.getTexture("Assets/Textures/spritesheet.png"), 16, 16, 26, 0));
         AssetPool.addSpriteSheet("Items", new SpriteSheet(AssetPool.getTexture("Assets/Textures/items.png"), 16, 16, 43, 0));
-        AssetPool.addSpriteSheet("Gizmos", new SpriteSheet(AssetPool.getTexture("Assets/Textures/gizmos.png"), 24, 48, 3, 0));
 
         AssetPool.addSound("Main Theme","Assets/Sounds/main-theme-overworld.ogg", true);
         AssetPool.addSound("Flagpole","Assets/Sounds/flagpole.ogg", false);
@@ -113,103 +109,6 @@ public class EditorSceneInitializer extends SceneInitializer
 
     // - - - Scene usage - - -
 
-
-    // - - - editor stuff
-    @Override
-    public void editorGUI()
-    {
-        ImGui.begin("Block Picker");
-        if (ImGui.beginTabBar("Window Tabar"))
-        {
-            if (ImGui.beginTabItem("Blocks"))
-            {
-                ImVec2 windowPos = new ImVec2();
-                ImGui.getWindowPos(windowPos);
-                ImVec2 windowSize = new ImVec2();
-                ImGui.getWindowSize(windowSize);
-                ImVec2 itemSpacing = new ImVec2();
-                ImGui.getStyle().getItemSpacing(itemSpacing);
-                float windowX2 = windowPos.x + windowSize.x;
-                for (int i = 0; i < sprites.size(); ++i) {
-                    Sprite sprite = sprites.getSprite(i);
-                    float spriteWidth = sprite.getWidth() * 2;
-                    float spriteHeight = sprite.getHeight() * 2;
-                    int id = sprite.getTextureID();
-                    Vector2f[] texCoords = sprite.getTextureCoordinates();
-
-                    ImGui.pushID(i);
-                    if (ImGui.imageButton(id, spriteWidth, spriteHeight, texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y)) {
-                        GameObject object = Prefabs.generateSpriteObject(sprite, DefaultValues.GRID_WIDTH, DefaultValues.GRID_HEIGHT);
-//                object.getCompoent(SpriteComponent.class).setColor(new Vector4f(0.8f, 0.8f, 0.8f, 0.5f));
-                        MouseControlComponent.pickupObject(object);
-                    }
-                    ImGui.popID();
-
-                    ImVec2 lastButtonPos = new ImVec2();
-                    ImGui.getItemRectMax(lastButtonPos);
-                    float lastButtonX2 = lastButtonPos.x;
-                    float nextButtonX2 = lastButtonX2 + itemSpacing.x + spriteWidth;
-                    if (i + 1 < sprites.size() && nextButtonX2 < windowX2) {
-                        ImGui.sameLine();
-                    }
-                }
-                ImGui.endTabItem();
-            }
-            if (ImGui.beginTabItem("Prefabs"))
-            {
-                SpriteSheet playerSprites = AssetPool.getSpriteSheet("Sprite sheet");
-                Sprite sprite = playerSprites.getSprite(0);
-                float spriteWidth = sprite.getWidth() * 4;
-                float spriteHeight = sprite.getHeight() * 4;
-                int id = sprite.getTextureID();
-                Vector2f[] texCoords = sprite.getTextureCoordinates();
-                if (ImGui.imageButton(id, spriteWidth, spriteHeight, texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y))
-                {
-                    GameObject object = Prefabs.generateMario();
-                    object.getCompoent(SpriteComponent.class).setColor(new Vector4f(0.8f, 0.8f, 0.8f, 0.5f));
-                    MouseControlComponent.pickupObject(object);
-                }
-
-                SpriteSheet items = AssetPool.getSpriteSheet("Items");
-                Sprite sprite2 = items.getSprite(0);
-                float sprite2Width = sprite2.getWidth() * 4;
-                float sprite2Height = sprite2.getHeight() * 4;
-                int id2 = sprite2.getTextureID();
-                Vector2f[] texCoords2 = sprite2.getTextureCoordinates();
-                if (ImGui.imageButton(id2, sprite2Width, sprite2Height, texCoords2[2].x, texCoords2[0].y, texCoords2[0].x, texCoords2[2].y))
-                {
-                    GameObject object = Prefabs.generateQuestionBlock();
-                    object.getCompoent(SpriteComponent.class).setColor(new Vector4f(0.8f, 0.8f, 0.8f, 0.5f));
-                    MouseControlComponent.pickupObject(object);
-                }
-                ImGui.sameLine();
-                ImGui.endTabItem();
-            }
-
-            if (ImGui.beginTabItem("Sounds"))
-            {
-                Collection<Sound> sounds = AssetPool.getAllSounds();
-                for (Sound sound : sounds)
-                {
-                    File tmp = new File(sound.getFIlePath());
-                    if (ImGui.button(tmp.getName()))
-                    {
-                        if (!sound.isPlaying())
-                        {
-                            sound.play();
-                        }
-                        else
-                        {
-                            sound.stop();
-                        }
-                    }
-                }
-                ImGui.endTabItem();
-            }
-            ImGui.endTabBar();
-        }
-        ImGui.end();
-    }
 
     @Override
     public void assignRenderingSystem()

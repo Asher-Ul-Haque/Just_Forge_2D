@@ -105,6 +105,7 @@ public class Scene
         this.camera = Mouse.getWorldCamera();
         this.initializer.loadResources(this);
         this.initializer.init(this);
+        SceneSystemManager.createMaster(this);
         Logger.FORGE_LOG_INFO("Scene: " + this.initializer + " Initialized");
     }
 
