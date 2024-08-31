@@ -8,10 +8,12 @@ import Just_Forge_2D.EntityComponentSystem.Components.ComponentList;
 import Just_Forge_2D.RenderingSystem.Framebuffer;
 import Just_Forge_2D.RenderingSystem.Shader;
 import Just_Forge_2D.RenderingSystem.SpriteSheet;
+import Just_Forge_2D.SceneSystem.SceneInitializer;
 import Just_Forge_2D.Utils.AssetPool;
 import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.WindowSystem.WindowConfig;
 import Just_Forge_2D.WindowSystem.WindowSystemManager;
+import SampleMario.GameCode.EditorSceneInitializer;
 
 import java.io.IOException;
 
@@ -25,8 +27,8 @@ public class EditorSystemManager
     protected static ImGUIManager editorLayer;
     protected static boolean isRuntimePlaying = false;
     public static WindowConfig editorWindowConfig;
+    public static SceneInitializer currentSceneInitializer = new EditorSceneInitializer();
     public static String projectDir = System.getProperty("user.dir");
-//    public static String projectDir = "/home/nadeem/Documents/ForgeProjects/mario";
     public static boolean isRelease = false;
 
     public static state getCurrentState()

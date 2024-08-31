@@ -53,7 +53,8 @@ public class KeyboardControls
                 {
                     if (Keyboard.isKeyPressed(Keys.LEFT_SHIFT) || Keyboard.isKeyPressed(Keys.RIGHT_SHIFT))
                     {
-                        go.transform.scale.x += (Keyboard.isKeyPressed(Keys.LEFT_CONTROL) || Keyboard.isKeyPressed(Keys.RIGHT_CONTROL)) ? GridlinesComponent.gridSize.x : 0.01f;
+                        if (Keyboard.isKeyPressed(Keys.LEFT_ALT) || Keyboard.isKeyPressed(Keys.RIGHT_ALT)) go.transform.rotation -= 0.01f;
+                        else go.transform.scale.x += (Keyboard.isKeyPressed(Keys.LEFT_CONTROL) || Keyboard.isKeyPressed(Keys.RIGHT_CONTROL)) ? GridlinesComponent.gridSize.x : 0.01f;
                     }
                     else go.transform.position.x += (Keyboard.isKeyPressed(Keys.LEFT_CONTROL) || Keyboard.isKeyPressed(Keys.RIGHT_CONTROL)) ? GridlinesComponent.gridSize.x : 0.01f;
                 }
@@ -62,7 +63,8 @@ public class KeyboardControls
                 {
                     if (Keyboard.isKeyPressed(Keys.LEFT_SHIFT) || Keyboard.isKeyPressed(Keys.RIGHT_SHIFT))
                     {
-                        go.transform.scale.x -= (Keyboard.isKeyPressed(Keys.LEFT_CONTROL) || Keyboard.isKeyPressed(Keys.RIGHT_CONTROL)) ? GridlinesComponent.gridSize.x : 0.01f;
+                        if (Keyboard.isKeyPressed(Keys.LEFT_ALT) || Keyboard.isKeyPressed(Keys.RIGHT_ALT)) go.transform.rotation += 0.01f;
+                        else go.transform.scale.x -= (Keyboard.isKeyPressed(Keys.LEFT_CONTROL) || Keyboard.isKeyPressed(Keys.RIGHT_CONTROL)) ? GridlinesComponent.gridSize.x : 0.01f;
                     }
                     else go.transform.position.x -= (Keyboard.isKeyPressed(Keys.LEFT_CONTROL) || Keyboard.isKeyPressed(Keys.RIGHT_CONTROL)) ? GridlinesComponent.gridSize.x : 0.01f;
                 }
@@ -71,7 +73,8 @@ public class KeyboardControls
                 {
                     if (Keyboard.isKeyPressed(Keys.LEFT_SHIFT) || Keyboard.isKeyPressed(Keys.RIGHT_SHIFT))
                     {
-                        go.transform.scale.y += (Keyboard.isKeyPressed(Keys.LEFT_CONTROL) || Keyboard.isKeyPressed(Keys.RIGHT_CONTROL)) ? GridlinesComponent.gridSize.x : 0.01f;
+                        if (Keyboard.isKeyPressed(Keys.LEFT_ALT) || Keyboard.isKeyPressed(Keys.RIGHT_ALT)) go.transform.rotation -= 0.01f;
+                        else go.transform.scale.y += (Keyboard.isKeyPressed(Keys.LEFT_CONTROL) || Keyboard.isKeyPressed(Keys.RIGHT_CONTROL)) ? GridlinesComponent.gridSize.x : 0.01f;
                     }
                     else go.transform.position.y += (Keyboard.isKeyPressed(Keys.LEFT_CONTROL) || Keyboard.isKeyPressed(Keys.RIGHT_CONTROL)) ? GridlinesComponent.gridSize.x : 0.01f;
                 }
@@ -80,7 +83,8 @@ public class KeyboardControls
                 {
                     if (Keyboard.isKeyPressed(Keys.LEFT_SHIFT) || Keyboard.isKeyPressed(Keys.RIGHT_SHIFT))
                     {
-                        go.transform.scale.y -= (Keyboard.isKeyPressed(Keys.LEFT_CONTROL) || Keyboard.isKeyPressed(Keys.RIGHT_CONTROL)) ? GridlinesComponent.gridSize.x : 0.01f;
+                        if (Keyboard.isKeyPressed(Keys.LEFT_ALT) || Keyboard.isKeyPressed(Keys.RIGHT_ALT)) go.transform.rotation += 0.01f;
+                        else go.transform.scale.y -= (Keyboard.isKeyPressed(Keys.LEFT_CONTROL) || Keyboard.isKeyPressed(Keys.RIGHT_CONTROL)) ? GridlinesComponent.gridSize.x : 0.01f;
                     }
                     else go.transform.position.y -= (Keyboard.isKeyPressed(Keys.LEFT_CONTROL) || Keyboard.isKeyPressed(Keys.RIGHT_CONTROL)) ? GridlinesComponent.gridSize.x : 0.01f;
                 }
