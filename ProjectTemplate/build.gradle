@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
 
 repositories {
@@ -9,28 +10,20 @@ repositories {
     mavenCentral()
 }
 
-dependencies {
-    implementation name: 'Just-Forge-2D-SNAPSHOT-1.2.jar' // Assuming the engine JAR is named 'engine.jar'
-}
-
-tasks.withType(JavaCompile) {
-    options.encoding = 'UTF-8'
-}
-
-jar {
-    from {
-        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
-    }
+shadowJar {
+    archiveClassifier.set('all')
+    mergeServiceFiles()
     manifest {
-        attributes(
-                'Class-Path': configurations.runtimeClasspath.collect { it.getName() }.join(' '),
-                'Main-Class': 'com.somebody.engine.Main' // This should point to the actual main class in the engine JAR
-        )
+        attributes 'Main-Class': 'Just_Forge_2D.Main'
+    }
+    from('Assets') {
+        into '${buildDir}/libs/Assets'
+    }
+    from('libs') {
+        into '%{buildDir}/libs'
     }
 }
 
-task runGame(type: JavaExec) {
-    mainClass = 'com.somebody.engine.Main' // Replace with the actual fully qualified name of the main class in your engine
-    classpath = sourceSets.main.runtimeClasspath + configurations.runtimeClasspath
+dependencies {
+    implementation fileTree(dir: 'libs', include: '*.jar')
 }
-

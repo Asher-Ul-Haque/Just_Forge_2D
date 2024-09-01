@@ -113,6 +113,7 @@ public class SplashScreen
 
     public static void cleanup()
     {
+        GameManager.buildUserCode();
         MainWindow.get().setVisible(false);
         Logger.FORGE_LOG_TRACE("Project Path : " + EditorSystemManager.projectDir);
         EditorSystemManager.setCurrentState(EditorSystemManager.state.isEditor);
@@ -126,7 +127,5 @@ public class SplashScreen
         MainWindow.get().setVisible(true);
         if (EditorSystemManager.isRelease) EventManager.notify(null, new Event(EventTypes.ForgeStart));
         else EventManager.notify(null, new Event(EventTypes.ForgeStop));
-        GameManager.buildUserCode();
-        GameManager.init();
     }
 }

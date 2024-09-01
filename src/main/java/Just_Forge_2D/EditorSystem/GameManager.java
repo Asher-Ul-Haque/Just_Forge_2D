@@ -18,12 +18,11 @@ public class GameManager
     private static boolean success = false;
     public static void buildUserCode()
     {
-        new Thread(() ->
+        try
         {
-            try
+            if (!EditorSystemManager.isRelease)
             {
                 String gradlewCommand = System.getProperty("os.name").toLowerCase().contains("win") ? "./gradlew.bat" : "./gradlew";
-
                 ProcessBuilder processBuilder = new ProcessBuilder(gradlewCommand, "build");
                 processBuilder.directory(new File(projectDir));
 
@@ -37,28 +36,32 @@ public class GameManager
                     Logger.FORGE_LOG_FATAL("Error in user code. Exit code : " + exitCode);
                     return;
                 }
-                try
-                {
-                    File classesDir = new File(projectDir +"/build/classes/java/main");
-                    URLClassLoader classLoader = new URLClassLoader(new URL[]{classesDir.toURI().toURL()});
+            }
+            try
+            {
+                File classesDir = new File(projectDir + "/build/classes/java/main");
+                URLClassLoader classLoader = new URLClassLoader(new URL[]{classesDir.toURI().toURL()});
 
-                    Class<?> gameClass = classLoader.loadClass("Main");
-                    Constructor<?> constructor = gameClass.getConstructor();
-                    game = (Game) constructor.newInstance();
-                    success = true;
-                }
-                catch (Exception e)
-                {
-                    Logger.FORGE_LOG_FATAL("Couldnt find any entry point in the user code. Are you sure that you implemented the Game Interface");
-                    return;
-                }
-                game.init();
-                Logger.FORGE_LOG_TRACE("Build successful");
+                Class<?> gameClass = classLoader.loadClass("Main");
+                Constructor<?> constructor = gameClass.getConstructor();
+                game = (Game) constructor.newInstance();
+                success = true;
             }
             catch (Exception e)
             {
-                Logger.FORGE_LOG_FATAL("Failed to build user code: " + e.getCause());
+                Logger.FORGE_LOG_FATAL("Couldn't find any entry point in the user code. Are you sure that you implemented the Game Interface");
+                return;
             }
+            game.init();
+            Logger.FORGE_LOG_TRACE("Build successful");
+        }
+        catch (Exception e)
+        {
+            Logger.FORGE_LOG_FATAL("Failed to build user code: " + e.getCause());
+        }
+        new Thread(() ->
+        {
+
         }).start();
     }
 

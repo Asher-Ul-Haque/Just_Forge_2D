@@ -5,6 +5,7 @@ import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.EditorCameraComponent;
 import Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.GizmoSystem.GizmoSystemComponent;
 import Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.GridlinesComponent;
+import Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.NonPickableComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.JsonHandlers.ComponentJsonHandler;
@@ -128,6 +129,7 @@ public class SceneSystemManager
         master.addComponent(new EditorCameraComponent(SCENE.getCamera()));
         master.addComponent(new GizmoSystemComponent());
         master.addComponent(new MouseControlComponent());
+        master.addComponent(new NonPickableComponent());
         SCENE.addGameObject(master);
     }
 }

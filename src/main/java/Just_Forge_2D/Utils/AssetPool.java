@@ -125,9 +125,9 @@ public class AssetPool
         File file = new File(SPRITE_SHEET.getTexture().getFilepath());
         if (!AssetPool.spriteSheetPool.containsKey(file.getAbsolutePath()))
         {
-            Logger.FORGE_LOG_DEBUG("Sprite sheet with path: " + file.getAbsolutePath() + " Hashed in Asset Pool and loaded");
             nameToFile.put(NAME, file.getAbsolutePath());
             AssetPool.spriteSheetPool.put(file.getAbsolutePath(), SPRITE_SHEET);
+            Logger.FORGE_LOG_DEBUG("Sprite sheet with path: " + file.getAbsolutePath() + " Hashed in Asset Pool and loaded");
         }
         else
         {

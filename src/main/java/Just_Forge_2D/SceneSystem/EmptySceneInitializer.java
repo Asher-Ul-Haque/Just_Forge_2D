@@ -21,7 +21,5 @@ public class EmptySceneInitializer extends SceneInitializer
     @Override
     public void loadResources(Scene SCENE)
     {
-        AssetPool.addSpriteSheet("Turtle", new SpriteSheet(AssetPool.getTexture("Assets/Textures/turtle.png"), 16, 24, 4, 0));
-
     }
 }

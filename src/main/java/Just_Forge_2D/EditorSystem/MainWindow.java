@@ -65,7 +65,7 @@ public class MainWindow extends Window
         }
         PropertiesWindow.setActiveGameObject(null);
 
-        get().currentScene = new Scene(INITIALIZER, "Editor Scene");
+        get().currentScene = new Scene(INITIALIZER, "Main Scene");
         SceneSystemManager.load(get().currentScene);
         get().currentScene.init();
         get().currentScene.start();
@@ -119,14 +119,14 @@ public class MainWindow extends Window
         Logger.FORGE_LOG_INFO("Time keeping system Online");
 
         Mouse.setCamera(new Camera(new Vector2f(0, 0)));
-        try
-        {
-            MainWindow.changeScene(EditorSystemManager.currentSceneInitializer.getDeclaredConstructor().newInstance());
-        }
-        catch (Exception e)
-        {
-            Logger.FORGE_LOG_FATAL(e.getCause());
-        }
+//        try
+//        {
+//            MainWindow.changeScene(EditorSystemManager.currentSceneInitializer.getDeclaredConstructor().newInstance());
+//        }
+//        catch (Exception e)
+//        {
+//            Logger.FORGE_LOG_FATAL(e.getCause());
+//        }
     }
 
     // - - - Loop the game
@@ -180,6 +180,7 @@ public class MainWindow extends Window
                     {
                         currentScene.editorUpdate(dt);
                     }
+                    GameManager.loop(dt);
                     currentScene.render(dt);
                     if (!EditorSystemManager.isRelease) DebugPencil.draw();
                 }

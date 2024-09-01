@@ -42,9 +42,18 @@ public class EditorSystemManager
             return;
         }
         EditorSystemManager.currentSceneInitializer = INITIALIZER;
+        try
+        {
+            MainWindow.changeScene(currentSceneInitializer.getDeclaredConstructor().newInstance());
+        }
+        catch (Exception e)
+        {
+            Logger.FORGE_LOG_FATAL("Couldnt change scene");
+            MainWindow.changeScene(new EmptySceneInitializer());
+        }
     }
 
-    public static Class<? extends SceneInitializer> currentSceneInitializer = EditorSceneInitializer.class;
+    public static Class<? extends SceneInitializer> currentSceneInitializer = EmptySceneInitializer.class;
     public static String projectDir = System.getProperty("user.dir");
     public static boolean isRelease = false;
 

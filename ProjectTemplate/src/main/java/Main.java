@@ -1,25 +1,23 @@
-import Just_Forge_2D.Game.GameApplication;
+import Just_Forge_2D.EditorSystem.Game;
+import Just_Forge_2D.Utils.Logger;
 
-public class MainGame implements Game
+public class Main implements Game
 {
     @Override
     public void init()
     {
-        // Initialize game resources
-        System.out.println("Game initialized!");
+        Logger.FORGE_LOG_DEBUG("Yay");
     }
 
     @Override
     public void update(float deltaTime)
     {
-        // Update game state
-        System.out.println("Game updated!");
+        Logger.FORGE_LOG_TRACE("Game updated!");
     }
 
     @Override
     public void end()
     {
-        // Cleanup game resources
-        System.out.println("Game ended!");
+        Logger.FORGE_LOG_DEBUG("Game ended!");
     }
 }
