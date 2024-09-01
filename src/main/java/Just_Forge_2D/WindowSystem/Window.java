@@ -1,6 +1,6 @@
 package Just_Forge_2D.WindowSystem;
 
-import Just_Forge_2D.EditorSystem.GameManager;
+import Just_Forge_2D.EditorSystem.GameSystem.GameManager;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.EventSystem.EventManager;
 import Just_Forge_2D.EventSystem.Events.Event;

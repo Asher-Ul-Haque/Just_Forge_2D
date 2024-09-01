@@ -53,7 +53,7 @@ public class EditorSystemManager
         }
     }
 
-    public static Class<? extends SceneInitializer> currentSceneInitializer = EmptySceneInitializer.class;
+    public static Class<? extends SceneInitializer> currentSceneInitializer;
     public static String projectDir = System.getProperty("user.dir");
     public static boolean isRelease = false;
 

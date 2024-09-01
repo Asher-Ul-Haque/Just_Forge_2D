@@ -1,13 +1,14 @@
 package Just_Forge_2D.EditorSystem.Windows;
 
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
-import Just_Forge_2D.EditorSystem.GameManager;
+import Just_Forge_2D.EditorSystem.GameSystem.GameManager;
 import Just_Forge_2D.EditorSystem.MainWindow;
 import Just_Forge_2D.EditorSystem.ProjectManager;
 import Just_Forge_2D.EventSystem.EventManager;
 import Just_Forge_2D.EventSystem.Events.Event;
 import Just_Forge_2D.EventSystem.Events.EventTypes;
 import Just_Forge_2D.RenderingSystem.Texture;
+import Just_Forge_2D.SceneSystem.EmptySceneInitializer;
 import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.WindowSystem.WindowSystemManager;
@@ -114,6 +115,10 @@ public class SplashScreen
     public static void cleanup()
     {
         GameManager.buildUserCode();
+        if (EditorSystemManager.currentSceneInitializer == null)
+        {
+            EditorSystemManager.setCurrentSceneInitializer(EmptySceneInitializer.class);
+        }
         MainWindow.get().setVisible(false);
         Logger.FORGE_LOG_TRACE("Project Path : " + EditorSystemManager.projectDir);
         EditorSystemManager.setCurrentState(EditorSystemManager.state.isEditor);

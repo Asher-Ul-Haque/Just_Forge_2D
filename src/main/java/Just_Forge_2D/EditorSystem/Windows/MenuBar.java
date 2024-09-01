@@ -1,6 +1,7 @@
 package Just_Forge_2D.EditorSystem.Windows;
 
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
+import Just_Forge_2D.EditorSystem.GameSystem.GameManager;
 import Just_Forge_2D.EditorSystem.MainWindow;
 import Just_Forge_2D.EventSystem.EventManager;
 import Just_Forge_2D.EventSystem.Events.Event;
@@ -50,6 +51,18 @@ public class MenuBar
                         EventManager.notify(null, new Event(EventTypes.LoadLevel));
                     }
                 }
+            }
+            ImGui.endMenu();
+        }
+        if (ImGui.beginMenu("Run"))
+        {
+            if (ImGui.menuItem("Build JAR"))
+            {
+                GameManager.compileCode();
+            }
+            if (ImGui.menuItem("Run JAR"))
+            {
+                GameManager.runCode();
             }
             ImGui.endMenu();
         }

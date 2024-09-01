@@ -4,6 +4,7 @@ package Just_Forge_2D.EditorSystem;
 
 // - - - Internal
 
+import Just_Forge_2D.EditorSystem.GameSystem.GameManager;
 import Just_Forge_2D.EditorSystem.Windows.EditorWindowConfig;
 import Just_Forge_2D.EditorSystem.Windows.ObjectSelector;
 import Just_Forge_2D.EditorSystem.Windows.PropertiesWindow;
