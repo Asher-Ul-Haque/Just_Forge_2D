@@ -82,13 +82,15 @@ public class ProjectManager
     public static void copyDirectory(String sourceDirectoryLocation, String destinationDirectoryLocation)
             throws IOException
     {
+        File srcDir = new File(sourceDirectoryLocation);
+        if (srcDir.isDirectory() && srcDir.exists()) srcDir.delete();
         Files.walk(Paths.get(sourceDirectoryLocation))
                 .forEach(source -> {
                     Path destination = Paths.get(destinationDirectoryLocation, source.toString()
                             .substring(sourceDirectoryLocation.length()));
                     try {
                         Files.copy(source, destination);
-                    } catch (IOException e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 });

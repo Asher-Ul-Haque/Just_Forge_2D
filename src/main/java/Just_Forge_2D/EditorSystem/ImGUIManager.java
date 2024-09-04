@@ -3,8 +3,6 @@ package Just_Forge_2D.EditorSystem;
 import Just_Forge_2D.EditorSystem.Themes.ConfigFlags;
 import Just_Forge_2D.EditorSystem.Windows.*;
 import Just_Forge_2D.EditorSystem.InputControls.KeyboardControls;
-import Just_Forge_2D.EditorSystem.InputControls.MouseControlComponent;
-import Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.GridlinesComponent;
 import Just_Forge_2D.PrefabSystem.PrefabManager;
 import Just_Forge_2D.SceneSystem.Scene;
 import Just_Forge_2D.Utils.Logger;
@@ -260,7 +258,7 @@ public class ImGUIManager
                 break;
 
             case isSplashScreen:
-                SplashScreen.intiailize();
+                SplashScreen.setupMainWindow();
                 SplashScreen.render();
                 break;
         }

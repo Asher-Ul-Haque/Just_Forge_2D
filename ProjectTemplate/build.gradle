@@ -16,12 +16,6 @@ shadowJar {
     manifest {
         attributes 'Main-Class': 'Just_Forge_2D.Main'
     }
-    from('Assets') {
-        into '${buildDir}/libs/Assets'
-    }
-    from('libs') {
-        into '%{buildDir}/libs'
-    }
 }
 
 dependencies {

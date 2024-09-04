@@ -14,9 +14,6 @@ import Just_Forge_2D.Utils.AssetPool;
 import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.WindowSystem.WindowConfig;
 import Just_Forge_2D.WindowSystem.WindowSystemManager;
-import SampleMario.GameCode.EditorSceneInitializer;
-
-import java.io.IOException;
 
 
 public class EditorSystemManager

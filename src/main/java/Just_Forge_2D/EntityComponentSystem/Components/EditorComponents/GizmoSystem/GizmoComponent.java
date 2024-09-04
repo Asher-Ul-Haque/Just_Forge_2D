@@ -8,7 +8,7 @@ import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.InputSystem.Mouse;
 import Just_Forge_2D.EditorSystem.MainWindow;
-import SampleMario.GameCode.Prefabs;
+import Just_Forge_2D.PrefabSystem.PrefabManager;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 
@@ -51,8 +51,8 @@ public class GizmoComponent extends Component
 
     public GizmoComponent(Sprite ARROW)
     {
-        this.xAxisGizmo = Prefabs.generateSpriteObject("X axis Gizmo", ARROW, gizmoWidth, gizmoHeight);
-        this.yAxisGizmo = Prefabs.generateSpriteObject("Y axis Gizmo", ARROW, gizmoWidth, gizmoHeight);
+        this.xAxisGizmo = PrefabManager.generateDefaultSpriteObject(ARROW, gizmoWidth, gizmoHeight);
+        this.yAxisGizmo = PrefabManager.generateDefaultSpriteObject(ARROW, gizmoWidth, gizmoHeight);
         this.xAxisSprite = this.xAxisGizmo.getCompoent(SpriteComponent.class);
         this.yAxisSprite = this.yAxisGizmo.getCompoent(SpriteComponent.class);
         this.xAxisGizmo.transform.position.add(this.xAxisOffset);

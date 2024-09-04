@@ -9,6 +9,7 @@ import Just_Forge_2D.EventSystem.Events.Event;
 import Just_Forge_2D.EventSystem.Events.EventTypes;
 import Just_Forge_2D.RenderingSystem.Texture;
 import Just_Forge_2D.SceneSystem.EmptySceneInitializer;
+import Just_Forge_2D.Utils.AssetPool;
 import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.WindowSystem.WindowSystemManager;
@@ -19,29 +20,30 @@ import org.joml.Vector4f;
 public class SplashScreen
 {
     private static Texture logoTexture;
-    private static boolean isInitialized = false;
     private static float timer = 0.0f;
 
-    public static void intiailize()
+    public static void setupMainWindow()
     {
-        if (!isInitialized)
+        MainWindow.get().setClearColor(new Vector4f(0.5f));
+        MainWindow.get().setAlwaysOnTop(true);
+        MainWindow.get().setDecorated(false);
+        MainWindow.get().setSize(600, 400);
+        MainWindow.get().setPosition(
+                (WindowSystemManager.getMonitorSize().x - MainWindow.get().getWidth()) / 2,
+                (WindowSystemManager.getMonitorSize().y - MainWindow.get().getHeight()) / 2
+        );
+        if (logoTexture == null)
         {
-            MainWindow.get().setClearColor(new Vector4f(0.5f));
-            MainWindow.get().setAlwaysOnTop(true);
-            MainWindow.get().setDecorated(false);
-            MainWindow.get().setSize(600, 400);
-            MainWindow.get().setPosition(
-                    (WindowSystemManager.getMonitorSize().x - MainWindow.get().getWidth()) / 2,
-                    (WindowSystemManager.getMonitorSize().y - MainWindow.get().getHeight()) / 2
-            );
-            if (logoTexture == null)
-            {
-                logoTexture = new Texture();
-                logoTexture.init(DefaultValues.DEFAULT_ICON_PATH);
-            }
-            MainWindow.get().setVisible(true);
-            isInitialized = true;
+            logoTexture = new Texture();
+            logoTexture.init(DefaultValues.DEFAULT_ICON_PATH);
+            AssetPool.addTexture("Logo", DefaultValues.DEFAULT_ICON_PATH);
         }
+        MainWindow.get().setVisible(true);
+    }
+
+    public static void initialise()
+    {
+        setupMainWindow();
     }
 
     public static void render()
