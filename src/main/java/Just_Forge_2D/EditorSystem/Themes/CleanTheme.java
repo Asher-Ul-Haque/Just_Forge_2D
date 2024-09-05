@@ -7,17 +7,17 @@ public class CleanTheme extends Theme
 {
     public CleanTheme()
     {
-        this.primaryColor = new ImVec4(0.188235f, 0.188235f, 0.188235f, 1.0f);
-        this.secondaryColor = new ImVec4(0.9411f, 0.9411f, 0.9411f, 1.0f);
+        this.secondaryColor = new ImVec4(0.129411765f, 0.1450980f, 0.16078f, 1.0f);
+        this.primaryColor = new ImVec4(0.97647f, 0.97254902f, 0.968627541f, 1.0f);
         this.tertiaryColor = new ImVec4(0.0f, 0.0f, 0.0f, 1.0f);
         this.quaternaryColor = new ImVec4(0.862f, 0.862f, 0.862f, 1.0f);
 
-        this.windowBgColor = secondaryColor;
-        this.windowChildBgColor = secondaryColor;
-        this.popupBgColor = secondaryColor;
+        this.windowBgColor = primaryColor;
+        this.windowChildBgColor = primaryColor;
+        this.popupBgColor = primaryColor;
 
-        this.windowBorderSize = 4.0f;
-        this.windowBorderColor = primaryColor;
+        this.windowBorderSize = 0.0f;
+        this.windowBorderColor = secondaryColor;
         this.windowBorderShadowColor = quaternaryColor;
 
         this.windowTitleBgColor = tertiaryColor;
@@ -27,7 +27,7 @@ public class CleanTheme extends Theme
 
         this.windowPadding = new ImVec2(0.0f, 0.0f);
 
-        this.buttonBgColor = primaryColor;
+        this.buttonBgColor = secondaryColor;
         this.buttonBgHoverColor = tertiaryColor;
         this.buttonBgActiveColor = primaryColor;
 
@@ -38,8 +38,8 @@ public class CleanTheme extends Theme
         this.dockingBgColor = primaryColor;
         this.dockGripperColor = secondaryColor;
 
-        this.treeNodeBgColor = primaryColor;
-        this.treeNodeTextColor = secondaryColor;
+        this.treeNodeBgColor = secondaryColor;
+        this.treeNodeTextColor = primaryColor;
         this.treeNodeIndent = 16f;
 
         this.tabBgColor = primaryColor;

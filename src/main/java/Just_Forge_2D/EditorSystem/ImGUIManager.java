@@ -191,7 +191,7 @@ public class ImGUIManager
         // Glyphs could be added per-font as well as per config used globally like here
         fontConfig.setGlyphRanges(fontAtlas.getGlyphRangesDefault());
 
-        final String fontPath = "Assets/Fonts/JetBrainsMono-Bold.ttf";
+        final String fontPath = "Assets/Fonts/Inter.ttf";
         final int fontSize = 16;
 
 // Fonts merge example
@@ -200,7 +200,6 @@ public class ImGUIManager
 
         fontConfig.destroy(); // After all fonts were added we don't need this config more
         fontAtlas.build();
-
     }
 
     // - - - start function because constructors are pointless
@@ -258,8 +257,7 @@ public class ImGUIManager
                 break;
 
             case isSplashScreen:
-                SplashScreen.setupMainWindow();
-                SplashScreen.render();
+                SplashScreen.render(DELTA_TIME);
                 break;
         }
 
