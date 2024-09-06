@@ -6,13 +6,13 @@ public class Main implements Game
     @Override
     public void init()
     {
-        Logger.FORGE_LOG_DEBUG("Yay");
+        Logger.FORGE_LOG_DEBUG("Game started!");
     }
 
     @Override
     public void update(float deltaTime)
     {
-        Logger.FORGE_LOG_TRACE("Game updated!");
+        //Logger.FORGE_LOG_TRACE("Game updated!");
     }
 
     @Override

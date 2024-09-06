@@ -15,7 +15,7 @@ public class EmptySceneInitializer extends SceneInitializer
     @Override
     public void init(Scene SCENE)
     {
-        MainWindow.get().setClearColor(new Vector4f(1.0f));
+        MainWindow.get().setClearColor(new Vector4f(0.0f));
     }
 
     @Override

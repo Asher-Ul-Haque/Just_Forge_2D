@@ -3,7 +3,6 @@ package Just_Forge_2D.EditorSystem.Windows;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.Components.ComponentList;
 import Just_Forge_2D.Utils.Logger;
-import SampleMario.Components.BreakableBrick;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.BoxColliderComponent;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.CircleColliderComponent;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent;

@@ -2,6 +2,8 @@ package Just_Forge_2D.EntityComponentSystem.Components.Sprite;
 
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EditorSystem.Widgets;
+import Just_Forge_2D.RenderingSystem.RenderBatch;
+import Just_Forge_2D.RenderingSystem.Renderer;
 import Just_Forge_2D.RenderingSystem.Texture;
 import Just_Forge_2D.Utils.AssetPool;
 import Just_Forge_2D.Utils.Logger;
@@ -114,8 +116,8 @@ public class SpriteComponent extends Component
     {
         if (ImGui.button("Destroy"))
         {
-            this.gameObject.removeComponent(this.getClass());
             this.isChanged = true;
+            this.gameObject.removeComponent(this.getClass());
         }
         if (Widgets.colorPicker4("Color Picker", this.color))
         {

@@ -7,10 +7,7 @@ import Just_Forge_2D.PrefabSystem.PrefabManager;
 import Just_Forge_2D.SceneSystem.Scene;
 import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.InputSystem.*;
-import imgui.ImFontAtlas;
-import imgui.ImFontConfig;
-import imgui.ImGui;
-import imgui.ImGuiIO;
+import imgui.*;
 import imgui.callback.ImStrConsumer;
 import imgui.callback.ImStrSupplier;
 import imgui.flag.*;
@@ -27,6 +24,8 @@ public class ImGUIManager
     private static final ImGuiImplGl3 imGuiGl3 = new ImGuiImplGl3();
     private static long windowPtr;
     public static ImGuiIO io;
+    public static ImFont interExtraBold;
+    public static ImFont interRegular;
     static float timer = 0f;
 
 
@@ -191,12 +190,13 @@ public class ImGUIManager
         // Glyphs could be added per-font as well as per config used globally like here
         fontConfig.setGlyphRanges(fontAtlas.getGlyphRangesDefault());
 
-        final String fontPath = "Assets/Fonts/Inter.ttf";
-        final int fontSize = 16;
+        final String interPath = "Assets/Fonts/JetBrainsMono-Bold.ttf";
+        final int interFontSize = 16;
+        interRegular = fontAtlas.addFontFromFileTTF(interPath, interFontSize);
 
-// Fonts merge example
-        fontConfig.setPixelSnapH(true);
-        fontAtlas.addFontFromFileTTF(fontPath, fontSize, fontConfig);
+        final String interExtraBoldPath = "Assets/Fonts/Inter-Black.otf";
+        final int interExtraBoldFontSize = 16;
+        interExtraBold = fontAtlas.addFontFromFileTTF(interExtraBoldPath, interExtraBoldFontSize);
 
         fontConfig.destroy(); // After all fonts were added we don't need this config more
         fontAtlas.build();

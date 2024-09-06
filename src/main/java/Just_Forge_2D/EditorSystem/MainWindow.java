@@ -5,7 +5,7 @@ package Just_Forge_2D.EditorSystem;
 // - - - Internal
 
 import Just_Forge_2D.EditorSystem.GameSystem.GameManager;
-import Just_Forge_2D.EditorSystem.Windows.EditorWindowConfig;
+import Just_Forge_2D.EditorSystem.Windows.MainWindowConfig;
 import Just_Forge_2D.EditorSystem.Windows.ObjectSelector;
 import Just_Forge_2D.EditorSystem.Windows.PropertiesWindow;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
@@ -78,7 +78,7 @@ public class MainWindow extends Window
         if (MainWindow.window == null)
         {
             Logger.FORGE_LOG_ERROR("No Window config specified");
-            MainWindow.window = new MainWindow(new EditorWindowConfig());
+            MainWindow.window = new MainWindow(new MainWindowConfig());
         }
         return MainWindow.window;
     }

@@ -24,8 +24,8 @@ public class GridlinesComponent extends Component
         Vector2f cameraPos = camera.position;
         Vector2f projectionSize = camera.getProjectionSize();
 
-        float firstX = ((int) (cameraPos.x / gridSize.x)) * gridSize.x;
-        float firstY = ((int) (cameraPos.y / gridSize.y)) * gridSize.y;
+        float firstX = ((int) (cameraPos.x / gridSize.x) - 1) * gridSize.x;
+        float firstY = ((int) (cameraPos.y / gridSize.y) - 1) * gridSize.y;
 
         int numVertLines = (int) (projectionSize.x * camera.getZoom() / gridSize.x) + 2;
         int numHorLines = (int) (projectionSize.y * camera.getZoom() / gridSize.y) + 2;

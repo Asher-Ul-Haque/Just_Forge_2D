@@ -2,6 +2,7 @@ package Just_Forge_2D.EditorSystem.Windows;
 
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.EditorSystem.GameSystem.GameManager;
+import Just_Forge_2D.EditorSystem.ImGUIManager;
 import Just_Forge_2D.EditorSystem.MainWindow;
 import Just_Forge_2D.EditorSystem.ProjectManager;
 import Just_Forge_2D.EditorSystem.Themes.Theme;
@@ -10,6 +11,7 @@ import Just_Forge_2D.EventSystem.Events.Event;
 import Just_Forge_2D.EventSystem.Events.EventTypes;
 import Just_Forge_2D.RenderingSystem.Texture;
 import Just_Forge_2D.SceneSystem.EmptySceneInitializer;
+import Just_Forge_2D.Utils.AssetPool;
 import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.WindowSystem.WindowSystemManager;
@@ -19,18 +21,23 @@ import org.joml.Vector4f;
 
 public class SplashScreen
 {
+
+    // - - -  private variables
     private static Texture logoTexture;
     private static boolean isInitialized = false;
     private static float timer = 0.0f;
-    private static float splashTime = 2.0f;
-    private static float relapseTime = 0.2f;
+    private static final float splashTime = 2.0f;
+    private static final float relapseTime = 0.2f;
     private static boolean readyToLoad = false;
     private static boolean load = false;
 
+    // - - - initialization
     public static void initialize()
     {
         if (!isInitialized)
         {
+            Logger.FORGE_LOG_INFO("Initializing Just Forge 2D");
+            // - - - set up the window
             MainWindow.get().setClearColor(new Vector4f(0.5f));
             MainWindow.get().setAlwaysOnTop(true);
             MainWindow.get().setDecorated(false);
@@ -39,16 +46,25 @@ public class SplashScreen
                     (WindowSystemManager.getMonitorSize().x - MainWindow.get().getWidth()) / 2,
                     (WindowSystemManager.getMonitorSize().y - MainWindow.get().getHeight()) / 2
             );
+
+            // - - - set up the texture
+            Logger.FORGE_LOG_TRACE("Loading Default Texture");
             if (logoTexture == null)
             {
                 logoTexture = new Texture();
                 logoTexture.init(DefaultValues.DEFAULT_ICON_PATH);
+                AssetPool.addTexture("Default", DefaultValues.DEFAULT_ICON_PATH);
             }
+
+            // - - - flip the flags
+            Logger.FORGE_LOG_TRACE("Getting Ready to go");
             MainWindow.get().setVisible(true);
             isInitialized = true;
         }
     }
 
+
+    // - - - the main render function
     public static void render(float DELTA_TIME)
     {
         initialize();
@@ -84,15 +100,18 @@ public class SplashScreen
         ImGui.end();
     }
 
+    // - - - the display page
     private static void displayWelcomePage()
     {
         if (!MainWindow.get().isDecorated())
         {
+            Logger.FORGE_LOG_TRACE("Getting the window back");
             MainWindow.get().setDecorated(true);
             MainWindow.get().setAlwaysOnTop(false);
             MainWindow.get().setVisible(true);
         }
 
+        // - - - early return for cleanup
         if (EditorSystemManager.isRelease)
         {
             cleanup();
@@ -107,6 +126,7 @@ public class SplashScreen
         ImGui.setCursorPos(buttonX, buttonY);
         if (timer > splashTime + relapseTime)
         {
+            ImGui.pushFont(ImGUIManager.interExtraBold);
             if (ImGui.button("Create New Project", buttonWidth, buttonHeight))
             {
                 if (ProjectManager.createNewProject())
@@ -126,29 +146,37 @@ public class SplashScreen
                 }
             }
         }
+        ImGui.popFont();
     }
 
+    // - - - load code and display the text
     private static void displayLoadingPage()
     {
         if (load) cleanup();
         if (!MainWindow.get().isVisible()) MainWindow.get().setVisible(true);
 
         ImGui.setCursorPosX((ImGui.getWindowWidth() - ImGui.calcTextSize("Loading Project: " + EditorSystemManager.projectDir).x) / 2);
-        ImGui.setCursorPosY(MainWindow.get().getHeight() - 64);
+        ImGui.setCursorPosY(MainWindow.get().getHeight() - 32);
+        Theme.setDefaultTextColor(EditorSystemManager.getCurrentTheme().secondaryColor);
         ImGui.text("Loading Project: " + EditorSystemManager.projectDir);
+        Theme.resetDefaultTextColor();
         load = true;
     }
 
+    // - - - finish up
     public static void cleanup()
     {
+        Logger.FORGE_LOG_TRACE("Compiling");
         GameManager.buildUserCode();
-        if (EditorSystemManager.currentSceneInitializer == null) {
+        Logger.FORGE_LOG_TRACE("Building user code");
+        if (EditorSystemManager.currentSceneInitializer == null)
+        {
             EditorSystemManager.setCurrentSceneInitializer(EmptySceneInitializer.class);
         }
         MainWindow.get().setVisible(false);
         Logger.FORGE_LOG_TRACE("Project Path : " + EditorSystemManager.projectDir);
         EditorSystemManager.setCurrentState(EditorSystemManager.state.isEditor);
-        MainWindow.get().setSize(WindowSystemManager.getMonitorSize().x, WindowSystemManager.getMonitorSize().y);
+        MainWindow.get().setSize(EditorSystemManager.editorWindowConfig.getWidth(), EditorSystemManager.editorWindowConfig.getHeight());
         MainWindow.get().setPosition(0, 0);
         MainWindow.get().setVisible(true);
         if (EditorSystemManager.isRelease) EventManager.notify(null, new Event(EventTypes.ForgeStart));

@@ -3,6 +3,7 @@ package Just_Forge_2D.EditorSystem.InputControls;
 import Just_Forge_2D.AnimationSystem.AnimationComponent;
 import Just_Forge_2D.EditorSystem.Windows.PropertiesWindow;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
+import Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.GridlinesComponent;
 import Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.NonPickableComponent;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
@@ -76,8 +77,8 @@ public class MouseControlComponent extends Component
 
         if (holdingObject != null && debounce < 0.0f)
         {
-            holdingObject.transform.position.x = (int)(Mouse.getWorldX() / DefaultValues.GRID_WIDTH) * DefaultValues.GRID_WIDTH + DefaultValues.GRID_WIDTH / 2f;
-            holdingObject.transform.position.y = (int)(Mouse.getWorldY() / DefaultValues.GRID_HEIGHT) * DefaultValues.GRID_WIDTH + DefaultValues.GRID_HEIGHT / 2f;
+            holdingObject.transform.position.x = (int)(Mouse.getWorldX() / GridlinesComponent.gridSize.x) * GridlinesComponent.gridSize.x + GridlinesComponent.gridSize.x / 2f;
+            holdingObject.transform.position.y = (int)(Mouse.getWorldY() / GridlinesComponent.gridSize.y) * GridlinesComponent.gridSize.x + GridlinesComponent.gridSize.y / 2f;
             if (Mouse.isMouseButtonDown(GLFW_MOUSE_BUTTON_LEFT) && debounce < 0.0f)
             {
                 place();
