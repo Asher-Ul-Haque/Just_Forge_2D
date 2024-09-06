@@ -11,6 +11,7 @@ import Just_Forge_2D.RenderingSystem.SpriteSheet;
 import Just_Forge_2D.SceneSystem.EmptySceneInitializer;
 import Just_Forge_2D.SceneSystem.SceneInitializer;
 import Just_Forge_2D.Utils.AssetPool;
+import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.WindowSystem.WindowConfig;
 import Just_Forge_2D.WindowSystem.WindowSystemManager;
@@ -45,7 +46,7 @@ public class EditorSystemManager
         }
         catch (Exception e)
         {
-            Logger.FORGE_LOG_FATAL("Couldnt change scene");
+            Logger.FORGE_LOG_FATAL("Couldn't change scene");
             MainWindow.changeScene(new EmptySceneInitializer());
         }
     }
@@ -80,12 +81,12 @@ public class EditorSystemManager
 
     public static void setFramebuffer()
     {
-        framebuffer = new Framebuffer(1980, 720);
+        framebuffer = new Framebuffer(DefaultValues.DEFAULT_WINDOW_WIDTH, DefaultValues.DEFAULT_WINDOW_HEIGHT);
     }
 
     public static void setSelector()
     {
-        ObjectSelector.init(1980, 720);
+        ObjectSelector.init(MainWindow.get().getWidth(), MainWindow.get().getHeight());
     }
 
     public static void compileShaders()

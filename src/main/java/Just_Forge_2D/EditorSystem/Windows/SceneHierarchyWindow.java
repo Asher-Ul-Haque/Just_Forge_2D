@@ -23,8 +23,8 @@ public class SceneHierarchyWindow
             ImGui.setCursorPosY(ImGui.getCursorPosY() + EditorSystemManager.getCurrentTheme().framePadding.y);
             if (ImGui.button(obj.name))
             {
-                PropertiesWindow.clearSelection();
-                PropertiesWindow.setActiveGameObject(obj);
+                ComponentsWindow.clearSelection();
+                ComponentsWindow.setActiveGameObject(obj);
             }
         }
         ImGui.end();

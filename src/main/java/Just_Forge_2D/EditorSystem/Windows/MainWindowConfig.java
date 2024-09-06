@@ -8,8 +8,8 @@ public class MainWindowConfig extends WindowConfig
     public MainWindowConfig()
     {
         super();
-        this.x = WindowSystemManager.getMonitorSize().x;
-        this.y = WindowSystemManager.getMonitorSize().y;
+        this.width = WindowSystemManager.getMonitorSize().x;
+        this.height = WindowSystemManager.getMonitorSize().y;
         this.visible = false;
     }
 }

@@ -25,7 +25,8 @@ public class CleanTheme extends Theme
 
         this.windowBgColor = primaryColor;
         this.windowChildBgColor = primaryColor;
-        this.popupBgColor = primaryColor;
+        this.popupBgColor = secondaryColor;
+        this.popupRounding = 4.0f;
 
         this.windowBorderSize = 0.0f;
         this.windowBorderColor = secondaryColor;
@@ -67,6 +68,5 @@ public class CleanTheme extends Theme
         this.frameHoverColor = this.secondaryColor;
 
         this.menuBarBg = this.secondaryColor;
-        this.popupBg = this.primaryColor;
     }
 }

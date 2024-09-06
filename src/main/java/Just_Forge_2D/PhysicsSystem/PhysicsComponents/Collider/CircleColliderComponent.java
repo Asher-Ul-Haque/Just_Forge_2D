@@ -2,11 +2,13 @@ package Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider;
 
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.RenderingSystem.DebugPencil;
+import org.joml.Math;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 
 public class CircleColliderComponent extends Component
 {
+    private boolean autoScale = true;
 
     private Vector2f offset = new Vector2f();
 
@@ -36,14 +38,9 @@ public class CircleColliderComponent extends Component
     {
         Vector2f center = new Vector2f(this.gameObject.transform.position).add(this.offset);
         DebugPencil.addCircle(center, this.radius, new Vector3f(1, 0, 0));
+        if (autoScale)
+        {
+            setRadius(Math.max(this.gameObject.transform.scale.x, this.gameObject.transform.scale.y) / 2f);
+        }
     }
-
-    /*
-    @Override
-    public void update(float DELTA_tIME)
-    {
-        Vector2f center = new Vector2f(this.gameObject.transform.position).add(this.offset);
-        DebugPencil.addCircle(center, this.radius, new Vector3f(1, 0, 0));
-    }
-    */
 }

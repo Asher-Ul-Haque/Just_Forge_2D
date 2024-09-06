@@ -1,5 +1,6 @@
 package Just_Forge_2D.EditorSystem;
 
+import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.Logger;
 import org.lwjgl.util.tinyfd.TinyFileDialogs;
 import java.io.IOException;
@@ -87,7 +88,7 @@ public class ProjectManager
 
     private static String selectProjectDirectory()
     {
-        return TinyFileDialogs.tinyfd_selectFolderDialog("Select Project Directory", DEFAULT_PROJECTS_DIR);
+        return TinyFileDialogs.tinyfd_selectFolderDialog("Select Project Directory", Paths.get(DEFAULT_PROJECTS_DIR + DefaultValues.DEFAULT_SAVE_DIR).toAbsolutePath().toString());
     }
 
 

@@ -72,7 +72,7 @@ public abstract class Component
                 else if (type == boolean.class)
                 {
                     boolean val = (boolean)value;
-                    Theme.setDefaultTextColor(EditorSystemManager.getCurrentTheme().tertiaryColor);
+                    Theme.setDefaultTextColor(EditorSystemManager.getCurrentTheme().secondaryColor);
                     if (ImGui.checkbox(name + ": ", val))
                     {
                         val = !val;

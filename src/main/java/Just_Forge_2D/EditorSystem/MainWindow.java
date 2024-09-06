@@ -7,7 +7,7 @@ package Just_Forge_2D.EditorSystem;
 import Just_Forge_2D.EditorSystem.GameSystem.GameCodeLoader;
 import Just_Forge_2D.EditorSystem.Windows.MainWindowConfig;
 import Just_Forge_2D.EditorSystem.Windows.ObjectSelector;
-import Just_Forge_2D.EditorSystem.Windows.PropertiesWindow;
+import Just_Forge_2D.EditorSystem.Windows.ComponentsWindow;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.SceneSystem.Camera;
 import Just_Forge_2D.SceneSystem.SceneInitializer;
@@ -64,7 +64,7 @@ public class MainWindow extends Window
             Logger.FORGE_LOG_INFO("Clearing Scene Catch from previous run");
             SceneSystemManager.destroy(get().currentScene);
         }
-        PropertiesWindow.setActiveGameObject(null);
+        ComponentsWindow.setActiveGameObject(null);
 
         get().currentScene = new Scene(INITIALIZER, "Main Scene");
         SceneSystemManager.load(get().currentScene);
@@ -120,14 +120,6 @@ public class MainWindow extends Window
         Logger.FORGE_LOG_INFO("Time keeping system Online");
 
         Mouse.setCamera(new Camera(new Vector2f(0, 0)));
-//        try
-//        {
-//            MainWindow.changeScene(EditorSystemManager.currentSceneInitializer.getDeclaredConstructor().newInstance());
-//        }
-//        catch (Exception e)
-//        {
-//            Logger.FORGE_LOG_FATAL(e.getCause());
-//        }
     }
 
     // - - - Loop the game

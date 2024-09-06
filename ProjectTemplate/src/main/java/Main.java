@@ -10,7 +10,7 @@ public class Main implements Game
     }
 
     @Override
-    public void update(float deltaTime)
+    public void update(float DELTA_TIME)
     {
         //Logger.FORGE_LOG_TRACE("Game updated!");
     }

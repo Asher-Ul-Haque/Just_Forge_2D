@@ -12,8 +12,8 @@ public class CylinderColliderComponent extends Component
     private transient BoxColliderComponent box = new BoxColliderComponent();
     private transient boolean resetFixtureNextFrame = false;
 
-    public float width = 0.1f;
-    public float height = 0.2f;
+    public float width = 0.25f;
+    public float height = 0.25f;
     public Vector2f offset = new Vector2f();
 
     @Override

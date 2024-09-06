@@ -1,10 +1,12 @@
 package Just_Forge_2D.SceneSystem;
 
 import Just_Forge_2D.AnimationSystem.AnimationComponent;
+import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.Components.TransformComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.InputSystem.Mouse;
+import Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent;
 import Just_Forge_2D.PhysicsSystem.PhysicsSystemManager;
 import Just_Forge_2D.RenderingSystem.Renderer;
 import Just_Forge_2D.Utils.AssetPool;
@@ -62,8 +64,8 @@ public class Scene
         {
             GameObject go = gameObjects.get(i);
             go.start();
-            if (this.renderer != null) this.renderer.add(go);
-            if (this.physics != null) this.physics.add(go);
+            if (this.renderer != null && go.getCompoent(SpriteComponent.class) != null) this.renderer.add(go);
+            if (this.physics != null && go.getCompoent(RigidBodyComponent.class) != null) this.physics.add(go);
         }
         isRunning = true;
         Logger.FORGE_LOG_INFO("Scene: " + this + " Started");
@@ -92,8 +94,8 @@ public class Scene
         {
             gameObjects.add(go);
             go.start();
-            if (this.renderer != null) this.renderer.add(go);
-            if (this.physics != null) this.physics.add(go);
+            if (this.renderer != null) this.renderer.destroyGameObject(go);
+            if (this.physics != null) this.physics.destroyGameObject(go);
         }
         pendingObjects.clear();
     }
@@ -125,7 +127,7 @@ public class Scene
             }
         }
         this.initializer.init(this);
-        SceneSystemManager.createMaster(this);
+        if (!EditorSystemManager.isRelease) SceneSystemManager.createMaster(this);
         Logger.FORGE_LOG_INFO("Scene: " + this.initializer + " Initialized");
     }
 

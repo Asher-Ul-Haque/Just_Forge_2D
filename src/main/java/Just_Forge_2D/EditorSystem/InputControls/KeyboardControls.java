@@ -6,10 +6,9 @@ import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.InputSystem.Keys;
 import Just_Forge_2D.EditorSystem.MainWindow;
 import Just_Forge_2D.InputSystem.Keyboard;
-import Just_Forge_2D.EditorSystem.Windows.PropertiesWindow;
+import Just_Forge_2D.EditorSystem.Windows.ComponentsWindow;
 import Just_Forge_2D.Utils.Logger;
 
-import java.util.ArrayList;
 import java.util.List;
 
 // - - - Key control class
@@ -17,12 +16,12 @@ public class KeyboardControls
 {
     public static void editorUpdate()
     {
-        GameObject activeGameObject = PropertiesWindow.getActiveGameObject();
-        List<GameObject> activeGameObjects = PropertiesWindow.getActiveGameObjects();
+        GameObject activeGameObject = ComponentsWindow.getActiveGameObject();
+        List<GameObject> activeGameObjects = ComponentsWindow.getActiveGameObjects();
 
         if (Keyboard.isKeyPressed(Keys.LEFT_CONTROL) && Keyboard.isKeyBeginPress(Keys.C) && activeGameObject != null)
         {
-            PropertiesWindow.setActiveGameObject(null);
+            ComponentsWindow.setActiveGameObject(null);
             Logger.FORGE_LOG_DEBUG("Copying: " + activeGameObject);
             GameObject newObj = activeGameObject.copy();
             MouseControlComponent.holdingObject = newObj;
@@ -40,7 +39,7 @@ public class KeyboardControls
                 Logger.FORGE_LOG_DEBUG("Destroying game object: "+ go);
                 go.destroy();
             }
-            PropertiesWindow.clearSelection();
+            ComponentsWindow.clearSelection();
         }
         else if (!activeGameObjects.isEmpty())
         {

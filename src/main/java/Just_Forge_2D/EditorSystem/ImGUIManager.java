@@ -224,7 +224,7 @@ public class ImGUIManager
         setKeyboardCallbacks();
         setMouseCallbacks();
         setClipboardCallbacks();
-        setFontAtlas();
+        if (!EditorSystemManager.isRelease) setFontAtlas();
 
         EditorSystemManager.getCurrentTheme().applyTheme();
         imGuiGl3.init("#version 450 core");
@@ -244,7 +244,7 @@ public class ImGUIManager
                 KeyboardControls.editorUpdate();
                 SCENE.editorGUI();
                 GameViewport.render();
-                PropertiesWindow.render();
+                ComponentsWindow.render();
                 MenuBar.render();
                 CameraControlWindow.render();
                 FPSGraph.render();

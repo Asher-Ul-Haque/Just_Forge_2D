@@ -2,6 +2,7 @@ package Just_Forge_2D.EditorSystem.Windows;
 
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.EditorSystem.GameSystem.GameManager;
+import Just_Forge_2D.EditorSystem.ImGUIManager;
 import Just_Forge_2D.EditorSystem.MainWindow;
 import Just_Forge_2D.EventSystem.EventManager;
 import Just_Forge_2D.EventSystem.Events.Event;
@@ -18,15 +19,15 @@ public class MenuBar
         ImGui.beginMainMenuBar();
         if (ImGui.beginMenu("File"))
         {
-            if (ImGui.menuItem("Save", "Ctrl+S"))
+            if (ImGui.menuItem("Save", ""))
             {
                 EventManager.notify(null, new Event(EventTypes.SaveLevel));
             }
-            if (ImGui.menuItem("Load", "Ctrl+O"))
+            if (ImGui.menuItem("Load", ""))
             {
                 EventManager.notify(null, new Event(EventTypes.LoadLevel));
             }
-            if (ImGui.menuItem("Save as", "Ctrl+Shift+S"))
+            if (ImGui.menuItem("Save as", ""))
             {
                 String savePath = TinyFileDialogs.tinyfd_saveFileDialog("Choose Save Location", EditorSystemManager.projectDir + DefaultValues.DEFAULT_SAVE_DIR,null,null);
                 if (savePath != null)
