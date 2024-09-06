@@ -27,11 +27,11 @@ public class CleanTheme extends Theme
         this.windowChildBgColor = primaryColor;
         this.popupBgColor = primaryColor;
 
-        this.windowBorderSize = 4.0f;
+        this.windowBorderSize = 0.0f;
         this.windowBorderColor = secondaryColor;
         this.windowBorderShadowColor = secondaryColor;
 
-        this.windowTitleBgColor = tertiaryColor;
+        this.windowTitleBgColor = secondaryColor;
         this.windowTitleBgActiveColor = secondaryColor;
         this.windowTitleBgCollapsedColor = tertiaryColor;
         this.windowRounding = 0.0f;
@@ -53,13 +53,13 @@ public class CleanTheme extends Theme
         this.treeNodeTextColor = primaryColor;
         this.treeNodeIndent = 16f;
 
-        this.tabBgColor = tertiaryColor;
-        this.tabHoveredColor = secondaryColor;
-        this.tabActiveColor = tertiaryColor;
-        this.tabUnfocusedColor = tertiaryColor;
-        this.tabUnfocusedActiveColor = tertiaryColor;
-        this.tabRounding = 0f;
-        this.tabBorder = 4f;
+        this.tabBgColor = secondaryColor;
+        this.tabHoveredColor = tertiaryColor;
+        this.tabActiveColor = secondaryColor;
+        this.tabUnfocusedColor = secondaryColor;
+        this.tabUnfocusedActiveColor = secondaryColor;
+        this.tabRounding = 4f;
+        this.tabBorder = 0f;
 
         this.checkMarkColor = this.primaryColor;
         this.frameBgColor = this.secondaryColor;

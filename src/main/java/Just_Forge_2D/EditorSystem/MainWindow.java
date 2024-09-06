@@ -4,7 +4,7 @@ package Just_Forge_2D.EditorSystem;
 
 // - - - Internal
 
-import Just_Forge_2D.EditorSystem.GameSystem.GameManager;
+import Just_Forge_2D.EditorSystem.GameSystem.GameCodeLoader;
 import Just_Forge_2D.EditorSystem.Windows.MainWindowConfig;
 import Just_Forge_2D.EditorSystem.Windows.ObjectSelector;
 import Just_Forge_2D.EditorSystem.Windows.PropertiesWindow;
@@ -181,7 +181,7 @@ public class MainWindow extends Window
                     {
                         currentScene.editorUpdate(dt);
                     }
-                    GameManager.loop(dt);
+                    GameCodeLoader.loop(dt);
                     currentScene.render(dt);
                     if (!EditorSystemManager.isRelease) DebugPencil.draw();
                 }

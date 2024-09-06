@@ -1,98 +1,129 @@
 package Just_Forge_2D.EditorSystem;
+
 import Just_Forge_2D.Utils.Logger;
 import org.lwjgl.util.tinyfd.TinyFileDialogs;
-
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
+import java.nio.file.*;
 
 public class ProjectManager
 {
-    static String dirPath = System.getProperty("user.home") + "/Documents/ForgeProjects";
-    static String[] projectDirs = {"Assets", "Assets/Textures", "Assets/Sounds", "Assets/Shaders", "src", "src/main", "src/main/java", "build"};
-    static String[] projectFiles = {"src/main/java/Just_Forge_2D.Main.java"};
+    // - - - project management defaults
+    private static final String DEFAULT_PROJECTS_DIR = System.getProperty("user.home") + "/Documents/ForgeProjects";
+    private static final String PROJECT_TEMPLATE_DIR = "ProjectTemplate";
+
+
+    // - - - Creating new Project - - -
 
     public static boolean createNewProject()
     {
-        String NAME = TinyFileDialogs.tinyfd_inputBox("Project name : ", null, "newProject");
-        createProjectsDir();
-        if (NAME != null && !NAME.isEmpty())
+        String projectName = getProjectName();
+        Logger.FORGE_LOG_INFO("Creating new Project: " + projectName);
+        if (projectName == null || projectName.trim().isEmpty())
         {
-            String destinationDirPath = TinyFileDialogs.tinyfd_selectFolderDialog("Select Project Directory", dirPath);
-            if (destinationDirPath != null)
-            {
-                destinationDirPath += "/" + NAME;
-                File destinationDir = new File(destinationDirPath);
-                if (!destinationDir.exists())
-                {
-                    try
-                    {
-                        copyDirectory("ProjectTemplate", destinationDirPath);
-                        Logger.FORGE_LOG_INFO("Project created successfully at: " + destinationDir.getAbsolutePath());
-                    }
-                    catch (IOException e)
-                    {
-                        Logger.FORGE_LOG_ERROR("Could not create project: " + e.getMessage());
-                        return false;
-                    }
-                }
-                else
-                {
-                    TinyFileDialogs.tinyfd_notifyPopup("Error in creating project", destinationDir.getName() + " already exists", "error");
-                    return false;
-                }
-            }
-            EditorSystemManager.projectDir = destinationDirPath;
-            return true;
+            Logger.FORGE_LOG_ERROR("Project name is invalid or not provided.");
+            return false;
         }
-        return false;
-    }
 
-    public static boolean openExistingProject()
-    {
-        String filePath = TinyFileDialogs.tinyfd_selectFolderDialog("Select Project", dirPath + "/");
-        if (filePath != null)
+        createProjectsDir();
+        String selectedDir = selectProjectDirectory();
+        if (selectedDir == null || selectedDir.trim().isEmpty())
         {
-            EditorSystemManager.projectDir = filePath;
+            Logger.FORGE_LOG_ERROR("No project directory selected.");
+            return false;
+        }
+
+        Path destinationDir = Paths.get(selectedDir).resolve(projectName.trim());
+        if (Files.exists(destinationDir))
+        {
+            TinyFileDialogs.tinyfd_notifyPopup("Error", "Project already exists.", "error");
+            return false;
+        }
+
+        try
+        {
+            copyDirectory(Paths.get(PROJECT_TEMPLATE_DIR), destinationDir);
+            Logger.FORGE_LOG_INFO("Project created successfully at: " + destinationDir.toAbsolutePath());
+            EditorSystemManager.projectDir = destinationDir.toString();
             return true;
         }
-        return false;
+        catch (IOException e)
+        {
+            Logger.FORGE_LOG_ERROR("Error creating project: " + e.getMessage());
+            return false;
+        }
     }
 
     private static void createProjectsDir()
     {
-        File directory = new File(dirPath);
-        if (!directory.exists())
+        Path projectsDir = Paths.get(DEFAULT_PROJECTS_DIR);
+        Logger.FORGE_LOG_INFO("Creating Project directory: " + projectsDir);
+        if (Files.notExists(projectsDir))
         {
             try
             {
-                if (directory.mkdir()) Logger.FORGE_LOG_INFO("Created the Forge Projects Directory");
-                else Logger.FORGE_LOG_ERROR("Couldnt create the Forge Projects Directory");
+                Files.createDirectories(projectsDir);
+                Logger.FORGE_LOG_INFO("Created the Forge Projects directory at: " + projectsDir);
             }
-            catch (SecurityException e)
+            catch (IOException | SecurityException e)
             {
-                Logger.FORGE_LOG_FATAL("Security exception : " + e.getMessage());
+                Logger.FORGE_LOG_FATAL("Failed to create Forge Projects directory: " + e.getMessage());
             }
         }
     }
 
-    public static void copyDirectory(String sourceDirectoryLocation, String destinationDirectoryLocation)
-            throws IOException
+
+    // - - - Opening Project - - -
+
+    public static boolean openExistingProject()
     {
-        File srcDir = new File(sourceDirectoryLocation);
-        if (srcDir.isDirectory() && srcDir.exists()) srcDir.delete();
-        Files.walk(Paths.get(sourceDirectoryLocation))
-                .forEach(source -> {
-                    Path destination = Paths.get(destinationDirectoryLocation, source.toString()
-                            .substring(sourceDirectoryLocation.length()));
-                    try {
-                        Files.copy(source, destination);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                });
+        String selectedDir = selectProjectDirectory();
+        if (selectedDir != null && !selectedDir.trim().isEmpty())
+        {
+            EditorSystemManager.projectDir = selectedDir;
+            return true;
+        }
+        return false;
+    }
+
+    private static String selectProjectDirectory()
+    {
+        return TinyFileDialogs.tinyfd_selectFolderDialog("Select Project Directory", DEFAULT_PROJECTS_DIR);
+    }
+
+
+    // - - - Helper Function - - -
+
+    private static String getProjectName()
+    {
+        return TinyFileDialogs.tinyfd_inputBox("Project Name:", null, "newProject");
+    }
+
+    public static void copyDirectory(Path source, Path destination) throws IOException
+    {
+        if (Files.notExists(source))
+        {
+            Logger.FORGE_LOG_FATAL("Source directory does not exist: " + source);
+            return;
+        }
+
+        Files.walk(source).forEach(sourcePath ->
+        {
+            try
+            {
+                Path destinationPath = destination.resolve(source.relativize(sourcePath));
+                if (Files.isDirectory(sourcePath))
+                {
+                    Files.createDirectories(destinationPath);
+                }
+                else
+                {
+                    Files.copy(sourcePath, destinationPath, StandardCopyOption.REPLACE_EXISTING);
+                }
+            }
+            catch (IOException e)
+            {
+                Logger.FORGE_LOG_FATAL("Error copying: " + sourcePath + " to " + destination + " - " + e.getMessage());
+            }
+        });
     }
 }
