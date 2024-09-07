@@ -4,6 +4,7 @@ import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.Utils.Logger;
 import imgui.ImGui;
 import org.lwjgl.util.tinyfd.TinyFileDialogs;
+
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
@@ -84,7 +85,8 @@ public class GameManager
 
                 Process process = processBuilder.start();
                 int exitCode = process.waitFor();
-                if (exitCode != 0) {
+                if (exitCode != 0)
+                {
                     TinyFileDialogs.tinyfd_notifyPopup("Error in compiling project", "Error in user code. Exit code : " + exitCode, "error");
                     Logger.FORGE_LOG_FATAL("Error in user code. Exit code : " + exitCode);
                     return;
@@ -95,11 +97,15 @@ public class GameManager
                 Path savesPath = projectPath.resolve("Saves");
 
                 destinationDirPath = Paths.get(TinyFileDialogs.tinyfd_selectFolderDialog("Select Project Directory", projectPath.toString()));
-                if (destinationDirPath != null) {
-                    try {
+                if (destinationDirPath != null)
+                {
+                    try
+                    {
                         File[] directoriesToCreate = {new File(destinationDirPath.resolve("Assets").toString()), new File(destinationDirPath.resolve("Saves").toString())};
-                        for (File dir : directoriesToCreate) {
-                            if (!dir.exists()) {
+                        for (File dir : directoriesToCreate)
+                        {
+                            if (!dir.exists())
+                            {
                                 if (dir.mkdir()) Logger.FORGE_LOG_INFO("Created directory: " + dir.getPath());
                                 else Logger.FORGE_LOG_ERROR("Couldn't create directory: " + dir.getPath());
                             }
@@ -110,7 +116,9 @@ public class GameManager
                         copyDirectory(savesPath, destinationDirPath.resolve("Saves"));
 
                         File[] jarFiles = destinationDirPath.toFile().listFiles((dir, name) -> name.endsWith(".jar"));
-                        if (jarFiles == null || jarFiles.length == 0) {
+                        if (jarFiles == null || jarFiles.length == 0)
+                        {
+                            TinyFileDialogs.tinyfd_notifyPopup("Error in running project", "No JAR file found", "error");
                             Logger.FORGE_LOG_ERROR("No JAR files found in the directory.");
                             return;
                         }
@@ -120,25 +128,32 @@ public class GameManager
                                 .findFirst()
                                 .orElse(null);
 
-                        if (jarToExecute == null) {
+                        if (jarToExecute == null)
+                        {
+                            TinyFileDialogs.tinyfd_notifyPopup("Error in running project", "No JAR file ending with '-all' found", "error");
                             Logger.FORGE_LOG_ERROR("No JAR file ending with '-all' found.");
                             return;
                         }
 
                         // Delete other JAR files except '-all.jar'
-                        for (File jar : jarFiles) {
-                            if (!jar.equals(jarToExecute) && jar.delete()) {
+                        for (File jar : jarFiles)
+                        {
+                            if (!jar.equals(jarToExecute) && jar.delete())
+                            {
                                 Logger.FORGE_LOG_TRACE("Deleted: " + jar.getName());
                             }
                         }
 
                         TinyFileDialogs.tinyfd_notifyPopup("Successfully compiled project", "Your game has been built", "info");
-                    } catch (IOException e) {
+                    }
+                    catch (IOException e)
+                    {
                         TinyFileDialogs.tinyfd_notifyPopup("Error in compiling project", "I/O error occurred", "error");
                         Logger.FORGE_LOG_FATAL("Error in compiling project: " + e.getMessage());
                     }
                 }
-            } catch (Exception e) {
+            } catch (Exception e)
+            {
                 TinyFileDialogs.tinyfd_notifyPopup("Error in compiling project", "Failed to build user code: " + e.getMessage(), "error");
                 Logger.FORGE_LOG_FATAL("Failed to build user code: " + e.getMessage());
             }
@@ -176,6 +191,7 @@ public class GameManager
             }
             catch (Exception e)
             {
+                TinyFileDialogs.tinyfd_notifyPopup("Failed to run the code", e.getMessage(), "error");
                 Logger.FORGE_LOG_FATAL("Failed to run the code: " + e.getMessage());
             }
         }).start();

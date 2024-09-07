@@ -1,13 +1,20 @@
 package Just_Forge_2D.PhysicsSystem.PhysicsComponents;
 
-import Just_Forge_2D.EntityComponentSystem.Components.Component;
+import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.EditorSystem.MainWindow;
+import Just_Forge_2D.EditorSystem.Themes.Theme;
+import Just_Forge_2D.EditorSystem.Widgets;
+import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.PhysicsSystem.Enums.BodyType;
 import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.Logger;
+import imgui.ImGui;
+import imgui.type.ImInt;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.joml.Vector2f;
+
+import java.util.Arrays;
 
 // - - - Rigid Body
 public class RigidBodyComponent extends Component
@@ -22,7 +29,7 @@ public class RigidBodyComponent extends Component
     private boolean continuousCollision = DefaultValues.CONTINUOUS_COLLISION;
     private transient Body rawBody = null;
     public float angularVelocity = 0.0f;
-    public float gravityScale = 1.0f;
+    public float gravityScale = DefaultValues.GRAVITY_SCALE;
     private boolean isSensor = false;
 
 
@@ -212,7 +219,7 @@ public class RigidBodyComponent extends Component
             Logger.FORGE_LOG_ERROR("Cant add force to a null raw body");
             return;
         }
-        rawBody.applyForceToCenter(new Vec2(velocity.x, velocity.y));
+        rawBody.applyForceToCenter(new Vec2(FORCE.x, FORCE.y));
     }
 
     public void addImpulse(Vector2f IMPULSE)
@@ -222,11 +229,71 @@ public class RigidBodyComponent extends Component
             Logger.FORGE_LOG_ERROR("Cant add impulse toa  null raw body");
             return;
         }
-        rawBody.applyLinearImpulse(new Vec2(velocity.x, velocity.y), rawBody.getWorldCenter());
+        rawBody.applyLinearImpulse(new Vec2(IMPULSE.x, IMPULSE.y), rawBody.getWorldCenter());
     }
 
     public Vec2 getLinearVelocity()
     {
-        return new Vec2(this.velocity.x, this.velocity.y);
+        return rawBody.getLinearVelocity();
+    }
+
+
+    // - - - Editor UI - - -
+
+    @Override
+    public void editorGUI()
+    {
+        // - - - destroy button
+        if (ImGui.button("Destroy"))
+        {
+            this.gameObject.removeComponent(this.getClass());
+        }
+
+        // - - - body type
+        String[] enumValues = Arrays.stream(BodyType.values())
+                .map(Enum::name)
+                .toArray(String[]::new);
+        String enumType = (bodyType).name();
+        ImInt index = new ImInt(Arrays.asList(enumValues).indexOf(enumType));
+        if (ImGui.combo("Body Type", index, enumValues, enumValues.length))
+        {
+            bodyType = BodyType.values()[index.get()];
+        }
+
+        // - - - mass
+        setMass(Widgets.drawFloatControl("Mass", getMass()));
+
+        // - - - gravity scale
+        setGravityScale(Widgets.drawFloatControl("Gravity Scale", gravityScale));
+
+
+        // - - - linear damping
+        Widgets.drawFloatControl("Linear Damping", linearDamping);
+
+
+        // - - - angular damping
+        Widgets.drawFloatControl("Angular Damping", angularVelocity);
+
+        // - - - fixed rotation, continuous collision and is Sensor
+        Theme.setDefaultTextColor(EditorSystemManager.getCurrentTheme().secondaryColor);
+        boolean val = fixedRotation;
+        if (ImGui.checkbox("Fixed rotation", val))
+        {
+            val = !val;
+            fixedRotation = val;
+        }
+        val = continuousCollision;
+        if (ImGui.checkbox("Continuous Collision", val))
+        {
+            val = !val;
+            continuousCollision = val;
+        }
+        val = isSensor;
+        if (ImGui.checkbox("isSensor", val))
+        {
+            val = !val;
+            isSensor = val;
+        }
+        Theme.resetDefaultTextColor();
     }
 }

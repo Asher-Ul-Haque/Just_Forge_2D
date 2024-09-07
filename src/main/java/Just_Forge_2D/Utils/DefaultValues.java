@@ -1,6 +1,5 @@
 package Just_Forge_2D.Utils;
 
-import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import org.jbox2d.common.Vec2;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
@@ -23,9 +22,10 @@ public class DefaultValues
     public static final int POSITION_ITERATIONS = 3;
     public static final float LINEAR_DAMPING = 0.9f;
     public static final float ANGULAR_DAMPING = 0.8f;
-    public static final float DEFAULT_MASS = 0f;
+    public static final float DEFAULT_MASS = 1f;
     public static final boolean ROTATION_FIXED = false;
-    public static final boolean CONTINUOUS_COLLISION = true;
+    public static final boolean CONTINUOUS_COLLISION = false;
+    public static final float GRAVITY_SCALE = 1.0f;
     public static final float DEFAULT_ROTATION = 0.0f;
     public static final int DEFAULT_LAYER = 0;
     public static final float DEFAULT_EDITOR_CAMERA_DRAG_DEBOUNCE = 0.032f;

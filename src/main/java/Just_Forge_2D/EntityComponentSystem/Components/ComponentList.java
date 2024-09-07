@@ -5,6 +5,7 @@ import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.BoxColliderCompone
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.CircleColliderComponent;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.CylinderColliderComponent;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent;
+import Just_Forge_2D.PhysicsSystem.PhysicsComponents.SimpleCharacterController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +20,7 @@ public class ComponentList
         types.add(CircleColliderComponent.class);
         types.add(BoxColliderComponent.class);
         types.add(CylinderColliderComponent.class);
-
+        types.add(SimpleCharacterController.class);
     }
 
     public static final List<Class<? extends Component>> types = new ArrayList<>();

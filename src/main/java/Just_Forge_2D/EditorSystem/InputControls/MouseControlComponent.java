@@ -1,28 +1,31 @@
 package Just_Forge_2D.EditorSystem.InputControls;
 
 import Just_Forge_2D.AnimationSystem.AnimationComponent;
+import Just_Forge_2D.EditorSystem.EditorComponents.GridlinesComponent;
+import Just_Forge_2D.EditorSystem.EditorComponents.NonPickableComponent;
+import Just_Forge_2D.EditorSystem.MainWindow;
 import Just_Forge_2D.EditorSystem.Windows.ComponentsWindow;
 import Just_Forge_2D.EditorSystem.Windows.GridControls;
+import Just_Forge_2D.EditorSystem.Windows.ObjectSelector;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
-import Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.GridlinesComponent;
-import Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.NonPickableComponent;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.InputSystem.Keyboard;
 import Just_Forge_2D.InputSystem.Keys;
 import Just_Forge_2D.InputSystem.Mouse;
-import Just_Forge_2D.EditorSystem.MainWindow;
-import Just_Forge_2D.SceneSystem.Scene;
-import Just_Forge_2D.EditorSystem.Windows.ObjectSelector;
 import Just_Forge_2D.RenderingSystem.DebugPencil;
+import Just_Forge_2D.SceneSystem.Scene;
 import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.Logger;
-import org.joml.*;
+import org.joml.Vector2f;
+import org.joml.Vector2i;
+import org.joml.Vector3f;
+import org.joml.Vector4f;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_LEFT;
 
 public class MouseControlComponent extends Component
 {

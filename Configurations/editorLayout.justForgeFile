@@ -31,7 +31,7 @@ Collapsed=0
 
 [Window][Game Viewport]
 Pos=219,28
-Size=407,272
+Size=412,275
 Collapsed=0
 DockId=0x00000007,0
 
@@ -47,8 +47,8 @@ Size=461,343
 Collapsed=0
 
 [Window][Scene Hierarchy]
-Pos=628,322
-Size=392,206
+Pos=4,322
+Size=213,206
 Collapsed=0
 DockId=0x0000000C,0
 
@@ -67,8 +67,8 @@ Size=600,400
 Collapsed=0
 
 [Window][Camera Controls]
-Pos=219,302
-Size=407,226
+Pos=219,305
+Size=412,223
 Collapsed=0
 DockId=0x00000009,0
 
@@ -79,28 +79,28 @@ Collapsed=0
 DockId=0x00000007,0
 
 [Window][FPS]
-Pos=219,302
-Size=407,226
+Pos=219,305
+Size=412,223
 Collapsed=0
 DockId=0x00000009,1
 
 [Window][Grid Controls]
-Pos=219,302
-Size=407,226
+Pos=219,305
+Size=412,223
 Collapsed=0
 DockId=0x00000009,2
 
 [Window][Asset Pool]
 Pos=4,28
-Size=213,500
+Size=213,292
 Collapsed=0
-DockId=0x0000000A,0
+DockId=0x0000000B,0
 
 [Window][Prefabs]
 Pos=4,28
-Size=213,500
+Size=213,292
 Collapsed=0
-DockId=0x0000000A,1
+DockId=0x0000000B,1
 
 [Window][Nice]
 Pos=60,60
@@ -118,23 +118,23 @@ Size=405,40
 Collapsed=0
 
 [Window][Components]
-Pos=628,28
-Size=392,292
+Pos=633,28
+Size=387,500
 Collapsed=0
-DockId=0x0000000B,0
+DockId=0x00000002,0
 
 [Docking][Data]
-DockSpace       ID=0x6D3A3A6E Window=0x091AB4BE Pos=4,28 Size=1016,500 Split=X
-  DockNode      ID=0x00000005 Parent=0x6D3A3A6E SizeRef=964,700 Split=X
-    DockNode    ID=0x00000003 Parent=0x00000005 SizeRef=213,700 Split=Y Selected=0xA9416207
-      DockNode  ID=0x00000008 Parent=0x00000003 SizeRef=236,368 Selected=0xA9416207
-      DockNode  ID=0x0000000A Parent=0x00000003 SizeRef=236,330 Selected=0xDF18B7BE
-    DockNode    ID=0x00000004 Parent=0x00000005 SizeRef=749,700 Split=Y Selected=0xAE7BB42F
-      DockNode  ID=0x00000007 Parent=0x00000004 SizeRef=875,464 CentralNode=1 HiddenTabBar=1 Selected=0xAE7BB42F
-      DockNode  ID=0x00000009 Parent=0x00000004 SizeRef=875,226 Selected=0x1026710E
-  DockNode      ID=0x00000006 Parent=0x6D3A3A6E SizeRef=392,700 Split=Y Selected=0xC89E3217
-    DockNode    ID=0x00000001 Parent=0x00000006 SizeRef=336,352 Selected=0xC89E3217
-    DockNode    ID=0x00000002 Parent=0x00000006 SizeRef=336,346 Split=Y Selected=0x9A68760C
-      DockNode  ID=0x0000000B Parent=0x00000002 SizeRef=198,405 Selected=0xA115F62D
-      DockNode  ID=0x0000000C Parent=0x00000002 SizeRef=198,285 Selected=0x9A68760C
+DockSpace         ID=0x6D3A3A6E Window=0x091AB4BE Pos=4,28 Size=1016,500 Split=X
+  DockNode        ID=0x00000005 Parent=0x6D3A3A6E SizeRef=969,700 Split=X
+    DockNode      ID=0x00000003 Parent=0x00000005 SizeRef=213,700 Split=Y Selected=0xA9416207
+      DockNode    ID=0x00000008 Parent=0x00000003 SizeRef=236,368 Selected=0xA9416207
+      DockNode    ID=0x0000000A Parent=0x00000003 SizeRef=236,330 Split=Y Selected=0x601E4255
+        DockNode  ID=0x0000000B Parent=0x0000000A SizeRef=213,405 Selected=0x601E4255
+        DockNode  ID=0x0000000C Parent=0x0000000A SizeRef=213,285 Selected=0x9A68760C
+    DockNode      ID=0x00000004 Parent=0x00000005 SizeRef=754,700 Split=Y Selected=0xAE7BB42F
+      DockNode    ID=0x00000007 Parent=0x00000004 SizeRef=875,467 CentralNode=1 HiddenTabBar=1 Selected=0xAE7BB42F
+      DockNode    ID=0x00000009 Parent=0x00000004 SizeRef=875,223 Selected=0x1026710E
+  DockNode        ID=0x00000006 Parent=0x6D3A3A6E SizeRef=387,700 Split=Y Selected=0xC89E3217
+    DockNode      ID=0x00000001 Parent=0x00000006 SizeRef=336,352 Selected=0xC89E3217
+    DockNode      ID=0x00000002 Parent=0x00000006 SizeRef=336,346 Selected=0xA115F62D
 

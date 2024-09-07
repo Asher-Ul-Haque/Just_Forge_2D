@@ -1,9 +1,11 @@
 package Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider;
 
+import Just_Forge_2D.EditorSystem.MainWindow;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent;
-import Just_Forge_2D.EditorSystem.MainWindow;
+import Just_Forge_2D.RenderingSystem.DebugPencil;
 import org.joml.Vector2f;
+import org.joml.Vector3f;
 
 public class CylinderColliderComponent extends Component
 {
@@ -15,6 +17,7 @@ public class CylinderColliderComponent extends Component
     public float width = 0.25f;
     public float height = 0.25f;
     public Vector2f offset = new Vector2f();
+    public static boolean showHitboxInMain = false;
 
     @Override
     public void start()
@@ -87,6 +90,33 @@ public class CylinderColliderComponent extends Component
     @Override
     public void update(float DELTA_TIME)
     {
+        if (showHitboxInMain)
+        {
+            displayHitBox();
+        }
+        if (resetFixtureNextFrame)
+        {
+            resetFixtures();
+            resetFixtureNextFrame = false;
+        }
+    }
+
+    private void displayHitBox()
+    {
+        Vector2f center = new Vector2f(this.gameObject.transform.position).add(topCircle.getOffset());
+        DebugPencil.addCircle(center, this.topCircle.getRadius(), new Vector3f(1, 0, 0));
+        center = new Vector2f(this.gameObject.transform.position).add(bottomCircle.getOffset());
+        DebugPencil.addCircle(center, this.bottomCircle.getRadius(), new Vector3f(1, 0, 0));
+        center = new Vector2f(this.gameObject.transform.position).add(this.offset);
+        DebugPencil.addBox(center, this.box.getHalfSize(), this.gameObject.transform.rotation, new Vector3f(1, 0, 0));
+    }
+
+    @Override
+    public void editorUpdate(float DELTA_TIME)
+    {
+        if (topCircle.gameObject == null || bottomCircle.gameObject == null || box.gameObject == null) start();
+        displayHitBox();
+
         if (resetFixtureNextFrame)
         {
             resetFixtures();
@@ -95,17 +125,9 @@ public class CylinderColliderComponent extends Component
     }
 
     @Override
-    public void editorUpdate(float DELTA_TIME)
+    public void editorGUI()
     {
-        if (topCircle.gameObject == null || bottomCircle.gameObject == null || box.gameObject == null) start();
-        topCircle.editorUpdate(DELTA_TIME);
-        bottomCircle.editorUpdate(DELTA_TIME);
-        box.editorUpdate(DELTA_TIME);
-
-        if (resetFixtureNextFrame)
-        {
-            resetFixtures();
-            resetFixtureNextFrame = false;
-        }
+        super.editorGUI();
+        recalculateColliders();
     }
 }

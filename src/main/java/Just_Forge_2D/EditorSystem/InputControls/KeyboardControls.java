@@ -1,12 +1,12 @@
 package Just_Forge_2D.EditorSystem.InputControls;
 
 import Just_Forge_2D.AnimationSystem.AnimationComponent;
-import Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.GridlinesComponent;
-import Just_Forge_2D.EntityComponentSystem.GameObject;
-import Just_Forge_2D.InputSystem.Keys;
+import Just_Forge_2D.EditorSystem.EditorComponents.GridlinesComponent;
 import Just_Forge_2D.EditorSystem.MainWindow;
-import Just_Forge_2D.InputSystem.Keyboard;
 import Just_Forge_2D.EditorSystem.Windows.ComponentsWindow;
+import Just_Forge_2D.EntityComponentSystem.GameObject;
+import Just_Forge_2D.InputSystem.Keyboard;
+import Just_Forge_2D.InputSystem.Keys;
 import Just_Forge_2D.Utils.Logger;
 
 import java.util.List;

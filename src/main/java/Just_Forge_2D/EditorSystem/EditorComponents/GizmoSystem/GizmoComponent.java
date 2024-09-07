@@ -1,18 +1,18 @@
-package Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.GizmoSystem;
+package Just_Forge_2D.EditorSystem.EditorComponents.GizmoSystem;
 
+import Just_Forge_2D.EditorSystem.EditorComponents.NonPickableComponent;
+import Just_Forge_2D.EditorSystem.MainWindow;
 import Just_Forge_2D.EditorSystem.Windows.ComponentsWindow;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
-import Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.NonPickableComponent;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.Sprite;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.InputSystem.Mouse;
-import Just_Forge_2D.EditorSystem.MainWindow;
 import Just_Forge_2D.PrefabSystem.PrefabManager;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 
-import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_LEFT;
 
 // - - - Gizmo
 public class GizmoComponent extends Component

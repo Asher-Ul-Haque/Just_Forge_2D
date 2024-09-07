@@ -1,11 +1,11 @@
 package Just_Forge_2D.PhysicsSystem;
 
+import Just_Forge_2D.EntityComponentSystem.Components.TransformComponent;
+import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.BoxColliderComponent;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.CircleColliderComponent;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.CylinderColliderComponent;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent;
-import Just_Forge_2D.EntityComponentSystem.Components.TransformComponent;
-import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.SceneSystem.Scene;
 import Just_Forge_2D.Utils.Logger;
 import org.jbox2d.collision.shapes.CircleShape;
@@ -22,7 +22,7 @@ public class PhysicsSystemManager
     // - - - world settings
 
     private Scene owner;
-    private PhysicsWorld myWorld;
+    public PhysicsWorld rawWorld;
 
 
     // - - - | Functions | - - -
@@ -30,7 +30,7 @@ public class PhysicsSystemManager
     public PhysicsSystemManager(Scene SCENE, PhysicsWorld WORLD)
     {
         this.owner = SCENE;
-        myWorld = WORLD;
+        rawWorld = WORLD;
     }
 
     // - - - Game Objects - - -
@@ -73,7 +73,7 @@ public class PhysicsSystemManager
                     break;
             }
 
-            Body body = myWorld.getWorld().createBody(bodyDef);
+            Body body = rawWorld.getWorld().createBody(bodyDef);
             body.m_mass = rb.getMass();
             rb.setRawBody(body);
 
@@ -107,7 +107,7 @@ public class PhysicsSystemManager
         {
             if (rb.getRawBody() != null)
             {
-                myWorld.getWorld().destroyBody(rb.getRawBody());
+                rawWorld.getWorld().destroyBody(rb.getRawBody());
                 rb.setRawBody(null);
             }
         }
@@ -117,7 +117,7 @@ public class PhysicsSystemManager
     public void update(float DELTA_TIME)
     {
         // - - - ensure that update happens only every 16 milliseconds. We increase only when we pass 16ms
-        myWorld.step(DELTA_TIME);
+        rawWorld.step(DELTA_TIME);
     }
 
     public void addBoxCollider(RigidBodyComponent RB, BoxColliderComponent COLLIDER)
@@ -184,7 +184,7 @@ public class PhysicsSystemManager
     public RayCastInfo rayCast(GameObject REQUESTEE, Vector2f POINT_1, Vector2f POINT_2)
     {
         RayCastInfo callback = new RayCastInfo(REQUESTEE);
-        myWorld.getWorld().raycast(callback, new Vec2(POINT_1.x, POINT_1.y), new Vec2(POINT_2.x, POINT_2.y));
+        rawWorld.getWorld().raycast(callback, new Vec2(POINT_1.x, POINT_1.y), new Vec2(POINT_2.x, POINT_2.y));
         return callback;
     }
 
@@ -275,6 +275,6 @@ public class PhysicsSystemManager
 
     public boolean isLocked()
     {
-        return myWorld.getWorld().isLocked();
+        return rawWorld.getWorld().isLocked();
     }
 }

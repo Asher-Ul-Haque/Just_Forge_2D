@@ -9,6 +9,7 @@ import org.joml.Vector3f;
 public class CircleColliderComponent extends Component
 {
     private boolean autoScale = true;
+    private boolean showHitboxAtRuntime = false;
 
     private Vector2f offset = new Vector2f();
 
@@ -41,6 +42,16 @@ public class CircleColliderComponent extends Component
         if (autoScale)
         {
             setRadius(Math.max(this.gameObject.transform.scale.x, this.gameObject.transform.scale.y) / 2f);
+        }
+    }
+
+    @Override
+    public void update(float DELTA_TIME)
+    {
+        if (showHitboxAtRuntime)
+        {
+            Vector2f center = new Vector2f(this.gameObject.transform.position).add(this.offset);
+            DebugPencil.addCircle(center, this.radius, new Vector3f(1, 0, 0));
         }
     }
 }

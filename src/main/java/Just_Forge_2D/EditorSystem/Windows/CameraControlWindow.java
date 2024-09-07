@@ -1,9 +1,8 @@
 package Just_Forge_2D.EditorSystem.Windows;
 
+import Just_Forge_2D.EditorSystem.EditorComponents.EditorCameraComponent;
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
-import Just_Forge_2D.EditorSystem.Themes.Theme;
 import Just_Forge_2D.EditorSystem.Widgets;
-import Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.EditorCameraComponent;
 import Just_Forge_2D.InputSystem.Mouse;
 import Just_Forge_2D.SceneSystem.Camera;
 import imgui.ImGui;

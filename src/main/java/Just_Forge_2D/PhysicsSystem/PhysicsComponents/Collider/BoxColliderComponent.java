@@ -10,6 +10,7 @@ public class BoxColliderComponent extends Component
 {
     // - - - private variables
     private boolean autoScale = true;
+    private boolean showHitboxAtRuntime = false;
     private Vector2f halfSize = new Vector2f(0.25f);
     private final Vector2f origin = new Vector2f();
 
@@ -47,6 +48,16 @@ public class BoxColliderComponent extends Component
         if (autoScale)
         {
             setHalfSize(new Vector2f(this.gameObject.transform.scale.x, this.gameObject.transform.scale.y));
+        }
+    }
+
+    @Override
+    public void update(float DELTA_TIME)
+    {
+        if (showHitboxAtRuntime)
+        {
+            Vector2f center = new Vector2f(this.gameObject.transform.position).add(this.offset);
+            DebugPencil.addBox(center, this.halfSize, this.gameObject.transform.rotation, new Vector3f(1, 0, 0));
         }
     }
 

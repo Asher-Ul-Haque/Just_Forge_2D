@@ -1,20 +1,18 @@
 package Just_Forge_2D.SceneSystem;
 
+import Just_Forge_2D.EditorSystem.EditorComponents.EditorCameraComponent;
+import Just_Forge_2D.EditorSystem.EditorComponents.GizmoSystem.GizmoSystemComponent;
+import Just_Forge_2D.EditorSystem.EditorComponents.GridlinesComponent;
+import Just_Forge_2D.EditorSystem.EditorComponents.NonPickableComponent;
 import Just_Forge_2D.EditorSystem.InputControls.MouseControlComponent;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
-import Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.EditorCameraComponent;
-import Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.GizmoSystem.GizmoSystemComponent;
-import Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.GridlinesComponent;
-import Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.NonPickableComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
-import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.JsonHandlers.ComponentJsonHandler;
 import Just_Forge_2D.Utils.JsonHandlers.GameObjectJsonHandler;
 import Just_Forge_2D.Utils.Logger;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;

@@ -38,7 +38,7 @@ public class PhysicsWorld
         }
     }
 
-    protected World getWorld()
+    public World getWorld()
     {
         return this.world;
     }

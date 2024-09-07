@@ -1,4 +1,4 @@
-package Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.GizmoSystem;
+package Just_Forge_2D.EditorSystem.EditorComponents.GizmoSystem;
 
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.Sprite;
 import Just_Forge_2D.InputSystem.Mouse;

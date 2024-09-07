@@ -1,14 +1,14 @@
-package Just_Forge_2D.EntityComponentSystem.Components.EditorComponents;
+package Just_Forge_2D.EditorSystem.EditorComponents;
 
-import Just_Forge_2D.InputSystem.Keys;
-import Just_Forge_2D.SceneSystem.Camera;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.InputSystem.Keyboard;
+import Just_Forge_2D.InputSystem.Keys;
 import Just_Forge_2D.InputSystem.Mouse;
+import Just_Forge_2D.SceneSystem.Camera;
 import Just_Forge_2D.Utils.DefaultValues;
 import org.joml.Vector2f;
 
-import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_RIGHT;
 
 public class EditorCameraComponent extends Component
 {
