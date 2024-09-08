@@ -6,29 +6,30 @@ import Just_Forge_2D.InputSystem.Keyboard;
 import Just_Forge_2D.InputSystem.Keys;
 import Just_Forge_2D.PhysicsSystem.RayCastInfo;
 import Just_Forge_2D.RenderingSystem.DebugPencil;
+import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.Logger;
 import org.jbox2d.common.Vec2;
 import org.joml.Vector2f;
 
 public class SimpleCharacterController extends Component
 {
-    private Keys rightKey = Keys.ARROW_RIGHT;
-    private Keys leftKey = Keys.ARROW_LEFT;
-    private Keys jumpKey = Keys.SPACE;
-    private Keys runKey = Keys.CAPS_LOCK;
+    private Keys rightKey = DefaultValues.DEFAULT_MOVE_RIGHT_KEY;
+    private Keys leftKey = DefaultValues.DEFAULT_MOVE_LEFT_KEY;
+    private Keys jumpKey = DefaultValues.DEFAULT_JUMP_KEY;
+    private Keys runKey = DefaultValues.DEFAULT_RUN_KEY;
 
-    private float maxWalkSpeed = 12.5f;
-    private float groundAcceleration = 5f;
-    private float groundDeceleration = 20f;
-    private float airAcceleration = 5f;
-    private float airDeceleration = 5f;
-    private float jumpForce = 1f;  // Jump force to be applied
-    private float maxRunSpeed = 20f;
-    private float groundDetectRayLength = 0.02f;
+    private float maxWalkSpeed = DefaultValues.DEFAULT_MAX_WALK_SPEED;
+    private float groundAcceleration = DefaultValues.DEFAULT_GROUND_ACCELERATION;
+    private float groundDeceleration = DefaultValues.DEFAULT_GROUND_DECELERATION;
+    private float airAcceleration = DefaultValues.DEFAULT_AIR_ACCELERATION;
+    private float airDeceleration = DefaultValues.DEFAULT_AIR_DECELERATION;
+    private float jumpImpulse = DefaultValues.DEFAULT_JUMP_IMPULSE;  // Jump force to be applied
+    private float maxRunSpeed = DefaultValues.DEFAULT_MAX_RUN_SPEED;
+    private float groundDetectRayLength = DefaultValues.DEFAULT_GROUND_DETECT_RAY_LENGTH;
 
-    private float coyoteTime = 0.1f;  // Grace period for jumping after leaving ground
+    private float coyoteTime = DefaultValues.DEFAULT_COYOTE_TIME;  // Grace period for jumping after leaving ground
     private float coyoteTimer = 0f;
-    private int maxJumps = 2;  // Number of allowed jumps (1 jump on ground, 1 mid-air)
+    private int maxJumps = DefaultValues.DEFAULT_MAX_JUMPS;  // Number of allowed jumps (1 jump on ground, 1 mid-air)
     private int jumpsUsed = 0;  // Track the number of jumps used
 
     private RigidBodyComponent rb;
@@ -157,7 +158,7 @@ public class SimpleCharacterController extends Component
     private void jump()
     {
         // Apply upward impulse for jumping
-        Vec2 jumpImpulse = new Vec2(0, jumpForce);
+        Vec2 jumpImpulse = new Vec2(0, this.jumpImpulse);
         rb.addImpulse(new Vector2f(jumpImpulse.x, jumpImpulse.y));
 
         // Track jumps

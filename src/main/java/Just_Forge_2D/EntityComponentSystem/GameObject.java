@@ -3,11 +3,11 @@ package Just_Forge_2D.EntityComponentSystem;
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
+import Just_Forge_2D.EntityComponentSystem.Components.TransformComponent;
 import Just_Forge_2D.Utils.AssetPool;
 import Just_Forge_2D.Utils.JsonHandlers.ComponentJsonHandler;
 import Just_Forge_2D.Utils.JsonHandlers.GameObjectJsonHandler;
 import Just_Forge_2D.Utils.Logger;
-import Just_Forge_2D.EntityComponentSystem.Components.TransformComponent;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import imgui.ImGui;
@@ -60,7 +60,6 @@ public class GameObject
                 }
             }
         }
-        Logger.FORGE_LOG_WARNING("Returning null on get Component on Game Object " + this.name + " for component of type" + COMPONENT_CLASS);
         return null;
     }
 

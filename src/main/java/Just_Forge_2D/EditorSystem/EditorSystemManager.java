@@ -131,7 +131,7 @@ public class EditorSystemManager
         WindowSystemManager.initialize();
         editorWindowConfig = new WindowConfig();
         editorWindowConfig.setHeight(800);
-        if (currentTheme == null) currentTheme = new CleanTheme(true);
+        if (currentTheme == null) currentTheme = new CleanTheme(DefaultValues.DARK_MODE_ENABLED);
         MainWindow.get();
         AssetPool.addSpriteSheet("Gizmos", new SpriteSheet(AssetPool.getTexture("Assets/Textures/gizmos.png"), 24, 48, 3, 0));
         EditorSystemManager.setSelector();

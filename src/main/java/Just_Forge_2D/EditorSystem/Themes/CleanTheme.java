@@ -1,18 +1,16 @@
 package Just_Forge_2D.EditorSystem.Themes;
 
-import Just_Forge_2D.EditorSystem.ImGUIManager;
-import imgui.ImVec2;
+import Just_Forge_2D.Utils.DefaultValues;
 import imgui.ImVec4;
-import org.joml.Vector4f;
 
 public class CleanTheme extends Theme
 {
     public CleanTheme(boolean DARK)
     {
-        this.secondaryColor = new ImVec4(0.129411765f, 0.1450980f, 0.16078f, 1.0f);
-        this.primaryColor = new ImVec4(0.97647f, 0.97254902f, 0.968627541f, 1.0f);
-        this.tertiaryColor = new ImVec4(0.203921569f, 0.22745f, 0.2509f, 1.0f);
-        this.quaternaryColor = new ImVec4(0.8747f, 0.892156f, 0.91760f, 1.0f);
+        this.secondaryColor = DefaultValues.DEFAULT_CLEAN_THEME_SECONDARY_COLOR;
+        this.primaryColor = DefaultValues.DEFAULT_CLEAN_THEME_PRIMARY_COLOR;
+        this.tertiaryColor = DefaultValues.DEFAULT_CLEAN_THEME_TERTIARY_COLOR;
+        this.quaternaryColor = DefaultValues.DEFAULT_CLEAN_THEME_QUATERNARY_COLOR;
         if (DARK)
         {
             ImVec4 temp = new ImVec4(this.secondaryColor);
@@ -26,25 +24,25 @@ public class CleanTheme extends Theme
         this.windowBgColor = primaryColor;
         this.windowChildBgColor = primaryColor;
         this.popupBgColor = secondaryColor;
-        this.popupRounding = 4.0f;
+        this.popupRounding = DefaultValues.DEFAULT_POPUP_ROUNDING;
 
-        this.windowBorderSize = 0.0f;
+        this.windowBorderSize = DefaultValues.DEFAULT_WINDOW_BORDER_SIZE;
         this.windowBorderColor = secondaryColor;
         this.windowBorderShadowColor = secondaryColor;
 
         this.windowTitleBgColor = secondaryColor;
         this.windowTitleBgActiveColor = secondaryColor;
         this.windowTitleBgCollapsedColor = tertiaryColor;
-        this.windowRounding = 0.0f;
+        this.windowRounding = DefaultValues.DEFAULT_WINDOW_ROUNDING;
 
-        this.windowPadding = new ImVec2(4.0f, 4.0f);
+        this.windowPadding = DefaultValues.DEFAULT_WINDOW_PADDING;
 
         this.buttonBgColor = secondaryColor;
         this.buttonBgHoverColor = tertiaryColor;
         this.buttonBgActiveColor = secondaryColor;
 
-        this.framePadding = new ImVec2(4.0f, 4.0f);
-        this.frameRounding = 4.0f;
+        this.framePadding = DefaultValues.DEFAULT_FRAME_PADDING;
+        this.frameRounding = DefaultValues.DEFAULT_FRAME_ROUNDING;
 
         this.dockingBorderColor = tertiaryColor;
         this.dockingBgColor = secondaryColor;
@@ -52,15 +50,15 @@ public class CleanTheme extends Theme
 
         this.treeNodeBgColor = secondaryColor;
         this.treeNodeTextColor = primaryColor;
-        this.treeNodeIndent = 16f;
+        this.treeNodeIndent = DefaultValues.DEFAULT_TREE_NODE_INDENT;
 
         this.tabBgColor = secondaryColor;
         this.tabHoveredColor = tertiaryColor;
         this.tabActiveColor = secondaryColor;
         this.tabUnfocusedColor = secondaryColor;
         this.tabUnfocusedActiveColor = secondaryColor;
-        this.tabRounding = 4f;
-        this.tabBorder = 0f;
+        this.tabRounding = DefaultValues.DEFAULT_TAB_ROUNDING;
+        this.tabBorder = DefaultValues.DEFAULT_TAB_BORDER;
 
         this.checkMarkColor = this.primaryColor;
         this.frameBgColor = this.secondaryColor;

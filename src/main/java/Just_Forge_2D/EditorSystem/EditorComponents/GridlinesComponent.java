@@ -14,12 +14,14 @@ public class GridlinesComponent extends Component
 {
     public static Vector2f gridSize = new Vector2f(DefaultValues.GRID_WIDTH, DefaultValues.GRID_HEIGHT);
     public static Vector4f gridColor = new Vector4f(DefaultValues.DEBUG_PENCIL_DEFAULT_COLOR, 1.0f);
+    public static boolean showGrid = DefaultValues.SHOW_GRID;
 
 
 
     @Override
     public void editorUpdate(float DELTA_TIME)
     {
+        if (!showGrid) return;
         Camera camera = MainWindow.getCurrentScene().getCamera();
         Vector2f cameraPos = camera.position;
         Vector2f projectionSize = camera.getProjectionSize();

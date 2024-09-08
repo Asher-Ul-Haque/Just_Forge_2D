@@ -30,6 +30,8 @@ public class RigidBodyComponent extends Component
     private transient Body rawBody = null;
     public float angularVelocity = 0.0f;
     public float gravityScale = DefaultValues.GRAVITY_SCALE;
+    public float frictionCoefficient = DefaultValues.DEFAULT_FRICTION;
+    public float restitutionCoefficient = DefaultValues.DEFAULT_RESTITUTION;
     private boolean isSensor = false;
 
 
@@ -57,13 +59,28 @@ public class RigidBodyComponent extends Component
 
     // - - - Angular Damping - - -
 
-    public float getAngularDamping() {
-        return angularDamping;
+    public float getAngularDamping()
+    {
+        return this.angularDamping;
     }
 
     public void setAngularDamping(float ANGULAR_DAMPING)
     {
         this.angularDamping = ANGULAR_DAMPING;
+        if (rawBody == null)
+        {
+            Logger.FORGE_LOG_ERROR("Cant add angular velocity to a null raw body");
+            return;
+        }
+        this.rawBody.m_angularDamping = this.angularDamping;
+    }
+
+
+    // - - - Angular Velocity - - -
+
+    public float getAngularVelocity()
+    {
+        return this.angularVelocity;
     }
 
     public void setAngularVelocity(float ANGULAR_VELOCITY)
@@ -77,6 +94,9 @@ public class RigidBodyComponent extends Component
         this.rawBody.setAngularVelocity(ANGULAR_VELOCITY);
     }
 
+
+    // - - - gravity scale - - -
+
     public void setGravityScale(float GRAVITY)
     {
         this.gravityScale = GRAVITY;
@@ -87,6 +107,9 @@ public class RigidBodyComponent extends Component
         }
         this.rawBody.setGravityScale(GRAVITY);
     }
+
+
+    // - - - sensor - - -
 
     public void setSensor(boolean REALLY)
     {
@@ -104,16 +127,61 @@ public class RigidBodyComponent extends Component
         return isSensor;
     }
 
+
     // - - - Linear Damping - - -
 
     public float getLinearDamping()
     {
-        return linearDamping;
+        return this.linearDamping;
     }
 
     public void setLinearDamping(float LINEAR_DAMPING)
     {
         this.linearDamping = LINEAR_DAMPING;
+        if (rawBody == null)
+        {
+            Logger.FORGE_LOG_ERROR("Cant add linear damping to a null raw body");
+            return;
+        }
+        this.rawBody.m_linearDamping = LINEAR_DAMPING;
+    }
+
+
+    // - - - Friction - - -
+
+    public float getFrictionCoefficient()
+    {
+        return this.frictionCoefficient;
+    }
+
+    public void setFrictionCoefficient(float COEFF)
+    {
+        this.frictionCoefficient = Math.max(0, Math.min(1.0f, COEFF));
+        if (rawBody == null)
+        {
+            Logger.FORGE_LOG_ERROR("Cant set frictional coefficient to a null raw body");
+            return;
+        }
+        this.rawBody.getFixtureList().m_friction = this.frictionCoefficient;
+    }
+
+
+    // - - - Bounciness - - -
+
+    public float getRestitutionCoefficient()
+    {
+        return this.restitutionCoefficient;
+    }
+
+    public void setRestitutionCoefficient(float COEFF)
+    {
+        this.restitutionCoefficient = Math.max(0, Math.min(1.0f, COEFF));
+        if (rawBody == null)
+        {
+            Logger.FORGE_LOG_ERROR("Cant add restitution to a null raw body");
+            return;
+        }
+        this.rawBody.getFixtureList().m_restitution = this.restitutionCoefficient;
     }
 
 
@@ -127,6 +195,12 @@ public class RigidBodyComponent extends Component
     public void setMass(float MASS)
     {
         this.mass = MASS;
+        if (rawBody == null)
+        {
+            Logger.FORGE_LOG_ERROR("Cant add mass to a null raw body");
+            return;
+        }
+        this.rawBody.m_mass = MASS;
     }
 
 
@@ -268,11 +342,17 @@ public class RigidBodyComponent extends Component
 
 
         // - - - linear damping
-        Widgets.drawFloatControl("Linear Damping", linearDamping);
+        setLinearDamping(Widgets.drawFloatControl("Linear Damping", linearDamping));
 
 
         // - - - angular damping
-        Widgets.drawFloatControl("Angular Damping", angularVelocity);
+        setAngularDamping(Widgets.drawFloatControl("Angular Damping", angularVelocity));
+
+        // - - - friction
+        setFrictionCoefficient(Widgets.drawFloatControl("Friction Coeff", frictionCoefficient));
+
+        // - - - restitution
+        setRestitutionCoefficient(Widgets.drawFloatControl("Restitution", restitutionCoefficient));
 
         // - - - fixed rotation, continuous collision and is Sensor
         Theme.setDefaultTextColor(EditorSystemManager.getCurrentTheme().secondaryColor);

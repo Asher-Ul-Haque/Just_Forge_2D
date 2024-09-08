@@ -16,16 +16,22 @@ import org.lwjgl.BufferUtils;
 import org.lwjgl.glfw.GLFWImage;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.stb.STBImage;
+
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
-
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.glClear;
-import static org.lwjgl.opengl.GL11C.*;
+import static org.lwjgl.opengl.GL11C.GL_BLEND;
+import static org.lwjgl.opengl.GL11C.GL_ONE;
+import static org.lwjgl.opengl.GL11C.GL_ONE_MINUS_SRC_ALPHA;
+import static org.lwjgl.opengl.GL11C.glBlendFunc;
+import static org.lwjgl.opengl.GL11C.glClearColor;
+import static org.lwjgl.opengl.GL11C.glEnable;
+import static org.lwjgl.opengl.GL11C.glViewport;
 
 public class Window implements Observer
 {
@@ -375,6 +381,11 @@ public class Window implements Observer
     }
 
     // - - - clear color
+    public Vector4f getClearColor()
+    {
+        return this.config.getClearColor();
+    }
+
     public void setClearColor(Vector4f COLOR)
     {
         Logger.FORGE_LOG_DEBUG("Setting clear color of " + this.config.title + " to : " + COLOR.x + " : " + COLOR.y + " : " + COLOR.z + " : " + COLOR.w);

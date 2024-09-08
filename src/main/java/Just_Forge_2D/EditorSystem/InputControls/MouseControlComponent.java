@@ -67,7 +67,6 @@ public class MouseControlComponent extends Component
         {
             newObj.getCompoent(AnimationComponent.class).refreshTextures();
         }
-        newObj.getCompoent(SpriteComponent.class).setColor(new Vector4f(1, 1, 1, 1));
         newObj.removeComponent(NonPickableComponent.class);
         MainWindow.getCurrentScene().addGameObject(newObj);
     }

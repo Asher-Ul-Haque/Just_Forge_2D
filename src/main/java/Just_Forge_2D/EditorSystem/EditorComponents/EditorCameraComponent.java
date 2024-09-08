@@ -20,7 +20,7 @@ public class EditorCameraComponent extends Component
     // - - - sensitivity
     public static float dragDebounce = DefaultValues.DEFAULT_EDITOR_CAMERA_DRAG_DEBOUNCE;
     public static float lerpTime = DefaultValues.DEFAULT_EDITOR_CAMERA_LERP_TIME;
-    public static float dragSensitivity = DefaultValues.DEFAULT_EDITOR_CAMERA_DRAG_SENSITIVTY;
+    public static float dragSensitivity = DefaultValues.DEFAULT_EDITOR_CAMERA_DRAG_SENSITIVITY;
     public static float scrollSensitivity = DefaultValues.DEFAULT_EDITOR_CAMERA_SCROLL_SENSITIVITY;
 
     // - - - everything else
