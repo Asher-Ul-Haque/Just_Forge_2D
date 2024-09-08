@@ -70,6 +70,7 @@ public class GameObject
             if (COMPONENT_CLASS.isAssignableFrom(components.get(i).getClass()))
             {
                 Logger.FORGE_LOG_TRACE("Removed Component at index " + i + ": " + components.get(i).toString());
+                components.get(i).destroy();
                 components.remove(i);
                 return;
             }

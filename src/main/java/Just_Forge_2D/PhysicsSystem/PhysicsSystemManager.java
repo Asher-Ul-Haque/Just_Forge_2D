@@ -141,7 +141,6 @@ public class PhysicsSystemManager
         fixtureDef.userData = COLLIDER.gameObject;
         fixtureDef.isSensor = RB.isSensor();
         body.createFixture(fixtureDef);
-        RB.setMass(body.getMass());
     }
 
     public void addCircleCollider(RigidBodyComponent RB, CircleColliderComponent COLLIDER)
@@ -164,7 +163,6 @@ public class PhysicsSystemManager
         fixtureDef.userData = COLLIDER.gameObject;
         fixtureDef.isSensor = RB.isSensor();
         body.createFixture(fixtureDef);
-        RB.setMass(body.getMass());
     }
 
     public void addCylinderCollider(RigidBodyComponent RB, CylinderColliderComponent COLLIDER)
@@ -179,7 +177,6 @@ public class PhysicsSystemManager
         addBoxCollider(RB, COLLIDER.getBox());
         addCircleCollider(RB, COLLIDER.getTopCircle());
         addCircleCollider(RB, COLLIDER.getBottomCircle());
-        RB.setMass(body.getMass());
     }
 
 
@@ -208,8 +205,6 @@ public class PhysicsSystemManager
         }
 
         addCircleCollider(RB, COLLIDER);
-        body.resetMassData();
-        RB.setMass(body.getMass());
     }
 
     public void resetBoxCollider(RigidBodyComponent RB, BoxColliderComponent COLLIDER)
@@ -228,8 +223,7 @@ public class PhysicsSystemManager
         }
 
         addBoxCollider(RB, COLLIDER);
-        body.resetMassData();
-        RB.setMass(body.getMass());
+
     }
 
     public void resetCylinderCollider(RigidBodyComponent RB, CylinderColliderComponent COLLIDER)
@@ -248,8 +242,6 @@ public class PhysicsSystemManager
         }
 
         addCylinderCollider(RB, COLLIDER);
-        body.resetMassData();
-        RB.setMass(body.getMass());
     }
 
     private int fixtureListSize(Body BODY)

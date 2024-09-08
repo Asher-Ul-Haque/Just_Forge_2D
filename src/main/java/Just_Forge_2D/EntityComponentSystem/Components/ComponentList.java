@@ -21,6 +21,7 @@ public class ComponentList
         types.add(BoxColliderComponent.class);
         types.add(CylinderColliderComponent.class);
         types.add(SimpleCharacterController.class);
+        types.add(CameraControlComponent.class);
     }
 
     public static final List<Class<? extends Component>> types = new ArrayList<>();

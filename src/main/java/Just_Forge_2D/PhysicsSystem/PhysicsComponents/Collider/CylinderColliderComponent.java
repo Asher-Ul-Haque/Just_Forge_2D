@@ -17,7 +17,9 @@ public class CylinderColliderComponent extends Component
     public float width = 0.25f;
     public float height = 0.25f;
     public Vector2f offset = new Vector2f();
-    public static boolean showHitboxInMain = false;
+    private boolean autoScale = true;
+
+    public static boolean showHitboxAtRuntime = false;
 
     @Override
     public void start()
@@ -30,13 +32,13 @@ public class CylinderColliderComponent extends Component
 
     public void recalculateColliders()
     {
-        float circleRadius = width / 4.0f;
-        float boxHeight = height - 2 * circleRadius;
+        float circleRadius = width / 2.0f;
+        float boxHeight = height - (2 * circleRadius);
         topCircle.setRadius(circleRadius);
         bottomCircle.setRadius(circleRadius);
-        topCircle.setOffset(new Vector2f(new Vector2f(offset).add(0, boxHeight / 4.0f)));
-        bottomCircle.setOffset(new Vector2f(new Vector2f(offset).sub(0, boxHeight / 4.0f)));
-        box.setHalfSize(new Vector2f(width / 2.0f, boxHeight / 2.0f));
+        topCircle.setOffset(new Vector2f(new Vector2f(offset).add(0, boxHeight / 2f)));
+        bottomCircle.setOffset(new Vector2f(new Vector2f(offset).sub(0, boxHeight / 2f)));
+        box.setHalfSize(new Vector2f(width, boxHeight));
         box.setOffset(new Vector2f(offset));
     }
 
@@ -90,7 +92,7 @@ public class CylinderColliderComponent extends Component
     @Override
     public void update(float DELTA_TIME)
     {
-        if (showHitboxInMain)
+        if (showHitboxAtRuntime)
         {
             displayHitBox();
         }
@@ -121,6 +123,12 @@ public class CylinderColliderComponent extends Component
         {
             resetFixtures();
             resetFixtureNextFrame = false;
+        }
+
+        if (autoScale)
+        {
+            setWidth(this.gameObject.transform.scale.x);
+            setHeight(this.gameObject.transform.scale.y);
         }
     }
 

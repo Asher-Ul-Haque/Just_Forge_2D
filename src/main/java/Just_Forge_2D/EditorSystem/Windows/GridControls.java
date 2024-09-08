@@ -32,7 +32,7 @@ public class GridControls
         Widgets.colorPicker4("Grid Color", GridlinesComponent.gridColor);
         Vector4f clearColor = MainWindow.get().getClearColor();
         Widgets.colorPicker4("Background", clearColor);
-        MainWindow.get().setClearColor(clearColor);
+        if (!MainWindow.get().getClearColor().equals(clearColor)) MainWindow.get().setClearColor(clearColor);
         ImGui.end();
     }
 }

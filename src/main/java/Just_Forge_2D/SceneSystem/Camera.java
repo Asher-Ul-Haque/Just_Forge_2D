@@ -101,4 +101,17 @@ public class Camera
     {
         this.zoom += OFFSET;
     }
+
+
+    // - - - Position - - -
+
+    public Vector2f getPosition()
+    {
+        return position;
+    }
+
+    public void setPosition(Vector2f POSITION)
+    {
+        this.position = POSITION;
+    }
 }

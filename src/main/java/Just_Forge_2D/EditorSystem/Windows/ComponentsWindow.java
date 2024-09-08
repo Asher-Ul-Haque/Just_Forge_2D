@@ -1,22 +1,15 @@
 package Just_Forge_2D.EditorSystem.Windows;
 
-import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.Components.ComponentList;
-import Just_Forge_2D.EventSystem.Events.Event;
-import Just_Forge_2D.EventSystem.Events.EventTypes;
-import Just_Forge_2D.EventSystem.Observer;
-import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
+import Just_Forge_2D.Utils.Logger;
 import imgui.ImGui;
-import imgui.ImVec4;
-import imgui.flag.ImGuiCol;
 import org.joml.Vector4f;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 
 // - - - Properties Window
@@ -37,31 +30,39 @@ public class ComponentsWindow
         if (activeGameObjects.size() == 1 && activeGameObjects.get(0) != null)
         {
             GameObject activeGameObject = activeGameObjects.get(0);
-
-            if (ImGui.beginPopupContextWindow("Component Adder"))
+            if (ImGui.button("Delete"))
             {
-                String message = "Add Component";
-                ImGui.setCursorPosX((ImGui.getContentRegionAvailX() - ImGui.calcTextSize(message).x)/2f);
-                ImGui.text(message);
-                for (Class<? extends Component> type : ComponentList.types)
+                activeGameObject.destroy();
+                clearSelection();
+            }
+            if (activeGameObject != null)
+            {
+                if (ImGui.beginPopupContextWindow("Component Adder"))
                 {
-                    if (activeGameObject.getCompoent(type) != null) continue;
-                    if (ImGui.menuItem(type.getSimpleName()))
+                    String message = "Add Component";
+                    ImGui.setCursorPosX((ImGui.getContentRegionAvailX() - ImGui.calcTextSize(message).x) / 2f);
+                    ImGui.text(message);
+                    for (Class<? extends Component> type : ComponentList.types)
                     {
-                        try
+                        if (activeGameObject.getCompoent(type) != null) continue;
+                        if (ImGui.menuItem(type.getSimpleName()))
                         {
-                            Component component = type.getDeclaredConstructor().newInstance();
-                            activeGameObject.addComponent(component);
-                        }
-                        catch (Exception e)
-                        {
-                            Logger.FORGE_LOG_ERROR("Cant add component : " + type.getSimpleName());
+                            try
+                            {
+                                Component component = type.getDeclaredConstructor().newInstance();
+                                activeGameObject.addComponent(component);
+                            }
+                            catch (Exception e)
+                            {
+                                Logger.FORGE_LOG_ERROR("Cant add component : " + type.getSimpleName());
+                                Logger.FORGE_LOG_ERROR(e.getCause());
+                            }
                         }
                     }
+                    ImGui.endPopup();
                 }
-                ImGui.endPopup();
+                activeGameObject.editorGUI();
             }
-            activeGameObject.editorGUI();
         }
         else
         {

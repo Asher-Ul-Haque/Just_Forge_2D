@@ -110,6 +110,7 @@ public class MouseControlComponent extends Component
             GameObject picked = currentScene.getGameObject(gameObjectID);
             if (picked != null && picked.getCompoent(NonPickableComponent.class) == null)
             {
+                pickupObject(picked);
                 ComponentsWindow.setActiveGameObject(picked);
             }
             else if (picked == null && !Mouse.isDragging())

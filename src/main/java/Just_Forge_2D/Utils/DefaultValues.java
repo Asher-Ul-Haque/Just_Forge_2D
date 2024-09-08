@@ -62,7 +62,7 @@ public class DefaultValues
     public static final String DEFAULT_SAVE_DIR = "/Saves";
     public static final float DEFAULT_JUMP_IMPULSE = 1f;
     public static final float DEFAULT_MAX_RUN_SPEED = 7f;
-    public static final float DEFAULT_GROUND_DETECT_RAY_LENGTH = 0.02f;
+    public static final float DEFAULT_GROUND_DETECT_RAY_LENGTH = 0.05f;
     public static final float DEFAULT_COYOTE_TIME = 0.1f;
     public static final int DEFAULT_MAX_JUMPS = 1;
     public static final Keys DEFAULT_MOVE_RIGHT_KEY = Keys.D;

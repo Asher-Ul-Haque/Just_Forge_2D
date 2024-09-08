@@ -28,14 +28,16 @@ public class SimpleCharacterController extends Component
     private float groundDetectRayLength = DefaultValues.DEFAULT_GROUND_DETECT_RAY_LENGTH;
 
     private float coyoteTime = DefaultValues.DEFAULT_COYOTE_TIME;  // Grace period for jumping after leaving ground
-    private float coyoteTimer = 0f;
+    private transient float coyoteTimer = 0f;
     private int maxJumps = DefaultValues.DEFAULT_MAX_JUMPS;  // Number of allowed jumps (1 jump on ground, 1 mid-air)
-    private int jumpsUsed = 0;  // Track the number of jumps used
+    private transient int jumpsUsed = 0;  // Track the number of jumps used
 
     private RigidBodyComponent rb;
     private transient Vector2f moveVelocity = new Vector2f();
-    private boolean isRight;
-    private boolean isGrounded;
+    private transient boolean isRight;
+    private transient boolean isGrounded;
+    private float maxJumpTime = 1f;
+    private float jumpTimer = maxJumpTime;
 
     @Override
     public void start()
@@ -71,7 +73,7 @@ public class SimpleCharacterController extends Component
         }
 
         // Handle jumping logic
-        handleJump();
+        handleJump(DELTA_TIME);
     }
 
     private void move(float ACCELERATION, float DECELERATION, Vector2f MOVE_INPUT, float DELTA_TIME)
@@ -88,7 +90,6 @@ public class SimpleCharacterController extends Component
         }
 //        this.rb.addImpulse(new Vector2f(moveVelocity.x / this.rb.getMass(), 0));
         this.rb.setVelocity(new Vector2f(moveVelocity.x, rb.getVelocity().y));
-        Logger.FORGE_LOG_TRACE(rb.getVelocity().y);
     }
 
     private void turnCheck(Vector2f MOVE_INPUT)
@@ -139,16 +140,19 @@ public class SimpleCharacterController extends Component
         }
     }
 
-    private void handleJump()
+    private void handleJump(float DELTA_TIME)
     {
+        jumpTimer -= DELTA_TIME;
         if (Keyboard.isKeyBeginPress(jumpKey))
         {
-            if (isGrounded || coyoteTimer > 0f)
+            if ((isGrounded || coyoteTimer > 0f) && maxJumps > 0)
             {
+                jumpTimer = maxJumpTime;
                 jump();
             }
             else if (jumpsUsed < maxJumps)
             {
+                jumpTimer = maxJumpTime;
                 rb.setVelocity(new Vector2f(rb.getLinearVelocity().x, 0f));
                 jump();
             }
@@ -159,7 +163,7 @@ public class SimpleCharacterController extends Component
     {
         // Apply upward impulse for jumping
         Vec2 jumpImpulse = new Vec2(0, this.jumpImpulse);
-        rb.addImpulse(new Vector2f(jumpImpulse.x, jumpImpulse.y));
+        rb.addImpulse(new Vector2f(jumpImpulse.x, jumpImpulse.y).mul(jumpTimer / maxJumpTime));
 
         // Track jumps
         jumpsUsed++;
