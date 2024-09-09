@@ -67,6 +67,7 @@ public class MouseControlComponent extends Component
         {
             newObj.getCompoent(AnimationComponent.class).refreshTextures();
         }
+        newObj.getCompoent(SpriteComponent.class).setColor(new Vector4f(1, 1, 1, 1));
         newObj.removeComponent(NonPickableComponent.class);
         MainWindow.getCurrentScene().addGameObject(newObj);
     }
@@ -110,7 +111,6 @@ public class MouseControlComponent extends Component
             GameObject picked = currentScene.getGameObject(gameObjectID);
             if (picked != null && picked.getCompoent(NonPickableComponent.class) == null)
             {
-                pickupObject(picked);
                 ComponentsWindow.setActiveGameObject(picked);
             }
             else if (picked == null && !Mouse.isDragging())

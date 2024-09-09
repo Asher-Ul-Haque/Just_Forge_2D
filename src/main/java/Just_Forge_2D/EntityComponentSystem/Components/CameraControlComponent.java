@@ -41,7 +41,7 @@ public class CameraControlComponent extends Component
     {
         if (points.isEmpty()) return;
         camera.position = calculateAveragePosition();
-        camera.setZoom(calculateZoom());
+//        camera.setZoom(calculateZoom());
     }
 
 
