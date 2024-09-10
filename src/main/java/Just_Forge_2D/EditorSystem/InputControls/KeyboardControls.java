@@ -2,7 +2,6 @@ package Just_Forge_2D.EditorSystem.InputControls;
 
 import Just_Forge_2D.AnimationSystem.AnimationComponent;
 import Just_Forge_2D.EditorSystem.EditorComponents.GridlinesComponent;
-import Just_Forge_2D.EditorSystem.MainWindow;
 import Just_Forge_2D.EditorSystem.Windows.ComponentsWindow;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.InputSystem.Keyboard;
@@ -24,8 +23,9 @@ public class KeyboardControls
             ComponentsWindow.setActiveGameObject(null);
             Logger.FORGE_LOG_DEBUG("Copying: " + activeGameObject);
             GameObject newObj = activeGameObject.copy();
-            MouseControlComponent.holdingObject = newObj;
-            MainWindow.getCurrentScene().addGameObject(newObj);
+            MouseControlComponent.pickupObject(newObj);
+//            MouseControlComponent.holdingObject = newObj;
+//            MainWindow.getCurrentScene().addGameObject(newObj);
             if (newObj.getCompoent(AnimationComponent.class) != null)
             {
                 newObj.getCompoent(AnimationComponent.class).refreshTextures();

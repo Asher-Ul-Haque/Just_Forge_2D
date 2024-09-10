@@ -176,7 +176,7 @@ public class SplashScreen
         MainWindow.get().setVisible(false);
         Logger.FORGE_LOG_TRACE("Project Path : " + EditorSystemManager.projectDir);
         EditorSystemManager.setCurrentState(EditorSystemManager.state.isEditor);
-        MainWindow.get().setSize(EditorSystemManager.editorWindowConfig.getWidth(), EditorSystemManager.editorWindowConfig.getHeight());
+        MainWindow.get().setSize(WindowSystemManager.getMonitorSize().x, WindowSystemManager.getMonitorSize().y);
         MainWindow.get().setPosition(0, 0);
         MainWindow.get().setVisible(true);
         if (EditorSystemManager.isRelease) EventManager.notify(null, new Event(EventTypes.ForgeStart));

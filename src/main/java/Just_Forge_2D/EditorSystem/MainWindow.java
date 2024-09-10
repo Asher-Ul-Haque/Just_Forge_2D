@@ -5,27 +5,27 @@ package Just_Forge_2D.EditorSystem;
 // - - - Internal
 
 import Just_Forge_2D.EditorSystem.GameSystem.GameCodeLoader;
+import Just_Forge_2D.EditorSystem.Windows.ComponentsWindow;
 import Just_Forge_2D.EditorSystem.Windows.MainWindowConfig;
 import Just_Forge_2D.EditorSystem.Windows.ObjectSelector;
-import Just_Forge_2D.EditorSystem.Windows.ComponentsWindow;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
-import Just_Forge_2D.SceneSystem.Camera;
-import Just_Forge_2D.SceneSystem.SceneInitializer;
-import Just_Forge_2D.SceneSystem.Scene;
 import Just_Forge_2D.EventSystem.Events.Event;
 import Just_Forge_2D.InputSystem.Mouse;
 import Just_Forge_2D.PhysicsSystem.PhysicsSystemManager;
 import Just_Forge_2D.RenderingSystem.DebugPencil;
+import Just_Forge_2D.RenderingSystem.Renderer;
+import Just_Forge_2D.SceneSystem.Camera;
+import Just_Forge_2D.SceneSystem.Scene;
+import Just_Forge_2D.SceneSystem.SceneInitializer;
 import Just_Forge_2D.SceneSystem.SceneSystemManager;
+import Just_Forge_2D.Utils.Logger;
+import Just_Forge_2D.Utils.TimeKeeper;
 import Just_Forge_2D.WindowSystem.Window;
 import Just_Forge_2D.WindowSystem.WindowConfig;
-import Just_Forge_2D.RenderingSystem.Renderer;
-import Just_Forge_2D.Utils.TimeKeeper;
-import Just_Forge_2D.Utils.Logger;
 import org.joml.Vector2f;
 
+import static org.lwjgl.glfw.GLFW.glfwPollEvents;
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.glfw.GLFW.*;
 
 
 // - - - | Class | - - -
@@ -242,6 +242,7 @@ public class MainWindow extends Window
 
             case ForgeStop:
                 Logger.FORGE_LOG_INFO("Ending Game");
+                ComponentsWindow.clearSelection();
                 EditorSystemManager.isRuntimePlaying = false;
                 try
                 {

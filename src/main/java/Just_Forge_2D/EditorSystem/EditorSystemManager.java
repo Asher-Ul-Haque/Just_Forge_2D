@@ -92,10 +92,14 @@ public class EditorSystemManager
     public static void compileShaders()
     {
         AssetPool.addShader("Default", "Assets/Shaders/default.glsl");
-        AssetPool.addShader("Selector", "Assets/Shaders/selector.glsl");
-        AssetPool.addShader("Debug", "Assets/Shaders/debug.glsl");
         EditorSystemManager.defaultShader = AssetPool.getShader("Default");
-        EditorSystemManager.selectorShader = AssetPool.getShader("Selector");
+
+        if (!EditorSystemManager.isRelease)
+        {
+            AssetPool.addShader("Selector", "Assets/Shaders/selector.glsl");
+            AssetPool.addShader("Debug", "Assets/Shaders/debug.glsl");
+            EditorSystemManager.selectorShader = AssetPool.getShader("Selector");
+        }
     }
 
     public static ImGUIManager getEditor()
