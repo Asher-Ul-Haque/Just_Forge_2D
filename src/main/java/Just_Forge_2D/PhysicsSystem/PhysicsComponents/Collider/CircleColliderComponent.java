@@ -2,9 +2,11 @@ package Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider;
 
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.RenderingSystem.DebugPencil;
+import Just_Forge_2D.Utils.DefaultValues;
 import org.joml.Math;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
+import org.joml.Vector4f;
 
 public class CircleColliderComponent extends Component
 {
@@ -12,6 +14,7 @@ public class CircleColliderComponent extends Component
     private boolean showHitboxAtRuntime = false;
 
     private Vector2f offset = new Vector2f();
+    private Vector4f hitboxColor = new Vector4f(DefaultValues.DEFAULT_CLEAR_COLOR);
 
     public Vector2f getOffset()
     {
@@ -38,7 +41,7 @@ public class CircleColliderComponent extends Component
     public void editorUpdate(float DELTA_tIME)
     {
         Vector2f center = new Vector2f(this.gameObject.transform.position).add(this.offset);
-        DebugPencil.addCircle(center, this.radius, new Vector3f(1, 0, 0));
+        DebugPencil.addCircle(center, this.radius, new Vector3f(hitboxColor.x, hitboxColor.y, hitboxColor.z));
         if (autoScale)
         {
             setRadius(Math.max(this.gameObject.transform.scale.x, this.gameObject.transform.scale.y) / 2f);
@@ -51,7 +54,7 @@ public class CircleColliderComponent extends Component
         if (showHitboxAtRuntime)
         {
             Vector2f center = new Vector2f(this.gameObject.transform.position).add(this.offset);
-            DebugPencil.addCircle(center, this.radius, new Vector3f(1, 0, 0));
+            DebugPencil.addCircle(center, this.radius, new Vector3f(hitboxColor.x, hitboxColor.y, hitboxColor.z));
         }
     }
 }

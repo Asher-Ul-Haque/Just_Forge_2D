@@ -16,17 +16,15 @@ public class GameViewport
     private static float leftX, rightX, topY, bottomY;
     private static boolean isPlaying = false;
 
-    public static void render() {
+    public static void render()
+    {
         ImGui.begin("Game Viewport", ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoScrollWithMouse | ImGuiWindowFlags.NoTitleBar);
 
-        // Calculate the size and centered position for the viewport
         ImVec2 windowSize = getLargestSizeForViewport();
         ImVec2 windowPos = getCenteredPositionForViewport(windowSize);
 
-        // Set the cursor position for the image below the buttons
-        ImGui.setCursorPos(windowPos.x, windowPos.y);  // Move down to fit the buttons' height (adjust as needed)
+        ImGui.setCursorPos(windowPos.x, windowPos.y);
 
-        // Capture the top-left corner of the viewport to set the game viewport boundaries
         ImVec2 topLeft = new ImVec2();
         ImGui.getCursorScreenPos(topLeft);
         topLeft.x -= ImGui.getScrollX();
@@ -36,37 +34,21 @@ public class GameViewport
         rightX = topLeft.x + windowSize.x;
         topY = topLeft.y + windowSize.y;
 
-        // Update mouse viewport
         Mouse.setGameViewport(new Vector2f(topLeft.x, topLeft.y), new Vector2f(windowSize.x, windowSize.y));
 
-        // Render the game image (framebuffer)
         int textureId = EditorSystemManager.getFramebuffer().getTextureID();
         ImGui.image(textureId, windowSize.x, windowSize.y, 0, 1, 1, 0);
 
-        float buttonWidth = 64f;  // Approximate width for buttons (adjust as needed)
-        float spacing = 8f;       // Spacing between buttons (adjust as needed)
+        float buttonWidth = 64f;
 
-        // Center the buttons horizontally by calculating their position based on window width
-        float totalButtonWidth = (2 * buttonWidth) + spacing;  // Two buttons with spacing
-        float buttonStartX = (windowSize.x - totalButtonWidth) / 2;
+        float buttonStartX = (windowSize.x - buttonWidth) / 2;
 
-        // Set the cursor position for the first button
-        ImGui.setCursorPos(windowPos.x + buttonStartX, windowPos.y);  // Top-center aligned buttons
+        ImGui.setCursorPos(windowPos.x + buttonStartX, windowPos.y);
 
-        // Render the "Play" button
-        if (ImGui.button("Play", buttonWidth, 30)) {
-            isPlaying = true;
-            EventManager.notify(null, new Event(EventTypes.ForgeStart));
-        }
-
-        // Same line to position the "Stop" button next to the "Play" button
-        ImGui.sameLine(0, spacing);
-
-        // Render the "Stop" button
-        if (ImGui.button("Stop", buttonWidth, 30))
+        if (ImGui.button(isPlaying ? "Stop" : "Start", buttonWidth, 30))
         {
-            isPlaying = false;
-            EventManager.notify(null, new Event(EventTypes.ForgeStop));
+            isPlaying = !isPlaying;
+            EventManager.notify(null, new Event(isPlaying ? EventTypes.ForgeStart : EventTypes.ForgeStop));
         }
 
         ImGui.end();
