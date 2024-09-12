@@ -1,16 +1,19 @@
 package Just_Forge_2D.AudioSystem;
 
+import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.Utils.Logger;
+import org.joml.Vector3f;
 
 import java.nio.IntBuffer;
 import java.nio.ShortBuffer;
 
 import static org.lwjgl.openal.AL10.*;
+import static org.lwjgl.openal.AL11.AL_SEC_OFFSET;
 import static org.lwjgl.stb.STBVorbis.stb_vorbis_decode_filename;
 import static org.lwjgl.system.MemoryStack.*;
 import static org.lwjgl.system.libc.LibCStdlib.free;
 
-public class Sound
+public class Sound extends Component
 {
     private int bufferID;
     private int sourceID;
@@ -64,7 +67,8 @@ public class Sound
         alSourcei(sourceID, AL_BUFFER, bufferID);
         alSourcei(sourceID, AL_LOOPING, LOOPS ? 1 : 0);
         alSourcei(sourceID, AL_POSITION, 0);
-        alSourcef(sourceID, AL_GAIN, 0.3f);
+        alSourcef(sourceID, AL_GAIN, 1.0f);
+        alSourcef(sourceID, AL_PITCH, 1.0f);
 
         // - - - free raw buffers
         free(rawAudioBuffer);
@@ -101,7 +105,51 @@ public class Sound
         }
     }
 
-    public String getFIlePath()
+    public void pause()
+    {
+        if (isPlaying)
+        {
+            alSourcePause(sourceID);
+            isPlaying = false;
+        }
+    }
+
+    public void resume()
+    {
+        if (!isPlaying)
+        {
+            alSourcePlay(sourceID);
+            isPlaying = true;
+        }
+    }
+
+    public void playFrom(float SECONDS)
+    {
+        alSourcef(sourceID, AL_SEC_OFFSET, SECONDS);
+        play();
+    }
+
+    public void setPosition(Vector3f POSITION)
+    {
+        alSource3f(sourceID, AL_POSITION, POSITION.x, POSITION.y, POSITION.z);
+    }
+
+    public void setVolume(float VOLUME)
+    {
+        alSourcef(sourceID, AL_GAIN, VOLUME);
+    }
+
+    public void setPitch(float PITCH)
+    {
+        alSourcef(sourceID, AL_PITCH, PITCH);
+    }
+
+    public void setLooping(boolean LOOPS)
+    {
+        alSourcei(sourceID, AL_LOOPING, LOOPS ? 1 : 0);
+    }
+
+    public String getFilePath()
     {
         return this.filepath;
     }

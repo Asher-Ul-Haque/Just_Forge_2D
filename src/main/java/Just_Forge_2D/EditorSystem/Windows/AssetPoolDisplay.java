@@ -27,7 +27,7 @@ public class AssetPoolDisplay
                 Collection<Sound> sounds = AssetPool.getAllSounds();
                 for (Sound sound : sounds)
                 {
-                    File tmp = new File(sound.getFIlePath());
+                    File tmp = new File(sound.getFilePath());
                     if (ImGui.button(tmp.getName()))
                     {
                         if (!sound.isPlaying())

@@ -1,24 +1,19 @@
 package Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider;
 
-import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.RenderingSystem.DebugPencil;
-import Just_Forge_2D.Utils.DefaultValues;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
-import org.joml.Vector4f;
+
 
 // - - - Box Collider
-public class BoxColliderComponent extends Component
+public class BoxColliderComponent extends ColliderComponent
 {
     // - - - private variables
-    private boolean autoScale = true;
-    private boolean showHitboxAtRuntime = false;
     private Vector2f halfSize = new Vector2f(0.25f);
     private final Vector2f origin = new Vector2f();
-    private Vector4f hitboxColor = new Vector4f(DefaultValues.DEBUG_PENCIL_DEFAULT_COLOR, 1.0f);
-
 
     private Vector2f offset = new Vector2f();
+    private Vector3f hitboxColor = new Vector3f(super.baseColor.x, super.baseColor.y, super.baseColor.z);
 
     public Vector2f getOffset()
     {
@@ -48,7 +43,7 @@ public class BoxColliderComponent extends Component
     public void editorUpdate(float DELTA_tIME)
     {
         Vector2f center = new Vector2f(this.gameObject.transform.position).add(this.offset);
-        DebugPencil.addBox(center, this.halfSize, this.gameObject.transform.rotation, new Vector3f(hitboxColor.x, hitboxColor.y, hitboxColor.z));
+        DebugPencil.addBox(center, this.halfSize, this.gameObject.transform.rotation, hitboxColor);
         if (autoScale)
         {
             setHalfSize(new Vector2f(this.gameObject.transform.scale.x, this.gameObject.transform.scale.y));
@@ -61,7 +56,7 @@ public class BoxColliderComponent extends Component
         if (showHitboxAtRuntime)
         {
             Vector2f center = new Vector2f(this.gameObject.transform.position).add(this.offset);
-            DebugPencil.addBox(center, this.halfSize, this.gameObject.transform.rotation, new Vector3f(hitboxColor.x, hitboxColor.y, hitboxColor.z));
+            DebugPencil.addBox(center, this.halfSize, this.gameObject.transform.rotation, hitboxColor);
         }
     }
 

@@ -43,7 +43,7 @@ public class GameViewport
 
         float buttonStartX = (windowSize.x - buttonWidth) / 2;
 
-        ImGui.setCursorPos(windowPos.x + buttonStartX, windowPos.y);
+        ImGui.setCursorPos(windowPos.x + buttonStartX, 0);
 
         if (ImGui.button(isPlaying ? "Stop" : "Start", buttonWidth, 30))
         {

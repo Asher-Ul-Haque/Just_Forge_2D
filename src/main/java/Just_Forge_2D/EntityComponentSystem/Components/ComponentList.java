@@ -1,5 +1,6 @@
 package Just_Forge_2D.EntityComponentSystem.Components;
 
+import Just_Forge_2D.AudioSystem.SoundPlayerComponent;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.BoxColliderComponent;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.CircleColliderComponent;
@@ -22,6 +23,7 @@ public class ComponentList
         types.add(CylinderColliderComponent.class);
         types.add(SimpleCharacterController.class);
         types.add(CameraControlComponent.class);
+        types.add(SoundPlayerComponent.class);
     }
 
     public static final List<Class<? extends Component>> types = new ArrayList<>();
