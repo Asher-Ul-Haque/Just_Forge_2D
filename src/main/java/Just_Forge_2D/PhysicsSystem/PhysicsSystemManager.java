@@ -74,7 +74,6 @@ public class PhysicsSystemManager
             }
 
             Body body = rawWorld.getWorld().createBody(bodyDef);
-            body.m_mass = rb.getMass();
             rb.setRawBody(body);
 
             CircleColliderComponent circleCollider = OBJ.getCompoent(CircleColliderComponent.class);
@@ -84,14 +83,17 @@ public class PhysicsSystemManager
             if (circleCollider != null)
             {
                 addCircleCollider(rb, circleCollider);
+                body.resetMassData();
             }
             if (boxCollider != null)
             {
                 addBoxCollider(rb, boxCollider);
+                body.resetMassData();
             }
             if (pillCollider != null)
             {
                 addCylinderCollider(rb, pillCollider);
+                body.resetMassData();
             }
 
             Logger.FORGE_LOG_DEBUG("Linked Box2D with " + OBJ);
@@ -205,6 +207,7 @@ public class PhysicsSystemManager
         }
 
         addCircleCollider(RB, COLLIDER);
+        body.resetMassData();
     }
 
     public void resetBoxCollider(RigidBodyComponent RB, BoxColliderComponent COLLIDER)
@@ -223,7 +226,7 @@ public class PhysicsSystemManager
         }
 
         addBoxCollider(RB, COLLIDER);
-
+        body.resetMassData();
     }
 
     public void resetCylinderCollider(RigidBodyComponent RB, CylinderColliderComponent COLLIDER)
@@ -242,6 +245,7 @@ public class PhysicsSystemManager
         }
 
         addCylinderCollider(RB, COLLIDER);
+        body.resetMassData();
     }
 
     private int fixtureListSize(Body BODY)

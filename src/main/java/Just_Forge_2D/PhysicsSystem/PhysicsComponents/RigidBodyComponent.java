@@ -23,7 +23,7 @@ public class RigidBodyComponent extends Component
     public Vector2f velocity = new Vector2f();
     private float angularDamping = DefaultValues.ANGULAR_DAMPING;
     private float linearDamping = DefaultValues.LINEAR_DAMPING;
-    private float mass = DefaultValues.DEFAULT_MASS;
+    private float density = DefaultValues.DEFAULT_MASS;
     private BodyType bodyType = BodyType.Dynamic;
     private boolean fixedRotation = DefaultValues.ROTATION_FIXED;
     private boolean continuousCollision = DefaultValues.CONTINUOUS_COLLISION;
@@ -33,6 +33,7 @@ public class RigidBodyComponent extends Component
     public float frictionCoefficient = DefaultValues.DEFAULT_FRICTION;
     public float restitutionCoefficient = DefaultValues.DEFAULT_RESTITUTION;
     private boolean isSensor = false;
+    private boolean isEditor = false;
 
 
     // - - - | Functions | - - -
@@ -50,7 +51,7 @@ public class RigidBodyComponent extends Component
         this.velocity.set(VELOCITY);
         if (rawBody == null)
         {
-            Logger.FORGE_LOG_ERROR("Cant set velocity on a null raw body");
+            if (!isEditor) Logger.FORGE_LOG_ERROR("Cant set velocity on a null raw body");
             return;
         }
         this.rawBody.setLinearVelocity(new Vec2(velocity.x, velocity.y));
@@ -69,10 +70,10 @@ public class RigidBodyComponent extends Component
         this.angularDamping = ANGULAR_DAMPING;
         if (rawBody == null)
         {
-            Logger.FORGE_LOG_ERROR("Cant add angular velocity to a null raw body");
+            if (!isEditor) Logger.FORGE_LOG_ERROR("Cant add angular velocity to a null raw body");
             return;
         }
-        this.rawBody.m_angularDamping = this.angularDamping;
+        this.rawBody.setAngularDamping(ANGULAR_DAMPING);
     }
 
 
@@ -88,7 +89,7 @@ public class RigidBodyComponent extends Component
         this.angularVelocity = ANGULAR_VELOCITY;
         if (rawBody == null)
         {
-            Logger.FORGE_LOG_ERROR("Cant add angular velocity to a null raw body");
+            if (!isEditor) Logger.FORGE_LOG_ERROR("Cant add angular velocity to a null raw body");
             return;
         }
         this.rawBody.setAngularVelocity(ANGULAR_VELOCITY);
@@ -102,7 +103,7 @@ public class RigidBodyComponent extends Component
         this.gravityScale = GRAVITY;
         if (rawBody == null)
         {
-            Logger.FORGE_LOG_ERROR("Cant add gravity to a null raw body");
+            if (!isEditor) Logger.FORGE_LOG_ERROR("Cant add gravity to a null raw body");
             return;
         }
         this.rawBody.setGravityScale(GRAVITY);
@@ -140,10 +141,10 @@ public class RigidBodyComponent extends Component
         this.linearDamping = LINEAR_DAMPING;
         if (rawBody == null)
         {
-            Logger.FORGE_LOG_ERROR("Cant add linear damping to a null raw body");
+            if (!isEditor) Logger.FORGE_LOG_ERROR("Cant add linear damping to a null raw body");
             return;
         }
-        this.rawBody.m_linearDamping = LINEAR_DAMPING;
+        this.rawBody.setLinearDamping(LINEAR_DAMPING);
     }
 
 
@@ -157,12 +158,12 @@ public class RigidBodyComponent extends Component
     public void setFrictionCoefficient(float COEFF)
     {
         this.frictionCoefficient = Math.max(0, Math.min(1.0f, COEFF));
-        if (rawBody == null)
+        if (rawBody == null || rawBody.getFixtureList() == null)
         {
-            Logger.FORGE_LOG_ERROR("Cant set frictional coefficient to a null raw body");
+            if (!isEditor) Logger.FORGE_LOG_ERROR("Cant set frictional coefficient to a null raw body");
             return;
         }
-        this.rawBody.getFixtureList().m_friction = this.frictionCoefficient;
+        this.rawBody.getFixtureList().setFriction(COEFF);
     }
 
 
@@ -176,31 +177,34 @@ public class RigidBodyComponent extends Component
     public void setRestitutionCoefficient(float COEFF)
     {
         this.restitutionCoefficient = Math.max(0, Math.min(1.0f, COEFF));
-        if (rawBody == null)
+        if (rawBody == null || rawBody.getFixtureList() == null)
         {
-            Logger.FORGE_LOG_ERROR("Cant add restitution to a null raw body");
+            if (!isEditor) Logger.FORGE_LOG_ERROR("Cant add restitution to a null raw body");
             return;
         }
-        this.rawBody.getFixtureList().m_restitution = this.restitutionCoefficient;
+        this.rawBody.getFixtureList().setRestitution(COEFF);
     }
 
 
     // - - - Mass - - -
 
-    public float getMass()
+    public float getDensity()
     {
-        return mass;
+        return density;
     }
 
-    public void setMass(float MASS)
+    public void setDensity(float DENSITY)
     {
-        this.mass = MASS;
-        if (rawBody == null)
+        this.density = DENSITY;
+        if (rawBody == null || rawBody.getFixtureList() == null)
         {
-            Logger.FORGE_LOG_ERROR("Cant add mass to a null raw body");
+            if (!isEditor) Logger.FORGE_LOG_ERROR("Cant add mass to a null raw body");
             return;
         }
-        this.rawBody.m_mass = MASS;
+        this.rawBody.getFixtureList().setDensity(DENSITY);
+        this.rawBody.resetMassData();
+
+
     }
 
 
@@ -283,6 +287,7 @@ public class RigidBodyComponent extends Component
             Logger.FORGE_LOG_ERROR("Cant add velocity to a null raw body");
             return;
         }
+        this.setDensity(this.getDensity());
         rawBody.setLinearVelocity(rawBody.getLinearVelocity().add(new Vec2(VELOCITY.x, VELOCITY.y)));
     }
 
@@ -293,17 +298,30 @@ public class RigidBodyComponent extends Component
             Logger.FORGE_LOG_ERROR("Cant add force to a null raw body");
             return;
         }
+        this.setDensity(this.getDensity());
         rawBody.applyForceToCenter(new Vec2(FORCE.x, FORCE.y));
     }
 
     public void addImpulse(Vector2f IMPULSE)
     {
-        if (rawBody == null)
+        if (this.rawBody == null)
         {
-            Logger.FORGE_LOG_ERROR("Cant add impulse toa  null raw body");
+            if (!isEditor) Logger.FORGE_LOG_ERROR("Cant add impulse toa  null raw body");
             return;
         }
-        rawBody.applyLinearImpulse(new Vec2(IMPULSE.x, IMPULSE.y), rawBody.getWorldCenter());
+        this.setDensity(this.getDensity());
+        this.rawBody.applyLinearImpulse(new Vec2(IMPULSE.x, IMPULSE.y), this.rawBody.getWorldCenter());
+    }
+
+    public void addTorque(float TORQUE)
+    {
+        if (rawBody == null)
+        {
+            if (!isEditor) Logger.FORGE_LOG_ERROR("Cant add torque to a null raw body");
+            return;
+        }
+        this.setDensity(this.getDensity());
+        rawBody.applyTorque(TORQUE);
     }
 
     public Vec2 getLinearVelocity()
@@ -317,6 +335,7 @@ public class RigidBodyComponent extends Component
     @Override
     public void editorGUI()
     {
+        isEditor = true;
         // - - - destroy button
         if (ImGui.button("Destroy"))
         {
@@ -335,7 +354,7 @@ public class RigidBodyComponent extends Component
         }
 
         // - - - mass
-        setMass(Widgets.drawFloatControl("Mass", getMass()));
+        setDensity(Widgets.drawFloatControl("Density", getDensity()));
 
         // - - - gravity scale
         setGravityScale(Widgets.drawFloatControl("Gravity Scale", gravityScale));
@@ -375,5 +394,7 @@ public class RigidBodyComponent extends Component
             isSensor = val;
         }
         Theme.resetDefaultTextColor();
+
+        isEditor = false;
     }
 }
