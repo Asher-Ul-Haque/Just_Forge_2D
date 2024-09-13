@@ -310,7 +310,7 @@ public class RigidBodyComponent extends Component
             return;
         }
         this.setDensity(this.getDensity());
-        this.rawBody.applyLinearImpulse(new Vec2(IMPULSE.x, IMPULSE.y), this.rawBody.getWorldCenter());
+        this.rawBody.applyLinearImpulse(new Vec2(IMPULSE.x, IMPULSE.y), this.rawBody.getWorldCenter(), true);
     }
 
     public void addTorque(float TORQUE)

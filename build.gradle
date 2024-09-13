@@ -59,7 +59,7 @@ switch (OperatingSystem.current()) {
 dependencies {
 
     // Box 2d
-    implementation name: 'jbox2d-library'
+    implementation name: 'jBox2d-library'
 
     // GSON
     implementation 'com.google.code.gson:gson:2.11.0'

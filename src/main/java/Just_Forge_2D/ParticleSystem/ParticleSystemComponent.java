@@ -1,6 +1,8 @@
 package Just_Forge_2D.ParticleSystem;
 
+import org.jbox2d.particle.ParticleDef;
+
 public class ParticleSystemComponent
 {
-    private int a = 10;
+    private ParticleDef A = new ParticleDef();
 }

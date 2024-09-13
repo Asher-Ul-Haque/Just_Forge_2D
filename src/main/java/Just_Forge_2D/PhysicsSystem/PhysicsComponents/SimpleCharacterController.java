@@ -1,13 +1,14 @@
 package Just_Forge_2D.PhysicsSystem.PhysicsComponents;
 
-import Just_Forge_2D.EditorSystem.MainWindow;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.InputSystem.Keyboard;
 import Just_Forge_2D.InputSystem.Keys;
 import Just_Forge_2D.PhysicsSystem.Raycasts.RayCastInfo;
+import Just_Forge_2D.PhysicsSystem.Raycasts.Raycast;
 import Just_Forge_2D.RenderingSystem.DebugPencil;
 import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.Logger;
+import org.jbox2d.common.Vec2;
 import org.joml.Vector2f;
 
 public class SimpleCharacterController extends Component
@@ -111,17 +112,18 @@ public class SimpleCharacterController extends Component
 
     private void checkGrounded(float DELTA_TIME)
     {
+        Raycast gun = new Raycast();
         Vector2f rayCast1Begin = new Vector2f(this.gameObject.transform.position);
         rayCast1Begin.sub(this.gameObject.transform.scale.x / 2.0f, this.gameObject.transform.scale.y / 2.0f);
         Vector2f rayCast1End = new Vector2f(rayCast1Begin).sub(0.0f, groundDetectRayLength);
         DebugPencil.addLine(rayCast1Begin, rayCast1End);
-        RayCastInfo rayCast1 = MainWindow.getPhysicsSystem().rayCast(this.gameObject, rayCast1Begin, rayCast1End);
+        RayCastInfo rayCast1 = gun.rayCast(this.gameObject, rayCast1Begin, rayCast1End);
 
         Vector2f rayCast2Begin = new Vector2f(this.gameObject.transform.position);
         rayCast2Begin.sub(- this.gameObject.transform.scale.x / 2.0f, this.gameObject.transform.scale.y /2.0f);
         Vector2f rayCast2End = new Vector2f(rayCast2Begin).sub(0.0f, groundDetectRayLength);
         DebugPencil.addLine(rayCast2Begin, rayCast2End);
-        RayCastInfo rayCast2 = MainWindow.getPhysicsSystem().rayCast(this.gameObject, rayCast2Begin, rayCast2End);
+        RayCastInfo rayCast2 = gun.rayCast(this.gameObject, rayCast2Begin, rayCast2End);
 
         boolean wasGrounded = this.isGrounded;
         this.isGrounded = rayCast1.hit && rayCast1.hitObject != null || rayCast2.hit && rayCast2.hitObject != null;
