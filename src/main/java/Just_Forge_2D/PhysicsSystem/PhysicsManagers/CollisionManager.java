@@ -1,4 +1,4 @@
-package Just_Forge_2D.PhysicsSystem;
+package Just_Forge_2D.PhysicsSystem.PhysicsManagers;
 
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
@@ -9,7 +9,7 @@ import org.jbox2d.collision.WorldManifold;
 import org.jbox2d.dynamics.contacts.Contact;
 import org.joml.Vector2f;
 
-public class CollisionDetector implements ContactListener
+public class CollisionManager implements ContactListener
 {
     @Override
     public void beginContact(Contact CONTACT)

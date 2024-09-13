@@ -6,13 +6,9 @@ import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.BoxColliderCompone
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.CircleColliderComponent;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.CylinderColliderComponent;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent;
+import Just_Forge_2D.PhysicsSystem.PhysicsManagers.ColliderManager;
 import Just_Forge_2D.SceneSystem.Scene;
 import Just_Forge_2D.Utils.Logger;
-import org.jbox2d.collision.shapes.CircleShape;
-import org.jbox2d.collision.shapes.PolygonShape;
-import org.jbox2d.common.Vec2;
-import org.jbox2d.dynamics.*;
-import org.joml.Vector2f;
 
 // - - - interface to communicate with Box2D
 public class PhysicsSystemManager
@@ -82,17 +78,17 @@ public class PhysicsSystemManager
 
             if (circleCollider != null)
             {
-                addCircleCollider(rb, circleCollider);
+                ColliderManager.addCircleCollider(rb, circleCollider);
                 body.resetMassData();
             }
             if (boxCollider != null)
             {
-                addBoxCollider(rb, boxCollider);
+                ColliderManager.addBoxCollider(rb, boxCollider);
                 body.resetMassData();
             }
             if (pillCollider != null)
             {
-                addCylinderCollider(rb, pillCollider);
+                ColliderManager.addCylinderCollider(rb, pillCollider);
                 body.resetMassData();
             }
 
@@ -120,145 +116,6 @@ public class PhysicsSystemManager
     {
         // - - - ensure that update happens only every 16 milliseconds. We increase only when we pass 16ms
         rawWorld.step(DELTA_TIME);
-    }
-
-    public void addBoxCollider(RigidBodyComponent RB, BoxColliderComponent COLLIDER)
-    {
-        Body body = RB.getRawBody();
-        if (body == null)
-        {
-            Logger.FORGE_LOG_WARNING("Raw body must not be null, while adding a collider");
-            return;
-        }
-        PolygonShape shape = new PolygonShape();
-        Vector2f halfSize = new Vector2f(COLLIDER.getHalfSize()).mul(0.5f); // Dont ask me why half. I fine tuned in testing
-        Vector2f offset = COLLIDER.getOffset();
-        Vector2f origin = new Vector2f(COLLIDER.getOrigin());
-        shape.setAsBox(halfSize.x, halfSize.y, new Vec2(offset.x, offset.y), 0);
-
-        FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.shape = shape;
-        fixtureDef.density = 1.0f;
-        fixtureDef.friction = RB.getFrictionCoefficient();
-        fixtureDef.userData = COLLIDER.gameObject;
-        fixtureDef.isSensor = RB.isSensor();
-        body.createFixture(fixtureDef);
-    }
-
-    public void addCircleCollider(RigidBodyComponent RB, CircleColliderComponent COLLIDER)
-    {
-        Body body = RB.getRawBody();
-        if (body == null)
-        {
-            Logger.FORGE_LOG_WARNING("Raw body must not be null, while adding a collider");
-            return;
-        }
-        CircleShape shape = new CircleShape();
-        shape.setRadius(COLLIDER.getRadius());
-        shape.m_p.set(COLLIDER.getOffset().x, COLLIDER.getOffset().y);
-
-        FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.shape = shape;
-        fixtureDef.density = 1.0f;
-        fixtureDef.friction = RB.getFrictionCoefficient();
-        fixtureDef.restitution = RB.getRestitutionCoefficient();
-        fixtureDef.userData = COLLIDER.gameObject;
-        fixtureDef.isSensor = RB.isSensor();
-        body.createFixture(fixtureDef);
-    }
-
-    public void addCylinderCollider(RigidBodyComponent RB, CylinderColliderComponent COLLIDER)
-    {
-        Body body = RB.getRawBody();
-        if (body == null)
-        {
-            Logger.FORGE_LOG_WARNING("Raw body must not be null, while adding a collider");
-            return;
-        }
-
-        addBoxCollider(RB, COLLIDER.getBox());
-        addCircleCollider(RB, COLLIDER.getTopCircle());
-        addCircleCollider(RB, COLLIDER.getBottomCircle());
-    }
-
-
-    // - - - Ray cast
-
-    public RayCastInfo rayCast(GameObject REQUESTEE, Vector2f POINT_1, Vector2f POINT_2)
-    {
-        RayCastInfo callback = new RayCastInfo(REQUESTEE);
-        rawWorld.getWorld().raycast(callback, new Vec2(POINT_1.x, POINT_1.y), new Vec2(POINT_2.x, POINT_2.y));
-        return callback;
-    }
-
-    public void resetCircleCollider(RigidBodyComponent RB, CircleColliderComponent COLLIDER)
-    {
-        Body body = RB.getRawBody();
-        if (body == null)
-        {
-            Logger.FORGE_LOG_ERROR("Tried to reset Circle Collider on a null physics body");
-            return;
-        }
-
-        int size = fixtureListSize(body);
-        for (int i = 0; i < size; ++i)
-        {
-            body.destroyFixture(body.getFixtureList());
-        }
-
-        addCircleCollider(RB, COLLIDER);
-        body.resetMassData();
-    }
-
-    public void resetBoxCollider(RigidBodyComponent RB, BoxColliderComponent COLLIDER)
-    {
-        Body body = RB.getRawBody();
-        if (body == null)
-        {
-            Logger.FORGE_LOG_ERROR("Tried to reset Circle Collider on a null physics body");
-            return;
-        }
-
-        int size = fixtureListSize(body);
-        for (int i = 0; i < size; ++i)
-        {
-            body.destroyFixture(body.getFixtureList());
-        }
-
-        addBoxCollider(RB, COLLIDER);
-        body.resetMassData();
-    }
-
-    public void resetCylinderCollider(RigidBodyComponent RB, CylinderColliderComponent COLLIDER)
-    {
-        Body body = RB.getRawBody();
-        if (body == null)
-        {
-            Logger.FORGE_LOG_ERROR("Tried to reset Circle Collider on a null physics body");
-            return;
-        }
-
-        int size = fixtureListSize(body);
-        for (int i = 0; i < size; ++i)
-        {
-            body.destroyFixture(body.getFixtureList());
-        }
-
-        addCylinderCollider(RB, COLLIDER);
-        body.resetMassData();
-    }
-
-    private int fixtureListSize(Body BODY)
-    {
-        int size = 0;
-        Fixture fixture = BODY.getFixtureList();
-        while (fixture != null)
-        {
-            size++;
-            fixture = fixture.m_next;
-        }
-
-        return size;
     }
 
     public void setSensor(RigidBodyComponent RB, boolean REALLY)

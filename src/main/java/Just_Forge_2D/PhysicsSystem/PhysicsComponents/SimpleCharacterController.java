@@ -4,11 +4,10 @@ import Just_Forge_2D.EditorSystem.MainWindow;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.InputSystem.Keyboard;
 import Just_Forge_2D.InputSystem.Keys;
-import Just_Forge_2D.PhysicsSystem.RayCastInfo;
+import Just_Forge_2D.PhysicsSystem.Raycasts.RayCastInfo;
 import Just_Forge_2D.RenderingSystem.DebugPencil;
 import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.Logger;
-import org.jbox2d.common.Vec2;
 import org.joml.Vector2f;
 
 public class SimpleCharacterController extends Component

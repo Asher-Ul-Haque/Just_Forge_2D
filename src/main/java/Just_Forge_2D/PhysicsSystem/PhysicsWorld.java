@@ -1,5 +1,6 @@
 package Just_Forge_2D.PhysicsSystem;
 
+import Just_Forge_2D.PhysicsSystem.PhysicsManagers.CollisionManager;
 import Just_Forge_2D.Utils.DefaultValues;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
@@ -16,7 +17,7 @@ public class PhysicsWorld
     public PhysicsWorld(Vector2f GRAVITY, float DELTA_TIME, int VELOCITY_ITERATIONS, int POSITION_ITERATIONS)
     {
         this.world = new World(new Vec2(GRAVITY.x, GRAVITY.y));
-        this.world.setContactListener(new CollisionDetector());
+        this.world.setContactListener(new CollisionManager());
         this.physicsDeltaTime = DELTA_TIME;
         this.velocityIterations = VELOCITY_ITERATIONS;
         this.positionIterations = POSITION_ITERATIONS;
@@ -25,7 +26,7 @@ public class PhysicsWorld
     public PhysicsWorld()
     {
         this.world = new World(DefaultValues.GRAVITY);
-        this.world.setContactListener(new CollisionDetector());
+        this.world.setContactListener(new CollisionManager());
     }
 
     protected void step(float DELTA_TIME)

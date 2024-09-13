@@ -1,19 +1,22 @@
 package Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider;
 
 import Just_Forge_2D.EditorSystem.MainWindow;
+import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent;
+import Just_Forge_2D.PhysicsSystem.PhysicsManagers.ColliderManager;
 import Just_Forge_2D.RenderingSystem.DebugPencil;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
+import org.joml.Vector4f;
 
-public class CylinderColliderComponent extends ColliderComponent
-{
+public class CylinderColliderComponent extends Component {
     private transient CircleColliderComponent topCircle = new CircleColliderComponent();
     private transient CircleColliderComponent bottomCircle = new CircleColliderComponent();
     private transient BoxColliderComponent box = new BoxColliderComponent();
     private transient boolean resetFixtureNextFrame = false;
-    private Vector3f hitboxColor = new Vector3f(super.baseColor.x, super.baseColor.y, super.baseColor.z);
-
+    private Vector4f hitboxColor = new Vector4f(1.0f).sub(MainWindow.get().getClearColor());
+    private boolean autoScale = true;
+    private boolean showHitboxAtRuntime = false;
     public float width = 0.25f;
     public float height = 0.25f;
     public Vector2f offset = new Vector2f();
@@ -67,7 +70,7 @@ public class CylinderColliderComponent extends ColliderComponent
             RigidBodyComponent rb = gameObject.getCompoent(RigidBodyComponent.class);
             if (rb != null)
             {
-                MainWindow.getPhysicsSystem().resetCylinderCollider(rb, this);
+                ColliderManager.resetCylinderCollider(rb, this);
             }
         }
     }
@@ -103,11 +106,12 @@ public class CylinderColliderComponent extends ColliderComponent
     private void displayHitBox()
     {
         Vector2f center = new Vector2f(this.gameObject.transform.position).add(topCircle.getOffset());
-        DebugPencil.addCircle(center, this.topCircle.getRadius(), hitboxColor);
+        Vector3f color = new Vector3f(hitboxColor.x, hitboxColor.y, hitboxColor.z);
+        DebugPencil.addCircle(center, this.topCircle.getRadius(), color);
         center = new Vector2f(this.gameObject.transform.position).add(bottomCircle.getOffset());
-        DebugPencil.addCircle(center, this.bottomCircle.getRadius(), hitboxColor);
+        DebugPencil.addCircle(center, this.bottomCircle.getRadius(), color);
         center = new Vector2f(this.gameObject.transform.position).add(this.offset);
-        DebugPencil.addBox(center, this.box.getHalfSize(), this.gameObject.transform.rotation, hitboxColor);
+        DebugPencil.addBox(center, this.box.getHalfSize(), this.gameObject.transform.rotation, color);
     }
 
     @Override
