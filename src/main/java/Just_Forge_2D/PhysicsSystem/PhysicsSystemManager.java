@@ -13,6 +13,7 @@ import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.Fixture;
+import org.jbox2d.particle.ParticleSystem;
 
 // - - - interface to communicate with Box2D
 public class PhysicsSystemManager
@@ -142,4 +143,6 @@ public class PhysicsSystemManager
     {
         return rawWorld.getWorld().isLocked();
     }
+
+    public ParticleSystem particleSystem;
 }
