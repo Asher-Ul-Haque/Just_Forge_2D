@@ -38,10 +38,12 @@ public class SceneSystemManager
             List<GameObject> toSerialize = new ArrayList<>();
             for (GameObject obj : SCENE.getGameObjects())
             {
-                if (obj.getSerializationStatus())
+                if (!obj.getSerializationStatus())
                 {
-                    toSerialize.add(obj);
+                    Logger.FORGE_LOG_TRACE("Not saving: " + obj.name);
+                    continue;
                 }
+                toSerialize.add(obj);
             }
             writer.write(gson.toJson(toSerialize));
             writer.close();
@@ -79,6 +81,11 @@ public class SceneSystemManager
             GameObject[] objects = gson.fromJson(inFile, GameObject[].class);
             for (GameObject object : objects)
             {
+                if (!object.getSerializationStatus())
+                {
+                    Logger.FORGE_LOG_TRACE("Not loading: " + object.name);
+                    continue;
+                }
                 SCENE.addGameObject(object);
 
                 for (Component component : object.getComponents())
