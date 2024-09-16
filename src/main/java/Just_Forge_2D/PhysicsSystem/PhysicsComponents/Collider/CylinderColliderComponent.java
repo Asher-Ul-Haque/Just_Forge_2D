@@ -2,9 +2,11 @@ package Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider;
 
 import Just_Forge_2D.EditorSystem.MainWindow;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
+import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent;
 import Just_Forge_2D.PhysicsSystem.PhysicsManagers.ColliderManager;
 import Just_Forge_2D.RenderingSystem.DebugPencil;
+import org.jbox2d.dynamics.contacts.Contact;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
@@ -14,9 +16,11 @@ public class CylinderColliderComponent extends Component {
     private transient CircleColliderComponent bottomCircle = new CircleColliderComponent();
     private transient BoxColliderComponent box = new BoxColliderComponent();
     private transient boolean resetFixtureNextFrame = false;
-    private Vector4f hitboxColor = new Vector4f(1.0f).sub(MainWindow.get().getClearColor());
     private boolean autoScale = true;
-    private boolean showHitboxAtRuntime = false;
+    private transient boolean useCollisionColor = false;
+    private boolean debugDrawAtRuntime = false;
+    private Vector4f hitboxColor = new Vector4f(1.0f, 0.0f, 0.0f, 1.0f);
+    private Vector4f collisionColor = new Vector4f(0.0f, 1.0f, 0.0f, 1.0f);
     public float width = 0.25f;
     public float height = 0.25f;
     public Vector2f offset = new Vector2f();
@@ -92,7 +96,7 @@ public class CylinderColliderComponent extends Component {
     @Override
     public void update(float DELTA_TIME)
     {
-        if (showHitboxAtRuntime)
+        if (debugDrawAtRuntime)
         {
             displayHitBox();
         }
@@ -105,13 +109,33 @@ public class CylinderColliderComponent extends Component {
 
     private void displayHitBox()
     {
-        Vector2f center = new Vector2f(this.gameObject.transform.position).add(topCircle.getOffset());
-        Vector3f color = new Vector3f(hitboxColor.x, hitboxColor.y, hitboxColor.z);
-        DebugPencil.addCircle(center, this.topCircle.getRadius(), color);
-        center = new Vector2f(this.gameObject.transform.position).add(bottomCircle.getOffset());
-        DebugPencil.addCircle(center, this.bottomCircle.getRadius(), color);
-        center = new Vector2f(this.gameObject.transform.position).add(this.offset);
-        DebugPencil.addBox(center, this.box.getHalfSize(), this.gameObject.transform.rotation, color);
+        float rotation = this.gameObject.transform.rotation;
+
+        Vector3f color = useCollisionColor
+                ? new Vector3f(collisionColor.x, collisionColor.y, collisionColor.z)
+                : new Vector3f(hitboxColor.x, hitboxColor.y, hitboxColor.z);
+
+        Vector2f topOffset = rotateVector(topCircle.getOffset(), rotation);
+        Vector2f topCenter = new Vector2f(this.gameObject.transform.position).add(topOffset);
+        DebugPencil.addCircle(topCenter, this.topCircle.getRadius(), color);
+
+        Vector2f bottomOffset = rotateVector(bottomCircle.getOffset(), rotation);
+        Vector2f bottomCenter = new Vector2f(this.gameObject.transform.position).add(bottomOffset);
+        DebugPencil.addCircle(bottomCenter, this.bottomCircle.getRadius(), color);
+
+        Vector2f boxCenter = new Vector2f(this.gameObject.transform.position);
+        DebugPencil.addBox(boxCenter, this.box.getHalfSize(), this.gameObject.transform.rotation, color);
+    }
+
+    private Vector2f rotateVector(Vector2f VECTOR, float ANGLE)
+    {
+        float cos = (float) Math.cos(ANGLE);
+        float sin = (float) Math.sin(ANGLE);
+
+        float x = VECTOR.x * cos - VECTOR.y * sin;
+        float y = VECTOR.x * sin + VECTOR.y * cos;
+
+        return new Vector2f(x, y);
     }
 
     @Override
@@ -138,5 +162,17 @@ public class CylinderColliderComponent extends Component {
     {
         super.editorGUI();
         recalculateColliders();
+    }
+
+    @Override
+    public void beginCollision(GameObject OBJ, Contact CONTACT, Vector2f NORMAL)
+    {
+        useCollisionColor = true;
+    }
+
+    @Override
+    public void endCollision(GameObject OBJ, Contact CONTACT, Vector2f NORMAL)
+    {
+        useCollisionColor = false;
     }
 }

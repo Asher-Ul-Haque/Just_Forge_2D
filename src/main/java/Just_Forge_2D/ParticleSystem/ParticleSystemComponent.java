@@ -36,6 +36,7 @@ public class ParticleSystemComponent extends Component implements Observer
     private transient ParticleGenerator generator;
     private Vector4f debugColor = new Vector4f(1.0f).sub(MainWindow.get().getClearColor());
     private boolean keepPhysics = false;
+    private boolean useOnce = false;
 
     private Vector2f generateVelocity()
     {
@@ -115,7 +116,8 @@ public class ParticleSystemComponent extends Component implements Observer
             GameObject core = particle.core;
             if (particle.lifeSpan < 0)
             {
-                core.destroy();
+                if (useOnce) core.destroy();
+                else resetParticle(particle);
             }
             else
             {
@@ -154,5 +156,4 @@ public class ParticleSystemComponent extends Component implements Observer
 
     public boolean keepingPhysics() { return this.keepPhysics; }
     public void setKeepPhysics(boolean REALLY) { this.keepPhysics = REALLY; }
-
 }

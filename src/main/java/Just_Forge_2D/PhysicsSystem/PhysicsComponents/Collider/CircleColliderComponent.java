@@ -1,8 +1,9 @@
 package Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider;
 
-import Just_Forge_2D.EditorSystem.MainWindow;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
+import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.RenderingSystem.DebugPencil;
+import org.jbox2d.dynamics.contacts.Contact;
 import org.joml.Math;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
@@ -17,9 +18,10 @@ public class CircleColliderComponent extends Component {
         return this.offset;
     }
     private boolean autoScale = true;
-    private boolean showHitboxAtRuntime = false;
-
-    private Vector4f hitboxColor = new Vector4f(1.0f).sub(MainWindow.get().getClearColor());
+    private boolean debugDrawAtRuntime = false;
+    private transient boolean useCollisionColor = false;
+    private Vector4f hitboxColor = new Vector4f(1.0f, 0.0f, 0.0f, 1.0f);
+    private Vector4f collisionColor = new Vector4f(0.0f, 1.0f, 0.0f, 1.0f);
 
     public void setOffset(Vector2f OFFSET)
     {
@@ -40,8 +42,7 @@ public class CircleColliderComponent extends Component {
     @Override
     public void editorUpdate(float DELTA_tIME)
     {
-        Vector2f center = new Vector2f(this.gameObject.transform.position).add(this.offset);
-        DebugPencil.addCircle(center, this.radius, new Vector3f(hitboxColor.x, hitboxColor.y, hitboxColor.z));
+        debugDraw();
         if (autoScale)
         {
             setRadius(Math.max(this.gameObject.transform.scale.x, this.gameObject.transform.scale.y) / 2f);
@@ -51,10 +52,27 @@ public class CircleColliderComponent extends Component {
     @Override
     public void update(float DELTA_TIME)
     {
-        if (showHitboxAtRuntime)
+        if (debugDrawAtRuntime)
         {
-            Vector2f center = new Vector2f(this.gameObject.transform.position).add(this.offset);
-            DebugPencil.addCircle(center, this.radius, new Vector3f(hitboxColor.x, hitboxColor.y, hitboxColor.z));
+            debugDraw();
         }
+    }
+
+    private void debugDraw()
+    {
+        Vector2f center = new Vector2f(this.gameObject.transform.position).add(this.offset);
+        DebugPencil.addCircle(center, this.radius, useCollisionColor ? new Vector3f(collisionColor.x, collisionColor.y, collisionColor.z) : new Vector3f(hitboxColor.x, hitboxColor.y, hitboxColor.z));
+    }
+
+    @Override
+    public void beginCollision(GameObject OBJ, Contact CONTACT, Vector2f NORMAL)
+    {
+        useCollisionColor = true;
+    }
+
+    @Override
+    public void endCollision(GameObject OBJ, Contact CONTACT, Vector2f NORMAL)
+    {
+        useCollisionColor = false;
     }
 }

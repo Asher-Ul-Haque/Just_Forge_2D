@@ -1,6 +1,5 @@
 package Just_Forge_2D.PhysicsSystem.PhysicsComponents;
 
-import Just_Forge_2D.EditorSystem.MainWindow;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.InputSystem.Keyboard;
 import Just_Forge_2D.InputSystem.Keys;
@@ -82,7 +81,6 @@ public class SimpleCharacterController extends Component {
     public void editorUpdate(float DELTA_TIME)
     {
         checkGrounded(DELTA_TIME);
-        Logger.FORGE_LOG_TRACE("");
     }
 
 

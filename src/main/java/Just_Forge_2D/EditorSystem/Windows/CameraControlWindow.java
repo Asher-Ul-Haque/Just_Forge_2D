@@ -6,6 +6,7 @@ import Just_Forge_2D.EditorSystem.MainWindow;
 import Just_Forge_2D.EditorSystem.Widgets;
 import Just_Forge_2D.SceneSystem.Camera;
 import imgui.ImGui;
+import org.joml.Vector4f;
 
 public class CameraControlWindow
 {
@@ -25,6 +26,9 @@ public class CameraControlWindow
             EditorCameraComponent.dragSensitivity = Widgets.drawFloatControl("Drag Sensitivity", EditorCameraComponent.dragSensitivity);
             EditorCameraComponent.scrollSensitivity = Widgets.drawFloatControl("Scroll Sensitivity", EditorCameraComponent.scrollSensitivity);
         }
+        Vector4f clearColor = MainWindow.get().getClearColor();
+        Widgets.colorPicker4("Background", clearColor);
+        if (!MainWindow.get().getClearColor().equals(clearColor)) MainWindow.get().setClearColor(clearColor);
         ImGui.end();
     }
 }
