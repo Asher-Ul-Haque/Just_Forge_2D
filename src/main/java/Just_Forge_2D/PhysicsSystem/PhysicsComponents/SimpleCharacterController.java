@@ -1,5 +1,6 @@
 package Just_Forge_2D.PhysicsSystem.PhysicsComponents;
 
+import Just_Forge_2D.EditorSystem.MainWindow;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.InputSystem.Keyboard;
 import Just_Forge_2D.InputSystem.Keys;
@@ -10,9 +11,10 @@ import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.Logger;
 import org.jbox2d.common.Vec2;
 import org.joml.Vector2f;
+import org.joml.Vector3f;
+import org.joml.Vector4f;
 
-public class SimpleCharacterController extends Component
-{
+public class SimpleCharacterController extends Component {
     private Keys rightKey = DefaultValues.DEFAULT_MOVE_RIGHT_KEY;
     private Keys leftKey = DefaultValues.DEFAULT_MOVE_LEFT_KEY;
     private Keys jumpKey = DefaultValues.DEFAULT_JUMP_KEY;
@@ -38,6 +40,9 @@ public class SimpleCharacterController extends Component
     private transient boolean isGrounded;
     private float maxJumpTime = 1f;
     private float jumpTimer = maxJumpTime;
+    private boolean debugDrawAtRuntime = false;
+    private Vector4f hitColor = new Vector4f(0.0f, 1.0f, 0.0f, 1.0f);
+    private Vector4f noHitColor = new Vector4f(1.0f, 0.0f, 0.0f, 1.0f);
 
     @Override
     public void start()
@@ -54,7 +59,6 @@ public class SimpleCharacterController extends Component
     @Override
     public void update(float DELTA_TIME)
     {
-        // Check if the player is grounded and handle coyote time
         checkGrounded(DELTA_TIME);
 
         Vector2f moveInput = new Vector2f();
@@ -63,7 +67,6 @@ public class SimpleCharacterController extends Component
 
         if (isGrounded)
         {
-            // Reset jump when grounded
             jumpsUsed = 0;
             move(this.groundAcceleration, this.groundDeceleration, moveInput, DELTA_TIME);
         }
@@ -72,9 +75,16 @@ public class SimpleCharacterController extends Component
             move(this.airAcceleration, this.airDeceleration, moveInput, DELTA_TIME);
         }
 
-        // Handle jumping logic
         handleJump(DELTA_TIME);
     }
+
+    @Override
+    public void editorUpdate(float DELTA_TIME)
+    {
+        checkGrounded(DELTA_TIME);
+        Logger.FORGE_LOG_TRACE("");
+    }
+
 
     private void move(float ACCELERATION, float DECELERATION, Vector2f MOVE_INPUT, float DELTA_TIME)
     {
@@ -88,7 +98,6 @@ public class SimpleCharacterController extends Component
         {
             this.moveVelocity.lerp(new Vector2f(0.0f), DECELERATION * DELTA_TIME);
         }
-//        this.rb.addImpulse(new Vector2f(moveVelocity.x / this.rb.getMass(), 0));
         this.rb.setVelocity(new Vector2f(moveVelocity.x, rb.getVelocity().y));
     }
 
@@ -113,33 +122,37 @@ public class SimpleCharacterController extends Component
     private void checkGrounded(float DELTA_TIME)
     {
         Raycast gun = new Raycast();
-        Vector2f rayCast1Begin = new Vector2f(this.gameObject.transform.position);
-        rayCast1Begin.sub(this.gameObject.transform.scale.x / 2.0f, this.gameObject.transform.scale.y / 2.0f);
-        Vector2f rayCast1End = new Vector2f(rayCast1Begin).sub(0.0f, groundDetectRayLength);
-        DebugPencil.addLine(rayCast1Begin, rayCast1End);
-        RayCastInfo rayCast1 = gun.rayCast(this.gameObject, rayCast1Begin, rayCast1End);
 
-        Vector2f rayCast2Begin = new Vector2f(this.gameObject.transform.position);
-        rayCast2Begin.sub(- this.gameObject.transform.scale.x / 2.0f, this.gameObject.transform.scale.y /2.0f);
-        Vector2f rayCast2End = new Vector2f(rayCast2Begin).sub(0.0f, groundDetectRayLength);
-        DebugPencil.addLine(rayCast2Begin, rayCast2End);
-        RayCastInfo rayCast2 = gun.rayCast(this.gameObject, rayCast2Begin, rayCast2End);
+        Vector2f rayCastBegin = new Vector2f(this.gameObject.transform.position);
+        rayCastBegin.sub(this.gameObject.transform.scale.x / 2.0f, this.gameObject.transform.scale.y - groundDetectRayLength);
+
+        Vector2f rayCastEnd = new Vector2f(rayCastBegin);
+        rayCastEnd.add(this.gameObject.transform.scale.x, 0.0f);
+
+
+        RayCastInfo rayCastInfo = gun.rayCast(this.gameObject, rayCastBegin, rayCastEnd);
 
         boolean wasGrounded = this.isGrounded;
-        this.isGrounded = rayCast1.hit && rayCast1.hitObject != null || rayCast2.hit && rayCast2.hitObject != null;
+        this.isGrounded = rayCastInfo.hit && rayCastInfo.hitObject != null;
+        if (debugDrawAtRuntime)
+        {
+            Vector3f color;
+            if (this.isGrounded) color = new Vector3f(hitColor.x, hitColor.y, hitColor.z);
+            else color = new Vector3f(noHitColor.x, noHitColor.y, noHitColor.z);
+            DebugPencil.addLine(rayCastBegin, rayCastEnd, color);
+        }
 
-        // Start or reduce coyote time when the player leaves the ground
         if (!isGrounded && wasGrounded)
         {
             coyoteTimer = coyoteTime;
         }
 
-        // Reduce coyote timer
         if (coyoteTimer > 0)
         {
             coyoteTimer -= DELTA_TIME;
         }
     }
+
 
     private void handleJump(float DELTA_TIME)
     {
@@ -162,14 +175,11 @@ public class SimpleCharacterController extends Component
 
     private void jump()
     {
-        // Apply upward impulse for jumping
         Vec2 jumpImpulse = new Vec2(0, this.jumpImpulse);
         rb.addImpulse(new Vector2f(jumpImpulse.x, jumpImpulse.y).mul(jumpTimer / maxJumpTime));
 
-        // Track jumps
         jumpsUsed++;
 
-        // Reset coyote timer to prevent jumping after coyote time expires
         coyoteTimer = 0f;
     }
 }

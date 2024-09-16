@@ -62,7 +62,7 @@ public class CameraControlComponent extends Component
     // Calculate the average position of the points
     private Vector2f calculateAveragePosition()
     {
-        Vector2f sum = new Vector2f(camera.getProjectionSize()).negate().div(2);
+        Vector2f sum = new Vector2f(camera.getProjectionSize()).negate().div(2 / camera.getZoom());
         for (Vector2f point : points)
         {
             sum.add(point);

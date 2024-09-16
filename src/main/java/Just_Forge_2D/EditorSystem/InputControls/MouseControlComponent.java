@@ -99,11 +99,6 @@ public class MouseControlComponent extends Component
                 place();
                 debounce = debounceTime;
             }
-            if (Keyboard.isKeyPressed(Keys.ESCAPE))
-            {
-                holdingObject.destroy();
-                holdingObject = (null);
-            }
         }
         else if (!Mouse.isDragging() && Mouse.isMouseButtonDown(GLFW_MOUSE_BUTTON_LEFT) && debounce < 0)
         {

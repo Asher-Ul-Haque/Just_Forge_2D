@@ -18,14 +18,19 @@ public class KeyboardControls
         GameObject activeGameObject = ComponentsWindow.getActiveGameObject();
         List<GameObject> activeGameObjects = ComponentsWindow.getActiveGameObjects();
 
+        if (Keyboard.isKeyPressed(Keys.ESCAPE))
+        {
+            if (MouseControlComponent.holdingObject != null) MouseControlComponent.holdingObject.destroy();
+            MouseControlComponent.holdingObject = (null);
+            ComponentsWindow.clearSelection();
+        }
+
         if (Keyboard.isKeyPressed(Keys.LEFT_CONTROL) && Keyboard.isKeyBeginPress(Keys.C) && activeGameObject != null)
         {
             ComponentsWindow.setActiveGameObject(null);
             Logger.FORGE_LOG_DEBUG("Copying: " + activeGameObject);
             GameObject newObj = activeGameObject.copy();
             MouseControlComponent.pickupObject(newObj);
-//            MouseControlComponent.holdingObject = newObj;
-//            MainWindow.getCurrentScene().addGameObject(newObj);
             if (newObj.getCompoent(AnimationComponent.class) != null)
             {
                 newObj.getCompoent(AnimationComponent.class).refreshTextures();
