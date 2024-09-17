@@ -26,7 +26,8 @@ public class ParticleSystemComponent extends Component implements Observer
     private static Random randomizer;
     private Vector4f startColor = new Vector4f(1.0f, 0.0f, 1.0f, 1.0f);
     private Vector4f finalColor = new Vector4f(1.0f, 1.0f, 0.0f, 1.0f);
-    private float lifespan = 10;
+    private float minLifespan = 0.05f;
+    private float maxLifespan = 0.2f;
     private float fanStart = 0;
     private float fanEnd = (float) (2 * Math.PI);
     private float angularVelocity = 0.2f;
@@ -37,6 +38,8 @@ public class ParticleSystemComponent extends Component implements Observer
     private Vector4f debugColor = new Vector4f(1.0f).sub(MainWindow.get().getClearColor());
     private boolean keepPhysics = false;
     private boolean useOnce = false;
+    private Vector2f offset = new Vector2f();
+    private int particleLayer;
 
     private Vector2f generateVelocity()
     {
@@ -52,12 +55,14 @@ public class ParticleSystemComponent extends Component implements Observer
     public ParticleSystemComponent()
     {
         EventManager.addObserver(this);
+        particles = new ArrayList<>(maxParticles);
     }
 
     public ParticleSystemComponent(ParticleGenerator GENERATOR)
     {
         EventManager.addObserver(this);
         setGenerator(GENERATOR);
+        particles = new ArrayList<>(maxParticles);
     }
 
     private void debugDraw()
@@ -79,8 +84,8 @@ public class ParticleSystemComponent extends Component implements Observer
 
     private void resetParticle(Particle PARTICLE)
     {
-        PARTICLE.lifeTime = lifespan;
-        PARTICLE.core.transform.position = new Vector2f(this.gameObject.transform.position);
+        PARTICLE.lifeTime = randomizer.nextFloat(minLifespan, maxLifespan + 0.001f);
+        PARTICLE.core.transform.position = new Vector2f(this.gameObject.transform.position).add(offset);
         SpriteComponent renderable = PARTICLE.core.getCompoent(SpriteComponent.class);
         if (renderable != null) renderable.setColor(new Vector4f(startColor));
         PARTICLE.lifeSpan = PARTICLE.lifeTime;
@@ -88,6 +93,7 @@ public class ParticleSystemComponent extends Component implements Observer
         PARTICLE.core.transform.scale = generateSize();
         PARTICLE.velocity = generateVelocity();
         PARTICLE.core.transform.rotation = randomizer.nextFloat();
+        PARTICLE.core.transform.layer = particleLayer;
     }
 
 
@@ -95,10 +101,9 @@ public class ParticleSystemComponent extends Component implements Observer
     public void start()
     {
         generator = new ParticleGenerator(this.gameObject, keepPhysics);
-        particles = new ArrayList<>(maxParticles);
 
         randomizer = new Random(this.gameObject.getUniqueID());
-        for (int i = 0; i < maxParticles; ++i)
+        for (int i = particles.size(); i < maxParticles; ++i)
         {
             Particle particle = this.generator.create();
             resetParticle(particle);
@@ -137,6 +142,8 @@ public class ParticleSystemComponent extends Component implements Observer
         debugDraw();
         fanStart = Math.max(fanStart, 0f);
         fanEnd = Math.max(fanEnd, 0f);
+        maxLifespan = Math.max(0.001f, maxLifespan);
+        minLifespan = Math.max(Math.min(maxLifespan, minLifespan), 0f);
     }
 
     @Override
@@ -150,6 +157,7 @@ public class ParticleSystemComponent extends Component implements Observer
                     Logger.FORGE_LOG_DEBUG("Destroying particle : " + particle.core.name);
                     particle.core.destroy();
                 }
+                particles.clear();
                 break;
         }
     }

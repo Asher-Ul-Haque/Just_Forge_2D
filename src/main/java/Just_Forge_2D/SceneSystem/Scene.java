@@ -11,7 +11,6 @@ import Just_Forge_2D.PhysicsSystem.PhysicsSystemManager;
 import Just_Forge_2D.RenderingSystem.Renderer;
 import Just_Forge_2D.Utils.AssetPool;
 import Just_Forge_2D.Utils.Logger;
-import org.joml.Vector2f;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -215,7 +214,6 @@ public class Scene
         for (GameObject go : pendingObjects)
         {
             gameObjects.add(go);
-            go.start();
             if (this.renderer != null) this.renderer.add(go);
             if (this.physics != null) this.physics.add(go);
         }

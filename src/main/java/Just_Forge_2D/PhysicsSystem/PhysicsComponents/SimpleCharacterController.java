@@ -13,7 +13,8 @@ import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 
-public class SimpleCharacterController extends Component {
+public class SimpleCharacterController extends Component
+{
     private Keys rightKey = DefaultValues.DEFAULT_MOVE_RIGHT_KEY;
     private Keys leftKey = DefaultValues.DEFAULT_MOVE_LEFT_KEY;
     private Keys jumpKey = DefaultValues.DEFAULT_JUMP_KEY;
@@ -36,6 +37,7 @@ public class SimpleCharacterController extends Component {
     private RigidBodyComponent rb;
     private transient Vector2f moveVelocity = new Vector2f();
     private transient boolean isRight;
+    private transient boolean isEditorUpdate = true;
     private transient boolean isGrounded;
     private float maxJumpTime = 1f;
     private float jumpTimer = maxJumpTime;
@@ -58,6 +60,7 @@ public class SimpleCharacterController extends Component {
     @Override
     public void update(float DELTA_TIME)
     {
+        isEditorUpdate = false;
         checkGrounded(DELTA_TIME);
 
         Vector2f moveInput = new Vector2f();
@@ -80,6 +83,7 @@ public class SimpleCharacterController extends Component {
     @Override
     public void editorUpdate(float DELTA_TIME)
     {
+        isEditorUpdate = true;
         checkGrounded(DELTA_TIME);
     }
 
@@ -132,7 +136,7 @@ public class SimpleCharacterController extends Component {
 
         boolean wasGrounded = this.isGrounded;
         this.isGrounded = rayCastInfo.hit && rayCastInfo.hitObject != null;
-        if (debugDrawAtRuntime)
+        if (debugDrawAtRuntime || isEditorUpdate)
         {
             Vector3f color;
             if (this.isGrounded) color = new Vector3f(hitColor.x, hitColor.y, hitColor.z);

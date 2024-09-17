@@ -190,6 +190,7 @@ public class GameObject
         String objAsJson = gson.toJson(this);
         GameObject obj = gson.fromJson(objAsJson, GameObject.class);
         obj.generateUniqueID();
+        obj.name += " Copy: " + obj.getUniqueID();
 
         for (Component c : obj.components)
         {
