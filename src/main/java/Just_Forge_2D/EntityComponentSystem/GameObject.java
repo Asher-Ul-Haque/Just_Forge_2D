@@ -86,6 +86,15 @@ public class GameObject
         Logger.FORGE_LOG_TRACE("Added component: " + COMPONENT + " to Game Object " + this);
     }
 
+    public boolean hasComponent(Class<? extends Component> COMPONENT_CLASS)
+    {
+        for (Component c : this.components)
+        {
+            if (COMPONENT_CLASS.isAssignableFrom(c.getClass())) return true;
+        }
+        return false;
+    }
+
     public List<Component> getComponents()
     {
         return this.components;

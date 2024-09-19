@@ -1,5 +1,6 @@
 package Just_Forge_2D.EntityComponentSystem.Components.Sprite;
 
+import Just_Forge_2D.EditorSystem.MainWindow;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EditorSystem.Widgets;
 import Just_Forge_2D.RenderingSystem.RenderBatch;
@@ -24,6 +25,9 @@ public class SpriteComponent extends Component
 
     // - - - | Functions | - - -
 
+    public SpriteComponent()
+    {
+    }
 
     // - - - Getters and Setters - - -
 
@@ -100,12 +104,7 @@ public class SpriteComponent extends Component
     @Override
     public void editorUpdate(float DELTA_TIME)
     {
-        if (this.gameObject.transform == null) Logger.FORGE_LOG_ERROR(gameObject);
-        if (!this.lastTransform.equals(this.gameObject.transform))
-        {
-            this.gameObject.transform.copy(this.lastTransform);
-            this.isChanged = true;
-        }
+        update(DELTA_TIME);
     }
 
 

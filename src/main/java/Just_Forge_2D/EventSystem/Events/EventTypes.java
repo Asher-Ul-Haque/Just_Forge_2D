@@ -6,5 +6,5 @@ public enum EventTypes
     ForgeStop,
     SaveLevel,
     LoadLevel,
-    UserEvent
+    SpriteAdded,
 }

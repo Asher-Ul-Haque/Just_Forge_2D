@@ -33,7 +33,6 @@ public class Renderer
     public void add(GameObject gameObject)
     {
         SpriteComponent sprite = gameObject.getCompoent(SpriteComponent.class);
-
         if (sprite != null)
         {
             add(sprite);

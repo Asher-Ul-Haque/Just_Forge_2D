@@ -51,7 +51,7 @@ public class EditorCameraComponent extends Component
         {
             Vector2f mousePos = new Vector2f(Mouse.getWorldX(), Mouse.getWorldY());
             Vector2f delta = new Vector2f(mousePos).sub(this.clickOrigin);
-            this.editorCamera.position.sub(delta.mul(DELTA_TIME).mul(dragSensitivity));
+            this.editorCamera.getPosition().sub(delta.mul(DELTA_TIME).mul(dragSensitivity));
             this.clickOrigin.lerp(mousePos, DELTA_TIME);
         }
         if (dragDebounce <= 0.0f && !Mouse.isMouseButtonDown(GLFW_MOUSE_BUTTON_RIGHT))
@@ -72,12 +72,12 @@ public class EditorCameraComponent extends Component
         }
         if (reset)
         {
-            editorCamera.position.lerp(new Vector2f(), lerpTime);
+            this.editorCamera.getPosition().lerp(new Vector2f(), lerpTime);
             editorCamera.setZoom(editorCamera.getZoom() + (DefaultValues.DEFAULT_CAMERA_ZOOM - editorCamera.getZoom()) * lerpTime);
             lerpTime += 0.1f * DELTA_TIME;
-            if (Math.abs(editorCamera.position.x) <= 1f && Math.abs(editorCamera.position.y) <= 1f)
+            if (Math.abs(this.editorCamera.getPosition().x) <= 1f && Math.abs(this.editorCamera.getPosition().y) <= 1f)
             {
-                editorCamera.position.set(0f, 0f);
+                editorCamera.setPositionAbsolute(new Vector2f(0f, 0f));
                 reset = false;
                 lerpTime = DefaultValues.DEFAULT_EDITOR_CAMERA_LERP_TIME;
                 this.editorCamera.setZoom(DefaultValues.DEFAULT_CAMERA_ZOOM);

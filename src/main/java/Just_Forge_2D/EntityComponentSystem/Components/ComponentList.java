@@ -34,4 +34,14 @@ public class ComponentList
     {
         types.add(TYPE);
     }
+
+    public static void removeComponentType(Class<? extends Component> TYPE)
+    {
+        types.remove(TYPE);
+    }
+
+    public static boolean hasComponentType(Class<? extends Component> TYPE)
+    {
+        return types.contains(TYPE);
+    }
 }

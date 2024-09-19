@@ -8,9 +8,4 @@ public class Event
     {
         this.type = TYPE;
     }
-
-    public Event()
-    {
-        this.type = EventTypes.UserEvent;
-    }
 }

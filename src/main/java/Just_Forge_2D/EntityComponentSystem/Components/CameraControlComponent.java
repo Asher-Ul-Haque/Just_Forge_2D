@@ -1,6 +1,7 @@
 package Just_Forge_2D.EntityComponentSystem.Components;
 
 import Just_Forge_2D.EditorSystem.MainWindow;
+import Just_Forge_2D.RenderingSystem.DebugPencil;
 import Just_Forge_2D.SceneSystem.Camera;
 import Just_Forge_2D.Utils.Logger;
 import org.joml.Vector2f;
@@ -26,9 +27,6 @@ public class CameraControlComponent extends Component
         addPoint(this.gameObject.transform.position);
     }
 
-    public CameraControlComponent()
-    {
-    }
 
     public void clearPoints()
     {
@@ -40,26 +38,27 @@ public class CameraControlComponent extends Component
     public void update(float DELTA_TIME)
     {
         if (points.isEmpty()) return;
-        camera.position = calculateAveragePosition();
-//        camera.setZoom(calculateZoom());
+        Vector2f targetPosition = calculateAveragePosition();
+        Vector2f currentPosition = camera.getPosition();
+        currentPosition.lerp(targetPosition, lerpFactor);
+        camera.setPosition(currentPosition);
+
+        float targetZoom = calculateZoom();
+        float currentZoom = camera.getZoom();
+        camera.setZoom(lerp(currentZoom, targetZoom, zoomLerpFactor));
     }
 
-
-    // Remove a point from tracking
     public void removePoint(Vector2f point)
     {
-        points.remove(point);
-        totalPoints--;
+        if (points.remove(point)) totalPoints--;
         Logger.FORGE_LOG_TRACE(totalPoints);
     }
 
     public void addPoint(Vector2f POINT)
     {
-        points.add(POINT);
-        totalPoints++;
+        if (points.add(POINT)) totalPoints++;
     }
 
-    // Calculate the average position of the points
     private Vector2f calculateAveragePosition()
     {
         Vector2f sum = new Vector2f(camera.getProjectionSize()).negate().div(2 / camera.getZoom());
@@ -70,7 +69,6 @@ public class CameraControlComponent extends Component
         return sum.div(points.size());
     }
 
-    // Calculate the appropriate zoom based on the spread of points
     private float calculateZoom()
     {
         if (points.size() < 2)
@@ -78,27 +76,20 @@ public class CameraControlComponent extends Component
             return minZoom;
         }
 
-        // Find the furthest distance between points
         float maxDistance = 0f;
         for (int i = 0; i < points.size(); i++)
         {
             for (int j = i + 1; j < points.size(); j++)
             {
                 float distance = points.get(i).distance(points.get(j));
-                if (distance > maxDistance)
-                {
-                    maxDistance = distance;
-                }
+                maxDistance = Math.max(maxDistance, distance);
             }
         }
 
-        float targetZoom = maxZoom - (maxDistance / 10f);  // 100f can be adjusted based on world scale
-        targetZoom = Math.max(minZoom, Math.min(targetZoom, maxZoom));
-
+        float targetZoom = Math.min(maxZoom, Math.max(minZoom, maxDistance));
         return targetZoom;
     }
 
-    // Helper function to linearly interpolate floats
     private float lerp(float start, float end, float factor) {
         return start + factor * (end - start);
     }
@@ -107,5 +98,15 @@ public class CameraControlComponent extends Component
     public void destroy()
     {
         removePoint(this.gameObject.transform.position);
+    }
+
+    @Override
+    public void editorUpdate(float DELTA_TIME)
+    {
+        for (Vector2f point : points)
+        {
+            DebugPencil.addBox(point, new Vector2f(0.1f));
+            DebugPencil.addCircle(point, 0.005f);
+        }
     }
 }

@@ -30,6 +30,7 @@ public class SplashScreen
     private static final float relapseTime = 0.2f;
     private static boolean readyToLoad = false;
     private static boolean load = false;
+    private static boolean compiling = false;
 
     // - - - initialization
     public static void initialize()
@@ -166,20 +167,24 @@ public class SplashScreen
     // - - - finish up
     public static void cleanup()
     {
-        Logger.FORGE_LOG_TRACE("Compiling");
-        GameManager.buildUserCode();
-        Logger.FORGE_LOG_TRACE("Building user code");
-        if (EditorSystemManager.currentSceneInitializer == null)
+        if (!compiling)
         {
-            EditorSystemManager.setCurrentSceneInitializer(EmptySceneInitializer.class);
+            Logger.FORGE_LOG_TRACE("Compiling");
+            GameManager.buildUserCode();
+            Logger.FORGE_LOG_TRACE("Building user code");
+            if (EditorSystemManager.currentSceneInitializer == null)
+            {
+                EditorSystemManager.setCurrentSceneInitializer(EmptySceneInitializer.class);
+            }
+            MainWindow.get().setVisible(false);
+            Logger.FORGE_LOG_TRACE("Project Path : " + EditorSystemManager.projectDir);
+            EditorSystemManager.setCurrentState(EditorSystemManager.state.isEditor);
+            MainWindow.get().setSize(WindowSystemManager.getMonitorSize().x, WindowSystemManager.getMonitorSize().y);
+            MainWindow.get().setPosition(0, 0);
+            MainWindow.get().setVisible(true);
+            if (EditorSystemManager.isRelease) EventManager.notify(null, new Event(EventTypes.ForgeStart));
+            else EventManager.notify(null, new Event(EventTypes.ForgeStop));
         }
-        MainWindow.get().setVisible(false);
-        Logger.FORGE_LOG_TRACE("Project Path : " + EditorSystemManager.projectDir);
-        EditorSystemManager.setCurrentState(EditorSystemManager.state.isEditor);
-        MainWindow.get().setSize(WindowSystemManager.getMonitorSize().x, WindowSystemManager.getMonitorSize().y);
-        MainWindow.get().setPosition(0, 0);
-        MainWindow.get().setVisible(true);
-        if (EditorSystemManager.isRelease) EventManager.notify(null, new Event(EventTypes.ForgeStart));
-        else EventManager.notify(null, new Event(EventTypes.ForgeStop));
+        compiling = true;
     }
 }

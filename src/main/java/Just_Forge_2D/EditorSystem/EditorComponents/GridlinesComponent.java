@@ -24,7 +24,7 @@ public class GridlinesComponent extends Component
         if (!showGrid) return;
         Camera camera = MainWindow.getCurrentScene().getCamera();
         if (camera.getZoom() > 5f) return;
-        Vector2f cameraPos = camera.position;
+        Vector2f cameraPos = camera.getPosition();
         Vector2f projectionSize = camera.getProjectionSize();
 
         float firstX = ((int) (cameraPos.x / gridSize.x) - 1) * gridSize.x;

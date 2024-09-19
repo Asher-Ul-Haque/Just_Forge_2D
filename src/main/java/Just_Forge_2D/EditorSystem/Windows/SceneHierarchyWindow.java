@@ -2,18 +2,80 @@ package Just_Forge_2D.EditorSystem.Windows;
 
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.EditorSystem.MainWindow;
+import Just_Forge_2D.EditorSystem.Themes.Theme;
+import Just_Forge_2D.EditorSystem.Widgets;
+import Just_Forge_2D.EntityComponentSystem.Components.Component;
+import Just_Forge_2D.EntityComponentSystem.Components.ComponentList;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.Utils.Logger;
 import imgui.ImGui;
+import imgui.type.ImString;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class SceneHierarchyWindow
 {
+
+    private static final Map<Class<? extends Component>, Boolean> componentFilters = new HashMap<>();
+    private static String nameFilter = "";
+
     public static void editorGUI()
     {
         ImGui.begin("Scene Hierarchy");
-        List<GameObject> gameObjectList = MainWindow.getCurrentScene().getGameObjects();
+
+        nameFilter = Widgets.inputText("Filter by name", nameFilter);
+
+
+        Theme.setDefaultTextColor(EditorSystemManager.getCurrentTheme().secondaryColor);
+        ImGui.text("Filter by components:");
+        ImGui.beginChild("##ComponentFilterChild", ImGui.getContentRegionAvailX(), 200, true);
+
+        for (Class<? extends Component> componentClass : ComponentList.types)
+        {
+            boolean isSelected = componentFilters.getOrDefault(componentClass, false);
+            if (ImGui.checkbox(componentClass.getSimpleName(), isSelected))
+            {
+                componentFilters.put(componentClass, !isSelected);
+            }
+        }
+
+        ImGui.endChild();
+
+        List<Class<? extends Component>> selectedComponents = new ArrayList<>();
+        for (Map.Entry<Class<? extends Component>, Boolean> entry : componentFilters.entrySet())
+        {
+            if (entry.getValue())
+            {
+                selectedComponents.add(entry.getKey());
+            }
+        }
+
+        List<GameObject> gameObjectList;
+        if (selectedComponents.isEmpty() && nameFilter.isEmpty())
+        {
+            gameObjectList = MainWindow.getCurrentScene().getGameObjects();
+        }
+        else if (selectedComponents.isEmpty())
+        {
+            gameObjectList = MainWindow.getCurrentScene().getGameObjects(nameFilter);
+        }
+        else if (nameFilter.isEmpty())
+        {
+            gameObjectList = MainWindow.getCurrentScene().getGameObjects(selectedComponents);
+        }
+        else
+        {
+            gameObjectList = MainWindow.getCurrentScene().getGameObjects(selectedComponents, nameFilter);
+        }
+
+        Theme.resetDefaultTextColor();
+
+//        if (ImGui.button("Select All")) {}
+//        ImGui.sameLine();
+//        if (ImGui.button("Deselect All")) { ComponentsWindow.clearSelection(); }
         for (int i = 0; i < gameObjectList.size(); ++i)
         {
             GameObject obj = gameObjectList.get(i);
@@ -23,9 +85,15 @@ public class SceneHierarchyWindow
             }
             ImGui.setCursorPosX(EditorSystemManager.getCurrentTheme().framePadding.x);
             ImGui.setCursorPosY(ImGui.getCursorPosY() + EditorSystemManager.getCurrentTheme().framePadding.y);
+//            boolean isSelected = false;
+//            Theme.setDefaultTextColor(EditorSystemManager.getCurrentTheme().secondaryColor);
+//            ImGui.checkbox("##" + obj.name, isSelected);
+//            Theme.resetDefaultTextColor();
+//            ImGui.sameLine();
             if (ImGui.button(obj.name + "##" + i))
             {
                 Logger.FORGE_LOG_TRACE("Selected Object: " + obj.name);
+                ComponentsWindow.clearSelection();
                 ComponentsWindow.setActiveGameObject(obj);
             }
         }

@@ -2,6 +2,7 @@ package Just_Forge_2D.SceneSystem;
 
 import Just_Forge_2D.AnimationSystem.AnimationComponent;
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
+import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.Components.TransformComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
@@ -62,9 +63,9 @@ public class Scene
         for (int i = 0; i < gameObjects.size(); ++i)
         {
             GameObject go = gameObjects.get(i);
+            if (this.renderer != null && go.hasComponent(SpriteComponent.class)) this.renderer.add(go);
+            if (this.physics != null && go.hasComponent(RigidBodyComponent.class)) this.physics.add(go);
             go.start();
-            if (this.renderer != null && go.getCompoent(SpriteComponent.class) != null) this.renderer.add(go);
-            if (this.physics != null && go.getCompoent(RigidBodyComponent.class) != null) this.physics.add(go);
         }
         isRunning = true;
         Logger.FORGE_LOG_INFO("Scene: " + this + " Started");
@@ -83,8 +84,8 @@ public class Scene
             if (go.isDead())
             {
                 gameObjects.remove(i);
-                if (this.renderer != null) this.renderer.destroyGameObject(go);
                 if (this.physics != null) this.physics.destroyGameObject(go);
+                if (this.renderer != null) this.renderer.destroyGameObject(go);
                 i--;
             }
         }
@@ -214,6 +215,7 @@ public class Scene
         for (GameObject go : pendingObjects)
         {
             gameObjects.add(go);
+
             if (this.renderer != null) this.renderer.add(go);
             if (this.physics != null) this.physics.add(go);
         }
@@ -225,6 +227,58 @@ public class Scene
     {
         return this.gameObjects;
     }
+
+    public List<GameObject> getGameObjects(List<Class<? extends Component>> TYPES)
+    {
+        if (TYPES.isEmpty()) return getGameObjects();
+        List<GameObject> returnList = new ArrayList<>();
+        for (GameObject g : this.gameObjects)
+        {
+            boolean added = false;
+            for (Class<? extends Component> type : TYPES)
+            {
+                if (g.hasComponent(type) && !added)
+                {
+                    returnList.add(g);
+                    added = true;
+                }
+            }
+        }
+        return returnList;
+    }
+
+    public List<GameObject> getGameObjects(String NAME)
+    {
+        if (NAME.isEmpty() || NAME.isBlank()) return getGameObjects();
+        List<GameObject> returnList = new ArrayList<>();
+        for (GameObject g : this.gameObjects)
+        {
+            if (g.toString().trim().toLowerCase().startsWith(NAME.toLowerCase().trim())) returnList.add(g);
+        }
+        return returnList;
+    }
+
+    public List<GameObject> getGameObjects(List<Class<? extends Component>> TYPES, String NAME)
+    {
+        if (TYPES.isEmpty()) return getGameObjects(NAME);
+        if (NAME.isEmpty() || NAME.isBlank()) return getGameObjects(TYPES);
+
+        List<GameObject> returnList = new ArrayList<>();
+        for (GameObject g : this.gameObjects)
+        {
+            boolean added = false;
+            for (Class<? extends Component> type : TYPES)
+            {
+                if (g.hasComponent(type) && g.toString().trim().toLowerCase().startsWith(NAME.toLowerCase().trim()) && !added)
+                {
+                    returnList.add(g);
+                    added = true;
+                }
+            }
+        }
+        return returnList;
+    }
+
 
     public PhysicsSystemManager getPhysics()
     {
@@ -245,5 +299,10 @@ public class Scene
     public void setSavePath(String PATH)
     {
         this.initializer.savePath = PATH;
+    }
+
+    public Renderer getRenderer()
+    {
+        return this.renderer;
     }
 }

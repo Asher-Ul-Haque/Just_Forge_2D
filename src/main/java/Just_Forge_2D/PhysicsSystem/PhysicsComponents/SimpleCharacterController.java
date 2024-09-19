@@ -131,17 +131,22 @@ public class SimpleCharacterController extends Component
         Vector2f rayCastEnd = new Vector2f(rayCastBegin);
         rayCastEnd.add(this.gameObject.transform.scale.x, 0.0f);
 
+        Vector2f rayCast2Begin = new Vector2f(this.gameObject.transform.position);
+        rayCast2Begin.sub(0f, this.gameObject.transform.scale.y /2.0f);
+        Vector2f rayCast2End = new Vector2f(rayCast2Begin).sub(0.0f, groundDetectRayLength);
+        RayCastInfo rayCast2 = gun.rayCast(this.gameObject, rayCast2Begin, rayCast2End);
 
         RayCastInfo rayCastInfo = gun.rayCast(this.gameObject, rayCastBegin, rayCastEnd);
 
         boolean wasGrounded = this.isGrounded;
-        this.isGrounded = rayCastInfo.hit && rayCastInfo.hitObject != null;
+        this.isGrounded = (rayCastInfo.hit && rayCastInfo.hitObject != null) || (rayCast2.hit && rayCast2.hitObject != null);
         if (debugDrawAtRuntime || isEditorUpdate)
         {
             Vector3f color;
-            if (this.isGrounded) color = new Vector3f(hitColor.x, hitColor.y, hitColor.z);
+            if (this.isGrounded || rayCastInfo.hit || coyoteTimer > 0f) color = new Vector3f(hitColor.x, hitColor.y, hitColor.z);
             else color = new Vector3f(noHitColor.x, noHitColor.y, noHitColor.z);
             DebugPencil.addLine(rayCastBegin, rayCastEnd, color);
+            DebugPencil.addLine(rayCast2Begin, rayCast2End, color);
         }
 
         if (!isGrounded && wasGrounded)
@@ -166,7 +171,7 @@ public class SimpleCharacterController extends Component
                 jumpTimer = maxJumpTime;
                 jump();
             }
-            else if (jumpsUsed < maxJumps)
+            else if (jumpsUsed + 1 < maxJumps)
             {
                 jumpTimer = maxJumpTime;
                 rb.setVelocity(new Vector2f(rb.getLinearVelocity().x, 0f));
