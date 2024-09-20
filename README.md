@@ -1,6 +1,6 @@
 <div align="center">
   
-<img src="https://github.com/user-attachments/assets/9b3adcf7-70c9-45f0-ab14-3769072244d5" alt="Logo" width="256" />
+<img src="https://github.com/user-attachments/assets/99d21ac3-ba5f-422c-a119-64b0b55edb39" alt="Logo" width="256" />
 
 # Just Forge 2D
 
@@ -21,19 +21,18 @@
 
 # Introduction
 
-**Just Forge 2D** is a powerful, easy-to-use 2D game engine built entirely using OpenGL and Java. It provides a simple API for game development and comes with a set of tools to help you create games quickly and efficiently. It allows you to publish your grames directly to itch.io or raw JAR files. Comes with a customizable editor out of the box to get going quick!
+**Just Forge 2D** is a powerful, easy-to-use 2D game engine built entirely using OpenGL and Java. It provides a simple almost no code API for game development and comes with tools to help you create games quickly and efficiently. It allows you to publish your games as raw JAR files. It comes with a customizable editor out of the box to get going quickly!
 
 # Features
 
 - Supports all desktop operating systems (atleast JDK 8) including **Windows, MacOS and Linux**
 - Defferred and Bacth rendering
 - Efficient Resource management
-- Builtin BOX-2D like physics engine
+- Builtin BOX-2D physics engine
 - Entity Component and Scene Systems
 - Customizable to any degree
 - Easy to use interface
 - Built in editor
-- Direct publish to itch.io
   
 ***
 
@@ -41,13 +40,14 @@
 
 [Once Just Forge 2D is installed](https://github.com/Asher-Ul-Haque/Just_Forge_2D/wiki), 
 
-Create a main class that inherits from Application and copy paste this code. Go to [wiki](https://github.com/Asher-Ul-Haque/Just_Forge_2D/wiki) for more details
+Look at this demo which shows how to use particles system, asset pool textures, physics, camera and a transparent background to create a simple platformer.
 
 ## Demo
 
 <div align="center">
 
-# Add a video here
+
+https://github.com/user-attachments/assets/31d2563d-4f0f-40cb-98ac-efe6fac22d98
 
 </div>
 
@@ -65,7 +65,7 @@ The wiki describes how to get up and running with Just Forge Engine and also cov
 
 # Acknowledgements
 
-I didnt learn how to make a game engine overnight and certainly did not figure everything out myself. Here are some people and resources that helped me a lot:-
+I didn't learn how to make a game engine overnight and certainly did not figure everything out myself. Here are some people and resources that helped me a lot:-
 
 - [The Cherno](https://github.com/TheCherno)
 - [Griffpath](https://www.youtube.com/user/griffpatch)
