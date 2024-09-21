@@ -2,10 +2,7 @@ package Just_Forge_2D.PhysicsSystem;
 
 import Just_Forge_2D.EntityComponentSystem.Components.TransformComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
-import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.BoxColliderComponent;
-import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.CircleColliderComponent;
-import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.CylinderColliderComponent;
-import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.PolygonColliderComponent;
+import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.*;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent;
 import Just_Forge_2D.PhysicsSystem.PhysicsManagers.ColliderManager;
 import Just_Forge_2D.SceneSystem.Scene;
@@ -81,7 +78,8 @@ public class PhysicsSystemManager
             CircleColliderComponent circleCollider = OBJ.getCompoent(CircleColliderComponent.class);
             BoxColliderComponent boxCollider = OBJ.getCompoent(BoxColliderComponent.class);
             CylinderColliderComponent pillCollider = OBJ.getCompoent(CylinderColliderComponent.class);
-            PolygonColliderComponent customCollider = OBJ.getCompoent(PolygonColliderComponent.class);
+            PolygonColliderComponent polygonColliderComponent = OBJ.getCompoent(PolygonColliderComponent.class);
+            EdgeColliderComponent edgeColliderComponent = OBJ.getCompoent(EdgeColliderComponent.class);
 
             if (circleCollider != null)
             {
@@ -98,10 +96,14 @@ public class PhysicsSystemManager
                 ColliderManager.addCylinderCollider(rb, pillCollider);
                 body.resetMassData();
             }
-            if (customCollider != null)
+            if (polygonColliderComponent != null)
             {
-                ColliderManager.addCustomCollider(rb, customCollider);
+                ColliderManager.addCustomCollider(rb, polygonColliderComponent);
                 body.resetMassData();
+            }
+            if (edgeColliderComponent != null)
+            {
+                ColliderManager.addEdgeCollider(rb, edgeColliderComponent);
             }
 
             Logger.FORGE_LOG_DEBUG("Linked Box2D with " + OBJ);

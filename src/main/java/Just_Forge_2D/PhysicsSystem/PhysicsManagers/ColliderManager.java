@@ -4,6 +4,7 @@ import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.*;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent;
 import Just_Forge_2D.Utils.Logger;
 import org.jbox2d.collision.shapes.CircleShape;
+import org.jbox2d.collision.shapes.EdgeShape;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
@@ -150,6 +151,31 @@ public class ColliderManager
 
             shape.set(physicsVertices, physicsVertices.length);
             debugShape = shape;
+
+            FixtureDef fixtureDef = new FixtureDef();
+            fixtureDef.shape = shape;
+            fixtureDef.density = RB.getDensity();
+            fixtureDef.friction = RB.getFrictionCoefficient();
+            fixtureDef.userData = COLLIDER.gameObject;
+            fixtureDef.isSensor = RB.isSensor();
+            body.createFixture(fixtureDef);
+        }
+    }
+
+    public static void addEdgeCollider(RigidBodyComponent RB, EdgeColliderComponent COLLIDER)
+    {
+        Body body = RB.getRawBody();
+        if (body == null)
+        {
+            Logger.FORGE_LOG_WARNING("Raw body must not be null while adding a collider");
+            return;
+        }
+
+        for (EdgeCollider collider : COLLIDER.getColliders())
+        {
+            EdgeShape shape = new EdgeShape();
+
+            shape.set(new Vec2(collider.getEdgeStart().x, collider.getEdgeStart().y), new Vec2(collider.getEdgeEnd().x, collider.getEdgeEnd().y));
 
             FixtureDef fixtureDef = new FixtureDef();
             fixtureDef.shape = shape;

@@ -152,17 +152,17 @@ public class CustomCollider extends Component
         }
     }
 
-    private void resetToRegularPolygon(int sides)
+    private void resetToRegularPolygon(int SIDES)
     {
         vertices.clear();
-        float radius = 1.0f; // Choose a suitable scale or radius
-        float angleIncrement = (float) (2 * Math.PI / sides);
+        float radius = 1.0f;
+        float angleIncrement = (float) (2 * Math.PI / SIDES);
 
-        for (int i = 0; i < sides; i++)
+        for (int i = 0; i < SIDES; i++)
         {
             float angle = i * angleIncrement;
             vertices.add(new Vector2f((float) Math.cos(angle) * radius, (float) Math.sin(angle) * radius));
         }
-        Logger.FORGE_LOG_INFO("Shape reset to a regular " + sides + "-sided polygon.");
+        Logger.FORGE_LOG_INFO("Shape reset to a regular " + SIDES + "-sided polygon.");
     }
 }
