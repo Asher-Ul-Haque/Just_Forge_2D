@@ -10,16 +10,16 @@ import org.joml.Vector4f;
 
 public class DefaultValues
 {
-    public static final float GRID_WIDTH = 0.25f;
-    public static final float GRID_HEIGHT = 0.25f;
+    public static final float GRID_WIDTH = 1f;
+    public static final float GRID_HEIGHT = 1f;
     public static final int MAX_BATCH_SIZE = 1024;
     public static final int DEBUG_PENCIL_MAX_LINES = 2048;
     public static final int DEBUG_PENCIL_DEFAULT_LIFE = 1;
     public static final Vector3f DEBUG_PENCIL_DEFAULT_COLOR = new Vector3f(1, 1, 1);
-    public static final int DEBUG_PENCIL_DEFAULT_WIDTH = 4;
+    public static final int DEBUG_PENCIL_DEFAULT_WIDTH = 8;
     public static final int DEBUG_PENCIL_DEFAULT_CIRCLE_PRECISION = 64;
     public static final float DEBUG_PENCIL_DEFAULT_ROTATION = 0f;
-    public static final Vec2 GRAVITY = new Vec2(0, -10f);
+    public static final Vec2 GRAVITY = new Vec2(0, -40f);
     public static final float PHYSICS_DELTA_TIME = 1.0f / 60f;
     public static final int VELOCITY_ITERATIONS = 8;
     public static final int POSITION_ITERATIONS = 3;
@@ -47,7 +47,7 @@ public class DefaultValues
     public static final float DEFAULT_GROUND_DECELERATION = 20.0f;
     public static final float DEFAULT_AIR_ACCELERATION = 5f;
     public static final float DEFAULT_AIR_DECELERATION = 5f;
-    public static final Vector2f DEFAULT_CAMERA_PROJECTION_SIZE = new Vector2f(16f / 3f, 9f / 3f);
+    public static final Vector2f DEFAULT_CAMERA_PROJECTION_SIZE = new Vector2f(16f, 9f);
     public static final float DEFAULT_FPS = 60.0f;
     public static final String DEFAULT_WINDOW_TITLE = "Just Forge 2D";
     public static final Vector4f DEFAULT_CLEAR_COLOR = new Vector4f(1.0f);

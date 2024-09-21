@@ -4,7 +4,6 @@ import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.*;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent;
 import Just_Forge_2D.Utils.Logger;
 import org.jbox2d.collision.shapes.CircleShape;
-import org.jbox2d.collision.shapes.EdgeShape;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
@@ -131,7 +130,7 @@ public class ColliderManager
         body.resetMassData();
     }
 
-    public static void addCustomCollider(RigidBodyComponent RB, CustomColliderComponent COLLIDER)
+    public static void addCustomCollider(RigidBodyComponent RB, PolygonColliderComponent COLLIDER)
     {
         Body body = RB.getRawBody();
         if (body == null)
@@ -142,20 +141,19 @@ public class ColliderManager
 
         for (CustomCollider collider : COLLIDER.getColliders())
         {
-            EdgeShape shape = new EdgeShape();
-            shape.
             PolygonShape shape = new PolygonShape();
             Vec2[] physicsVertices = new Vec2[collider.getVertices().size()];
-            physicsVertices[0] = new Vec2(collider.getVertices().get(0).x, collider.getVertices().get(0).y);
-            physicsVertices[1] = new Vec2(collider.getVertices().get(1).x, collider.getVertices().get(1).y);
-            physicsVertices[2] = new Vec2(collider.getVertices().get(2).x, collider.getVertices().get(2).y);
+            for (int i = 0; i < physicsVertices.length; ++i)
+            {
+                physicsVertices[i] = new Vec2(collider.getVertices().get(i).x, collider.getVertices().get(i).y);
+            }
 
             shape.set(physicsVertices, physicsVertices.length);
             debugShape = shape;
 
             FixtureDef fixtureDef = new FixtureDef();
             fixtureDef.shape = shape;
-            fixtureDef.density = 1.0f;
+            fixtureDef.density = RB.getDensity();
             fixtureDef.friction = RB.getFrictionCoefficient();
             fixtureDef.userData = COLLIDER.gameObject;
             fixtureDef.isSensor = RB.isSensor();
@@ -163,7 +161,7 @@ public class ColliderManager
         }
     }
 
-    public static void resetCustomCollider(RigidBodyComponent RB, CustomColliderComponent COLLIDER)
+    public static void resetCustomCollider(RigidBodyComponent RB, PolygonColliderComponent COLLIDER)
     {
         Body body = RB.getRawBody();
         if (body == null) {

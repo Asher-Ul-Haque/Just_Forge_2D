@@ -4,8 +4,8 @@ import Just_Forge_2D.EntityComponentSystem.Components.TransformComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.BoxColliderComponent;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.CircleColliderComponent;
-import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.CustomColliderComponent;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.CylinderColliderComponent;
+import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.PolygonColliderComponent;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent;
 import Just_Forge_2D.PhysicsSystem.PhysicsManagers.ColliderManager;
 import Just_Forge_2D.SceneSystem.Scene;
@@ -81,7 +81,7 @@ public class PhysicsSystemManager
             CircleColliderComponent circleCollider = OBJ.getCompoent(CircleColliderComponent.class);
             BoxColliderComponent boxCollider = OBJ.getCompoent(BoxColliderComponent.class);
             CylinderColliderComponent pillCollider = OBJ.getCompoent(CylinderColliderComponent.class);
-            CustomColliderComponent customCollider = OBJ.getCompoent(CustomColliderComponent.class);
+            PolygonColliderComponent customCollider = OBJ.getCompoent(PolygonColliderComponent.class);
 
             if (circleCollider != null)
             {

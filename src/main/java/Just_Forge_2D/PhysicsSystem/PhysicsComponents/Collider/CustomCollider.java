@@ -1,23 +1,20 @@
 package Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider;
 
+import Just_Forge_2D.EditorSystem.Widgets;
+import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.RenderingSystem.DebugPencil;
 import Just_Forge_2D.Utils.ForgeMath;
 import Just_Forge_2D.Utils.Logger;
-import org.jbox2d.collision.shapes.PolygonShape;
-import org.jbox2d.common.Vec2;
+import imgui.ImGui;
 import org.joml.Vector2f;
-import org.joml.Vector4f;
+import org.joml.Vector3f;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CustomCollider
+public class CustomCollider extends Component
 {
-    private Vector4f collisionColor = new Vector4f();
-    private Vector4f hitboxColor = new Vector4f();
-    private boolean useCollisionColor = false;
-
     public CustomCollider(List<Vector2f> INITIAL_VERTICES)
     {
         vertices.addAll(INITIAL_VERTICES);
@@ -27,6 +24,11 @@ public class CustomCollider
 
     public boolean addVertex(Vector2f VERTEX)
     {
+        if (vertices.size() == 8)
+        {
+            Logger.FORGE_LOG_ERROR("Can only have upto 8 vertices in an Collider");
+            return false;
+        }
         vertices.add(VERTEX);
         if (!isConvex())
         {
@@ -93,40 +95,74 @@ public class CustomCollider
     }
 
 
-    protected void debugDraw(PolygonShape polygonShape, GameObject gameObject)
-    {
-        if (polygonShape == null) return;
-        ArrayList<Vector2f> display = new ArrayList<>();
+    protected void debugDraw(GameObject gameObject, Vector3f color) {
+        int vertexCount = this.vertices.size();
+        if (vertexCount < 3) return; // Ensure we have a valid polygon
 
-        // Use m_count to determine the actual number of vertices in the polygon shape
-        int vertexCount = polygonShape.m_count;
-        if (vertexCount < 3) return;
+        // Transform the vertices based on the GameObject's position, rotation, and scale
+        ArrayList<Vector2f> transformedVertices = new ArrayList<>();
+        for (Vector2f vertex : this.vertices) {
+            // Apply scale
+            Vector2f scaledVertex = new Vector2f(vertex);
 
-        // Get the position, scale, and rotation of the game object
-        Vector2f position = gameObject.transform.position;
-        float rotation = gameObject.transform.rotation; // in radians, assuming it's in the right format
+            // Rotate around the GameObject's center
+            ForgeMath.rotate(scaledVertex, gameObject.transform.rotation, new Vector2f());
 
-        // Iterate only through the actual vertices count
-        for (int i = 0; i < vertexCount; i++) {
-            Vec2 v = polygonShape.m_vertices[i];
-            // Apply the GameObject's transform to the vertex
-            Vector2f transformedVertex = new Vector2f(v.x, v.y).add(position);
-            display.add(transformedVertex);
+            // Apply position
+            scaledVertex.add(gameObject.transform.position);
+
+            transformedVertices.add(scaledVertex);
         }
 
-        // Call the debug drawing function with the transformed vertices
-        DebugPencil.addPolygonFromVertices(display, rotation);
+        // Draw lines between consecutive vertices
+        for (int i = 0; i < transformedVertices.size(); i++) {
+            Vector2f start = transformedVertices.get(i);
+            Vector2f end = transformedVertices.get((i + 1) % transformedVertices.size()); // Wrap around to the first vertex
+
+            // Draw the line between the current vertex and the next
+            DebugPencil.addLine(start, end, color);
+        }
     }
 
 
 
-    protected void beginCollision()
+    @Override
+    public void editorGUI()
     {
-        useCollisionColor = true;
+        for (int i = 0; i < vertices.size(); ++i)
+        {
+            Vector2f copy = new Vector2f(vertices.get(i));
+            Widgets.drawVec2Control("Vertex: " + (i + 1), copy);
+            setVertex(i, copy);
+        }
+
+        if (vertices.size() < 8 && ImGui.button("Add Vertex##" + this.toString()))
+        {
+            resetToRegularPolygon(vertices.size() + 1);
+        }
+
+        if (vertices.size() > 3 && ImGui.button("Remove Vertex##"  + toString()))
+        {
+            resetToRegularPolygon(vertices.size() - 1);
+        }
+
+        if (ImGui.button("Reset To Regular Polygon##"  + toString()))
+        {
+            resetToRegularPolygon(vertices.size());
+        }
     }
 
-    protected void endCollision()
+    private void resetToRegularPolygon(int sides)
     {
-        useCollisionColor = false;
+        vertices.clear();
+        float radius = 1.0f; // Choose a suitable scale or radius
+        float angleIncrement = (float) (2 * Math.PI / sides);
+
+        for (int i = 0; i < sides; i++)
+        {
+            float angle = i * angleIncrement;
+            vertices.add(new Vector2f((float) Math.cos(angle) * radius, (float) Math.sin(angle) * radius));
+        }
+        Logger.FORGE_LOG_INFO("Shape reset to a regular " + sides + "-sided polygon.");
     }
 }

@@ -22,7 +22,7 @@ public class GizmoComponent extends Component
     // - - - xAxis Gizmo
     private final Vector4f xAxisColor = new Vector4f(1, 0.3f, 0.3f, 1);
     private final Vector4f xAxisHoverColor = new Vector4f(1, 0, 0, 1);
-    private final Vector2f xAxisOffset = new Vector2f(24f / 80f, -6f / 80f);
+    private final Vector2f xAxisOffset = new Vector2f(24f / 20f, -6f / 20f);
     private final SpriteComponent xAxisSprite;
     protected boolean xAxisActive = false;
     private final GameObject xAxisGizmo;
@@ -30,14 +30,14 @@ public class GizmoComponent extends Component
     // - - - yAxis Gizmo
     private final Vector4f yAxisColor = new Vector4f(0.3f, 1, 0.3f, 1);
     private final Vector4f yAxisHoverColor = new Vector4f(0, 1, 0, 1);
-    private final Vector2f yAxisOffset = new Vector2f(-7f / 80f, 21f / 80f);
+    private final Vector2f yAxisOffset = new Vector2f(-7f / 20f, 21f / 20f);
     private final SpriteComponent yAxisSprite;
     protected boolean yAxisActive = false;
     private final GameObject yAxisGizmo;
 
     // - - - Size
-    private final float gizmoWidth = 16f / 80f;
-    private final float gizmoHeight = 48f / 80f;
+    private final float gizmoWidth = 16f / 20f;
+    private final float gizmoHeight = 48f / 20f;
 
     // - - - state
     private boolean using = false;
