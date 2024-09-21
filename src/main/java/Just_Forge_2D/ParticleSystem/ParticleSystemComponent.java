@@ -141,7 +141,7 @@ public class ParticleSystemComponent extends Component implements Observer
     {
         debugDraw();
         fanStart = Math.max(fanStart, 0f);
-        fanEnd = Math.max(fanEnd, 0f);
+        fanEnd = Math.max(fanEnd, fanStart + 0.001f);
         maxLifespan = Math.max(0.001f, maxLifespan);
         minLifespan = Math.max(Math.min(maxLifespan, minLifespan), 0f);
     }

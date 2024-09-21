@@ -61,12 +61,12 @@ public class CameraControlComponent extends Component
 
     private Vector2f calculateAveragePosition()
     {
-        Vector2f sum = new Vector2f(camera.getProjectionSize()).negate().div(2 / camera.getZoom());
+        Vector2f sum = new Vector2f();
         for (Vector2f point : points)
         {
             sum.add(point);
         }
-        return sum.div(points.size());
+        return sum.div(points.size()).sub(new Vector2f(camera.getProjectionSize()).mul(camera.getZoom() * 0.5f));
     }
 
     private float calculateZoom()
@@ -76,18 +76,20 @@ public class CameraControlComponent extends Component
             return minZoom;
         }
 
-        float maxDistance = 0f;
-        for (int i = 0; i < points.size(); i++)
-        {
-            for (int j = i + 1; j < points.size(); j++)
-            {
-                float distance = points.get(i).distance(points.get(j));
-                maxDistance = Math.max(maxDistance, distance);
-            }
-        }
+        float maxXDist = 0;
+        float maxYDist = 0;
+        Vector2f centroid = calculateAveragePosition();
 
-        float targetZoom = Math.min(maxZoom, Math.max(minZoom, maxDistance));
-        return targetZoom;
+        for (Vector2f point : points)
+        {
+            maxXDist = Math.max(point.x - centroid.x, maxXDist);
+            maxYDist = Math.max(point.y - centroid.y, maxYDist);
+        }
+        float zoomX = (maxXDist * 2) / camera.getProjectionSize().x;
+        float zoomY = (maxYDist * 2) / camera.getProjectionSize().y;
+
+        float requiredZoom = 1.0f / Math.max(zoomX, zoomY);
+        return Math.max(minZoom, Math.min(maxZoom, requiredZoom));
     }
 
     private float lerp(float start, float end, float factor) {

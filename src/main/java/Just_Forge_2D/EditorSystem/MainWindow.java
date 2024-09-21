@@ -22,6 +22,7 @@ import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.Utils.TimeKeeper;
 import Just_Forge_2D.WindowSystem.Window;
 import Just_Forge_2D.WindowSystem.WindowConfig;
+import Just_Forge_2D.WindowSystem.WindowSystemManager;
 import org.joml.Vector2f;
 
 import static org.lwjgl.glfw.GLFW.glfwPollEvents;
@@ -105,7 +106,7 @@ public class MainWindow extends Window
         isInitialized = true;
 
         EditorSystemManager.setFramebuffer();
-        glViewport(0, 0, 1980, 720);
+        glViewport(0, 0, WindowSystemManager.getMonitorSize().x, WindowSystemManager.getMonitorSize().y);
         Logger.FORGE_LOG_INFO("Framebuffer created and assigned for offscreen rendering");
 
         Logger.FORGE_LOG_INFO("Editor linked with window");
@@ -144,7 +145,7 @@ public class MainWindow extends Window
                     glDisable(GL_BLEND);
                     ObjectSelector.enableWriting();
 
-                    glViewport(0, 0, 1980, 720);
+                    glViewport(0, 0, WindowSystemManager.getMonitorSize().x, WindowSystemManager.getMonitorSize().y);
                     clear();
                     Renderer.bindShader(EditorSystemManager.selectorShader);
                     currentScene.render(dt);

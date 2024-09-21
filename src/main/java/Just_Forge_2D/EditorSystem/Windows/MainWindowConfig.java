@@ -11,5 +11,6 @@ public class MainWindowConfig extends WindowConfig
         this.width = WindowSystemManager.getMonitorSize().x;
         this.height = WindowSystemManager.getMonitorSize().y;
         this.visible = false;
+        this.transparent = true;
     }
 }

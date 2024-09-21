@@ -282,7 +282,7 @@ public class Window implements Observer
 
     public float getAspectRatio()
     {
-        return this.config.aspectRatio;
+        return (float) this.getWidth() / this.getHeight();
     }
 
     // - - - Handle Icon and Title - - -

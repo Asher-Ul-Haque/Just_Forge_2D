@@ -1,14 +1,11 @@
 package Just_Forge_2D.EntityComponentSystem.Components.Sprite;
 
-import Just_Forge_2D.EditorSystem.MainWindow;
-import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EditorSystem.Widgets;
-import Just_Forge_2D.RenderingSystem.RenderBatch;
-import Just_Forge_2D.RenderingSystem.Renderer;
+import Just_Forge_2D.EntityComponentSystem.Components.Component;
+import Just_Forge_2D.EntityComponentSystem.Components.TransformComponent;
 import Just_Forge_2D.RenderingSystem.Texture;
 import Just_Forge_2D.Utils.AssetPool;
 import Just_Forge_2D.Utils.Logger;
-import Just_Forge_2D.EntityComponentSystem.Components.TransformComponent;
 import imgui.ImGui;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
@@ -121,6 +118,11 @@ public class SpriteComponent extends Component
         if (Widgets.colorPicker4("Color Picker", this.color))
         {
             this.isChanged = true;
+        }
+        if (this.sprite.getTexture() != null)
+        {
+            Vector2f[] texCoords = this.sprite.getTextureCoordinates();
+            if (ImGui.imageButton(this.sprite.getTextureID(), this.sprite.getWidth() * 2, this.sprite.getHeight() * 2, texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y));
         }
     }
 

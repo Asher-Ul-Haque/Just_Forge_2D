@@ -81,12 +81,12 @@ public class EditorSystemManager
 
     public static void setFramebuffer()
     {
-        framebuffer = new Framebuffer(DefaultValues.DEFAULT_WINDOW_WIDTH, DefaultValues.DEFAULT_WINDOW_HEIGHT);
+        framebuffer = new Framebuffer(WindowSystemManager.getMonitorSize().x, WindowSystemManager.getMonitorSize().y);
     }
 
     public static void setSelector()
     {
-        ObjectSelector.init(MainWindow.get().getWidth(), MainWindow.get().getHeight());
+        ObjectSelector.init(WindowSystemManager.getMonitorSize().x, WindowSystemManager.getMonitorSize().y);
     }
 
     public static void compileShaders()

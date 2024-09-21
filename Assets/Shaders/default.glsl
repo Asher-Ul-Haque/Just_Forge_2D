@@ -38,7 +38,6 @@ void main()
     {
         int id = int(fTextureID);
         color = fColor * texture(uTextures[id], fTextureCoords);
-        //color = vec4(fTextureCoords, 0, 1);
     }
     else
     {
