@@ -3,6 +3,7 @@ package Just_Forge_2D.EntityComponentSystem.Components;
 import Just_Forge_2D.EditorSystem.MainWindow;
 import Just_Forge_2D.RenderingSystem.DebugPencil;
 import Just_Forge_2D.SceneSystem.Camera;
+import Just_Forge_2D.Utils.ForgeMath;
 import Just_Forge_2D.Utils.Logger;
 import org.joml.Vector2f;
 
@@ -45,7 +46,7 @@ public class CameraControlComponent extends Component
 
         float targetZoom = calculateZoom();
         float currentZoom = camera.getZoom();
-        camera.setZoom(lerp(currentZoom, targetZoom, zoomLerpFactor));
+        camera.setZoom(ForgeMath.lerp(currentZoom, targetZoom, zoomLerpFactor));
     }
 
     public void removePoint(Vector2f point)
@@ -61,12 +62,8 @@ public class CameraControlComponent extends Component
 
     private Vector2f calculateAveragePosition()
     {
-        Vector2f sum = new Vector2f();
-        for (Vector2f point : points)
-        {
-            sum.add(point);
-        }
-        return sum.div(points.size()).sub(new Vector2f(camera.getProjectionSize()).mul(camera.getZoom() * 0.5f));
+        Vector2f sum = ForgeMath.calculateCentroid(points);
+        return sum.sub(new Vector2f(camera.getProjectionSize()).mul(camera.getZoom() * 0.5f));
     }
 
     private float calculateZoom()
@@ -76,25 +73,20 @@ public class CameraControlComponent extends Component
             return minZoom;
         }
 
-        float maxXDist = 0;
-        float maxYDist = 0;
-        Vector2f centroid = calculateAveragePosition();
-
-        for (Vector2f point : points)
+        float maxDistance = 0f;
+        for (int i = 0; i < points.size(); i++)
         {
-            maxXDist = Math.max(point.x - centroid.x, maxXDist);
-            maxYDist = Math.max(point.y - centroid.y, maxYDist);
+            for (int j = i + 1; j < points.size(); j++)
+            {
+                float distance = points.get(i).distance(camera.getPosition());
+                maxDistance = Math.max(maxDistance, distance);
+            }
         }
-        float zoomX = (maxXDist * 2) / camera.getProjectionSize().x;
-        float zoomY = (maxYDist * 2) / camera.getProjectionSize().y;
 
-        float requiredZoom = 1.0f / Math.max(zoomX, zoomY);
-        return Math.max(minZoom, Math.min(maxZoom, requiredZoom));
+        float requiredZoom = maxDistance / Math.max(camera.getProjectionSize().x, camera.getProjectionSize().y);
+        return Math.min(maxZoom, Math.max(minZoom, requiredZoom));
     }
 
-    private float lerp(float start, float end, float factor) {
-        return start + factor * (end - start);
-    }
 
     @Override
     public void destroy()

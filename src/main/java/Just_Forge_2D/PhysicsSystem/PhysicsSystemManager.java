@@ -4,6 +4,7 @@ import Just_Forge_2D.EntityComponentSystem.Components.TransformComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.BoxColliderComponent;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.CircleColliderComponent;
+import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.CustomColliderComponent;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.CylinderColliderComponent;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent;
 import Just_Forge_2D.PhysicsSystem.PhysicsManagers.ColliderManager;
@@ -80,6 +81,7 @@ public class PhysicsSystemManager
             CircleColliderComponent circleCollider = OBJ.getCompoent(CircleColliderComponent.class);
             BoxColliderComponent boxCollider = OBJ.getCompoent(BoxColliderComponent.class);
             CylinderColliderComponent pillCollider = OBJ.getCompoent(CylinderColliderComponent.class);
+            CustomColliderComponent customCollider = OBJ.getCompoent(CustomColliderComponent.class);
 
             if (circleCollider != null)
             {
@@ -94,6 +96,11 @@ public class PhysicsSystemManager
             if (pillCollider != null)
             {
                 ColliderManager.addCylinderCollider(rb, pillCollider);
+                body.resetMassData();
+            }
+            if (customCollider != null)
+            {
+                ColliderManager.addCustomCollider(rb, customCollider);
                 body.resetMassData();
             }
 

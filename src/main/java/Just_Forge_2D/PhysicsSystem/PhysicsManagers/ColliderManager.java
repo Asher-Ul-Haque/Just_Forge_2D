@@ -1,11 +1,10 @@
 package Just_Forge_2D.PhysicsSystem.PhysicsManagers;
 
-import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.BoxColliderComponent;
-import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.CircleColliderComponent;
-import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.CylinderColliderComponent;
+import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.*;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent;
 import Just_Forge_2D.Utils.Logger;
 import org.jbox2d.collision.shapes.CircleShape;
+import org.jbox2d.collision.shapes.EdgeShape;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
@@ -15,6 +14,7 @@ import org.joml.Vector2f;
 
 public class ColliderManager
 {
+    public static PolygonShape debugShape;
     public static void addBoxCollider(RigidBodyComponent RB, BoxColliderComponent COLLIDER)
     {
         Body body = RB.getRawBody();
@@ -31,7 +31,7 @@ public class ColliderManager
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
-        fixtureDef.density = 1.0f;
+        fixtureDef.density = RB.getDensity();
         fixtureDef.friction = RB.getFrictionCoefficient();
         fixtureDef.userData = COLLIDER.gameObject;
         fixtureDef.isSensor = RB.isSensor();
@@ -52,7 +52,7 @@ public class ColliderManager
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
-        fixtureDef.density = 1.0f;
+        fixtureDef.density = RB.getDensity();
         fixtureDef.friction = RB.getFrictionCoefficient();
         fixtureDef.restitution = RB.getRestitutionCoefficient();
         fixtureDef.userData = COLLIDER.gameObject;
@@ -131,6 +131,55 @@ public class ColliderManager
         body.resetMassData();
     }
 
+    public static void addCustomCollider(RigidBodyComponent RB, CustomColliderComponent COLLIDER)
+    {
+        Body body = RB.getRawBody();
+        if (body == null)
+        {
+            Logger.FORGE_LOG_WARNING("Raw body must not be null while adding a collider");
+            return;
+        }
+
+        for (CustomCollider collider : COLLIDER.getColliders())
+        {
+            EdgeShape shape = new EdgeShape();
+            shape.
+            PolygonShape shape = new PolygonShape();
+            Vec2[] physicsVertices = new Vec2[collider.getVertices().size()];
+            physicsVertices[0] = new Vec2(collider.getVertices().get(0).x, collider.getVertices().get(0).y);
+            physicsVertices[1] = new Vec2(collider.getVertices().get(1).x, collider.getVertices().get(1).y);
+            physicsVertices[2] = new Vec2(collider.getVertices().get(2).x, collider.getVertices().get(2).y);
+
+            shape.set(physicsVertices, physicsVertices.length);
+            debugShape = shape;
+
+            FixtureDef fixtureDef = new FixtureDef();
+            fixtureDef.shape = shape;
+            fixtureDef.density = 1.0f;
+            fixtureDef.friction = RB.getFrictionCoefficient();
+            fixtureDef.userData = COLLIDER.gameObject;
+            fixtureDef.isSensor = RB.isSensor();
+            body.createFixture(fixtureDef);
+        }
+    }
+
+    public static void resetCustomCollider(RigidBodyComponent RB, CustomColliderComponent COLLIDER)
+    {
+        Body body = RB.getRawBody();
+        if (body == null) {
+            Logger.FORGE_LOG_ERROR("Tried to reset Convex Collider on a null physics body");
+            return;
+        }
+
+        int size = fixtureListSize(body);
+        for (int i = 0; i < size; ++i) {
+            body.destroyFixture(body.getFixtureList());
+        }
+
+        addCustomCollider(RB, COLLIDER);
+        body.resetMassData();
+    }
+
     private static int fixtureListSize(Body BODY)
     {
         int size = 0;
@@ -142,5 +191,10 @@ public class ColliderManager
         }
 
         return size;
+    }
+
+    public static PolygonShape getDebugShape()
+    {
+        return debugShape;
     }
 }

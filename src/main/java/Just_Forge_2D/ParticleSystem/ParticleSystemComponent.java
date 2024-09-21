@@ -72,9 +72,9 @@ public class ParticleSystemComponent extends Component implements Observer
         DebugPencil.addCircle(center, minSpeed, debuColor);
         DebugPencil.addCircle(center, maxSpeed, debuColor);
         Vector2f lineEnd = new Vector2f((float) (center.x + maxSpeed * Math.cos(fanStart)), (float) (center.y + maxSpeed * Math.sin(fanStart)));
-        DebugPencil.addLine(center, lineEnd, debuColor);
+        DebugPencil.addLine(center, lineEnd, new Vector3f(1.0f, 0.0f, 1.0f));
         lineEnd = new Vector2f((float) (center.x + maxSpeed * Math.cos(fanEnd)), (float) (center.y + maxSpeed * Math.sin(fanEnd)));
-        DebugPencil.addLine(center, lineEnd, debuColor);
+        DebugPencil.addLine(center, lineEnd, new Vector3f(0.0f, 1.0f, 1.0f));
     }
 
     public void setGenerator(ParticleGenerator TEMPLATE)
@@ -116,6 +116,7 @@ public class ParticleSystemComponent extends Component implements Observer
     @Override
     public void update(float DELTA_TIME)
     {
+        clamp();
         for (Particle particle : this.particles)
         {
             GameObject core = particle.core;
@@ -140,8 +141,13 @@ public class ParticleSystemComponent extends Component implements Observer
     public void editorUpdate(float DELTA_TIME)
     {
         debugDraw();
-        fanStart = Math.max(fanStart, 0f);
-        fanEnd = Math.max(fanEnd, fanStart + 0.001f);
+        clamp();
+    }
+
+    private void clamp()
+    {
+        fanStart = Math.max(0f, Math.min(fanEnd, fanStart));
+        fanEnd = (float) Math.max(fanStart, Math.min(2 * Math.PI, fanEnd));
         maxLifespan = Math.max(0.001f, maxLifespan);
         minLifespan = Math.max(Math.min(maxLifespan, minLifespan), 0f);
     }

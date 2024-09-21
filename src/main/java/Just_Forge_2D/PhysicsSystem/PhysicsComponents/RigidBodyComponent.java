@@ -203,8 +203,6 @@ public class RigidBodyComponent extends Component
         }
         this.rawBody.getFixtureList().setDensity(DENSITY);
         this.rawBody.resetMassData();
-
-
     }
 
 

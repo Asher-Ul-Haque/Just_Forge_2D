@@ -2,6 +2,8 @@ package Just_Forge_2D.Utils;
 
 import org.joml.Vector2f;
 
+import java.util.List;
+
 public class ForgeMath
 {
     public static void rotate(Vector2f VECTOR, float ANGLE_RADIAN, Vector2f ORIGIN)
@@ -40,5 +42,33 @@ public class ForgeMath
     public static boolean compare(Vector2f VEC_1, Vector2f VEC_2)
     {
         return compare(VEC_1.x, VEC_2.x, Float.MIN_VALUE) && compare(VEC_1.y, VEC_2.y, Float.MIN_VALUE);
+    }
+
+
+    public static float lerp(float start, float end, float factor)
+    {
+        return start + factor * (end - start);
+    }
+
+    public static float cross(Vector2f A, Vector2f B)
+    {
+        return A.x * B.y - A.y * B.x;
+    }
+
+    public static Vector2f rotateVertex(Vector2f VERTEX, Vector2f CENTER, float ROTATION)
+    {
+        Vector2f result = new Vector2f(VERTEX).sub(CENTER);
+        ForgeMath.rotate(result, ROTATION, new Vector2f());
+        return result.add(CENTER);
+    }
+
+    public static Vector2f calculateCentroid(List<Vector2f> VERTICES)
+    {
+        Vector2f centroid = new Vector2f();
+        for (Vector2f vertex : VERTICES)
+        {
+            centroid.add(vertex);
+        }
+        return centroid.div(VERTICES.size());
     }
 }

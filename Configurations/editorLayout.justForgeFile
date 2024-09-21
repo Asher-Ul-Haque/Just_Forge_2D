@@ -26,12 +26,12 @@ DockId=0x00000003,0
 
 [Window][Dockspace Demo]
 Pos=0,0
-Size=1366,724
+Size=1024,532
 Collapsed=0
 
 [Window][Game Viewport]
 Pos=256,28
-Size=760,405
+Size=418,213
 Collapsed=0
 DockId=0x00000004,0
 
@@ -47,8 +47,8 @@ Size=461,343
 Collapsed=0
 
 [Window][Scene Hierarchy]
-Pos=4,376
-Size=250,344
+Pos=4,280
+Size=250,248
 Collapsed=0
 DockId=0x0000000A,0
 
@@ -67,8 +67,8 @@ Size=600,400
 Collapsed=0
 
 [Window][Camera Controls]
-Pos=256,435
-Size=760,285
+Pos=256,243
+Size=418,285
 Collapsed=0
 DockId=0x0000000C,0
 
@@ -79,26 +79,26 @@ Collapsed=0
 DockId=0x00000004,0
 
 [Window][FPS]
-Pos=256,435
-Size=760,285
+Pos=256,243
+Size=418,285
 Collapsed=0
 DockId=0x0000000C,2
 
 [Window][Grid Controls]
-Pos=256,435
-Size=760,285
+Pos=256,243
+Size=418,285
 Collapsed=0
 DockId=0x0000000C,1
 
 [Window][Asset Pool]
 Pos=4,28
-Size=250,346
+Size=250,250
 Collapsed=0
 DockId=0x00000009,0
 
 [Window][Prefabs]
 Pos=4,28
-Size=250,346
+Size=250,250
 Collapsed=0
 DockId=0x00000009,1
 
@@ -118,16 +118,16 @@ Size=405,40
 Collapsed=0
 
 [Window][Components]
-Pos=1018,28
-Size=344,692
+Pos=676,28
+Size=344,500
 Collapsed=0
 DockId=0x0000000D,0
 
 [Docking][Data]
-DockSpace           ID=0x6D3A3A6E Window=0x091AB4BE Pos=4,28 Size=1358,692 Split=X
+DockSpace           ID=0x6D3A3A6E Window=0x091AB4BE Pos=4,28 Size=1016,500 Split=X
   DockNode          ID=0x00000002 Parent=0x6D3A3A6E SizeRef=1012,692 Split=X
     DockNode        ID=0x00000007 Parent=0x00000002 SizeRef=250,692 Split=Y Selected=0x601E4255
-      DockNode      ID=0x00000009 Parent=0x00000007 SizeRef=286,346 Selected=0x601E4255
+      DockNode      ID=0x00000009 Parent=0x00000007 SizeRef=286,346 Selected=0xDF18B7BE
       DockNode      ID=0x0000000A Parent=0x00000007 SizeRef=286,344 Selected=0x9A68760C
     DockNode        ID=0x00000008 Parent=0x00000002 SizeRef=760,692 Split=Y
       DockNode      ID=0x0000000B Parent=0x00000008 SizeRef=1358,405 Split=X
