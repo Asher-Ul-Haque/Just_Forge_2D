@@ -7,6 +7,7 @@ import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.EventSystem.EventManager;
 import Just_Forge_2D.EventSystem.Events.Event;
 import Just_Forge_2D.EventSystem.Observer;
+import Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent;
 import Just_Forge_2D.RenderingSystem.DebugPencil;
 import Just_Forge_2D.Utils.Logger;
 import org.joml.Vector2f;
@@ -31,8 +32,8 @@ public class ParticleSystemComponent extends Component implements Observer
     private float fanStart = 0;
     private float fanEnd = (float) (2 * Math.PI);
     private float angularVelocity = 0.2f;
-    private float minSpeed = 0.01f;
-    private float maxSpeed = 0.05f;
+    private float minSpeed = 0.1f;
+    private float maxSpeed = 0.5f;
     private boolean debugDrawAtRuntime = false;
     private transient ParticleGenerator generator;
     private Vector4f debugColor = new Vector4f(1.0f).sub(MainWindow.get().getClearColor());
@@ -95,6 +96,13 @@ public class ParticleSystemComponent extends Component implements Observer
         PARTICLE.velocity = generateVelocity();
         PARTICLE.core.transform.rotation = randomizer.nextFloat();
         PARTICLE.core.transform.layer = particleLayer;
+        if (keepPhysics)
+        {
+            RigidBodyComponent rb = PARTICLE.core.getCompoent(RigidBodyComponent.class);
+            rb.setTransform(PARTICLE.core.transform);
+            rb.addImpulse(PARTICLE.velocity);
+            rb.addTorque(PARTICLE.angularVelocity);
+        }
     }
 
 
@@ -107,8 +115,8 @@ public class ParticleSystemComponent extends Component implements Observer
         for (int i = particles.size(); i < maxParticles; ++i)
         {
             Particle particle = this.generator.create();
-            resetParticle(particle);
             particles.add(particle);
+            resetParticle(particle);
             MainWindow.getCurrentScene().addGameObject(particle.core);
         }
         Logger.FORGE_LOG_DEBUG("Starting");

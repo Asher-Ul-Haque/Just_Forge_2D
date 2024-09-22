@@ -4,8 +4,8 @@ import Just_Forge_2D.AudioSystem.SoundPlayerComponent;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.ParticleSystem.ParticleSystemComponent;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.*;
+import Just_Forge_2D.PhysicsSystem.PhysicsComponents.KeyboardControllerComponent;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent;
-import Just_Forge_2D.PhysicsSystem.PhysicsComponents.SimpleCharacterController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ public class ComponentList
         types.add(CylinderColliderComponent.class);
         types.add(PolygonColliderComponent.class);
         types.add(EdgeColliderComponent.class);
-        types.add(SimpleCharacterController.class);
+        types.add(KeyboardControllerComponent.class);
         types.add(CameraControlComponent.class);
         types.add(SoundPlayerComponent.class);
         types.add(ParticleSystemComponent.class);

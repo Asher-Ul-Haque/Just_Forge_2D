@@ -28,7 +28,7 @@ public abstract class Component
 
     // - - - use
     public void update(float DELTA_TIME) {}
-    public void editorUpdate(float DELTA_TIME){}
+    public void editorUpdate(float DELTA_TIME){ debugDraw(); }
     public void start(){}
     public void destroy(){}
     public void debugDraw(){}
@@ -44,7 +44,7 @@ public abstract class Component
             {
                 this.gameObject.removeComponent(this.getClass());
             }
-            Field[] fields = this.getClass().getFields();
+            Field[] fields = this.getClass().getDeclaredFields();
             for (Field field : fields)
             {
                 boolean isPrivate = Modifier.isPrivate(field.getModifiers());

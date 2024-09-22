@@ -19,7 +19,7 @@ public class DefaultValues
     public static final int DEBUG_PENCIL_DEFAULT_WIDTH = 8;
     public static final int DEBUG_PENCIL_DEFAULT_CIRCLE_PRECISION = 64;
     public static final float DEBUG_PENCIL_DEFAULT_ROTATION = 0f;
-    public static final Vec2 GRAVITY = new Vec2(0, -40f);
+    public static final Vec2 GRAVITY = new Vec2(0, -20f);
     public static final float PHYSICS_DELTA_TIME = 1.0f / 60f;
     public static final int VELOCITY_ITERATIONS = 8;
     public static final int POSITION_ITERATIONS = 3;
@@ -60,7 +60,7 @@ public class DefaultValues
     public static final boolean DEFAULT_WINDOW_RESIZABLE_STATE = true;
     public static final boolean DEFAULT_WINDOW_FLOAT_STATUS = false;
     public static final String DEFAULT_SAVE_DIR = "/Saves";
-    public static final float DEFAULT_JUMP_IMPULSE = 1f;
+    public static final float DEFAULT_JUMP_IMPULSE = 15f;
     public static final float DEFAULT_MAX_RUN_SPEED = 7f;
     public static final float DEFAULT_GROUND_DETECT_RAY_LENGTH = 0.05f;
     public static final float DEFAULT_COYOTE_TIME = 0.1f;

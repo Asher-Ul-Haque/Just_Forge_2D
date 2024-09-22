@@ -13,7 +13,7 @@ import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 
-public class SimpleCharacterController extends Component
+public class KeyboardControllerComponent extends Component
 {
     private Keys rightKey = DefaultValues.DEFAULT_MOVE_RIGHT_KEY;
     private Keys leftKey = DefaultValues.DEFAULT_MOVE_LEFT_KEY;
@@ -25,14 +25,14 @@ public class SimpleCharacterController extends Component
     private float groundDeceleration = DefaultValues.DEFAULT_GROUND_DECELERATION;
     private float airAcceleration = DefaultValues.DEFAULT_AIR_ACCELERATION;
     private float airDeceleration = DefaultValues.DEFAULT_AIR_DECELERATION;
-    private float jumpImpulse = DefaultValues.DEFAULT_JUMP_IMPULSE;  // Jump force to be applied
+    private float jumpImpulse = DefaultValues.DEFAULT_JUMP_IMPULSE;
     private float maxRunSpeed = DefaultValues.DEFAULT_MAX_RUN_SPEED;
     private float groundDetectRayLength = DefaultValues.DEFAULT_GROUND_DETECT_RAY_LENGTH;
 
-    private float coyoteTime = DefaultValues.DEFAULT_COYOTE_TIME;  // Grace period for jumping after leaving ground
+    private float coyoteTime = DefaultValues.DEFAULT_COYOTE_TIME;
     private transient float coyoteTimer = 0f;
-    private int maxJumps = DefaultValues.DEFAULT_MAX_JUMPS;  // Number of allowed jumps (1 jump on ground, 1 mid-air)
-    private transient int jumpsUsed = 0;  // Track the number of jumps used
+    private int maxJumps = DefaultValues.DEFAULT_MAX_JUMPS;
+    private transient int jumpsUsed = 0;
 
     private RigidBodyComponent rb;
     private transient Vector2f moveVelocity = new Vector2f();
@@ -132,7 +132,7 @@ public class SimpleCharacterController extends Component
         Raycast gun = new Raycast();
 
         Vector2f rayCastBegin = new Vector2f(this.gameObject.transform.position);
-        rayCastBegin.sub(this.gameObject.transform.scale.x / 2.0f, this.gameObject.transform.scale.y - groundDetectRayLength);
+        rayCastBegin.sub(this.gameObject.transform.scale.x / 2.0f,  (this.gameObject.transform.scale.y / 2 + groundDetectRayLength));
 
         Vector2f rayCastEnd = new Vector2f(rayCastBegin);
         rayCastEnd.add(this.gameObject.transform.scale.x, 0.0f);

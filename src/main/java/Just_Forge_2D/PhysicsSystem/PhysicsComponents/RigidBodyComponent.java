@@ -5,6 +5,7 @@ import Just_Forge_2D.EditorSystem.MainWindow;
 import Just_Forge_2D.EditorSystem.Themes.Theme;
 import Just_Forge_2D.EditorSystem.Widgets;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
+import Just_Forge_2D.EntityComponentSystem.Components.TransformComponent;
 import Just_Forge_2D.PhysicsSystem.Enums.BodyType;
 import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.Logger;
@@ -51,10 +52,30 @@ public class RigidBodyComponent extends Component
         this.velocity.set(VELOCITY);
         if (rawBody == null)
         {
-            if (!isEditor) Logger.FORGE_LOG_ERROR("Cant set velocity on a null raw body");
+            Logger.FORGE_LOG_ERROR("Cant set velocity on a null raw body");
             return;
         }
         this.rawBody.setLinearVelocity(new Vec2(velocity.x, velocity.y));
+    }
+
+    public void setTransform(TransformComponent TRANSFORM)
+    {
+        if (rawBody == null)
+        {
+            Logger.FORGE_LOG_ERROR("Cant set velocity on a null raw body");
+            return;
+        }
+        this.rawBody.setTransform(new Vec2(TRANSFORM.position.x, TRANSFORM.position.y), TRANSFORM.rotation);
+    }
+
+    public void setTransform(Vector2f POSITION, float ROTATION)
+    {
+        if (rawBody == null)
+        {
+            Logger.FORGE_LOG_ERROR("Cant set velocity on a null raw body");
+            return;
+        }
+        this.rawBody.setTransform(new Vec2(POSITION.x, POSITION.y), ROTATION);
     }
 
 

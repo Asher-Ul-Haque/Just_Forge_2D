@@ -2,9 +2,7 @@ package Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider;
 
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.EditorSystem.Themes.Theme;
-import Just_Forge_2D.EntityComponentSystem.GameObject;
 import imgui.ImGui;
-import org.jbox2d.dynamics.contacts.Contact;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 
@@ -52,18 +50,6 @@ public class PolygonColliderComponent extends ColliderComponent
         {
             collider.debugDraw(this.gameObject, useCollisionColor ? new Vector3f(collisionColor.x, collisionColor.y, collisionColor.z) : new Vector3f(hitboxColor.x, hitboxColor.y, hitboxColor.z));
         }
-    }
-
-    @Override
-    public void beginCollision(GameObject OBJ, Contact CONTACT, Vector2f NORMAL)
-    {
-        useCollisionColor = true;
-    }
-
-    @Override
-    public void endCollision(GameObject OBJ, Contact CONTACT, Vector2f NORMAL)
-    {
-        useCollisionColor = false;
     }
 
     public List<CustomCollider> getColliders()

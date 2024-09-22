@@ -2,11 +2,9 @@ package Just_Forge_2D.ParticleSystem;
 
 import Just_Forge_2D.EntityComponentSystem.Components.CameraControlComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
-import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.BoxColliderComponent;
-import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.CircleColliderComponent;
-import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.CylinderColliderComponent;
+import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.*;
+import Just_Forge_2D.PhysicsSystem.PhysicsComponents.KeyboardControllerComponent;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent;
-import Just_Forge_2D.PhysicsSystem.PhysicsComponents.SimpleCharacterController;
 import Just_Forge_2D.Utils.Logger;
 
 public class ParticleGenerator
@@ -21,12 +19,14 @@ public class ParticleGenerator
         template.noSerialize();
         template.removeComponent(CameraControlComponent.class);
         template.removeComponent(ParticleSystemComponent.class);
-        template.removeComponent(SimpleCharacterController.class);
+        template.removeComponent(KeyboardControllerComponent.class);
         if (!KEEP_PHYSICS)
         {
             template.removeComponent(RigidBodyComponent.class);
             template.removeComponent(BoxColliderComponent.class);
             template.removeComponent(CircleColliderComponent.class);
+            template.removeComponent(PolygonColliderComponent.class);
+            template.removeComponent(EdgeColliderComponent.class);
             template.removeComponent(CylinderColliderComponent.class);
         }
         this.template = template;

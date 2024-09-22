@@ -12,6 +12,8 @@ import Just_Forge_2D.Utils.JsonHandlers.GameObjectJsonHandler;
 import Just_Forge_2D.Utils.Logger;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonParseException;
+import org.lwjgl.util.tinyfd.TinyFileDialogs;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -78,7 +80,17 @@ public class SceneSystemManager
         {
             int maxGoId = -1;
             int maxCompoId = -1;
-            GameObject[] objects = gson.fromJson(inFile, GameObject[].class);
+            GameObject[] objects;
+            try
+            {
+                objects = gson.fromJson(inFile, GameObject[].class);
+            }
+            catch (JsonParseException e)
+            {
+                Logger.FORGE_LOG_FATAL("Corrupted Scene File: " + SCENE.getSavePath());
+                TinyFileDialogs.tinyfd_notifyPopup("Failed to Load " + SCENE, "Corrupted Save File : \n" + SCENE.getSavePath() + "\n" + e.getMessage(), "error");
+                return;
+            }
             for (GameObject object : objects)
             {
                 if (!object.getSerializationStatus())
@@ -86,19 +98,19 @@ public class SceneSystemManager
                     Logger.FORGE_LOG_TRACE("Not loading: " + object.name);
                     continue;
                 }
-                SCENE.addGameObject(object);
-
                 for (Component component : object.getComponents())
                 {
                     maxCompoId = Math.max(maxCompoId, component.getUniqueID());
                 }
                 maxGoId = Math.max(maxGoId, object.getUniqueID());
+                SCENE.addGameObject(object);
             }
 
             maxGoId++;
             maxCompoId++;
             GameObject.init(maxGoId);
             Component.init(maxCompoId);
+
         }
     }
 
