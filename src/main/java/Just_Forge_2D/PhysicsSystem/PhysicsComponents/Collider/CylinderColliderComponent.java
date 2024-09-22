@@ -21,8 +21,8 @@ public class CylinderColliderComponent extends Component {
     private boolean debugDrawAtRuntime = false;
     private Vector4f hitboxColor = new Vector4f(1.0f, 0.0f, 0.0f, 1.0f);
     private Vector4f collisionColor = new Vector4f(0.0f, 1.0f, 0.0f, 1.0f);
-    public float width = 0.25f;
-    public float height = 0.25f;
+    public float width = 1f;
+    public float height = 1f;
     public Vector2f offset = new Vector2f();
 
     @Override
@@ -44,6 +44,7 @@ public class CylinderColliderComponent extends Component {
         bottomCircle.setOffset(new Vector2f(new Vector2f(offset).sub(0, boxHeight / 2f)));
         box.setHalfSize(new Vector2f(width, boxHeight));
         box.setOffset(new Vector2f(offset));
+        resetFixtures();
     }
 
 

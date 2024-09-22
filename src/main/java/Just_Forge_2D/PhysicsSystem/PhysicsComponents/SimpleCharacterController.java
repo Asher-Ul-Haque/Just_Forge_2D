@@ -64,8 +64,14 @@ public class SimpleCharacterController extends Component
         checkGrounded(DELTA_TIME);
 
         Vector2f moveInput = new Vector2f();
-        if (Keyboard.isKeyPressed(rightKey)) moveInput.x = 1.0f;
-        if (Keyboard.isKeyPressed(leftKey)) moveInput.x = -1.0f;
+        if (Keyboard.isKeyPressed(rightKey))
+        {
+            moveInput.x = 1.0f;
+        }
+        if (Keyboard.isKeyPressed(leftKey))
+        {
+            moveInput.x = -1.0f;
+        }
 
         if (isGrounded)
         {

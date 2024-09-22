@@ -2,9 +2,9 @@ package Just_Forge_2D.EntityComponentSystem.Components;
 
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.EditorSystem.Themes.Theme;
+import Just_Forge_2D.EditorSystem.Widgets;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
-import Just_Forge_2D.EditorSystem.Widgets;
 import Just_Forge_2D.Utils.Logger;
 import imgui.ImGui;
 import imgui.type.ImInt;
@@ -39,7 +39,7 @@ public abstract class Component
     {
         try
         {
-            if (ImGui.button("Destroy"))
+            if (ImGui.button("Destroy##" + this.getClass().hashCode()))
             {
                 this.gameObject.removeComponent(this.getClass());
             }

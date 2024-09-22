@@ -86,24 +86,25 @@ public class PhysicsSystemManager
                 ColliderManager.addCircleCollider(rb, circleCollider);
                 body.resetMassData();
             }
-            if (boxCollider != null)
+            else if (boxCollider != null)
             {
                 ColliderManager.addBoxCollider(rb, boxCollider);
                 body.resetMassData();
             }
-            if (pillCollider != null)
+            else if (pillCollider != null)
             {
                 ColliderManager.addCylinderCollider(rb, pillCollider);
                 body.resetMassData();
             }
-            if (polygonColliderComponent != null)
+            else if (polygonColliderComponent != null)
             {
                 ColliderManager.addCustomCollider(rb, polygonColliderComponent);
                 body.resetMassData();
             }
-            if (edgeColliderComponent != null)
+            else if (edgeColliderComponent != null)
             {
                 ColliderManager.addEdgeCollider(rb, edgeColliderComponent);
+                body.resetMassData();
             }
 
             Logger.FORGE_LOG_DEBUG("Linked Box2D with " + OBJ);

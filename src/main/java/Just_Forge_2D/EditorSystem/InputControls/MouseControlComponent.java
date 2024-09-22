@@ -52,8 +52,11 @@ public class MouseControlComponent extends Component
             holdingObject.destroy();
         }
         holdingObject = GO;
-        originalColor.set(holdingObject.getCompoent(SpriteComponent.class).getColor());
-        holdingObject.getCompoent(SpriteComponent.class).setColor(new Vector4f(0.8f, 0.8f, 0.0f, 0.5f));
+        if (holdingObject.hasComponent(SpriteComponent.class))
+        {
+            originalColor.set(holdingObject.getCompoent(SpriteComponent.class).getColor());
+            holdingObject.getCompoent(SpriteComponent.class).setColor(new Vector4f(0.8f, 0.8f, 0.0f, 0.5f));
+        }
         holdingObject.addComponent(new NonPickableComponent());
         MainWindow.getCurrentScene().addGameObject(GO);
         Logger.FORGE_LOG_DEBUG("Picked up object: "+ holdingObject);
@@ -67,7 +70,7 @@ public class MouseControlComponent extends Component
         {
             newObj.getCompoent(AnimationComponent.class).refreshTextures();
         }
-        newObj.getCompoent(SpriteComponent.class).setColor(originalColor);
+        if (newObj.hasComponent(SpriteComponent.class)) newObj.getCompoent(SpriteComponent.class).setColor(originalColor);
         newObj.removeComponent(NonPickableComponent.class);
         MainWindow.getCurrentScene().addGameObject(newObj);
     }

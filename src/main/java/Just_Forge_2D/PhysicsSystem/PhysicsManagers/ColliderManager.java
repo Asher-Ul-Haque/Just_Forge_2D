@@ -14,9 +14,9 @@ import org.joml.Vector2f;
 
 public class ColliderManager
 {
-    public static PolygonShape debugShape;
     public static void addBoxCollider(RigidBodyComponent RB, BoxColliderComponent COLLIDER)
     {
+        resetAll(RB);
         Body body = RB.getRawBody();
         if (body == null)
         {
@@ -40,6 +40,7 @@ public class ColliderManager
 
     public static void addCircleCollider(RigidBodyComponent RB, CircleColliderComponent COLLIDER)
     {
+        resetAll(RB);
         Body body = RB.getRawBody();
         if (body == null)
         {
@@ -69,9 +70,43 @@ public class ColliderManager
             return;
         }
 
-        addBoxCollider(RB, COLLIDER.getBox());
-        addCircleCollider(RB, COLLIDER.getTopCircle());
-        addCircleCollider(RB, COLLIDER.getBottomCircle());
+        CircleShape shape = new CircleShape();
+        shape.setRadius(COLLIDER.getBottomCircle().getRadius());
+        shape.m_p.set(COLLIDER.getBottomCircle().getOffset().x, COLLIDER.getBottomCircle().getOffset().y);
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = shape;
+        fixtureDef.density = RB.getDensity();
+        fixtureDef.friction = RB.getFrictionCoefficient();
+        fixtureDef.restitution = RB.getRestitutionCoefficient();
+        fixtureDef.userData = COLLIDER.gameObject;
+        fixtureDef.isSensor = RB.isSensor();
+        body.createFixture(fixtureDef);
+
+        CircleShape shape1 = new CircleShape();
+        shape.setRadius(COLLIDER.getTopCircle().getRadius());
+        shape.m_p.set(COLLIDER.getTopCircle().getOffset().x, COLLIDER.getTopCircle().getOffset().y);
+        fixtureDef = new FixtureDef();
+        fixtureDef.shape = shape1;
+        fixtureDef.density = RB.getDensity();
+        fixtureDef.friction = RB.getFrictionCoefficient();
+        fixtureDef.restitution = RB.getRestitutionCoefficient();
+        fixtureDef.userData = COLLIDER.gameObject;
+        fixtureDef.isSensor = RB.isSensor();
+        body.createFixture(fixtureDef);
+
+        PolygonShape shape2 = new PolygonShape();
+        Vector2f halfSize = new Vector2f(COLLIDER.getBox().getHalfSize()).mul(0.5f); // Dont ask me why half. I fine tuned in testing
+        Vector2f offset = COLLIDER.getBox().getOffset();
+        Vector2f origin = new Vector2f(COLLIDER.getBox().getOrigin());
+        shape2.setAsBox(halfSize.x, halfSize.y, new Vec2(offset.x, offset.y), 0);
+
+        fixtureDef = new FixtureDef();
+        fixtureDef.shape = shape;
+        fixtureDef.density = RB.getDensity();
+        fixtureDef.friction = RB.getFrictionCoefficient();
+        fixtureDef.userData = COLLIDER.gameObject;
+        fixtureDef.isSensor = RB.isSensor();
+        body.createFixture(fixtureDef);
     }
 
     public static void resetCircleCollider(RigidBodyComponent RB, CircleColliderComponent COLLIDER)
@@ -150,7 +185,6 @@ public class ColliderManager
             }
 
             shape.set(physicsVertices, physicsVertices.length);
-            debugShape = shape;
 
             FixtureDef fixtureDef = new FixtureDef();
             fixtureDef.shape = shape;
@@ -217,8 +251,19 @@ public class ColliderManager
         return size;
     }
 
-    public static PolygonShape getDebugShape()
+    public static void resetAll(RigidBodyComponent RB)
     {
-        return debugShape;
+        Body body = RB.getRawBody();
+        if (body == null) {
+            Logger.FORGE_LOG_ERROR("Tried to reset Convex Collider on a null physics body");
+            return;
+        }
+
+        int size = fixtureListSize(body);
+        for (int i = 0; i < size; ++i)
+        {
+            body.destroyFixture(body.getFixtureList());
+        }
+        body.resetMassData();
     }
 }

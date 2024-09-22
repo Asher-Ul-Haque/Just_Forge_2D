@@ -45,6 +45,16 @@ public class ComponentsWindow
                     for (Class<? extends Component> type : ComponentList.types)
                     {
                         if (activeGameObject.getCompoent(type) != null) continue;
+                        boolean flag = false;
+                        for (Component c : activeGameObject.getComponents())
+                        {
+                            if (c.getClass().getSimpleName().endsWith("ColliderComponent") && type.getSimpleName().endsWith("ColliderComponent"))
+                            {
+                                flag = true;
+                                break;
+                            }
+                        }
+                        if (flag) continue;
                         if (ImGui.menuItem(type.getSimpleName()))
                         {
                             try
