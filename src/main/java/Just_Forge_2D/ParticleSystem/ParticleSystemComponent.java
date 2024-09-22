@@ -65,7 +65,8 @@ public class ParticleSystemComponent extends Component implements Observer
         particles = new ArrayList<>(maxParticles);
     }
 
-    private void debugDraw()
+    @Override
+    public void debugDraw()
     {
         Vector2f center = this.gameObject.transform.position;
         Vector3f debuColor = new Vector3f(debugColor.x, debugColor.y, debugColor.z);

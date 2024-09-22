@@ -31,7 +31,7 @@ Collapsed=0
 
 [Window][Game Viewport]
 Pos=284,28
-Size=699,465
+Size=507,465
 Collapsed=0
 DockId=0x00000004,0
 
@@ -68,7 +68,7 @@ Collapsed=0
 
 [Window][Camera Controls]
 Pos=284,495
-Size=699,225
+Size=507,225
 Collapsed=0
 DockId=0x0000000C,0
 
@@ -80,13 +80,13 @@ DockId=0x00000004,0
 
 [Window][FPS]
 Pos=284,495
-Size=699,225
+Size=507,225
 Collapsed=0
 DockId=0x0000000C,2
 
 [Window][Grid Controls]
 Pos=284,495
-Size=699,225
+Size=507,225
 Collapsed=0
 DockId=0x0000000C,1
 
@@ -118,23 +118,23 @@ Size=405,40
 Collapsed=0
 
 [Window][Components]
-Pos=985,28
-Size=377,692
+Pos=793,28
+Size=569,692
 Collapsed=0
 DockId=0x0000000D,0
 
 [Docking][Data]
 DockSpace           ID=0x6D3A3A6E Window=0x091AB4BE Pos=4,28 Size=1358,692 Split=X
-  DockNode          ID=0x00000002 Parent=0x6D3A3A6E SizeRef=979,692 Split=X
+  DockNode          ID=0x00000002 Parent=0x6D3A3A6E SizeRef=787,692 Split=X
     DockNode        ID=0x00000007 Parent=0x00000002 SizeRef=278,692 Split=Y Selected=0x601E4255
       DockNode      ID=0x00000009 Parent=0x00000007 SizeRef=286,346 Selected=0x601E4255
       DockNode      ID=0x0000000A Parent=0x00000007 SizeRef=286,344 Selected=0x9A68760C
-    DockNode        ID=0x00000008 Parent=0x00000002 SizeRef=699,692 Split=Y
+    DockNode        ID=0x00000008 Parent=0x00000002 SizeRef=507,692 Split=Y
       DockNode      ID=0x0000000B Parent=0x00000008 SizeRef=1358,285 Split=X
         DockNode    ID=0x00000005 Parent=0x0000000B SizeRef=779,700 Split=X
           DockNode  ID=0x00000003 Parent=0x00000005 SizeRef=975,700 Selected=0xA9416207
           DockNode  ID=0x00000004 Parent=0x00000005 SizeRef=220,700 CentralNode=1 HiddenTabBar=1 Selected=0xAE7BB42F
         DockNode    ID=0x00000006 Parent=0x0000000B SizeRef=93,700 Selected=0xC89E3217
       DockNode      ID=0x0000000C Parent=0x00000008 SizeRef=1358,225 Selected=0x1026710E
-  DockNode          ID=0x0000000D Parent=0x6D3A3A6E SizeRef=377,692 Selected=0xA115F62D
+  DockNode          ID=0x0000000D Parent=0x6D3A3A6E SizeRef=569,692 Selected=0xA115F62D
 

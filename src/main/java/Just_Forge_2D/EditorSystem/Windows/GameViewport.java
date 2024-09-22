@@ -18,7 +18,7 @@ public class GameViewport
 
     public static void render()
     {
-        ImGui.begin("Game Viewport", ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoScrollWithMouse | ImGuiWindowFlags.NoTitleBar);
+        ImGui.begin("Game Viewport", ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoScrollWithMouse | ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.NoDecoration);
 
         ImVec2 windowSize = getLargestSizeForViewport();
         ImVec2 windowPos = getCenteredPositionForViewport(windowSize);

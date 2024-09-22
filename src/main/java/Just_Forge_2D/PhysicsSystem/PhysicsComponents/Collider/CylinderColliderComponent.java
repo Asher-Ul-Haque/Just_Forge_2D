@@ -1,28 +1,24 @@
 package Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider;
 
+import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.EditorSystem.MainWindow;
-import Just_Forge_2D.EntityComponentSystem.Components.Component;
-import Just_Forge_2D.EntityComponentSystem.GameObject;
+import Just_Forge_2D.EditorSystem.Themes.Theme;
+import Just_Forge_2D.EditorSystem.Widgets;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent;
 import Just_Forge_2D.PhysicsSystem.PhysicsManagers.ColliderManager;
 import Just_Forge_2D.RenderingSystem.DebugPencil;
-import org.jbox2d.dynamics.contacts.Contact;
+import imgui.ImGui;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
-import org.joml.Vector4f;
 
-public class CylinderColliderComponent extends Component {
+public class CylinderColliderComponent extends ColliderComponent
+{
     private transient CircleColliderComponent topCircle = new CircleColliderComponent();
     private transient CircleColliderComponent bottomCircle = new CircleColliderComponent();
     private transient BoxColliderComponent box = new BoxColliderComponent();
     private transient boolean resetFixtureNextFrame = false;
     private boolean autoScale = true;
-    private transient boolean useCollisionColor = false;
-    private boolean debugDrawAtRuntime = false;
-    private Vector4f hitboxColor = new Vector4f(1.0f, 0.0f, 0.0f, 1.0f);
-    private Vector4f collisionColor = new Vector4f(0.0f, 1.0f, 0.0f, 1.0f);
-    public float width = 1f;
-    public float height = 1f;
+    public Vector2f scale = new Vector2f();
     public Vector2f offset = new Vector2f();
 
     @Override
@@ -31,18 +27,20 @@ public class CylinderColliderComponent extends Component {
         this.topCircle.gameObject = this.gameObject;
         this.bottomCircle.gameObject = this.gameObject;
         this.box.gameObject = this.gameObject;
+        this.scale.x = this.gameObject.transform.scale.x;
+        this.scale.y = this.gameObject.transform.scale.y;
         recalculateColliders();
     }
 
     public void recalculateColliders()
     {
-        float circleRadius = width / 2.0f;
-        float boxHeight = height - (2 * circleRadius);
+        float circleRadius = this.scale.x / 2.0f;
+        float boxHeight = this.scale.y - (2 * circleRadius);
         topCircle.setRadius(circleRadius);
         bottomCircle.setRadius(circleRadius);
         topCircle.setOffset(new Vector2f(new Vector2f(offset).add(0, boxHeight / 2f)));
         bottomCircle.setOffset(new Vector2f(new Vector2f(offset).sub(0, boxHeight / 2f)));
-        box.setHalfSize(new Vector2f(width, boxHeight));
+        box.setHalfSize(new Vector2f(this.scale.x, boxHeight));
         box.setOffset(new Vector2f(offset));
         resetFixtures();
     }
@@ -82,14 +80,14 @@ public class CylinderColliderComponent extends Component {
 
     public void setWidth(float WIDTH)
     {
-        this.width = WIDTH;
+        this.scale.set(WIDTH, this.scale.y);
         recalculateColliders();
         resetFixtures();
     }
 
     public void setHeight(float HEIGHT)
     {
-        this.height = HEIGHT;
+        this.scale.set(this.scale.x, HEIGHT);
         recalculateColliders();
         resetFixtures();
     }
@@ -97,7 +95,7 @@ public class CylinderColliderComponent extends Component {
     @Override
     public void update(float DELTA_TIME)
     {
-        if (debugDrawAtRuntime)
+        if (this.debugDrawAtRuntime)
         {
             displayHitBox();
         }
@@ -162,18 +160,14 @@ public class CylinderColliderComponent extends Component {
     public void editorGUI()
     {
         super.editorGUI();
+        Theme.setDefaultTextColor(EditorSystemManager.getCurrentTheme().secondaryColor);
+        if (ImGui.checkbox("Auto Scale", this.autoScale))
+        {
+            this.autoScale = !this.autoScale;
+        }
+        Theme.resetDefaultTextColor();
+        Widgets.drawVec2Control("Scale", this.scale);
+        Widgets.drawVec2Control("Offset", this.offset);
         recalculateColliders();
-    }
-
-    @Override
-    public void beginCollision(GameObject OBJ, Contact CONTACT, Vector2f NORMAL)
-    {
-        useCollisionColor = true;
-    }
-
-    @Override
-    public void endCollision(GameObject OBJ, Contact CONTACT, Vector2f NORMAL)
-    {
-        useCollisionColor = false;
     }
 }

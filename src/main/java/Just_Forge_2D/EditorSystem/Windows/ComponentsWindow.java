@@ -42,19 +42,16 @@ public class ComponentsWindow
                     String message = "Add Component";
                     ImGui.setCursorPosX((ImGui.getContentRegionAvailX() - ImGui.calcTextSize(message).x) / 2f);
                     ImGui.text(message);
+                    int delay = 2;
                     for (Class<? extends Component> type : ComponentList.types)
                     {
                         if (activeGameObject.getCompoent(type) != null) continue;
-                        boolean flag = false;
-                        for (Component c : activeGameObject.getComponents())
+                        if (delay-- == 0)
                         {
-                            if (c.getClass().getSimpleName().endsWith("ColliderComponent") && type.getSimpleName().endsWith("ColliderComponent"))
-                            {
-                                flag = true;
-                                break;
-                            }
+                            ImGui.separator();
+                            delay = 2;
                         }
-                        if (flag) continue;
+
                         if (ImGui.menuItem(type.getSimpleName()))
                         {
                             try

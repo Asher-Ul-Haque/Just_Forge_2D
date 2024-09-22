@@ -31,6 +31,7 @@ public abstract class Component
     public void editorUpdate(float DELTA_TIME){}
     public void start(){}
     public void destroy(){}
+    public void debugDraw(){}
 
 
     // - - - Editor Part - - -
@@ -43,13 +44,14 @@ public abstract class Component
             {
                 this.gameObject.removeComponent(this.getClass());
             }
-            Field[] fields = this.getClass().getDeclaredFields();
+            Field[] fields = this.getClass().getFields();
             for (Field field : fields)
             {
                 boolean isPrivate = Modifier.isPrivate(field.getModifiers());
+                boolean isProtected = Modifier.isProtected(field.getModifiers());
                 boolean isTransient = Modifier.isTransient(field.getModifiers());
                 if (isTransient) continue;
-                if (isPrivate)
+                if (isPrivate || isProtected)
                 {
                     field.setAccessible(true);
                 }
@@ -100,7 +102,8 @@ public abstract class Component
                     String[] enumValues = getEnumValues((Class<Enum>) type);
                     String enumType = ((Enum) value).name();
                     ImInt index = new ImInt(indexOf(enumType, enumValues));
-                    if (ImGui.combo(field.getName(), index, enumValues, enumValues.length)) {
+                    if (ImGui.combo(field.getName(), index, enumValues, enumValues.length))
+                    {
                         field.set(this, type.getEnumConstants()[index.get()]);
                     }
                 }

@@ -86,22 +86,22 @@ public class PhysicsSystemManager
                 ColliderManager.addCircleCollider(rb, circleCollider);
                 body.resetMassData();
             }
-            else if (boxCollider != null)
+            if (boxCollider != null)
             {
                 ColliderManager.addBoxCollider(rb, boxCollider);
                 body.resetMassData();
             }
-            else if (pillCollider != null)
+            if (pillCollider != null)
             {
                 ColliderManager.addCylinderCollider(rb, pillCollider);
                 body.resetMassData();
             }
-            else if (polygonColliderComponent != null)
+            if (polygonColliderComponent != null)
             {
                 ColliderManager.addCustomCollider(rb, polygonColliderComponent);
                 body.resetMassData();
             }
-            else if (edgeColliderComponent != null)
+            if (edgeColliderComponent != null)
             {
                 ColliderManager.addEdgeCollider(rb, edgeColliderComponent);
                 body.resetMassData();

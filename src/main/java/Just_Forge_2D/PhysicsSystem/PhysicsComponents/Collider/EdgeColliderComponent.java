@@ -2,26 +2,18 @@ package Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider;
 
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.EditorSystem.Themes.Theme;
-import Just_Forge_2D.EntityComponentSystem.Components.Component;
-import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.RenderingSystem.DebugPencil;
 import Just_Forge_2D.Utils.ForgeMath;
 import imgui.ImGui;
-import org.jbox2d.dynamics.contacts.Contact;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
-import org.joml.Vector4f;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class EdgeColliderComponent extends Component
+public class EdgeColliderComponent extends ColliderComponent
 {
     private List<EdgeCollider> colliders = new ArrayList<>();
-    private boolean debugDrawAtRuntime = false;
-    private transient boolean useCollisionColor = false;
-    private Vector4f hitboxColor = new Vector4f(1.0f, 0.0f, 0.0f, 1.0f);
-    private Vector4f collisionColor = new Vector4f(0.0f, 1.0f, 0.0f, 1.0f);
 
     public void addCollider()
     {
@@ -39,21 +31,7 @@ public class EdgeColliderComponent extends Component
     }
 
     @Override
-    public void update(float DELTA_TIME)
-    {
-        if (debugDrawAtRuntime)
-        {
-            debugDraw();
-        }
-    }
-
-    @Override
-    public void editorUpdate(float DELTA_TIME)
-    {
-        debugDraw();
-    }
-
-    private void debugDraw()
+    public void debugDraw()
     {
         for (EdgeCollider collider : colliders)
         {
@@ -61,20 +39,8 @@ public class EdgeColliderComponent extends Component
             Vector2f end = new Vector2f(collider.getEdgeEnd()).add(this.gameObject.transform.position);
             ForgeMath.rotate(start, this.gameObject.transform.rotation, this.gameObject.transform.position);
             ForgeMath.rotate(end, this.gameObject.transform.rotation, this.gameObject.transform.position);
-            DebugPencil.addLine(start, end, useCollisionColor ? new Vector3f(collisionColor.x, collisionColor.y, collisionColor.z) : new Vector3f(hitboxColor.x, hitboxColor.y, hitboxColor.z));
+            DebugPencil.addLine(start, end, this.useCollisionColor ? new Vector3f(collisionColor.x, collisionColor.y, collisionColor.z) : new Vector3f(hitboxColor.x, hitboxColor.y, hitboxColor.z));
         }
-    }
-
-    @Override
-    public void beginCollision(GameObject OBJ, Contact CONTACT, Vector2f NORMAL)
-    {
-        useCollisionColor = true;
-    }
-
-    @Override
-    public void endCollision(GameObject OBJ, Contact CONTACT, Vector2f NORMAL)
-    {
-        useCollisionColor = false;
     }
 
     public List<EdgeCollider> getColliders()

@@ -136,14 +136,23 @@ public class CustomCollider extends Component
             setVertex(i, copy);
         }
 
+        ArrayList<Vector2f> previousVertices = new ArrayList<>(this.vertices);
         if (vertices.size() < 8 && ImGui.button("Add Vertex##" + this.toString()))
         {
             resetToRegularPolygon(vertices.size() + 1);
+            for (int i = 0; i < previousVertices.size(); ++i)
+            {
+                setVertex(i, previousVertices.get(i));
+            }
         }
 
         if (vertices.size() > 3 && ImGui.button("Remove Vertex##"  + toString()))
         {
             resetToRegularPolygon(vertices.size() - 1);
+            for (int i = 0; i < vertices.size() - 1; ++i)
+            {
+                setVertex(i, previousVertices.get(i));
+            }
         }
 
         if (ImGui.button("Reset To Regular Polygon##"  + toString()))
@@ -152,7 +161,7 @@ public class CustomCollider extends Component
         }
     }
 
-    private void resetToRegularPolygon(int SIDES)
+    public void resetToRegularPolygon(int SIDES)
     {
         vertices.clear();
         float radius = 1.0f;
