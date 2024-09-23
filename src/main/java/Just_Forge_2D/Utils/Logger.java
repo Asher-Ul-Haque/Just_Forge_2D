@@ -198,6 +198,7 @@ public class Logger
 
     public static void finish()
     {
+        if (EditorSystemManager.isRelease) return;
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(LOG_FILE_PATH.toString(), true)))
         {
             for (String m : writeBuffer)

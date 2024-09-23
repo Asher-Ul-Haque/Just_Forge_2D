@@ -138,8 +138,10 @@ public class Window implements Observer
     public void maximize()
     {
         Logger.FORGE_LOG_DEBUG("Maximizing " + this.config.title);
-        glfwMaximizeWindow(this.glfwWindowPtr);
-        this.restore();
+        boolean isWindows = System.getProperty("os.name").toLowerCase().contains("win");
+        if (isWindows) setSize(WindowSystemManager.getMonitorSize().x + WindowSystemManager.getDecorationSize(this)[2], WindowSystemManager.getMonitorSize().y + WindowSystemManager.getDecorationSize(this)[1]);
+        else setSize(WindowSystemManager.getMonitorSize().x, WindowSystemManager.getMonitorSize().y);
+        setPosition(0, 0);
     }
 
     public void minimize()

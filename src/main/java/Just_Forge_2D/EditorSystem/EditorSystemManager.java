@@ -147,5 +147,6 @@ public class EditorSystemManager
     {
         AudioSystemManager.terminate();
         ImGUIManager.destroyImGui();
+        Logger.finish();
     }
 }
