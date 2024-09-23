@@ -162,8 +162,8 @@ public class ParticleSystemComponent extends Component implements Observer
 
     private void clamp()
     {
-        fanStart = Math.max(0f, Math.min(fanEnd, fanStart));
-        fanEnd = (float) Math.max(fanStart, Math.min(2 * Math.PI, fanEnd));
+        fanStart = Math.min(fanEnd, fanStart);
+        fanEnd = Math.max(fanStart, fanEnd);
         maxLifespan = Math.max(0.001f, maxLifespan);
         minLifespan = Math.max(Math.min(maxLifespan, minLifespan), 0f);
         maxSpeed = Math.max(0f, maxSpeed);

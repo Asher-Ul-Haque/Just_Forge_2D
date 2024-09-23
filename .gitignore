@@ -12,6 +12,7 @@ logs/*
 .gradle/*
 uiPreview.svg
 tilesets.svg
+README.md
 
 
 ### IntelliJ IDEA ###

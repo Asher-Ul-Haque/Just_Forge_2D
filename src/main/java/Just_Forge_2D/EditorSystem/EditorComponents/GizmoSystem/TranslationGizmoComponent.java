@@ -22,11 +22,11 @@ public class TranslationGizmoComponent extends GizmoComponent
         {
             if (xAxisActive && !yAxisActive)
             {
-                activeGameObject.transform.position.x -= Mouse.getWorldDeltaX();
+                activeGameObject.transform.position.x = Mouse.getWorldX();
             }
             else if (yAxisActive && !xAxisActive)
             {
-                activeGameObject.transform.position.y -= Mouse.getWorldDeltaY();
+                activeGameObject.transform.position.y = Mouse.getWorldY();
             }
         }
         super.editorUpdate(DELTA_TIME);
