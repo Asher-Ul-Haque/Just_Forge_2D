@@ -252,6 +252,7 @@ public class ImGUIManager
                 FPSGraph.render();
                 GridControls.render();
                 AssetPoolDisplay.render();
+                Logs.render();
                 PrefabManager.render();
                 ImGui.end();
 
