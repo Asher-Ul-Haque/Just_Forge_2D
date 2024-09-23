@@ -9,7 +9,6 @@ import Just_Forge_2D.EntityComponentSystem.Components.ComponentList;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.Utils.Logger;
 import imgui.ImGui;
-import imgui.type.ImString;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,6 +20,10 @@ public class SceneHierarchyWindow
 
     private static final Map<Class<? extends Component>, Boolean> componentFilters = new HashMap<>();
     private static String nameFilter = "";
+    private static List<GameObject> gameObjectList;
+
+//    private static boolean selectedAll = false;
+//    private static boolean deselectedAll = false;
 
     public static void editorGUI()
     {
@@ -32,7 +35,28 @@ public class SceneHierarchyWindow
         Theme.setDefaultTextColor(EditorSystemManager.getCurrentTheme().secondaryColor);
         ImGui.text("Filter by components:");
         ImGui.beginChild("##ComponentFilterChild", ImGui.getContentRegionAvailX(), 200, true);
+        Theme.resetDefaultTextColor();
 
+        /*if (ImGui.button("Select All"))
+        {
+            for (Class<? extends Component> componentClass : ComponentList.types)
+            {
+                componentFilters.put(componentClass, true);
+            }
+            selectedAll = true;
+            deselectedAll = false;
+        }
+        ImGui.sameLine();
+        if (ImGui.button("Deselect All"))
+        {
+            for (Class<? extends Component> componentClass : ComponentList.types)
+            {
+                componentFilters.put(componentClass, false);
+            }
+            selectedAll = false;
+            deselectedAll = true;
+        }*/
+        Theme.setDefaultTextColor(EditorSystemManager.getCurrentTheme().secondaryColor);
         for (Class<? extends Component> componentClass : ComponentList.types)
         {
             boolean isSelected = componentFilters.getOrDefault(componentClass, false);
@@ -53,7 +77,6 @@ public class SceneHierarchyWindow
             }
         }
 
-        List<GameObject> gameObjectList;
         if (selectedComponents.isEmpty() && nameFilter.isEmpty())
         {
             gameObjectList = MainWindow.getCurrentScene().getGameObjects();
@@ -73,9 +96,7 @@ public class SceneHierarchyWindow
 
         Theme.resetDefaultTextColor();
 
-//        if (ImGui.button("Select All")) {}
-//        ImGui.sameLine();
-//        if (ImGui.button("Deselect All")) { ComponentsWindow.clearSelection(); }
+
         for (int i = 0; i < gameObjectList.size(); ++i)
         {
             GameObject obj = gameObjectList.get(i);
@@ -98,5 +119,10 @@ public class SceneHierarchyWindow
             }
         }
         ImGui.end();
+    }
+
+    public static List<GameObject> gameObjectList()
+    {
+        return gameObjectList;
     }
 }

@@ -2,8 +2,6 @@ package Just_Forge_2D.InputSystem;
 
 import Just_Forge_2D.Utils.Logger;
 
-import java.util.Arrays;
-
 import static org.lwjgl.glfw.GLFW.*;
 
 
@@ -85,5 +83,17 @@ public class Keyboard
             if (b) return b;
         }
         return false;
+    }
+
+    public static void reset()
+    {
+        for (boolean b : keyboard.isKeyPressed)
+        {
+            b = false;
+        }
+        for (boolean b : keyboard.isKeyBeginPress)
+        {
+            b = false;
+        }
     }
 }

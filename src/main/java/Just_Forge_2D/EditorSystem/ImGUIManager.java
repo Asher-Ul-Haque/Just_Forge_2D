@@ -1,12 +1,13 @@
 package Just_Forge_2D.EditorSystem;
 
+import Just_Forge_2D.EditorSystem.InputControls.KeyboardControls;
 import Just_Forge_2D.EditorSystem.Themes.ConfigFlags;
 import Just_Forge_2D.EditorSystem.Windows.*;
-import Just_Forge_2D.EditorSystem.InputControls.KeyboardControls;
+import Just_Forge_2D.InputSystem.Keyboard;
+import Just_Forge_2D.InputSystem.Mouse;
 import Just_Forge_2D.PrefabSystem.PrefabManager;
 import Just_Forge_2D.SceneSystem.Scene;
 import Just_Forge_2D.Utils.Logger;
-import Just_Forge_2D.InputSystem.*;
 import imgui.*;
 import imgui.callback.ImStrConsumer;
 import imgui.callback.ImStrSupplier;
@@ -242,6 +243,7 @@ public class ImGUIManager
             case isEditor:
                 if (ConfigFlags.dockingEnable) setupDockSpace();
                 KeyboardControls.editorUpdate();
+                SceneHierarchyWindow.editorGUI();
                 SCENE.editorGUI();
                 GameViewport.render();
                 ComponentsWindow.render();
@@ -250,7 +252,6 @@ public class ImGUIManager
                 FPSGraph.render();
                 GridControls.render();
                 AssetPoolDisplay.render();
-                SceneHierarchyWindow.editorGUI();
                 PrefabManager.render();
                 ImGui.end();
 

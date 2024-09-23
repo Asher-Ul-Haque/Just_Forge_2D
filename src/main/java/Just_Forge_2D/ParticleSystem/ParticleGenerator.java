@@ -9,7 +9,7 @@ import Just_Forge_2D.Utils.Logger;
 
 public class ParticleGenerator
 {
-    private final GameObject template;
+    private GameObject template;
     private final int index = 0;
 
     public ParticleGenerator(GameObject TEMPLATE, boolean KEEP_PHYSICS)
@@ -37,4 +37,5 @@ public class ParticleGenerator
     {
         return new Particle(this.template.copy());
     }
+
 }

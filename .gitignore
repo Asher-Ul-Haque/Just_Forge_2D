@@ -8,6 +8,7 @@ build/
 .idea/
 .idea/*
 build/*
+logs/*
 .gradle/*
 uiPreview.svg
 tilesets.svg

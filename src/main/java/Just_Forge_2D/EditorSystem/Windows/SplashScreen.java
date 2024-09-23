@@ -170,21 +170,30 @@ public class SplashScreen
         if (!compiling)
         {
             Logger.FORGE_LOG_TRACE("Compiling");
-            GameManager.buildUserCode();
+            compiling = true;
             Logger.FORGE_LOG_TRACE("Building user code");
-            if (EditorSystemManager.currentSceneInitializer == null)
+            GameManager.buildUserCode();
+            compiling = true;
+            if (GameManager.isSuccess())
             {
-                EditorSystemManager.setCurrentSceneInitializer(EmptySceneInitializer.class);
+                if (EditorSystemManager.currentSceneInitializer == null)
+                {
+                    EditorSystemManager.setCurrentSceneInitializer(EmptySceneInitializer.class);
+                }
+                MainWindow.get().setVisible(false);
+                Logger.FORGE_LOG_TRACE("Project Path : " + EditorSystemManager.projectDir);
+                EditorSystemManager.setCurrentState(EditorSystemManager.state.isEditor);
+                MainWindow.get().setSize(WindowSystemManager.getMonitorSize().x, WindowSystemManager.getMonitorSize().y);
+                MainWindow.get().setPosition(0, 0);
+                MainWindow.get().setVisible(true);
+                if (EditorSystemManager.isRelease) EventManager.notify(null, new Event(EventTypes.ForgeStart));
+                else EventManager.notify(null, new Event(EventTypes.ForgeStop));
             }
-            MainWindow.get().setVisible(false);
-            Logger.FORGE_LOG_TRACE("Project Path : " + EditorSystemManager.projectDir);
-            EditorSystemManager.setCurrentState(EditorSystemManager.state.isEditor);
-            MainWindow.get().setSize(WindowSystemManager.getMonitorSize().x, WindowSystemManager.getMonitorSize().y);
-            MainWindow.get().setPosition(0, 0);
-            MainWindow.get().setVisible(true);
-            if (EditorSystemManager.isRelease) EventManager.notify(null, new Event(EventTypes.ForgeStart));
-            else EventManager.notify(null, new Event(EventTypes.ForgeStop));
+            else
+            {
+                timer = 0f;
+                compiling = false;
+            }
         }
-        compiling = true;
     }
 }

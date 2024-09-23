@@ -41,16 +41,17 @@ public class ParticleSystemComponent extends Component implements Observer
     private boolean useOnce = false;
     private Vector2f offset = new Vector2f();
     private int particleLayer;
+    private transient GameObject generatorTemplate = null;
 
     private Vector2f generateVelocity()
     {
         float randomAngle = randomizer.nextFloat(fanStart, fanEnd + 0.0001f);
-        return new Vector2f((float) Math.cos(randomAngle), (float) Math.sin(randomAngle)).normalize().mul(randomizer.nextFloat(minSpeed, maxSpeed + 0.0001f));
+        return new Vector2f((float) Math.cos(randomAngle), (float) Math.sin(randomAngle)).normalize().mul(randomizer.nextFloat(minSpeed, maxSpeed + 0.1f));
     }
 
     public Vector2f generateSize()
     {
-        return new Vector2f(randomizer.nextFloat(minSize.x, maxSize.x + 0.001f), randomizer.nextFloat(minSize.y, maxSize.y + 0.001f));
+        return new Vector2f(randomizer.nextFloat(minSize.x, maxSize.x + 0.001f), randomizer.nextFloat(minSize.y, maxSize.y + 0.1f));
     }
 
     public ParticleSystemComponent()
@@ -101,6 +102,7 @@ public class ParticleSystemComponent extends Component implements Observer
             RigidBodyComponent rb = PARTICLE.core.getCompoent(RigidBodyComponent.class);
             rb.setTransform(PARTICLE.core.transform);
             rb.addImpulse(PARTICLE.velocity);
+            rb.setAngularVelocity(PARTICLE.angularVelocity);
             rb.addTorque(PARTICLE.angularVelocity);
         }
     }
@@ -109,7 +111,11 @@ public class ParticleSystemComponent extends Component implements Observer
     @Override
     public void start()
     {
-        generator = new ParticleGenerator(this.gameObject, keepPhysics);
+        if (generatorTemplate == null)
+        {
+            generatorTemplate = this.gameObject;
+        }
+        generator = new ParticleGenerator(generatorTemplate, keepPhysics);
 
         randomizer = new Random(this.gameObject.getUniqueID());
         for (int i = particles.size(); i < maxParticles; ++i)
@@ -153,12 +159,15 @@ public class ParticleSystemComponent extends Component implements Observer
         clamp();
     }
 
+
     private void clamp()
     {
         fanStart = Math.max(0f, Math.min(fanEnd, fanStart));
         fanEnd = (float) Math.max(fanStart, Math.min(2 * Math.PI, fanEnd));
         maxLifespan = Math.max(0.001f, maxLifespan);
         minLifespan = Math.max(Math.min(maxLifespan, minLifespan), 0f);
+        maxSpeed = Math.max(0f, maxSpeed);
+        minSpeed = Math.max(Math.min(minSpeed, maxSpeed), 0f);
     }
 
     @Override
@@ -175,6 +184,25 @@ public class ParticleSystemComponent extends Component implements Observer
                 particles.clear();
                 break;
         }
+    }
+
+    @Override
+    public void editorGUI()
+    {
+//        String name = this.generator != null ? this.generatorTemplate.name : this.gameObject.name;
+//        String input = "other";
+//        if (!input.equals(name))
+//        {
+//            for (GameObject g : SceneHierarchyWindow.gameObjectList())
+//            {
+//                if (g.name.equals(input))
+//                {
+//                    generatorTemplate = g;
+//                    break;
+//                }
+//            }
+//        }
+        super.editorGUI();
     }
 
     public boolean keepingPhysics() { return this.keepPhysics; }

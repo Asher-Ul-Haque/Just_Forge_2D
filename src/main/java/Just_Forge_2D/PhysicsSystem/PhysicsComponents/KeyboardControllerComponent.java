@@ -96,6 +96,7 @@ public class KeyboardControllerComponent extends Component
 
     private void move(float ACCELERATION, float DECELERATION, Vector2f MOVE_INPUT, float DELTA_TIME)
     {
+        Keyboard.reset();
         if (!MOVE_INPUT.equals(0, 0))
         {
             turnCheck(MOVE_INPUT);

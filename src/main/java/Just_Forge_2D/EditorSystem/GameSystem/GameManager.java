@@ -24,13 +24,11 @@ public class GameManager
 
     // - - - Code Loading - - -
 
-    public static void buildUserCode()
-    {
+    public static void buildUserCode() {
         Logger.FORGE_LOG_INFO("Reading Your Code");
-        try
-        {
-            if (!EditorSystemManager.isRelease)
-            {
+
+        try {
+            if (!EditorSystemManager.isRelease) {
                 String gradlewCommand = System.getProperty("os.name").toLowerCase().contains("win") ? "gradlew.bat" : "./gradlew";
                 ProcessBuilder processBuilder = new ProcessBuilder(gradlewCommand, "build");
                 processBuilder.directory(new File(EditorSystemManager.projectDir));
@@ -38,15 +36,13 @@ public class GameManager
 
                 Process process = processBuilder.start();
                 int exitCode = process.waitFor();
-                if (exitCode != 0)
-                {
+                if (exitCode != 0) {
                     Logger.FORGE_LOG_FATAL("Error in user code. Exit code : " + exitCode);
                     return;
                 }
             }
 
-            try
-            {
+            try {
                 Path projectPath = Paths.get(EditorSystemManager.projectDir);
                 Path classesDir = projectPath.resolve("build/classes/java/main");
                 URLClassLoader classLoader = new URLClassLoader(new URL[]{classesDir.toUri().toURL()});
@@ -55,23 +51,28 @@ public class GameManager
                 Constructor<?> constructor = gameClass.getConstructor();
                 game = (Game) constructor.newInstance();
                 success = true;
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 Logger.FORGE_LOG_FATAL("Couldn't find an entry point in the user code. Ensure that the Game Interface is implemented.");
                 return;
             }
 
             game.init();
             Logger.FORGE_LOG_TRACE("Build successful");
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             Logger.FORGE_LOG_FATAL("Failed to build user code: " + e.getMessage());
+        }
+
+
+        // Check the success variable here if needed
+        if (success) {
+            Logger.FORGE_LOG_INFO("The build was successful, and the Main class was loaded.");
+        } else {
+            Logger.FORGE_LOG_WARNING("The build process failed or the Main class was not loaded correctly.");
         }
     }
 
-    public static void compileCode() {
+    public static void compileCode()
+    {
         Logger.FORGE_LOG_TRACE("Building Game");
         ImGui.begin("Building the game");
         ImGui.textColored(0, 0, 0, 1, "Please wait...");
@@ -195,5 +196,10 @@ public class GameManager
                 Logger.FORGE_LOG_FATAL("Failed to run the code: " + e.getMessage());
             }
         }).start();
+    }
+
+    public static boolean isSuccess()
+    {
+        return success;
     }
 }
