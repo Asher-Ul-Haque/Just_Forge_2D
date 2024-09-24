@@ -190,8 +190,10 @@ public class SplashScreen
             }
             else
             {
-                timer = 0f;
+                timer = splashTime + relapseTime + 0.01f;
                 compiling = false;
+                readyToLoad = false;
+                load = false;
             }
         }
     }
