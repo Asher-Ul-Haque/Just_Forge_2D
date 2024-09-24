@@ -9,9 +9,9 @@ public class Logs
     public static void render()
     {
         ImGui.begin("Logger", ImGuiWindowFlags.AlwaysVerticalScrollbar);
-        for (int i = Logger.getReadBuffer().size() - 1; i > 0; --i)
+        for (int i = Logger.getReadBuffer().length - 1; i > 0; --i)
         {
-            String e = Logger.getReadBuffer().get(i);
+            String e = Logger.getReadBuffer()[i];
             float r, g, b;
             r = g = b = 1;
             if (e.startsWith("[FATAL]"))

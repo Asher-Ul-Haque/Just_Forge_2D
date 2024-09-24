@@ -36,8 +36,8 @@ public class GizmoComponent extends Component
     private final GameObject yAxisGizmo;
 
     // - - - Size
-    private final float gizmoWidth = 16f / 20f;
-    private final float gizmoHeight = 48f / 20f;
+    protected final float gizmoWidth = 16f / 20f;
+    protected final float gizmoHeight = 48f / 20f;
 
     // - - - state
     private boolean using = false;
@@ -139,6 +139,8 @@ public class GizmoComponent extends Component
     private void activate()
     {
         this.xAxisSprite.setColor(xAxisColor);
+        this.xAxisGizmo.transform.layer = Math.max(this.xAxisGizmo.transform.layer, this.activeGameObject.transform.layer + 1);
+        this.yAxisGizmo.transform.layer = Math.max(this.xAxisGizmo.transform.layer, this.activeGameObject.transform.layer + 1);
         this.yAxisSprite.setColor(yAxisColor);
     }
 
@@ -173,10 +175,10 @@ public class GizmoComponent extends Component
     {
         Vector2f mousePos = new Vector2f(Mouse.getWorldX(), Mouse.getWorldY());
 
-        if (mousePos.x <= yAxisGizmo.transform.position.x + (gizmoWidth / 2f)&&
-                mousePos.x >= yAxisGizmo.transform.position.x - (gizmoWidth / 2f)&&
+        if (mousePos.x <= yAxisGizmo.transform.position.x + (gizmoWidth / 2.0f)&&
+                mousePos.x >= yAxisGizmo.transform.position.x - (gizmoWidth / 2.0f)&&
                 mousePos.y <= yAxisGizmo.transform.position.y + (gizmoHeight / 2.0f)&&
-                mousePos.y >= yAxisGizmo.transform.position.y - (gizmoHeight / 2f))
+                mousePos.y >= yAxisGizmo.transform.position.y - (gizmoHeight / 2.0f))
         {
             yAxisSprite.setColor(yAxisHoverColor);
             return true;

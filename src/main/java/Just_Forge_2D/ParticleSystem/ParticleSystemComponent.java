@@ -1,6 +1,7 @@
 package Just_Forge_2D.ParticleSystem;
 
 import Just_Forge_2D.EditorSystem.MainWindow;
+import Just_Forge_2D.EditorSystem.Windows.SceneHierarchyWindow;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
@@ -41,7 +42,7 @@ public class ParticleSystemComponent extends Component implements Observer
     private boolean useOnce = false;
     private Vector2f offset = new Vector2f();
     private int particleLayer;
-    private transient GameObject generatorTemplate = null;
+    private transient GameObject generatorTemplate;
 
     private Vector2f generateVelocity()
     {
@@ -168,6 +169,7 @@ public class ParticleSystemComponent extends Component implements Observer
         minLifespan = Math.max(Math.min(maxLifespan, minLifespan), 0f);
         maxSpeed = Math.max(0f, maxSpeed);
         minSpeed = Math.max(Math.min(minSpeed, maxSpeed), 0f);
+        maxParticles = Math.max(0, maxParticles);
     }
 
     @Override
@@ -189,19 +191,19 @@ public class ParticleSystemComponent extends Component implements Observer
     @Override
     public void editorGUI()
     {
-//        String name = this.generator != null ? this.generatorTemplate.name : this.gameObject.name;
-//        String input = "other";
-//        if (!input.equals(name))
-//        {
-//            for (GameObject g : SceneHierarchyWindow.gameObjectList())
-//            {
-//                if (g.name.equals(input))
-//                {
-//                    generatorTemplate = g;
-//                    break;
-//                }
-//            }
-//        }
+        String name = this.generator != null ? this.generatorTemplate.name : this.gameObject.name;
+        String input = "other";
+        if (!input.equals(name))
+        {
+            for (GameObject g : SceneHierarchyWindow.gameObjectList())
+            {
+                if (g.name.equals(input))
+                {
+                    generatorTemplate = g;
+                    break;
+                }
+            }
+        }
         super.editorGUI();
     }
 

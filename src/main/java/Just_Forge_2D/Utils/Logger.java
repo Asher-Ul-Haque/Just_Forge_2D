@@ -10,7 +10,6 @@ import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public class Logger
@@ -30,8 +29,16 @@ public class Logger
     private static Path LOG_FILE_PATH = Paths.get("logs", "latest.justForgeLog");
 
     private static final int maxWriteBuffer = 15;
+    private static final int maxReadBuffer = 150;
     private static final List<String> writeBuffer = new ArrayList<>(maxWriteBuffer);
-    private static final List<String> readBuffer = new LinkedList<>();
+    private static final String[] readBuffer = new String[maxReadBuffer];
+    private static int readBufferIndex = 0;
+
+    private static void addToReadBuffer(String MESSAGE)
+    {
+        readBuffer[readBufferIndex] = MESSAGE;
+        readBufferIndex = (readBufferIndex + 1) % maxReadBuffer;
+    }
 
     static
     {
@@ -99,7 +106,7 @@ public class Logger
     {
         if (EditorSystemManager.isRelease) return;
         String message = formatMessage("[FATAL]", ARGS);
-        readBuffer.add(message);
+        addToReadBuffer(message);
         System.out.println(ANSI_RESET + ANSI_RED_BG + message + ANSI_RESET);
         writeToFile(message);
     }
@@ -108,7 +115,7 @@ public class Logger
     {
         if (EditorSystemManager.isRelease) return;
         String message = formatMessage("[ERROR]", ARGS);
-        readBuffer.add(message);
+        addToReadBuffer(message);
         System.out.println(ANSI_RED + message + ANSI_RESET);
         writeToFile(message);
     }
@@ -117,7 +124,7 @@ public class Logger
     {
         if (EditorSystemManager.isRelease) return;
         String message = formatMessage("[WARNING]", ARGS);
-        readBuffer.add(message);
+        addToReadBuffer(message);
         System.out.println(ANSI_PASTEL_RED + message + ANSI_RESET);
         writeToFile(message);
     }
@@ -126,7 +133,7 @@ public class Logger
     {
         if (EditorSystemManager.isRelease) return;
         String message = formatMessage("[DEBUG]", ARGS);
-        readBuffer.add(message);
+        addToReadBuffer(message);
         System.out.println(ANSI_BLUE + message + ANSI_RESET);
         writeToFile(message);
     }
@@ -135,7 +142,7 @@ public class Logger
     {
         if (EditorSystemManager.isRelease) return;
         String message = formatMessage("[TRACE]", ARGS);
-        readBuffer.add(message);
+        addToReadBuffer(message);
         System.out.println(ANSI_PURPLE + message + ANSI_RESET);
         writeToFile(message);
     }
@@ -144,7 +151,7 @@ public class Logger
     {
         if (EditorSystemManager.isRelease) return;
         String message = formatMessage("[INFO]", ARGS);
-        readBuffer.add(message);
+        addToReadBuffer(message);
         System.out.println(ANSI_GREEN + message + ANSI_RESET);
         writeToFile(message);
     }
@@ -213,7 +220,7 @@ public class Logger
         }
     }
 
-    public static List<String> getReadBuffer()
+    public static String[] getReadBuffer()
     {
         return readBuffer;
     }

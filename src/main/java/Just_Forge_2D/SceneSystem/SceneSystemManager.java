@@ -36,6 +36,7 @@ public class SceneSystemManager
 
         try
         {
+            Files.createDirectories(Paths.get(SCENE.getSavePath()).getParent());
             FileWriter writer = new FileWriter(SCENE.getSavePath());
             List<GameObject> toSerialize = new ArrayList<>();
             for (GameObject obj : SCENE.getGameObjects())

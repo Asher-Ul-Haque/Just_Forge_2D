@@ -17,7 +17,8 @@ public class DefaultValues
     public static final int DEBUG_PENCIL_DEFAULT_LIFE = 1;
     public static final Vector3f DEBUG_PENCIL_DEFAULT_COLOR = new Vector3f(1, 1, 1);
     public static final int DEBUG_PENCIL_DEFAULT_WIDTH = 8;
-    public static final int DEBUG_PENCIL_DEFAULT_CIRCLE_PRECISION = 64;
+    public static final int DEBUG_PENCIL_MAX_CIRCLE_PRECISION = 100;
+    public static final int DEBUG_PENCIL_MIN_CIRCLE_PRECISION = 16;
     public static final float DEBUG_PENCIL_DEFAULT_ROTATION = 0f;
     public static final Vec2 GRAVITY = new Vec2(0, -20f);
     public static final float PHYSICS_DELTA_TIME = 1.0f / 60f;
