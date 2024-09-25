@@ -1,6 +1,7 @@
 package Just_Forge_2D.ParticleSystem;
 
 import Just_Forge_2D.EditorSystem.MainWindow;
+import Just_Forge_2D.EditorSystem.Widgets;
 import Just_Forge_2D.EditorSystem.Windows.SceneHierarchyWindow;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
@@ -42,7 +43,7 @@ public class ParticleSystemComponent extends Component implements Observer
     private boolean useOnce = false;
     private Vector2f offset = new Vector2f();
     private int particleLayer;
-    private transient GameObject generatorTemplate;
+    private String templateName;
 
     private Vector2f generateVelocity()
     {
@@ -112,11 +113,11 @@ public class ParticleSystemComponent extends Component implements Observer
     @Override
     public void start()
     {
-        if (generatorTemplate == null)
+        if (templateName == null)
         {
-            generatorTemplate = this.gameObject;
+            templateName = this.gameObject.name;
         }
-        generator = new ParticleGenerator(generatorTemplate, keepPhysics);
+        generator = new ParticleGenerator(MainWindow.getCurrentScene().getGameObject(templateName), keepPhysics);
 
         randomizer = new Random(this.gameObject.getUniqueID());
         for (int i = particles.size(); i < maxParticles; ++i)
@@ -191,15 +192,15 @@ public class ParticleSystemComponent extends Component implements Observer
     @Override
     public void editorGUI()
     {
-        String name = this.generator != null ? this.generatorTemplate.name : this.gameObject.name;
-        String input = "other";
+        String name = this.generator != null ? templateName : this.gameObject.name;
+        String input = Widgets.inputText("Template", name);
         if (!input.equals(name))
         {
             for (GameObject g : SceneHierarchyWindow.gameObjectList())
             {
                 if (g.name.equals(input))
                 {
-                    generatorTemplate = g;
+                    templateName = g.name;
                     break;
                 }
             }
