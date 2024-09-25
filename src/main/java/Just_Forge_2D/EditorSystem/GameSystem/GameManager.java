@@ -77,9 +77,11 @@ public class GameManager
         ImGui.begin("Building the game");
         ImGui.textColored(0, 0, 0, 1, "Please wait...");
 
-        new Thread(() -> {
-            try {
-                String gradlewCommand = System.getProperty("os.name").toLowerCase().contains("win") ? "gradlew.bat" : "./gradlew";
+        new Thread(() ->
+        {
+            try
+            {
+                String gradlewCommand = System.getProperty("os.name").toLowerCase().contains("win") ? "./gradlew.bat" : "./gradlew";
                 ProcessBuilder processBuilder = new ProcessBuilder(gradlewCommand, "shadowJar");
                 processBuilder.directory(new File(EditorSystemManager.projectDir.toString()));
                 processBuilder.inheritIO();
@@ -90,12 +92,13 @@ public class GameManager
                 {
                     TinyFileDialogs.tinyfd_notifyPopup("Error in compiling project", "Error in user code. Exit code : " + exitCode, "error");
                     Logger.FORGE_LOG_FATAL("Error in user code. Exit code : " + exitCode);
+                    Logger.FORGE_LOG_FATAL(process.errorReader().toString());
                     return;
                 }
 
                 Path projectPath = Paths.get(EditorSystemManager.projectDir);
                 Path assetsPath = projectPath.resolve("Assets");
-                Path savesPath = projectPath.resolve("Saves");
+                Path savesPath = projectPath.resolve("Scenes");
 
                 destinationDirPath = Paths.get(TinyFileDialogs.tinyfd_selectFolderDialog("Select Project Directory", projectPath.toString()));
                 if (destinationDirPath != null)
@@ -114,7 +117,7 @@ public class GameManager
 
                         copyDirectory(projectPath.resolve("build/libs"), destinationDirPath);
                         copyDirectory(assetsPath, destinationDirPath.resolve("Assets"));
-                        copyDirectory(savesPath, destinationDirPath.resolve("Saves"));
+                        copyDirectory(savesPath, destinationDirPath.resolve("Scenes"));
 
                         File[] jarFiles = destinationDirPath.toFile().listFiles((dir, name) -> name.endsWith(".jar"));
                         if (jarFiles == null || jarFiles.length == 0)

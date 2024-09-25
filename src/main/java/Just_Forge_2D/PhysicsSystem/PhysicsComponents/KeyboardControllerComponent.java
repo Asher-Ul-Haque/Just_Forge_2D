@@ -39,6 +39,7 @@ public class KeyboardControllerComponent extends Component
     private transient boolean isRight;
     private transient boolean isEditorUpdate = true;
     private transient boolean isGrounded;
+    private boolean birdMode = false;
     private float maxJumpTime = 1f;
     private float jumpTimer = maxJumpTime;
     private boolean debugDrawAtRuntime = false;
@@ -130,6 +131,12 @@ public class KeyboardControllerComponent extends Component
 
     private void checkGrounded(float DELTA_TIME)
     {
+        boolean wasGrounded = this.isGrounded;
+        if (birdMode)
+        {
+            this.isGrounded = true;
+            return;
+        }
         Raycast gun = new Raycast();
 
         Vector2f rayCastBegin = new Vector2f(this.gameObject.transform.position);
@@ -145,7 +152,6 @@ public class KeyboardControllerComponent extends Component
 
         RayCastInfo rayCastInfo = gun.rayCast(this.gameObject, rayCastBegin, rayCastEnd);
 
-        boolean wasGrounded = this.isGrounded;
         this.isGrounded = (rayCastInfo.hit && rayCastInfo.hitObject != null) || (rayCast2.hit && rayCast2.hitObject != null);
         if (debugDrawAtRuntime || isEditorUpdate)
         {

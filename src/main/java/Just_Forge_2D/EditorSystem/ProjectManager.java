@@ -3,8 +3,12 @@ package Just_Forge_2D.EditorSystem;
 import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.Logger;
 import org.lwjgl.util.tinyfd.TinyFileDialogs;
+
 import java.io.IOException;
-import java.nio.file.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 public class ProjectManager
 {
@@ -50,6 +54,7 @@ public class ProjectManager
         catch (IOException e)
         {
             Logger.FORGE_LOG_ERROR("Error creating project: " + e.getMessage());
+            TinyFileDialogs.tinyfd_notifyPopup("Fatal Error", e.getMessage(), "error");
             return false;
         }
     }
@@ -68,6 +73,7 @@ public class ProjectManager
             catch (IOException | SecurityException e)
             {
                 Logger.FORGE_LOG_FATAL("Failed to create Forge Projects directory: " + e.getMessage());
+                TinyFileDialogs.tinyfd_notifyPopup("Fatal Error", "Failed to create Forge Projects directory: " + e.getMessage(), "error");
             }
         }
     }
