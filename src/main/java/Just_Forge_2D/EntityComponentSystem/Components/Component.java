@@ -3,7 +3,6 @@ package Just_Forge_2D.EntityComponentSystem.Components;
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.EditorSystem.Themes.Theme;
 import Just_Forge_2D.EditorSystem.Widgets;
-import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.Utils.Logger;
 import imgui.ImGui;
@@ -24,19 +23,20 @@ public abstract class Component
     private static int ID_COUNTER = 0;
     private int uniqueID = -1;
 
-    // - - - Functions - - -
 
-    // - - - use
-    public void update(float DELTA_TIME) {}
-    public void editorUpdate(float DELTA_TIME){ debugDraw(); }
+    // - - - | Functions | - - -
+
+
+    // - - - use - - -
+
+    public void update(float DELTA_TIME){}
     public void start(){}
     public void destroy(){}
-    public void debugDraw(){}
 
 
     // - - - Editor Part - - -
 
-    public void editorGUI()
+    public void editorGUI() 
     {
         try
         {
@@ -126,7 +126,9 @@ public abstract class Component
         }
     }
 
-    public void editorUpdate(SpriteComponent SPRITE) {}
+    public void editorUpdate(float DELTA_TIME)  { debugDraw(); }
+
+    public void debugDraw()  {}
 
     private <T extends Enum<T>> String[] getEnumValues(Class<T> enumType) {
         String[] enumValues = new String[enumType.getEnumConstants().length];
@@ -172,25 +174,10 @@ public abstract class Component
     }
 
 
-    // - - - Physics
-    public void beginCollision(GameObject OBJ, Contact CONTACT, Vector2f NORMAL)
-    {
+    // - - - Physics - - -
 
-    }
-
-    public void endCollision(GameObject OBJ, Contact CONTACT, Vector2f NORMAL)
-    {
-
-    }
-
-
-    public void beforeCollision(GameObject OBJ, Contact CONTACT, Vector2f NORMAL)
-    {
-
-    }
-
-    public void afterCollision(GameObject OBJ, Contact CONTACT, Vector2f NORMAL)
-    {
-
-    }
+    public void beginCollision(GameObject OBJ, Contact CONTACT, Vector2f NORMAL) {}
+    public void endCollision(GameObject OBJ, Contact CONTACT, Vector2f NORMAL) {}
+    public void beforeCollision(GameObject OBJ, Contact CONTACT, Vector2f NORMAL) {}
+    public void afterCollision(GameObject OBJ, Contact CONTACT, Vector2f NORMAL) {}
 }

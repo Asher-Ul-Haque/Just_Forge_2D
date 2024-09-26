@@ -43,7 +43,13 @@ public abstract class ColliderComponent extends Component
     }
 
     @Override
-    public void update(float DELTA_TIME) { if (debugDrawAtRuntime) debugDraw(); }
+    public void update(float DELTA_TIME)
+    {
+        if (debugDrawAtRuntime)
+        {
+            debugDraw();
+        }
+    }
 
     @Override
     public void editorGUI()
