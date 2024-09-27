@@ -1,6 +1,6 @@
 package Just_Forge_2D.EntityComponentSystem.Components.Sprite;
 
-import Just_Forge_2D.RenderingSystem.Texture;
+import RenderingSystem.Texture;
 import org.joml.Vector2f;
 
 

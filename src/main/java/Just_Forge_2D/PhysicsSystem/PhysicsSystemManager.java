@@ -1,26 +1,23 @@
-package Just_Forge_2D.PhysicsSystem;
+package PhysicsSystem;
 
 import Just_Forge_2D.EntityComponentSystem.Components.TransformComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
-import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.*;
-import Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent;
-import Just_Forge_2D.PhysicsSystem.PhysicsManagers.ColliderManager;
-import Just_Forge_2D.SceneSystem.Scene;
-import Just_Forge_2D.Utils.Logger;
+import PhysicsSystem.PhysicsComponents.Collider.*;
+import PhysicsSystem.PhysicsComponents.RigidBodyComponent;
+import PhysicsSystem.PhysicsManagers.ColliderManager;
+import SceneSystem.Scene;
+import Utils.DefaultValues;
+import Utils.Logger;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.Fixture;
-import org.jbox2d.particle.ParticleSystem;
 
 // - - - interface to communicate with Box2D
 public class PhysicsSystemManager
 {
-    // - - - private variables - - -
-
-    // - - - world settings
-
     private Scene owner;
+    private float fixedDelta = DefaultValues.PHYSICS_DELTA_TIME;
     public PhysicsWorld rawWorld;
 
 
@@ -30,6 +27,15 @@ public class PhysicsSystemManager
     {
         this.owner = SCENE;
         rawWorld = WORLD;
+        Logger.FORGE_LOG_INFO("Created new Physics System Manager for : " + SCENE);
+    }
+
+    public PhysicsSystemManager(Scene SCENE, PhysicsWorld WORLD, float FIXED_DELTA)
+    {
+        this.owner = SCENE;
+        rawWorld = WORLD;
+        this.fixedDelta = FIXED_DELTA;
+        Logger.FORGE_LOG_INFO("Created new Physics System Manager for : " + SCENE);
     }
 
     // - - - Game Objects - - -
@@ -37,7 +43,8 @@ public class PhysicsSystemManager
     // - - - add
     public void add(GameObject OBJ)
     {
-        RigidBodyComponent rb = OBJ.getCompoent(RigidBodyComponent.class);
+        Logger.FORGE_LOG_DEBUG("Registering: " + OBJ + " with physics system");
+        RigidBodyComponent rb = OBJ.getComponent(RigidBodyComponent.class);
         if (rb != null && rb.getRawBody() == null)
         {
             TransformComponent transform = OBJ.transform;
@@ -75,11 +82,11 @@ public class PhysicsSystemManager
             Body body = rawWorld.getWorld().createBody(bodyDef);
             rb.setRawBody(body);
 
-            CircleColliderComponent circleCollider = OBJ.getCompoent(CircleColliderComponent.class);
-            BoxColliderComponent boxCollider = OBJ.getCompoent(BoxColliderComponent.class);
-            CylinderColliderComponent pillCollider = OBJ.getCompoent(CylinderColliderComponent.class);
-            PolygonColliderComponent polygonColliderComponent = OBJ.getCompoent(PolygonColliderComponent.class);
-            EdgeColliderComponent edgeColliderComponent = OBJ.getCompoent(EdgeColliderComponent.class);
+            CircleColliderComponent circleCollider = OBJ.getComponent(CircleColliderComponent.class);
+            BoxColliderComponent boxCollider = OBJ.getComponent(BoxColliderComponent.class);
+            CylinderColliderComponent pillCollider = OBJ.getComponent(CylinderColliderComponent.class);
+            PolygonColliderComponent polygonColliderComponent = OBJ.getComponent(PolygonColliderComponent.class);
+            EdgeColliderComponent edgeColliderComponent = OBJ.getComponent(EdgeColliderComponent.class);
 
             if (circleCollider != null)
             {
@@ -98,7 +105,7 @@ public class PhysicsSystemManager
             }
             if (polygonColliderComponent != null)
             {
-                ColliderManager.addCustomCollider(rb, polygonColliderComponent);
+                ColliderManager.addPolygonCollider(rb, polygonColliderComponent);
                 body.resetMassData();
             }
             if (edgeColliderComponent != null)
@@ -106,16 +113,18 @@ public class PhysicsSystemManager
                 ColliderManager.addEdgeCollider(rb, edgeColliderComponent);
                 body.resetMassData();
             }
-
-            Logger.FORGE_LOG_DEBUG("Linked Box2D with " + OBJ);
+        }
+        else
+        {
+            Logger.FORGE_LOG_ERROR("Cannot register : " + OBJ + " with Physics System : null game object");
         }
     }
 
     // - - - destroy
     public void destroyGameObject(GameObject GO)
     {
-        Logger.FORGE_LOG_DEBUG("Unlinked Box2D with " + GO);
-        RigidBodyComponent rb = GO.getCompoent(RigidBodyComponent.class);
+        Logger.FORGE_LOG_DEBUG("Removing: " + GO + " from physics system");
+        RigidBodyComponent rb = GO.getComponent(RigidBodyComponent.class);
         if (rb != null)
         {
             if (rb.getRawBody() != null)
@@ -124,6 +133,10 @@ public class PhysicsSystemManager
                 rb.setRawBody(null);
             }
         }
+        else
+        {
+            Logger.FORGE_LOG_ERROR("Cannot remove : " + GO + " from physics system: null raw physics body");
+        }
     }
 
     // - - - update
@@ -131,6 +144,12 @@ public class PhysicsSystemManager
     {
         // - - - ensure that update happens only every 16 milliseconds. We increase only when we pass 16ms
         rawWorld.step(DELTA_TIME);
+    }
+
+    public void update()
+    {
+        // - - - ensure that update happens only every 16 milliseconds. We increase only when we pass 16ms
+        rawWorld.step(this.fixedDelta);
     }
 
     public void setSensor(RigidBodyComponent RB, boolean REALLY)
@@ -153,6 +172,4 @@ public class PhysicsSystemManager
     {
         return rawWorld.getWorld().isLocked();
     }
-
-    public ParticleSystem particleSystem;
 }

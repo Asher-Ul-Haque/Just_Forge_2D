@@ -1,4 +1,4 @@
-package Just_Forge_2D.RenderingSystem;
+package RenderingSystem;
 
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.Sprite;
 import org.joml.Vector2f;

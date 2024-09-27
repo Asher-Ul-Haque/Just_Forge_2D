@@ -2,10 +2,10 @@ package Just_Forge_2D.EntityComponentSystem.Components;
 
 import Just_Forge_2D.AudioSystem.SoundPlayerComponent;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
-import Just_Forge_2D.ParticleSystem.ParticleSystemComponent;
-import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.*;
-import Just_Forge_2D.PhysicsSystem.PhysicsComponents.KeyboardControllerComponent;
-import Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent;
+import ParticleSystem.ParticleSystemComponent;
+import PhysicsSystem.PhysicsComponents.Collider.*;
+import PhysicsSystem.PhysicsComponents.KeyboardControllerComponent;
+import PhysicsSystem.PhysicsComponents.RigidBodyComponent;
 
 import java.util.ArrayList;
 import java.util.List;

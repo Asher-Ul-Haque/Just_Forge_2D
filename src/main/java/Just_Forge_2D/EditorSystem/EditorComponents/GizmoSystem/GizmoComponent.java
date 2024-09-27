@@ -53,8 +53,8 @@ public class GizmoComponent extends Component
     {
         this.xAxisGizmo = PrefabManager.generateDefaultSpriteObject(ARROW, gizmoWidth, gizmoHeight);
         this.yAxisGizmo = PrefabManager.generateDefaultSpriteObject(ARROW, gizmoWidth, gizmoHeight);
-        this.xAxisSprite = this.xAxisGizmo.getCompoent(SpriteComponent.class);
-        this.yAxisSprite = this.yAxisGizmo.getCompoent(SpriteComponent.class);
+        this.xAxisSprite = this.xAxisGizmo.getComponent(SpriteComponent.class);
+        this.yAxisSprite = this.yAxisGizmo.getComponent(SpriteComponent.class);
         this.xAxisGizmo.transform.position.add(this.xAxisOffset);
         this.yAxisGizmo.transform.position.add(this.yAxisOffset);
         this.xAxisGizmo.addComponent(new NonPickableComponent());
@@ -129,8 +129,8 @@ public class GizmoComponent extends Component
     public void update(float DELTA_TIME)
     {
         if (this.using) inactivate();
-        this.xAxisGizmo.getCompoent(SpriteComponent.class).setColor(new Vector4f(0, 0, 0, 0));
-        this.yAxisGizmo.getCompoent(SpriteComponent.class).setColor(new Vector4f(0, 0, 0, 0));
+        this.xAxisGizmo.getComponent(SpriteComponent.class).setColor(new Vector4f(0, 0, 0, 0));
+        this.yAxisGizmo.getComponent(SpriteComponent.class).setColor(new Vector4f(0, 0, 0, 0));
     }
 
 

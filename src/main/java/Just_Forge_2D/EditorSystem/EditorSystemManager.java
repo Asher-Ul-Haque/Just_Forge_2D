@@ -5,29 +5,20 @@ import Just_Forge_2D.EditorSystem.Themes.CleanTheme;
 import Just_Forge_2D.EditorSystem.Themes.Theme;
 import Just_Forge_2D.EditorSystem.Windows.ObjectSelector;
 import Just_Forge_2D.EntityComponentSystem.Components.ComponentList;
-import Just_Forge_2D.RenderingSystem.Framebuffer;
-import Just_Forge_2D.RenderingSystem.Shader;
-import Just_Forge_2D.RenderingSystem.SpriteSheet;
-import Just_Forge_2D.SceneSystem.EmptySceneInitializer;
-import Just_Forge_2D.SceneSystem.SceneInitializer;
-import Just_Forge_2D.Utils.AssetPool;
-import Just_Forge_2D.Utils.DefaultValues;
-import Just_Forge_2D.Utils.Logger;
-import Just_Forge_2D.WindowSystem.WindowConfig;
-import Just_Forge_2D.WindowSystem.WindowSystemManager;
+
 
 
 public class EditorSystemManager
 {
-    private static Framebuffer framebuffer;
+    private static RenderingSystem.Framebuffer framebuffer;
     private static Theme currentTheme;
-    protected static Shader defaultShader;
-    protected static Shader selectorShader;
+    protected static RenderingSystem.Shader defaultShader;
+    protected static RenderingSystem.Shader selectorShader;
     protected static ImGUIManager editorLayer;
     protected static boolean isRuntimePlaying = false;
-    public static WindowConfig editorWindowConfig;
+    public static WindowSystem.WindowConfig editorWindowConfig;
 
-    public static Class<? extends SceneInitializer> getCurrentSceneInitializer()
+    public static Class<? extends SceneSystem.SceneInitializer> getCurrentSceneInitializer()
     {
         return currentSceneInitializer;
     }

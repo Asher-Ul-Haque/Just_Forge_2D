@@ -1,11 +1,11 @@
-package Just_Forge_2D.ParticleSystem;
+package ParticleSystem;
 
 import Just_Forge_2D.EntityComponentSystem.Components.CameraControlComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
-import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.*;
-import Just_Forge_2D.PhysicsSystem.PhysicsComponents.KeyboardControllerComponent;
-import Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent;
-import Just_Forge_2D.Utils.Logger;
+import PhysicsSystem.PhysicsComponents.Collider.*;
+import PhysicsSystem.PhysicsComponents.KeyboardControllerComponent;
+import PhysicsSystem.PhysicsComponents.RigidBodyComponent;
+import Utils.Logger;
 
 public class ParticleGenerator
 {

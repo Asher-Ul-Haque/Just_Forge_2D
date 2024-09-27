@@ -11,10 +11,10 @@ import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.InputSystem.Mouse;
-import Just_Forge_2D.RenderingSystem.DebugPencil;
-import Just_Forge_2D.SceneSystem.Scene;
-import Just_Forge_2D.Utils.Logger;
-import Just_Forge_2D.WindowSystem.WindowSystemManager;
+import RenderingSystem.DebugPencil;
+import SceneSystem.Scene;
+import Utils.Logger;
+import WindowSystem.WindowSystemManager;
 import org.joml.Vector2f;
 import org.joml.Vector2i;
 import org.joml.Vector3f;
@@ -54,8 +54,8 @@ public class MouseControlComponent extends Component
         holdingObject = GO;
         if (holdingObject.hasComponent(SpriteComponent.class))
         {
-            originalColor.set(holdingObject.getCompoent(SpriteComponent.class).getColor());
-            holdingObject.getCompoent(SpriteComponent.class).setColor(new Vector4f(0.8f, 0.8f, 0.0f, 0.5f));
+            originalColor.set(holdingObject.getComponent(SpriteComponent.class).getColor());
+            holdingObject.getComponent(SpriteComponent.class).setColor(new Vector4f(0.8f, 0.8f, 0.0f, 0.5f));
         }
         holdingObject.addComponent(new NonPickableComponent());
         MainWindow.getCurrentScene().addGameObject(GO);
@@ -66,11 +66,11 @@ public class MouseControlComponent extends Component
     {
         Logger.FORGE_LOG_DEBUG("Placed game object: " + holdingObject);
         GameObject newObj = holdingObject.copy();
-        if (newObj.getCompoent(AnimationComponent.class) != null)
+        if (newObj.getComponent(AnimationComponent.class) != null)
         {
-            newObj.getCompoent(AnimationComponent.class).refreshTextures();
+            newObj.getComponent(AnimationComponent.class).refreshTextures();
         }
-        if (newObj.hasComponent(SpriteComponent.class)) newObj.getCompoent(SpriteComponent.class).setColor(originalColor);
+        if (newObj.hasComponent(SpriteComponent.class)) newObj.getComponent(SpriteComponent.class).setColor(originalColor);
         newObj.removeComponent(NonPickableComponent.class);
         MainWindow.getCurrentScene().addGameObject(newObj);
     }
@@ -107,7 +107,7 @@ public class MouseControlComponent extends Component
             int y = (int)Mouse.getScreenY(WindowSystemManager.getMonitorSize().y);
             int gameObjectID = ObjectSelector.readPixel(x, y);
             GameObject picked = currentScene.getGameObject(gameObjectID);
-            if (picked != null && picked.getCompoent(NonPickableComponent.class) == null)
+            if (picked != null && picked.getComponent(NonPickableComponent.class) == null)
             {
                 ComponentsWindow.setActiveGameObject(picked);
             }
@@ -172,7 +172,7 @@ public class MouseControlComponent extends Component
             for (Integer gameObjectID : uniqueGameObjectIDs)
             {
                 GameObject picked = MainWindow.getCurrentScene().getGameObject(gameObjectID);
-                if (picked != null && picked.getCompoent(NonPickableComponent.class) == null)
+                if (picked != null && picked.getComponent(NonPickableComponent.class) == null)
                 {
                     ComponentsWindow.addActiveGameObject(picked);
                 }

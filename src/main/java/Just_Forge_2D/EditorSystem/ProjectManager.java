@@ -1,7 +1,7 @@
 package Just_Forge_2D.EditorSystem;
 
-import Just_Forge_2D.Utils.DefaultValues;
-import Just_Forge_2D.Utils.Logger;
+import Utils.DefaultValues;
+import Utils.Logger;
 import org.lwjgl.util.tinyfd.TinyFileDialogs;
 
 import java.io.IOException;

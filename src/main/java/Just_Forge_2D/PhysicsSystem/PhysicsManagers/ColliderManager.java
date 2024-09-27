@@ -1,8 +1,8 @@
-package Just_Forge_2D.PhysicsSystem.PhysicsManagers;
+package PhysicsSystem.PhysicsManagers;
 
-import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.*;
-import Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent;
-import Just_Forge_2D.Utils.Logger;
+import PhysicsSystem.PhysicsComponents.Collider.*;
+import PhysicsSystem.PhysicsComponents.RigidBodyComponent;
+import Utils.Logger;
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.collision.shapes.EdgeShape;
 import org.jbox2d.collision.shapes.PolygonShape;
@@ -15,18 +15,8 @@ import org.joml.Vector2f;
 
 public class ColliderManager
 {
-    private static void createFixture(Shape SHAPE, RigidBodyComponent RB, ColliderComponent COLLIDER, Body BODY)
-    {
-        FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.shape = SHAPE;
-        fixtureDef.density = RB.getDensity();
-        fixtureDef.friction = RB.getFrictionCoefficient();
-        fixtureDef.userData = COLLIDER.gameObject;
-        fixtureDef.isSensor = RB.isSensor();
-        fixtureDef.filter.categoryBits = COLLIDER.collisionLayer.getCategoryBits();
-        fixtureDef.filter.maskBits = COLLIDER.collisionLayer.getMaskBits();
-        BODY.createFixture(fixtureDef);
-    }
+
+    // - - - Box Colliders - - -
 
     public static void addBoxCollider(RigidBodyComponent RB, BoxColliderComponent COLLIDER)
     {
@@ -45,6 +35,14 @@ public class ColliderManager
         createFixture(shape, RB, COLLIDER, body);
     }
 
+    public static void resetBoxCollider(RigidBodyComponent RB, BoxColliderComponent COLLIDER)
+    {
+        resetCollider(RB, COLLIDER, () -> addBoxCollider(RB, COLLIDER));
+    }
+
+
+    // - - - Circle Colliders - - -
+
     public static void addCircleCollider(RigidBodyComponent RB, CircleColliderComponent COLLIDER)
     {
         Body body = RB.getRawBody();
@@ -60,6 +58,14 @@ public class ColliderManager
         createFixture(shape, RB, COLLIDER, body);
     }
 
+    public static void resetCircleCollider(RigidBodyComponent RB, CircleColliderComponent COLLIDER)
+    {
+        resetCollider(RB, COLLIDER, () -> addCircleCollider(RB, COLLIDER));
+    }
+
+
+    // - - - Cylinder Colliders - - -
+
     public static void addCylinderCollider(RigidBodyComponent RB, CylinderColliderComponent COLLIDER)
     {
         Body body = RB.getRawBody();
@@ -74,64 +80,15 @@ public class ColliderManager
         addCircleCollider(RB, COLLIDER.getBottomCircle());
     }
 
-    public static void resetCircleCollider(RigidBodyComponent RB, CircleColliderComponent COLLIDER)
-    {
-        Body body = RB.getRawBody();
-        if (body == null)
-        {
-            Logger.FORGE_LOG_ERROR("Tried to reset Circle Collider on a null physics body");
-            return;
-        }
-
-        int size = fixtureListSize(body);
-        for (int i = 0; i < size; ++i)
-        {
-            body.destroyFixture(body.getFixtureList());
-        }
-
-        addCircleCollider(RB, COLLIDER);
-        body.resetMassData();
-    }
-
-    public static void resetBoxCollider(RigidBodyComponent RB, BoxColliderComponent COLLIDER)
-    {
-        Body body = RB.getRawBody();
-        if (body == null)
-        {
-            Logger.FORGE_LOG_ERROR("Tried to reset Circle Collider on a null physics body");
-            return;
-        }
-
-        int size = fixtureListSize(body);
-        for (int i = 0; i < size; ++i)
-        {
-            body.destroyFixture(body.getFixtureList());
-        }
-
-        addBoxCollider(RB, COLLIDER);
-        body.resetMassData();
-    }
-
     public static void resetCylinderCollider(RigidBodyComponent RB, CylinderColliderComponent COLLIDER)
     {
-        Body body = RB.getRawBody();
-        if (body == null)
-        {
-            Logger.FORGE_LOG_ERROR("Tried to reset Circle Collider on a null physics body");
-            return;
-        }
-
-        int size = fixtureListSize(body);
-        for (int i = 0; i < size; ++i)
-        {
-            body.destroyFixture(body.getFixtureList());
-        }
-
-        addCylinderCollider(RB, COLLIDER);
-        body.resetMassData();
+        resetCollider(RB, COLLIDER, () -> addCylinderCollider(RB, COLLIDER));
     }
 
-    public static void addCustomCollider(RigidBodyComponent RB, PolygonColliderComponent COLLIDER)
+
+    // - - - Polygon Colliders - - -
+
+    public static void addPolygonCollider(RigidBodyComponent RB, PolygonColliderComponent COLLIDER)
     {
         Body body = RB.getRawBody();
         if (body == null)
@@ -156,6 +113,14 @@ public class ColliderManager
         }
     }
 
+    public static void resetPolygonCollider(RigidBodyComponent RB, PolygonColliderComponent COLLIDER)
+    {
+        resetCollider(RB, COLLIDER, () -> addPolygonCollider(RB, COLLIDER));
+    }
+
+
+    // - - - Edge Colliders - - -
+
     public static void addEdgeCollider(RigidBodyComponent RB, EdgeColliderComponent COLLIDER)
     {
         Body body = RB.getRawBody();
@@ -175,51 +140,45 @@ public class ColliderManager
         }
     }
 
-    public static void resetCustomCollider(RigidBodyComponent RB, PolygonColliderComponent COLLIDER)
+    public static void resetEdgeCollider(RigidBodyComponent RB, EdgeColliderComponent COLLIDER)
     {
-        Body body = RB.getRawBody();
+        resetCollider(RB, COLLIDER, () -> addEdgeCollider(RB, COLLIDER));
+    }
+
+
+    // - - - Helper Functions - - -
+
+    private static void createFixture(Shape SHAPE, RigidBodyComponent RB, ColliderComponent COLLIDER, Body BODY)
+    {
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = SHAPE;
+        fixtureDef.density = RB.getDensity();
+        fixtureDef.friction = RB.getFrictionCoefficient();
+        fixtureDef.userData = COLLIDER.gameObject;
+        fixtureDef.isSensor = RB.isSensor();
+        fixtureDef.filter.categoryBits = COLLIDER.collisionLayer.getCategoryBits();
+        fixtureDef.filter.maskBits = COLLIDER.collisionLayer.getMaskBits();
+        BODY.createFixture(fixtureDef);
+    }
+
+    public static void resetCollider(RigidBodyComponent rb, ColliderComponent collider, Runnable addCollider)
+    {
+        Body body = rb.getRawBody();
         if (body == null)
         {
-            Logger.FORGE_LOG_ERROR("Tried to reset Convex Collider on a null physics body");
+            Logger.FORGE_LOG_ERROR("Cannot Reset collider on null body");
             return;
         }
-
-        int size = fixtureListSize(body);
-        for (int i = 0; i < size; ++i) {
-            body.destroyFixture(body.getFixtureList());
-        }
-
-        addCustomCollider(RB, COLLIDER);
+        destroyAllFixtures(body);
+        addCollider.run();
         body.resetMassData();
     }
 
-    private static int fixtureListSize(Body BODY)
+    private static void destroyAllFixtures(Body BODY)
     {
-        int size = 0;
-        Fixture fixture = BODY.getFixtureList();
-        while (fixture != null)
+        while (BODY.getFixtureList() != null)
         {
-            size++;
-            fixture = fixture.m_next;
+            BODY.destroyFixture(BODY.getFixtureList());
         }
-
-        return size;
-    }
-
-    public static void resetAll(RigidBodyComponent RB)
-    {
-        Body body = RB.getRawBody();
-        if (body == null)
-        {
-            Logger.FORGE_LOG_ERROR("Tried to reset Convex Collider on a null physics body");
-            return;
-        }
-
-        int size = fixtureListSize(body);
-        for (int i = 0; i < size; ++i)
-        {
-            body.destroyFixture(body.getFixtureList());
-        }
-        body.resetMassData();
     }
 }

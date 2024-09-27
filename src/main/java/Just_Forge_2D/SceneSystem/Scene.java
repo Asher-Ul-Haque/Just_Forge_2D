@@ -1,4 +1,4 @@
-package Just_Forge_2D.SceneSystem;
+package SceneSystem;
 
 import Just_Forge_2D.AnimationSystem.AnimationComponent;
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
@@ -7,11 +7,11 @@ import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.Components.TransformComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.InputSystem.Mouse;
-import Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent;
-import Just_Forge_2D.PhysicsSystem.PhysicsSystemManager;
-import Just_Forge_2D.RenderingSystem.Renderer;
-import Just_Forge_2D.Utils.AssetPool;
-import Just_Forge_2D.Utils.Logger;
+import PhysicsSystem.PhysicsComponents.RigidBodyComponent;
+import PhysicsSystem.PhysicsSystemManager;
+import RenderingSystem.Renderer;
+import Utils.AssetPool;
+import Utils.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,7 +75,7 @@ public class Scene
     {
         this.camera.adjustProjection();
         if (!this.isRunning) return;
-        if (this.physics != null) this.physics.update(DELTA_TIME);
+        if (this.physics != null) this.physics.update();
         for (int i = 0; i < gameObjects.size(); ++i)
         {
             GameObject go = gameObjects.get(i);
@@ -111,18 +111,18 @@ public class Scene
         this.initializer.loadResources(this);
         for (GameObject g : this.getGameObjects())
         {
-            if (g.getCompoent(SpriteComponent.class) != null)
+            if (g.getComponent(SpriteComponent.class) != null)
             {
-                SpriteComponent spr = g.getCompoent(SpriteComponent.class);
+                SpriteComponent spr = g.getComponent(SpriteComponent.class);
                 if (spr.getTexture() != null)
                 {
                     spr.setTexture(AssetPool.getTexture(spr.getTexture().getFilepath()));
                 }
             }
 
-            if (g.getCompoent(AnimationComponent.class) != null)
+            if (g.getComponent(AnimationComponent.class) != null)
             {
-                AnimationComponent stateMachine = g.getCompoent(AnimationComponent.class);
+                AnimationComponent stateMachine = g.getComponent(AnimationComponent.class);
                 stateMachine.refreshTextures();
             }
         }
@@ -138,7 +138,7 @@ public class Scene
     {
         GameObject go = new GameObject(NAME);
         go.addComponent(new TransformComponent());
-        go.transform = go.getCompoent(TransformComponent.class);
+        go.transform = go.getComponent(TransformComponent.class);
         return go;
     }
 

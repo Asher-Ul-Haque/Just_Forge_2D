@@ -1,4 +1,4 @@
-package Just_Forge_2D.ParticleSystem;
+package ParticleSystem;
 
 import Just_Forge_2D.EditorSystem.MainWindow;
 import Just_Forge_2D.EditorSystem.Widgets;
@@ -9,9 +9,9 @@ import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.EventSystem.EventManager;
 import Just_Forge_2D.EventSystem.Events.Event;
 import Just_Forge_2D.EventSystem.Observer;
-import Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent;
-import Just_Forge_2D.RenderingSystem.DebugPencil;
-import Just_Forge_2D.Utils.Logger;
+import PhysicsSystem.PhysicsComponents.RigidBodyComponent;
+import RenderingSystem.DebugPencil;
+import Utils.Logger;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
@@ -91,7 +91,7 @@ public class ParticleSystemComponent extends Component implements Observer
     {
         PARTICLE.lifeTime = randomizer.nextFloat(minLifespan, maxLifespan + 0.001f);
         PARTICLE.core.transform.position = new Vector2f(this.gameObject.transform.position).add(offset);
-        SpriteComponent renderable = PARTICLE.core.getCompoent(SpriteComponent.class);
+        SpriteComponent renderable = PARTICLE.core.getComponent(SpriteComponent.class);
         if (renderable != null) renderable.setColor(new Vector4f(startColor));
         PARTICLE.lifeSpan = PARTICLE.lifeTime;
         PARTICLE.angularVelocity = angularVelocity;
@@ -101,7 +101,7 @@ public class ParticleSystemComponent extends Component implements Observer
         PARTICLE.core.transform.layer = particleLayer;
         if (keepPhysics)
         {
-            RigidBodyComponent rb = PARTICLE.core.getCompoent(RigidBodyComponent.class);
+            RigidBodyComponent rb = PARTICLE.core.getComponent(RigidBodyComponent.class);
             rb.setTransform(PARTICLE.core.transform);
             rb.addImpulse(PARTICLE.velocity);
             rb.setAngularVelocity(PARTICLE.angularVelocity);
@@ -146,7 +146,7 @@ public class ParticleSystemComponent extends Component implements Observer
             {
                 core.transform.rotation += particle.angularVelocity * DELTA_TIME;
                 core.transform.position.add(new Vector2f(particle.velocity).mul(DELTA_TIME));
-                SpriteComponent renderable = core.getCompoent(SpriteComponent.class);
+                SpriteComponent renderable = core.getComponent(SpriteComponent.class);
                 if (renderable != null) renderable.setColor(new Vector4f(startColor).lerp(finalColor, 1.0f - (particle.lifeSpan / particle.lifeTime)));
                 particle.lifeSpan -= DELTA_TIME;
             }

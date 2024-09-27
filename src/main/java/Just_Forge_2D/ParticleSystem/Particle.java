@@ -1,4 +1,4 @@
-package Just_Forge_2D.ParticleSystem;
+package ParticleSystem;
 
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import org.joml.Vector2f;

@@ -1,4 +1,4 @@
-package Just_Forge_2D.PhysicsSystem.PhysicsComponents;
+package PhysicsSystem.PhysicsComponents;
 
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.EditorSystem.MainWindow;
@@ -6,9 +6,9 @@ import Just_Forge_2D.EditorSystem.Themes.Theme;
 import Just_Forge_2D.EditorSystem.Widgets;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.Components.TransformComponent;
-import Just_Forge_2D.PhysicsSystem.Enums.BodyType;
-import Just_Forge_2D.Utils.DefaultValues;
-import Just_Forge_2D.Utils.Logger;
+import PhysicsSystem.Enums.BodyType;
+import Utils.DefaultValues;
+import Utils.Logger;
 import imgui.ImGui;
 import imgui.type.ImInt;
 import org.jbox2d.common.Vec2;

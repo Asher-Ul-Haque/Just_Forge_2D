@@ -1,6 +1,6 @@
-package Just_Forge_2D.RenderingSystem;
+package RenderingSystem;
 
-import Just_Forge_2D.Utils.Logger;
+import Utils.Logger;
 import org.joml.*;
 import org.lwjgl.BufferUtils;
 

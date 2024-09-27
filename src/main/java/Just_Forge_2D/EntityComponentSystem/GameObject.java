@@ -7,10 +7,10 @@ import Just_Forge_2D.EntityComponentSystem.Components.TransformComponent;
 import Just_Forge_2D.EventSystem.EventManager;
 import Just_Forge_2D.EventSystem.Events.Event;
 import Just_Forge_2D.EventSystem.Events.EventTypes;
-import Just_Forge_2D.Utils.AssetPool;
-import Just_Forge_2D.Utils.JsonHandlers.ComponentJsonHandler;
-import Just_Forge_2D.Utils.JsonHandlers.GameObjectJsonHandler;
-import Just_Forge_2D.Utils.Logger;
+import Utils.AssetPool;
+import Utils.JsonHandlers.ComponentJsonHandler;
+import Utils.JsonHandlers.GameObjectJsonHandler;
+import Utils.Logger;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import imgui.ImGui;
@@ -47,7 +47,7 @@ public class GameObject
 
     // - - - component management - - -
 
-    public <T extends Component> T getCompoent(Class<T> COMPONENT_CLASS)
+    public <T extends Component> T getComponent(Class<T> COMPONENT_CLASS)
     {
         Logger.FORGE_LOG_DEBUG("Getting component of type : " + COMPONENT_CLASS + " for: " + this);
         for (Component c : components)
@@ -273,7 +273,7 @@ public class GameObject
             c.generateID();
         }
 
-        SpriteComponent sprite = obj.getCompoent(SpriteComponent.class);
+        SpriteComponent sprite = obj.getComponent(SpriteComponent.class);
         if (sprite != null && sprite.getTexture() != null)
         {
             sprite.setTexture(AssetPool.getTexture(sprite.getTexture().getFilepath()));

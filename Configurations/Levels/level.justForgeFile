@@ -408,7 +408,7 @@
         }
       },
       {
-        "type": "Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent",
+        "type": "PhysicsSystem.PhysicsComponents.RigidBodyComponent",
         "properties": {
           "velocity": {
             "x": 0.0,
@@ -427,7 +427,7 @@
         }
       },
       {
-        "type": "Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.BoxColliderComponent",
+        "type": "PhysicsSystem.PhysicsComponents.Collider.BoxColliderComponent",
         "properties": {
           "halfSize": {
             "x": 0.25,
@@ -669,7 +669,7 @@
         }
       },
       {
-        "type": "Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent",
+        "type": "PhysicsSystem.PhysicsComponents.RigidBodyComponent",
         "properties": {
           "velocity": {
             "x": 0.0,
@@ -688,7 +688,7 @@
         }
       },
       {
-        "type": "Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.BoxColliderComponent",
+        "type": "PhysicsSystem.PhysicsComponents.Collider.BoxColliderComponent",
         "properties": {
           "halfSize": {
             "x": 0.25,
@@ -1739,7 +1739,7 @@
         }
       },
       {
-        "type": "Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent",
+        "type": "PhysicsSystem.PhysicsComponents.RigidBodyComponent",
         "properties": {
           "velocity": {
             "x": 0.0,
@@ -1758,7 +1758,7 @@
         }
       },
       {
-        "type": "Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.BoxColliderComponent",
+        "type": "PhysicsSystem.PhysicsComponents.Collider.BoxColliderComponent",
         "properties": {
           "halfSize": {
             "x": 0.25,
@@ -2015,7 +2015,7 @@
         }
       },
       {
-        "type": "Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent",
+        "type": "PhysicsSystem.PhysicsComponents.RigidBodyComponent",
         "properties": {
           "velocity": {
             "x": 0.0,
@@ -2034,7 +2034,7 @@
         }
       },
       {
-        "type": "Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.BoxColliderComponent",
+        "type": "PhysicsSystem.PhysicsComponents.Collider.BoxColliderComponent",
         "properties": {
           "halfSize": {
             "x": 0.25,
@@ -2115,7 +2115,7 @@
         }
       },
       {
-        "type": "Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent",
+        "type": "PhysicsSystem.PhysicsComponents.RigidBodyComponent",
         "properties": {
           "velocity": {
             "x": 0.0,
@@ -2134,7 +2134,7 @@
         }
       },
       {
-        "type": "Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.BoxColliderComponent",
+        "type": "PhysicsSystem.PhysicsComponents.Collider.BoxColliderComponent",
         "properties": {
           "halfSize": {
             "x": 0.25,

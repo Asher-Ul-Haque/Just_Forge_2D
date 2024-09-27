@@ -1,4 +1,4 @@
-package Just_Forge_2D.SceneSystem;
+package SceneSystem;
 
 public class EmptySceneInitializer extends SceneInitializer
 {

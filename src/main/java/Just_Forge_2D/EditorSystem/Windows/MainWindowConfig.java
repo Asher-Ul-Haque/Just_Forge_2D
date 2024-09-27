@@ -1,7 +1,7 @@
 package Just_Forge_2D.EditorSystem.Windows;
 
-import Just_Forge_2D.WindowSystem.WindowConfig;
-import Just_Forge_2D.WindowSystem.WindowSystemManager;
+import WindowSystem.WindowConfig;
+import WindowSystem.WindowSystemManager;
 
 public class MainWindowConfig extends WindowConfig
 {

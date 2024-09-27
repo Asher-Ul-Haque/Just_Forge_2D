@@ -1,9 +1,9 @@
-package Just_Forge_2D.Utils;
+package Utils;
 
-import Just_Forge_2D.PrefabSystem.SpritePrefab;
-import Just_Forge_2D.RenderingSystem.SpriteSheet;
-import Just_Forge_2D.RenderingSystem.Shader;
-import Just_Forge_2D.RenderingSystem.Texture;
+import PrefabSystem.SpritePrefab;
+import RenderingSystem.SpriteSheet;
+import RenderingSystem.Shader;
+import RenderingSystem.Texture;
 import Just_Forge_2D.AudioSystem.Sound;
 
 import java.io.File;
@@ -64,11 +64,11 @@ public class AssetPool
         {
             shaderPool.remove(path);
             nameToFile.remove(NAME);
-            Logger.FORGE_LOG_DEBUG("Shader: " + NAME + " removed from AssetPool");
+            Logger.FORGE_LOG_DEBUG("Shader: " + NAME + " removed from Just_Forge_2D.AssetPool");
         }
         else
         {
-            Logger.FORGE_LOG_WARNING("Shader: " + NAME + " doesn't exist in AssetPool");
+            Logger.FORGE_LOG_WARNING("Shader: " + NAME + " doesn't exist in Just_Forge_2D.AssetPool");
         }
     }
 
@@ -153,11 +153,11 @@ public class AssetPool
         {
             spriteSheetPool.remove(path);
             nameToFile.remove(NAME);
-            Logger.FORGE_LOG_DEBUG("Sprite Sheet: " + NAME + " removed from AssetPool");
+            Logger.FORGE_LOG_DEBUG("Sprite Sheet: " + NAME + " removed from Just_Forge_2D.AssetPool");
         }
         else
         {
-            Logger.FORGE_LOG_WARNING("Sprite Sheet: " + NAME + " doesn't exist in AssetPool");
+            Logger.FORGE_LOG_WARNING("Sprite Sheet: " + NAME + " doesn't exist in Just_Forge_2D.AssetPool");
         }
     }
 
@@ -206,11 +206,11 @@ public class AssetPool
             soundPool.get(path).delete();
             soundPool.remove(path);
             nameToFile.remove(NAME);
-            Logger.FORGE_LOG_DEBUG("Sound: " + NAME + " removed from AssetPool");
+            Logger.FORGE_LOG_DEBUG("Sound: " + NAME + " removed from Just_Forge_2D.AssetPool");
         }
         else
         {
-            Logger.FORGE_LOG_WARNING("Sound: " + NAME + " doesn't exist in AssetPool");
+            Logger.FORGE_LOG_WARNING("Sound: " + NAME + " doesn't exist in Just_Forge_2D.AssetPool");
         }
     }
 

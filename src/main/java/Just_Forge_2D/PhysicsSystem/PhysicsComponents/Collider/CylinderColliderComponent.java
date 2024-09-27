@@ -1,12 +1,12 @@
-package Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider;
+package PhysicsSystem.PhysicsComponents.Collider;
 
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.EditorSystem.MainWindow;
 import Just_Forge_2D.EditorSystem.Themes.Theme;
 import Just_Forge_2D.EditorSystem.Widgets;
-import Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent;
-import Just_Forge_2D.PhysicsSystem.PhysicsManagers.ColliderManager;
-import Just_Forge_2D.RenderingSystem.DebugPencil;
+import PhysicsSystem.PhysicsComponents.RigidBodyComponent;
+import PhysicsSystem.PhysicsManagers.ColliderManager;
+import RenderingSystem.DebugPencil;
 import imgui.ImGui;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
@@ -70,7 +70,7 @@ public class CylinderColliderComponent extends ColliderComponent
 
         if (gameObject != null)
         {
-            RigidBodyComponent rb = gameObject.getCompoent(RigidBodyComponent.class);
+            RigidBodyComponent rb = gameObject.getComponent(RigidBodyComponent.class);
             if (rb != null)
             {
                 ColliderManager.resetCylinderCollider(rb, this);

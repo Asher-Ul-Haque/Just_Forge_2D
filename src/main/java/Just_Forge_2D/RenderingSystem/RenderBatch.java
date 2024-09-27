@@ -1,9 +1,9 @@
-package Just_Forge_2D.RenderingSystem;
+package RenderingSystem;
 
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.EditorSystem.MainWindow;
-import Just_Forge_2D.Utils.Logger;
+import Utils.Logger;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
@@ -365,7 +365,7 @@ public class RenderBatch implements Comparable<RenderBatch>
     public boolean destroyIfExists(GameObject GO)
     {
         Logger.FORGE_LOG_DEBUG("Removing game object: " + GO + " from render batch with layer " + this.layer);
-        SpriteComponent sprite = GO.getCompoent(SpriteComponent.class);
+        SpriteComponent sprite = GO.getComponent(SpriteComponent.class);
         for (int i = 0; i < spriteCount; ++i)
         {
             if (sprites[i] == sprite)

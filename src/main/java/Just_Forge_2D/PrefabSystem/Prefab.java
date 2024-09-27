@@ -1,4 +1,4 @@
-package Just_Forge_2D.PrefabSystem;
+package PrefabSystem;
 
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 

@@ -4,7 +4,7 @@ import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.Components.ComponentList;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
-import Just_Forge_2D.Utils.Logger;
+import Utils.Logger;
 import imgui.ImGui;
 import org.joml.Vector4f;
 
@@ -45,7 +45,7 @@ public class ComponentsWindow
                     int delay = 2;
                     for (Class<? extends Component> type : ComponentList.types)
                     {
-                        if (activeGameObject.getCompoent(type) != null) continue;
+                        if (activeGameObject.getComponent(type) != null) continue;
                         if (delay-- == 0)
                         {
                             ImGui.separator();
@@ -98,7 +98,7 @@ public class ComponentsWindow
             int i = 0;
             for (GameObject go: activeGameObjects)
             {
-                SpriteComponent spr = go.getCompoent(SpriteComponent.class);
+                SpriteComponent spr = go.getComponent(SpriteComponent.class);
                 if (spr != null)
                 {
                     spr.setColor(activeGameObjectsColors.get(i));
@@ -121,7 +121,7 @@ public class ComponentsWindow
 
     public static void addActiveGameObject(GameObject GO)
     {
-        SpriteComponent spr = GO.getCompoent(SpriteComponent.class);
+        SpriteComponent spr = GO.getComponent(SpriteComponent.class);
         if (spr != null)
         {
             activeGameObjectsColors.add(new Vector4f(spr.getColor()));

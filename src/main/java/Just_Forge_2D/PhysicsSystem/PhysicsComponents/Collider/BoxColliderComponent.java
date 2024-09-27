@@ -1,10 +1,10 @@
-package Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider;
+package PhysicsSystem.PhysicsComponents.Collider;
 
 
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.EditorSystem.Themes.Theme;
 import Just_Forge_2D.EditorSystem.Widgets;
-import Just_Forge_2D.RenderingSystem.DebugPencil;
+import RenderingSystem.DebugPencil;
 import imgui.ImGui;
 import org.joml.Vector2f;
 import org.joml.Vector3f;

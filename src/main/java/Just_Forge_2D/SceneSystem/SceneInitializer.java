@@ -1,9 +1,9 @@
-package Just_Forge_2D.SceneSystem;
+package SceneSystem;
 
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
-import Just_Forge_2D.PhysicsSystem.PhysicsWorld;
-import Just_Forge_2D.RenderingSystem.Renderer;
+import PhysicsSystem.PhysicsWorld;
+import RenderingSystem.Renderer;
 
 public abstract class SceneInitializer
 {

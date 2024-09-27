@@ -135,7 +135,7 @@ public class AnimationComponent extends Component
                 currentState = getStateByName(defaultStateTitle);
             }
 
-            SpriteComponent sprite = gameObject.getCompoent(SpriteComponent.class);
+            SpriteComponent sprite = gameObject.getComponent(SpriteComponent.class);
             if (sprite != null)
             {
                 sprite.setSprite(currentState.getCurrentSprite());

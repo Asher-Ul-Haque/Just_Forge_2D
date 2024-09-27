@@ -1,6 +1,6 @@
 package Just_Forge_2D.EditorSystem.Themes;
 
-import Just_Forge_2D.Utils.DefaultValues;
+import Utils.DefaultValues;
 import imgui.ImVec4;
 
 public class CleanTheme extends Theme

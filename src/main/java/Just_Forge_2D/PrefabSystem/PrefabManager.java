@@ -1,9 +1,9 @@
-package Just_Forge_2D.PrefabSystem;
+package PrefabSystem;
 
 import Just_Forge_2D.EditorSystem.InputControls.MouseControlComponent;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.Sprite;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
-import Just_Forge_2D.Utils.Logger;
+import Utils.Logger;
 import imgui.ImGui;
 
 import java.util.HashMap;

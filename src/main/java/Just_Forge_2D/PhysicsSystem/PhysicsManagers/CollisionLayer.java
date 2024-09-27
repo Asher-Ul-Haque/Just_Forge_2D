@@ -1,11 +1,18 @@
-package Just_Forge_2D.PhysicsSystem.PhysicsManagers;
+package PhysicsSystem.PhysicsManagers;
 
-import Just_Forge_2D.Utils.Logger;
+import Utils.Logger;
 
 public class CollisionLayer
 {
+    // - - - private variables
     private short categoryBits;
     private short maskBits;
+
+
+    // - - - | Functions | - - -
+
+
+    // - - - Constructors - - -
 
     public CollisionLayer()
     {
@@ -19,14 +26,17 @@ public class CollisionLayer
         this.maskBits = MASK_BITS;
     }
 
-    public void setLayer(int layer)
+
+    // - - - Layer getter setterS - - -
+
+    public void setLayer(int LAYER)
     {
-        if (layer < 1 || layer > 16)
+        if (LAYER < 1 || LAYER > 16)
         {
             Logger.FORGE_LOG_ERROR("Layer must be between 1 and 16.");
             return;
         }
-        this.categoryBits = (short) (1 << (layer - 1));
+        this.categoryBits = (short) (1 << (LAYER - 1));
     }
 
     public int getLayer()
@@ -81,6 +91,9 @@ public class CollisionLayer
             this.maskBits &= (short) ~(1 << (LAYER - 1));
         }
     }
+
+
+    // - - - Data getters - - -
 
     public short getCategoryBits()
     {

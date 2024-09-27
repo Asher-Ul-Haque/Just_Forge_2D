@@ -1,4 +1,4 @@
-package Just_Forge_2D.Utils;
+package Utils;
 
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
 

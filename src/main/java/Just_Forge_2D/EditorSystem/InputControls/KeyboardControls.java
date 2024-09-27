@@ -6,7 +6,7 @@ import Just_Forge_2D.EditorSystem.Windows.ComponentsWindow;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.InputSystem.Keyboard;
 import Just_Forge_2D.InputSystem.Keys;
-import Just_Forge_2D.Utils.Logger;
+import Utils.Logger;
 
 import java.util.List;
 
@@ -31,9 +31,9 @@ public class KeyboardControls
             Logger.FORGE_LOG_DEBUG("Copying: " + activeGameObject);
             GameObject newObj = activeGameObject.copy();
             MouseControlComponent.pickupObject(newObj);
-            if (newObj.getCompoent(AnimationComponent.class) != null)
+            if (newObj.getComponent(AnimationComponent.class) != null)
             {
-                newObj.getCompoent(AnimationComponent.class).refreshTextures();
+                newObj.getComponent(AnimationComponent.class).refreshTextures();
             }
         }
 

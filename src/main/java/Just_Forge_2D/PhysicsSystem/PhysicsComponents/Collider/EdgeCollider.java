@@ -1,4 +1,4 @@
-package Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider;
+package PhysicsSystem.PhysicsComponents.Collider;
 
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import org.joml.Vector2f;

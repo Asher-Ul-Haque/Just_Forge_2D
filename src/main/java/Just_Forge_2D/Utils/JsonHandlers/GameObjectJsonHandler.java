@@ -1,4 +1,4 @@
-package Just_Forge_2D.Utils.JsonHandlers;
+package Utils.JsonHandlers;
 
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.Components.TransformComponent;
@@ -23,7 +23,7 @@ public class GameObjectJsonHandler implements JsonDeserializer<GameObject>
             Component component = jsonDeserializationContext.deserialize(e, Component.class);
             newGameObject.addComponent(component);
         }
-        newGameObject.transform = newGameObject.getCompoent(TransformComponent.class);
+        newGameObject.transform = newGameObject.getComponent(TransformComponent.class);
 
         return newGameObject;
     }

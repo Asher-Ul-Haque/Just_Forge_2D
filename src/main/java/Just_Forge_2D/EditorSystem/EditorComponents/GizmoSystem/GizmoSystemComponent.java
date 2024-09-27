@@ -37,13 +37,13 @@ public class GizmoSystemComponent extends Component
         switch (currentGizmo)
         {
             case 0:
-                gameObject.getCompoent(TranslationGizmoComponent.class).setUsing(true);
-                gameObject.getCompoent(ScaleGizmoComponent.class).setUsing(false);
+                gameObject.getComponent(TranslationGizmoComponent.class).setUsing(true);
+                gameObject.getComponent(ScaleGizmoComponent.class).setUsing(false);
                 break;
 
             case 1:
-                gameObject.getCompoent(TranslationGizmoComponent.class).setUsing(false);
-                gameObject.getCompoent(ScaleGizmoComponent.class).setUsing(true);
+                gameObject.getComponent(TranslationGizmoComponent.class).setUsing(false);
+                gameObject.getComponent(ScaleGizmoComponent.class).setUsing(true);
                 break;
         }
 

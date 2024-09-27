@@ -1,7 +1,7 @@
-package Just_Forge_2D.Utils.JsonHandlers;
+package Utils.JsonHandlers;
 
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
-import Just_Forge_2D.Utils.Logger;
+import Utils.Logger;
 import com.google.gson.*;
 
 import java.lang.reflect.Type;

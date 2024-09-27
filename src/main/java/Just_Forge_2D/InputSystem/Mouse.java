@@ -1,8 +1,8 @@
 package Just_Forge_2D.InputSystem;
 
-import Just_Forge_2D.SceneSystem.Camera;
-import Just_Forge_2D.Utils.Logger;
-import Just_Forge_2D.WindowSystem.WindowSystemManager;
+import SceneSystem.Camera;
+import Utils.Logger;
+import WindowSystem.WindowSystemManager;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector4f;

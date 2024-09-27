@@ -1,4 +1,4 @@
-package Just_Forge_2D.RenderingSystem;
+package RenderingSystem;
 
 import org.joml.Vector2f;
 import org.joml.Vector3f;

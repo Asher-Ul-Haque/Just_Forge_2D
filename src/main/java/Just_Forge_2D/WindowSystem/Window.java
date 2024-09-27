@@ -1,4 +1,4 @@
-package Just_Forge_2D.WindowSystem;
+package WindowSystem;
 
 import Just_Forge_2D.EditorSystem.GameSystem.GameCodeLoader;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
@@ -7,10 +7,10 @@ import Just_Forge_2D.EventSystem.Events.Event;
 import Just_Forge_2D.EventSystem.Observer;
 import Just_Forge_2D.InputSystem.Keyboard;
 import Just_Forge_2D.InputSystem.Mouse;
-import Just_Forge_2D.SceneSystem.Scene;
-import Just_Forge_2D.Utils.DefaultValues;
-import Just_Forge_2D.Utils.Logger;
-import Just_Forge_2D.Utils.TimeKeeper;
+import SceneSystem.Scene;
+import Utils.DefaultValues;
+import Utils.Logger;
+import Utils.TimeKeeper;
 import org.joml.Vector4f;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.glfw.GLFWImage;

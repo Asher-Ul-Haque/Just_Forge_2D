@@ -1,6 +1,6 @@
 package Just_Forge_2D.EditorSystem.Windows;
 
-import Just_Forge_2D.Utils.Logger;
+import Utils.Logger;
 import org.joml.Vector2i;
 
 import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;

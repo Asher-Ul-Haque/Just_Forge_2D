@@ -1,11 +1,11 @@
-package Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider;
+package PhysicsSystem.PhysicsComponents.Collider;
 
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.EditorSystem.Themes.Theme;
 import Just_Forge_2D.EditorSystem.Widgets;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
-import Just_Forge_2D.PhysicsSystem.PhysicsManagers.CollisionLayer;
+import PhysicsSystem.PhysicsManagers.CollisionLayer;
 import imgui.ImGui;
 import imgui.type.ImBoolean;
 import imgui.type.ImInt;
@@ -15,7 +15,7 @@ import org.joml.Vector4f;
 
 public abstract class ColliderComponent extends Component
 {
-    private transient ImBoolean[] collisionMasks = new ImBoolean[16];
+    private final transient ImBoolean[] collisionMasks = new ImBoolean[16];
     protected transient boolean useCollisionColor = false;
     protected boolean debugDrawAtRuntime = false;
     protected Vector4f hitboxColor = new Vector4f(1.0f, 0.0f, 0.0f, 1.0f);
@@ -67,12 +67,13 @@ public abstract class ColliderComponent extends Component
         Theme.resetDefaultTextColor();
         Widgets.colorPicker4("HitBox Color", this.hitboxColor);
         Widgets.colorPicker4("Collision Color", this.collisionColor);
+        ImGui.indent(16f);
         if (ImGui.collapsingHeader("Collision Editor"))
         {
             collisionEditor();
         }
+        ImGui.unindent();
         ImGui.separator();
-
     }
 
     protected void collisionEditor()
@@ -92,8 +93,6 @@ public abstract class ColliderComponent extends Component
                 collisionLayer.setCollideWithLayer(i + 1, false);
             }
         }
-        int currentLayer = collisionLayer.getLayer() - 1;
-        ImInt layerIndex = new ImInt(currentLayer);
         String[] layers = new String[16];
         for (int i = 0; i < layers.length; ++i)
         {

@@ -1,7 +1,7 @@
 package Just_Forge_2D.EditorSystem.GameSystem;
 
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
-import Just_Forge_2D.Utils.Logger;
+import Utils.Logger;
 import imgui.ImGui;
 import org.lwjgl.util.tinyfd.TinyFileDialogs;
 
@@ -52,6 +52,7 @@ public class GameManager
                 game = (Game) constructor.newInstance();
                 success = true;
             } catch (Exception e) {
+                Logger.FORGE_LOG_ERROR(e.getMessage());
                 Logger.FORGE_LOG_FATAL("Couldn't find an entry point in the user code. Ensure that the Game Interface is implemented.");
                 return;
             }

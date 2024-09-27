@@ -1,7 +1,7 @@
-package Just_Forge_2D.WindowSystem;
+package WindowSystem;
 
-import Just_Forge_2D.Utils.DefaultValues;
-import Just_Forge_2D.Utils.Logger;
+import Utils.DefaultValues;
+import Utils.Logger;
 import org.joml.Vector2i;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
