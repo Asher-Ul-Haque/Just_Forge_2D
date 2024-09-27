@@ -2,7 +2,7 @@ package Just_Forge_2D.EditorSystem.Windows;
 
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.EditorSystem.Themes.Theme;
-import Utils.Logger;
+import Just_Forge_2D.Utils.Logger;
 import imgui.ImGui;
 import imgui.flag.ImGuiWindowFlags;
 

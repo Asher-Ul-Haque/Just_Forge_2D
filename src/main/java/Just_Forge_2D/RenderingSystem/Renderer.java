@@ -1,9 +1,9 @@
-package RenderingSystem;
+package Just_Forge_2D.RenderingSystem;
 
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
-import Utils.DefaultValues;
-import Utils.Logger;
+import Just_Forge_2D.Utils.DefaultValues;
+import Just_Forge_2D.Utils.Logger;
 
 import java.util.ArrayList;
 import java.util.Collections;

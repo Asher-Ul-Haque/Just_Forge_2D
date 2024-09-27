@@ -1,10 +1,10 @@
-package RenderingSystem;
+package Just_Forge_2D.RenderingSystem;
 
 import Just_Forge_2D.EditorSystem.MainWindow;
-import Utils.AssetPool;
-import Utils.DefaultValues;
-import Utils.ForgeMath;
-import Utils.Logger;
+import Just_Forge_2D.Utils.AssetPool;
+import Just_Forge_2D.Utils.DefaultValues;
+import Just_Forge_2D.Utils.ForgeMath;
+import Just_Forge_2D.Utils.Logger;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 

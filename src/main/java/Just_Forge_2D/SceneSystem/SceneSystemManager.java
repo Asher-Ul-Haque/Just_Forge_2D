@@ -1,4 +1,4 @@
-package SceneSystem;
+package Just_Forge_2D.SceneSystem;
 
 import Just_Forge_2D.EditorSystem.EditorComponents.EditorCameraComponent;
 import Just_Forge_2D.EditorSystem.EditorComponents.GizmoSystem.GizmoSystemComponent;
@@ -7,9 +7,9 @@ import Just_Forge_2D.EditorSystem.EditorComponents.NonPickableComponent;
 import Just_Forge_2D.EditorSystem.InputControls.MouseControlComponent;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
-import Utils.JsonHandlers.ComponentJsonHandler;
-import Utils.JsonHandlers.GameObjectJsonHandler;
-import Utils.Logger;
+import Just_Forge_2D.Utils.JsonHandlers.ComponentJsonHandler;
+import Just_Forge_2D.Utils.JsonHandlers.GameObjectJsonHandler;
+import Just_Forge_2D.Utils.Logger;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParseException;

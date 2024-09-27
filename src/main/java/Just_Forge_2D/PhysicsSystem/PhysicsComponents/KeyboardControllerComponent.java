@@ -1,13 +1,13 @@
-package PhysicsSystem.PhysicsComponents;
+package Just_Forge_2D.PhysicsSystem.PhysicsComponents;
 
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.InputSystem.Keyboard;
 import Just_Forge_2D.InputSystem.Keys;
-import PhysicsSystem.Raycasts.RayCastInfo;
-import PhysicsSystem.Raycasts.RaycastGun;
-import RenderingSystem.DebugPencil;
-import Utils.DefaultValues;
-import Utils.Logger;
+import Just_Forge_2D.PhysicsSystem.Raycasts.RayCastInfo;
+import Just_Forge_2D.PhysicsSystem.Raycasts.RaycastGun;
+import Just_Forge_2D.RenderingSystem.DebugPencil;
+import Just_Forge_2D.Utils.DefaultValues;
+import Just_Forge_2D.Utils.Logger;
 import org.jbox2d.common.Vec2;
 import org.joml.Vector2f;
 import org.joml.Vector3f;

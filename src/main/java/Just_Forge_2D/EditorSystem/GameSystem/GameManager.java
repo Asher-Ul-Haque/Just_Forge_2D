@@ -1,7 +1,7 @@
 package Just_Forge_2D.EditorSystem.GameSystem;
 
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
-import Utils.Logger;
+import Just_Forge_2D.Utils.Logger;
 import imgui.ImGui;
 import org.lwjgl.util.tinyfd.TinyFileDialogs;
 

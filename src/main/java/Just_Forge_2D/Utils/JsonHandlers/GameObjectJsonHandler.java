@@ -1,4 +1,4 @@
-package Utils.JsonHandlers;
+package Just_Forge_2D.Utils.JsonHandlers;
 
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.Components.TransformComponent;

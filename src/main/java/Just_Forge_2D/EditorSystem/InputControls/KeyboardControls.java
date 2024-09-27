@@ -6,7 +6,7 @@ import Just_Forge_2D.EditorSystem.Windows.ComponentsWindow;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.InputSystem.Keyboard;
 import Just_Forge_2D.InputSystem.Keys;
-import Utils.Logger;
+import Just_Forge_2D.Utils.Logger;
 
 import java.util.List;
 

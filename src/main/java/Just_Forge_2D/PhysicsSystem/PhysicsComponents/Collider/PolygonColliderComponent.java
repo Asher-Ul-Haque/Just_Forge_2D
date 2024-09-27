@@ -1,4 +1,4 @@
-package PhysicsSystem.PhysicsComponents.Collider;
+package Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider;
 
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.EditorSystem.Themes.Theme;

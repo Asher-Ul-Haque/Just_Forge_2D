@@ -1,6 +1,6 @@
-package WindowSystem;
-import Utils.DefaultValues;
-import Utils.Logger;
+package Just_Forge_2D.WindowSystem;
+import Just_Forge_2D.Utils.DefaultValues;
+import Just_Forge_2D.Utils.Logger;
 import org.joml.Vector4f;
 
 public class WindowConfig

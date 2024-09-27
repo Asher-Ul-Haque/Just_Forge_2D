@@ -1,12 +1,11 @@
 package Just_Forge_2D.EditorSystem.Windows;
 
-import Utils.Logger;
+import Just_Forge_2D.Utils.Logger;
 import org.joml.Vector2i;
 
 import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
 import static org.lwjgl.opengl.GL11.glGetError;
 import static org.lwjgl.opengl.GL30.*;
-import static org.lwjgl.opengl.GL30.GL_FRAMEBUFFER;
 
 // - - - Object Selector
 public class ObjectSelector

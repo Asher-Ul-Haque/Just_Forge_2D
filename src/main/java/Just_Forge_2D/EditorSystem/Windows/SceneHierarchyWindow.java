@@ -7,7 +7,7 @@ import Just_Forge_2D.EditorSystem.Widgets;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.Components.ComponentList;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
-import Utils.Logger;
+import Just_Forge_2D.Utils.Logger;
 import imgui.ImGui;
 
 import java.util.ArrayList;

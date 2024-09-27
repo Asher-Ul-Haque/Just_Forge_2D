@@ -1,4 +1,4 @@
-package PhysicsSystem.Raycasts;
+package Just_Forge_2D.PhysicsSystem.Raycasts;
 
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import org.jbox2d.callbacks.RayCastCallback;
@@ -13,7 +13,7 @@ public class RayCastInfo implements RayCastCallback
     public Vector2f normal;
     public float fraction;
     public boolean hit;
-    private final GameObject requestee;
+    private GameObject requestee;
     public GameObject hitObject;
 
     public RayCastInfo(GameObject OBJ)
@@ -41,6 +41,7 @@ public class RayCastInfo implements RayCastCallback
         this.fraction = FRACTION;
         this.hit = fraction != 0;
         this.hitObject = (GameObject) fixture.m_userData;
+
         return fraction;
     }
 }

@@ -1,8 +1,8 @@
-package PhysicsSystem;
+package Just_Forge_2D.PhysicsSystem;
 
-import PhysicsSystem.PhysicsManagers.CollisionManager;
-import Utils.DefaultValues;
-import Utils.Logger;
+import Just_Forge_2D.PhysicsSystem.PhysicsManagers.CollisionManager;
+import Just_Forge_2D.Utils.DefaultValues;
+import Just_Forge_2D.Utils.Logger;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
 import org.joml.Vector2f;

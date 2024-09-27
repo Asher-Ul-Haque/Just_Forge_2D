@@ -1,15 +1,14 @@
-package PhysicsSystem.PhysicsManagers;
+package Just_Forge_2D.PhysicsSystem.PhysicsManagers;
 
-import PhysicsSystem.PhysicsComponents.Collider.*;
-import PhysicsSystem.PhysicsComponents.RigidBodyComponent;
-import Utils.Logger;
+import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.*;
+import Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent;
+import Just_Forge_2D.Utils.Logger;
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.collision.shapes.EdgeShape;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.collision.shapes.Shape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
-import org.jbox2d.dynamics.Fixture;
 import org.jbox2d.dynamics.FixtureDef;
 import org.joml.Vector2f;
 

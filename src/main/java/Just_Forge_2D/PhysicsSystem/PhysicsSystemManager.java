@@ -1,13 +1,13 @@
-package PhysicsSystem;
+package Just_Forge_2D.PhysicsSystem;
 
 import Just_Forge_2D.EntityComponentSystem.Components.TransformComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
-import PhysicsSystem.PhysicsComponents.Collider.*;
-import PhysicsSystem.PhysicsComponents.RigidBodyComponent;
-import PhysicsSystem.PhysicsManagers.ColliderManager;
-import SceneSystem.Scene;
-import Utils.DefaultValues;
-import Utils.Logger;
+import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.*;
+import Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent;
+import Just_Forge_2D.PhysicsSystem.PhysicsManagers.ColliderManager;
+import Just_Forge_2D.SceneSystem.Scene;
+import Just_Forge_2D.Utils.DefaultValues;
+import Just_Forge_2D.Utils.Logger;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;

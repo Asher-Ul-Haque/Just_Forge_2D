@@ -1,4 +1,4 @@
-package PhysicsSystem.PhysicsManagers;
+package Just_Forge_2D.PhysicsSystem.PhysicsManagers;
 
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.GameObject;

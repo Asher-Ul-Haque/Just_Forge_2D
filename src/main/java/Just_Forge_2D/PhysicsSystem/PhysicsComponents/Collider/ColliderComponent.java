@@ -1,14 +1,12 @@
-package PhysicsSystem.PhysicsComponents.Collider;
-
+package Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider;
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.EditorSystem.Themes.Theme;
 import Just_Forge_2D.EditorSystem.Widgets;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
-import PhysicsSystem.PhysicsManagers.CollisionLayer;
+import Just_Forge_2D.PhysicsSystem.PhysicsManagers.CollisionLayer;
 import imgui.ImGui;
 import imgui.type.ImBoolean;
-import imgui.type.ImInt;
 import org.jbox2d.dynamics.contacts.Contact;
 import org.joml.Vector2f;
 import org.joml.Vector4f;

@@ -1,6 +1,6 @@
-package PhysicsSystem.PhysicsManagers;
+package Just_Forge_2D.PhysicsSystem.PhysicsManagers;
 
-import Utils.Logger;
+import Just_Forge_2D.Utils.Logger;
 
 public class CollisionLayer
 {
@@ -29,14 +29,14 @@ public class CollisionLayer
 
     // - - - Layer getter setterS - - -
 
-    public void setLayer(int LAYER)
+    public void setLayer(int layer)
     {
-        if (LAYER < 1 || LAYER > 16)
+        if (layer < 1 || layer > 16)
         {
             Logger.FORGE_LOG_ERROR("Layer must be between 1 and 16.");
             return;
         }
-        this.categoryBits = (short) (1 << (LAYER - 1));
+        this.categoryBits = (short) (1 << (layer - 1));
     }
 
     public int getLayer()

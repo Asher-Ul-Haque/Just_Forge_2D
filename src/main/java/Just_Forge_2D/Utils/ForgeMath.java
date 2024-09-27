@@ -1,4 +1,4 @@
-package Utils;
+package Just_Forge_2D.Utils;
 
 import org.joml.Vector2f;
 

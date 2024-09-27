@@ -1,4 +1,4 @@
-package ParticleSystem;
+package Just_Forge_2D.ParticleSystem;
 
 import Just_Forge_2D.EditorSystem.MainWindow;
 import Just_Forge_2D.EditorSystem.Widgets;
@@ -9,9 +9,9 @@ import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.EventSystem.EventManager;
 import Just_Forge_2D.EventSystem.Events.Event;
 import Just_Forge_2D.EventSystem.Observer;
-import PhysicsSystem.PhysicsComponents.RigidBodyComponent;
-import RenderingSystem.DebugPencil;
-import Utils.Logger;
+import Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent;
+import Just_Forge_2D.RenderingSystem.DebugPencil;
+import Just_Forge_2D.Utils.Logger;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;

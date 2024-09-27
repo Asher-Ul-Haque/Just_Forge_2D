@@ -1,4 +1,4 @@
-package ParticleSystem;
+package Just_Forge_2D.ParticleSystem;
 
 import org.jbox2d.particle.ParticleType;
 

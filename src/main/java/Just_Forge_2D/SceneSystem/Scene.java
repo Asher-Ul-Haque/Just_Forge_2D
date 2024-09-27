@@ -1,4 +1,4 @@
-package SceneSystem;
+package Just_Forge_2D.SceneSystem;
 
 import Just_Forge_2D.AnimationSystem.AnimationComponent;
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
@@ -7,11 +7,11 @@ import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.Components.TransformComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.InputSystem.Mouse;
-import PhysicsSystem.PhysicsComponents.RigidBodyComponent;
-import PhysicsSystem.PhysicsSystemManager;
-import RenderingSystem.Renderer;
-import Utils.AssetPool;
-import Utils.Logger;
+import Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent;
+import Just_Forge_2D.PhysicsSystem.PhysicsSystemManager;
+import Just_Forge_2D.RenderingSystem.Renderer;
+import Just_Forge_2D.Utils.AssetPool;
+import Just_Forge_2D.Utils.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,7 +75,7 @@ public class Scene
     {
         this.camera.adjustProjection();
         if (!this.isRunning) return;
-        if (this.physics != null) this.physics.update();
+        if (this.physics != null) this.physics.update(DELTA_TIME);
         for (int i = 0; i < gameObjects.size(); ++i)
         {
             GameObject go = gameObjects.get(i);

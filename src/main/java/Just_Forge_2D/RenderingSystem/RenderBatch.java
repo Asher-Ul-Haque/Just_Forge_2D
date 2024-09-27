@@ -1,9 +1,9 @@
-package RenderingSystem;
+package Just_Forge_2D.RenderingSystem;
 
+import Just_Forge_2D.EditorSystem.MainWindow;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
-import Just_Forge_2D.EditorSystem.MainWindow;
-import Utils.Logger;
+import Just_Forge_2D.Utils.Logger;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;

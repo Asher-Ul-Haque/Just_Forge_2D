@@ -1,4 +1,4 @@
-package PrefabSystem;
+package Just_Forge_2D.PrefabSystem;
 
 import Just_Forge_2D.EditorSystem.MainWindow;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.Sprite;

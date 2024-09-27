@@ -2,7 +2,7 @@ package Just_Forge_2D.EntityComponentSystem.Components;
 
 import Just_Forge_2D.EditorSystem.EditorComponents.GridlinesComponent;
 import Just_Forge_2D.EditorSystem.Widgets;
-import Utils.DefaultValues;
+import Just_Forge_2D.Utils.DefaultValues;
 import org.joml.Vector2f;
 
 // - - - class to store data regarding position and scale

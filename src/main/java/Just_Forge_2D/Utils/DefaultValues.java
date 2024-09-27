@@ -1,4 +1,4 @@
-package Utils;
+package Just_Forge_2D.Utils;
 
 import Just_Forge_2D.InputSystem.Keys;
 import imgui.ImVec2;
