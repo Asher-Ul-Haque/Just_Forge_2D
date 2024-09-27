@@ -35,7 +35,7 @@ public class EdgeColliderComponent extends ColliderComponent
     {
         for (EdgeCollider collider : colliders)
         {
-            Vector2f start = new Vector2f(collider.getEdgeStart()).add(this.gameObject.transform.position);
+            Vector2f start = new Vector2f(collider.getEdgeStart());
             Vector2f end = new Vector2f(collider.getEdgeEnd()).add(this.gameObject.transform.position);
             ForgeMath.rotate(start, this.gameObject.transform.rotation, this.gameObject.transform.position);
             ForgeMath.rotate(end, this.gameObject.transform.rotation, this.gameObject.transform.position);

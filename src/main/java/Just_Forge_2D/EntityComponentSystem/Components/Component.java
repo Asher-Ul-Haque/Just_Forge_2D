@@ -102,6 +102,10 @@ public abstract class Component
                     String[] enumValues = getEnumValues((Class<Enum>) type);
                     String enumType = ((Enum) value).name();
                     ImInt index = new ImInt(indexOf(enumType, enumValues));
+                    Theme.setDefaultTextColor(EditorSystemManager.getCurrentTheme().secondaryColor);
+                    ImGui.text(field.getName());
+                    ImGui.sameLine();
+                    Theme.resetDefaultTextColor();
                     if (ImGui.combo(field.getName(), index, enumValues, enumValues.length))
                     {
                         field.set(this, type.getEnumConstants()[index.get()]);
@@ -130,10 +134,12 @@ public abstract class Component
 
     public void debugDraw()  {}
 
-    private <T extends Enum<T>> String[] getEnumValues(Class<T> enumType) {
-        String[] enumValues = new String[enumType.getEnumConstants().length];
+    private <T extends Enum<T>> String[] getEnumValues(Class<T> TYPE)
+    {
+        String[] enumValues = new String[TYPE.getEnumConstants().length];
         int i = 0;
-        for (T enumIntegerValue : enumType.getEnumConstants()) {
+        for (T enumIntegerValue : TYPE.getEnumConstants())
+        {
             enumValues[i] = enumIntegerValue.name();
             i++;
         }

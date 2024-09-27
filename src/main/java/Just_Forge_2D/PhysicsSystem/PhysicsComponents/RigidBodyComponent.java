@@ -58,6 +58,25 @@ public class RigidBodyComponent extends Component
         this.rawBody.setLinearVelocity(new Vec2(velocity.x, velocity.y));
     }
 
+    public void addVelocity(Vector2f VELOCITY)
+    {
+        if (rawBody == null)
+        {
+            Logger.FORGE_LOG_ERROR("Cant add velocity to a null raw body");
+            return;
+        }
+        this.setDensity(this.getDensity());
+        rawBody.setLinearVelocity(rawBody.getLinearVelocity().add(new Vec2(VELOCITY.x, VELOCITY.y)));
+    }
+
+    public Vector2f getLinearVelocity()
+    {
+        return new Vector2f(rawBody.getLinearVelocity().x, rawBody.getLinearVelocity().y);
+    }
+
+
+    // - - - Transform - - -
+
     public void setTransform(TransformComponent TRANSFORM)
     {
         if (rawBody == null)
@@ -226,6 +245,16 @@ public class RigidBodyComponent extends Component
         this.rawBody.resetMassData();
     }
 
+    public float getMass()
+    {
+        if (rawBody == null)
+        {
+            if (!isEditor) Logger.FORGE_LOG_ERROR("Cant add mass to a null raw body");
+            return -1f;
+        }
+        return rawBody.getMass();
+    }
+
 
     // - - - Body Type - - -
 
@@ -279,7 +308,45 @@ public class RigidBodyComponent extends Component
     }
 
 
-    // - - - update
+    // - - - Force - - -
+
+    public void addForce(Vector2f FORCE)
+    {
+        if (!rawBodyCheck("Force")) return;
+        rawBody.applyForce(new Vec2(FORCE.x, FORCE.y), rawBody.getWorldCenter());
+    }
+
+    public void addForce(Vector2f FORCE, Vector2f POINT)
+    {
+        if (!rawBodyCheck("Force")) return;
+        rawBody.applyForce(new Vec2(FORCE.x, FORCE.y), new Vec2(POINT.x, POINT.y));
+    }
+
+
+    // - - - Torque - - -
+
+    public void addTorque(float TORQUE)
+    {
+        if (!rawBodyCheck("Torque")) return;
+        rawBody.applyTorque(TORQUE);
+    }
+
+
+    // - - - Impulse - - -
+
+    public void addImpulse(Vector2f IMPULSE)
+    {
+        if (!rawBodyCheck("Impulse")) return;
+        addImpulse(IMPULSE, new Vector2f(rawBody.getWorldCenter().x, rawBody.getWorldCenter().y));
+    }
+
+    public void addImpulse(Vector2f IMPULSE, Vector2f POINT)
+    {
+        this.rawBody.applyLinearImpulse(new Vec2(IMPULSE.x, IMPULSE.y), new Vec2(POINT.x, POINT.y), true);
+    }
+
+
+    // - - - update - - -
     @Override
     public void update(float DELTA_TIME)
     {
@@ -297,55 +364,6 @@ public class RigidBodyComponent extends Component
                 this.rawBody.setTransform(new Vec2(this.gameObject.transform.position.x, this.gameObject.transform.position.y), this.gameObject.transform.rotation);
             }
         }
-    }
-
-    public void addVelocity(Vector2f VELOCITY)
-    {
-        if (rawBody == null)
-        {
-            Logger.FORGE_LOG_ERROR("Cant add velocity to a null raw body");
-            return;
-        }
-        this.setDensity(this.getDensity());
-        rawBody.setLinearVelocity(rawBody.getLinearVelocity().add(new Vec2(VELOCITY.x, VELOCITY.y)));
-    }
-
-    public void addForce(Vector2f FORCE)
-    {
-        if (rawBody == null)
-        {
-            Logger.FORGE_LOG_ERROR("Cant add force to a null raw body");
-            return;
-        }
-        this.setDensity(this.getDensity());
-        rawBody.applyForceToCenter(new Vec2(FORCE.x, FORCE.y));
-    }
-
-    public void addImpulse(Vector2f IMPULSE)
-    {
-        if (this.rawBody == null)
-        {
-            if (!isEditor) Logger.FORGE_LOG_ERROR("Cant add impulse toa  null raw body");
-            return;
-        }
-        this.setDensity(this.getDensity());
-        this.rawBody.applyLinearImpulse(new Vec2(IMPULSE.x, IMPULSE.y), this.rawBody.getWorldCenter(), true);
-    }
-
-    public void addTorque(float TORQUE)
-    {
-        if (rawBody == null)
-        {
-            if (!isEditor) Logger.FORGE_LOG_ERROR("Cant add torque to a null raw body");
-            return;
-        }
-        this.setDensity(this.getDensity());
-        rawBody.applyTorque(TORQUE);
-    }
-
-    public Vec2 getLinearVelocity()
-    {
-        return rawBody.getLinearVelocity();
     }
 
 
@@ -367,6 +385,10 @@ public class RigidBodyComponent extends Component
                 .toArray(String[]::new);
         String enumType = (bodyType).name();
         ImInt index = new ImInt(Arrays.asList(enumValues).indexOf(enumType));
+        Theme.setDefaultTextColor(EditorSystemManager.getCurrentTheme().secondaryColor);
+        ImGui.text("Body Type");
+        ImGui.sameLine();
+        Theme.resetDefaultTextColor();
         if (ImGui.combo("Body Type", index, enumValues, enumValues.length))
         {
             bodyType = BodyType.values()[index.get()];
@@ -415,5 +437,18 @@ public class RigidBodyComponent extends Component
         Theme.resetDefaultTextColor();
 
         isEditor = false;
+    }
+
+
+    // - - - Helper functions
+    private boolean rawBodyCheck(String MESSAGE)
+    {
+        if (this.rawBody == null)
+        {
+            if (!isEditor) Logger.FORGE_LOG_ERROR("Cant add " + MESSAGE + " to a  null raw body");
+            return false;
+        }
+        this.setDensity(this.getDensity());
+        return true;
     }
 }
