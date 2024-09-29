@@ -1,15 +1,17 @@
-package Just_Forge_2D.EditorSystem;
+package Just_Forge_2D.WindowSystem;
 
 // - - - Imports | - - -
 
 // - - - Internal
 
-import Just_Forge_2D.EditorSystem.GameSystem.GameCodeLoader;
+import Just_Forge_2D.EditorSystem.EditorSystemManager;
+import Just_Forge_2D.EditorSystem.ImGUIManager;
 import Just_Forge_2D.EditorSystem.Windows.ComponentsWindow;
 import Just_Forge_2D.EditorSystem.Windows.MainWindowConfig;
 import Just_Forge_2D.EditorSystem.Windows.ObjectSelector;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.EventSystem.Events.Event;
+import Just_Forge_2D.GameSystem.GameCodeLoader;
 import Just_Forge_2D.InputSystem.Mouse;
 import Just_Forge_2D.PhysicsSystem.PhysicsSystemManager;
 import Just_Forge_2D.RenderingSystem.DebugPencil;
@@ -20,9 +22,6 @@ import Just_Forge_2D.SceneSystem.SceneInitializer;
 import Just_Forge_2D.SceneSystem.SceneSystemManager;
 import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.Utils.TimeKeeper;
-import Just_Forge_2D.WindowSystem.Window;
-import Just_Forge_2D.WindowSystem.WindowConfig;
-import Just_Forge_2D.WindowSystem.WindowSystemManager;
 import org.joml.Vector2f;
 
 import static org.lwjgl.glfw.GLFW.glfwPollEvents;
@@ -127,7 +126,7 @@ public class MainWindow extends Window
     @Override
     public void gameLoop()
     {
-        switch (EditorSystemManager.currentState)
+        switch (EditorSystemManager.getCurrentState())
         {
             case isEditor:
                 warnFPSSpike();
@@ -168,7 +167,10 @@ public class MainWindow extends Window
                     Renderer.bindShader(EditorSystemManager.defaultShader);
                     if (EditorSystemManager.isRuntimePlaying)
                     {
-                        currentScene.update(dt);
+                        new Thread(() ->
+                        {
+                            currentScene.update(dt);
+                        }).start();
                     }
                     else if (!EditorSystemManager.isRelease)
                     {
@@ -184,11 +186,12 @@ public class MainWindow extends Window
                 {
                     EditorSystemManager.getFramebuffer().unbind();
 
-                // - - - Update the editor
+                    // - - - Update the editor
                     ImGUIManager.update(dt, currentScene);
 
-                // - - - finish input frames
+                    // - - - finish input frames
                 }
+
                 finishInputFrames();
                 keepTime();
                 break;

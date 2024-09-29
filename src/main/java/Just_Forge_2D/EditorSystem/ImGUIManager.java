@@ -8,6 +8,7 @@ import Just_Forge_2D.InputSystem.Mouse;
 import Just_Forge_2D.PrefabSystem.PrefabManager;
 import Just_Forge_2D.SceneSystem.Scene;
 import Just_Forge_2D.Utils.Logger;
+import Just_Forge_2D.WindowSystem.MainWindow;
 import imgui.*;
 import imgui.callback.ImStrConsumer;
 import imgui.callback.ImStrSupplier;
@@ -255,7 +256,6 @@ public class ImGUIManager
                 Logs.render();
                 PrefabManager.render();
                 ImGui.end();
-
                 break;
 
             case isSplashScreen:

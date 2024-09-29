@@ -1,4 +1,4 @@
-package Just_Forge_2D.EditorSystem.GameSystem;
+package Just_Forge_2D.GameSystem;
 
 public interface Game
 {

@@ -1,10 +1,10 @@
 package Just_Forge_2D.WindowSystem;
 
-import Just_Forge_2D.EditorSystem.GameSystem.GameCodeLoader;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.EventSystem.EventManager;
 import Just_Forge_2D.EventSystem.Events.Event;
 import Just_Forge_2D.EventSystem.Observer;
+import Just_Forge_2D.GameSystem.GameCodeLoader;
 import Just_Forge_2D.InputSystem.Keyboard;
 import Just_Forge_2D.InputSystem.Mouse;
 import Just_Forge_2D.SceneSystem.Scene;

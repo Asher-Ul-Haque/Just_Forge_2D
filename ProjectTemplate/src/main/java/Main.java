@@ -1,4 +1,4 @@
-import Just_Forge_2D.EditorSystem.GameSystem.Game;
+import Just_Forge_2D.GameSystem.Game;
 import Just_Forge_2D.Utils.Logger;
 
 public class Main implements Game

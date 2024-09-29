@@ -6,7 +6,6 @@ import Just_Forge_2D.EditorSystem.Widgets;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.Utils.Logger;
 import imgui.ImGui;
-import imgui.type.ImInt;
 import org.jbox2d.dynamics.contacts.Contact;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
@@ -99,16 +98,21 @@ public abstract class Component
                 }
                 else if (type.isEnum())
                 {
-                    String[] enumValues = getEnumValues((Class<Enum>) type);
-                    String enumType = ((Enum) value).name();
-                    ImInt index = new ImInt(indexOf(enumType, enumValues));
-                    Theme.setDefaultTextColor(EditorSystemManager.getCurrentTheme().secondaryColor);
-                    ImGui.text(field.getName());
-                    ImGui.sameLine();
-                    Theme.resetDefaultTextColor();
-                    if (ImGui.combo(field.getName(), index, enumValues, enumValues.length))
+//                    String[] enumValues = getEnumValues((Class<Enum>) type);
+//                    String enumType = ((Enum) value).name();
+//                    ImInt index = new ImInt(indexOf(enumType, enumValues));
+//                    Theme.setDefaultTextColor(EditorSystemManager.getCurrentTheme().secondaryColor);
+//                    ImGui.text(field.getName());
+//                    ImGui.sameLine();
+//                    Theme.resetDefaultTextColor();
+//                    if (ImGui.combo(field.getName(), index, enumValues, enumValues.length))
+//                    {
+//                        field.set(this, type.getEnumConstants()[index.get()]);
+//                    }
+                    Enum t = Widgets.drawEnumControls(type, field.getName());
+                    if (t != null)
                     {
-                        field.set(this, type.getEnumConstants()[index.get()]);
+                        field.set(this, t);
                     }
                 }
                 else if (type == String.class)
@@ -133,31 +137,6 @@ public abstract class Component
     public void editorUpdate(float DELTA_TIME)  { debugDraw(); }
 
     public void debugDraw()  {}
-
-    private <T extends Enum<T>> String[] getEnumValues(Class<T> TYPE)
-    {
-        String[] enumValues = new String[TYPE.getEnumConstants().length];
-        int i = 0;
-        for (T enumIntegerValue : TYPE.getEnumConstants())
-        {
-            enumValues[i] = enumIntegerValue.name();
-            i++;
-        }
-        return enumValues;
-    }
-
-    private int indexOf(String str, String[] arr)
-    {
-        for (int i=0; i < arr.length; i++)
-        {
-            if (str.equals(arr[i]))
-            {
-                return i;
-            }
-        }
-        return -1;
-    }
-
 
     // - - - Unique initialization - - -
 

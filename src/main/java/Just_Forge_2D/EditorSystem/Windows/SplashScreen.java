@@ -1,19 +1,19 @@
 package Just_Forge_2D.EditorSystem.Windows;
 
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
-import Just_Forge_2D.EditorSystem.GameSystem.GameManager;
 import Just_Forge_2D.EditorSystem.ImGUIManager;
-import Just_Forge_2D.EditorSystem.MainWindow;
-import Just_Forge_2D.EditorSystem.ProjectManager;
 import Just_Forge_2D.EditorSystem.Themes.Theme;
 import Just_Forge_2D.EventSystem.EventManager;
 import Just_Forge_2D.EventSystem.Events.Event;
 import Just_Forge_2D.EventSystem.Events.EventTypes;
+import Just_Forge_2D.GameSystem.GameManager;
+import Just_Forge_2D.GameSystem.ProjectManager;
 import Just_Forge_2D.RenderingSystem.Texture;
 import Just_Forge_2D.SceneSystem.EmptySceneInitializer;
 import Just_Forge_2D.Utils.AssetPool;
 import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.Logger;
+import Just_Forge_2D.WindowSystem.MainWindow;
 import Just_Forge_2D.WindowSystem.WindowSystemManager;
 import imgui.ImGui;
 import imgui.flag.ImGuiWindowFlags;

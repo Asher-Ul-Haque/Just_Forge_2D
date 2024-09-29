@@ -29,7 +29,7 @@ public class Logger
     private static Path LOG_FILE_PATH = Paths.get("logs", "latest.justForgeLog");
 
     private static final int maxWriteBuffer = 15;
-    private static final int maxReadBuffer = 4096;
+    private static final int maxReadBuffer = 1024;
     private static final List<String> writeBuffer = new ArrayList<>(maxWriteBuffer);
     private static final String[] readBuffer = new String[maxReadBuffer];
     private static int readBufferIndex = 0;

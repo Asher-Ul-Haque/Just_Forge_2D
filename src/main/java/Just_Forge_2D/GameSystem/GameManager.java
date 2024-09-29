@@ -1,4 +1,4 @@
-package Just_Forge_2D.EditorSystem.GameSystem;
+package Just_Forge_2D.GameSystem;
 
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.Utils.Logger;
@@ -14,7 +14,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 
-import static Just_Forge_2D.EditorSystem.ProjectManager.copyDirectory;
+import static Just_Forge_2D.GameSystem.ProjectManager.copyDirectory;
 
 public class GameManager
 {

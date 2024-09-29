@@ -1,10 +1,10 @@
 package Just_Forge_2D.EntityComponentSystem.Components;
 
-import Just_Forge_2D.EditorSystem.MainWindow;
 import Just_Forge_2D.RenderingSystem.DebugPencil;
 import Just_Forge_2D.SceneSystem.Camera;
 import Just_Forge_2D.Utils.ForgeMath;
 import Just_Forge_2D.Utils.Logger;
+import Just_Forge_2D.WindowSystem.MainWindow;
 import imgui.ImGui;
 import org.joml.Vector2f;
 

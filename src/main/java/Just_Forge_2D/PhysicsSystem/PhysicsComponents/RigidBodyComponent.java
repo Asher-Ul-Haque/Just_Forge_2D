@@ -1,7 +1,6 @@
 package Just_Forge_2D.PhysicsSystem.PhysicsComponents;
 
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
-import Just_Forge_2D.EditorSystem.MainWindow;
 import Just_Forge_2D.EditorSystem.Themes.Theme;
 import Just_Forge_2D.EditorSystem.Widgets;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
@@ -9,13 +8,11 @@ import Just_Forge_2D.EntityComponentSystem.Components.TransformComponent;
 import Just_Forge_2D.PhysicsSystem.Enums.BodyType;
 import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.Logger;
+import Just_Forge_2D.WindowSystem.MainWindow;
 import imgui.ImGui;
-import imgui.type.ImInt;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.joml.Vector2f;
-
-import java.util.Arrays;
 
 // - - - Rigid Body
 public class RigidBodyComponent extends Component
@@ -380,18 +377,11 @@ public class RigidBodyComponent extends Component
         }
 
         // - - - body type
-        String[] enumValues = Arrays.stream(BodyType.values())
-                .map(Enum::name)
-                .toArray(String[]::new);
-        String enumType = (bodyType).name();
-        ImInt index = new ImInt(Arrays.asList(enumValues).indexOf(enumType));
-        Theme.setDefaultTextColor(EditorSystemManager.getCurrentTheme().secondaryColor);
-        ImGui.text("Body Type");
-        ImGui.sameLine();
-        Theme.resetDefaultTextColor();
-        if (ImGui.combo("Body Type", index, enumValues, enumValues.length))
+
+        Enum t = Widgets.drawEnumControls(BodyType.class, "Body Type");
+        if (t != null)
         {
-            bodyType = BodyType.values()[index.get()];
+            bodyType = (BodyType) t;
         }
 
         // - - - mass
@@ -415,14 +405,10 @@ public class RigidBodyComponent extends Component
         setRestitutionCoefficient(Widgets.drawFloatControl("Restitution", restitutionCoefficient));
 
         // - - - fixed rotation, continuous collision and is Sensor
+        fixedRotation = Widgets.drawBoolControl("Fixed Rotation", fixedRotation);
+
         Theme.setDefaultTextColor(EditorSystemManager.getCurrentTheme().secondaryColor);
-        boolean val = fixedRotation;
-        if (ImGui.checkbox("Fixed rotation", val))
-        {
-            val = !val;
-            fixedRotation = val;
-        }
-        val = continuousCollision;
+        boolean val = continuousCollision;
         if (ImGui.checkbox("Continuous Collision", val))
         {
             val = !val;

@@ -8,7 +8,6 @@ import Just_Forge_2D.PhysicsSystem.Raycasts.RaycastGun;
 import Just_Forge_2D.RenderingSystem.DebugPencil;
 import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.Logger;
-import org.jbox2d.common.Vec2;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
@@ -171,6 +170,8 @@ public class KeyboardControllerComponent extends Component
         {
             coyoteTimer -= DELTA_TIME;
         }
+
+        if (isGrounded) jumpTimer = maxJumpTime;
     }
 
 
@@ -181,13 +182,11 @@ public class KeyboardControllerComponent extends Component
         {
             if ((isGrounded || coyoteTimer > 0f) && maxJumps > 0)
             {
-                jumpTimer = maxJumpTime;
                 jump();
             }
             else if (jumpsUsed + 1 < maxJumps)
             {
                 jumpTimer = maxJumpTime;
-                rb.setVelocity(new Vector2f(rb.getLinearVelocity().x, 0f));
                 jump();
             }
         }
@@ -195,11 +194,8 @@ public class KeyboardControllerComponent extends Component
 
     private void jump()
     {
-        Vec2 jumpImpulse = new Vec2(0, this.jumpImpulse);
-        rb.addImpulse(new Vector2f(jumpImpulse.x, jumpImpulse.y).mul(jumpTimer / maxJumpTime));
-
+        rb.addImpulse(new Vector2f(0, this.jumpImpulse).mul(jumpTimer / maxJumpTime));
         jumpsUsed++;
-
         coyoteTimer = 0f;
     }
 }

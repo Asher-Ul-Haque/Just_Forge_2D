@@ -1,7 +1,6 @@
 package Just_Forge_2D.EditorSystem.EditorComponents.GizmoSystem;
 
 import Just_Forge_2D.EditorSystem.EditorComponents.NonPickableComponent;
-import Just_Forge_2D.EditorSystem.MainWindow;
 import Just_Forge_2D.EditorSystem.Windows.ComponentsWindow;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.Sprite;
@@ -9,6 +8,7 @@ import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.InputSystem.Mouse;
 import Just_Forge_2D.PrefabSystem.PrefabManager;
+import Just_Forge_2D.WindowSystem.MainWindow;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 

@@ -1,7 +1,7 @@
 package Just_Forge_2D.PhysicsSystem.Raycasts;
 
-import Just_Forge_2D.EditorSystem.MainWindow;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
+import Just_Forge_2D.WindowSystem.MainWindow;
 import org.jbox2d.common.Vec2;
 import org.joml.Vector2f;
 

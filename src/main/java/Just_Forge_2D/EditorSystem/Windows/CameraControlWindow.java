@@ -2,9 +2,9 @@ package Just_Forge_2D.EditorSystem.Windows;
 
 import Just_Forge_2D.EditorSystem.EditorComponents.EditorCameraComponent;
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
-import Just_Forge_2D.EditorSystem.MainWindow;
 import Just_Forge_2D.EditorSystem.Widgets;
 import Just_Forge_2D.SceneSystem.Camera;
+import Just_Forge_2D.WindowSystem.MainWindow;
 import imgui.ImGui;
 import org.joml.Vector4f;
 

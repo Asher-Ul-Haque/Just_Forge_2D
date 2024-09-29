@@ -13,6 +13,7 @@ import Just_Forge_2D.SceneSystem.SceneInitializer;
 import Just_Forge_2D.Utils.AssetPool;
 import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.Logger;
+import Just_Forge_2D.WindowSystem.MainWindow;
 import Just_Forge_2D.WindowSystem.WindowConfig;
 import Just_Forge_2D.WindowSystem.WindowSystemManager;
 
@@ -21,10 +22,10 @@ public class EditorSystemManager
 {
     private static Framebuffer framebuffer;
     private static Theme currentTheme;
-    protected static Shader defaultShader;
-    protected static Shader selectorShader;
+    public static Shader defaultShader;
+    public static Shader selectorShader;
     protected static ImGUIManager editorLayer;
-    protected static boolean isRuntimePlaying = false;
+    public static boolean isRuntimePlaying = false;
     public static WindowConfig editorWindowConfig;
 
     public static Class<? extends SceneInitializer> getCurrentSceneInitializer()

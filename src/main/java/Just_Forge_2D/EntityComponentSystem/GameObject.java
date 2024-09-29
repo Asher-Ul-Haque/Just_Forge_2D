@@ -49,7 +49,6 @@ public class GameObject
 
     public <T extends Component> T getComponent(Class<T> COMPONENT_CLASS)
     {
-        Logger.FORGE_LOG_DEBUG("Getting component of type : " + COMPONENT_CLASS + " for: " + this);
         for (Component c : components)
         {
             if (COMPONENT_CLASS.isAssignableFrom(c.getClass()))

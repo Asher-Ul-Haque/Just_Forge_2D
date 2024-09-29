@@ -1,7 +1,7 @@
-package Just_Forge_2D.EditorSystem.GameSystem;
+package Just_Forge_2D.GameSystem;
 
-import static Just_Forge_2D.EditorSystem.GameSystem.GameManager.game;
-import static Just_Forge_2D.EditorSystem.GameSystem.GameManager.success;
+import static Just_Forge_2D.GameSystem.GameManager.game;
+import static Just_Forge_2D.GameSystem.GameManager.success;
 
 public class GameCodeLoader
 {
