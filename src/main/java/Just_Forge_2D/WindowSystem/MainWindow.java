@@ -170,7 +170,8 @@ public class MainWindow extends Window
                         new Thread(() ->
                         {
                             currentScene.update(dt);
-                        }).start();
+                        });
+                        currentScene.update(dt);
                     }
                     else if (!EditorSystemManager.isRelease)
                     {

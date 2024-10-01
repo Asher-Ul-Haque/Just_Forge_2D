@@ -182,19 +182,20 @@ public class KeyboardControllerComponent extends Component
         {
             if ((isGrounded || coyoteTimer > 0f) && maxJumps > 0)
             {
-                jump();
+                jump(1);
             }
-            else if (jumpsUsed + 1 < maxJumps)
+            else if (jumpsUsed < maxJumps)
             {
                 jumpTimer = maxJumpTime;
-                jump();
+                rb.setVelocity(new Vector2f(rb.getLinearVelocity().x, 0f));
+                jump(1);
             }
         }
     }
 
-    private void jump()
+    private void jump(float MULTIPLIER)
     {
-        rb.addImpulse(new Vector2f(0, this.jumpImpulse).mul(jumpTimer / maxJumpTime));
+        rb.addImpulse(new Vector2f(0, this.jumpImpulse).mul(jumpTimer / maxJumpTime).mul(MULTIPLIER));
         jumpsUsed++;
         coyoteTimer = 0f;
     }

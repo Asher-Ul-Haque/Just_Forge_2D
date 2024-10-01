@@ -1,6 +1,6 @@
 package Just_Forge_2D.RenderingSystem;
 
-import Just_Forge_2D.Utils.AssetPool;
+import Just_Forge_2D.AssetPool.AssetPool;
 import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.ForgeMath;
 import Just_Forge_2D.Utils.Logger;

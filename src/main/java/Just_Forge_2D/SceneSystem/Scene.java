@@ -1,6 +1,7 @@
 package Just_Forge_2D.SceneSystem;
 
 import Just_Forge_2D.AnimationSystem.AnimationComponent;
+import Just_Forge_2D.AssetPool.AssetPool;
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
@@ -10,7 +11,6 @@ import Just_Forge_2D.InputSystem.Mouse;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent;
 import Just_Forge_2D.PhysicsSystem.PhysicsSystemManager;
 import Just_Forge_2D.RenderingSystem.Renderer;
-import Just_Forge_2D.Utils.AssetPool;
 import Just_Forge_2D.Utils.Logger;
 
 import java.util.ArrayList;

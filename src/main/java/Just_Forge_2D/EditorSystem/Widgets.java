@@ -257,32 +257,54 @@ public class Widgets {
     }
 
     // - - - Enum Input - - -
-    public static Enum<?> drawEnumControls(Class<?> ENUM, String NAME)
+    public static <T extends Enum<T>> T drawEnumControls(Class<T> ENUM_CLASS, String LABEL, T CURRENT_ENUM)
     {
-        ImGui.pushID(NAME);
+        String[] enumValues = getEnumValues(ENUM_CLASS);
+        String currentEnumName = CURRENT_ENUM != null ? CURRENT_ENUM.name() : null;
+
+        ImGui.pushID(LABEL);
         ImGui.columns(2);
-        String[] enumValues = getEnumValues((Class<Enum>) ENUM);
-        String enumType = ENUM.getName();
-        ImInt index = new ImInt(indexOf(enumType, enumValues));
-        Theme.setDefaultTextColor(EditorSystemManager.getCurrentTheme().secondaryColor);
-        ImGui.text(NAME);
-        Theme.resetDefaultTextColor();
+        setDefaultTextColor(EditorSystemManager.getCurrentTheme().tertiaryColor);
+        ImGui.text(LABEL);
+        resetDefaultTextColor();
+
         ImGui.nextColumn();
-        if (ImGui.combo(NAME, index, enumValues, enumValues.length))
+        ImInt index = new ImInt(indexOf(currentEnumName, enumValues));
+
+        if (ImGui.combo(LABEL, index, enumValues, enumValues.length))
         {
             ImGui.columns(1);
             ImGui.popID();
-            return (Enum<?>) ENUM.getEnumConstants()[index.get()];
+            return ENUM_CLASS.getEnumConstants()[index.get()];
         }
+
         ImGui.columns(1);
         ImGui.popID();
-        return null;
+        return CURRENT_ENUM;
     }
 
-
-    public static Enum<?> drawEnumControls(Class<?> ENUM)
+    private static <T extends Enum<T>> String[] getEnumValues(Class<T> enumClass)
     {
-        return drawEnumControls(ENUM, ENUM.getSimpleName());
+        String[] enumValues = new String[enumClass.getEnumConstants().length];
+        int i = 0;
+        for (T enumConstant : enumClass.getEnumConstants())
+        {
+            enumValues[i] = enumConstant.name();
+            i++;
+        }
+        return enumValues;
+    }
+
+    private static int indexOf(String str, String[] arr)
+    {
+        for (int i = 0; i < arr.length; i++)
+        {
+            if (str.equals(arr[i]))
+            {
+                return i;
+            }
+        }
+        return -1; // Return -1 if not found
     }
 
     // - - - Utility method to set button styles - - -
@@ -291,29 +313,5 @@ public class Widgets {
         ImGui.pushStyleColor(ImGuiCol.Button, r, g, b, 1.0f);
         ImGui.pushStyleColor(ImGuiCol.ButtonHovered, r - 0.0f, g - 0.05f, b - 0.05f, 1.0f);
         ImGui.pushStyleColor(ImGuiCol.ButtonActive, r + 0.05f, g + 0.05f, b + 0.05f, 1.0f);
-    }
-
-    private static <T extends Enum<T>> String[] getEnumValues(Class<T> TYPE)
-    {
-        String[] enumValues = new String[TYPE.getEnumConstants().length];
-        int i = 0;
-        for (T enumIntegerValue : TYPE.getEnumConstants())
-        {
-            enumValues[i] = enumIntegerValue.name();
-            i++;
-        }
-        return enumValues;
-    }
-
-    private static int indexOf(String str, String[] arr)
-    {
-        for (int i=0; i < arr.length; i++)
-        {
-            if (str.equals(arr[i]))
-            {
-                return i;
-            }
-        }
-        return -1;
     }
 }

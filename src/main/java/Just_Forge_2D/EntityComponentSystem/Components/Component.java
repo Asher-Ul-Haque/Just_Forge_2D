@@ -98,18 +98,7 @@ public abstract class Component
                 }
                 else if (type.isEnum())
                 {
-//                    String[] enumValues = getEnumValues((Class<Enum>) type);
-//                    String enumType = ((Enum) value).name();
-//                    ImInt index = new ImInt(indexOf(enumType, enumValues));
-//                    Theme.setDefaultTextColor(EditorSystemManager.getCurrentTheme().secondaryColor);
-//                    ImGui.text(field.getName());
-//                    ImGui.sameLine();
-//                    Theme.resetDefaultTextColor();
-//                    if (ImGui.combo(field.getName(), index, enumValues, enumValues.length))
-//                    {
-//                        field.set(this, type.getEnumConstants()[index.get()]);
-//                    }
-                    Enum t = Widgets.drawEnumControls(type, field.getName());
+                    Enum t = Widgets.drawEnumControls((Class<Enum>) type, field.getName(), (Enum) value);
                     if (t != null)
                     {
                         field.set(this, t);

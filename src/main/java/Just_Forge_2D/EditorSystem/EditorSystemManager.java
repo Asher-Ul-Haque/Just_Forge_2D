@@ -1,5 +1,6 @@
 package Just_Forge_2D.EditorSystem;
 
+import Just_Forge_2D.AssetPool.AssetPool;
 import Just_Forge_2D.AudioSystem.AudioSystemManager;
 import Just_Forge_2D.EditorSystem.Themes.CleanTheme;
 import Just_Forge_2D.EditorSystem.Themes.Theme;
@@ -10,7 +11,6 @@ import Just_Forge_2D.RenderingSystem.Shader;
 import Just_Forge_2D.RenderingSystem.SpriteSheet;
 import Just_Forge_2D.SceneSystem.EmptySceneInitializer;
 import Just_Forge_2D.SceneSystem.SceneInitializer;
-import Just_Forge_2D.Utils.AssetPool;
 import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.WindowSystem.MainWindow;

@@ -68,7 +68,11 @@ public class CameraControlComponent extends Component
 
     public void addPoint(Vector2f POINT)
     {
-        if (points.add(POINT)) totalPoints++;
+        if (!points.contains(POINT))
+        {
+            points.add(POINT);
+            totalPoints++;
+        }
     }
 
     private Vector2f calculateAveragePosition()

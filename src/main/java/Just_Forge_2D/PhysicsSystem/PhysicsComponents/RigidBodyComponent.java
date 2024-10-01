@@ -146,6 +146,11 @@ public class RigidBodyComponent extends Component
         this.rawBody.setGravityScale(GRAVITY);
     }
 
+    public float getGravityScale()
+    {
+        return this.gravityScale;
+    }
+
 
     // - - - sensor - - -
 
@@ -378,7 +383,7 @@ public class RigidBodyComponent extends Component
 
         // - - - body type
 
-        Enum t = Widgets.drawEnumControls(BodyType.class, "Body Type");
+        Enum t = Widgets.drawEnumControls(BodyType.class, "Body Type", bodyType);
         if (t != null)
         {
             bodyType = (BodyType) t;

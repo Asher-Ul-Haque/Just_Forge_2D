@@ -1,10 +1,10 @@
 package Just_Forge_2D.EntityComponentSystem.Components.Sprite;
 
+import Just_Forge_2D.AssetPool.AssetPool;
 import Just_Forge_2D.EditorSystem.Widgets;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.Components.TransformComponent;
 import Just_Forge_2D.RenderingSystem.Texture;
-import Just_Forge_2D.Utils.AssetPool;
 import Just_Forge_2D.Utils.Logger;
 import imgui.ImGui;
 import org.joml.Vector2f;

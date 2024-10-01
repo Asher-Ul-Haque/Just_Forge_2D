@@ -13,7 +13,7 @@ public class DefaultValues
     public static final float GRID_WIDTH = 1f;
     public static final float GRID_HEIGHT = 1f;
     public static final int MAX_BATCH_SIZE = 1024;
-    public static final int DEBUG_PENCIL_MAX_LINES = 2048;
+    public static final int DEBUG_PENCIL_MAX_LINES = 32768;
     public static final int DEBUG_PENCIL_DEFAULT_LIFE = 1;
     public static final Vector3f DEBUG_PENCIL_DEFAULT_COLOR = new Vector3f(1, 1, 1);
     public static final int DEBUG_PENCIL_DEFAULT_WIDTH = 8;
