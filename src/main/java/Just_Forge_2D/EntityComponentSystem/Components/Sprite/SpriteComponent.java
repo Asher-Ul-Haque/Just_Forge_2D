@@ -1,6 +1,8 @@
 package Just_Forge_2D.EntityComponentSystem.Components.Sprite;
 
 import Just_Forge_2D.AssetPool.AssetPool;
+import Just_Forge_2D.EditorSystem.EditorSystemManager;
+import Just_Forge_2D.EditorSystem.Themes.Theme;
 import Just_Forge_2D.EditorSystem.Widgets;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.Components.TransformComponent;
@@ -18,13 +20,12 @@ public class SpriteComponent extends Component
     private Sprite sprite = new Sprite();
     private transient TransformComponent lastTransform = new TransformComponent();
     private transient boolean isChanged = true;
+    private boolean showAtRuntime = true;
+    private Vector4f originalColor = null;
 
 
     // - - - | Functions | - - -
 
-    public SpriteComponent()
-    {
-    }
 
     // - - - Getters and Setters - - -
 
@@ -72,6 +73,16 @@ public class SpriteComponent extends Component
         this.isChanged = false;
     }
 
+    public boolean getShowAtRuntime()
+    {
+        return showAtRuntime;
+    }
+
+    public void setShowAtRuntime(boolean REALLY)
+    {
+        this.showAtRuntime = REALLY;
+        this.isChanged = true;
+    }
 
     // - - - Use Functions - - -
 
@@ -105,6 +116,7 @@ public class SpriteComponent extends Component
     }
 
 
+
     // - - - Editor Functionality - - -
 
     @Override
@@ -115,6 +127,9 @@ public class SpriteComponent extends Component
             this.isChanged = true;
             this.gameObject.removeComponent(this.getClass());
         }
+        Theme.setDefaultTextColor(EditorSystemManager.getCurrentTheme().secondaryColor);
+        Theme.resetDefaultTextColor();
+        setShowAtRuntime(Widgets.drawBoolControl((getShowAtRuntime() ? "Hide" : "Show"), getShowAtRuntime()));
         if (Widgets.colorPicker4("Color Picker", this.color))
         {
             this.isChanged = true;

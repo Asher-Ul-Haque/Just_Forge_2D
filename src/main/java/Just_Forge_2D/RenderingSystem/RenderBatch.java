@@ -37,9 +37,10 @@ public class RenderBatch implements Comparable<RenderBatch>
     private final int TEXTURE_ID_SIZE = 1;
     private final int ENTITY_ID_SIZE = 1;
     private final int POSITION_SIZE = 2;
-    private final int VERTEX_SIZE = 10;
+    private final int VERTEX_SIZE = 11;
     private final int COLOR_SIZE = 4;
     private final int VERTEX_SIZE_BYTES = VERTEX_SIZE * Float.BYTES;
+    private final int ENTITY_SHOW_SIZE = 1;
 
     // - - - offset
     private final int POSITION_OFFSET = 0;
@@ -47,6 +48,8 @@ public class RenderBatch implements Comparable<RenderBatch>
     private final int TEXTURE_COORDS_OFFSET = COLOR_OFFSET + COLOR_SIZE * Float.BYTES;
     private final int TEXTURE_ID_OFFSET = TEXTURE_COORDS_OFFSET + TEXTURE_COORDS_SIZE * Float.BYTES;
     private final int ENTITY_ID_OFFSET = TEXTURE_ID_OFFSET + TEXTURE_ID_SIZE * Float.BYTES;
+    private final int ENTITY_SHOW_OFFSET = ENTITY_ID_OFFSET + ENTITY_ID_SIZE * Float.BYTES;
+
 
     // - - - batch related
     private final SpriteComponent[] sprites;
@@ -118,6 +121,9 @@ public class RenderBatch implements Comparable<RenderBatch>
 
         glVertexAttribPointer(4, ENTITY_ID_SIZE, GL_FLOAT, false, VERTEX_SIZE_BYTES, ENTITY_ID_OFFSET);
         glEnableVertexAttribArray(4);
+
+        glVertexAttribPointer(5, ENTITY_SHOW_SIZE, GL_FLOAT, false, VERTEX_SIZE_BYTES, ENTITY_SHOW_OFFSET);
+        glEnableVertexAttribArray(5);
         Logger.FORGE_LOG_DEBUG("RenderBatch for layer: " + this.layer + " started");
     }
 
@@ -298,7 +304,10 @@ public class RenderBatch implements Comparable<RenderBatch>
             // - - - Load Entity ID
             vertices[offset + 9] = sprite.gameObject.getUniqueID() + 1;
 
-            // - - - Update the offset
+            // Load visibility flag
+            vertices[offset + 10] = sprite.getShowAtRuntime() ? 1f : 0f;
+
+            // Update the offset
             offset += VERTEX_SIZE;
         }
     }
