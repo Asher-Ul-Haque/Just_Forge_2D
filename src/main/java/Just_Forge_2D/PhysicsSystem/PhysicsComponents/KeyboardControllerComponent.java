@@ -151,7 +151,7 @@ public class KeyboardControllerComponent extends Component
 
         RayCastInfo rayCastInfo = gun.rayCast(this.gameObject, rayCastBegin, rayCastEnd);
 
-        this.isGrounded = (rayCastInfo.hit && rayCastInfo.hitObject != null) || (rayCast2.hit && rayCast2.hitObject != null);
+        this.isGrounded = (rayCastInfo.hit && rayCastInfo.hitObject != null);
         if (debugDrawAtRuntime || isEditorUpdate)
         {
             Vector3f color;

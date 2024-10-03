@@ -1,6 +1,7 @@
 package Just_Forge_2D.EditorSystem.Windows;
 
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
+import Just_Forge_2D.EditorSystem.ImGUIManager;
 import Just_Forge_2D.EventSystem.EventManager;
 import Just_Forge_2D.EventSystem.Events.Event;
 import Just_Forge_2D.EventSystem.Events.EventTypes;
@@ -26,7 +27,7 @@ public class MenuBar
             {
                 EventManager.notify(null, new Event(EventTypes.LoadLevel));
             }
-            if (ImGui.menuItem("Save as", ""))
+            if (ImGui.menuItem("Save As", ""))
             {
                 String savePath = TinyFileDialogs.tinyfd_saveFileDialog("Choose Save Location", EditorSystemManager.projectDir + DefaultValues.DEFAULT_SAVE_DIR,null,null);
                 if (savePath != null)
@@ -36,7 +37,7 @@ public class MenuBar
                     EventManager.notify(null, new Event(EventTypes.SaveLevel));
                 }
             }
-            if (ImGui.menuItem("Load from", ""))
+            if (ImGui.menuItem("Load From", ""))
             {
                 String savePath = TinyFileDialogs.tinyfd_openFileDialog("Choose Save Location", EditorSystemManager.projectDir + DefaultValues.DEFAULT_SAVE_DIR,null,null, false);
                 if (savePath != null)
@@ -52,8 +53,9 @@ public class MenuBar
                     }
                 }
             }
-            ImGui.endMenu();
+            ImGui.endMenu();  // End the "File" menu
         }
+
         if (ImGui.beginMenu("Run"))
         {
             if (ImGui.menuItem("Build JAR"))
@@ -66,6 +68,26 @@ public class MenuBar
             }
             ImGui.endMenu();
         }
+
+        if (ImGui.beginMenu("View"))
+        {
+            for (int i = 0; i < ImGUIManager.getRenderable().size(); ++i)
+            {
+                Boolean b = ImGUIManager.getRenderable().get(i);
+                if (ImGui.menuItem((b ? "HIDE" : "SHOW") + "\t\t" + ImGUIManager.getRenderableNames().get(i)))
+                {
+                    ImGUIManager.getRenderable().set(i, !b);
+                }
+            }
+            ImGui.endMenu();
+        }
+
+        if (ImGui.beginMenu("Settings"))
+        {
+            DefaultValues.render();
+            ImGui.endMenu();
+        }
+
         ImGui.endMainMenuBar();
     }
 }

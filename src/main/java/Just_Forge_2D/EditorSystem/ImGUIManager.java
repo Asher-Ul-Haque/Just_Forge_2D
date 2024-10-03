@@ -17,6 +17,9 @@ import imgui.gl3.ImGuiImplGl3;
 import imgui.type.ImBoolean;
 import org.lwjgl.glfw.GLFW;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 // - - - Class to manage imGUI
 public class ImGUIManager
@@ -28,10 +31,30 @@ public class ImGUIManager
     public static ImGuiIO io;
     public static ImFont interExtraBold;
     public static ImFont interRegular;
+    private static List<Runnable> renderWindows = new ArrayList<>();
+    private static List<Boolean> toRender = new ArrayList<>();
+    private static List<String> renderWindowNames = new ArrayList<>();
     static float timer = 0f;
 
 
     // - - - Functions - - -
+
+    public static void addRenderWindow(Runnable RENDER_FUNCTION, String LABEL)
+    {
+        renderWindows.add(RENDER_FUNCTION);
+        renderWindowNames.add(LABEL);
+        toRender.add(true);
+    }
+
+    public static List<Boolean> getRenderable()
+    {
+        return toRender;
+    }
+
+    public static List<String> getRenderableNames()
+    {
+        return renderWindowNames;
+    }
 
 
     private static void setInputMapping()
@@ -187,9 +210,8 @@ public class ImGUIManager
     {
         // - - - spritesheet but for fonts
         final ImFontAtlas fontAtlas = io.getFonts();
-        final ImFontConfig fontConfig = new ImFontConfig(); // Natively allocated object, should be explicitly destroyed
+        final ImFontConfig fontConfig = new ImFontConfig();
 
-        // Glyphs could be added per-font as well as per config used globally like here
         fontConfig.setGlyphRanges(fontAtlas.getGlyphRangesDefault());
 
         final String interPath = "Assets/Fonts/JetBrainsMono-Bold.ttf";
@@ -200,7 +222,7 @@ public class ImGUIManager
         final int interExtraBoldFontSize = 16;
         interExtraBold = fontAtlas.addFontFromFileTTF(interExtraBoldPath, interExtraBoldFontSize);
 
-        fontConfig.destroy(); // After all fonts were added we don't need this config more
+        fontConfig.destroy();
         fontAtlas.build();
     }
 
@@ -231,6 +253,17 @@ public class ImGUIManager
         EditorSystemManager.getCurrentTheme().applyTheme();
         imGuiGl3.init("#version 450 core");
         Logger.FORGE_LOG_INFO("Editor GUI ready");
+
+        addRenderWindow(KeyboardControls::editorUpdate, "Keyboard Controls");
+        addRenderWindow(SceneHierarchyWindow::editorGUI, "Scene Hierarchy Window");
+        addRenderWindow(GameViewport::render, "Game Viewport");
+        addRenderWindow(ComponentsWindow::render, "Components Window");
+        addRenderWindow(CameraControlWindow::render, "Camera Controls");
+        addRenderWindow(FPSGraph::render, "FPS Graphs");
+        addRenderWindow(GridControls::render, "Grid Controls");
+        addRenderWindow(AssetPoolDisplay::render, "Asset Pool Display");
+        addRenderWindow(Logs::render, "Logs");
+        addRenderWindow(PrefabManager::render, "Prefabs");
     }
 
 
@@ -243,18 +276,16 @@ public class ImGUIManager
         {
             case isEditor:
                 if (ConfigFlags.dockingEnable) setupDockSpace();
-                KeyboardControls.editorUpdate();
-                SceneHierarchyWindow.editorGUI();
                 SCENE.editorGUI();
-                GameViewport.render();
-                ComponentsWindow.render();
                 MenuBar.render();
-                CameraControlWindow.render();
-                FPSGraph.render();
-                GridControls.render();
-                AssetPoolDisplay.render();
-                Logs.render();
-                PrefabManager.render();
+
+                for (int i = 0; i < toRender.size(); ++i)
+                {
+                    if (toRender.get(i))
+                    {
+                        renderWindows.get(i).run();
+                    }
+                }
                 ImGui.end();
                 break;
 

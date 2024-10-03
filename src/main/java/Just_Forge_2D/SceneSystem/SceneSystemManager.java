@@ -20,10 +20,13 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class SceneSystemManager
 {
+    public static Set<String> sceneScripts = new HashSet<>();
     public static void save(Scene SCENE)
     {
         Gson gson = new GsonBuilder()
@@ -50,6 +53,7 @@ public class SceneSystemManager
             }
             writer.write(gson.toJson(toSerialize));
             writer.close();
+            sceneScripts.add(SCENE.getSavePath());
             Logger.FORGE_LOG_INFO("Saved scene: " + SCENE);
         }
         catch (IOException e)
@@ -92,6 +96,7 @@ public class SceneSystemManager
                 TinyFileDialogs.tinyfd_notifyPopup("Failed to Load " + SCENE, "Corrupted Save File : \n" + SCENE.getSavePath() + "\n" + e.getMessage(), "error");
                 return;
             }
+            sceneScripts.add(inFile);
             for (GameObject object : objects)
             {
                 if (!object.getSerializationStatus())

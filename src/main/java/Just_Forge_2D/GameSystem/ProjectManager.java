@@ -1,6 +1,7 @@
 package Just_Forge_2D.GameSystem;
 
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
+import Just_Forge_2D.SceneSystem.SceneSystemManager;
 import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.Logger;
 import org.lwjgl.util.tinyfd.TinyFileDialogs;
@@ -93,6 +94,19 @@ public class ProjectManager
             EditorSystemManager.projectDir = selectedDir;
             File dir = new File(selectedDir);
             PROJECT_NAME = dir.getName();
+            try
+            {
+                File[] files = dir.listFiles((directory, name) -> name.endsWith(".justForgeFile"));
+                for (File script : files)
+                {
+                    SceneSystemManager.sceneScripts.add(script.getAbsolutePath());
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.FORGE_LOG_ERROR("Failed to read scripts");
+                Logger.FORGE_LOG_ERROR(e.getMessage());
+            }
             return true;
         }
         return false;
