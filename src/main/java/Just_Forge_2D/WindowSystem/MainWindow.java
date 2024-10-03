@@ -59,14 +59,20 @@ public class MainWindow extends Window
     // - - - Systems function to change the scene
     public static void changeScene(SceneInitializer INITIALIZER)
     {
+        String path;
         if (get().currentScene != null)
         {
             Logger.FORGE_LOG_INFO("Clearing Scene Catch from previous run");
             SceneSystemManager.destroy(get().currentScene);
+            path = getCurrentScene().getSavePath();
         }
-        ComponentsWindow.setActiveGameObject(null);
-
+        else
+        {
+            path = INITIALIZER.savePath;
+        }
         get().currentScene = new Scene(INITIALIZER, "Main Scene");
+        getCurrentScene().setSavePath(path);
+        ComponentsWindow.setActiveGameObject(null);
         SceneSystemManager.load(get().currentScene);
         get().currentScene.init();
         get().currentScene.start();

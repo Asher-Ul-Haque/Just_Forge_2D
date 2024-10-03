@@ -129,7 +129,7 @@ public class SpriteComponent extends Component
         }
         Theme.setDefaultTextColor(EditorSystemManager.getCurrentTheme().secondaryColor);
         Theme.resetDefaultTextColor();
-        setShowAtRuntime(Widgets.drawBoolControl((getShowAtRuntime() ? "Hide" : "Show"), getShowAtRuntime()));
+        setShowAtRuntime(Widgets.drawBoolControl("Show", getShowAtRuntime()));
         if (Widgets.colorPicker4("Color Picker", this.color))
         {
             this.isChanged = true;

@@ -23,6 +23,7 @@ public class Scene
 
     // - - - Basic
     private Camera camera;
+    private String savePath = "";
     protected boolean isRunning = false;
 
     // - - - ALl the objects
@@ -108,6 +109,7 @@ public class Scene
     public void init()
     {
         this.camera = Mouse.getWorldCamera();
+        if (this.savePath.isEmpty()) setSavePath(this.initializer.savePath);
         this.initializer.loadResources(this);
         for (GameObject g : this.getGameObjects())
         {
@@ -293,12 +295,12 @@ public class Scene
 
     public String getSavePath()
     {
-        return this.initializer.savePath;
+        return this.savePath;
     }
 
     public void setSavePath(String PATH)
     {
-        this.initializer.savePath = PATH;
+        this.savePath = PATH;
     }
 
     public Renderer getRenderer()
