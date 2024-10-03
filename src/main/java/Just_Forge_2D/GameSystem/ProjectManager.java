@@ -5,6 +5,7 @@ import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.Logger;
 import org.lwjgl.util.tinyfd.TinyFileDialogs;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -16,6 +17,7 @@ public class ProjectManager
     // - - - project management defaults
     private static final String DEFAULT_PROJECTS_DIR = System.getProperty("user.home") + "/Documents/ForgeProjects";
     private static final String PROJECT_TEMPLATE_DIR = "ProjectTemplate";
+    public static String PROJECT_NAME = null;
 
 
     // - - - Creating new Project - - -
@@ -50,6 +52,7 @@ public class ProjectManager
             copyDirectory(Paths.get(PROJECT_TEMPLATE_DIR), destinationDir);
             Logger.FORGE_LOG_INFO("Project created successfully at: " + destinationDir.toAbsolutePath());
             EditorSystemManager.projectDir = destinationDir.toString();
+            PROJECT_NAME = projectName;
             return true;
         }
         catch (IOException e)
@@ -88,6 +91,8 @@ public class ProjectManager
         if (selectedDir != null && !selectedDir.trim().isEmpty())
         {
             EditorSystemManager.projectDir = selectedDir;
+            File dir = new File(selectedDir);
+            PROJECT_NAME = dir.getName();
             return true;
         }
         return false;

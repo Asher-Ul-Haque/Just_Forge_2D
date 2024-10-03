@@ -31,7 +31,7 @@ public class Scene
 
     // - - - Scene Rendering
     private final Renderer renderer;
-    private final SceneInitializer initializer;
+    private final SceneScript initializer;
 
     // - - - saving and loading
     private final PhysicsSystemManager physics;
@@ -44,7 +44,7 @@ public class Scene
 
 
     // - - - Now presenting: useful constructor
-    public Scene(SceneInitializer INITIALIZER, String NAME)
+    public Scene(SceneScript INITIALIZER, String NAME)
     {
         this.initializer = INITIALIZER;
         this.physics = new PhysicsSystemManager(this, INITIALIZER.physicsWorld);
@@ -74,8 +74,9 @@ public class Scene
 
     public void update(float DELTA_TIME)
     {
-        this.camera.adjustProjection();
         if (!this.isRunning) return;
+        this.camera.adjustProjection();
+        this.initializer.update(DELTA_TIME);
         if (this.physics != null) this.physics.update(DELTA_TIME);
         for (int i = 0; i < gameObjects.size(); ++i)
         {
@@ -104,6 +105,7 @@ public class Scene
     public void render(float DELTA_TIME)
     {
         if (this.renderer != null) this.renderer.render();
+        this.initializer.render(DELTA_TIME);
     }
 
     public void init()
@@ -198,8 +200,9 @@ public class Scene
 
     public void editorUpdate(float DELTA_TIME)
     {
-        this.camera.adjustProjection();
         if (!this.isRunning) return;
+        this.camera.adjustProjection();
+        this.initializer.editorUpdate(DELTA_TIME);
         for (int i = 0; i < gameObjects.size(); ++i)
         {
             GameObject go = gameObjects.get(i);

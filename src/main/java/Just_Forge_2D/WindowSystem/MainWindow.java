@@ -18,7 +18,7 @@ import Just_Forge_2D.RenderingSystem.DebugPencil;
 import Just_Forge_2D.RenderingSystem.Renderer;
 import Just_Forge_2D.SceneSystem.Camera;
 import Just_Forge_2D.SceneSystem.Scene;
-import Just_Forge_2D.SceneSystem.SceneInitializer;
+import Just_Forge_2D.SceneSystem.SceneScript;
 import Just_Forge_2D.SceneSystem.SceneSystemManager;
 import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.Utils.TimeKeeper;
@@ -57,7 +57,7 @@ public class MainWindow extends Window
     }
 
     // - - - Systems function to change the scene
-    public static void changeScene(SceneInitializer INITIALIZER)
+    public static void changeScene(SceneScript INITIALIZER)
     {
         String path;
         if (get().currentScene != null)

@@ -1,6 +1,6 @@
 package Just_Forge_2D.SceneSystem;
 
-public class EmptySceneInitializer extends SceneInitializer
+public class EmptySceneScript extends SceneScript
 {
     @Override
     public void init(Scene SCENE)

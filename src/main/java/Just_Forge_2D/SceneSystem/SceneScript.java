@@ -5,7 +5,7 @@ import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.PhysicsSystem.PhysicsWorld;
 import Just_Forge_2D.RenderingSystem.Renderer;
 
-public abstract class SceneInitializer
+public abstract class SceneScript
 {
     public GameObject master;
     public Renderer renderer;
@@ -14,6 +14,9 @@ public abstract class SceneInitializer
     public abstract void init(Scene SCENE);
     public abstract void loadResources(Scene SCENE);
     public void editorGUI(){};
+    public void update(float DELTA_TIME){};
+    public void editorUpdate(float DELTA_TIME){};
+    public void render(float DELTA_TIME){};
     public void assignRenderingSystem()
     {
         this.renderer = new Renderer();
@@ -22,7 +25,7 @@ public abstract class SceneInitializer
     {
         this.physicsWorld = new PhysicsWorld();
     }
-    public SceneInitializer()
+    public SceneScript()
     {
         assignRenderingSystem();
         assignPhysicsSystem();

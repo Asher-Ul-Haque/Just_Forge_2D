@@ -10,7 +10,7 @@ import Just_Forge_2D.EventSystem.Events.EventTypes;
 import Just_Forge_2D.GameSystem.GameManager;
 import Just_Forge_2D.GameSystem.ProjectManager;
 import Just_Forge_2D.RenderingSystem.Texture;
-import Just_Forge_2D.SceneSystem.EmptySceneInitializer;
+import Just_Forge_2D.SceneSystem.EmptySceneScript;
 import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.WindowSystem.MainWindow;
@@ -156,10 +156,11 @@ public class SplashScreen
         if (load) cleanup();
         if (!MainWindow.get().isVisible()) MainWindow.get().setVisible(true);
 
-        ImGui.setCursorPosX((ImGui.getWindowWidth() - ImGui.calcTextSize("Loading Project: " + EditorSystemManager.projectDir).x) / 2);
+        ImGui.setCursorPosX((ImGui.getWindowWidth() - ImGui.calcTextSize("Loading Project: " + ProjectManager.PROJECT_NAME).x) / 2);
         ImGui.setCursorPosY(MainWindow.get().getHeight() - 32);
         Theme.setDefaultTextColor(EditorSystemManager.getCurrentTheme().secondaryColor);
-        ImGui.text("Loading Project: " + EditorSystemManager.projectDir);
+        String title = "Loading Project: " + ProjectManager.PROJECT_NAME;
+        ImGui.text(title);
         Theme.resetDefaultTextColor();
         load = true;
     }
@@ -178,15 +179,16 @@ public class SplashScreen
             {
                 if (EditorSystemManager.currentSceneInitializer == null)
                 {
-                    EditorSystemManager.setCurrentSceneInitializer(EmptySceneInitializer.class);
+                    EditorSystemManager.setCurrentSceneInitializer(EmptySceneScript.class);
                 }
                 MainWindow.get().setVisible(false);
                 Logger.FORGE_LOG_TRACE("Project Path : " + EditorSystemManager.projectDir);
                 EditorSystemManager.setCurrentState(EditorSystemManager.state.isEditor);
                 MainWindow.get().maximize();
-                MainWindow.get().setVisible(true);
                 if (EditorSystemManager.isRelease) EventManager.notify(null, new Event(EventTypes.ForgeStart));
                 else EventManager.notify(null, new Event(EventTypes.ForgeStop));
+                MainWindow.get().setTitle("Just Forge 2D    -    " + ProjectManager.PROJECT_NAME);
+                MainWindow.get().setVisible(true);
             }
             else
             {

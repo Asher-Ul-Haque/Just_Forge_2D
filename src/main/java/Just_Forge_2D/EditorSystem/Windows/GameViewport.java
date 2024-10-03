@@ -5,6 +5,7 @@ import Just_Forge_2D.EventSystem.EventManager;
 import Just_Forge_2D.EventSystem.Events.Event;
 import Just_Forge_2D.EventSystem.Events.EventTypes;
 import Just_Forge_2D.InputSystem.Mouse;
+import Just_Forge_2D.SceneSystem.SceneSystemManager;
 import Just_Forge_2D.WindowSystem.MainWindow;
 import imgui.ImGui;
 import imgui.ImVec2;
@@ -40,8 +41,9 @@ public class GameViewport
         ImGui.image(textureId, windowSize.x, windowSize.y, 0, 1, 1, 0);
 
         float buttonWidth = 64f;
+        float buttonPadding = 8f;
 
-        float buttonStartX = (windowSize.x - buttonWidth) / 2;
+        float buttonStartX = (windowSize.x - (buttonWidth * 2) + buttonPadding) / 2;
 
         ImGui.setCursorPos(windowPos.x + buttonStartX, 0);
 
@@ -49,6 +51,15 @@ public class GameViewport
         {
             isPlaying = !isPlaying;
             EventManager.notify(null, new Event(isPlaying ? EventTypes.ForgeStart : EventTypes.ForgeStop));
+        }
+
+        buttonStartX += buttonWidth + buttonPadding;
+
+        ImGui.setCursorPos(windowPos.x + buttonStartX, 0);
+
+        if (ImGui.button(MainWindow.getCurrentScene().isRunning() ? "Pause" : "Unpause", buttonWidth, 30))
+        {
+            SceneSystemManager.setPause(MainWindow.getCurrentScene(), !MainWindow.getCurrentScene().isRunning());
         }
 
         ImGui.end();

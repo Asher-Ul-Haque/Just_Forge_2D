@@ -9,8 +9,8 @@ import Just_Forge_2D.EntityComponentSystem.Components.ComponentList;
 import Just_Forge_2D.RenderingSystem.Framebuffer;
 import Just_Forge_2D.RenderingSystem.Shader;
 import Just_Forge_2D.RenderingSystem.SpriteSheet;
-import Just_Forge_2D.SceneSystem.EmptySceneInitializer;
-import Just_Forge_2D.SceneSystem.SceneInitializer;
+import Just_Forge_2D.SceneSystem.EmptySceneScript;
+import Just_Forge_2D.SceneSystem.SceneScript;
 import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.WindowSystem.MainWindow;
@@ -28,12 +28,12 @@ public class EditorSystemManager
     public static boolean isRuntimePlaying = false;
     public static WindowConfig editorWindowConfig;
 
-    public static Class<? extends SceneInitializer> getCurrentSceneInitializer()
+    public static Class<? extends SceneScript> getCurrentSceneInitializer()
     {
         return currentSceneInitializer;
     }
 
-    public static void setCurrentSceneInitializer(Class<? extends SceneInitializer> INITIALIZER)
+    public static void setCurrentSceneInitializer(Class<? extends SceneScript> INITIALIZER)
     {
         if (INITIALIZER == null)
         {
@@ -48,11 +48,11 @@ public class EditorSystemManager
         catch (Exception e)
         {
             Logger.FORGE_LOG_FATAL("Couldn't change scene");
-            MainWindow.changeScene(new EmptySceneInitializer());
+            MainWindow.changeScene(new EmptySceneScript());
         }
     }
 
-    public static Class<? extends SceneInitializer> currentSceneInitializer;
+    public static Class<? extends SceneScript> currentSceneInitializer;
     public static String projectDir = System.getProperty("user.dir");
     public static boolean isRelease = false;
 
