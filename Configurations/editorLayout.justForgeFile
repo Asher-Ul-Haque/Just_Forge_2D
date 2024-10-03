@@ -133,7 +133,7 @@ DockId=0x0000000C,3
 DockSpace           ID=0x6D3A3A6E Window=0x091AB4BE Pos=4,28 Size=1358,692 Split=X
   DockNode          ID=0x00000002 Parent=0x6D3A3A6E SizeRef=1042,692 Split=X
     DockNode        ID=0x00000007 Parent=0x00000002 SizeRef=183,692 Split=Y Selected=0x601E4255
-      DockNode      ID=0x00000009 Parent=0x00000007 SizeRef=286,346 Selected=0x601E4255
+      DockNode      ID=0x00000009 Parent=0x00000007 SizeRef=286,346 Selected=0xDF18B7BE
       DockNode      ID=0x0000000A Parent=0x00000007 SizeRef=286,344 Selected=0x9A68760C
     DockNode        ID=0x00000008 Parent=0x00000002 SizeRef=857,692 Split=Y
       DockNode      ID=0x0000000B Parent=0x00000008 SizeRef=1358,478 Split=X

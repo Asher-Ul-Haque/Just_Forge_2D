@@ -31,7 +31,7 @@ public class Scene
 
     // - - - Scene Rendering
     private final Renderer renderer;
-    private final SceneScript initializer;
+    private final SceneScript script;
 
     // - - - saving and loading
     private final PhysicsSystemManager physics;
@@ -46,7 +46,7 @@ public class Scene
     // - - - Now presenting: useful constructor
     public Scene(SceneScript INITIALIZER, String NAME)
     {
-        this.initializer = INITIALIZER;
+        this.script = INITIALIZER;
         this.physics = new PhysicsSystemManager(this, INITIALIZER.physicsWorld);
         this.renderer = INITIALIZER.renderer;
         this.gameObjects = new ArrayList<>();
@@ -60,7 +60,7 @@ public class Scene
 
     public void start()
     {
-        Logger.FORGE_LOG_INFO("Starting Scene : " + this.initializer);
+        Logger.FORGE_LOG_INFO("Starting Scene : " + this.script);
         for (int i = 0; i < gameObjects.size(); ++i)
         {
             GameObject go = gameObjects.get(i);
@@ -76,7 +76,7 @@ public class Scene
     {
         if (!this.isRunning) return;
         this.camera.adjustProjection();
-        this.initializer.update(DELTA_TIME);
+        this.script.update(DELTA_TIME);
         if (this.physics != null) this.physics.update(DELTA_TIME);
         for (int i = 0; i < gameObjects.size(); ++i)
         {
@@ -105,14 +105,14 @@ public class Scene
     public void render(float DELTA_TIME)
     {
         if (this.renderer != null) this.renderer.render();
-        this.initializer.render(DELTA_TIME);
+        this.script.render(DELTA_TIME);
     }
 
     public void init()
     {
         this.camera = Mouse.getWorldCamera();
-        if (this.savePath.isEmpty()) setSavePath(this.initializer.savePath);
-        this.initializer.loadResources(this);
+        if (this.savePath.isEmpty()) setSavePath(this.script.savePath);
+        this.script.loadResources(this);
         for (GameObject g : this.getGameObjects())
         {
             if (g.getComponent(SpriteComponent.class) != null)
@@ -130,9 +130,9 @@ public class Scene
                 stateMachine.refreshTextures();
             }
         }
-        this.initializer.init(this);
+        this.script.init(this);
         if (!EditorSystemManager.isRelease) SceneSystemManager.createMaster(this);
-        Logger.FORGE_LOG_INFO("Scene: " + this.initializer + " Initialized");
+        Logger.FORGE_LOG_INFO("Scene: " + this.script + " Initialized");
     }
 
 
@@ -194,7 +194,7 @@ public class Scene
     // - - - Editor GUI
     public void editorGUI()
     {
-        this.initializer.editorGUI();
+        this.script.editorGUI();
     }
 
 
@@ -202,7 +202,7 @@ public class Scene
     {
         if (!this.isRunning) return;
         this.camera.adjustProjection();
-        this.initializer.editorUpdate(DELTA_TIME);
+        this.script.editorUpdate(DELTA_TIME);
         for (int i = 0; i < gameObjects.size(); ++i)
         {
             GameObject go = gameObjects.get(i);
@@ -309,5 +309,10 @@ public class Scene
     public Renderer getRenderer()
     {
         return this.renderer;
+    }
+
+    public SceneScript getScript()
+    {
+        return this.script;
     }
 }

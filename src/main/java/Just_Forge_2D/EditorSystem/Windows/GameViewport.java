@@ -57,11 +57,10 @@ public class GameViewport
 
         ImGui.setCursorPos(windowPos.x + buttonStartX, 0);
 
-        if (ImGui.button(MainWindow.getCurrentScene().isRunning() ? "Pause" : "Unpause", buttonWidth, 30))
+        if (ImGui.button(SceneSystemManager.isRunning(MainWindow.getCurrentScene()) ? "Pause" : "Unpause", buttonWidth, 30))
         {
-            SceneSystemManager.setPause(MainWindow.getCurrentScene(), !MainWindow.getCurrentScene().isRunning());
+            SceneSystemManager.setPause(MainWindow.getCurrentScene(), !SceneSystemManager.isRunning(MainWindow.getCurrentScene()));
         }
-
         ImGui.end();
     }
 

@@ -243,7 +243,7 @@ public class MainWindow extends Window
                 SceneSystemManager.save(currentScene);
                 try
                 {
-                    MainWindow.changeScene(EditorSystemManager.currentSceneInitializer.getDeclaredConstructor().newInstance());
+                    MainWindow.changeScene(MainWindow.getCurrentScene().getScript().getClass().getDeclaredConstructor().newInstance());
                 }
                 catch (Exception e)
                 {
@@ -257,7 +257,7 @@ public class MainWindow extends Window
                 EditorSystemManager.isRuntimePlaying = false;
                 try
                 {
-                    MainWindow.changeScene(EditorSystemManager.currentSceneInitializer.getDeclaredConstructor().newInstance());
+                    MainWindow.changeScene(MainWindow.getCurrentScene().getScript().getClass().getDeclaredConstructor().newInstance());
                 }
                 catch (Exception e)
                 {
@@ -273,7 +273,7 @@ public class MainWindow extends Window
             case LoadLevel:
                 try
                 {
-                    MainWindow.changeScene(EditorSystemManager.currentSceneInitializer.getDeclaredConstructor().newInstance());
+                    MainWindow.changeScene(MainWindow.getCurrentScene().getScript().getClass().getDeclaredConstructor().newInstance());
                 }
                 catch (Exception e)
                 {
