@@ -200,7 +200,6 @@ public class Scene
 
     public void editorUpdate(float DELTA_TIME)
     {
-        if (!this.isRunning) return;
         this.camera.adjustProjection();
         this.script.editorUpdate(DELTA_TIME);
         for (int i = 0; i < gameObjects.size(); ++i)
