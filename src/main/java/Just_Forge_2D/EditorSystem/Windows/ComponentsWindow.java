@@ -115,7 +115,7 @@ public class ComponentsWindow
         if (GO != null)
         {
             clearSelection();
-            activeGameObjects.add(GO);
+            addActiveGameObject(GO);
         }
     }
 

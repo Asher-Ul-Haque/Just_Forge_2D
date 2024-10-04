@@ -8,6 +8,8 @@ import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.EventSystem.EventManager;
 import Just_Forge_2D.EventSystem.Events.Event;
 import Just_Forge_2D.EventSystem.Observer;
+import Just_Forge_2D.InputSystem.Keyboard;
+import Just_Forge_2D.InputSystem.Keys;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent;
 import Just_Forge_2D.RenderingSystem.DebugPencil;
 import Just_Forge_2D.Utils.Logger;
@@ -29,7 +31,6 @@ public class ParticleSystemComponent extends Component implements Observer
     private static Random randomizer;
     private Vector4f startColor = new Vector4f(1.0f, 0.0f, 1.0f, 1.0f);
     private Vector4f finalColor = new Vector4f(1.0f, 1.0f, 0.0f, 1.0f);
-    private boolean automaticEmmision = true;
     private float minLifespan = 0.05f;
     private float maxLifespan = 0.2f;
     private float fanStart = 0;
@@ -41,6 +42,7 @@ public class ParticleSystemComponent extends Component implements Observer
     private transient ParticleGenerator generator;
     private Vector4f debugColor = new Vector4f(1.0f).sub(MainWindow.get().getClearColor());
     private boolean keepPhysics = false;
+    private boolean useOnce = false;
     private Vector2f offset = new Vector2f();
     private int particleLayer;
     private String templateName;
@@ -134,33 +136,33 @@ public class ParticleSystemComponent extends Component implements Observer
     public void update(float DELTA_TIME)
     {
         clamp();
-        if (automaticEmmision) emmitAll(DELTA_TIME);
+        if (Keyboard.isKeyPressed(Keys.ENTER))
+        {
+            start();
+        }
+        for (int i = 0; i < particles.size(); ++i)
+        {
+            Particle particle = particles.get(i);
+            GameObject core = particle.core;
+            if (particle.lifeSpan < 0)
+            {
+                if (useOnce)
+                {
+                    particles.remove(i);
+                    core.destroy();
+                }
+                else resetParticle(particle);
+            }
+            else
+            {
+                core.transform.rotation += particle.angularVelocity * DELTA_TIME;
+                core.transform.position.add(new Vector2f(particle.velocity).mul(DELTA_TIME));
+                SpriteComponent renderable = core.getComponent(SpriteComponent.class);
+                if (renderable != null) renderable.setColor(new Vector4f(startColor).lerp(finalColor, 1.0f - (particle.lifeSpan / particle.lifeTime)));
+                particle.lifeSpan -= DELTA_TIME;
+            }
+        }
         if (debugDrawAtRuntime) debugDraw();
-    }
-
-    private void emmitAll(float DELTA_TIME)
-    {
-        for (Particle particle : this.particles)
-        {
-            emit(particle, DELTA_TIME);
-        }
-    }
-
-    private void emit(Particle particle, float DELTA_TIME)
-    {
-        GameObject core = particle.core;
-        if (particle.lifeSpan < 0)
-        {
-            resetParticle(particle);
-        }
-        else
-        {
-            core.transform.rotation += particle.angularVelocity * DELTA_TIME;
-            core.transform.position.add(new Vector2f(particle.velocity).mul(DELTA_TIME));
-            SpriteComponent renderable = core.getComponent(SpriteComponent.class);
-            if (renderable != null) renderable.setColor(new Vector4f(startColor).lerp(finalColor, 1.0f - (particle.lifeSpan / particle.lifeTime)));
-            particle.lifeSpan -= DELTA_TIME;
-        }
     }
 
     @Override
