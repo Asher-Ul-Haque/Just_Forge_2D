@@ -30,8 +30,8 @@ Size=1366,724
 Collapsed=0
 
 [Window][Game Viewport]
-Pos=201,28
-Size=845,478
+Pos=215,28
+Size=831,478
 Collapsed=0
 DockId=0x00000004,0
 
@@ -48,7 +48,7 @@ Collapsed=0
 
 [Window][Scene Hierarchy]
 Pos=4,264
-Size=195,456
+Size=209,456
 Collapsed=0
 DockId=0x00000009,0
 
@@ -67,8 +67,8 @@ Size=600,400
 Collapsed=0
 
 [Window][Camera Controls]
-Pos=201,508
-Size=845,212
+Pos=215,508
+Size=831,212
 Collapsed=0
 DockId=0x0000000C,0
 
@@ -79,26 +79,26 @@ Collapsed=0
 DockId=0x00000004,0
 
 [Window][FPS]
-Pos=201,508
-Size=845,212
+Pos=215,508
+Size=831,212
 Collapsed=0
 DockId=0x0000000C,2
 
 [Window][Grid Controls]
-Pos=201,508
-Size=845,212
+Pos=215,508
+Size=831,212
 Collapsed=0
 DockId=0x0000000C,1
 
 [Window][Asset Pool]
 Pos=4,28
-Size=195,234
+Size=209,234
 Collapsed=0
 DockId=0x00000001,0
 
 [Window][Prefabs]
 Pos=4,28
-Size=195,234
+Size=209,234
 Collapsed=0
 DockId=0x00000001,1
 
@@ -124,8 +124,8 @@ Collapsed=0
 DockId=0x0000000D,0
 
 [Window][Logger]
-Pos=201,508
-Size=845,212
+Pos=215,508
+Size=831,212
 Collapsed=0
 DockId=0x0000000C,3
 
@@ -142,10 +142,10 @@ Collapsed=0
 [Docking][Data]
 DockSpace           ID=0x6D3A3A6E Window=0x091AB4BE Pos=4,28 Size=1358,692 Split=X
   DockNode          ID=0x00000002 Parent=0x6D3A3A6E SizeRef=1042,692 Split=X
-    DockNode        ID=0x00000007 Parent=0x00000002 SizeRef=195,692 Split=Y Selected=0x601E4255
+    DockNode        ID=0x00000007 Parent=0x00000002 SizeRef=209,692 Split=Y Selected=0x601E4255
       DockNode      ID=0x00000001 Parent=0x00000007 SizeRef=195,234 Selected=0x601E4255
       DockNode      ID=0x00000009 Parent=0x00000007 SizeRef=195,456 Selected=0x9A68760C
-    DockNode        ID=0x00000008 Parent=0x00000002 SizeRef=845,692 Split=Y
+    DockNode        ID=0x00000008 Parent=0x00000002 SizeRef=831,692 Split=Y
       DockNode      ID=0x0000000B Parent=0x00000008 SizeRef=1358,478 Split=X
         DockNode    ID=0x00000005 Parent=0x0000000B SizeRef=779,700 Split=X
           DockNode  ID=0x00000003 Parent=0x00000005 SizeRef=975,700 Selected=0xA9416207
