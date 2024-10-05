@@ -24,6 +24,7 @@ public class ComponentList
         types.add(PolygonColliderComponent.class);
         types.add(EdgeColliderComponent.class);
         types.add(KeyboardControllerComponent.class);
+        types.add(MouseControlComponent.class);
         types.add(CameraControlComponent.class);
         types.add(SoundPlayerComponent.class);
         types.add(ParticleSystemComponent.class);
