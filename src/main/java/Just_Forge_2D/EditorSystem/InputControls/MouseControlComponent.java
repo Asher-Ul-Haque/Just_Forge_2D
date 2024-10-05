@@ -9,8 +9,6 @@ import Just_Forge_2D.EditorSystem.Windows.ObjectSelector;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
-import Just_Forge_2D.InputSystem.Keyboard;
-import Just_Forge_2D.InputSystem.Keys;
 import Just_Forge_2D.InputSystem.Mouse;
 import Just_Forge_2D.RenderingSystem.DebugPencil;
 import Just_Forge_2D.SceneSystem.Scene;
@@ -111,15 +109,8 @@ public class MouseControlComponent extends Component
             GameObject picked = currentScene.getGameObject(gameObjectID);
             if (picked != null && picked.getComponent(NonPickableComponent.class) == null)
             {
-                if (Keyboard.isKeyPressed(Keys.LEFT_SHIFT) || Keyboard.isKeyPressed(Keys.RIGHT_SHIFT))
-                {
-                    ComponentsWindow.addActiveGameObject(picked);
-                }
-                else
-                {
-                    ComponentsWindow.clearSelection();
-                    ComponentsWindow.setActiveGameObject(picked);
-                }
+                ComponentsWindow.clearSelection();
+                ComponentsWindow.setActiveGameObject(picked);
             }
             else if (picked == null && !Mouse.isDragging())
             {

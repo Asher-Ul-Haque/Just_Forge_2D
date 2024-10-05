@@ -115,7 +115,11 @@ public class ComponentsWindow
         if (GO != null)
         {
             clearSelection();
-            addActiveGameObject(GO);
+            SpriteComponent spr = GO.getComponent(SpriteComponent.class);
+            if (spr != null)
+            {
+                activeGameObjects.add(GO);
+            }
         }
     }
 

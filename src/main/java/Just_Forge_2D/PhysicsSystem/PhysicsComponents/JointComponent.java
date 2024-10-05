@@ -1,53 +1,64 @@
 package Just_Forge_2D.PhysicsSystem.PhysicsComponents;
-
-import Just_Forge_2D.EditorSystem.Widgets;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.RenderingSystem.DebugPencil;
 import Just_Forge_2D.WindowSystem.MainWindow;
-import org.joml.Vector2f;
+import imgui.ImGui;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 public class JointComponent extends Component
 {
-    private List<Vector2f> points = new ArrayList<>();
-    private Set<RigidBodyComponent> bodies = new HashSet<>();
-    private String name;
+    private String otherName;
+    private transient GameObject other;
+    private transient RigidBodyComponent otherRB;
 
-
-    @Override
-    public void editorGUI()
+    public JointComponent(GameObject OTHER)
     {
-        super.editorGUI();
-        name = Widgets.inputText("Other Object: " , name);
-        GameObject other = MainWindow.getCurrentScene().getGameObject(name);
+        other = OTHER;
+        otherRB = other.getComponent(RigidBodyComponent.class);
+        otherName = OTHER.name;
+    }
+
+    public JointComponent(RigidBodyComponent OTHER_RB)
+    {
+        otherRB = OTHER_RB;
+        other = OTHER_RB.gameObject;
         if (other != null)
         {
-            points.add(other.transform.position);
-            RigidBodyComponent rb = other.getComponent(RigidBodyComponent.class);
-            if ( rb != null) {
-                bodies.add(rb);
-            }
+            otherName = other.name;
         }
-        Widgets.drawIntControl("Body Count", bodies.size());
+    }
+
+    public JointComponent() {}
+
+    @Override
+    public void start()
+    {
+        if (other == null)
+        {
+            other = MainWindow.getCurrentScene().getGameObject(otherName);
+        }
     }
 
     @Override
     public void editorUpdate(float DELTA_TIME)
     {
-        for (Vector2f p : points)
-        {
-            DebugPencil.addLine(p, this.gameObject.transform.position);
-        }
+        if (other != null) DebugPencil.addLine(other.transform.position, this.gameObject.transform.position);
     }
 
     @Override
     public void update(float DELTA_TIME)
     {
         editorUpdate(DELTA_TIME);
+    }
+
+    @Override
+    public void editorGUI()
+    {
+        super.editorGUI();
+        if (ImGui.button("Set other"))
+        {
+            other = MainWindow.getCurrentScene().getGameObject(otherName);
+        }
     }
 }
