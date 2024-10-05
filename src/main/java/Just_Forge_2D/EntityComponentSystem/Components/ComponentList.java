@@ -4,7 +4,7 @@ import Just_Forge_2D.AudioSystem.SoundPlayerComponent;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.ParticleSystem.ParticleSystemComponent;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.*;
-import Just_Forge_2D.PhysicsSystem.PhysicsComponents.JointComponent;
+import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Joints.DistanceJoint;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.KeyboardControllerComponent;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent;
 
@@ -28,7 +28,7 @@ public class ComponentList
         types.add(CameraControlComponent.class);
         types.add(SoundPlayerComponent.class);
         types.add(ParticleSystemComponent.class);
-        types.add(JointComponent.class);
+        types.add(DistanceJoint.class);
     }
 
     public static final List<Class<? extends Component>> types = new ArrayList<>();
