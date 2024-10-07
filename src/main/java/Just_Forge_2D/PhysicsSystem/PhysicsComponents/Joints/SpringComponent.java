@@ -4,13 +4,14 @@ import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent;
 import Just_Forge_2D.RenderingSystem.DebugPencil;
 import Just_Forge_2D.WindowSystem.MainWindow;
+import imgui.ImGui;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.joints.DistanceJoint;
 import org.jbox2d.dynamics.joints.DistanceJointDef;
 import org.joml.Vector2f;
 
 
-public class DistanceJointComponent extends BaseJointComponent
+public class SpringComponent extends BaseJointComponent
 {
     // - - - private variables
     private transient final DistanceJointDef defJoint = new DistanceJointDef ();
@@ -19,8 +20,10 @@ public class DistanceJointComponent extends BaseJointComponent
     // - - - property variables
     protected float length = 1f;
     protected float dampingRatio = 0.5f;
-    protected float shmFrequency = 20f;
+    protected float springConstant = 2f;
     protected boolean collideConnected = false;
+    protected Vector2f anchorA = new Vector2f();
+    protected Vector2f anchorB = new Vector2f();
 
 
     // - - - | Functions | - - -
@@ -28,20 +31,25 @@ public class DistanceJointComponent extends BaseJointComponent
 
     // - - - constructors - - -
 
-    public DistanceJointComponent(GameObject OTHER)
+    public SpringComponent(GameObject OTHER)
     {
         super(OTHER);
     }
-    public DistanceJointComponent(RigidBodyComponent OTHER_RB)
+    public SpringComponent(RigidBodyComponent OTHER_RB)
     {
         super(OTHER_RB);
     }
-    public DistanceJointComponent() {}
+    public SpringComponent() {}
 
     // - - - creation of joint
     @Override
     public void createJoint()
     {
+        if (joint != null) joint = null;
+        if (otherRB != null)
+        {
+            other = otherRB.gameObject;
+        }
         if (other == null)
         {
             other = MainWindow.getCurrentScene().getGameObject(otherName);
@@ -51,9 +59,11 @@ public class DistanceJointComponent extends BaseJointComponent
         {
             defJoint.dampingRatio = getDampingRatio();
             defJoint.length = getLength();
-            defJoint.frequencyHz = getSHMFrequency();
+            defJoint.frequencyHz = getSpringConstant();
             defJoint.collideConnected = isCollideConnected();
-            defJoint.initialize(this.gameObject.getComponent(RigidBodyComponent.class).getRawBody(), otherRB.getRawBody(), new Vec2(this.gameObject.transform.position.x, this.gameObject.transform.position.y), new Vec2(other.transform.position.x, other.transform.position.y));
+            if (anchorA.lengthSquared() == 0) anchorA = new Vector2f(this.gameObject.transform.position);
+            if (anchorB.lengthSquared() == 0) anchorB = new Vector2f(other.transform.position);
+            defJoint.initialize(this.gameObject.getComponent(RigidBodyComponent.class).getRawBody(), otherRB.getRawBody(), new Vec2(anchorA.x, anchorA.y), new Vec2(anchorB.x, anchorB.y));
             joint = (DistanceJoint) MainWindow.getCurrentScene().getPhysics().rawWorld.getWorld().createJoint(defJoint);
         }
     }
@@ -92,14 +102,14 @@ public class DistanceJointComponent extends BaseJointComponent
 
     // - - - SHM - - -
 
-    public float getSHMFrequency()
+    public float getSpringConstant()
     {
-        return this.shmFrequency;
+        return this.springConstant;
     }
 
-    public void setSHMFrequency(float FREQUENCY)
+    public void setSpringConstant(float FREQUENCY)
     {
-        this.dampingRatio = FREQUENCY;
+        this.springConstant = FREQUENCY;
         if (this.joint != null) this.joint.setFrequency(FREQUENCY);
     }
 
@@ -117,6 +127,44 @@ public class DistanceJointComponent extends BaseJointComponent
         this.collideConnected = REALLY;
     }
 
+    public Vector2f getAnchorA()
+    {
+        Vec2 temp = new Vec2();
+        if (this.joint != null)
+        {
+            joint.getAnchorA(temp);
+            this.anchorA.x = temp.x;
+            this.anchorA.y = temp.y;
+        }
+        return this.anchorA;
+    }
+
+    public Vector2f getAnchorB()
+    {
+        Vec2 temp = new Vec2();
+        if (this.joint != null)
+        {
+            joint.getAnchorB(temp);
+            this.anchorB.x = temp.x;
+            this.anchorB.y = temp.y;
+        }
+        return this.anchorB;
+    }
+
+    public void setAnchorA(Vector2f ANCHOR)
+    {
+        this.anchorA = ANCHOR;
+        joint = null;
+        createJoint();
+    }
+
+    public void setAnchorB(Vector2f ANCHOR)
+    {
+        this.anchorB = ANCHOR;
+        joint = null;
+        createJoint();
+    }
+
 
     // - - - editor
 
@@ -125,23 +173,41 @@ public class DistanceJointComponent extends BaseJointComponent
     public void editorGUI()
     {
         super.editorGUI();
+        Widgets.colorPicker3("Joint Color", color);
         setDampingRatio(Widgets.drawFloatControl("Damping Ratio", getDampingRatio()));
-        setSHMFrequency(Widgets.drawFloatControl("SHM Frequency Hz", getSHMFrequency()));
+        setSpringConstant(Widgets.drawFloatControl("SHM Frequency Hz", getSpringConstant()));
         setLength(Widgets.drawFloatControl("Length", getLength()));
         collideConnect(Widgets.drawBoolControl("Collide with Connection", isCollideConnected()));
+        Vector2f temp = new Vector2f(getAnchorA());
+        Widgets.drawVec2Control("Anchor A", temp);
+        if (!temp.equals(getAnchorA()))
+        {
+            setAnchorA(temp);
+        }
+        if (ImGui.button("Reset Anchor A"))
+        {
+            this.anchorA = new Vector2f();
+            this.joint = null;
+            createJoint();
+        }
+        temp = new Vector2f(getAnchorB());
+        Widgets.drawVec2Control("Anchor B", temp);
+        if (!temp.equals(getAnchorB()))
+        {
+            setAnchorB(temp);
+        }
+        if (ImGui.button("Reset Anchor B"))
+        {
+            this.anchorB = new Vector2f();
+            this.joint = null;
+            createJoint();
+        }
     }
 
     // - - - debug
     @Override
     public void debugDraw()
     {
-        if (joint != null)
-        {
-            Vec2 pointA = new Vec2();
-            Vec2 pointB = new Vec2();
-            joint.getAnchorA(pointA);
-            joint.getAnchorB(pointB);
-            DebugPencil.addLine(new Vector2f(pointA.x, pointA.y), new Vector2f(pointB.x, pointB.y));
-        }
+        DebugPencil.addLine(getAnchorA(), getAnchorB(), color);
     }
 }
