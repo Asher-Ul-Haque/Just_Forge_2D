@@ -173,10 +173,6 @@ public class MainWindow extends Window
                     Renderer.bindShader(EditorSystemManager.defaultShader);
                     if (EditorSystemManager.isRuntimePlaying)
                     {
-                        new Thread(() ->
-                        {
-                            currentScene.update(dt);
-                        });
                         currentScene.update(dt);
                     }
                     else if (!EditorSystemManager.isRelease)
