@@ -30,8 +30,7 @@ Size=1366,724
 Collapsed=0
 
 [Window][Game Viewport]
-Pos=215,28
-Size=442,478
+Size=754,478
 Collapsed=0
 DockId=0x00000004,0
 
@@ -146,11 +145,5 @@ DockSpace           ID=0x6D3A3A6E Window=0x091AB4BE Pos=4,28 Size=1358,692 Split
       DockNode      ID=0x00000001 Parent=0x00000007 SizeRef=195,234 Selected=0x601E4255
       DockNode      ID=0x00000009 Parent=0x00000007 SizeRef=195,456 Selected=0x9A68760C
     DockNode        ID=0x00000008 Parent=0x00000002 SizeRef=442,692 Split=Y
-      DockNode      ID=0x0000000B Parent=0x00000008 SizeRef=1358,478 Split=X
-        DockNode    ID=0x00000005 Parent=0x0000000B SizeRef=779,700 Split=X
-          DockNode  ID=0x00000003 Parent=0x00000005 SizeRef=975,700 Selected=0xA9416207
-          DockNode  ID=0x00000004 Parent=0x00000005 SizeRef=220,700 CentralNode=1 HiddenTabBar=1 Selected=0xAE7BB42F
-        DockNode    ID=0x00000006 Parent=0x0000000B SizeRef=93,700 Selected=0xC89E3217
-      DockNode      ID=0x0000000C Parent=0x00000008 SizeRef=1358,212 Selected=0x9FD216C5
   DockNode          ID=0x0000000D Parent=0x6D3A3A6E SizeRef=703,692 Selected=0xA115F62D
 

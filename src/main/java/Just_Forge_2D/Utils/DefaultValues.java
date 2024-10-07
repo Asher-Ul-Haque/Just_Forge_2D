@@ -87,7 +87,7 @@ public class DefaultValues
     public static final float DEFAULT_FRAME_TIME = 0.12f;
 
     // - - - save directory
-    public static final String DEFAULT_SAVE_DIR = "/SceneScripts";
+    public static final String DEFAULT_SAVE_DIR = "/SceneScripts/";
 
     // - - - keyboard control component
     public static final float DEFAULT_JUMP_IMPULSE = 15f;
