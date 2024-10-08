@@ -77,4 +77,14 @@ public class WindowSystemManager
         return new Vector2i(vidMode.width(), vidMode.height());
     }
 
+    public static int[] getDecorationSize(Window WINDOW)
+    {
+        int[] top = new int[1];
+        int[] left = new int[1];
+        int[] bottom = new int[1];
+        int[] right = new int[1];
+        org.lwjgl.glfw.GLFW.glfwGetWindowFrameSize(WINDOW.getGlfwWindowPtr(), top, left, bottom, right);
+        return new int[]{top[0], left[0], bottom[0], right[0]};
+    }
+
 }

@@ -2,6 +2,7 @@ package Just_Forge_2D.InputSystem;
 
 import Just_Forge_2D.SceneSystem.Camera;
 import Just_Forge_2D.Utils.Logger;
+import Just_Forge_2D.WindowSystem.WindowSystemManager;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
@@ -233,7 +234,7 @@ public class Mouse
     public static float getScreenY(int SCREEN_HEIGHT)
     {
         float currentY = getY() - get().gameViewportPos.y;
-        currentY = 720f - ((currentY / get().gameViewportSize.y) * SCREEN_HEIGHT);
+        currentY = WindowSystemManager.getMonitorSize().y - ((currentY / get().gameViewportSize.y) * SCREEN_HEIGHT);
         return currentY;
     }
 
@@ -265,6 +266,12 @@ public class Mouse
         }
 
         return get().isMouseButtonPressed[BUTTON];
+    }
+
+    public static boolean isMouseButtonDown(MouseButtons MOUSE_BUTTON)
+    {
+        int BUTTON = MOUSE_BUTTON.buttonCode;
+        return isMouseButtonDown(BUTTON);
     }
 
 

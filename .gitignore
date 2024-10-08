@@ -8,10 +8,11 @@ build/
 .idea/
 .idea/*
 build/*
-gradle/*
+logs/*
 .gradle/*
 uiPreview.svg
 tilesets.svg
+README.md
 
 
 ### IntelliJ IDEA ###

@@ -1,7 +1,8 @@
 package Just_Forge_2D.EntityComponentSystem.Components;
+
+import Just_Forge_2D.EditorSystem.EditorComponents.GridlinesComponent;
 import Just_Forge_2D.EditorSystem.Widgets;
 import Just_Forge_2D.Utils.DefaultValues;
-import imgui.ImGui;
 import org.joml.Vector2f;
 
 // - - - class to store data regarding position and scale
@@ -90,7 +91,7 @@ public class TransformComponent extends Component
         this.gameObject.name = Widgets.inputText("Name", this.gameObject.name);
 
         Widgets.drawVec2Control("Position", this.position);
-        Widgets.drawVec2Control("Scale", this.scale, Math.min(DefaultValues.GRID_HEIGHT, DefaultValues.GRID_WIDTH));
+        Widgets.drawVec2Control("Scale", this.scale, Math.min(GridlinesComponent.gridSize.x, GridlinesComponent.gridSize.y));
         this.rotation = Widgets.drawFloatControl("Rotation", this.rotation);
         this.layer = Widgets.drawIntControl("Layer", this.layer);
     }

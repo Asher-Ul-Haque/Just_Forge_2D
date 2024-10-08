@@ -1,28 +1,24 @@
 package Just_Forge_2D.PhysicsSystem;
 
-import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.BoxColliderComponent;
-import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.CircleColliderComponent;
-import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.CylinderColliderComponent;
-import Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent;
 import Just_Forge_2D.EntityComponentSystem.Components.TransformComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
+import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.*;
+import Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent;
+import Just_Forge_2D.PhysicsSystem.PhysicsManagers.ColliderManager;
 import Just_Forge_2D.SceneSystem.Scene;
+import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.Logger;
-import org.jbox2d.collision.shapes.CircleShape;
-import org.jbox2d.collision.shapes.PolygonShape;
-import org.jbox2d.common.Vec2;
-import org.jbox2d.dynamics.*;
-import org.joml.Vector2f;
+import org.jbox2d.dynamics.Body;
+import org.jbox2d.dynamics.BodyDef;
+import org.jbox2d.dynamics.BodyType;
+import org.jbox2d.dynamics.Fixture;
 
 // - - - interface to communicate with Box2D
 public class PhysicsSystemManager
 {
-    // - - - private variables - - -
-
-    // - - - world settings
-
     private Scene owner;
-    private PhysicsWorld myWorld;
+    private float fixedDelta = DefaultValues.PHYSICS_DELTA_TIME;
+    public PhysicsWorld rawWorld;
 
 
     // - - - | Functions | - - -
@@ -30,7 +26,16 @@ public class PhysicsSystemManager
     public PhysicsSystemManager(Scene SCENE, PhysicsWorld WORLD)
     {
         this.owner = SCENE;
-        myWorld = WORLD;
+        rawWorld = WORLD;
+        Logger.FORGE_LOG_INFO("Created new Physics System Manager for : " + SCENE);
+    }
+
+    public PhysicsSystemManager(Scene SCENE, PhysicsWorld WORLD, float FIXED_DELTA)
+    {
+        this.owner = SCENE;
+        rawWorld = WORLD;
+        this.fixedDelta = FIXED_DELTA;
+        Logger.FORGE_LOG_INFO("Created new Physics System Manager for : " + SCENE);
     }
 
     // - - - Game Objects - - -
@@ -38,7 +43,8 @@ public class PhysicsSystemManager
     // - - - add
     public void add(GameObject OBJ)
     {
-        RigidBodyComponent rb = OBJ.getCompoent(RigidBodyComponent.class);
+        Logger.FORGE_LOG_DEBUG("Registering: " + OBJ + " with physics system");
+        RigidBodyComponent rb = OBJ.getComponent(RigidBodyComponent.class);
         if (rb != null && rb.getRawBody() == null)
         {
             TransformComponent transform = OBJ.transform;
@@ -73,43 +79,63 @@ public class PhysicsSystemManager
                     break;
             }
 
-            Body body = myWorld.getWorld().createBody(bodyDef);
-            body.m_mass = rb.getMass();
+            Body body = rawWorld.getWorld().createBody(bodyDef);
             rb.setRawBody(body);
 
-            CircleColliderComponent circleCollider = OBJ.getCompoent(CircleColliderComponent.class);
-            BoxColliderComponent boxCollider = OBJ.getCompoent(BoxColliderComponent.class);
-            CylinderColliderComponent pillCollider = OBJ.getCompoent(CylinderColliderComponent.class);
+            CircleColliderComponent circleCollider = OBJ.getComponent(CircleColliderComponent.class);
+            BoxColliderComponent boxCollider = OBJ.getComponent(BoxColliderComponent.class);
+            CylinderColliderComponent pillCollider = OBJ.getComponent(CylinderColliderComponent.class);
+            PolygonColliderComponent polygonColliderComponent = OBJ.getComponent(PolygonColliderComponent.class);
+            EdgeColliderComponent edgeColliderComponent = OBJ.getComponent(EdgeColliderComponent.class);
 
             if (circleCollider != null)
             {
-                addCircleCollider(rb, circleCollider);
+                ColliderManager.addCircleCollider(rb, circleCollider);
+                body.resetMassData();
             }
             if (boxCollider != null)
             {
-                addBoxCollider(rb, boxCollider);
+                ColliderManager.addBoxCollider(rb, boxCollider);
+                body.resetMassData();
             }
             if (pillCollider != null)
             {
-                addCylinderCollider(rb, pillCollider);
+                ColliderManager.addCylinderCollider(rb, pillCollider);
+                body.resetMassData();
             }
-
-            Logger.FORGE_LOG_DEBUG("Linked Box2D with " + OBJ);
+            if (polygonColliderComponent != null)
+            {
+                ColliderManager.addPolygonCollider(rb, polygonColliderComponent);
+                body.resetMassData();
+            }
+            if (edgeColliderComponent != null)
+            {
+                ColliderManager.addEdgeCollider(rb, edgeColliderComponent);
+                body.resetMassData();
+            }
+        }
+        else
+        {
+            Logger.FORGE_LOG_ERROR("Cannot register : " + OBJ + " with Physics System : null game object");
         }
     }
 
     // - - - destroy
     public void destroyGameObject(GameObject GO)
     {
-        Logger.FORGE_LOG_DEBUG("Unlinked Box2D with " + GO);
-        RigidBodyComponent rb = GO.getCompoent(RigidBodyComponent.class);
+        Logger.FORGE_LOG_DEBUG("Removing: " + GO + " from physics system");
+        RigidBodyComponent rb = GO.getComponent(RigidBodyComponent.class);
         if (rb != null)
         {
             if (rb.getRawBody() != null)
             {
-                myWorld.getWorld().destroyBody(rb.getRawBody());
+                rawWorld.getWorld().destroyBody(rb.getRawBody());
                 rb.setRawBody(null);
             }
+        }
+        else
+        {
+            Logger.FORGE_LOG_ERROR("Cannot remove : " + GO + " from physics system: null raw physics body");
         }
     }
 
@@ -117,144 +143,13 @@ public class PhysicsSystemManager
     public void update(float DELTA_TIME)
     {
         // - - - ensure that update happens only every 16 milliseconds. We increase only when we pass 16ms
-        myWorld.step(DELTA_TIME);
+        rawWorld.step(DELTA_TIME);
     }
 
-    public void addBoxCollider(RigidBodyComponent RB, BoxColliderComponent COLLIDER)
+    public void update()
     {
-        Body body = RB.getRawBody();
-        if (body == null)
-        {
-            Logger.FORGE_LOG_WARNING("Raw body must not be null, while adding a collider");
-            return;
-        }
-        PolygonShape shape = new PolygonShape();
-        Vector2f halfSize = new Vector2f(COLLIDER.getHalfSize()).mul(0.5f); // Dont ask me why half. I fine tuned in testing
-        Vector2f offset = COLLIDER.getOffset();
-        Vector2f origin = new Vector2f(COLLIDER.getOrigin());
-        shape.setAsBox(halfSize.x, halfSize.y, new Vec2(offset.x, offset.y), 0);
-
-        FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.shape = shape;
-        fixtureDef.density = 1.0f;
-        fixtureDef.friction = RB.getLinearDamping();
-        fixtureDef.userData = COLLIDER.gameObject;
-        fixtureDef.isSensor = RB.isSensor();
-        body.createFixture(fixtureDef);
-    }
-
-    public void addCircleCollider(RigidBodyComponent RB, CircleColliderComponent COLLIDER)
-    {
-        Body body = RB.getRawBody();
-        if (body == null)
-        {
-            Logger.FORGE_LOG_WARNING("Raw body must not be null, while adding a collider");
-            return;
-        }
-        CircleShape shape = new CircleShape();
-        shape.setRadius(COLLIDER.getRadius());
-        shape.m_p.set(COLLIDER.getOffset().x, COLLIDER.getOffset().y);
-
-        FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.shape = shape;
-        fixtureDef.density = 1.0f;
-        fixtureDef.friction = RB.getLinearDamping();
-        fixtureDef.userData = COLLIDER.gameObject;
-        fixtureDef.isSensor = RB.isSensor();
-        body.createFixture(fixtureDef);
-    }
-
-    public void addCylinderCollider(RigidBodyComponent RB, CylinderColliderComponent COLLIDER)
-    {
-        Body body = RB.getRawBody();
-        if (body == null)
-        {
-            Logger.FORGE_LOG_WARNING("Raw body must not be null, while adding a collider");
-            return;
-        }
-
-        addBoxCollider(RB, COLLIDER.getBox());
-        addCircleCollider(RB, COLLIDER.getTopCircle());
-        addCircleCollider(RB, COLLIDER.getBottomCircle());
-    }
-
-
-    // - - - Ray cast
-
-    public RayCastInfo rayCast(GameObject REQUESTEE, Vector2f POINT_1, Vector2f POINT_2)
-    {
-        RayCastInfo callback = new RayCastInfo(REQUESTEE);
-        myWorld.getWorld().raycast(callback, new Vec2(POINT_1.x, POINT_1.y), new Vec2(POINT_2.x, POINT_2.y));
-        return callback;
-    }
-
-    public void resetCircleCollider(RigidBodyComponent RB, CircleColliderComponent COLLIDER)
-    {
-        Body body = RB.getRawBody();
-        if (body == null)
-        {
-            Logger.FORGE_LOG_ERROR("Tried to reset Circle Collider on a null physics body");
-            return;
-        }
-
-        int size = fixtureListSize(body);
-        for (int i = 0; i < size; ++i)
-        {
-            body.destroyFixture(body.getFixtureList());
-        }
-
-        addCircleCollider(RB, COLLIDER);
-        body.resetMassData();
-    }
-
-    public void resetBoxCollider(RigidBodyComponent RB, BoxColliderComponent COLLIDER)
-    {
-        Body body = RB.getRawBody();
-        if (body == null)
-        {
-            Logger.FORGE_LOG_ERROR("Tried to reset Circle Collider on a null physics body");
-            return;
-        }
-
-        int size = fixtureListSize(body);
-        for (int i = 0; i < size; ++i)
-        {
-            body.destroyFixture(body.getFixtureList());
-        }
-
-        addBoxCollider(RB, COLLIDER);
-        body.resetMassData();
-    }
-
-    public void resetCylinderCollider(RigidBodyComponent RB, CylinderColliderComponent COLLIDER)
-    {
-        Body body = RB.getRawBody();
-        if (body == null)
-        {
-            Logger.FORGE_LOG_ERROR("Tried to reset Circle Collider on a null physics body");
-            return;
-        }
-
-        int size = fixtureListSize(body);
-        for (int i = 0; i < size; ++i)
-        {
-            body.destroyFixture(body.getFixtureList());
-        }
-
-        addCylinderCollider(RB, COLLIDER);
-        body.resetMassData();
-    }
-    private int fixtureListSize(Body BODY)
-    {
-        int size = 0;
-        Fixture fixture = BODY.getFixtureList();
-        while (fixture != null)
-        {
-            size++;
-            fixture = fixture.m_next;
-        }
-
-        return size;
+        // - - - ensure that update happens only every 16 milliseconds. We increase only when we pass 16ms
+        rawWorld.step(this.fixedDelta);
     }
 
     public void setSensor(RigidBodyComponent RB, boolean REALLY)
@@ -275,6 +170,6 @@ public class PhysicsSystemManager
 
     public boolean isLocked()
     {
-        return myWorld.getWorld().isLocked();
+        return rawWorld.getWorld().isLocked();
     }
 }

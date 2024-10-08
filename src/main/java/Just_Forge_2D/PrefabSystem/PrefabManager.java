@@ -3,17 +3,16 @@ package Just_Forge_2D.PrefabSystem;
 import Just_Forge_2D.EditorSystem.InputControls.MouseControlComponent;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.Sprite;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
-import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.Logger;
 import imgui.ImGui;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
 public class PrefabManager
 {
     private static final Map<String, Prefab> prefabRegistry = new HashMap<>();
+    private static int defaultPrefabMask = 0;
 
     public static void registerPrefab(String NAME, Prefab PREFAB)
     {
@@ -33,7 +32,7 @@ public class PrefabManager
 
     public static GameObject generateDefaultSpriteObject(Sprite SPRITE, float SIZE_X, float SIZE_Y)
     {
-        SpritePrefab spritePrefab = new SpritePrefab("Auto Generated", SPRITE, SIZE_X, SIZE_Y);
+        SpritePrefab spritePrefab = new SpritePrefab("Auto Generated " + ++defaultPrefabMask, SPRITE, SIZE_X, SIZE_Y);
         return  spritePrefab.create();
     }
 

@@ -137,6 +137,7 @@ public abstract class Theme
         ImGui.getStyle().setColor(ImGuiCol.TabActive, tabActiveColor.x, tabActiveColor.y, tabActiveColor.z, tabActiveColor.w);
         ImGui.getStyle().setColor(ImGuiCol.TabUnfocused, tabUnfocusedColor.x, tabUnfocusedColor.y, tabUnfocusedColor.z, tabUnfocusedColor.w);
         ImGui.getStyle().setColor(ImGuiCol.TabUnfocusedActive, tabUnfocusedActiveColor.x, tabUnfocusedActiveColor.y, tabUnfocusedActiveColor.z, tabUnfocusedActiveColor.w);
+        ImGui.getStyle().setColor(ImGuiCol.HeaderHovered, tabHoveredColor.x, tabHoveredColor.y, tabHoveredColor.z, tabHoveredColor.w);
         ImGui.getStyle().setTabRounding(tabRounding);
         ImGui.getStyle().setTabBorderSize(tabBorder);
     }
@@ -154,11 +155,12 @@ public abstract class Theme
 
     // - - - Pop Up - - -
 
-    public ImVec4 popupBg;
+    public float popupRounding;
 
     public void applyPopupBg()
     {
-        ImGui.getStyle().setColor(ImGuiCol.PopupBg, popupBg.x, popupBg.y, popupBg.z, popupBg.w);
+        ImGui.getStyle().setColor(ImGuiCol.PopupBg, popupBgColor.x, popupBgColor.y, popupBgColor.z, popupBgColor.w);
+        ImGui.getStyle().setPopupRounding(popupRounding);
     }
 
 

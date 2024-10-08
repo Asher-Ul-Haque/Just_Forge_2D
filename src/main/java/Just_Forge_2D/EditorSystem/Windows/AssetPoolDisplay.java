@@ -1,15 +1,13 @@
 package Just_Forge_2D.EditorSystem.Windows;
 
+import Just_Forge_2D.AssetPool.AssetPool;
 import Just_Forge_2D.AudioSystem.Sound;
+import Just_Forge_2D.EditorSystem.EditorComponents.GridlinesComponent;
 import Just_Forge_2D.EditorSystem.InputControls.MouseControlComponent;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.Sprite;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.PrefabSystem.PrefabManager;
-import Just_Forge_2D.RenderingSystem.Shader;
 import Just_Forge_2D.RenderingSystem.SpriteSheet;
-import Just_Forge_2D.Utils.AssetPool;
-import Just_Forge_2D.Utils.DefaultValues;
-import SampleMario.GameCode.Prefabs;
 import imgui.ImGui;
 import imgui.ImVec2;
 import org.joml.Vector2f;
@@ -29,7 +27,7 @@ public class AssetPoolDisplay
                 Collection<Sound> sounds = AssetPool.getAllSounds();
                 for (Sound sound : sounds)
                 {
-                    File tmp = new File(sound.getFIlePath());
+                    File tmp = new File(sound.getFilePath());
                     if (ImGui.button(tmp.getName()))
                     {
                         if (!sound.isPlaying())
@@ -70,7 +68,7 @@ public class AssetPoolDisplay
                             ImGui.pushID(i);
                             if (ImGui.imageButton(id, spriteWidth, spriteHeight, texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y))
                             {
-                                GameObject object = PrefabManager.generateDefaultSpriteObject(sprite, DefaultValues.GRID_WIDTH, DefaultValues.GRID_HEIGHT);
+                                GameObject object = PrefabManager.generateDefaultSpriteObject(sprite, GridlinesComponent.gridSize.x, GridlinesComponent.gridSize.y);
                                 MouseControlComponent.pickupObject(object);
                             }
                             ImGui.popID();

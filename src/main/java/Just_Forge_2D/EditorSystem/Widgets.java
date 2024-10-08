@@ -1,8 +1,9 @@
 package Just_Forge_2D.EditorSystem;
 
+import Just_Forge_2D.EditorSystem.Themes.Theme;
 import imgui.ImGui;
 import imgui.flag.ImGuiCol;
-import imgui.flag.ImGuiStyleVar;
+import imgui.type.ImInt;
 import imgui.type.ImString;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
@@ -13,16 +14,14 @@ import static Just_Forge_2D.EditorSystem.Themes.Theme.setDefaultTextColor;
 
 public class Widgets {
 
-    private static final float DEFAULT_WIDTH = 128.0f;
     private static final float DEFAULT_RESET = 0.0f;
 
 
     // - - - Vec2 Control - - -
-    public static void drawVec2Control(String label, Vector2f values, float resetValue, float columnWidth)
+    public static void drawVec2Control(String label, Vector2f values, float resetValue)
     {
         ImGui.pushID(label);
         ImGui.columns(2);
-        ImGui.setColumnWidth(0, columnWidth);
         setDefaultTextColor(EditorSystemManager.getCurrentTheme().tertiaryColor);
         ImGui.text(label);
         resetDefaultTextColor();
@@ -68,18 +67,15 @@ public class Widgets {
     }
 
     public static void drawVec2Control(String label, Vector2f values) {
-        drawVec2Control(label, values, DEFAULT_RESET, DEFAULT_WIDTH);
-    }
-
-    public static void drawVec2Control(String label, Vector2f values, float resetValue) {
-        drawVec2Control(label, values, resetValue, DEFAULT_WIDTH);
+        drawVec2Control(label, values, DEFAULT_RESET);
     }
 
     // - - - Vec3 Control - - -
-    public static void drawVec3Control(String label, Vector3f values, float resetValue, float columnWidth) {
+    public static void drawVec3Control(String label, Vector3f values, float resetValue)
+    {
         ImGui.pushID(label);
         ImGui.columns(2);
-        ImGui.setColumnWidth(0, columnWidth);
+
         setDefaultTextColor(EditorSystemManager.getCurrentTheme().tertiaryColor);
         ImGui.text(label);
         resetDefaultTextColor();
@@ -135,19 +131,18 @@ public class Widgets {
         ImGui.popID();
     }
 
-    public static void drawVec3Control(String label, Vector3f values) {
-        drawVec3Control(label, values, DEFAULT_RESET, DEFAULT_WIDTH);
+    public static void drawVec3Control(String label, Vector3f values)
+    {
+        drawVec3Control(label, values, DEFAULT_RESET);
     }
 
-    public static void drawVec3Control(String label, Vector3f values, float resetValue) {
-        drawVec3Control(label, values, resetValue, DEFAULT_WIDTH);
-    }
 
     // - - - Float Control - - -
-    public static float drawFloatControl(String label, float value) {
+
+    public static float drawFloatControl(String label, float value)
+    {
         ImGui.pushID(label);
         ImGui.columns(2);
-        ImGui.setColumnWidth(0, DEFAULT_WIDTH);
         setDefaultTextColor(EditorSystemManager.getCurrentTheme().tertiaryColor);
         ImGui.text(label);
         resetDefaultTextColor();
@@ -155,7 +150,7 @@ public class Widgets {
 
         float[] valArr = {value};
         ImGui.setCursorPos(ImGui.getCursorPosX() + EditorSystemManager.getCurrentTheme().framePadding.x ,ImGui.getCursorPosY() + EditorSystemManager.getCurrentTheme().framePadding.y);
-        ImGui.dragFloat("##DragFloat", valArr, 0.1f);
+        ImGui.dragFloat("##DragFloat", valArr, 0.05f);
 
         ImGui.columns(1);
         ImGui.popID();
@@ -164,10 +159,10 @@ public class Widgets {
     }
 
     // - - - Int Control - - -
-    public static int drawIntControl(String label, int value) {
+    public static int drawIntControl(String label, int value)
+    {
         ImGui.pushID(label);
         ImGui.columns(2);
-        ImGui.setColumnWidth(0, DEFAULT_WIDTH);
         setDefaultTextColor(EditorSystemManager.getCurrentTheme().tertiaryColor);
         ImGui.text(label);
         resetDefaultTextColor();
@@ -184,10 +179,10 @@ public class Widgets {
     }
 
     // - - - Color Picker - - -
-    public static boolean colorPicker4(String label, Vector4f color) {
+    public static boolean colorPicker4(String label, Vector4f color)
+    {
         ImGui.pushID(label);
         ImGui.columns(2);
-        ImGui.setColumnWidth(0, DEFAULT_WIDTH);
         setDefaultTextColor(EditorSystemManager.getCurrentTheme().tertiaryColor);
         ImGui.text(label);
         resetDefaultTextColor();
@@ -195,7 +190,8 @@ public class Widgets {
 
         float[] colorArr = {color.x, color.y, color.z, color.w};
         boolean changed = ImGui.colorEdit4("##ColorPicker", colorArr);
-        if (changed) {
+        if (changed)
+        {
             color.set(colorArr[0], colorArr[1], colorArr[2], colorArr[3]);
         }
 
@@ -205,12 +201,44 @@ public class Widgets {
         return changed;
     }
 
-    // - - - Text Input - - -
+    public static boolean colorPicker3(String label, Vector3f COLOR)
+    {
+        ImGui.pushID(label);
+        ImGui.columns(2);
+        setDefaultTextColor(EditorSystemManager.getCurrentTheme().tertiaryColor);
+        ImGui.text(label);
+        resetDefaultTextColor();
+        ImGui.nextColumn();
+
+        float[] colorArr = {COLOR.x, COLOR.y, COLOR.z};
+        boolean changed = ImGui.colorEdit4("##ColorPicker", colorArr);
+        if (changed)
+        {
+            COLOR.set(colorArr[0], colorArr[1], colorArr[2]);
+        }
+
+        ImGui.columns(1);
+        ImGui.popID();
+
+        return changed;
+    }
+
+    public static boolean drawBoolControl(String LABEL, boolean VALUE)
+    {
+        Theme.setDefaultTextColor(EditorSystemManager.getCurrentTheme().secondaryColor);
+        if (ImGui.checkbox( LABEL, VALUE))
+        {
+            VALUE = !VALUE;
+        }
+        Theme.resetDefaultTextColor();
+        return VALUE;
+    }
+
+        // - - - Text Input - - -
     public static String inputText(String label, String text)
     {
         ImGui.pushID(label);
         ImGui.columns(2);
-        ImGui.setColumnWidth(0, DEFAULT_WIDTH);
         setDefaultTextColor(EditorSystemManager.getCurrentTheme().tertiaryColor);
         ImGui.text(label);
         resetDefaultTextColor();
@@ -226,6 +254,57 @@ public class Widgets {
         ImGui.popID();
 
         return text;
+    }
+
+    // - - - Enum Input - - -
+    public static <T extends Enum<T>> T drawEnumControls(Class<T> ENUM_CLASS, String LABEL, T CURRENT_ENUM)
+    {
+        String[] enumValues = getEnumValues(ENUM_CLASS);
+        String currentEnumName = CURRENT_ENUM != null ? CURRENT_ENUM.name() : null;
+
+        ImGui.pushID(LABEL);
+        ImGui.columns(2);
+        setDefaultTextColor(EditorSystemManager.getCurrentTheme().tertiaryColor);
+        ImGui.text(LABEL);
+        resetDefaultTextColor();
+
+        ImGui.nextColumn();
+        ImInt index = new ImInt(indexOf(currentEnumName, enumValues));
+
+        if (ImGui.combo(LABEL, index, enumValues, enumValues.length))
+        {
+            ImGui.columns(1);
+            ImGui.popID();
+            return ENUM_CLASS.getEnumConstants()[index.get()];
+        }
+
+        ImGui.columns(1);
+        ImGui.popID();
+        return CURRENT_ENUM;
+    }
+
+    private static <T extends Enum<T>> String[] getEnumValues(Class<T> enumClass)
+    {
+        String[] enumValues = new String[enumClass.getEnumConstants().length];
+        int i = 0;
+        for (T enumConstant : enumClass.getEnumConstants())
+        {
+            enumValues[i] = enumConstant.name();
+            i++;
+        }
+        return enumValues;
+    }
+
+    private static int indexOf(String str, String[] arr)
+    {
+        for (int i = 0; i < arr.length; i++)
+        {
+            if (str.equals(arr[i]))
+            {
+                return i;
+            }
+        }
+        return -1; // Return -1 if not found
     }
 
     // - - - Utility method to set button styles - - -
