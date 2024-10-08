@@ -167,12 +167,17 @@ public class MouseControlComponent extends Component
             Set<Integer> uniqueGameObjectIDs = new HashSet<>();
             for (float objID : gameObjectIDs)
             {
-                uniqueGameObjectIDs.add((int)objID);
+                if (objID != -1) uniqueGameObjectIDs.add((int)objID);
             }
 
             for (Integer gameObjectID : uniqueGameObjectIDs)
             {
                 GameObject picked = MainWindow.getCurrentScene().getGameObject(gameObjectID);
+                if (uniqueGameObjectIDs.size() == 1)
+                {
+                    ComponentsWindow.setActiveGameObject(picked);
+                    return;
+                }
                 if (picked != null && picked.getComponent(NonPickableComponent.class) == null)
                 {
                     ComponentsWindow.addActiveGameObject(picked);

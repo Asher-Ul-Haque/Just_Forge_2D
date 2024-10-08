@@ -3,6 +3,7 @@ import Just_Forge_2D.EditorSystem.Widgets;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent;
 import Just_Forge_2D.RenderingSystem.DebugPencil;
+import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.WindowSystem.MainWindow;
 import imgui.ImGui;
 import org.jbox2d.common.Vec2;
@@ -55,6 +56,12 @@ public class SpringComponent extends BaseJointComponent
             other = MainWindow.getCurrentScene().getGameObject(otherName);
             otherRB = other.getComponent(RigidBodyComponent.class);
         }
+        RigidBodyComponent my = this.gameObject.getComponent(RigidBodyComponent.class);
+        if (my == null)
+        {
+            Logger.FORGE_LOG_ERROR(this.gameObject + " does not have a rigid body");
+            return;
+        }
         if (other != null && otherRB != null)
         {
             defJoint.dampingRatio = getDampingRatio();
@@ -63,7 +70,7 @@ public class SpringComponent extends BaseJointComponent
             defJoint.collideConnected = isCollideConnected();
             if (anchorA.lengthSquared() == 0) anchorA = new Vector2f(this.gameObject.transform.position);
             if (anchorB.lengthSquared() == 0) anchorB = new Vector2f(other.transform.position);
-            defJoint.initialize(this.gameObject.getComponent(RigidBodyComponent.class).getRawBody(), otherRB.getRawBody(), new Vec2(anchorA.x, anchorA.y), new Vec2(anchorB.x, anchorB.y));
+            defJoint.initialize(my.getRawBody(), otherRB.getRawBody(), new Vec2(anchorA.x, anchorA.y), new Vec2(anchorB.x, anchorB.y));
             joint = (DistanceJoint) MainWindow.getCurrentScene().getPhysics().rawWorld.getWorld().createJoint(defJoint);
         }
     }
@@ -209,5 +216,12 @@ public class SpringComponent extends BaseJointComponent
     public void debugDraw()
     {
         DebugPencil.addLine(getAnchorA(), getAnchorB(), color);
+    }
+
+    @Override
+    public void destroy()
+    {
+        if (this.joint == null) return;
+        MainWindow.getCurrentScene().getPhysics().rawWorld.getWorld().destroyJoint(joint);
     }
 }

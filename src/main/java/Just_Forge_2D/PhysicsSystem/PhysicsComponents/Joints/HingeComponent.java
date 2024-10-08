@@ -213,7 +213,7 @@ public class HingeComponent extends BaseJointComponent
             // - - - TODO: abstract stuff out check for null instead of 0.
             if (anchorA.lengthSquared() == 0) anchorA = new Vector2f(this.gameObject.transform.position);
             if (anchorB.lengthSquared() == 0) anchorB = new Vector2f(other.transform.position);
-            if (hingeAnchor.lengthSquared() == 0) hingeAnchor = new Vector2f(anchorA);
+            if (hingeAnchor.lengthSquared() == 0) hingeAnchor = this.gameObject.transform.position;
             defJoint.initialize(this.gameObject.getComponent(RigidBodyComponent.class).getRawBody(), otherRB.getRawBody(), new Vec2(hingeAnchor.x, hingeAnchor.y));
             joint = (RevoluteJoint) MainWindow.getCurrentScene().getPhysics().rawWorld.getWorld().createJoint(defJoint);
         }
@@ -280,5 +280,12 @@ public class HingeComponent extends BaseJointComponent
         setMaxMotorTorque(Widgets.drawFloatControl("Max Torque", getMaxMotorTorque()));
 
         setMotorSpeed(Widgets.drawFloatControl("Motor Speed", getMotorSpeed()));
+    }
+
+    @Override
+    public void destroy()
+    {
+        if (this.joint == null) return;
+        MainWindow.getCurrentScene().getPhysics().rawWorld.getWorld().destroyJoint(joint);
     }
 }
