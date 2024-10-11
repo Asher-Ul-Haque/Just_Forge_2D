@@ -1,8 +1,8 @@
 package Just_Forge_2D.PhysicsSystem.PhysicsComponents.Joints;
+
 import Just_Forge_2D.EditorSystem.Widgets;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent;
-import Just_Forge_2D.RenderingSystem.DebugPencil;
 import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.WindowSystem.MainWindow;
 import imgui.ImGui;
@@ -22,7 +22,6 @@ public class SpringComponent extends BaseJointComponent
     protected float length = 1f;
     protected float dampingRatio = 0.5f;
     protected float springConstant = 2f;
-    protected boolean collideConnected = false;
     protected Vector2f anchorA = new Vector2f();
     protected Vector2f anchorB = new Vector2f();
 
@@ -209,13 +208,6 @@ public class SpringComponent extends BaseJointComponent
             this.joint = null;
             createJoint();
         }
-    }
-
-    // - - - debug
-    @Override
-    public void debugDraw()
-    {
-        DebugPencil.addLine(getAnchorA(), getAnchorB(), color);
     }
 
     @Override

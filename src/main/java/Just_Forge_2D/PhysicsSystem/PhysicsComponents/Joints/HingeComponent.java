@@ -21,7 +21,6 @@ public class HingeComponent extends BaseJointComponent
     protected Vector2f anchorA = new Vector2f();
     protected Vector2f anchorB = new Vector2f();
     protected Vector2f hingeAnchor = new Vector2f();
-    protected boolean collideConntected = false;
     protected float referenceAngle = 0f;
     protected boolean enableLimit = false;
     protected Vector2f limits = new Vector2f((float) (Math.PI / 2f), -(float) (Math.PI / 2f));
@@ -95,13 +94,13 @@ public class HingeComponent extends BaseJointComponent
     // - - - Collide
     public boolean isCollideConnected()
     {
-        if (this.joint != null) this.collideConntected = joint.getCollideConnected();
-        return this.collideConntected;
+        if (this.joint != null) this.collideConnected = joint.getCollideConnected();
+        return this.collideConnected;
     }
 
     public void collideConnect(boolean REALLY)
     {
-        this.collideConntected = REALLY;
+        this.collideConnected = REALLY;
     }
 
 
@@ -205,7 +204,7 @@ public class HingeComponent extends BaseJointComponent
             defJoint.referenceAngle = this.referenceAngle;
             defJoint.enableLimit = this.enableLimit;
             defJoint.enableMotor = this.enableMotor;
-            defJoint.collideConnected = this.collideConntected;
+            defJoint.collideConnected = this.collideConnected;
             defJoint.upperAngle = this.limits.x;
             defJoint.lowerAngle = this.limits.y;
             defJoint.maxMotorTorque = this.maxMotorTorque;
@@ -217,14 +216,6 @@ public class HingeComponent extends BaseJointComponent
             defJoint.initialize(this.gameObject.getComponent(RigidBodyComponent.class).getRawBody(), otherRB.getRawBody(), new Vec2(hingeAnchor.x, hingeAnchor.y));
             joint = (RevoluteJoint) MainWindow.getCurrentScene().getPhysics().rawWorld.getWorld().createJoint(defJoint);
         }
-    }
-
-    @Override
-    public void debugDraw()
-    {
-        DebugPencil.addCircle(getHingeAnchor(), 0.5f, color);
-        DebugPencil.addLine(getHingeAnchor(), this.gameObject.transform.position);
-        if (other != null) DebugPencil.addLine(getHingeAnchor(), other.transform.position);
     }
 
     @Override
@@ -287,5 +278,12 @@ public class HingeComponent extends BaseJointComponent
     {
         if (this.joint == null) return;
         MainWindow.getCurrentScene().getPhysics().rawWorld.getWorld().destroyJoint(joint);
+    }
+
+    @Override
+    public void debugDraw()
+    {
+        if (joint == null || other == null) return;
+        DebugPencil.addLine(this.gameObject.transform.position, other.transform.position);
     }
 }

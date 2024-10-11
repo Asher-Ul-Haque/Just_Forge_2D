@@ -6,14 +6,19 @@ import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.*;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.KeyboardControllerComponent;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent;
 import Just_Forge_2D.Utils.Logger;
+import Just_Forge_2D.WindowSystem.MainWindow;
+import org.jbox2d.particle.ParticleDef;
+import org.jbox2d.particle.ParticleSystem;
 
 public class ParticleGenerator
 {
     private GameObject template;
+    private ParticleSystem particleSystem;
     private final int index = 0;
 
-    public ParticleGenerator(GameObject TEMPLATE, boolean KEEP_PHYSICS)
+    public ParticleGenerator(GameObject TEMPLATE, boolean KEEP_PHYSICS, ParticleSystem SYSTEM)
     {
+        this.particleSystem = SYSTEM;
         GameObject template = TEMPLATE.copy();
         template.name = TEMPLATE.name + " particle: " + index;
         template.noSerialize();
@@ -33,9 +38,9 @@ public class ParticleGenerator
         Logger.FORGE_LOG_TRACE("Template created");
     }
 
-    public Particle create()
+    public Particle create(ParticleDef DEF)
     {
-        return new Particle(this.template.copy());
+        int particleID = MainWindow.getCurrentScene().getPhysics().rawWorld.getWorld().createParticle(DEF);
+        return new Particle(this.template.copy(), particleID);
     }
-
 }

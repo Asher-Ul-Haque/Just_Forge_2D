@@ -6,6 +6,7 @@ import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent;
 import imgui.ImGui;
+import org.jbox2d.dynamics.joints.Joint;
 import org.joml.Vector3f;
 
 public abstract class BaseJointComponent extends Component
@@ -15,7 +16,9 @@ public abstract class BaseJointComponent extends Component
     protected transient GameObject other;
     protected transient RigidBodyComponent otherRB;
     protected transient boolean firstTime = true;
+    protected boolean collideConnected = false;
     protected Vector3f color = new Vector3f(1f);
+    protected Joint joint;
 
     public BaseJointComponent(GameObject OTHER)
     {
@@ -63,4 +66,6 @@ public abstract class BaseJointComponent extends Component
             if (!EditorSystemManager.isRuntimePlaying) createJoint();
         }
     }
+
+
 }

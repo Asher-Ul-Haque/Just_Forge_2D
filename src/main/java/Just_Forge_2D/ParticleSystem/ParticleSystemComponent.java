@@ -14,6 +14,8 @@ import Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent;
 import Just_Forge_2D.RenderingSystem.DebugPencil;
 import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.WindowSystem.MainWindow;
+import org.jbox2d.particle.ParticleDef;
+import org.jbox2d.particle.ParticleSystem;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
@@ -46,6 +48,8 @@ public class ParticleSystemComponent extends Component implements Observer
     private Vector2f offset = new Vector2f();
     private int particleLayer;
     private String templateName;
+    private Keys keypress = Keys.ENTER;
+    private ParticleSystem particleSystem;
 
     private Vector2f generateVelocity()
     {
@@ -109,6 +113,7 @@ public class ParticleSystemComponent extends Component implements Observer
             rb.setAngularVelocity(PARTICLE.angularVelocity);
             rb.addTorque(PARTICLE.angularVelocity);
         }
+        PARTICLE.wake(true);
     }
 
 
@@ -119,12 +124,12 @@ public class ParticleSystemComponent extends Component implements Observer
         {
             templateName = this.gameObject.name;
         }
-        generator = new ParticleGenerator(MainWindow.getCurrentScene().getGameObject(templateName), keepPhysics);
+        generator = new ParticleGenerator(MainWindow.getCurrentScene().getGameObject(templateName), keepPhysics, this.particleSystem);
 
         randomizer = new Random(this.gameObject.getUniqueID());
         for (int i = particles.size(); i < maxParticles; ++i)
         {
-            Particle particle = this.generator.create();
+            Particle particle = this.generator.create(new ParticleDef());
             particles.add(particle);
             resetParticle(particle);
             MainWindow.getCurrentScene().addGameObject(particle.core);
@@ -136,9 +141,12 @@ public class ParticleSystemComponent extends Component implements Observer
     public void update(float DELTA_TIME)
     {
         clamp();
-        if (Keyboard.isKeyPressed(Keys.ENTER))
+        if (Keyboard.isKeyBeginPress(Keys.ENTER))
         {
-            start();
+            for (Particle p : particles)
+            {
+                resetParticle(p);
+            }
         }
         for (int i = 0; i < particles.size(); ++i)
         {
@@ -148,8 +156,7 @@ public class ParticleSystemComponent extends Component implements Observer
             {
                 if (useOnce)
                 {
-                    particles.remove(i);
-                    core.destroy();
+                    particle.wake(false);
                 }
                 else resetParticle(particle);
             }
