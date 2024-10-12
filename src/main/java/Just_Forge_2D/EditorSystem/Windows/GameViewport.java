@@ -1,6 +1,5 @@
 package Just_Forge_2D.EditorSystem.Windows;
 
-import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.EventSystem.EventManager;
 import Just_Forge_2D.EventSystem.Events.Event;
 import Just_Forge_2D.EventSystem.Events.EventTypes;
@@ -37,7 +36,7 @@ public class GameViewport
 
         Mouse.setGameViewport(new Vector2f(topLeft.x, topLeft.y), new Vector2f(windowSize.x, windowSize.y));
 
-        int textureId = EditorSystemManager.getFramebuffer().getTextureID();
+        int textureId = GameWindow.getFrameBuffer().getTextureID();
         ImGui.image(textureId, windowSize.x, windowSize.y, 0, 1, 1, 0);
 
         float buttonWidth = 64f;
@@ -73,12 +72,12 @@ public class GameViewport
         windowSize.y -= ImGui.getScrollY();
 
         float aspectWidth = windowSize.x;
-        float aspectHeight = aspectWidth / GameWindow.get().getAspectRatio();
+        float aspectHeight = aspectWidth / ((float) GameWindow.getFrameBuffer().getSize().x / GameWindow.getFrameBuffer().getSize().y);
         if (aspectHeight > windowSize.y)
         {
             // - - - switch to pillar mode
             aspectHeight = windowSize.y;
-            aspectWidth = aspectHeight * GameWindow.get().getAspectRatio();
+            aspectWidth = aspectHeight * ((float) GameWindow.getFrameBuffer().getSize().x / GameWindow.getFrameBuffer().getSize().y);
         }
 
         return new ImVec2(aspectWidth, aspectHeight);

@@ -15,6 +15,7 @@ import Just_Forge_2D.GameSystem.GameCodeLoader;
 import Just_Forge_2D.InputSystem.Mouse;
 import Just_Forge_2D.PhysicsSystem.PhysicsSystemManager;
 import Just_Forge_2D.RenderingSystem.DebugPencil;
+import Just_Forge_2D.RenderingSystem.Framebuffer;
 import Just_Forge_2D.RenderingSystem.Renderer;
 import Just_Forge_2D.SceneSystem.Camera;
 import Just_Forge_2D.SceneSystem.Scene;
@@ -37,6 +38,7 @@ public class GameWindow extends Window
 
     // - - - Window variables - - -
     private boolean isInitialized = false;
+    private Framebuffer framebuffer;
 
     // - - - Systems
 
@@ -54,6 +56,7 @@ public class GameWindow extends Window
     {
         super(CONFIG);
         Logger.FORGE_LOG_INFO("Started Just Forge 2D");
+        framebuffer = new Framebuffer(WindowSystemManager.getMonitorSize().x, WindowSystemManager.getMonitorSize().y);
     }
 
     // - - - Systems function to change the scene
@@ -110,10 +113,9 @@ public class GameWindow extends Window
 
         isInitialized = true;
 
-        EditorSystemManager.setFramebuffer();
-        glViewport(0, 0, WindowSystemManager.getMonitorSize().x, WindowSystemManager.getMonitorSize().y);
+        if (framebuffer == null) framebuffer = new Framebuffer(WindowSystemManager.getMonitorSize().x, WindowSystemManager.getMonitorSize().y);
+        glViewport(0, 0, framebuffer.getSize().x, framebuffer.getSize().y);
         Logger.FORGE_LOG_INFO("Framebuffer created and assigned for offscreen rendering");
-
         Logger.FORGE_LOG_INFO("Editor linked with window");
 
 
@@ -150,7 +152,7 @@ public class GameWindow extends Window
                     glDisable(GL_BLEND);
                     ObjectSelector.enableWriting();
 
-                    glViewport(0, 0, WindowSystemManager.getMonitorSize().x, WindowSystemManager.getMonitorSize().y);
+                    glViewport(0, 0, framebuffer.getSize().x, framebuffer.getSize().y);
                     clear();
                     Renderer.bindShader(EditorSystemManager.selectorShader);
                     currentScene.render(dt);
@@ -164,7 +166,7 @@ public class GameWindow extends Window
                     DebugPencil.beginFrame();
 
                     // - - - Framebuffer
-                    EditorSystemManager.getFramebuffer().bind();
+                    framebuffer.bind();
 
                 }
                 this.clear();
@@ -187,7 +189,7 @@ public class GameWindow extends Window
                 // - - - Finish drawing to texture so that imgui should be rendered to the window
                 if (!EditorSystemManager.isRelease)
                 {
-                    EditorSystemManager.getFramebuffer().unbind();
+                    framebuffer.unbind();
 
                     // - - - Update the editor
                     ImGUIManager.update(dt, currentScene);
@@ -282,5 +284,18 @@ public class GameWindow extends Window
     public static PhysicsSystemManager getPhysicsSystem()
     {
         return getCurrentScene().getPhysics();
+    }
+
+    public static Framebuffer getFrameBuffer() {return get().framebuffer;}
+
+    @Override
+    public void setSize(int WIDTH, int HEIGHT)
+    {
+        if (EditorSystemManager.getCurrentState().equals(EditorSystemManager.state.isEditor) && !EditorSystemManager.isRelease)
+        {
+            this.framebuffer = new Framebuffer(WIDTH, HEIGHT);
+            return;
+        }
+        super.setSize(WIDTH, HEIGHT);
     }
 }

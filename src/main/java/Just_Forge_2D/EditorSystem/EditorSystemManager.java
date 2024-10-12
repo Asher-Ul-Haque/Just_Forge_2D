@@ -6,7 +6,6 @@ import Just_Forge_2D.EditorSystem.Themes.CleanTheme;
 import Just_Forge_2D.EditorSystem.Themes.Theme;
 import Just_Forge_2D.EditorSystem.Windows.ObjectSelector;
 import Just_Forge_2D.EntityComponentSystem.Components.ComponentList;
-import Just_Forge_2D.RenderingSystem.Framebuffer;
 import Just_Forge_2D.RenderingSystem.Shader;
 import Just_Forge_2D.SceneSystem.EmptySceneScript;
 import Just_Forge_2D.SceneSystem.SceneScript;
@@ -19,7 +18,6 @@ import Just_Forge_2D.WindowSystem.WindowSystemManager;
 
 public class EditorSystemManager
 {
-    private static Framebuffer framebuffer;
     private static Theme currentTheme;
     public static Shader defaultShader;
     public static Shader selectorShader;
@@ -73,20 +71,9 @@ public class EditorSystemManager
         isSelector
     }
 
-
-    public static Framebuffer getFramebuffer()
-    {
-        return framebuffer;
-    }
-
-    public static void setFramebuffer()
-    {
-        framebuffer = new Framebuffer(WindowSystemManager.getMonitorSize().x, WindowSystemManager.getMonitorSize().y);
-    }
-
     public static void setSelector()
     {
-        ObjectSelector.init(WindowSystemManager.getMonitorSize().x, WindowSystemManager.getMonitorSize().y);
+        ObjectSelector.init(GameWindow.getFrameBuffer().getSize().x, GameWindow.getFrameBuffer().getSize().y);
     }
 
     public static void compileShaders()
