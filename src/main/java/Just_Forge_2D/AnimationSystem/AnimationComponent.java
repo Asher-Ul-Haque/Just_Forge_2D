@@ -5,6 +5,7 @@ import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.Utils.Logger;
 import imgui.ImGui;
 import imgui.type.ImString;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -135,7 +136,7 @@ public class AnimationComponent extends Component
                 currentState = getStateByName(defaultStateTitle);
             }
 
-            SpriteComponent sprite = gameObject.getCompoent(SpriteComponent.class);
+            SpriteComponent sprite = gameObject.getComponent(SpriteComponent.class);
             if (sprite != null)
             {
                 sprite.setSprite(currentState.getCurrentSprite());

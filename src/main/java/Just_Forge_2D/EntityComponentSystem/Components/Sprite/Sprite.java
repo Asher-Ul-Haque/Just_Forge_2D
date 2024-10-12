@@ -21,28 +21,6 @@ public class Sprite
     // - - - | Functions | - - -
 
 
-    // - - - - Constructors
-
-    // - - - Not useless constructors for once, store textures, invent texture coordinate
-    /*public justForgeSprite(justForgeTexture TEXTURE)
-    {
-        this.texture = TEXTURE;
-        this.textureCoordinates = new Vector2f[]{
-                new Vector2f(1, 1),
-                new Vector2f(1, 0),
-                new Vector2f(0, 0),
-                new Vector2f(0, 1),
-                };
-    }
-
-    // - - - Store both texture and its coordinates
-    public justForgeSprite(justForgeTexture TEXTURE, Vector2f[] TEXTURE_COORDINATES)
-    {
-        this.texture = TEXTURE;
-        this.textureCoordinates = TEXTURE_COORDINATES;
-    }*/
-
-
     // - - - Getters - - -
 
     // - - - for texture

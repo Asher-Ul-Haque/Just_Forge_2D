@@ -1,7 +1,7 @@
 package Just_Forge_2D.AnimationSystem;
 
+import Just_Forge_2D.AssetPool.AssetPool;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.Sprite;
-import Just_Forge_2D.Utils.AssetPool;
 import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.Logger;
 

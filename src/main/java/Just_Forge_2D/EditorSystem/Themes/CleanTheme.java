@@ -1,61 +1,70 @@
 package Just_Forge_2D.EditorSystem.Themes;
 
-import imgui.ImVec2;
+import Just_Forge_2D.Utils.DefaultValues;
 import imgui.ImVec4;
 
 public class CleanTheme extends Theme
 {
-    public CleanTheme()
+    public CleanTheme(boolean DARK)
     {
-        this.primaryColor = new ImVec4(0.188235f, 0.188235f, 0.188235f, 1.0f);
-        this.secondaryColor = new ImVec4(0.9411f, 0.9411f, 0.9411f, 1.0f);
-        this.tertiaryColor = new ImVec4(0.0f, 0.0f, 0.0f, 1.0f);
-        this.quaternaryColor = new ImVec4(0.862f, 0.862f, 0.862f, 1.0f);
+        this.secondaryColor = DefaultValues.DEFAULT_CLEAN_THEME_SECONDARY_COLOR;
+        this.primaryColor = DefaultValues.DEFAULT_CLEAN_THEME_PRIMARY_COLOR;
+        this.tertiaryColor = DefaultValues.DEFAULT_CLEAN_THEME_TERTIARY_COLOR;
+        this.quaternaryColor = DefaultValues.DEFAULT_CLEAN_THEME_QUATERNARY_COLOR;
+        if (DARK)
+        {
+            ImVec4 temp = new ImVec4(this.secondaryColor);
+            this.secondaryColor = this.primaryColor;
+            this.primaryColor = temp;
+            temp = new ImVec4(tertiaryColor);
+            this.tertiaryColor = this.quaternaryColor;
+            this.quaternaryColor = temp;
+        }
 
-        this.windowBgColor = secondaryColor;
-        this.windowChildBgColor = secondaryColor;
+        this.windowBgColor = primaryColor;
+        this.windowChildBgColor = primaryColor;
         this.popupBgColor = secondaryColor;
+        this.popupRounding = DefaultValues.DEFAULT_POPUP_ROUNDING;
 
-        this.windowBorderSize = 4.0f;
-        this.windowBorderColor = primaryColor;
-        this.windowBorderShadowColor = quaternaryColor;
+        this.windowBorderSize = DefaultValues.DEFAULT_WINDOW_BORDER_SIZE;
+        this.windowBorderColor = secondaryColor;
+        this.windowBorderShadowColor = secondaryColor;
 
-        this.windowTitleBgColor = tertiaryColor;
-        this.windowTitleBgActiveColor = tertiaryColor;
+        this.windowTitleBgColor = secondaryColor;
+        this.windowTitleBgActiveColor = secondaryColor;
         this.windowTitleBgCollapsedColor = tertiaryColor;
-        this.windowRounding = 0.0f;
+        this.windowRounding = DefaultValues.DEFAULT_WINDOW_ROUNDING;
 
-        this.windowPadding = new ImVec2(0.0f, 0.0f);
+        this.windowPadding = DefaultValues.DEFAULT_WINDOW_PADDING;
 
-        this.buttonBgColor = primaryColor;
+        this.buttonBgColor = secondaryColor;
         this.buttonBgHoverColor = tertiaryColor;
-        this.buttonBgActiveColor = primaryColor;
+        this.buttonBgActiveColor = secondaryColor;
 
-        this.framePadding = new ImVec2(4.0f, 4.0f);
-        this.frameRounding = 0.0f;
+        this.framePadding = DefaultValues.DEFAULT_FRAME_PADDING;
+        this.frameRounding = DefaultValues.DEFAULT_FRAME_ROUNDING;
 
         this.dockingBorderColor = tertiaryColor;
-        this.dockingBgColor = primaryColor;
-        this.dockGripperColor = secondaryColor;
+        this.dockingBgColor = secondaryColor;
+        this.dockGripperColor = quaternaryColor;
 
-        this.treeNodeBgColor = primaryColor;
-        this.treeNodeTextColor = secondaryColor;
-        this.treeNodeIndent = 16f;
+        this.treeNodeBgColor = secondaryColor;
+        this.treeNodeTextColor = primaryColor;
+        this.treeNodeIndent = DefaultValues.DEFAULT_TREE_NODE_INDENT;
 
-        this.tabBgColor = primaryColor;
+        this.tabBgColor = secondaryColor;
         this.tabHoveredColor = tertiaryColor;
-        this.tabActiveColor = tertiaryColor;
-        this.tabUnfocusedColor = primaryColor;
-        this.tabUnfocusedActiveColor = tertiaryColor;
-        this.tabRounding = 0f;
-        this.tabBorder = 4f;
+        this.tabActiveColor = secondaryColor;
+        this.tabUnfocusedColor = secondaryColor;
+        this.tabUnfocusedActiveColor = secondaryColor;
+        this.tabRounding = DefaultValues.DEFAULT_TAB_ROUNDING;
+        this.tabBorder = DefaultValues.DEFAULT_TAB_BORDER;
 
-        this.checkMarkColor = this.secondaryColor;
-        this.frameBgColor = this.tertiaryColor;
+        this.checkMarkColor = this.primaryColor;
+        this.frameBgColor = this.secondaryColor;
         this.frameActiveColor = this.tertiaryColor;
-        this.frameHoverColor = this.tertiaryColor;
+        this.frameHoverColor = this.secondaryColor;
 
-        this.menuBarBg = this.tertiaryColor;
-        this.popupBg = this.primaryColor;
+        this.menuBarBg = this.secondaryColor;
     }
 }

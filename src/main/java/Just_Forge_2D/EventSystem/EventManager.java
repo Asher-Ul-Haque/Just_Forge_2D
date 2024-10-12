@@ -2,6 +2,7 @@ package Just_Forge_2D.EventSystem;
 
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.EventSystem.Events.Event;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,9 +22,9 @@ public class EventManager
     // - - - trigger an event
     public static void notify(GameObject OBJECT, Event EVENT)
     {
-        for (Observer obs : observers)
+        for (int i = 0; i < observers.size(); ++i)
         {
-            obs.onNotify(OBJECT, EVENT);
+            observers.get(i).onNotify(OBJECT, EVENT);
         }
     }
 }

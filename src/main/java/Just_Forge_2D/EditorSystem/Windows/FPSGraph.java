@@ -1,18 +1,16 @@
 package Just_Forge_2D.EditorSystem.Windows;
 
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
-import Just_Forge_2D.EditorSystem.MainWindow;
 import Just_Forge_2D.EditorSystem.Themes.Theme;
+import Just_Forge_2D.WindowSystem.GameWindow;
 import imgui.ImGui;
-import imgui.ImVec4;
 import imgui.extension.implot.ImPlot;
 import imgui.extension.implot.ImPlotContext;
-import imgui.extension.implot.flag.ImPlotCol;
 import imgui.type.ImBoolean;
 
 public class FPSGraph
 {
-    private static final int MAX_SAMPLES = 1024;
+    private static final int MAX_SAMPLES = 128;
     private static final float[] fpsSamples = new float[MAX_SAMPLES];
     private static final Float[] fpsSamplesWrapper = new Float[MAX_SAMPLES];
     private static final Float[] xValuesWrapper = new Float[MAX_SAMPLES];
@@ -26,16 +24,26 @@ public class FPSGraph
         if (imPlotContext == null)
         {
             imPlotContext = ImPlot.createContext();
-            vsync.set(MainWindow.get().isVsync());
+            vsync.set(GameWindow.get().isVsync());
         }
     }
 
     public static void render()
     {
-        if (MainWindow.get() != null)
+        if (GameWindow.get() != null)
         {
             initializeImPlot();
-            fpsSamples[currentSampleIndex] = MainWindow.get().getFPS();
+            float currentFPS = GameWindow.get().getFPS();
+            float maxFPS = currentFPS;
+
+            for (int i = 1; i < MAX_SAMPLES; i++)
+            {
+                fpsSamples[i - 1] = fpsSamples[i];
+                maxFPS = Math.max(fpsSamples[i], maxFPS);
+            }
+
+            // - - - Insert the latest FPS value at the rightmost position
+            fpsSamples[MAX_SAMPLES - 1] = currentFPS;
 
             for (int i = 0; i < MAX_SAMPLES; i++)
             {
@@ -43,29 +51,31 @@ public class FPSGraph
                 xValuesWrapper[i] = fpsSamples[i];
             }
 
-            currentSampleIndex = (currentSampleIndex + 1) % MAX_SAMPLES;
-
             ImGui.begin("FPS");
-            ImGui.setCursorPos(ImGui.getCursorPosX() + EditorSystemManager.getCurrentTheme().framePadding.x , ImGui.getCursorPosY() + EditorSystemManager.getCurrentTheme().framePadding.y);
+            ImGui.setCursorPos(ImGui.getCursorPosX() + EditorSystemManager.getCurrentTheme().framePadding.x,
+                    ImGui.getCursorPosY() + EditorSystemManager.getCurrentTheme().framePadding.y);
             Theme.setDefaultTextColor(EditorSystemManager.getCurrentTheme().tertiaryColor);
             ImGui.checkbox("Vsync", vsync);
+            ImGui.sameLine();
+            ImGui.text("Current FPS: " + currentFPS);
             Theme.resetDefaultTextColor();
-            if (vsync.get() != MainWindow.get().isVsync())
+
+            if (vsync.get() != GameWindow.get().isVsync())
             {
-                MainWindow.get().setVsync(vsync.get());
+                GameWindow.get().setVsync(vsync.get());
             }
 
-
-            ImPlot.setNextPlotLimitsY(0, vsync.get() ? 120.0f : 600.0f, 1);
+            ImPlot.setNextPlotLimitsY(currentFPS > 1000 ? 200 : 0, maxFPS * 1.5, 1);
             ImPlot.setNextPlotFormatX("");
+
             if (ImPlot.beginPlot("FPS Plot"))
             {
                 ImPlot.plotLine("", fpsSamplesWrapper, xValuesWrapper);
-
                 ImPlot.endPlot();
             }
 
             ImGui.end();
         }
     }
+
 }

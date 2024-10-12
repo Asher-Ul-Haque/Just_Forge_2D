@@ -1,24 +1,24 @@
 package Just_Forge_2D.EditorSystem;
 
+import Just_Forge_2D.EditorSystem.InputControls.KeyboardControls;
 import Just_Forge_2D.EditorSystem.Themes.ConfigFlags;
 import Just_Forge_2D.EditorSystem.Windows.*;
-import Just_Forge_2D.EditorSystem.InputControls.KeyboardControls;
-import Just_Forge_2D.EditorSystem.InputControls.MouseControlComponent;
-import Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.GridlinesComponent;
+import Just_Forge_2D.InputSystem.Keyboard;
+import Just_Forge_2D.InputSystem.Mouse;
 import Just_Forge_2D.PrefabSystem.PrefabManager;
 import Just_Forge_2D.SceneSystem.Scene;
 import Just_Forge_2D.Utils.Logger;
-import Just_Forge_2D.InputSystem.*;
-import imgui.ImFontAtlas;
-import imgui.ImFontConfig;
-import imgui.ImGui;
-import imgui.ImGuiIO;
+import Just_Forge_2D.WindowSystem.GameWindow;
+import imgui.*;
 import imgui.callback.ImStrConsumer;
 import imgui.callback.ImStrSupplier;
 import imgui.flag.*;
 import imgui.gl3.ImGuiImplGl3;
 import imgui.type.ImBoolean;
 import org.lwjgl.glfw.GLFW;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 // - - - Class to manage imGUI
@@ -29,10 +29,32 @@ public class ImGUIManager
     private static final ImGuiImplGl3 imGuiGl3 = new ImGuiImplGl3();
     private static long windowPtr;
     public static ImGuiIO io;
+    public static ImFont interExtraBold;
+    public static ImFont interRegular;
+    private static List<Runnable> renderWindows = new ArrayList<>();
+    private static List<Boolean> toRender = new ArrayList<>();
+    private static List<String> renderWindowNames = new ArrayList<>();
     static float timer = 0f;
 
 
     // - - - Functions - - -
+
+    public static void addRenderWindow(Runnable RENDER_FUNCTION, String LABEL)
+    {
+        renderWindows.add(RENDER_FUNCTION);
+        renderWindowNames.add(LABEL);
+        toRender.add(true);
+    }
+
+    public static List<Boolean> getRenderable()
+    {
+        return toRender;
+    }
+
+    public static List<String> getRenderableNames()
+    {
+        return renderWindowNames;
+    }
 
 
     private static void setInputMapping()
@@ -188,21 +210,20 @@ public class ImGUIManager
     {
         // - - - spritesheet but for fonts
         final ImFontAtlas fontAtlas = io.getFonts();
-        final ImFontConfig fontConfig = new ImFontConfig(); // Natively allocated object, should be explicitly destroyed
+        final ImFontConfig fontConfig = new ImFontConfig();
 
-        // Glyphs could be added per-font as well as per config used globally like here
         fontConfig.setGlyphRanges(fontAtlas.getGlyphRangesDefault());
 
-        final String fontPath = "Assets/Fonts/JetBrainsMono-Bold.ttf";
-        final int fontSize = 16;
+        final String interPath = "Assets/Fonts/JetBrainsMono-Bold.ttf";
+        final int interFontSize = 16;
+        interRegular = fontAtlas.addFontFromFileTTF(interPath, interFontSize);
 
-// Fonts merge example
-        fontConfig.setPixelSnapH(true);
-        fontAtlas.addFontFromFileTTF(fontPath, fontSize, fontConfig);
+        final String interExtraBoldPath = "Assets/Fonts/Inter-Black.otf";
+        final int interExtraBoldFontSize = 16;
+        interExtraBold = fontAtlas.addFontFromFileTTF(interExtraBoldPath, interExtraBoldFontSize);
 
-        fontConfig.destroy(); // After all fonts were added we don't need this config more
+        fontConfig.destroy();
         fontAtlas.build();
-
     }
 
     // - - - start function because constructors are pointless
@@ -227,11 +248,22 @@ public class ImGUIManager
         setKeyboardCallbacks();
         setMouseCallbacks();
         setClipboardCallbacks();
-        setFontAtlas();
+        if (!EditorSystemManager.isRelease) setFontAtlas();
 
         EditorSystemManager.getCurrentTheme().applyTheme();
         imGuiGl3.init("#version 450 core");
         Logger.FORGE_LOG_INFO("Editor GUI ready");
+
+        addRenderWindow(KeyboardControls::editorUpdate, "Keyboard Controls");
+        addRenderWindow(SceneHierarchyWindow::editorGUI, "Scene Hierarchy Window");
+        addRenderWindow(GameViewport::render, "Game Viewport");
+        addRenderWindow(ComponentsWindow::render, "Components Window");
+        addRenderWindow(CameraControlWindow::render, "Camera Controls");
+        addRenderWindow(FPSGraph::render, "FPS Graphs");
+        addRenderWindow(GridControls::render, "Grid Controls");
+        addRenderWindow(AssetPoolDisplay::render, "Asset Pool Display");
+        addRenderWindow(Logs::render, "Logs");
+        addRenderWindow(PrefabManager::render, "Prefabs");
     }
 
 
@@ -244,24 +276,21 @@ public class ImGUIManager
         {
             case isEditor:
                 if (ConfigFlags.dockingEnable) setupDockSpace();
-                KeyboardControls.editorUpdate();
                 SCENE.editorGUI();
-                GameViewport.render();
-                PropertiesWindow.render();
                 MenuBar.render();
-                CameraControlWindow.render();
-                FPSGraph.render();
-                GridControls.render();
-                AssetPoolDisplay.render();
-                SceneHierarchyWindow.editorGUI();
-                PrefabManager.render();
-                ImGui.end();
 
+                for (int i = 0; i < toRender.size(); ++i)
+                {
+                    if (toRender.get(i))
+                    {
+                        renderWindows.get(i).run();
+                    }
+                }
+                ImGui.end();
                 break;
 
             case isSplashScreen:
-                SplashScreen.intiailize();
-                SplashScreen.render();
+                SplashScreen.render(DELTA_TIME);
                 break;
         }
 
@@ -272,8 +301,8 @@ public class ImGUIManager
     private static void startFrame(final float DELTA_TIME)
     {
         // - - - Get window properties and mouse position
-        float[] winWidth = {MainWindow.get().getWidth()};
-        float[] winHeight = {MainWindow.get().getHeight()};
+        float[] winWidth = {GameWindow.get().getWidth()};
+        float[] winHeight = {GameWindow.get().getHeight()};
         double[] mousePosX = {0};
         double[] mousePosY = {0};
         GLFW.glfwGetCursorPos(windowPtr, mousePosX, mousePosY);

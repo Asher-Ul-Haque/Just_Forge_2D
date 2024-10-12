@@ -1,6 +1,8 @@
 package Just_Forge_2D.PhysicsSystem;
 
+import Just_Forge_2D.PhysicsSystem.PhysicsManagers.CollisionManager;
 import Just_Forge_2D.Utils.DefaultValues;
+import Just_Forge_2D.Utils.Logger;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
 import org.joml.Vector2f;
@@ -13,21 +15,31 @@ public class PhysicsWorld
     private int velocityIterations = DefaultValues.VELOCITY_ITERATIONS;
     private int positionIterations = DefaultValues.POSITION_ITERATIONS;
 
+
+    // - - - | Functions | - - -
+
+
+    // - - - Constructors - - -
+
     public PhysicsWorld(Vector2f GRAVITY, float DELTA_TIME, int VELOCITY_ITERATIONS, int POSITION_ITERATIONS)
     {
         this.world = new World(new Vec2(GRAVITY.x, GRAVITY.y));
-        this.world.setContactListener(new CollisionDetector());
+        this.world.setContactListener(new CollisionManager());
         this.physicsDeltaTime = DELTA_TIME;
         this.velocityIterations = VELOCITY_ITERATIONS;
         this.positionIterations = POSITION_ITERATIONS;
+        Logger.FORGE_LOG_INFO("Created new Physics World");
     }
 
     public PhysicsWorld()
     {
         this.world = new World(DefaultValues.GRAVITY);
-        this.world.setContactListener(new CollisionDetector());
+        this.world.setContactListener(new CollisionManager());
+        Logger.FORGE_LOG_INFO("Created new Physics World");
     }
 
+
+    // - - - Other
     protected void step(float DELTA_TIME)
     {
         this.physicsTime += DELTA_TIME;
@@ -38,7 +50,7 @@ public class PhysicsWorld
         }
     }
 
-    protected World getWorld()
+    public World getWorld()
     {
         return this.world;
     }

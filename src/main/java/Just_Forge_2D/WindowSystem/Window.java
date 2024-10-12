@@ -1,10 +1,10 @@
 package Just_Forge_2D.WindowSystem;
 
-import Just_Forge_2D.EditorSystem.GameSystem.GameManager;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.EventSystem.EventManager;
 import Just_Forge_2D.EventSystem.Events.Event;
 import Just_Forge_2D.EventSystem.Observer;
+import Just_Forge_2D.GameSystem.GameCodeLoader;
 import Just_Forge_2D.InputSystem.Keyboard;
 import Just_Forge_2D.InputSystem.Mouse;
 import Just_Forge_2D.SceneSystem.Scene;
@@ -16,16 +16,22 @@ import org.lwjgl.BufferUtils;
 import org.lwjgl.glfw.GLFWImage;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.stb.STBImage;
+
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
-
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.glClear;
-import static org.lwjgl.opengl.GL11C.*;
+import static org.lwjgl.opengl.GL11C.GL_BLEND;
+import static org.lwjgl.opengl.GL11C.GL_ONE;
+import static org.lwjgl.opengl.GL11C.GL_ONE_MINUS_SRC_ALPHA;
+import static org.lwjgl.opengl.GL11C.glBlendFunc;
+import static org.lwjgl.opengl.GL11C.glClearColor;
+import static org.lwjgl.opengl.GL11C.glEnable;
+import static org.lwjgl.opengl.GL11C.glViewport;
 
 public class Window implements Observer
 {
@@ -132,8 +138,11 @@ public class Window implements Observer
     public void maximize()
     {
         Logger.FORGE_LOG_DEBUG("Maximizing " + this.config.title);
-        glfwMaximizeWindow(this.glfwWindowPtr);
-        this.restore();
+        setSize(WindowSystemManager.getMonitorSize().x, WindowSystemManager.getMonitorSize().y);
+        boolean isWindows = System.getProperty("os.name").toLowerCase().contains("win");
+        if (isWindows) setPosition(0, WindowSystemManager.getDecorationSize(this)[1]);
+        else setPosition(0, 0);
+        glfwMaximizeWindow(getGlfwWindowPtr());
     }
 
     public void minimize()
@@ -167,7 +176,7 @@ public class Window implements Observer
     public void close()
     {
         Logger.FORGE_LOG_INFO("Closing " + this.config.title);
-        GameManager.terminate();
+        GameCodeLoader.terminate();
         glfwSetWindowShouldClose(this.glfwWindowPtr, true);
         this.shouldClose = true;
     }
@@ -276,7 +285,7 @@ public class Window implements Observer
 
     public float getAspectRatio()
     {
-        return this.config.aspectRatio;
+        return (float) this.getWidth() / this.getHeight();
     }
 
     // - - - Handle Icon and Title - - -
@@ -375,6 +384,11 @@ public class Window implements Observer
     }
 
     // - - - clear color
+    public Vector4f getClearColor()
+    {
+        return this.config.getClearColor();
+    }
+
     public void setClearColor(Vector4f COLOR)
     {
         Logger.FORGE_LOG_DEBUG("Setting clear color of " + this.config.title + " to : " + COLOR.x + " : " + COLOR.y + " : " + COLOR.z + " : " + COLOR.w);

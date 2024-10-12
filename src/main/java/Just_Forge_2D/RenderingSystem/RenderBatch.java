@@ -2,8 +2,8 @@ package Just_Forge_2D.RenderingSystem;
 
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
-import Just_Forge_2D.EditorSystem.MainWindow;
 import Just_Forge_2D.Utils.Logger;
+import Just_Forge_2D.WindowSystem.GameWindow;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
@@ -37,9 +37,10 @@ public class RenderBatch implements Comparable<RenderBatch>
     private final int TEXTURE_ID_SIZE = 1;
     private final int ENTITY_ID_SIZE = 1;
     private final int POSITION_SIZE = 2;
-    private final int VERTEX_SIZE = 10;
+    private final int VERTEX_SIZE = 11;
     private final int COLOR_SIZE = 4;
     private final int VERTEX_SIZE_BYTES = VERTEX_SIZE * Float.BYTES;
+    private final int ENTITY_SHOW_SIZE = 1;
 
     // - - - offset
     private final int POSITION_OFFSET = 0;
@@ -47,6 +48,8 @@ public class RenderBatch implements Comparable<RenderBatch>
     private final int TEXTURE_COORDS_OFFSET = COLOR_OFFSET + COLOR_SIZE * Float.BYTES;
     private final int TEXTURE_ID_OFFSET = TEXTURE_COORDS_OFFSET + TEXTURE_COORDS_SIZE * Float.BYTES;
     private final int ENTITY_ID_OFFSET = TEXTURE_ID_OFFSET + TEXTURE_ID_SIZE * Float.BYTES;
+    private final int ENTITY_SHOW_OFFSET = ENTITY_ID_OFFSET + ENTITY_ID_SIZE * Float.BYTES;
+
 
     // - - - batch related
     private final SpriteComponent[] sprites;
@@ -118,6 +121,9 @@ public class RenderBatch implements Comparable<RenderBatch>
 
         glVertexAttribPointer(4, ENTITY_ID_SIZE, GL_FLOAT, false, VERTEX_SIZE_BYTES, ENTITY_ID_OFFSET);
         glEnableVertexAttribArray(4);
+
+        glVertexAttribPointer(5, ENTITY_SHOW_SIZE, GL_FLOAT, false, VERTEX_SIZE_BYTES, ENTITY_SHOW_OFFSET);
+        glEnableVertexAttribArray(5);
         Logger.FORGE_LOG_DEBUG("RenderBatch for layer: " + this.layer + " started");
     }
 
@@ -158,8 +164,8 @@ public class RenderBatch implements Comparable<RenderBatch>
         // - - - Use the shader
         Shader shader = Renderer.getCurrentShader();
         shader.use();
-        shader.uploadMatrix4f("uProjection", MainWindow.getCurrentScene().getCamera().getProjectionMatrix());
-        shader.uploadMatrix4f("uView", MainWindow.getCurrentScene().getCamera().getViewMatrix());
+        shader.uploadMatrix4f("uProjection", GameWindow.getCurrentScene().getCamera().getProjectionMatrix());
+        shader.uploadMatrix4f("uView", GameWindow.getCurrentScene().getCamera().getViewMatrix());
         for (int i = 0; i < textures.size(); ++i)
         {
             glActiveTexture(GL_TEXTURE0 + i + 1);
@@ -298,7 +304,10 @@ public class RenderBatch implements Comparable<RenderBatch>
             // - - - Load Entity ID
             vertices[offset + 9] = sprite.gameObject.getUniqueID() + 1;
 
-            // - - - Update the offset
+            // Load visibility flag
+            vertices[offset + 10] = sprite.getShowAtRuntime() ? 1f : 0f;
+
+            // Update the offset
             offset += VERTEX_SIZE;
         }
     }
@@ -345,7 +354,7 @@ public class RenderBatch implements Comparable<RenderBatch>
 
     public boolean hasTexture(Texture TEXTURE)
     {
-        return this.textures.contains(TEXTURE);
+        return this.textures.contains(TEXTURE) || TEXTURE == null;
     }
 
     // - - - layer
@@ -365,7 +374,7 @@ public class RenderBatch implements Comparable<RenderBatch>
     public boolean destroyIfExists(GameObject GO)
     {
         Logger.FORGE_LOG_DEBUG("Removing game object: " + GO + " from render batch with layer " + this.layer);
-        SpriteComponent sprite = GO.getCompoent(SpriteComponent.class);
+        SpriteComponent sprite = GO.getComponent(SpriteComponent.class);
         for (int i = 0; i < spriteCount; ++i)
         {
             if (sprites[i] == sprite)

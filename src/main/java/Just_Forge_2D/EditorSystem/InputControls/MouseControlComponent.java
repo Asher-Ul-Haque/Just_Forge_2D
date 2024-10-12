@@ -1,28 +1,33 @@
 package Just_Forge_2D.EditorSystem.InputControls;
 
 import Just_Forge_2D.AnimationSystem.AnimationComponent;
-import Just_Forge_2D.EditorSystem.Windows.PropertiesWindow;
+import Just_Forge_2D.EditorSystem.EditorComponents.GridlinesComponent;
+import Just_Forge_2D.EditorSystem.EditorComponents.NonPickableComponent;
+import Just_Forge_2D.EditorSystem.Windows.ComponentsWindow;
+import Just_Forge_2D.EditorSystem.Windows.GridControls;
+import Just_Forge_2D.EditorSystem.Windows.ObjectSelector;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
-import Just_Forge_2D.EntityComponentSystem.Components.EditorComponents.NonPickableComponent;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
-import Just_Forge_2D.InputSystem.Keyboard;
-import Just_Forge_2D.InputSystem.Keys;
+import Just_Forge_2D.EventSystem.Events.Event;
+import Just_Forge_2D.EventSystem.Observer;
 import Just_Forge_2D.InputSystem.Mouse;
-import Just_Forge_2D.EditorSystem.MainWindow;
-import Just_Forge_2D.SceneSystem.Scene;
-import Just_Forge_2D.EditorSystem.Windows.ObjectSelector;
 import Just_Forge_2D.RenderingSystem.DebugPencil;
-import Just_Forge_2D.Utils.DefaultValues;
+import Just_Forge_2D.SceneSystem.Scene;
 import Just_Forge_2D.Utils.Logger;
-import org.joml.*;
+import Just_Forge_2D.WindowSystem.GameWindow;
+import Just_Forge_2D.WindowSystem.WindowSystemManager;
+import org.joml.Vector2f;
+import org.joml.Vector2i;
+import org.joml.Vector3f;
+import org.joml.Vector4f;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_LEFT;
 
-public class MouseControlComponent extends Component
+public class MouseControlComponent extends Component implements Observer
 {
     // - - - private variable for the thing being held
     static GameObject holdingObject = null;
@@ -34,6 +39,7 @@ public class MouseControlComponent extends Component
     private static Vector2f boxSelectStart = new Vector2f();
     private static Vector2f boxSelectEnd = new Vector2f();
     private static Vector2f boxSelectWorldStart = new Vector2f();
+    private static Vector4f originalColor = new Vector4f(1f);
 
 
     // - - - | Functions | - - -
@@ -48,9 +54,13 @@ public class MouseControlComponent extends Component
             holdingObject.destroy();
         }
         holdingObject = GO;
-        holdingObject.getCompoent(SpriteComponent.class).setColor(new Vector4f(0.8f, 0.8f, 0.8f, 0.5f));
+        if (holdingObject.hasComponent(SpriteComponent.class))
+        {
+            originalColor.set(holdingObject.getComponent(SpriteComponent.class).getColor());
+            holdingObject.getComponent(SpriteComponent.class).setColor(new Vector4f(0.8f, 0.8f, 0.0f, 0.5f));
+        }
         holdingObject.addComponent(new NonPickableComponent());
-        MainWindow.getCurrentScene().addGameObject(GO);
+        GameWindow.getCurrentScene().addGameObject(GO);
         Logger.FORGE_LOG_DEBUG("Picked up object: "+ holdingObject);
     }
 
@@ -58,13 +68,13 @@ public class MouseControlComponent extends Component
     {
         Logger.FORGE_LOG_DEBUG("Placed game object: " + holdingObject);
         GameObject newObj = holdingObject.copy();
-        if (newObj.getCompoent(AnimationComponent.class) != null)
+        if (newObj.getComponent(AnimationComponent.class) != null)
         {
-            newObj.getCompoent(AnimationComponent.class).refreshTextures();
+            newObj.getComponent(AnimationComponent.class).refreshTextures();
         }
-        newObj.getCompoent(SpriteComponent.class).setColor(new Vector4f(1, 1, 1, 1));
+        if (newObj.hasComponent(SpriteComponent.class)) newObj.getComponent(SpriteComponent.class).setColor(originalColor);
         newObj.removeComponent(NonPickableComponent.class);
-        MainWindow.getCurrentScene().addGameObject(newObj);
+        GameWindow.getCurrentScene().addGameObject(newObj);
     }
 
     // - - - run
@@ -72,50 +82,55 @@ public class MouseControlComponent extends Component
     public void editorUpdate(float DELTA_TIME)
     {
         debounce -= DELTA_TIME;
-        Scene currentScene = MainWindow.getCurrentScene();
+        Scene currentScene = GameWindow.getCurrentScene();
 
         if (holdingObject != null && debounce < 0.0f)
         {
-            holdingObject.transform.position.x = (int)(Mouse.getWorldX() / DefaultValues.GRID_WIDTH) * DefaultValues.GRID_WIDTH + DefaultValues.GRID_WIDTH / 2f;
-            holdingObject.transform.position.y = (int)(Mouse.getWorldY() / DefaultValues.GRID_HEIGHT) * DefaultValues.GRID_WIDTH + DefaultValues.GRID_HEIGHT / 2f;
+            if (GridControls.snapToGrid)
+            {
+                holdingObject.transform.position.x = (int) (Mouse.getWorldX() / GridlinesComponent.gridSize.x) * GridlinesComponent.gridSize.x + GridlinesComponent.gridSize.x / 2f;
+                holdingObject.transform.position.y = (int) (Mouse.getWorldY() / GridlinesComponent.gridSize.y) * GridlinesComponent.gridSize.x + GridlinesComponent.gridSize.y / 2f;
+            }
+            else
+            {
+                holdingObject.transform.position.x = Mouse.getWorldX();
+                holdingObject.transform.position.y = Mouse.getWorldY();
+            }
+
             if (Mouse.isMouseButtonDown(GLFW_MOUSE_BUTTON_LEFT) && debounce < 0.0f)
             {
                 place();
                 debounce = debounceTime;
             }
-            if (Keyboard.isKeyPressed(Keys.ESCAPE))
-            {
-                holdingObject.destroy();
-                holdingObject = (null);
-            }
         }
         else if (!Mouse.isDragging() && Mouse.isMouseButtonDown(GLFW_MOUSE_BUTTON_LEFT) && debounce < 0)
         {
-            int x = (int)Mouse.getScreenX(DefaultValues.DEFAULT_WINDOW_WIDTH);
-            int y = (int)Mouse.getScreenY(DefaultValues.DEFAULT_WINDOW_HEIGHT);
+            int x = (int)Mouse.getScreenX(WindowSystemManager.getMonitorSize().x);
+            int y = (int)Mouse.getScreenY(WindowSystemManager.getMonitorSize().y);
             int gameObjectID = ObjectSelector.readPixel(x, y);
             GameObject picked = currentScene.getGameObject(gameObjectID);
-            if (picked != null && picked.getCompoent(NonPickableComponent.class) == null)
+            if (picked != null && picked.getComponent(NonPickableComponent.class) == null)
             {
-                PropertiesWindow.setActiveGameObject(picked);
+                ComponentsWindow.clearSelection();
+                ComponentsWindow.setActiveGameObject(picked);
             }
             else if (picked == null && !Mouse.isDragging())
             {
-                PropertiesWindow.clearSelection();
+                ComponentsWindow.clearSelection();
             }
 
             debounce = debounceTime;
         }
-        else if (Mouse.isDragging() && Mouse.isMouseButtonDown(GLFW_MOUSE_BUTTON_LEFT) && holdingObject == null && PropertiesWindow.getActiveGameObjects().isEmpty())
+        else if (Mouse.isDragging() && Mouse.isMouseButtonDown(GLFW_MOUSE_BUTTON_LEFT) && holdingObject == null && ComponentsWindow.getActiveGameObjects().isEmpty())
         {
             if (!boxSelect)
             {
-                PropertiesWindow.clearSelection();
-                boxSelectStart = new Vector2f(Mouse.getScreenX(DefaultValues.DEFAULT_WINDOW_WIDTH), Mouse.getScreenY(DefaultValues.DEFAULT_WINDOW_HEIGHT));
+                ComponentsWindow.clearSelection();
+                boxSelectStart = new Vector2f(Mouse.getScreenX(WindowSystemManager.getMonitorSize().x), Mouse.getScreenY(WindowSystemManager.getMonitorSize().y));
                 boxSelectWorldStart = new Vector2f(Mouse.getWorldX(), Mouse.getWorldY());
                 boxSelect = true;
             }
-            boxSelectEnd = new Vector2f(Mouse.getScreenX(DefaultValues.DEFAULT_WINDOW_WIDTH), Mouse.getScreenY(DefaultValues.DEFAULT_WINDOW_HEIGHT));
+            boxSelectEnd = new Vector2f(Mouse.getScreenX(WindowSystemManager.getMonitorSize().x), Mouse.getScreenY(WindowSystemManager.getMonitorSize().y));
             Vector2f boxSelectWorldEnd = new Vector2f(Mouse.getWorldX(), Mouse.getWorldY());
             Vector2f halfSize = (new Vector2f(boxSelectWorldEnd).sub(boxSelectWorldStart)).mul(0.5f);
             DebugPencil.addBox(
@@ -154,17 +169,29 @@ public class MouseControlComponent extends Component
             Set<Integer> uniqueGameObjectIDs = new HashSet<>();
             for (float objID : gameObjectIDs)
             {
-                uniqueGameObjectIDs.add((int)objID);
+                if (objID != -1) uniqueGameObjectIDs.add((int)objID);
             }
 
             for (Integer gameObjectID : uniqueGameObjectIDs)
             {
-                GameObject picked = MainWindow.getCurrentScene().getGameObject(gameObjectID);
-                if (picked != null && picked.getCompoent(NonPickableComponent.class) == null)
+                GameObject picked = GameWindow.getCurrentScene().getGameObject(gameObjectID);
+                if (uniqueGameObjectIDs.size() == 1)
                 {
-                    PropertiesWindow.addActiveGameObject(picked);
+                    ComponentsWindow.setActiveGameObject(picked);
+                    return;
+                }
+                if (picked != null && picked.getComponent(NonPickableComponent.class) == null)
+                {
+                    ComponentsWindow.addActiveGameObject(picked);
                 }
             }
         }
+    }
+
+    @Override
+    public void onNotify(GameObject OBJECT, Event EVENT)
+    {
+        boxSelect = false;
+        holdingObject = null;
     }
 }

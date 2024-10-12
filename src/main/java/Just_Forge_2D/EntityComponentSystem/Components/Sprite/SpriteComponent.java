@@ -1,11 +1,13 @@
 package Just_Forge_2D.EntityComponentSystem.Components.Sprite;
 
-import Just_Forge_2D.EntityComponentSystem.Components.Component;
+import Just_Forge_2D.AssetPool.AssetPool;
+import Just_Forge_2D.EditorSystem.EditorSystemManager;
+import Just_Forge_2D.EditorSystem.Themes.Theme;
 import Just_Forge_2D.EditorSystem.Widgets;
-import Just_Forge_2D.RenderingSystem.Texture;
-import Just_Forge_2D.Utils.AssetPool;
-import Just_Forge_2D.Utils.Logger;
+import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.Components.TransformComponent;
+import Just_Forge_2D.RenderingSystem.Texture;
+import Just_Forge_2D.Utils.Logger;
 import imgui.ImGui;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
@@ -18,6 +20,8 @@ public class SpriteComponent extends Component
     private Sprite sprite = new Sprite();
     private transient TransformComponent lastTransform = new TransformComponent();
     private transient boolean isChanged = true;
+    private boolean showAtRuntime = true;
+    private Vector4f originalColor = null;
 
 
     // - - - | Functions | - - -
@@ -69,6 +73,16 @@ public class SpriteComponent extends Component
         this.isChanged = false;
     }
 
+    public boolean getShowAtRuntime()
+    {
+        return showAtRuntime;
+    }
+
+    public void setShowAtRuntime(boolean REALLY)
+    {
+        this.showAtRuntime = REALLY;
+        this.isChanged = true;
+    }
 
     // - - - Use Functions - - -
 
@@ -98,13 +112,9 @@ public class SpriteComponent extends Component
     @Override
     public void editorUpdate(float DELTA_TIME)
     {
-        if (this.gameObject.transform == null) Logger.FORGE_LOG_ERROR(gameObject);
-        if (!this.lastTransform.equals(this.gameObject.transform))
-        {
-            this.gameObject.transform.copy(this.lastTransform);
-            this.isChanged = true;
-        }
+        update(DELTA_TIME);
     }
+
 
 
     // - - - Editor Functionality - - -
@@ -114,12 +124,20 @@ public class SpriteComponent extends Component
     {
         if (ImGui.button("Destroy"))
         {
-            this.gameObject.removeComponent(this.getClass());
             this.isChanged = true;
+            this.gameObject.removeComponent(this.getClass());
         }
+        Theme.setDefaultTextColor(EditorSystemManager.getCurrentTheme().secondaryColor);
+        Theme.resetDefaultTextColor();
+        setShowAtRuntime(Widgets.drawBoolControl("Show", getShowAtRuntime()));
         if (Widgets.colorPicker4("Color Picker", this.color))
         {
             this.isChanged = true;
+        }
+        if (this.sprite.getTexture() != null)
+        {
+            Vector2f[] texCoords = this.sprite.getTextureCoordinates();
+            if (ImGui.imageButton(this.sprite.getTextureID(), this.sprite.getWidth() * 2, this.sprite.getHeight() * 2, texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y));
         }
     }
 

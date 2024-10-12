@@ -7,7 +7,6 @@ import org.lwjgl.openal.ALCCapabilities;
 import org.lwjgl.openal.ALCapabilities;
 
 import static org.lwjgl.openal.ALC10.*;
-import static org.lwjgl.openal.ALC10.alcMakeContextCurrent;
 
 public class AudioSystemManager
 {

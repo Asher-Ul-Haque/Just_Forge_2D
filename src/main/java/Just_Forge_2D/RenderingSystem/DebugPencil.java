@@ -1,10 +1,10 @@
 package Just_Forge_2D.RenderingSystem;
 
-import Just_Forge_2D.EditorSystem.MainWindow;
-import Just_Forge_2D.PhysicsSystem.Primitives.Line;
+import Just_Forge_2D.AssetPool.AssetPool;
 import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.ForgeMath;
-import Just_Forge_2D.Utils.AssetPool;
+import Just_Forge_2D.Utils.Logger;
+import Just_Forge_2D.WindowSystem.GameWindow;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 
@@ -37,7 +37,6 @@ public class DebugPencil
     private static final int defaultLifetime = DefaultValues.DEBUG_PENCIL_DEFAULT_LIFE;
     private static final Vector3f defaultColor = DefaultValues.DEBUG_PENCIL_DEFAULT_COLOR;
     private static final int defaultWidth = DefaultValues.DEBUG_PENCIL_DEFAULT_WIDTH;
-    private static final int defaultSegments = DefaultValues.DEBUG_PENCIL_DEFAULT_CIRCLE_PRECISION;
     private static final float defaultRotation = DefaultValues.DEBUG_PENCIL_DEFAULT_ROTATION;
 
 
@@ -124,8 +123,8 @@ public class DebugPencil
 
         // - - - draw
         shader.use();
-        shader.uploadMatrix4f("uProjection", MainWindow.getCurrentScene().getCamera().getProjectionMatrix());
-        shader.uploadMatrix4f("uView", MainWindow.getCurrentScene().getCamera().getViewMatrix());
+        shader.uploadMatrix4f("uProjection", GameWindow.getCurrentScene().getCamera().getProjectionMatrix());
+        shader.uploadMatrix4f("uView", GameWindow.getCurrentScene().getCamera().getViewMatrix());
 
         // - - - bind the vao
         glBindVertexArray(vaoID);
@@ -251,11 +250,12 @@ public class DebugPencil
     // - - - default
     public static void addCircle(Vector2f CENTER, float RADIUS, Vector3f COLOR, int LIFETIME)
     {
-        Vector2f[] points = new Vector2f[defaultSegments];
-        float increment = (float) (2 * Math.PI / defaultSegments);
+        int segments = Math.max(DefaultValues.DEBUG_PENCIL_MIN_CIRCLE_PRECISION, Math.min(DefaultValues.DEBUG_PENCIL_MAX_CIRCLE_PRECISION, (int) (RADIUS * 16)));
+        Vector2f[] points = new Vector2f[segments];
+        float increment = (float) (2 * Math.PI / segments);
         float currentAngle = 0;
 
-        for (int i = 0; i < defaultSegments; ++i)
+        for (int i = 0; i < segments; ++i)
         {
             Vector2f temp = new Vector2f(RADIUS, 0);
             ForgeMath.rotate(temp, currentAngle, new Vector2f());
@@ -352,5 +352,55 @@ public class DebugPencil
     public static void addPolygon(Vector2f CENTER, float HALF_DIAGONAL, int SIDE_COUNT)
     {
         addPolygon(CENTER, HALF_DIAGONAL, SIDE_COUNT, defaultRotation, defaultColor, defaultLifetime);
+    }
+
+
+    // - - - Non-Regular Polygons - - -
+
+    // - - - With Everything
+    public static void addPolygonFromVertices(List<Vector2f> VERTICES, float ROTATION, Vector3f COLOR, int LIFETIME)
+    {
+        if (VERTICES == null || VERTICES.size() < 3)
+        {
+            Logger.FORGE_LOG_ERROR("Invalid vertices list: A polygon requires at least 3 vertices.");
+            return;
+        }
+
+        Vector2f center = ForgeMath.calculateCentroid(VERTICES);
+        Vector2f previous = ForgeMath.rotateVertex(VERTICES.get(0), center, ROTATION);
+
+        for (int i = 1; i < VERTICES.size(); i++)
+        {
+            Vector2f current = ForgeMath.rotateVertex(VERTICES.get(i), center, ROTATION);
+            addLine(previous, current, COLOR, LIFETIME);
+            previous = current;
+        }
+
+        Vector2f first = ForgeMath.rotateVertex(VERTICES.get(0), center, ROTATION);
+        addLine(previous, first, COLOR, LIFETIME);
+    }
+
+    // - - - Without rotation
+    public static void addPolygonFromVertices(List<Vector2f> VERTICES, Vector3f COLOR, int LIFETIME)
+    {
+        addPolygonFromVertices(VERTICES, defaultRotation, COLOR, LIFETIME);
+    }
+
+    // - - - without lifetime
+    public static void addPolygonFromVertices(List<Vector2f> VERTICES, float ROTATION, Vector3f COLOR)
+    {
+        addPolygonFromVertices(VERTICES, ROTATION, COLOR, defaultLifetime);
+    }
+
+    // - - - Without color and lifetime
+    public static void addPolygonFromVertices(List<Vector2f> vertices, float rotation)
+    {
+        addPolygonFromVertices(vertices, rotation, defaultColor, defaultLifetime);
+    }
+
+    // - - - With default color and no rotation
+    public static void addPolygonFromVertices(List<Vector2f> vertices)
+    {
+        addPolygonFromVertices(vertices, defaultRotation, defaultColor, defaultLifetime);
     }
 }

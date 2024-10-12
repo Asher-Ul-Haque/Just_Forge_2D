@@ -1,6 +1,7 @@
 package Just_Forge_2D.RenderingSystem;
 
 import Just_Forge_2D.Utils.Logger;
+
 import static org.lwjgl.opengl.GL30.*;
 
 public class Framebuffer

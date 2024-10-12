@@ -2,12 +2,10 @@ package Just_Forge_2D.EntityComponentSystem.Components;
 
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.EditorSystem.Themes.Theme;
-import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
-import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.EditorSystem.Widgets;
+import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.Utils.Logger;
 import imgui.ImGui;
-import imgui.type.ImInt;
 import org.jbox2d.dynamics.contacts.Contact;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
@@ -24,11 +22,13 @@ public abstract class Component
     private static int ID_COUNTER = 0;
     private int uniqueID = -1;
 
-    // - - - Functions - - -
 
-    // - - - use
-    public void update(float DELTA_TIME) {}
-    public void editorUpdate(float DELTA_TIME){}
+    // - - - | Functions | - - -
+
+
+    // - - - use - - -
+
+    public void update(float DELTA_TIME){}
     public void start(){}
     public void destroy(){}
 
@@ -39,7 +39,7 @@ public abstract class Component
     {
         try
         {
-            if (ImGui.button("Destroy"))
+            if (ImGui.button("Destroy##" + this.getClass().hashCode()))
             {
                 this.gameObject.removeComponent(this.getClass());
             }
@@ -47,9 +47,10 @@ public abstract class Component
             for (Field field : fields)
             {
                 boolean isPrivate = Modifier.isPrivate(field.getModifiers());
+                boolean isProtected = Modifier.isProtected(field.getModifiers());
                 boolean isTransient = Modifier.isTransient(field.getModifiers());
                 if (isTransient) continue;
-                if (isPrivate)
+                if (isPrivate || isProtected)
                 {
                     field.setAccessible(true);
                 }
@@ -72,7 +73,7 @@ public abstract class Component
                 else if (type == boolean.class)
                 {
                     boolean val = (boolean)value;
-                    Theme.setDefaultTextColor(EditorSystemManager.getCurrentTheme().tertiaryColor);
+                    Theme.setDefaultTextColor(EditorSystemManager.getCurrentTheme().secondaryColor);
                     if (ImGui.checkbox(name + ": ", val))
                     {
                         val = !val;
@@ -97,11 +98,10 @@ public abstract class Component
                 }
                 else if (type.isEnum())
                 {
-                    String[] enumValues = getEnumValues((Class<Enum>) type);
-                    String enumType = ((Enum) value).name();
-                    ImInt index = new ImInt(indexOf(enumType, enumValues));
-                    if (ImGui.combo(field.getName(), index, enumValues, enumValues.length)) {
-                        field.set(this, type.getEnumConstants()[index.get()]);
+                    Enum t = Widgets.drawEnumControls((Class<Enum>) type, field.getName(), (Enum) value);
+                    if (t != null)
+                    {
+                        field.set(this, t);
                     }
                 }
                 else if (type == String.class)
@@ -123,30 +123,9 @@ public abstract class Component
         }
     }
 
-    public void editorUpdate(SpriteComponent SPRITE) {}
+    public void editorUpdate(float DELTA_TIME)  { debugDraw(); }
 
-    private <T extends Enum<T>> String[] getEnumValues(Class<T> enumType) {
-        String[] enumValues = new String[enumType.getEnumConstants().length];
-        int i = 0;
-        for (T enumIntegerValue : enumType.getEnumConstants()) {
-            enumValues[i] = enumIntegerValue.name();
-            i++;
-        }
-        return enumValues;
-    }
-
-    private int indexOf(String str, String[] arr)
-    {
-        for (int i=0; i < arr.length; i++)
-        {
-            if (str.equals(arr[i]))
-            {
-                return i;
-            }
-        }
-        return -1;
-    }
-
+    public void debugDraw()  {}
 
     // - - - Unique initialization - - -
 
@@ -169,25 +148,10 @@ public abstract class Component
     }
 
 
-    // - - - Physics
-    public void beginCollision(GameObject OBJ, Contact CONTACT, Vector2f NORMAL)
-    {
+    // - - - Physics - - -
 
-    }
-
-    public void endCollision(GameObject OBJ, Contact CONTACT, Vector2f NORMAL)
-    {
-
-    }
-
-
-    public void beforeCollision(GameObject OBJ, Contact CONTACT, Vector2f NORMAL)
-    {
-
-    }
-
-    public void afterCollision(GameObject OBJ, Contact CONTACT, Vector2f NORMAL)
-    {
-
-    }
+    public void beginCollision(GameObject OBJ, Contact CONTACT, Vector2f NORMAL) {}
+    public void endCollision(GameObject OBJ, Contact CONTACT, Vector2f NORMAL) {}
+    public void beforeCollision(GameObject OBJ, Contact CONTACT, Vector2f NORMAL) {}
+    public void afterCollision(GameObject OBJ, Contact CONTACT, Vector2f NORMAL) {}
 }
