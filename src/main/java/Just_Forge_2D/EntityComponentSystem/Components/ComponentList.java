@@ -5,6 +5,7 @@ import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.ParticleSystem.ParticleSystemComponent;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.*;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Joints.HingeComponent;
+import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Joints.PistonComponent;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Joints.SpringComponent;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.KeyboardControllerComponent;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent;
@@ -31,6 +32,7 @@ public class ComponentList
         types.add(ParticleSystemComponent.class);
         types.add(SpringComponent.class);
         types.add(HingeComponent.class);
+        types.add(PistonComponent.class);
     }
 
     public static final List<Class<? extends Component>> types = new ArrayList<>();

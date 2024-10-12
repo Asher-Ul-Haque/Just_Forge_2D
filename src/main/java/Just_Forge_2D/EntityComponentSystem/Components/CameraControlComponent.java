@@ -4,7 +4,7 @@ import Just_Forge_2D.RenderingSystem.DebugPencil;
 import Just_Forge_2D.SceneSystem.Camera;
 import Just_Forge_2D.Utils.ForgeMath;
 import Just_Forge_2D.Utils.Logger;
-import Just_Forge_2D.WindowSystem.MainWindow;
+import Just_Forge_2D.WindowSystem.GameWindow;
 import imgui.ImGui;
 import org.joml.Vector2f;
 
@@ -32,7 +32,7 @@ public class CameraControlComponent extends Component
     @Override
     public void start()
     {
-        camera = MainWindow.getCurrentScene().getCamera();
+        camera = GameWindow.getCurrentScene().getCamera();
         addPoint(this.gameObject.transform.position);
     }
 

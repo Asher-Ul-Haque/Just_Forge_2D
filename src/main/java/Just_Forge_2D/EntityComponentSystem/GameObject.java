@@ -14,6 +14,7 @@ import Just_Forge_2D.Utils.Logger;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import imgui.ImGui;
+import org.lwjgl.util.tinyfd.TinyFileDialogs;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -286,6 +287,7 @@ public class GameObject
 
     private void handleComponentException(Component COMPONENT,  Exception e)
     {
+        TinyFileDialogs.tinyfd_notifyPopup(e.getClass().getSimpleName(), "Component : " + COMPONENT + "\nGame Object : " + this.name, "error");
         Logger.FORGE_LOG_FATAL(COMPONENT + " caused Exception : " + e.getClass());
         Logger.FORGE_LOG_ERROR(e.getMessage());
         Logger.FORGE_LOG_ERROR("Reason: " + e.getCause());

@@ -2,7 +2,7 @@ package Just_Forge_2D.EditorSystem.Windows;
 
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.EditorSystem.Themes.Theme;
-import Just_Forge_2D.WindowSystem.MainWindow;
+import Just_Forge_2D.WindowSystem.GameWindow;
 import imgui.ImGui;
 import imgui.extension.implot.ImPlot;
 import imgui.extension.implot.ImPlotContext;
@@ -24,16 +24,16 @@ public class FPSGraph
         if (imPlotContext == null)
         {
             imPlotContext = ImPlot.createContext();
-            vsync.set(MainWindow.get().isVsync());
+            vsync.set(GameWindow.get().isVsync());
         }
     }
 
     public static void render()
     {
-        if (MainWindow.get() != null)
+        if (GameWindow.get() != null)
         {
             initializeImPlot();
-            float currentFPS = MainWindow.get().getFPS();
+            float currentFPS = GameWindow.get().getFPS();
             float maxFPS = currentFPS;
 
             for (int i = 1; i < MAX_SAMPLES; i++)
@@ -60,9 +60,9 @@ public class FPSGraph
             ImGui.text("Current FPS: " + currentFPS);
             Theme.resetDefaultTextColor();
 
-            if (vsync.get() != MainWindow.get().isVsync())
+            if (vsync.get() != GameWindow.get().isVsync())
             {
-                MainWindow.get().setVsync(vsync.get());
+                GameWindow.get().setVsync(vsync.get());
             }
 
             ImPlot.setNextPlotLimitsY(currentFPS > 1000 ? 200 : 0, maxFPS * 1.5, 1);

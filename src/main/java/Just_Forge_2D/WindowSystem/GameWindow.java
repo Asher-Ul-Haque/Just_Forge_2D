@@ -31,7 +31,7 @@ import static org.lwjgl.opengl.GL11.*;
 // - - - | Class | - - -
 
 
-public class MainWindow extends Window
+public class GameWindow extends Window
 {
     // - - - | Private Variables | - - -
 
@@ -41,7 +41,7 @@ public class MainWindow extends Window
     // - - - Systems
 
     // - - - Singleton
-    private static MainWindow window = null;
+    private static GameWindow window = null;
 
     // - - - Editor
 
@@ -50,7 +50,7 @@ public class MainWindow extends Window
 
 
     // - - - Private Constructor for Singleton
-    MainWindow(WindowConfig CONFIG)
+    GameWindow(WindowConfig CONFIG)
     {
         super(CONFIG);
         Logger.FORGE_LOG_INFO("Started Just Forge 2D");
@@ -79,14 +79,14 @@ public class MainWindow extends Window
     }
 
     // - - - Get the window
-    public static MainWindow get()
+    public static GameWindow get()
     {
-        if (MainWindow.window == null)
+        if (GameWindow.window == null)
         {
             Logger.FORGE_LOG_ERROR("No Window config specified");
-            MainWindow.window = new MainWindow(new MainWindowConfig());
+            GameWindow.window = new GameWindow(new MainWindowConfig());
         }
-        return MainWindow.window;
+        return GameWindow.window;
     }
 
     // - - - Run the game
@@ -239,7 +239,7 @@ public class MainWindow extends Window
                 SceneSystemManager.save(currentScene);
                 try
                 {
-                    MainWindow.changeScene(MainWindow.getCurrentScene().getScript().getClass().getDeclaredConstructor().newInstance());
+                    GameWindow.changeScene(GameWindow.getCurrentScene().getScript().getClass().getDeclaredConstructor().newInstance());
                 }
                 catch (Exception e)
                 {
@@ -253,7 +253,7 @@ public class MainWindow extends Window
                 EditorSystemManager.isRuntimePlaying = false;
                 try
                 {
-                    MainWindow.changeScene(MainWindow.getCurrentScene().getScript().getClass().getDeclaredConstructor().newInstance());
+                    GameWindow.changeScene(GameWindow.getCurrentScene().getScript().getClass().getDeclaredConstructor().newInstance());
                 }
                 catch (Exception e)
                 {
@@ -269,7 +269,7 @@ public class MainWindow extends Window
             case LoadLevel:
                 try
                 {
-                    MainWindow.changeScene(MainWindow.getCurrentScene().getScript().getClass().getDeclaredConstructor().newInstance());
+                    GameWindow.changeScene(GameWindow.getCurrentScene().getScript().getClass().getDeclaredConstructor().newInstance());
                 }
                 catch (Exception e)
                 {

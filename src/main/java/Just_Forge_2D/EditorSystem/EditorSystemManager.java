@@ -13,7 +13,7 @@ import Just_Forge_2D.SceneSystem.EmptySceneScript;
 import Just_Forge_2D.SceneSystem.SceneScript;
 import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.Logger;
-import Just_Forge_2D.WindowSystem.MainWindow;
+import Just_Forge_2D.WindowSystem.GameWindow;
 import Just_Forge_2D.WindowSystem.WindowConfig;
 import Just_Forge_2D.WindowSystem.WindowSystemManager;
 
@@ -43,12 +43,12 @@ public class EditorSystemManager
         EditorSystemManager.currentSceneInitializer = INITIALIZER;
         try
         {
-            MainWindow.changeScene(currentSceneInitializer.getDeclaredConstructor().newInstance());
+            GameWindow.changeScene(currentSceneInitializer.getDeclaredConstructor().newInstance());
         }
         catch (Exception e)
         {
             Logger.FORGE_LOG_FATAL("Couldn't change scene");
-            MainWindow.changeScene(new EmptySceneScript());
+            GameWindow.changeScene(new EmptySceneScript());
         }
     }
 
@@ -110,7 +110,7 @@ public class EditorSystemManager
 
     public static void setEditorLayer()
     {
-        ImGUIManager.initImGui(MainWindow.get().getGlfwWindowPtr());
+        ImGUIManager.initImGui(GameWindow.get().getGlfwWindowPtr());
     }
 
     public static Theme getCurrentTheme()
@@ -126,7 +126,7 @@ public class EditorSystemManager
     public static void run()
     {
         start();
-        MainWindow.get().run();
+        GameWindow.get().run();
         end();
     }
 
@@ -137,7 +137,7 @@ public class EditorSystemManager
         editorWindowConfig = new WindowConfig();
         editorWindowConfig.setHeight(800);
         if (currentTheme == null) currentTheme = new CleanTheme(DefaultValues.DARK_MODE_ENABLED);
-        MainWindow.get();
+        GameWindow.get();
         AssetPool.addSpriteSheet("Gizmos", new SpriteSheet(AssetPool.getTexture("Assets/Textures/gizmos.png"), 24, 48, 3, 0));
         EditorSystemManager.setSelector();
         setEditorLayer();

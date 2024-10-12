@@ -4,7 +4,7 @@ import Just_Forge_2D.EditorSystem.Widgets;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent;
 import Just_Forge_2D.Utils.Logger;
-import Just_Forge_2D.WindowSystem.MainWindow;
+import Just_Forge_2D.WindowSystem.GameWindow;
 import imgui.ImGui;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.joints.DistanceJoint;
@@ -52,7 +52,7 @@ public class SpringComponent extends BaseJointComponent
         }
         if (other == null)
         {
-            other = MainWindow.getCurrentScene().getGameObject(otherName);
+            other = GameWindow.getCurrentScene().getGameObject(otherName);
             otherRB = other.getComponent(RigidBodyComponent.class);
         }
         RigidBodyComponent my = this.gameObject.getComponent(RigidBodyComponent.class);
@@ -70,7 +70,7 @@ public class SpringComponent extends BaseJointComponent
             if (anchorA.lengthSquared() == 0) anchorA = new Vector2f(this.gameObject.transform.position);
             if (anchorB.lengthSquared() == 0) anchorB = new Vector2f(other.transform.position);
             defJoint.initialize(my.getRawBody(), otherRB.getRawBody(), new Vec2(anchorA.x, anchorA.y), new Vec2(anchorB.x, anchorB.y));
-            joint = (DistanceJoint) MainWindow.getCurrentScene().getPhysics().rawWorld.getWorld().createJoint(defJoint);
+            joint = (DistanceJoint) GameWindow.getCurrentScene().getPhysics().rawWorld.getWorld().createJoint(defJoint);
         }
     }
 
@@ -214,6 +214,6 @@ public class SpringComponent extends BaseJointComponent
     public void destroy()
     {
         if (this.joint == null) return;
-        MainWindow.getCurrentScene().getPhysics().rawWorld.getWorld().destroyJoint(joint);
+        GameWindow.getCurrentScene().getPhysics().rawWorld.getWorld().destroyJoint(joint);
     }
 }

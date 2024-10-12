@@ -3,7 +3,7 @@ package Just_Forge_2D.PrefabSystem;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.Sprite;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
-import Just_Forge_2D.WindowSystem.MainWindow;
+import Just_Forge_2D.WindowSystem.GameWindow;
 
 public class SpritePrefab implements Prefab
 {
@@ -22,7 +22,7 @@ public class SpritePrefab implements Prefab
     @Override
     public GameObject create()
     {
-        GameObject block = MainWindow.getCurrentScene().createGameObject(this.name);
+        GameObject block = GameWindow.getCurrentScene().createGameObject(this.name);
         block.transform.scale.x = sizeX;
         block.transform.scale.y = sizeY;
         SpriteComponent spriteComponent = new SpriteComponent();

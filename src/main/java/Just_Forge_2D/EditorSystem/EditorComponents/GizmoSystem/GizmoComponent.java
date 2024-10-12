@@ -8,7 +8,7 @@ import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.InputSystem.Mouse;
 import Just_Forge_2D.PrefabSystem.PrefabManager;
-import Just_Forge_2D.WindowSystem.MainWindow;
+import Just_Forge_2D.WindowSystem.GameWindow;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 
@@ -60,8 +60,8 @@ public class GizmoComponent extends Component
         this.xAxisGizmo.addComponent(new NonPickableComponent());
         this.yAxisGizmo.addComponent(new NonPickableComponent());
 
-        MainWindow.getCurrentScene().addGameObject(this.xAxisGizmo);
-        MainWindow.getCurrentScene().addGameObject(this.yAxisGizmo);
+        GameWindow.getCurrentScene().addGameObject(this.xAxisGizmo);
+        GameWindow.getCurrentScene().addGameObject(this.yAxisGizmo);
     }
 
     // - - - start

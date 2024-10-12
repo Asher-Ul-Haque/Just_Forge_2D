@@ -6,7 +6,7 @@ import Just_Forge_2D.EventSystem.Events.Event;
 import Just_Forge_2D.EventSystem.Events.EventTypes;
 import Just_Forge_2D.InputSystem.Mouse;
 import Just_Forge_2D.SceneSystem.SceneSystemManager;
-import Just_Forge_2D.WindowSystem.MainWindow;
+import Just_Forge_2D.WindowSystem.GameWindow;
 import imgui.ImGui;
 import imgui.ImVec2;
 import imgui.flag.ImGuiWindowFlags;
@@ -57,9 +57,9 @@ public class GameViewport
 
         ImGui.setCursorPos(windowPos.x + buttonStartX, 0);
 
-        if (ImGui.button(SceneSystemManager.isRunning(MainWindow.getCurrentScene()) ? "Pause" : "Unpause", buttonWidth, 30))
+        if (ImGui.button(SceneSystemManager.isRunning(GameWindow.getCurrentScene()) ? "Pause" : "Unpause", buttonWidth, 30))
         {
-            SceneSystemManager.setPause(MainWindow.getCurrentScene(), !SceneSystemManager.isRunning(MainWindow.getCurrentScene()));
+            SceneSystemManager.setPause(GameWindow.getCurrentScene(), !SceneSystemManager.isRunning(GameWindow.getCurrentScene()));
         }
         ImGui.end();
     }
@@ -73,12 +73,12 @@ public class GameViewport
         windowSize.y -= ImGui.getScrollY();
 
         float aspectWidth = windowSize.x;
-        float aspectHeight = aspectWidth / MainWindow.get().getAspectRatio();
+        float aspectHeight = aspectWidth / GameWindow.get().getAspectRatio();
         if (aspectHeight > windowSize.y)
         {
             // - - - switch to pillar mode
             aspectHeight = windowSize.y;
-            aspectWidth = aspectHeight * MainWindow.get().getAspectRatio();
+            aspectWidth = aspectHeight * GameWindow.get().getAspectRatio();
         }
 
         return new ImVec2(aspectWidth, aspectHeight);

@@ -13,7 +13,7 @@ import Just_Forge_2D.InputSystem.Keys;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent;
 import Just_Forge_2D.RenderingSystem.DebugPencil;
 import Just_Forge_2D.Utils.Logger;
-import Just_Forge_2D.WindowSystem.MainWindow;
+import Just_Forge_2D.WindowSystem.GameWindow;
 import org.jbox2d.particle.ParticleDef;
 import org.jbox2d.particle.ParticleSystem;
 import org.joml.Vector2f;
@@ -42,7 +42,7 @@ public class ParticleSystemComponent extends Component implements Observer
     private float maxSpeed = 0.5f;
     private boolean debugDrawAtRuntime = false;
     private transient ParticleGenerator generator;
-    private Vector4f debugColor = new Vector4f(1.0f).sub(MainWindow.get().getClearColor());
+    private Vector4f debugColor = new Vector4f(1.0f).sub(GameWindow.get().getClearColor());
     private boolean keepPhysics = false;
     private boolean useOnce = false;
     private Vector2f offset = new Vector2f();
@@ -124,7 +124,7 @@ public class ParticleSystemComponent extends Component implements Observer
         {
             templateName = this.gameObject.name;
         }
-        generator = new ParticleGenerator(MainWindow.getCurrentScene().getGameObject(templateName), keepPhysics, this.particleSystem);
+        generator = new ParticleGenerator(GameWindow.getCurrentScene().getGameObject(templateName), keepPhysics, this.particleSystem);
 
         randomizer = new Random(this.gameObject.getUniqueID());
         for (int i = particles.size(); i < maxParticles; ++i)
@@ -132,7 +132,7 @@ public class ParticleSystemComponent extends Component implements Observer
             Particle particle = this.generator.create(new ParticleDef());
             particles.add(particle);
             resetParticle(particle);
-            MainWindow.getCurrentScene().addGameObject(particle.core);
+            GameWindow.getCurrentScene().addGameObject(particle.core);
         }
         Logger.FORGE_LOG_DEBUG("Starting");
     }

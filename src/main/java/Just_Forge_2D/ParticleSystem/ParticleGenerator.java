@@ -6,7 +6,7 @@ import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.*;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.KeyboardControllerComponent;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent;
 import Just_Forge_2D.Utils.Logger;
-import Just_Forge_2D.WindowSystem.MainWindow;
+import Just_Forge_2D.WindowSystem.GameWindow;
 import org.jbox2d.particle.ParticleDef;
 import org.jbox2d.particle.ParticleSystem;
 
@@ -40,7 +40,7 @@ public class ParticleGenerator
 
     public Particle create(ParticleDef DEF)
     {
-        int particleID = MainWindow.getCurrentScene().getPhysics().rawWorld.getWorld().createParticle(DEF);
+        int particleID = GameWindow.getCurrentScene().getPhysics().rawWorld.getWorld().createParticle(DEF);
         return new Particle(this.template.copy(), particleID);
     }
 }

@@ -4,7 +4,7 @@ import Just_Forge_2D.EditorSystem.Widgets;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent;
 import Just_Forge_2D.RenderingSystem.DebugPencil;
-import Just_Forge_2D.WindowSystem.MainWindow;
+import Just_Forge_2D.WindowSystem.GameWindow;
 import imgui.ImGui;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.joints.RevoluteJoint;
@@ -196,7 +196,7 @@ public class HingeComponent extends BaseJointComponent
         }
         if (other == null)
         {
-            other = MainWindow.getCurrentScene().getGameObject(otherName);
+            other = GameWindow.getCurrentScene().getGameObject(otherName);
             otherRB = other.getComponent(RigidBodyComponent.class);
         }
         if (other != null && otherRB != null)
@@ -214,7 +214,7 @@ public class HingeComponent extends BaseJointComponent
             if (anchorB.lengthSquared() == 0) anchorB = new Vector2f(other.transform.position);
             if (hingeAnchor.lengthSquared() == 0) hingeAnchor = this.gameObject.transform.position;
             defJoint.initialize(this.gameObject.getComponent(RigidBodyComponent.class).getRawBody(), otherRB.getRawBody(), new Vec2(hingeAnchor.x, hingeAnchor.y));
-            joint = (RevoluteJoint) MainWindow.getCurrentScene().getPhysics().rawWorld.getWorld().createJoint(defJoint);
+            joint = (RevoluteJoint) GameWindow.getCurrentScene().getPhysics().rawWorld.getWorld().createJoint(defJoint);
         }
     }
 
@@ -277,13 +277,14 @@ public class HingeComponent extends BaseJointComponent
     public void destroy()
     {
         if (this.joint == null) return;
-        MainWindow.getCurrentScene().getPhysics().rawWorld.getWorld().destroyJoint(joint);
+        GameWindow.getCurrentScene().getPhysics().rawWorld.getWorld().destroyJoint(joint);
     }
 
     @Override
     public void debugDraw()
     {
-        if (joint == null || other == null) return;
-        DebugPencil.addLine(this.gameObject.transform.position, other.transform.position);
+        if (other == null) return;
+        if (joint == null) DebugPencil.addLine(this.gameObject.transform.position, other.transform.position);
+        else DebugPencil.addLine(this.getAnchorA(), this.getAnchorB());
     }
 }

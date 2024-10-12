@@ -7,7 +7,7 @@ import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.Components.ComponentList;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.Utils.Logger;
-import Just_Forge_2D.WindowSystem.MainWindow;
+import Just_Forge_2D.WindowSystem.GameWindow;
 import imgui.ImGui;
 
 import java.util.ArrayList;
@@ -79,19 +79,19 @@ public class SceneHierarchyWindow
 
         if (selectedComponents.isEmpty() && nameFilter.isEmpty())
         {
-            gameObjectList = MainWindow.getCurrentScene().getGameObjects();
+            gameObjectList = GameWindow.getCurrentScene().getGameObjects();
         }
         else if (selectedComponents.isEmpty())
         {
-            gameObjectList = MainWindow.getCurrentScene().getGameObjects(nameFilter);
+            gameObjectList = GameWindow.getCurrentScene().getGameObjects(nameFilter);
         }
         else if (nameFilter.isEmpty())
         {
-            gameObjectList = MainWindow.getCurrentScene().getGameObjects(selectedComponents);
+            gameObjectList = GameWindow.getCurrentScene().getGameObjects(selectedComponents);
         }
         else
         {
-            gameObjectList = MainWindow.getCurrentScene().getGameObjects(selectedComponents, nameFilter);
+            gameObjectList = GameWindow.getCurrentScene().getGameObjects(selectedComponents, nameFilter);
         }
 
         Theme.resetDefaultTextColor();

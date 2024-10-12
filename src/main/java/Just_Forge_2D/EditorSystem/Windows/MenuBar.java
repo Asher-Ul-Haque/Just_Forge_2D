@@ -8,7 +8,7 @@ import Just_Forge_2D.EventSystem.Events.EventTypes;
 import Just_Forge_2D.GameSystem.GameManager;
 import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.Logger;
-import Just_Forge_2D.WindowSystem.MainWindow;
+import Just_Forge_2D.WindowSystem.GameWindow;
 import imgui.ImGui;
 import org.lwjgl.util.tinyfd.TinyFileDialogs;
 
@@ -33,7 +33,7 @@ public class MenuBar
                 if (savePath != null)
                 {
                     if (!savePath.endsWith(".justForgeFile")) savePath += ".justForgeFile";
-                    MainWindow.getCurrentScene().setSavePath(savePath);
+                    GameWindow.getCurrentScene().setSavePath(savePath);
                     EventManager.notify(null, new Event(EventTypes.SaveLevel));
                 }
             }
@@ -48,7 +48,7 @@ public class MenuBar
                     }
                     else
                     {
-                        MainWindow.getCurrentScene().setSavePath(savePath);
+                        GameWindow.getCurrentScene().setSavePath(savePath);
                         EventManager.notify(null, new Event(EventTypes.LoadLevel));
                     }
                 }

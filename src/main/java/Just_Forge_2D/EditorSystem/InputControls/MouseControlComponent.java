@@ -9,11 +9,13 @@ import Just_Forge_2D.EditorSystem.Windows.ObjectSelector;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
+import Just_Forge_2D.EventSystem.Events.Event;
+import Just_Forge_2D.EventSystem.Observer;
 import Just_Forge_2D.InputSystem.Mouse;
 import Just_Forge_2D.RenderingSystem.DebugPencil;
 import Just_Forge_2D.SceneSystem.Scene;
 import Just_Forge_2D.Utils.Logger;
-import Just_Forge_2D.WindowSystem.MainWindow;
+import Just_Forge_2D.WindowSystem.GameWindow;
 import Just_Forge_2D.WindowSystem.WindowSystemManager;
 import org.joml.Vector2f;
 import org.joml.Vector2i;
@@ -25,7 +27,7 @@ import java.util.Set;
 
 import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_LEFT;
 
-public class MouseControlComponent extends Component
+public class MouseControlComponent extends Component implements Observer
 {
     // - - - private variable for the thing being held
     static GameObject holdingObject = null;
@@ -58,7 +60,7 @@ public class MouseControlComponent extends Component
             holdingObject.getComponent(SpriteComponent.class).setColor(new Vector4f(0.8f, 0.8f, 0.0f, 0.5f));
         }
         holdingObject.addComponent(new NonPickableComponent());
-        MainWindow.getCurrentScene().addGameObject(GO);
+        GameWindow.getCurrentScene().addGameObject(GO);
         Logger.FORGE_LOG_DEBUG("Picked up object: "+ holdingObject);
     }
 
@@ -72,7 +74,7 @@ public class MouseControlComponent extends Component
         }
         if (newObj.hasComponent(SpriteComponent.class)) newObj.getComponent(SpriteComponent.class).setColor(originalColor);
         newObj.removeComponent(NonPickableComponent.class);
-        MainWindow.getCurrentScene().addGameObject(newObj);
+        GameWindow.getCurrentScene().addGameObject(newObj);
     }
 
     // - - - run
@@ -80,7 +82,7 @@ public class MouseControlComponent extends Component
     public void editorUpdate(float DELTA_TIME)
     {
         debounce -= DELTA_TIME;
-        Scene currentScene = MainWindow.getCurrentScene();
+        Scene currentScene = GameWindow.getCurrentScene();
 
         if (holdingObject != null && debounce < 0.0f)
         {
@@ -172,7 +174,7 @@ public class MouseControlComponent extends Component
 
             for (Integer gameObjectID : uniqueGameObjectIDs)
             {
-                GameObject picked = MainWindow.getCurrentScene().getGameObject(gameObjectID);
+                GameObject picked = GameWindow.getCurrentScene().getGameObject(gameObjectID);
                 if (uniqueGameObjectIDs.size() == 1)
                 {
                     ComponentsWindow.setActiveGameObject(picked);
@@ -184,5 +186,12 @@ public class MouseControlComponent extends Component
                 }
             }
         }
+    }
+
+    @Override
+    public void onNotify(GameObject OBJECT, Event EVENT)
+    {
+        boxSelect = false;
+        holdingObject = null;
     }
 }

@@ -8,7 +8,7 @@ import Just_Forge_2D.InputSystem.Mouse;
 import Just_Forge_2D.PrefabSystem.PrefabManager;
 import Just_Forge_2D.SceneSystem.Scene;
 import Just_Forge_2D.Utils.Logger;
-import Just_Forge_2D.WindowSystem.MainWindow;
+import Just_Forge_2D.WindowSystem.GameWindow;
 import imgui.*;
 import imgui.callback.ImStrConsumer;
 import imgui.callback.ImStrSupplier;
@@ -301,8 +301,8 @@ public class ImGUIManager
     private static void startFrame(final float DELTA_TIME)
     {
         // - - - Get window properties and mouse position
-        float[] winWidth = {MainWindow.get().getWidth()};
-        float[] winHeight = {MainWindow.get().getHeight()};
+        float[] winWidth = {GameWindow.get().getWidth()};
+        float[] winHeight = {GameWindow.get().getHeight()};
         double[] mousePosX = {0};
         double[] mousePosY = {0};
         GLFW.glfwGetCursorPos(windowPtr, mousePosX, mousePosY);
