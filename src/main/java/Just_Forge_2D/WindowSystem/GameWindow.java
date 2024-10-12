@@ -10,7 +10,9 @@ import Just_Forge_2D.EditorSystem.Windows.ComponentsWindow;
 import Just_Forge_2D.EditorSystem.Windows.MainWindowConfig;
 import Just_Forge_2D.EditorSystem.Windows.ObjectSelector;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
+import Just_Forge_2D.EventSystem.EventManager;
 import Just_Forge_2D.EventSystem.Events.Event;
+import Just_Forge_2D.EventSystem.Events.EventTypes;
 import Just_Forge_2D.GameSystem.GameCodeLoader;
 import Just_Forge_2D.InputSystem.Mouse;
 import Just_Forge_2D.PhysicsSystem.PhysicsSystemManager;
@@ -294,8 +296,8 @@ public class GameWindow extends Window
         if (EditorSystemManager.getCurrentState().equals(EditorSystemManager.state.isEditor) && !EditorSystemManager.isRelease)
         {
             this.framebuffer = new Framebuffer(WIDTH, HEIGHT);
-            return;
         }
-        super.setSize(WIDTH, HEIGHT);
+        else super.setSize(WIDTH, HEIGHT);
+        EventManager.notify(null, new Event(EventTypes.ForgeResize));
     }
 }

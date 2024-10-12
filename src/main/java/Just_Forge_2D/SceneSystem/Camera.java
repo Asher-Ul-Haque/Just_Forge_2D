@@ -1,20 +1,25 @@
 package Just_Forge_2D.SceneSystem;
 
+import Just_Forge_2D.EntityComponentSystem.GameObject;
+import Just_Forge_2D.EventSystem.Events.Event;
+import Just_Forge_2D.EventSystem.Events.EventTypes;
+import Just_Forge_2D.EventSystem.Observer;
 import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.Logger;
+import Just_Forge_2D.WindowSystem.GameWindow;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 
 // - - - 2D Camera
-public class Camera
+public class Camera implements Observer
 {
     // - - - Private Variables - - -
 
     // - - - projection
     private final Matrix4f projectionMatrix;
     private final Matrix4f inverseProjectionMatrix;
-    private final Vector2f projectionSize = DefaultValues.DEFAULT_CAMERA_PROJECTION_SIZE;
+    private Vector2f projectionSize = DefaultValues.DEFAULT_CAMERA_PROJECTION_SIZE;
 
     // - - - view
     private final Matrix4f viewMatrix;
@@ -65,7 +70,7 @@ public class Camera
     public void adjustProjection()
     {
         projectionMatrix.identity();
-        projectionMatrix.ortho(0.0f, projectionSize.x * this.zoom, 0.0f, projectionSize.y * this.zoom, 0.0f, 100.0f);
+        projectionMatrix.ortho(0.0f, projectionSize.x * this.zoom, 0.0f, projectionSize.y * this.zoom, 0.0f, 64.0f);
         projectionMatrix.invert(inverseProjectionMatrix);
     }
 
@@ -152,4 +157,16 @@ public class Camera
     }
 
     public float getRotation() {return this.rotation.z; }
+
+    @Override
+    public void onNotify(GameObject OBJECT, Event EVENT)
+    {
+        if (EVENT.type.equals(EventTypes.ForgeResize))
+        {
+            float aspectRatio = (float) GameWindow.getFrameBuffer().getSize().x / (float) GameWindow.getFrameBuffer().getSize().y;
+            float orthoWidth = 16f; // TODO: use the game window aspect ratio
+            float orthoHeight = orthoWidth / aspectRatio;
+            this.projectionSize = new Vector2f(orthoWidth, orthoHeight);
+        }
+    }
 }

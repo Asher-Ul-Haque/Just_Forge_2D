@@ -7,6 +7,7 @@ import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.Components.TransformComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
+import Just_Forge_2D.EventSystem.EventManager;
 import Just_Forge_2D.InputSystem.Mouse;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent;
 import Just_Forge_2D.PhysicsSystem.PhysicsSystemManager;
@@ -111,6 +112,7 @@ public class Scene
     public void init()
     {
         this.camera = Mouse.getWorldCamera();
+        EventManager.addObserver(this.camera);
         if (this.savePath.isEmpty()) setSavePath(this.script.savePath);
         this.script.loadResources(this);
         for (GameObject g : this.getGameObjects())
