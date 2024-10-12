@@ -4,6 +4,7 @@ import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.SceneSystem.SceneSystemManager;
 import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.Logger;
+import org.jetbrains.annotations.NotNull;
 import org.lwjgl.util.tinyfd.TinyFileDialogs;
 
 import java.io.File;
@@ -18,7 +19,7 @@ public class ProjectManager
     // - - - project management defaults
     private static final String DEFAULT_PROJECTS_DIR = System.getProperty("user.home") + "/Documents/ForgeProjects";
     private static final String PROJECT_TEMPLATE_DIR = "ProjectTemplate";
-    public static String PROJECT_NAME = null;
+    @NotNull public static String PROJECT_NAME = new File(System.getProperty("user.dir")).getName();
 
 
     // - - - Creating new Project - - -

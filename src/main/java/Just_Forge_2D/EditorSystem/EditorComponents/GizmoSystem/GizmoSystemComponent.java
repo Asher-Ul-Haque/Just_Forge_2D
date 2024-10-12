@@ -11,7 +11,7 @@ import Just_Forge_2D.Utils.Logger;
 public class GizmoSystemComponent extends Component
 {
     // - - - private variables
-    private final SpriteSheet gizmos = AssetPool.getSpriteSheet("Gizmos");
+    private SpriteSheet gizmos = new SpriteSheet(AssetPool.getTexture("Assets/Textures/gizmos.png"), 24, 48, 3, 0);
     private int currentGizmo = 0;
 
 

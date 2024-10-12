@@ -340,7 +340,7 @@ public class Window implements Observer
     {
         Logger.FORGE_LOG_DEBUG("Setting title of " + this.config.title + " to : " + TITLE);
         this.config.title = TITLE;
-        glfwSetWindowTitle(this.glfwWindowPtr, this.config.title);
+        glfwSetWindowTitle(this.glfwWindowPtr, TITLE);
     }
 
 

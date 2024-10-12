@@ -118,7 +118,7 @@ public class GameManager
 
                         copyDirectory(projectPath.resolve("build/libs"), destinationDirPath);
                         copyDirectory(assetsPath, destinationDirPath.resolve("Assets"));
-                        copyDirectory(savesPath, destinationDirPath.resolve("Scenes"));
+                        copyDirectory(savesPath, destinationDirPath.resolve("SceneScripts"));
 
                         File[] jarFiles = destinationDirPath.toFile().listFiles((dir, name) -> name.endsWith(".jar"));
                         if (jarFiles == null || jarFiles.length == 0)

@@ -8,7 +8,6 @@ import Just_Forge_2D.EditorSystem.Windows.ObjectSelector;
 import Just_Forge_2D.EntityComponentSystem.Components.ComponentList;
 import Just_Forge_2D.RenderingSystem.Framebuffer;
 import Just_Forge_2D.RenderingSystem.Shader;
-import Just_Forge_2D.RenderingSystem.SpriteSheet;
 import Just_Forge_2D.SceneSystem.EmptySceneScript;
 import Just_Forge_2D.SceneSystem.SceneScript;
 import Just_Forge_2D.Utils.DefaultValues;
@@ -138,7 +137,6 @@ public class EditorSystemManager
         editorWindowConfig.setHeight(800);
         if (currentTheme == null) currentTheme = new CleanTheme(DefaultValues.DARK_MODE_ENABLED);
         GameWindow.get();
-        AssetPool.addSpriteSheet("Gizmos", new SpriteSheet(AssetPool.getTexture("Assets/Textures/gizmos.png"), 24, 48, 3, 0));
         EditorSystemManager.setSelector();
         setEditorLayer();
         ComponentList.initialize();

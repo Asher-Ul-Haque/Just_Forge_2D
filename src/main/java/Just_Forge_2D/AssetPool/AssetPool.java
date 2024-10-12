@@ -1,6 +1,7 @@
 package Just_Forge_2D.AssetPool;
 
 import Just_Forge_2D.AudioSystem.Sound;
+import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.RenderingSystem.Shader;
 import Just_Forge_2D.RenderingSystem.SpriteSheet;
 import Just_Forge_2D.RenderingSystem.Texture;
@@ -29,7 +30,7 @@ public class AssetPool
 
     public static void addShader(String NAME, String FILE_PATH)
     {
-        File file = new File(FILE_PATH);
+        File file = new File(EditorSystemManager.projectDir + "/Assets/Shaders/" + FILE_PATH);
         if (!AssetPool.shaderPool.containsKey(file.getAbsolutePath()))
         {
             Logger.FORGE_LOG_DEBUG("Shader with path: " + FILE_PATH + " Hashed in shader Asset Pool and loaded");
@@ -83,7 +84,7 @@ public class AssetPool
 
     public static void addTexture(String NAME, String FILE_PATH)
     {
-        File file = new File(FILE_PATH);
+        File file = new File(EditorSystemManager.projectDir + "/Assets/Textures/" + FILE_PATH);
         if (!AssetPool.texturePool.containsKey(file.getAbsolutePath()))
         {
             Logger.FORGE_LOG_DEBUG("Texture with path: " + FILE_PATH + " Hashed in shader Asset Pool and loaded");
@@ -122,7 +123,7 @@ public class AssetPool
 
     public static void addSpriteSheet(String NAME, SpriteSheet SPRITE_SHEET)
     {
-        File file = new File(SPRITE_SHEET.getTexture().getFilepath());
+        File file = new File(EditorSystemManager.projectDir + "/Assets/Textures/" + SPRITE_SHEET.getTexture().getFilepath());
         if (!AssetPool.spriteSheetPool.containsKey(file.getAbsolutePath()))
         {
             nameToFile.put(NAME, file.getAbsolutePath());
@@ -177,7 +178,7 @@ public class AssetPool
 
     public static void addSound(String NAME, String FILE_PATH, boolean DOES_LOOP)
     {
-        File file = new File(FILE_PATH);
+        File file = new File(EditorSystemManager.projectDir + "/Assets/Sounds/" + FILE_PATH);
         if (!AssetPool.soundPool.containsKey(file.getAbsolutePath()))
         {
             Logger.FORGE_LOG_DEBUG("Sound with path: " + FILE_PATH + " Hashed in Asset Pool and loaded");

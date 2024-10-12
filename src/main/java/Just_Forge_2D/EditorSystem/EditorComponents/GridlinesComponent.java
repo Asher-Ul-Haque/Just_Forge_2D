@@ -1,5 +1,6 @@
 package Just_Forge_2D.EditorSystem.EditorComponents;
 
+import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.RenderingSystem.DebugPencil;
 import Just_Forge_2D.SceneSystem.Camera;
@@ -21,7 +22,7 @@ public class GridlinesComponent extends Component
     @Override
     public void editorUpdate(float DELTA_TIME)
     {
-        if (!showGrid) return;
+        if (!showGrid || EditorSystemManager.isRuntimePlaying) return;
         Camera camera = GameWindow.getCurrentScene().getCamera();
         if (camera.getZoom() > 5f) return;
         Vector2f cameraPos = camera.getPosition();
