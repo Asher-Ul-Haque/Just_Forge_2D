@@ -96,9 +96,9 @@ public class EditorSystemManager
 
         if (!EditorSystemManager.isRelease)
         {
-            AssetPool.addShader("Selector", "Assets/Shaders/selector.glsl");
             AssetPool.addShader("Debug", "Assets/Shaders/debug.glsl");
-            EditorSystemManager.selectorShader = AssetPool.getShader("Selector");
+            EditorSystemManager.selectorShader = new Shader("Assets/Shaders/selector.glsl");
+            selectorShader.compile();
         }
     }
 
