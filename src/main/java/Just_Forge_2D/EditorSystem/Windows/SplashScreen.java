@@ -39,7 +39,7 @@ public class SplashScreen
         {
             Logger.FORGE_LOG_INFO("Initializing Just Forge 2D");
             // - - - set up the window
-            GameWindow.get().setClearColor(new Vector4f(0.0f));
+            GameWindow.get().setClearColor(new Vector4f(0.0f, 0.0f, 0.0f, 1.0f));
             GameWindow.get().setAlwaysOnTop(true);
             GameWindow.get().setDecorated(false);
             GameWindow.get().setSize(600, 400);
