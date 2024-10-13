@@ -16,6 +16,8 @@ import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.WindowSystem.GameWindow;
 import Just_Forge_2D.WindowSystem.WindowSystemManager;
 import imgui.ImGui;
+import imgui.ImVec4;
+import imgui.flag.ImGuiCol;
 import imgui.flag.ImGuiWindowFlags;
 import org.joml.Vector4f;
 
@@ -31,6 +33,7 @@ public class SplashScreen
     private static boolean readyToLoad = false;
     private static boolean load = false;
     private static boolean compiling = false;
+    private static float progress = 0.0f;
 
     // - - - initialization
     public static void initialize()
@@ -153,15 +156,23 @@ public class SplashScreen
     // - - - load code and display the text
     private static void displayLoadingPage()
     {
-        if (load) cleanup();
-        if (!GameWindow.get().isVisible()) GameWindow.get().setVisible(true);
-
         ImGui.setCursorPosX((ImGui.getWindowWidth() - ImGui.calcTextSize("Loading Project: " + ProjectManager.PROJECT_NAME).x) / 2);
-        ImGui.setCursorPosY(GameWindow.get().getHeight() - 32);
+        ImGui.setCursorPosY(GameWindow.get().getHeight() - 36);
         Theme.setDefaultTextColor(EditorSystemManager.getCurrentTheme().secondaryColor);
         String title = "Loading Project: " + ProjectManager.PROJECT_NAME;
         ImGui.text(title);
+        ImGui.setCursorPosY(GameWindow.get().getHeight() - 20);
+        ImVec4 backColor = EditorSystemManager.getCurrentTheme().quaternaryColor;
+        ImVec4 color = EditorSystemManager.getCurrentTheme().tertiaryColor;
+        ImGui.pushStyleColor(ImGuiCol.PlotHistogram, color.x, color.y, color.z, color.w);
+        ImGui.pushStyleColor(ImGuiCol.FrameBg, backColor.x, backColor.y, backColor.z, backColor.w);
+        progress = Math.min(GameManager.getProgressPercentage(), progress + 0.01f);
+        ImGui.progressBar(progress, ImGui.getContentRegionAvailX(), 14);
+        ImGui.popStyleColor(2);
         Theme.resetDefaultTextColor();
+
+        if (load) cleanup();
+        if (!GameWindow.get().isVisible()) GameWindow.get().setVisible(true);
         load = true;
     }
 
@@ -174,29 +185,30 @@ public class SplashScreen
             compiling = true;
             Logger.FORGE_LOG_TRACE("Building user code");
             GameManager.buildUserCode();
-            if (GameManager.isSuccess())
+        }
+        if (GameManager.isSuccess())
+        {
+            if (EditorSystemManager.currentSceneInitializer == null)
             {
-                if (EditorSystemManager.currentSceneInitializer == null)
-                {
-                    EditorSystemManager.setCurrentSceneInitializer(EmptySceneScript.class);
-                }
-                GameWindow.get().setVisible(false);
-                Logger.FORGE_LOG_TRACE("Project Path : " + EditorSystemManager.projectDir);
-                GameWindow.get().maximize();
-                EditorSystemManager.setCurrentState(EditorSystemManager.state.isEditor);
-                if (EditorSystemManager.isRelease) EventManager.notify(null, new Event(EventTypes.ForgeStart));
-                else EventManager.notify(null, new Event(EventTypes.ForgeStop));
-                if (EditorSystemManager.isRelease) GameWindow.get().setTitle(ProjectManager.PROJECT_NAME);
-                else GameWindow.get().setTitle("Just Forge 2D    -    " + ProjectManager.PROJECT_NAME);
-                GameWindow.get().setVisible(true);
+                EditorSystemManager.setCurrentSceneInitializer(EmptySceneScript.class);
             }
-            else
-            {
-                timer = splashTime + relapseTime + 0.01f;
-                compiling = false;
-                readyToLoad = false;
-                load = false;
-            }
+            GameWindow.get().setVisible(false);
+            Logger.FORGE_LOG_TRACE("Project Path : " + EditorSystemManager.projectDir);
+            GameWindow.get().maximize();
+            EditorSystemManager.setCurrentState(EditorSystemManager.state.isEditor);
+            if (EditorSystemManager.isRelease) EventManager.notify(null, new Event(EventTypes.ForgeStart));
+            else EventManager.notify(null, new Event(EventTypes.ForgeStop));
+            if (EditorSystemManager.isRelease) GameWindow.get().setTitle(ProjectManager.PROJECT_NAME);
+            else GameWindow.get().setTitle("Just Forge 2D    -    " + ProjectManager.PROJECT_NAME);
+            GameWindow.get().setVisible(true);
+        }
+        else if (GameManager.getProgressPercentage() >= 1f)
+        {
+            timer = splashTime + relapseTime + 0.01f;
+            compiling = false;
+            readyToLoad = false;
+            progress = 0.0f;
+            load = false;
         }
     }
 }

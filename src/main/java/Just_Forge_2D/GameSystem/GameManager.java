@@ -28,6 +28,7 @@ public class GameManager
     public static void buildUserCode()
     {
         Logger.FORGE_LOG_INFO("Reading Your Code");
+        progressPercentage = 0.1f;
 
         new Thread(() ->
         {
@@ -40,13 +41,16 @@ public class GameManager
                     processBuilder.directory(new File(EditorSystemManager.projectDir));
                     processBuilder.inheritIO();
 
+                    progressPercentage = 0.9f;
                     Process process = processBuilder.start();
                     int exitCode = process.waitFor();
                     if (exitCode != 0)
                     {
                         Logger.FORGE_LOG_FATAL("Error in user code. Exit code : " + exitCode);
+                        progressPercentage = 1f;
                         return;
                     }
+                    progressPercentage = 0.96f;
                 }
 
                 try
@@ -54,20 +58,24 @@ public class GameManager
                     Path projectPath = Paths.get(EditorSystemManager.projectDir);
                     Path classesDir = projectPath.resolve("build/classes/java/main");
                     URLClassLoader classLoader = new URLClassLoader(new URL[]{classesDir.toUri().toURL()});
+                    progressPercentage = 0.98f;
 
                     Class<?> gameClass = classLoader.loadClass("Main");
                     Constructor<?> constructor = gameClass.getConstructor();
                     game = (Game) constructor.newInstance();
                     success = true;
+                    progressPercentage = 0.99f;
                 }
                 catch (Exception e)
                 {
                     Logger.FORGE_LOG_ERROR(e.getMessage());
                     Logger.FORGE_LOG_FATAL("Couldn't find an entry point in the user code. Ensure that the Game Interface is implemented.");
+                    progressPercentage = 1f;
                     return;
                 }
 
                 game.init();
+                progressPercentage = 1f;
                 Logger.FORGE_LOG_TRACE("Build successful");
             }
             catch (Exception e)
