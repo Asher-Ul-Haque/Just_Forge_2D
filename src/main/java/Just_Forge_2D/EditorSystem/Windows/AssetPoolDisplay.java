@@ -3,6 +3,7 @@ package Just_Forge_2D.EditorSystem.Windows;
 import Just_Forge_2D.AssetPool.AssetPool;
 import Just_Forge_2D.AudioSystem.Sound;
 import Just_Forge_2D.EditorSystem.EditorComponents.GridlinesComponent;
+import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.EditorSystem.InputControls.MouseControlComponent;
 import Just_Forge_2D.EditorSystem.Widgets;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.Sprite;
@@ -25,6 +26,7 @@ public class AssetPoolDisplay
     private static Vector2f size = new Vector2f(GridlinesComponent.gridSize);
     private static int spriteCount;
     private static int spriteSpacing;
+    private static boolean loop;
 
 
     private static void spriteSheetDisplay()
@@ -32,6 +34,7 @@ public class AssetPoolDisplay
         if (ImGui.beginTabItem("Sprite Sheets"))
         {
             if (ImGui.button("Add a SpriteSheet")) open = !open;
+            if (ImGui.button("Clear")) AssetPool.clearSpriteSheetPool();
             if (open)
             {
                 name = Widgets.inputText("Name", name);
@@ -42,7 +45,7 @@ public class AssetPoolDisplay
                 ImGui.columns(2);
                 if (ImGui.button("Browse"))
                 {
-                    path = TinyFileDialogs.tinyfd_openFileDialog("Path", null, null, null, false);
+                    path = TinyFileDialogs.tinyfd_openFileDialog("Path", EditorSystemManager.projectDir + "/Assets/Textures/", null, null, false);
                 }
                 ImGui.nextColumn();
                 if (ImGui.button("Add"))
@@ -101,7 +104,6 @@ public class AssetPoolDisplay
                     }
                 }
             }
-            open = false;
             ImGui.endTabItem();
         }
     }
@@ -111,6 +113,7 @@ public class AssetPoolDisplay
         if (ImGui.beginTabItem("Textures"))
         {
             if (ImGui.button("Add a Texture")) open = !open;
+            if (ImGui.button("Clear")) AssetPool.clearTexturePool();
             if (open)
             {
                 name = Widgets.inputText("Name", name);
@@ -118,7 +121,7 @@ public class AssetPoolDisplay
                 ImGui.columns(2);
                 if (ImGui.button("Browse"))
                 {
-                    path = TinyFileDialogs.tinyfd_openFileDialog("Path", null, null, null, false);
+                    path = TinyFileDialogs.tinyfd_openFileDialog("Path", EditorSystemManager.projectDir + "/Assets/Textures/", null, null, false);
                 }
                 ImGui.nextColumn();
                 if (ImGui.button("Add"))
@@ -151,7 +154,6 @@ public class AssetPoolDisplay
                     ImGui.popID();
                 }
             }
-            open = false;
             ImGui.endTabItem();
         }
     }
@@ -160,6 +162,25 @@ public class AssetPoolDisplay
     {
         if (ImGui.beginTabItem("Sounds"))
         {
+            if (ImGui.button("Add a Sound")) open = !open;
+            if (ImGui.button("Clear")) AssetPool.clearSoundPool();
+            if (open)
+            {
+                name = Widgets.inputText("Name", name);
+                path = Widgets.inputText("Path", path);
+                loop = Widgets.drawBoolControl("Loop", loop);
+                ImGui.columns(2);
+                if (ImGui.button("Browse"))
+                {
+                    path = TinyFileDialogs.tinyfd_openFileDialog("Path", EditorSystemManager.projectDir + "/Assets/Sounds/", null, null, false);
+                }
+                ImGui.nextColumn();
+                if (ImGui.button("Add"))
+                {
+                    AssetPool.addSound(name, path, loop);
+                }
+                ImGui.columns(1);
+            }
             List<Sound> sounds = AssetPool.getAllSounds();
             List<String> names = AssetPool.getAllSoundNames();
 
@@ -167,7 +188,7 @@ public class AssetPoolDisplay
             {
                 if (ImGui.button("Remove"))
                 {
-                    AssetPool.removeTexture(names.get(i));
+                    AssetPool.removeSound(names.get(i));
                     continue;
                 }
                 if (ImGui.button(names.get(i)))

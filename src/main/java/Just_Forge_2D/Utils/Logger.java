@@ -159,7 +159,7 @@ public class Logger
     private static String formatMessage(String level, Object... ARGS)
     {
         StringBuilder message = new StringBuilder();
-        message.append(level).append(": \t");
+        message.append(level).append(": \t\t\t");
 
         for (Object o : ARGS)
         {

@@ -32,9 +32,9 @@ public class AssetPool
 
     // - - - shader - - -
 
-    public static void addShader(String NAME, String FILE_PATH)
+    private static void shaderAdder(String NAME, String FILE_PATH)
     {
-        File file = new File(EditorSystemManager.projectDir + "/Assets/Shaders/" + FILE_PATH);
+        File file = new File(FILE_PATH);
         if (!AssetPool.shaderPool.containsKey(file.getAbsolutePath()))
         {
             Logger.FORGE_LOG_DEBUG("Shader with path: " + FILE_PATH + " Hashed in shader Asset Pool and loaded");
@@ -47,6 +47,17 @@ public class AssetPool
         {
             Logger.FORGE_LOG_WARNING("Shader at: " + FILE_PATH + " already exists in the asset pool");
         }
+    }
+
+    public static void addShader(String NAME, String FILE_PATH)
+    {
+        addShader(NAME, FILE_PATH, false);
+    }
+
+    public static void addShader(String NAME, String FILE_PATH, boolean ABSOLUTE_PATH)
+    {
+        if (ABSOLUTE_PATH) shaderAdder(NAME, FILE_PATH);
+        else shaderAdder(NAME, EditorSystemManager.projectDir + "/Assets/Shaders/" + FILE_PATH);
     }
 
     public static Shader getShader(String NAME)
@@ -87,9 +98,9 @@ public class AssetPool
 
     // - - - texture - - -
 
-    public static void addTexture(String NAME, String FILE_PATH)
+    private static void textureAdder(String NAME, String FILE_PATH)
     {
-        File file = new File(EditorSystemManager.projectDir + "/Assets/Textures/" + FILE_PATH);
+        File file = new File(FILE_PATH);
         if (!AssetPool.texturePool.containsKey(file.getAbsolutePath()))
         {
             Logger.FORGE_LOG_DEBUG("Texture with path: " + FILE_PATH + " Hashed in shader Asset Pool and loaded");
@@ -102,6 +113,17 @@ public class AssetPool
         {
             Logger.FORGE_LOG_WARNING("Texture at: " + FILE_PATH + " already exists in the shader pool");
         }
+    }
+
+    public static void addTexture(String NAME, String FILE_PATH)
+    {
+        addTexture(NAME, FILE_PATH, false);
+    }
+
+    public static void addTexture(String NAME, String FILE_PATH, boolean ABSOLUTE)
+    {
+        if (ABSOLUTE) textureAdder(NAME, FILE_PATH);
+        else textureAdder(NAME, EditorSystemManager.projectDir + "/Assets/Textures/" + FILE_PATH);
     }
 
     public static Texture getTexture(String NAME)
@@ -148,6 +170,13 @@ public class AssetPool
         }
     }
 
+    public static void clearTexturePool()
+    {
+        Logger.FORGE_LOG_WARNING("Clearing Texture Pool");
+        nameToFileTextures.clear();
+        texturePool.clear();
+    }
+
     public static List<Texture> getAllTextures()
     {
         return new ArrayList<>(texturePool.values());
@@ -161,9 +190,9 @@ public class AssetPool
 
     // - - - sprite sheets - - -
 
-    public static void addSpriteSheet(String NAME, SpriteSheet SPRITE_SHEET)
+    private static void spriteSheetAdder(String NAME, SpriteSheet SPRITE_SHEET, String PATH)
     {
-        File file = new File(EditorSystemManager.projectDir + "/Assets/Textures/" + SPRITE_SHEET.getTexture().getFilepath());
+        File file = new File(PATH);
         if (!AssetPool.spriteSheetPool.containsKey(file.getAbsolutePath()))
         {
             nameToFileSpriteSheet.put(NAME, file.getAbsolutePath());
@@ -174,6 +203,17 @@ public class AssetPool
         {
             Logger.FORGE_LOG_WARNING("Sprite Sheet at: " + file.getAbsolutePath() + " already exists in Asset Pool");
         }
+    }
+
+    public static void addSpriteSheet(String NAME, SpriteSheet SPRITE_SHEET)
+    {
+        addSpriteSheet(NAME, SPRITE_SHEET, false);
+    }
+
+    public static void addSpriteSheet(String NAME, SpriteSheet SPRITE_SHEET, boolean ABSOLUTE)
+    {
+        if (ABSOLUTE) spriteSheetAdder(NAME, SPRITE_SHEET, SPRITE_SHEET.getTexture().getFilepath());
+        else spriteSheetAdder(NAME, SPRITE_SHEET, EditorSystemManager.projectDir + "/Assets/Textures/" + SPRITE_SHEET.getTexture().getFilepath());
     }
 
     public static SpriteSheet getSpriteSheet(String NAME)
@@ -221,9 +261,9 @@ public class AssetPool
 
     // - - - Sounds - - -
 
-    public static void addSound(String NAME, String FILE_PATH, boolean DOES_LOOP)
+    private static void soundAdder(String NAME, String FILE_PATH, boolean DOES_LOOP)
     {
-        File file = new File(EditorSystemManager.projectDir + "/Assets/Sounds/" + FILE_PATH);
+        File file = new File(FILE_PATH);
         if (!AssetPool.soundPool.containsKey(file.getAbsolutePath()))
         {
             Logger.FORGE_LOG_DEBUG("Sound with path: " + FILE_PATH + " Hashed in Asset Pool and loaded");
@@ -231,6 +271,17 @@ public class AssetPool
             nameToFileSounds.put(NAME, file.getAbsolutePath());
             AssetPool.soundPool.put(file.getAbsolutePath(), sound);
         }
+    }
+
+    public static void addSound(String NAME, String FILE_PATH, boolean DOES_LOOP, boolean ABSOLUTE)
+    {
+        if (ABSOLUTE) soundAdder(NAME, FILE_PATH, DOES_LOOP);
+        else soundAdder(NAME, EditorSystemManager.projectDir + "/Assets/Sounds/" + FILE_PATH, DOES_LOOP);
+    }
+
+    public static void addSound(String NAME, String FILE_PATH, boolean DOES_LOOP)
+    {
+        addSound(NAME, FILE_PATH, DOES_LOOP, false);
     }
 
     public static Sound getSound(String NAME)

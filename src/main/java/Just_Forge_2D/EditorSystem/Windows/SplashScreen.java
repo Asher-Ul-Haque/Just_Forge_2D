@@ -54,7 +54,7 @@ public class SplashScreen
             {
                 logoTexture = new Texture();
                 logoTexture.init(DefaultValues.DEFAULT_ICON_PATH);
-                AssetPool.addTexture("Default", DefaultValues.DEFAULT_ICON_PATH);
+                AssetPool.addTexture("Default", DefaultValues.DEFAULT_ICON_PATH, true);
             }
 
             // - - - flip the flags
