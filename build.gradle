@@ -30,7 +30,7 @@ import org.gradle.internal.os.OperatingSystem
 
 project.ext.lwjglVersion = "3.3.4"
 project.ext.jomlVersion = "1.10.7"
-project.ext.imguiVersion = "1.86.11"
+project.ext.imguiVersion = "1.86.12"
 
 switch (OperatingSystem.current()) {
     case OperatingSystem.LINUX:
