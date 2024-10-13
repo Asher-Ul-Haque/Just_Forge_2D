@@ -92,7 +92,7 @@ public class SpriteComponent extends Component
     {
         if (this.gameObject.transform == null)
         {
-            this.sprite.setTexture(AssetPool.getTexture(this.sprite.getTexture().getFilepath()));
+            this.sprite.setTexture(AssetPool.makeTexture(this.sprite.getTexture().getFilepath()));
         }
         this.lastTransform = gameObject.transform.copy();
     }

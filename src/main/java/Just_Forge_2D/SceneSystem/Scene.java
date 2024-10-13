@@ -122,7 +122,7 @@ public class Scene
                 SpriteComponent spr = g.getComponent(SpriteComponent.class);
                 if (spr.getTexture() != null)
                 {
-                    spr.setTexture(AssetPool.getTexture(spr.getTexture().getFilepath()));
+                    spr.setTexture(AssetPool.makeTexture(spr.getTexture().getFilepath()));
                 }
             }
 

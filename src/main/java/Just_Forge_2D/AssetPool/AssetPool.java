@@ -8,8 +8,9 @@ import Just_Forge_2D.RenderingSystem.Texture;
 import Just_Forge_2D.Utils.Logger;
 
 import java.io.File;
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -17,7 +18,10 @@ import java.util.Map;
 public class AssetPool
 {
     // - - - private variable maps for all types of assets
-    private static final Map<String, String> nameToFile = new HashMap<>();
+    private static final Map<String, String> nameToFileTextures = new HashMap<>();
+    private static final Map<String, String> nameToFileSpriteSheet = new HashMap<>();
+    private static final Map<String, String> nameToFileShader = new HashMap<>();
+    private static final Map<String, String> nameToFileSounds = new HashMap<>();
     private static final Map<String, Shader> shaderPool = new HashMap<>();
     private static final Map<String, Texture> texturePool = new HashMap<>();
     private static final Map<String, SpriteSheet> spriteSheetPool = new HashMap<>();
@@ -36,7 +40,7 @@ public class AssetPool
             Logger.FORGE_LOG_DEBUG("Shader with path: " + FILE_PATH + " Hashed in shader Asset Pool and loaded");
             Shader shader = new Shader(FILE_PATH);
             shader.compile();
-            nameToFile.put(NAME, file.getAbsolutePath());
+            nameToFileShader.put(NAME, file.getAbsolutePath());
             AssetPool.shaderPool.put(file.getAbsolutePath(), shader);
         }
         else
@@ -47,8 +51,8 @@ public class AssetPool
 
     public static Shader getShader(String NAME)
     {
-        String path = nameToFile.get(NAME);
-        if (!nameToFile.containsKey(NAME) || !AssetPool.shaderPool.containsKey(path))
+        String path = nameToFileShader.get(NAME);
+        if (!nameToFileShader.containsKey(NAME) || !AssetPool.shaderPool.containsKey(path))
         {
 
             Logger.FORGE_LOG_ERROR("Shader : " + NAME + " does not exist");
@@ -60,11 +64,11 @@ public class AssetPool
 
     public static void removeShader(String NAME)
     {
-        String path = nameToFile.get(NAME);
-        if (nameToFile.containsKey(NAME) && AssetPool.shaderPool.containsKey(path))
+        String path = nameToFileShader.get(NAME);
+        if (nameToFileShader.containsKey(NAME) && AssetPool.shaderPool.containsKey(path))
         {
             shaderPool.remove(path);
-            nameToFile.remove(NAME);
+            nameToFileShader.remove(NAME);
             Logger.FORGE_LOG_DEBUG("Shader: " + NAME + " removed from AssetPool");
         }
         else
@@ -76,6 +80,7 @@ public class AssetPool
     public static void clearShaderPool()
     {
         Logger.FORGE_LOG_WARNING("Clearing Shader Pool");
+        nameToFileShader.clear();
         shaderPool.clear();
     }
 
@@ -90,7 +95,7 @@ public class AssetPool
             Logger.FORGE_LOG_DEBUG("Texture with path: " + FILE_PATH + " Hashed in shader Asset Pool and loaded");
             Texture texture = new Texture();
             texture.init(FILE_PATH);
-            nameToFile.put(NAME, file.getAbsolutePath());
+            nameToFileTextures.put(NAME, file.getAbsolutePath());
             AssetPool.texturePool.put(file.getAbsolutePath(), texture);
         }
         else
@@ -99,7 +104,18 @@ public class AssetPool
         }
     }
 
-    public static Texture getTexture(String FILE_PATH)
+    public static Texture getTexture(String NAME)
+    {
+        String path = nameToFileTextures.get(NAME);
+        if (!nameToFileTextures.containsKey(NAME) || !AssetPool.texturePool.containsKey(path))
+        {
+            Logger.FORGE_LOG_ERROR("Texture : " + NAME + " does not exist");
+            return null;
+        }
+        return AssetPool.texturePool.get(path);
+    }
+
+    public static Texture makeTexture(String FILE_PATH)
     {
         File file = new File(FILE_PATH);
 
@@ -113,9 +129,33 @@ public class AssetPool
             Logger.FORGE_LOG_DEBUG("Texture with path: " + FILE_PATH + " Hashed in Texture Asset Pool and loaded");
             Texture texture = new Texture();
             texture.init(FILE_PATH);
-            AssetPool.texturePool.put(file.getAbsolutePath(), texture);
             return texture;
         }
+    }
+
+    public static void removeTexture(String NAME)
+    {
+        String path = nameToFileTextures.get(NAME);
+        if (nameToFileTextures.containsKey(NAME) && AssetPool.texturePool.containsKey(path))
+        {
+            texturePool.remove(path);
+            nameToFileTextures.remove(NAME);
+            Logger.FORGE_LOG_DEBUG("Texture: " + NAME + " removed from AssetPool");
+        }
+        else
+        {
+            Logger.FORGE_LOG_WARNING("Texture: " + NAME + " doesn't exist in AssetPool");
+        }
+    }
+
+    public static List<Texture> getAllTextures()
+    {
+        return new ArrayList<>(texturePool.values());
+    }
+
+    public static List<String> getTextureNames()
+    {
+        return new ArrayList<>(nameToFileTextures.keySet());
     }
 
 
@@ -126,7 +166,7 @@ public class AssetPool
         File file = new File(EditorSystemManager.projectDir + "/Assets/Textures/" + SPRITE_SHEET.getTexture().getFilepath());
         if (!AssetPool.spriteSheetPool.containsKey(file.getAbsolutePath()))
         {
-            nameToFile.put(NAME, file.getAbsolutePath());
+            nameToFileSpriteSheet.put(NAME, file.getAbsolutePath());
             AssetPool.spriteSheetPool.put(file.getAbsolutePath(), SPRITE_SHEET);
             Logger.FORGE_LOG_DEBUG("Sprite sheet with path: " + file.getAbsolutePath() + " Hashed in Asset Pool and loaded");
         }
@@ -138,8 +178,8 @@ public class AssetPool
 
     public static SpriteSheet getSpriteSheet(String NAME)
     {
-        String path = nameToFile.get(NAME);
-        if (!nameToFile.containsKey(NAME) || !AssetPool.spriteSheetPool.containsKey(path))
+        String path = nameToFileSpriteSheet.get(NAME);
+        if (!nameToFileSpriteSheet.containsKey(NAME) || !AssetPool.spriteSheetPool.containsKey(path))
         {
             Logger.FORGE_LOG_ERROR("Sprite sheet : " + NAME + " does not exist");
             return null;
@@ -149,11 +189,11 @@ public class AssetPool
 
     public static void removeSpriteSheet(String NAME)
     {
-        String path = nameToFile.get(NAME);
-        if (nameToFile.containsKey(NAME) && AssetPool.spriteSheetPool.containsKey(path))
+        String path = nameToFileSpriteSheet.get(NAME);
+        if (nameToFileSpriteSheet.containsKey(NAME) && AssetPool.spriteSheetPool.containsKey(path))
         {
             spriteSheetPool.remove(path);
-            nameToFile.remove(NAME);
+            nameToFileSpriteSheet.remove(NAME);
             Logger.FORGE_LOG_DEBUG("Sprite Sheet: " + NAME + " removed from AssetPool");
         }
         else
@@ -165,13 +205,18 @@ public class AssetPool
     public static void clearSpriteSheetPool()
     {
         Logger.FORGE_LOG_WARNING("Clearing Sprite Sheet Pool");
+        nameToFileSpriteSheet.clear();
         spriteSheetPool.clear();
     }
 
-    public static Collection<SpriteSheet> getAllSpriteSheets()
+    public static List<SpriteSheet> getAllSpriteSheets()
     {
-        return spriteSheetPool.values();
+        return new ArrayList<>(spriteSheetPool.values());
     }
+
+    public static List<String> getSpriteSheetNames() {return new ArrayList<>(nameToFileSpriteSheet.keySet());}
+
+    public static List<String> getSpriteSheetPaths() {return new ArrayList<>(nameToFileSpriteSheet.values());}
 
 
     // - - - Sounds - - -
@@ -183,15 +228,15 @@ public class AssetPool
         {
             Logger.FORGE_LOG_DEBUG("Sound with path: " + FILE_PATH + " Hashed in Asset Pool and loaded");
             Sound sound = new Sound(file.getAbsolutePath(), DOES_LOOP);
-            nameToFile.put(NAME, file.getAbsolutePath());
+            nameToFileSounds.put(NAME, file.getAbsolutePath());
             AssetPool.soundPool.put(file.getAbsolutePath(), sound);
         }
     }
 
     public static Sound getSound(String NAME)
     {
-        String path = nameToFile.get(NAME);
-        if (!nameToFile.containsKey(NAME) || !AssetPool.soundPool.containsKey(path))
+        String path = nameToFileSounds.get(NAME);
+        if (!nameToFileSounds.containsKey(NAME) || !AssetPool.soundPool.containsKey(path))
         {
             Logger.FORGE_LOG_ERROR("Sound: " + NAME + " does not exist");
             return null;
@@ -201,12 +246,12 @@ public class AssetPool
 
     public static void removeSound(String NAME)
     {
-        String path = nameToFile.get(NAME);
-        if (nameToFile.containsKey(NAME) && AssetPool.soundPool.containsKey(path))
+        String path = nameToFileSounds.get(NAME);
+        if (nameToFileSounds.containsKey(NAME) && AssetPool.soundPool.containsKey(path))
         {
             soundPool.get(path).delete();
             soundPool.remove(path);
-            nameToFile.remove(NAME);
+            nameToFileSounds.remove(NAME);
             Logger.FORGE_LOG_DEBUG("Sound: " + NAME + " removed from AssetPool");
         }
         else
@@ -218,13 +263,17 @@ public class AssetPool
     public static void clearSoundPool()
     {
         Logger.FORGE_LOG_WARNING("Clearing Sound Pool");
+        nameToFileSounds.clear();
         soundPool.clear();
     }
 
-    public static Collection<Sound> getAllSounds()
+    public static List<Sound> getAllSounds()
     {
-        return soundPool.values();
+        return new ArrayList<>(soundPool.values());
     }
 
-    public static Map<String, Sound> getSoundMap() { return soundPool; };
+    public static List<String> getAllSoundNames()
+    {
+        return new ArrayList<>(nameToFileSounds.keySet());
+    }
 }

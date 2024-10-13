@@ -89,7 +89,7 @@ public class AnimationState
         Logger.FORGE_LOG_DEBUG("Refreshing Textures");
         for (Frame frame : animationFrames)
         {
-            frame.sprite.setTexture(AssetPool.getTexture(frame.sprite.getTexture().getFilepath()));
+            frame.sprite.setTexture(AssetPool.makeTexture(frame.sprite.getTexture().getFilepath()));
         }
     }
 

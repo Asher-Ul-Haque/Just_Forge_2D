@@ -60,6 +60,8 @@ public class Sprite
     public void setTexture(Texture TEXTURE)
     {
         this.texture = TEXTURE;
+        setWidth(TEXTURE.getWidth());
+        setHeight(TEXTURE.getHeight());
     }
 
     // - - - for coordinates
