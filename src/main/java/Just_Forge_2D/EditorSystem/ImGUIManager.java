@@ -251,7 +251,7 @@ public class ImGUIManager
         if (!EditorSystemManager.isRelease) setFontAtlas();
 
         EditorSystemManager.getCurrentTheme().applyTheme();
-        imGuiGl3.init("#version 450 core");
+        imGuiGl3.init("#version 410 core");
         Logger.FORGE_LOG_INFO("Editor GUI ready");
 
         addRenderWindow(KeyboardControls::editorUpdate, "Keyboard Controls");

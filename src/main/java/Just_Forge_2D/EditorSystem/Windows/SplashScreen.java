@@ -174,7 +174,6 @@ public class SplashScreen
             compiling = true;
             Logger.FORGE_LOG_TRACE("Building user code");
             GameManager.buildUserCode();
-            compiling = true;
             if (GameManager.isSuccess())
             {
                 if (EditorSystemManager.currentSceneInitializer == null)

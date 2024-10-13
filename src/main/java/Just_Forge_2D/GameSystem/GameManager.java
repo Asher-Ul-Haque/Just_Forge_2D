@@ -19,57 +19,73 @@ import static Just_Forge_2D.GameSystem.ProjectManager.copyDirectory;
 public class GameManager
 {
     protected static Game game;
-    protected static boolean success = false;
+    protected static volatile boolean success = false; // should we visible to other threads
     private static Path destinationDirPath;
+    private static volatile float progressPercentage; // should be visible to other threads
 
     // - - - Code Loading - - -
 
-    public static void buildUserCode() {
+    public static void buildUserCode()
+    {
         Logger.FORGE_LOG_INFO("Reading Your Code");
 
-        try {
-            if (!EditorSystemManager.isRelease) {
-                String gradlewCommand = System.getProperty("os.name").toLowerCase().contains("win") ? "gradlew.bat" : "./gradlew";
-                ProcessBuilder processBuilder = new ProcessBuilder(gradlewCommand, "build");
-                processBuilder.directory(new File(EditorSystemManager.projectDir));
-                processBuilder.inheritIO();
+        new Thread(() ->
+        {
+            try
+            {
+                if (!EditorSystemManager.isRelease)
+                {
+                    String gradlewCommand = System.getProperty("os.name").toLowerCase().contains("win") ? "gradlew.bat" : "./gradlew";
+                    ProcessBuilder processBuilder = new ProcessBuilder(gradlewCommand, "build");
+                    processBuilder.directory(new File(EditorSystemManager.projectDir));
+                    processBuilder.inheritIO();
 
-                Process process = processBuilder.start();
-                int exitCode = process.waitFor();
-                if (exitCode != 0) {
-                    Logger.FORGE_LOG_FATAL("Error in user code. Exit code : " + exitCode);
+                    Process process = processBuilder.start();
+                    int exitCode = process.waitFor();
+                    if (exitCode != 0)
+                    {
+                        Logger.FORGE_LOG_FATAL("Error in user code. Exit code : " + exitCode);
+                        return;
+                    }
+                }
+
+                try
+                {
+                    Path projectPath = Paths.get(EditorSystemManager.projectDir);
+                    Path classesDir = projectPath.resolve("build/classes/java/main");
+                    URLClassLoader classLoader = new URLClassLoader(new URL[]{classesDir.toUri().toURL()});
+
+                    Class<?> gameClass = classLoader.loadClass("Main");
+                    Constructor<?> constructor = gameClass.getConstructor();
+                    game = (Game) constructor.newInstance();
+                    success = true;
+                }
+                catch (Exception e)
+                {
+                    Logger.FORGE_LOG_ERROR(e.getMessage());
+                    Logger.FORGE_LOG_FATAL("Couldn't find an entry point in the user code. Ensure that the Game Interface is implemented.");
                     return;
                 }
+
+                game.init();
+                Logger.FORGE_LOG_TRACE("Build successful");
+            }
+            catch (Exception e)
+            {
+                Logger.FORGE_LOG_FATAL("Failed to build user code: " + e.getMessage());
             }
 
-            try {
-                Path projectPath = Paths.get(EditorSystemManager.projectDir);
-                Path classesDir = projectPath.resolve("build/classes/java/main");
-                URLClassLoader classLoader = new URLClassLoader(new URL[]{classesDir.toUri().toURL()});
 
-                Class<?> gameClass = classLoader.loadClass("Main");
-                Constructor<?> constructor = gameClass.getConstructor();
-                game = (Game) constructor.newInstance();
-                success = true;
-            } catch (Exception e) {
-                Logger.FORGE_LOG_ERROR(e.getMessage());
-                Logger.FORGE_LOG_FATAL("Couldn't find an entry point in the user code. Ensure that the Game Interface is implemented.");
-                return;
+            // Check the success variable here if needed
+            if (success)
+            {
+                Logger.FORGE_LOG_INFO("The build was successful, and the Main class was loaded.");
             }
-
-            game.init();
-            Logger.FORGE_LOG_TRACE("Build successful");
-        } catch (Exception e) {
-            Logger.FORGE_LOG_FATAL("Failed to build user code: " + e.getMessage());
-        }
-
-
-        // Check the success variable here if needed
-        if (success) {
-            Logger.FORGE_LOG_INFO("The build was successful, and the Main class was loaded.");
-        } else {
-            Logger.FORGE_LOG_WARNING("The build process failed or the Main class was not loaded correctly.");
-        }
+            else
+            {
+                Logger.FORGE_LOG_WARNING("The build process failed or the Main class was not loaded correctly.");
+            }
+        }).start();
     }
 
     public static void compileCode()
@@ -205,5 +221,10 @@ public class GameManager
     public static boolean isSuccess()
     {
         return success;
+    }
+
+    public static float getProgressPercentage()
+    {
+        return progressPercentage;
     }
 }
