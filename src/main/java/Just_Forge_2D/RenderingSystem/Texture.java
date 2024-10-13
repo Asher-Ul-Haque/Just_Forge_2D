@@ -36,82 +36,83 @@ public class Texture
         glBindTexture(GL_TEXTURE_2D, textureID);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-        // - - - sorry GPU, I cant give data because I dont have any.
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, WIDTH, HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, WIDTH, HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
     }
 
     public Texture(int WIDTH, int HEIGHT, String FILE_PATH)
     {
-        this.filepath = FILE_PATH;
-
         // - - - Generate the texture on GPU
         textureID = glGenTextures();
         glBindTexture(GL_TEXTURE_2D, textureID);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, WIDTH, HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
 
-        // - - - sorry GPU, I cant give data because I dont have any.
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, WIDTH, HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
+        init(FILE_PATH);
     }
 
     // - - - init
-    public void init(String FILEPATH)
+    public boolean init(String FILEPATH)
     {
         this.filepath = FILEPATH;
 
         // - - - Generate the texture on GPU
-        textureID = glGenTextures();
-        glBindTexture(GL_TEXTURE_2D, textureID);
-
-        // - - - Set texture parameters
-        // Repeat texture in both directions
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-
-        // - - - When shrinking or stretching pixelate it
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-
-        // - - - gET RGB data
-        IntBuffer width = BufferUtils.createIntBuffer(1);
-        IntBuffer height = BufferUtils.createIntBuffer(1);
-        IntBuffer channels = BufferUtils.createIntBuffer(1);
-        stbi_set_flip_vertically_on_load(true);
-        ByteBuffer image = stbi_load(filepath, width, height, channels, 0);
-
-        if (image != null)
+        try
         {
-            this.width = width.get(0);
-            this.height = height.get(0);
-            int textureType = switch (channels.get(0))
+            textureID = glGenTextures();
+            glBindTexture(GL_TEXTURE_2D, textureID);
+
+            // - - - Set texture parameters
+            // Repeat texture in both directions
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+            // - - - When shrinking or stretching pixelate it
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+            // - - - gET RGB data
+            IntBuffer width = BufferUtils.createIntBuffer(1);
+            IntBuffer height = BufferUtils.createIntBuffer(1);
+            IntBuffer channels = BufferUtils.createIntBuffer(1);
+            stbi_set_flip_vertically_on_load(true);
+            ByteBuffer image = stbi_load(filepath, width, height, channels, 0);
+
+            if (image != null)
             {
-                case 3 ->
+                this.width = width.get(0);
+                this.height = height.get(0);
+                int textureType = switch (channels.get(0))
                 {
-                    Logger.FORGE_LOG_TRACE("RGB image: " + filepath);
-                    yield GL_RGB; //RGB image
-                }
-                case 4 ->
-                {
-                    Logger.FORGE_LOG_TRACE("RGBA image " + filepath);
-                    yield GL_RGBA; //RGBA image
-                }
-                default ->
-                {
-                    Logger.FORGE_LOG_ERROR("Unknown picture type with " + channels.get(0) + " attributes");
-                    yield -1;
-                }
-            };
+                    case 3 ->
+                    {
+                        Logger.FORGE_LOG_TRACE("RGB image: " + filepath);
+                        yield GL_RGB; //RGB image
+                    }
+                    case 4 ->
+                    {
+                        Logger.FORGE_LOG_TRACE("RGBA image " + filepath);
+                        yield GL_RGBA; //RGBA image
+                    }
+                    default ->
+                    {
+                        Logger.FORGE_LOG_ERROR("Unknown picture type with " + channels.get(0) + " attributes");
+                        yield -1;
+                    }
+                };
 
-            glTexImage2D(GL_TEXTURE_2D, 0, textureType, width.get(0), height.get(0), 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
+                glTexImage2D(GL_TEXTURE_2D, 0, textureType, width.get(0), height.get(0), 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
+            }
+            Logger.FORGE_LOG_DEBUG("Loaded image sucessfully: " + filepath);
+            stbi_image_free(image);
+            return true;
         }
-        else
+        catch (Exception e)
         {
-            Logger.FORGE_LOG_WARNING("Could not load image: " + filepath);
-            assert false;
+            Logger.FORGE_LOG_ERROR("Could not load image: " + filepath);
+            Logger.FORGE_LOG_ERROR(e.getMessage());
+            return false;
         }
-        Logger.FORGE_LOG_DEBUG("Loaded image sucessfully: " + filepath);
-        stbi_image_free(image);
     }
 
     // - - - Bind texture to an object

@@ -105,9 +105,15 @@ public class AssetPool
         {
             Logger.FORGE_LOG_DEBUG("Texture with path: " + FILE_PATH + " Hashed in shader Asset Pool and loaded");
             Texture texture = new Texture();
-            texture.init(FILE_PATH);
-            nameToFileTextures.put(NAME, file.getAbsolutePath());
-            AssetPool.texturePool.put(file.getAbsolutePath(), texture);
+            if (texture.init(FILE_PATH))
+            {
+                nameToFileTextures.put(NAME, file.getAbsolutePath());
+                AssetPool.texturePool.put(file.getAbsolutePath(), texture);
+            }
+            else
+            {
+                Logger.FORGE_LOG_ERROR("Bad Texture : " + NAME);
+            }
         }
         else
         {
@@ -148,10 +154,13 @@ public class AssetPool
         }
         else
         {
-            Logger.FORGE_LOG_DEBUG("Texture with path: " + FILE_PATH + " Hashed in Texture Asset Pool and loaded");
             Texture texture = new Texture();
-            texture.init(FILE_PATH);
-            return texture;
+            if (texture.init(FILE_PATH)) return texture;
+            else
+            {
+                Logger.FORGE_LOG_WARNING("Bad Texture at : " + FILE_PATH);
+                return null;
+            }
         }
     }
 
@@ -268,6 +277,11 @@ public class AssetPool
         {
             Logger.FORGE_LOG_DEBUG("Sound with path: " + FILE_PATH + " Hashed in Asset Pool and loaded");
             Sound sound = new Sound(file.getAbsolutePath(), DOES_LOOP);
+            if (!sound.valid)
+            {
+                Logger.FORGE_LOG_ERROR("Bad Sound : " + NAME);
+                return;
+            }
             nameToFileSounds.put(NAME, file.getAbsolutePath());
             AssetPool.soundPool.put(file.getAbsolutePath(), sound);
         }

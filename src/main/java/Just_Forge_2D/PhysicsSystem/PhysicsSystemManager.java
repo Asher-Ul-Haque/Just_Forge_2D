@@ -114,10 +114,6 @@ public class PhysicsSystemManager
                 body.resetMassData();
             }
         }
-        else
-        {
-            Logger.FORGE_LOG_ERROR("Cannot register : " + OBJ + " with Physics System : null game object");
-        }
     }
 
     // - - - destroy
@@ -132,10 +128,6 @@ public class PhysicsSystemManager
                 rawWorld.getWorld().destroyBody(rb.getRawBody());
                 rb.setRawBody(null);
             }
-        }
-        else
-        {
-            Logger.FORGE_LOG_ERROR("Cannot remove : " + GO + " from physics system: null raw physics body");
         }
     }
 

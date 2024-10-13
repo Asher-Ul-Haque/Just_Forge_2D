@@ -117,14 +117,8 @@ public class GameWindow extends Window
 
         if (framebuffer == null) framebuffer = new Framebuffer(WindowSystemManager.getMonitorSize().x, WindowSystemManager.getMonitorSize().y);
         glViewport(0, 0, framebuffer.getSize().x, framebuffer.getSize().y);
-        Logger.FORGE_LOG_INFO("Framebuffer created and assigned for offscreen rendering");
-        Logger.FORGE_LOG_INFO("Editor linked with window");
-
-
-        // - - - compile shaders
-
-        EditorSystemManager.compileShaders();
-
+        Logger.FORGE_LOG_DEBUG("Framebuffer created and assigned for offscreen rendering");
+        Logger.FORGE_LOG_DEBUG("Editor linked with window");
 
         beginTime = (float) TimeKeeper.getTime();
         Logger.FORGE_LOG_INFO("Time keeping system Online");

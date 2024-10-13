@@ -18,6 +18,7 @@ public class Sound extends Component
     private int bufferID;
     private int sourceID;
     private final String filepath;
+    public final boolean valid;
 
     private boolean isPlaying = false;
 
@@ -37,6 +38,7 @@ public class Sound extends Component
             Logger.FORGE_LOG_ERROR("Could not load sound: " + FILEPATH);
             stackPop();
             stackPop();
+            valid = false;
             return;
         }
 
@@ -72,6 +74,7 @@ public class Sound extends Component
 
         // - - - free raw buffers
         free(rawAudioBuffer);
+        valid = true;
     }
 
     public void delete()

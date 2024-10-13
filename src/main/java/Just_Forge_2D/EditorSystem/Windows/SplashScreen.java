@@ -10,7 +10,7 @@ import Just_Forge_2D.EventSystem.Events.EventTypes;
 import Just_Forge_2D.GameSystem.GameManager;
 import Just_Forge_2D.GameSystem.ProjectManager;
 import Just_Forge_2D.RenderingSystem.Texture;
-import Just_Forge_2D.SceneSystem.EmptySceneScript;
+import Just_Forge_2D.SceneSystem.MainSceneScript;
 import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.WindowSystem.GameWindow;
@@ -190,7 +190,7 @@ public class SplashScreen
         {
             if (EditorSystemManager.currentSceneInitializer == null)
             {
-                EditorSystemManager.setCurrentSceneInitializer(EmptySceneScript.class);
+                EditorSystemManager.setCurrentSceneInitializer(MainSceneScript.class);
             }
             GameWindow.get().setVisible(false);
             Logger.FORGE_LOG_TRACE("Project Path : " + EditorSystemManager.projectDir);

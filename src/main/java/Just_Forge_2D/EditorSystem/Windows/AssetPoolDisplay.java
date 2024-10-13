@@ -11,6 +11,7 @@ import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.PrefabSystem.PrefabManager;
 import Just_Forge_2D.RenderingSystem.SpriteSheet;
 import Just_Forge_2D.RenderingSystem.Texture;
+import Just_Forge_2D.Utils.Logger;
 import imgui.ImGui;
 import imgui.ImVec2;
 import org.joml.Vector2f;
@@ -34,6 +35,7 @@ public class AssetPoolDisplay
         if (ImGui.beginTabItem("Sprite Sheets"))
         {
             if (ImGui.button("Add a SpriteSheet")) open = !open;
+            ImGui.sameLine();
             if (ImGui.button("Clear")) AssetPool.clearSpriteSheetPool();
             if (open)
             {
@@ -48,13 +50,23 @@ public class AssetPoolDisplay
                     path = TinyFileDialogs.tinyfd_openFileDialog("Path", EditorSystemManager.projectDir + "/Assets/Textures/", null, null, false);
                 }
                 ImGui.nextColumn();
-                if (ImGui.button("Add"))
+                if (!name.isEmpty() && !path.isEmpty())
                 {
-                    Texture t = new Texture();
-                    t.init(path);
-                    SpriteSheet sheet = new SpriteSheet(t, (int) size.x, (int) size.y, spriteCount, spriteSpacing);
-                    AssetPool.addSpriteSheet(name, sheet);
+                    if (ImGui.button("Add"))
+                    {
+                        Texture t = new Texture();
+                        if (t.init(path))
+                        {
+                            SpriteSheet sheet = new SpriteSheet(t, (int) size.x, (int) size.y, spriteCount, spriteSpacing);
+                            AssetPool.addSpriteSheet(name, sheet, true);
+                        }
+                        else
+                        {
+                            Logger.FORGE_LOG_ERROR("Bad Texture: " + name);
+                        }
+                    }
                 }
+
                 ImGui.columns(1);
             }
             List<SpriteSheet> spriteSheets = AssetPool.getAllSpriteSheets();
@@ -76,9 +88,9 @@ public class AssetPoolDisplay
                     ImVec2 itemSpacing = new ImVec2();
                     ImGui.getStyle().getItemSpacing(itemSpacing);
                     float windowX2 = windowPos.x + windowSize.x;
-                    for (int i = 0; i < spriteSheets.get(i).size(); ++i)
+                    for (int i = 0; i < spriteSheets.get(j).size(); ++i)
                     {
-                        Sprite sprite = spriteSheets.get(i).getSprite(i);
+                        Sprite sprite = spriteSheets.get(j).getSprite(i);
                         float spriteWidth = sprite.getWidth() * 2;
                         float spriteHeight = sprite.getHeight() * 2;
                         int id = sprite.getTextureID();
@@ -96,7 +108,7 @@ public class AssetPoolDisplay
                         ImGui.getItemRectMax(lastButtonPos);
                         float lastButtonX2 = lastButtonPos.x;
                         float nextButtonX2 = lastButtonX2 + itemSpacing.x + spriteWidth;
-                        if (i + 1 < spriteSheets.get(i).size() && nextButtonX2 < windowX2)
+                        if (i + 1 < spriteSheets.get(j).size() && nextButtonX2 < windowX2)
                         {
                             ImGui.sameLine();
                         }
@@ -113,6 +125,7 @@ public class AssetPoolDisplay
         if (ImGui.beginTabItem("Textures"))
         {
             if (ImGui.button("Add a Texture")) open = !open;
+            ImGui.sameLine();
             if (ImGui.button("Clear")) AssetPool.clearTexturePool();
             if (open)
             {
@@ -124,9 +137,12 @@ public class AssetPoolDisplay
                     path = TinyFileDialogs.tinyfd_openFileDialog("Path", EditorSystemManager.projectDir + "/Assets/Textures/", null, null, false);
                 }
                 ImGui.nextColumn();
-                if (ImGui.button("Add"))
+                if (!name.isEmpty() && !path.isEmpty())
                 {
-                    AssetPool.addTexture(name, path);
+                    if (ImGui.button("Add"))
+                    {
+                        AssetPool.addTexture(name, path, true);
+                    }
                 }
                 ImGui.columns(1);
             }
@@ -163,6 +179,7 @@ public class AssetPoolDisplay
         if (ImGui.beginTabItem("Sounds"))
         {
             if (ImGui.button("Add a Sound")) open = !open;
+            ImGui.sameLine();
             if (ImGui.button("Clear")) AssetPool.clearSoundPool();
             if (open)
             {
@@ -175,9 +192,12 @@ public class AssetPoolDisplay
                     path = TinyFileDialogs.tinyfd_openFileDialog("Path", EditorSystemManager.projectDir + "/Assets/Sounds/", null, null, false);
                 }
                 ImGui.nextColumn();
-                if (ImGui.button("Add"))
+                if (!name.isEmpty() && !path.isEmpty())
                 {
-                    AssetPool.addSound(name, path, loop);
+                    if (ImGui.button("Add"))
+                    {
+                        AssetPool.addSound(name, path, loop, true);
+                    }
                 }
                 ImGui.columns(1);
             }

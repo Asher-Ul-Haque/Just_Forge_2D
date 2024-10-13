@@ -65,7 +65,6 @@ public class GameObject
                 }
             }
         }
-        Logger.FORGE_LOG_WARNING("No component of type : " + COMPONENT_CLASS + " in : " + this);
         return null;
     }
 

@@ -81,7 +81,7 @@ public class Logs
             }
             else
             {
-                continue; // Skip the log if the corresponding checkbox is not checked
+                continue;
             }
 
             ImGui.textColored(r, g, b, 1f, e);

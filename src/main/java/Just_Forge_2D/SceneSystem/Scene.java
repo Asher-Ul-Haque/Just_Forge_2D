@@ -169,7 +169,6 @@ public class Scene
                 return object;
             }
         }
-        Logger.FORGE_LOG_WARNING("Found no game object with ID: " + GAME_OBJECT_ID + " in scene: " + this);
         return null;
     }
 

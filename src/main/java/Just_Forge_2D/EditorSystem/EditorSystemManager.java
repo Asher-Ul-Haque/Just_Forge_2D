@@ -7,7 +7,7 @@ import Just_Forge_2D.EditorSystem.Themes.Theme;
 import Just_Forge_2D.EditorSystem.Windows.ObjectSelector;
 import Just_Forge_2D.EntityComponentSystem.Components.ComponentList;
 import Just_Forge_2D.RenderingSystem.Shader;
-import Just_Forge_2D.SceneSystem.EmptySceneScript;
+import Just_Forge_2D.SceneSystem.MainSceneScript;
 import Just_Forge_2D.SceneSystem.SceneScript;
 import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.Logger;
@@ -45,7 +45,7 @@ public class EditorSystemManager
         catch (Exception e)
         {
             Logger.FORGE_LOG_FATAL("Couldn't change scene");
-            GameWindow.changeScene(new EmptySceneScript());
+            GameWindow.changeScene(new MainSceneScript());
         }
     }
 
@@ -127,6 +127,7 @@ public class EditorSystemManager
         EditorSystemManager.setSelector();
         setEditorLayer();
         ComponentList.initialize();
+        compileShaders();
     }
 
     public static void end()
