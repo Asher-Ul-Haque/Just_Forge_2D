@@ -78,6 +78,15 @@ public class Window implements Observer
         glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, this.config.transparent ? GLFW_TRUE : GLFW_FALSE);
         glfwWindowHint(GLFW_FLOATING, this.config.alwaysOnTop ? GLFW_TRUE : GLFW_FALSE);
 
+        // - - - mac os specific
+        if (System.getProperty("os.name").contains("mac"))
+        {
+            glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+            glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
+            glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+            glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE);
+        }
+
         // - - - Create the window
         this.glfwWindowPtr = glfwCreateWindow(100, 100, this.config.title, 0, 0);
         if (this.glfwWindowPtr == 0)
@@ -294,6 +303,11 @@ public class Window implements Observer
     public void setIcon(String IMAGE_PATH)
     {
         Logger.FORGE_LOG_DEBUG("Setting Icon for " + this.config.title + " to : " + IMAGE_PATH);
+        if (System.getProperty("os.name").toLowerCase().contains("mac"))
+        {
+            Logger.FORGE_LOG_ERROR("Mac OS doesnt allow for window icons");
+            return;
+        }
         if (IMAGE_PATH == null)
         {
             Logger.FORGE_LOG_WARNING("No Icon Path specified, going with default icon for " + this.config.title);
