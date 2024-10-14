@@ -69,6 +69,7 @@ public class DefaultValues
     public static final int DEFAULT_WINDOW_WIDTH = 1980;
     public static final int DEFAULT_WINDOW_HEIGHT = 720;
     public static final float DEFAULT_ASPECT_RATIO = 16f / 9f;
+    public static final float DEFAULT_SIZE_DOWN_FACTOR = 16f;
 
     // - - - config
     public static final float DEFAULT_FPS = 60.0f;

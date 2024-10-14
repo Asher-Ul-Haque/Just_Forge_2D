@@ -11,6 +11,7 @@ import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.PrefabSystem.PrefabManager;
 import Just_Forge_2D.RenderingSystem.SpriteSheet;
 import Just_Forge_2D.RenderingSystem.Texture;
+import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.Logger;
 import imgui.ImGui;
 import imgui.ImVec2;
@@ -24,10 +25,11 @@ public class AssetPoolDisplay
     private static String name = "";
     private static String path = "";
     private static boolean open = false;
-    private static Vector2f size = new Vector2f(GridlinesComponent.gridSize);
+    private static final Vector2f size = new Vector2f(GridlinesComponent.gridSize);
     private static int spriteCount;
     private static int spriteSpacing;
     private static boolean loop;
+    private static boolean keepSize;
 
 
     private static void spriteSheetDisplay()
@@ -48,6 +50,7 @@ public class AssetPoolDisplay
                 if (ImGui.button("Browse"))
                 {
                     path = TinyFileDialogs.tinyfd_openFileDialog("Path", EditorSystemManager.projectDir + "/Assets/Textures/", null, null, false);
+                    if (path == null) path = "";
                 }
                 ImGui.nextColumn();
                 if (!name.isEmpty() && !path.isEmpty())
@@ -75,6 +78,7 @@ public class AssetPoolDisplay
             {
                 if (ImGui.collapsingHeader(spriteSheetNames.get(j)))
                 {
+                    keepSize = Widgets.drawBoolControl("Keep Size", keepSize);
                     ImGui.sameLine();
                     if (ImGui.button("Remove"))
                     {
@@ -99,7 +103,7 @@ public class AssetPoolDisplay
                         ImGui.pushID(i);
                         if (ImGui.imageButton(id, spriteWidth, spriteHeight, texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y))
                         {
-                            GameObject object = PrefabManager.generateDefaultSpriteObject(sprite, GridControls.snapToGrid ? GridlinesComponent.gridSize.x : sprite.getWidth() , GridControls.snapToGrid ? GridlinesComponent.gridSize.y : sprite.getHeight());
+                            GameObject object = PrefabManager.generateDefaultSpriteObject(sprite, keepSize? GridlinesComponent.gridSize.x : sprite.getWidth() / DefaultValues.DEFAULT_SIZE_DOWN_FACTOR, keepSize ? GridlinesComponent.gridSize.y : sprite.getHeight() / DefaultValues.DEFAULT_SIZE_DOWN_FACTOR);
                             MouseControlComponent.pickupObject(object);
                         }
                         ImGui.popID();
@@ -135,6 +139,7 @@ public class AssetPoolDisplay
                 if (ImGui.button("Browse"))
                 {
                     path = TinyFileDialogs.tinyfd_openFileDialog("Path", EditorSystemManager.projectDir + "/Assets/Textures/", null, null, false);
+                    if (path == null) path = "";
                 }
                 ImGui.nextColumn();
                 if (!name.isEmpty() && !path.isEmpty())
@@ -152,6 +157,8 @@ public class AssetPoolDisplay
             {
                 if (ImGui.collapsingHeader(names.get(j)))
                 {
+                    keepSize = Widgets.drawBoolControl("Keep Size", keepSize);
+                    ImGui.sameLine();
                     if (ImGui.button("Remove"))
                     {
                         AssetPool.removeTexture(names.get(j));
@@ -164,7 +171,7 @@ public class AssetPoolDisplay
                     Vector2f[] texCoords = sprite.getTextureCoordinates();
                     if (ImGui.imageButton(id, sprite.getWidth(), sprite.getHeight(), texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y))
                     {
-                        GameObject object = PrefabManager.generateDefaultSpriteObject(sprite, GridControls.snapToGrid ? GridlinesComponent.gridSize.x : sprite.getWidth() , GridControls.snapToGrid ? GridlinesComponent.gridSize.y : sprite.getHeight());
+                        GameObject object = PrefabManager.generateDefaultSpriteObject(sprite, keepSize? GridlinesComponent.gridSize.x : sprite.getWidth() / DefaultValues.DEFAULT_SIZE_DOWN_FACTOR, keepSize ? GridlinesComponent.gridSize.y : sprite.getHeight() / DefaultValues.DEFAULT_SIZE_DOWN_FACTOR);
                         MouseControlComponent.pickupObject(object);
                     }
                     ImGui.popID();
@@ -190,6 +197,7 @@ public class AssetPoolDisplay
                 if (ImGui.button("Browse"))
                 {
                     path = TinyFileDialogs.tinyfd_openFileDialog("Path", EditorSystemManager.projectDir + "/Assets/Sounds/", null, null, false);
+                    if (path == null) path = "";
                 }
                 ImGui.nextColumn();
                 if (!name.isEmpty() && !path.isEmpty())
