@@ -18,14 +18,14 @@ import java.util.Map;
 public class AssetPool
 {
     // - - - private variable maps for all types of assets
-    private static final Map<String, String> nameToFileTextures = new HashMap<>();
-    private static final Map<String, String> nameToFileSpriteSheet = new HashMap<>();
-    private static final Map<String, String> nameToFileShader = new HashMap<>();
-    private static final Map<String, String> nameToFileSounds = new HashMap<>();
-    private static final Map<String, Shader> shaderPool = new HashMap<>();
-    private static final Map<String, Texture> texturePool = new HashMap<>();
-    private static final Map<String, SpriteSheet> spriteSheetPool = new HashMap<>();
-    private static final Map<String, Sound> soundPool = new HashMap<>();
+    protected static final Map<String, String> nameToFileTextures = new HashMap<>();
+    protected static final Map<String, String> nameToFileSpriteSheet = new HashMap<>();
+    protected static final Map<String, String> nameToFileShader = new HashMap<>();
+    protected static final Map<String, String> nameToFileSounds = new HashMap<>();
+    protected static final Map<String, Shader> shaderPool = new HashMap<>();
+    protected static final Map<String, Texture> texturePool = new HashMap<>();
+    protected static final Map<String, SpriteSheet> spriteSheetPool = new HashMap<>();
+    protected static final Map<String, Sound> soundPool = new HashMap<>();
 
 
     // - - - Functions - - -

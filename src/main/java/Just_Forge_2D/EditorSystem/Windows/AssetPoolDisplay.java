@@ -97,7 +97,7 @@ public class AssetPoolDisplay
                         Sprite sprite = spriteSheets.get(j).getSprite(i);
                         float spriteWidth = sprite.getWidth() * 2;
                         float spriteHeight = sprite.getHeight() * 2;
-                        int id = sprite.getTextureID();
+                        int id = sprite.getTexture().getID();
                         Vector2f[] texCoords = sprite.getTextureCoordinates();
 
                         ImGui.pushID(i);
@@ -166,7 +166,7 @@ public class AssetPoolDisplay
                     }
                     Sprite sprite = new Sprite();
                     sprite.setTexture(textures.get(j));
-                    int id = sprite.getTextureID();
+                    int id = textures.get(j).getID();
                     ImGui.pushID(id);
                     Vector2f[] texCoords = sprite.getTextureCoordinates();
                     if (ImGui.imageButton(id, sprite.getWidth(), sprite.getHeight(), texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y))

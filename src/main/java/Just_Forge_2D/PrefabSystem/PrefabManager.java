@@ -33,7 +33,7 @@ public class PrefabManager
     public static GameObject generateDefaultSpriteObject(Sprite SPRITE, float SIZE_X, float SIZE_Y)
     {
         SpritePrefab spritePrefab = new SpritePrefab("Auto Generated " + ++defaultPrefabMask, SPRITE, SIZE_X, SIZE_Y);
-        return  spritePrefab.create();
+        return spritePrefab.create();
     }
 
     public static void render()

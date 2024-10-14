@@ -1,6 +1,7 @@
 package Just_Forge_2D.EditorSystem;
 
 import Just_Forge_2D.AssetPool.AssetPool;
+import Just_Forge_2D.AssetPool.AssetPoolSerializer;
 import Just_Forge_2D.AudioSystem.AudioSystemManager;
 import Just_Forge_2D.EditorSystem.Themes.CleanTheme;
 import Just_Forge_2D.EditorSystem.Themes.Theme;
@@ -132,6 +133,7 @@ public class EditorSystemManager
 
     public static void end()
     {
+        AssetPoolSerializer.saveAssetPool(projectDir + "/Assets/Pool.justForgeFile");
         AudioSystemManager.terminate();
         ImGUIManager.destroyImGui();
         Logger.finish();

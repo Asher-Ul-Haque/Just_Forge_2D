@@ -164,7 +164,7 @@ public class Camera implements Observer
         if (EVENT.type.equals(EventTypes.ForgeResize))
         {
             float aspectRatio = (float) GameWindow.getFrameBuffer().getSize().x / (float) GameWindow.getFrameBuffer().getSize().y;
-            float orthoWidth = DefaultValues.DEFAULT_CAMERA_PROJECTION_SIZE.x; // TODO: use the game window aspect ratio
+            float orthoWidth = DefaultValues.DEFAULT_CAMERA_PROJECTION_SIZE.x;
             float orthoHeight = orthoWidth / aspectRatio;
             this.projectionSize = new Vector2f(orthoWidth, orthoHeight);
         }

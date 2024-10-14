@@ -14,29 +14,25 @@ public class Texture
 {
     // - - - Private variables
     private String filepath;
-    private transient int textureID;
+    private int textureID;
     private int width, height;
 
     // - - - Functions - - -
 
     // - - - Constructor
     public Texture()
-    {
-        textureID = -1;
-        width = -1;
-        height = -1;
-    }
+    {}
 
     public Texture(int WIDTH, int HEIGHT)
     {
-        this.filepath = "Assets/Textures/Generated";
+        this.filepath = "Assets/Textures/icon.png";
 
         // - - - Generate the texture on GPU
         textureID = glGenTextures();
         glBindTexture(GL_TEXTURE_2D, textureID);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, WIDTH, HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, WIDTH, HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
     }
 
     public Texture(int WIDTH, int HEIGHT, String FILE_PATH)
@@ -46,7 +42,7 @@ public class Texture
         glBindTexture(GL_TEXTURE_2D, textureID);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, WIDTH, HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, WIDTH, HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
 
         init(FILE_PATH);
     }

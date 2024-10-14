@@ -12,6 +12,9 @@ public class SpriteSheet
     // - - - private variables
     private final Texture texture;
     private final List<Sprite> sprites;
+    private final int height;
+    private final int width;
+    private final int spacing;
 
 
     // - - - | Functions | - - -
@@ -20,6 +23,9 @@ public class SpriteSheet
     // - - - Constructor to make a sprite sheet
     public SpriteSheet(Texture SPRITE_SHEET, int SPRITE_WIDTH, int SPRITE_HEIGHT, int SPRITE_COUNT, int SPACING)
     {
+        this.width = SPRITE_WIDTH;
+        this.height = SPRITE_HEIGHT;
+        this.spacing = SPACING;
         this.sprites = new ArrayList<>();
         this.texture = SPRITE_SHEET;
 
@@ -74,6 +80,12 @@ public class SpriteSheet
     {
         return this.sprites.size();
     }
+
+    public int getHeight() {return this.height;}
+
+    public int getWidth() {return this.width;}
+
+    public int getSpacing() {return this.spacing;}
 
     // - - - getter for texture
     public Texture getTexture()

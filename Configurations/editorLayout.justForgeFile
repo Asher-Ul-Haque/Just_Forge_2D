@@ -47,13 +47,13 @@ DockId=0x00000005,3
 Pos=4,28
 Size=376,346
 Collapsed=0
-DockId=0x00000003,0
+DockId=0x00000003,1
 
 [Window][Prefabs]
 Pos=4,28
 Size=376,346
 Collapsed=0
-DockId=0x00000003,1
+DockId=0x00000003,0
 
 [Window][Logger]
 Pos=382,554

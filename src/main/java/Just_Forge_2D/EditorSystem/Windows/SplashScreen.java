@@ -1,6 +1,7 @@
 package Just_Forge_2D.EditorSystem.Windows;
 
 import Just_Forge_2D.AssetPool.AssetPool;
+import Just_Forge_2D.AssetPool.AssetPoolSerializer;
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.EditorSystem.ImGUIManager;
 import Just_Forge_2D.EditorSystem.Themes.Theme;
@@ -188,6 +189,7 @@ public class SplashScreen
         }
         if (GameManager.isSuccess())
         {
+            AssetPoolSerializer.loadAssetPool(EditorSystemManager.projectDir + "/Assets/Pool.justForgeFile");
             if (EditorSystemManager.currentSceneInitializer == null)
             {
                 EditorSystemManager.setCurrentSceneInitializer(MainSceneScript.class);
