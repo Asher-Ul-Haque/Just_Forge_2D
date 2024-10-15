@@ -123,7 +123,7 @@ public class GameManager
 
                 Path projectPath = Paths.get(EditorSystemManager.projectDir);
                 Path assetsPath = projectPath.resolve("Assets");
-                Path savesPath = projectPath.resolve("Scenes");
+                Path savesPath = projectPath.resolve("SceneScripts");
 
                 destinationDirPath = Paths.get(TinyFileDialogs.tinyfd_selectFolderDialog("Select Project Directory", projectPath.toString()));
                 if (destinationDirPath != null)

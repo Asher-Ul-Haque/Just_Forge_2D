@@ -9,6 +9,7 @@ import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Joints.PistonComponent;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Joints.SpringComponent;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.KeyboardControllerComponent;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent;
+import Just_Forge_2D.TextSystem.TextComponent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,13 +34,14 @@ public class ComponentList
         types.add(SpringComponent.class);
         types.add(HingeComponent.class);
         types.add(PistonComponent.class);
+        types.add(TextComponent.class);
     }
 
     public static final List<Class<? extends Component>> types = new ArrayList<>();
 
     public static void addComponentType(Class<? extends Component> TYPE)
     {
-        types.add(TYPE);
+        if (!hasComponentType(TYPE)) types.add(TYPE);
     }
 
     public static void removeComponentType(Class<? extends Component> TYPE)
