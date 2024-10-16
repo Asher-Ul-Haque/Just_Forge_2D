@@ -20,7 +20,7 @@ public class GameManager
 {
     protected static Game game;
     protected static volatile boolean success = false; // should we visible to other threads
-    private static Path destinationDirPath;
+    private static Path destinationDirPath = Paths.get(EditorSystemManager.projectDir);
     private static volatile float progressPercentage; // should be visible to other threads
 
     // - - - Code Loading - - -

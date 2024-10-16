@@ -74,10 +74,8 @@ public class MenuBar
             for (int i = 0; i < ImGUIManager.getRenderable().size(); ++i)
             {
                 Boolean b = ImGUIManager.getRenderable().get(i);
-                if (ImGui.menuItem((b ? "HIDE" : "SHOW") + "\t\t" + ImGUIManager.getRenderableNames().get(i)))
-                {
-                    ImGUIManager.getRenderable().set(i, !b);
-                }
+                if (ImGui.checkbox(ImGUIManager.getRenderableNames().get(i), b)) b = !b;
+                ImGUIManager.getRenderable().set(i, b);
             }
             ImGui.endMenu();
         }

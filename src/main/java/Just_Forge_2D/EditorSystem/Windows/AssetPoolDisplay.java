@@ -151,9 +151,8 @@ public class AssetPoolDisplay
                 }
                 ImGui.columns(1);
             }
-            List<Texture> textures = AssetPool.getAllTextures();
             List<String> names = AssetPool.getTextureNames();
-            for (int j = 0; j < textures.size(); ++j)
+            for (int j = 0; j < names.size(); ++j)
             {
                 if (ImGui.collapsingHeader(names.get(j)))
                 {
@@ -165,8 +164,11 @@ public class AssetPoolDisplay
                         continue;
                     }
                     Sprite sprite = new Sprite();
-                    sprite.setTexture(textures.get(j));
-                    int id = textures.get(j).getID();
+                    Texture t = AssetPool.getTexture(names.get(j));
+                    if (t == null) continue;
+                    sprite.setTexture(t);
+                    ImGui.button(t.getFilepath());
+                    int id = t.getID();
                     ImGui.pushID(id);
                     Vector2f[] texCoords = sprite.getTextureCoordinates();
                     if (ImGui.imageButton(id, sprite.getWidth(), sprite.getHeight(), texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y))

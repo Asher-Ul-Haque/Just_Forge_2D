@@ -107,7 +107,7 @@ public class AssetPool
             Texture texture = new Texture();
             if (texture.init(FILE_PATH))
             {
-                nameToFileTextures.put(NAME, file.getAbsolutePath());
+                AssetPool.nameToFileTextures.put(NAME, file.getAbsolutePath());
                 AssetPool.texturePool.put(file.getAbsolutePath(), texture);
             }
             else

@@ -173,7 +173,7 @@ public class SplashScreen
         Theme.resetDefaultTextColor();
 
         if (load) cleanup();
-        if (!GameWindow.get().isVisible()) GameWindow.get().setVisible(true);
+        if (!EditorSystemManager.isRelease) if (!GameWindow.get().isVisible()) GameWindow.get().setVisible(true);
         load = true;
     }
 

@@ -37,14 +37,21 @@ public class Texture
 
     public Texture(int WIDTH, int HEIGHT, String FILE_PATH)
     {
-        // - - - Generate the texture on GPU
-        textureID = glGenTextures();
-        glBindTexture(GL_TEXTURE_2D, textureID);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, WIDTH, HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
+        try
+        {
+            // - - - Generate the texture on GPU
+            textureID = glGenTextures();
+            glBindTexture(GL_TEXTURE_2D, textureID);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, WIDTH, HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
 
-        init(FILE_PATH);
+            init(FILE_PATH);
+        }
+        catch (Throwable e)
+        {
+            Logger.FORGE_LOG_FATAL(e.getMessage());
+        }
     }
 
     // - - - init
@@ -97,13 +104,13 @@ public class Texture
                     }
                 };
 
-                glTexImage2D(GL_TEXTURE_2D, 0, textureType, width.get(0), height.get(0), 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
+                glTexImage2D(GL_TEXTURE_2D, 0, textureType, width.get(0), height.get(0), 0, textureType, GL_UNSIGNED_BYTE, image);
+                stbi_image_free(image);
             }
             Logger.FORGE_LOG_DEBUG("Loaded image sucessfully: " + filepath);
-            stbi_image_free(image);
             return true;
         }
-        catch (Exception e)
+        catch (Throwable e)
         {
             Logger.FORGE_LOG_ERROR("Could not load image: " + filepath);
             Logger.FORGE_LOG_ERROR(e.getMessage());
