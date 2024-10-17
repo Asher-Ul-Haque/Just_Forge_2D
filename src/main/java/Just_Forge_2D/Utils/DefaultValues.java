@@ -117,6 +117,10 @@ public class DefaultValues
     public static final float DEFAULT_TAB_ROUNDING = 4f;
     public static final float DEFAULT_TAB_BORDER = 0f;
 
+    // - - - Max Display Size
+    public static final float MAX_IMAGE_DISPLAY_WIDTH = 64;
+    public static final float MAX_IMAGE_DISPLAY_HEIGHT = 64;
+
 
     private static boolean showWindow = true;
 

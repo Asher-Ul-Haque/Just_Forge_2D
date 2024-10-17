@@ -1,6 +1,7 @@
 package Just_Forge_2D.EntityComponentSystem.Components;
 
 import Just_Forge_2D.EditorSystem.EditorComponents.GridlinesComponent;
+import Just_Forge_2D.EditorSystem.Icons;
 import Just_Forge_2D.EditorSystem.Widgets;
 import Just_Forge_2D.Utils.DefaultValues;
 import org.joml.Vector2f;
@@ -88,11 +89,10 @@ public class TransformComponent extends Component
     @Override
     public void editorGUI()
     {
-        this.gameObject.name = Widgets.inputText("Name", this.gameObject.name);
-
-        Widgets.drawVec2Control("Position", this.position);
-        Widgets.drawVec2Control("Scale", this.scale, Math.min(GridlinesComponent.gridSize.x, GridlinesComponent.gridSize.y), 0.1f);
-        this.rotation = Widgets.drawFloatControl("Rotation", this.rotation);
-        this.layer = Widgets.drawIntControl("Layer", this.layer);
+        this.gameObject.name = Widgets.inputText(Icons.User + "  Name", this.gameObject.name);
+        Widgets.drawVec2Control(Icons.Crosshairs + "  Position", this.position);
+        Widgets.drawVec2Control(Icons.ExpandArrowsAlt + "  Scale", this.scale, Math.min(GridlinesComponent.gridSize.x, GridlinesComponent.gridSize.y), 0.1f);
+        this.rotation = Widgets.drawFloatControl(Icons.Sync + "  Rotation", this.rotation);
+        this.layer = Widgets.drawIntControl(Icons.LayerGroup + "  Layer", this.layer);
     }
 }

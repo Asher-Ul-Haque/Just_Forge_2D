@@ -1,6 +1,8 @@
 package Just_Forge_2D.EditorSystem;
 
+import Just_Forge_2D.Utils.DefaultValues;
 import imgui.ImGui;
+import imgui.ImVec2;
 import imgui.flag.ImGuiCol;
 import imgui.flag.ImGuiTableFlags;
 import imgui.type.ImInt;
@@ -391,5 +393,23 @@ public class Widgets {
         ImGui.pushStyleColor(ImGuiCol.Button, r, g, b, 1.0f);
         ImGui.pushStyleColor(ImGuiCol.ButtonHovered, r - 0.0f, g - 0.05f, b - 0.05f, 1.0f);
         ImGui.pushStyleColor(ImGuiCol.ButtonActive, r + 0.05f, g + 0.05f, b + 0.05f, 1.0f);
+    }
+
+    public static boolean button(String LABEL)
+    {
+        LABEL = "  " + LABEL + "  ";
+        ImVec2 framePadding = EditorSystemManager.getCurrentTheme().framePadding;
+        if (LABEL.length() < 50) return ImGui.button(LABEL, 0 ,ImGui.getFontSize() + (framePadding.y * 2));
+        return ImGui.button(LABEL);
+    }
+
+    public static boolean imageButton(int TEXTURE_ID, float SIZE_X, float SIZE_Y, float UV0_X, float UV0_Y, float UV1_X, float UV1_Y)
+    {
+        float scaleFactor = Math.min(DefaultValues.MAX_IMAGE_DISPLAY_WIDTH / SIZE_X, DefaultValues.MAX_IMAGE_DISPLAY_HEIGHT / (SIZE_Y));
+
+        float displayWidth = SIZE_X * scaleFactor;
+        float displayHeight = SIZE_Y * scaleFactor;
+
+        return ImGui.imageButton(TEXTURE_ID, displayWidth, displayHeight, UV0_X, UV0_Y, UV1_X, UV1_Y);
     }
 }

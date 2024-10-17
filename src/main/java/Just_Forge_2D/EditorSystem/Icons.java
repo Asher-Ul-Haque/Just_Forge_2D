@@ -1,12 +1,8 @@
 package Just_Forge_2D.EditorSystem;
 
-/**
- * Font Awesome icons codepoints, can be used to render icons with imgui in any place where text can be rendered.
- *
- * To preview and search for icons use: https://fontawesome.com/icons?d=gallery&p=2&m=free
- */
 @SuppressWarnings("unused")
-public class FontAwesomeIcons {
+public class Icons
+{
     public static final short _IconRangeMin = (short) 0xe005;
     public static final short _IconRangeMax = (short) 0xf8ff;
     public static final short[] _IconRange = new short[]{_IconRangeMin, _IconRangeMax, 0};

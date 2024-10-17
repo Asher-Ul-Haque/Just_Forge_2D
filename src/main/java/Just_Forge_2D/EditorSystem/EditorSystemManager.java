@@ -136,6 +136,6 @@ public class EditorSystemManager
         AssetPoolSerializer.saveAssetPool(projectDir + "/Assets/Pool.justForgeFile");
         AudioSystemManager.terminate();
         ImGUIManager.destroyImGui();
-        Logger.finish();
+        Logger.flushToFile();
     }
 }

@@ -32,11 +32,9 @@ public class ImGUIManager
     public static ImFont interExtraBold;
     public static ImFont interRegular;
     public static ImFont fontAwesome;
-    private static List<Runnable> renderWindows = new ArrayList<>();
-    private static List<Boolean> toRender = new ArrayList<>();
-    private static List<String> renderWindowNames = new ArrayList<>();
-    private static short[] glyphs;
-    static float timer = 0f;
+    private static final List<Runnable> renderWindows = new ArrayList<>();
+    private static final List<Boolean> toRender = new ArrayList<>();
+    private static final List<String> renderWindowNames = new ArrayList<>();
 
 
     // - - - Functions - - -
@@ -214,8 +212,8 @@ public class ImGUIManager
 
         final ImFontGlyphRangesBuilder rangesBuilder = new ImFontGlyphRangesBuilder();
         rangesBuilder.addRanges(io.getFonts().getGlyphRangesDefault());
-        rangesBuilder.addRanges(FontAwesomeIcons._IconRange);
-        glyphs = rangesBuilder.buildRanges();
+        rangesBuilder.addRanges(Icons._IconRange);
+        short[] glyphs = rangesBuilder.buildRanges();
 
         final String interPath = "Assets/Fonts/JetBrainsMono-Bold.ttf";
         final int interFontSize = 16;
