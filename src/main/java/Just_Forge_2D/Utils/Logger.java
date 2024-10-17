@@ -67,7 +67,7 @@ public class Logger
                         }
                         catch (FileAlreadyExistsException e)
                         {
-                            Logger.FORGE_LOG_ERROR("Bro let the engine breath");
+                            Logger.FORGE_LOG_ERROR("Bro let the engine breathe");
                             Files.delete(oldLog);
                             Files.move(LOG_FILE_PATH, oldLog);
                         }
@@ -76,7 +76,7 @@ public class Logger
                     else
                     {
                         Files.delete(LOG_FILE_PATH);
-                        LOG_FILE_PATH = Paths.get("logs", stamp + ".justForgeFile");
+                        LOG_FILE_PATH = Paths.get("logs", stamp + ".justForgeLog");
                     }
                 }
 
@@ -87,10 +87,9 @@ public class Logger
                     writer.write("\n---- Log Session Started ----\n");
                 }
 
-                // - - - Redirect System.out and System.err to the custom logger
-                PrintStream logStream = new PrintStream(new LoggerOutputStream());
+                // - - - Redirect System.err to the custom logger (System.out can stay normal)
+                PrintStream logStream = new PrintStream(new LoggerOutputStream(true)); // true = for System.err
                 System.setErr(logStream);
-
             }
 
             catch (IOException e)
@@ -179,13 +178,21 @@ public class Logger
     private static void writeToFile(String message)
     {
         writeBuffer.add(message);
-        if (writeBuffer.size() <= 10) return;
-        finish();
+        if (writeBuffer.size() >= 10) // Adjust buffer threshold if needed
+        {
+            flushToFile();
+        }
     }
 
     private static class LoggerOutputStream extends OutputStream
     {
         private final StringBuilder buffer = new StringBuilder();
+        private final boolean isErrStream;
+
+        public LoggerOutputStream(boolean isErrStream)
+        {
+            this.isErrStream = isErrStream;
+        }
 
         @Override
         public void write(int b) throws IOException
@@ -195,6 +202,12 @@ public class Logger
                 String line = buffer.toString();
                 writeToFile(line);
                 buffer.setLength(0);
+
+                // - - - If it's System.err, flush the buffer immediately
+                if (isErrStream)
+                {
+                    flushToFile();
+                }
             }
             else
             {
@@ -203,14 +216,14 @@ public class Logger
         }
     }
 
-    public static void finish()
+    public static void flushToFile()
     {
         if (EditorSystemManager.isRelease) return;
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(LOG_FILE_PATH.toString(), true)))
         {
-            for (String m : writeBuffer)
+            for (String message : writeBuffer)
             {
-                writer.write(m + "\n");
+                writer.write(message + "\n");
             }
             writeBuffer.clear();
         }

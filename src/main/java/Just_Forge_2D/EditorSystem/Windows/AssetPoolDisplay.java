@@ -4,6 +4,7 @@ import Just_Forge_2D.AssetPool.AssetPool;
 import Just_Forge_2D.AudioSystem.Sound;
 import Just_Forge_2D.EditorSystem.EditorComponents.GridlinesComponent;
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
+import Just_Forge_2D.EditorSystem.FontAwesomeIcons;
 import Just_Forge_2D.EditorSystem.InputControls.MouseControlComponent;
 import Just_Forge_2D.EditorSystem.Widgets;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.Sprite;
@@ -128,7 +129,7 @@ public class AssetPoolDisplay
     {
         if (ImGui.beginTabItem("Textures"))
         {
-            if (ImGui.button("Add a Texture")) open = !open;
+            if (ImGui.button(FontAwesomeIcons.Save + "Add a Texture")) open = !open;
             ImGui.sameLine();
             if (ImGui.button("Clear")) AssetPool.clearTexturePool();
             if (open)
@@ -158,6 +159,7 @@ public class AssetPoolDisplay
                 {
                     keepSize = Widgets.drawBoolControl("Keep Size", keepSize);
                     ImGui.sameLine();
+
                     if (ImGui.button("Remove"))
                     {
                         AssetPool.removeTexture(names.get(j));

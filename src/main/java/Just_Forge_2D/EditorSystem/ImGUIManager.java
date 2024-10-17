@@ -31,9 +31,11 @@ public class ImGUIManager
     public static ImGuiIO io;
     public static ImFont interExtraBold;
     public static ImFont interRegular;
+    public static ImFont fontAwesome;
     private static List<Runnable> renderWindows = new ArrayList<>();
     private static List<Boolean> toRender = new ArrayList<>();
     private static List<String> renderWindowNames = new ArrayList<>();
+    private static short[] glyphs;
     static float timer = 0f;
 
 
@@ -208,22 +210,33 @@ public class ImGUIManager
 
     private static void setFontAtlas()
     {
-        // - - - spritesheet but for fonts
-        final ImFontAtlas fontAtlas = io.getFonts();
-        final ImFontConfig fontConfig = new ImFontConfig();
+        final ImGuiIO io = ImGui.getIO();
 
-        fontConfig.setGlyphRanges(fontAtlas.getGlyphRangesDefault());
+        final ImFontGlyphRangesBuilder rangesBuilder = new ImFontGlyphRangesBuilder();
+        rangesBuilder.addRanges(io.getFonts().getGlyphRangesDefault());
+        rangesBuilder.addRanges(FontAwesomeIcons._IconRange);
+        glyphs = rangesBuilder.buildRanges();
 
         final String interPath = "Assets/Fonts/JetBrainsMono-Bold.ttf";
         final int interFontSize = 16;
-        interRegular = fontAtlas.addFontFromFileTTF(interPath, interFontSize);
+        interRegular = io.getFonts().addFontFromFileTTF(interPath, interFontSize);
 
+        final ImFontConfig fontConfig = new ImFontConfig();
+        fontConfig.setMergeMode(true);
+
+        final String fontAwesomePath = "Assets/Fonts/FontAwesome.ttf";
+        final int fontAwesomeFontSize = 16;
+        fontAwesome = io.getFonts().addFontFromFileTTF(fontAwesomePath, fontAwesomeFontSize, fontConfig, glyphs);
+
+        final ImFontConfig noMergeConf = new ImFontConfig();
+        noMergeConf.setMergeMode(false);
         final String interExtraBoldPath = "Assets/Fonts/Inter-Black.otf";
         final int interExtraBoldFontSize = 16;
-        interExtraBold = fontAtlas.addFontFromFileTTF(interExtraBoldPath, interExtraBoldFontSize);
+        interExtraBold = io.getFonts().addFontFromFileTTF(interExtraBoldPath, interExtraBoldFontSize, noMergeConf);
 
+
+        io.getFonts().build();
         fontConfig.destroy();
-        fontAtlas.build();
     }
 
     // - - - start function because constructors are pointless
