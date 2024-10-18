@@ -1,5 +1,6 @@
 package Just_Forge_2D.EditorSystem;
 
+import Just_Forge_2D.EditorSystem.Themes.Theme;
 import Just_Forge_2D.Utils.DefaultValues;
 import imgui.ImGui;
 import imgui.ImVec2;
@@ -411,5 +412,17 @@ public class Widgets {
         float displayHeight = SIZE_Y * scaleFactor;
 
         return ImGui.imageButton(TEXTURE_ID, displayWidth, displayHeight, UV0_X, UV0_Y, UV1_X, UV1_Y);
+    }
+
+    public static void text(String TEXT)
+    {
+        Theme.setDefaultTextColor(EditorSystemManager.getCurrentTheme().secondaryColor);
+        ImGui.text(TEXT);
+        Theme.resetDefaultTextColor();
+    }
+
+    public static void text(String TEXT, Vector4f COLOR)
+    {
+        ImGui.textColored(COLOR.x * 256, COLOR.y * 256, COLOR.z * 256, COLOR.w * 256, TEXT);
     }
 }

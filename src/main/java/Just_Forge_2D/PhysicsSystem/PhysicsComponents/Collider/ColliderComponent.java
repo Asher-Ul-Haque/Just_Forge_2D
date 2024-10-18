@@ -1,6 +1,6 @@
 package Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider;
-import Just_Forge_2D.EditorSystem.EditorSystemManager;
-import Just_Forge_2D.EditorSystem.Themes.Theme;
+
+import Just_Forge_2D.EditorSystem.Icons;
 import Just_Forge_2D.EditorSystem.Widgets;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
@@ -52,21 +52,19 @@ public abstract class ColliderComponent extends Component
     @Override
     public void editorGUI()
     {
-        if (ImGui.button("Destroy"))
+        if (Widgets.button(Icons.Trash + " Destroy##" + this.getClass().hashCode()))
         {
             this.gameObject.removeComponent(this.getClass());
             return;
         }
-        Theme.setDefaultTextColor(EditorSystemManager.getCurrentTheme().secondaryColor);
-        if (ImGui.checkbox("Debug Draw at Runtime", this.debugDrawAtRuntime))
+        debugDrawAtRuntime = Widgets.drawBoolControl(Icons.Pen + "  Runtime Debug Draw", debugDrawAtRuntime);
+        if (debugDrawAtRuntime)
         {
-            this.debugDrawAtRuntime = !this.debugDrawAtRuntime;
+            Widgets.colorPicker4(Icons.EyeDropper + "  HitBox Color", this.hitboxColor);
+            Widgets.colorPicker4(Icons.EyeDropper + "  Collision Color", this.collisionColor);
         }
-        Theme.resetDefaultTextColor();
-        Widgets.colorPicker4("HitBox Color", this.hitboxColor);
-        Widgets.colorPicker4("Collision Color", this.collisionColor);
         ImGui.indent(16f);
-        if (ImGui.collapsingHeader("Collision Editor"))
+        if (ImGui.collapsingHeader(Icons.Bomb + "  Collision Editor"))
         {
             collisionEditor();
         }
@@ -76,42 +74,25 @@ public abstract class ColliderComponent extends Component
 
     protected void collisionEditor()
     {
-        if (ImGui.button("Select All"))
-        {
-            for (int i = 0; i < 16; ++i)
-            {
-                collisionLayer.setCollideWithLayer(i + 1, true);
-            }
-        }
-        ImGui.sameLine();
-        if (ImGui.button("Unselect All"))
-        {
-            for (int i = 0; i < 16; ++i)
-            {
-                collisionLayer.setCollideWithLayer(i + 1, false);
-            }
-        }
+        collisionLayer.setLayer(Widgets.drawIntControl("Layer", Math.max(Math.min(16, collisionLayer.getLayer()), 1)));
+        ImGui.columns(2);
+        if (Widgets.button(Icons.PlusSquare + "  Select All")) for (int i = 0; i < 16; ++i) collisionLayer.setCollideWithLayer(i + 1, true);
+        ImGui.nextColumn();
+        if (Widgets.button(Icons.MinusSquare + "  Unselect All")) for (int i = 0; i < 16; ++i) collisionLayer.setCollideWithLayer(i + 1, false);
+        ImGui.columns(1);
         String[] layers = new String[16];
         for (int i = 0; i < layers.length; ++i)
         {
             layers[i] = "Layer " + (i + 1);
         }
-
-        collisionLayer.setLayer(Widgets.drawIntControl("Layer", Math.max(Math.min(16, collisionLayer.getLayer()), 1)));
-        Theme.setDefaultTextColor(EditorSystemManager.getCurrentTheme().secondaryColor);
-        ImGui.text("Collides with: ");
+        Widgets.text("Collides with: ");
         ImGui.columns(2);
         for (int i = 0; i < 16; ++i)
         {
-            if (ImGui.checkbox(layers[i], collisionLayer.canCollideWith(i + 1)))
-            {
-                collisionLayer.setCollideWithLayer(i + 1, !collisionLayer.canCollideWith(i + 1));
-            }
+            collisionLayer.setCollideWithLayer(i + 1, Widgets.drawBoolControl(layers[i], collisionLayer.canCollideWith(i + 1)));
             ImGui.nextColumn();
         }
         ImGui.columns(1);
-        ImGui.text(collisionLayer.toString());
-        Theme.resetDefaultTextColor();
-        ImGui.separator();
+        Widgets.text(collisionLayer.toString());
     }
 }

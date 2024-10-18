@@ -1,7 +1,7 @@
 package Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider;
 
-import Just_Forge_2D.EditorSystem.EditorSystemManager;
-import Just_Forge_2D.EditorSystem.Themes.Theme;
+import Just_Forge_2D.EditorSystem.Icons;
+import Just_Forge_2D.EditorSystem.Widgets;
 import Just_Forge_2D.RenderingSystem.DebugPencil;
 import Just_Forge_2D.Utils.ForgeMath;
 import imgui.ImGui;
@@ -17,7 +17,7 @@ public class EdgeColliderComponent extends ColliderComponent
 
     public void addCollider()
     {
-        EdgeCollider collider = new EdgeCollider((new Vector2f(this.gameObject.transform.position)).sub(new Vector2f(this.gameObject.transform.scale)).div(2), (new Vector2f(this.gameObject.transform.position)).add(new Vector2f(this.gameObject.transform.scale)).div(2));
+        EdgeCollider collider = new EdgeCollider(new Vector2f(0, 0), new Vector2f(this.gameObject.transform.scale));
         collider.gameObject = this.gameObject;
         colliders.add(collider);
     }
@@ -53,25 +53,21 @@ public class EdgeColliderComponent extends ColliderComponent
     public void editorGUI()
     {
         super.editorGUI();
-        Theme.setDefaultTextColor(EditorSystemManager.getCurrentTheme().secondaryColor);
-        ImGui.text("Collider Count: " + this.colliders.size());
-        Theme.resetDefaultTextColor();
+        Widgets.text(Icons.ListOl + "  Collider Count: " + this.colliders.size());
+        if (Widgets.button(Icons.PlusSquare + "  Add Collider")) addCollider();
+        ImGui.separator();
 
         for (int i = 0; i < colliders.size(); ++i)
         {
             if (ImGui.collapsingHeader("Collider : " + (i + 1)))
             {
-                if (ImGui.button("Delete Collider" +"##i"))
+                if (Widgets.button(Icons.MinusSquare + "  Delete Collider" +"##i"))
                 {
                     removeCollider(i);
                     continue;
                 }
                 colliders.get(i).editorGUI();
             }
-        }
-        if (ImGui.button("Add Collider"))
-        {
-            addCollider();
         }
     }
 }

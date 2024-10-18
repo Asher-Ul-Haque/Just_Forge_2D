@@ -382,10 +382,7 @@ public class RigidBodyComponent extends Component
         // - - - body type
 
         Enum t = Widgets.drawEnumControls(BodyType.class, Icons.Box + "  Body Type", bodyType);
-        if (t != null)
-        {
-            bodyType = (BodyType) t;
-        }
+        if (t != null) bodyType = (BodyType) t;
 
         // - - - mass
         setDensity(Widgets.drawFloatControl(Icons.WeightHanging + "  Density", getDensity()));

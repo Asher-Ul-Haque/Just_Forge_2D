@@ -1,5 +1,6 @@
 package Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider;
 
+import Just_Forge_2D.EditorSystem.Icons;
 import Just_Forge_2D.EditorSystem.Widgets;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
@@ -95,32 +96,28 @@ public class CustomCollider extends Component
     }
 
 
-    protected void debugDraw(GameObject gameObject, Vector3f color) {
+    protected void debugDraw(GameObject OBJ, Vector3f COLOR)
+    {
         int vertexCount = this.vertices.size();
-        if (vertexCount < 3) return; // Ensure we have a valid polygon
+        if (vertexCount < 3) return;
 
-        // Transform the vertices based on the GameObject's position, rotation, and scale
+        // - - - Transform the vertices based on the GameObject's position, rotation, and scale
         ArrayList<Vector2f> transformedVertices = new ArrayList<>();
-        for (Vector2f vertex : this.vertices) {
-            // Apply scale
+        for (Vector2f vertex : this.vertices)
+        {
             Vector2f scaledVertex = new Vector2f(vertex);
-
-            // Rotate around the GameObject's center
-            ForgeMath.rotate(scaledVertex, gameObject.transform.rotation, new Vector2f());
-
-            // Apply position
-            scaledVertex.add(gameObject.transform.position);
+            ForgeMath.rotate(scaledVertex, OBJ.transform.rotation, new Vector2f());
+            scaledVertex.add(OBJ.transform.position);
 
             transformedVertices.add(scaledVertex);
         }
 
-        // Draw lines between consecutive vertices
-        for (int i = 0; i < transformedVertices.size(); i++) {
+        // - - - Draw lines between consecutive vertices
+        for (int i = 0; i < transformedVertices.size(); i++)
+        {
             Vector2f start = transformedVertices.get(i);
             Vector2f end = transformedVertices.get((i + 1) % transformedVertices.size()); // Wrap around to the first vertex
-
-            // Draw the line between the current vertex and the next
-            DebugPencil.addLine(start, end, color);
+            DebugPencil.addLine(start, end, COLOR);
         }
     }
 
@@ -132,12 +129,18 @@ public class CustomCollider extends Component
         for (int i = 0; i < vertices.size(); ++i)
         {
             Vector2f copy = new Vector2f(vertices.get(i));
-            Widgets.drawVec2Control("Vertex: " + (i + 1), copy);
+            Widgets.drawVec2Control(Icons.Crosshairs  +"  Vertex: " + (i + 1), copy);
             setVertex(i, copy);
         }
 
+
+        if (Widgets.button(Icons.Undo + "  Reset To Regular Polygon##"  + toString()))
+        {
+            resetToRegularPolygon(vertices.size());
+        }
+
         ArrayList<Vector2f> previousVertices = new ArrayList<>(this.vertices);
-        if (vertices.size() < 8 && ImGui.button("Add Vertex##" + this.toString()))
+        if (vertices.size() < 8 && Widgets.button(Icons.PlusCircle + " Add Vertex##" + this.toString()))
         {
             resetToRegularPolygon(vertices.size() + 1);
             for (int i = 0; i < previousVertices.size(); ++i)
@@ -146,18 +149,17 @@ public class CustomCollider extends Component
             }
         }
 
-        if (vertices.size() > 3 && ImGui.button("Remove Vertex##"  + toString()))
+        if (vertices.size() > 3)
         {
-            resetToRegularPolygon(vertices.size() - 1);
-            for (int i = 0; i < vertices.size() - 1; ++i)
+            ImGui.sameLine();
+            if (Widgets.button(Icons.MinusCircle + " Remove Vertex##" + toString()))
             {
-                setVertex(i, previousVertices.get(i));
+                resetToRegularPolygon(vertices.size() - 1);
+                for (int i = 0; i < vertices.size() - 1; ++i)
+                {
+                    setVertex(i, previousVertices.get(i));
+                }
             }
-        }
-
-        if (ImGui.button("Reset To Regular Polygon##"  + toString()))
-        {
-            resetToRegularPolygon(vertices.size());
         }
     }
 

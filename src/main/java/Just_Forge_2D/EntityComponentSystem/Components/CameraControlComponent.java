@@ -1,11 +1,12 @@
 package Just_Forge_2D.EntityComponentSystem.Components;
 
+import Just_Forge_2D.EditorSystem.Icons;
+import Just_Forge_2D.EditorSystem.Widgets;
 import Just_Forge_2D.RenderingSystem.DebugPencil;
 import Just_Forge_2D.SceneSystem.Camera;
 import Just_Forge_2D.Utils.ForgeMath;
 import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.WindowSystem.GameWindow;
-import imgui.ImGui;
 import org.joml.Vector2f;
 
 import java.util.ArrayList;
@@ -166,9 +167,6 @@ public class CameraControlComponent extends Component
     public void editorGUI()
     {
         super.editorGUI();
-        if (ImGui.button("Screen Shake"))
-        {
-            this.triggerShake(shakeDuration, shakeIntensity);
-        }
+        if (Widgets.button(Icons.CameraRetro + "  Screen Shake")) this.triggerShake(shakeDuration, shakeIntensity);
     }
 }
