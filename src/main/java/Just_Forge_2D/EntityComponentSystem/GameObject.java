@@ -286,8 +286,10 @@ public class GameObject
 
     private void handleComponentException(Component COMPONENT,  Exception e)
     {
-        TinyFileDialogs.tinyfd_notifyPopup(e.getClass().getSimpleName(), "Component : " + COMPONENT + "\nGame Object : " + this.name, "error");
+        StackTraceElement[] trace = e.getStackTrace();
+        TinyFileDialogs.tinyfd_notifyPopup(e.getClass().getSimpleName(), "Component : " + COMPONENT.getClass().getSimpleName() + "\n" + trace[0].getFileName() + " : " + trace[0].getLineNumber(), "error");
         Logger.FORGE_LOG_FATAL(COMPONENT + " caused Exception : " + e.getClass());
+        Logger.FORGE_LOG_FATAL(trace[0].getFileName() + " : " + trace[0].getLineNumber());
         Logger.FORGE_LOG_ERROR(e.getMessage());
         Logger.FORGE_LOG_ERROR("Reason: " + e.getCause());
         EventManager.notify(null, new Event(EventTypes.ForgeStop));

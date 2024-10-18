@@ -20,6 +20,7 @@ public abstract class Component
 {
     // - - - Private variables
     public transient GameObject gameObject = null; // a reference to the object it belongs to
+    public static String NAME;
     private static int ID_COUNTER = 0;
     private int uniqueID = -1;
 

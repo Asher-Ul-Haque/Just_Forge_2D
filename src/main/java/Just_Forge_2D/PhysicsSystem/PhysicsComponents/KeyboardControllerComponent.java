@@ -9,8 +9,8 @@ import Just_Forge_2D.PhysicsSystem.Raycasts.RayCastInfo;
 import Just_Forge_2D.PhysicsSystem.Raycasts.RaycastGun;
 import Just_Forge_2D.RenderingSystem.DebugPencil;
 import Just_Forge_2D.Utils.DefaultValues;
+import Just_Forge_2D.Utils.ForgeMath;
 import Just_Forge_2D.Utils.Logger;
-import imgui.ImGui;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
@@ -44,6 +44,7 @@ public class KeyboardControllerComponent extends Component
     protected boolean birdMode = false;
     protected float maxJumpTime = 1f;
     protected float jumpTimer = maxJumpTime;
+    protected boolean rotateRaycasts = false;
     protected boolean debugDrawAtRuntime = false;
     protected Vector4f hitColor = new Vector4f(0.0f, 1.0f, 0.0f, 1.0f);
     protected Vector4f noHitColor = new Vector4f(1.0f, 0.0f, 0.0f, 1.0f);
@@ -65,19 +66,19 @@ public class KeyboardControllerComponent extends Component
         t = Widgets.drawEnumControls(Keys.class, Icons.Running + "  Run Key", rightKey);
         if (t != null) runKey = (Keys) t;
 
-        ImGui.separator();
+        Widgets.text("");
 
         maxWalkSpeed = Widgets.drawFloatControl(Icons.Walking + "  Walk Speed", maxWalkSpeed);
         maxRunSpeed = Widgets.drawFloatControl(Icons.Running + "  Run Speed", maxRunSpeed);
 
-        ImGui.separator();
+        Widgets.text("");
 
         airAcceleration = Widgets.drawFloatControl(Icons.Wind + "  Air Acceleration", airAcceleration);
         airDeceleration = Widgets.drawFloatControl(Icons.Wind + "  Air Deceleration", airDeceleration);
         groundAcceleration = Widgets.drawFloatControl(Icons.GlobeAsia + "  Ground Acceleration", groundAcceleration);
         groundDeceleration = Widgets.drawFloatControl(Icons.GlobeAsia + "  Ground Deceleration", groundDeceleration);
 
-        ImGui.separator();
+        Widgets.text("");
 
         jumpImpulse = Widgets.drawFloatControl(Icons.CaretUp + "  Jump Impulse", jumpImpulse);
         coyoteTime = Widgets.drawFloatControl(Icons.CaretUp + "  Coyote Time", coyoteTime);
@@ -85,9 +86,10 @@ public class KeyboardControllerComponent extends Component
         if (!birdMode) maxJumps = Widgets.drawIntControl(Icons.CaretUp + "  Max Jumps", maxJumps);
         birdMode = Widgets.drawBoolControl(Icons.Crow + "  Bird Mode", birdMode);
 
-        ImGui.separator();
+        Widgets.text("");
 
         groundDetectRayLength = Widgets.drawFloatControl(Icons.XRay + "  Ground Detect Ray Length", groundDetectRayLength);
+        rotateRaycasts = Widgets.drawBoolControl(Icons.Redo + "  Rotate Raycasts", rotateRaycasts);
         debugDrawAtRuntime = Widgets.drawBoolControl(Icons.Pen + "  Runtime Debug Draw", debugDrawAtRuntime);
         if (!debugDrawAtRuntime) return;
 
@@ -188,16 +190,26 @@ public class KeyboardControllerComponent extends Component
         }
         RaycastGun gun = new RaycastGun();
 
-        Vector2f rayCastBegin = new Vector2f(this.gameObject.transform.position);
-        rayCastBegin.sub(this.gameObject.transform.scale.x / 2.0f,  (this.gameObject.transform.scale.y / 2 + groundDetectRayLength));
+        float angleRadian = this.gameObject.transform.rotation;
 
+        Vector2f rayCastBegin = new Vector2f(this.gameObject.transform.position);
+        rayCastBegin.sub(this.gameObject.transform.scale.x / 2.0f, (this.gameObject.transform.scale.y / 2 + groundDetectRayLength));
         Vector2f rayCastEnd = new Vector2f(rayCastBegin);
         rayCastEnd.add(this.gameObject.transform.scale.x, 0.0f);
 
+
+
         Vector2f rayCast2Begin = new Vector2f(this.gameObject.transform.position);
-        rayCast2Begin.sub(0f, this.gameObject.transform.scale.y /2.0f);
+        rayCast2Begin.sub(0f, this.gameObject.transform.scale.y / 2.0f);
         Vector2f rayCast2End = new Vector2f(rayCast2Begin).sub(0.0f, groundDetectRayLength);
-        RayCastInfo rayCast2 = gun.rayCast(this.gameObject, rayCast2Begin, rayCast2End);
+
+        if (rotateRaycasts)
+        {
+            ForgeMath.rotate(rayCastBegin, angleRadian, this.gameObject.transform.position);
+            ForgeMath.rotate(rayCastEnd, angleRadian, this.gameObject.transform.position);
+            ForgeMath.rotate(rayCast2Begin, angleRadian, this.gameObject.transform.position);
+            ForgeMath.rotate(rayCast2End, angleRadian, this.gameObject.transform.position);
+        }
 
         RayCastInfo rayCastInfo = gun.rayCast(this.gameObject, rayCastBegin, rayCastEnd);
         RayCastInfo rayCastInfo2 = gun.rayCast(this.gameObject, rayCast2Begin, rayCast2End);

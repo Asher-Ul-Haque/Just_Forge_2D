@@ -24,7 +24,7 @@ public class TextComponent extends Component
     protected transient List<GameObject> characters;
     protected float characterSpacing = 1f;
     protected float tabSpacing = 4 * characterSpacing;
-    protected float lineHeight = 24f;
+    protected float lineHeight = 1f;
     protected float size = 1f;
     protected int layer = 0;
     protected String font = "font";
@@ -125,37 +125,18 @@ public class TextComponent extends Component
     {
         if (moveWithMaster)
         {
-            float xPos = firstCharacterOffset.x;
-            float yPos = firstCharacterOffset.y;
-
-            for (int i = 0; i < characters.size(); i++)
+            Vector2f masterPosition = new Vector2f(this.gameObject.transform.position);
+            Vector2f firstCharacterPosition = new Vector2f(this.characters.get(0).transform.position);
+            for (GameObject character : this.characters)
             {
-                GameObject charObject = characters.get(i);
-
-                // - - - Set character positions relative to the gameObject's position and firstCharacterOffset
-                charObject.transform.position.set(this.gameObject.transform.position).add(xPos, yPos);
-
-                char currentChar = text.toLowerCase().charAt(i);
-                if (currentChar == '\n')
-                {
-                    xPos = firstCharacterOffset.x;
-                    yPos -= lineHeight;
-                }
-                else if (currentChar == '\t')
-                {
-                    xPos += tabSpacing;
-                }
-                else if (currentChar == ' ')
-                {
-                    xPos += characterSpacing;
-                }
-                else
-                {
-                    xPos += characterSpacing;
-                }
+                Vector2f characterOffset = new Vector2f(character.transform.position).sub(firstCharacterPosition);
+                character.transform.position.set(masterPosition).add(firstCharacterOffset).add(characterOffset);
             }
         }
     }
+
+
+
 
     @Override
     public void editorGUI()
@@ -174,7 +155,7 @@ public class TextComponent extends Component
         Vector2f pos = new Vector2f(firstCharacterOffset);
         Vector4f copy = new Vector4f(characterColor);
         Widgets.colorPicker4(Icons.EyeDropper + "  Color", copy);
-        if (moveWithMaster) Widgets.drawVec2Control(Icons.Crosshairs + "  Offset", pos);
+        Widgets.drawVec2Control(Icons.Crosshairs + "  Offset", pos);
         moveWithMaster = Widgets.drawBoolControl((moveWithMaster ? Icons.Walking : Icons.Wheelchair) + "  Move With Master", moveWithMaster);
         if (!text.equals(temp) || !sheet.equals(font) || spacing != characterSpacing || tab != tabSpacing || height != lineHeight || size2 != size || !copy.equals(characterColor) || !pos.equals(firstCharacterOffset) || l != layer)
         {

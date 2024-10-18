@@ -17,226 +17,306 @@ import Just_Forge_2D.Utils.Logger;
 import imgui.ImGui;
 import imgui.ImVec2;
 import org.joml.Vector2f;
+import org.lwjgl.PointerBuffer;
+import org.lwjgl.system.MemoryStack;
+import org.lwjgl.system.MemoryUtil;
 import org.lwjgl.util.tinyfd.TinyFileDialogs;
 
 import java.util.List;
 
 public class AssetPoolDisplay
 {
+    // - - - Dialog Box
     private static String name = "";
     private static String path = "";
     private static boolean open = false;
+    private static boolean keepSize;
+
+    // - - - Sprite Sheet
     private static final Vector2f size = new Vector2f(GridlinesComponent.gridSize);
     private static int spriteCount;
     private static int spriteSpacing;
+
+    // - - - Sound
     private static boolean loop;
-    private static boolean keepSize;
+
+    // - - - Icons
+    private static final String ICON_ADD = Icons.PlusSquare + " Add";
+    private static final String ICON_REMOVE = Icons.TrashAlt + " Remove";
+    private static final String ICON_BROWSE = Icons.FolderOpen + " Browse";
+
+
+    // - - - | Functions | - - -
+
+
+    // - - - Centralized handling for browsing path
+    private static String handleBrowse(String DIALOG_TITLE, String DEFAULT_PATH, String[] FILE_TYPE_FILTERS)
+    {
+        try (MemoryStack stack = MemoryStack.stackPush())
+        {
+            // - - - Allocate the pointer buffer for filter patterns
+            PointerBuffer filterBuffer = stack.mallocPointer(FILE_TYPE_FILTERS.length);
+
+            // - - - Populate the filter buffer with the provided file type patterns
+            for (String filter : FILE_TYPE_FILTERS)
+            {
+                filterBuffer.put(MemoryUtil.memUTF8(filter));
+            }
+            // - - - Flip the buffer for reading
+            filterBuffer.flip();
+
+            // - - - Call the tinyfd_openFileDialog with the filter patterns
+            String selectedPath = TinyFileDialogs.tinyfd_openFileDialog(DIALOG_TITLE, DEFAULT_PATH, filterBuffer, null, false);
+            return selectedPath != null ? selectedPath : "";
+        }
+    }
+
+    // - - - Helper for asset addition
+    private static void addAsset(String assetName, String assetPath, boolean condition, Runnable onAdd)
+    {
+        name = Widgets.inputText(Icons.User + "  Name", name);
+        path = Widgets.inputText(Icons.FileImage + "  Path", path);
+        ImGui.columns(2);
+
+        if (Widgets.button(ICON_BROWSE))
+        {
+            if (assetName.equals("Sprite Sheet"))
+            {
+                path = handleBrowse("Select a Sprite Sheet", assetPath, new String[]{"*.png", "*.jpg", "*.jpeg"});
+            }
+            else if (assetName.equals("Texture"))
+            {
+                path = handleBrowse("Select a Texture", assetPath, new String[]{"*.png", "*.jpg", "*.jpeg"});
+            }
+            else if (assetName.equals("Sound"))
+            {
+                path = handleBrowse("Select a Sound", assetPath, new String[]{"*.wav", "*.mp3", "*.ogg"});
+            }
+        }
+
+        ImGui.nextColumn();
+
+        if (!name.isEmpty() && !path.isEmpty())
+        {
+            if (Widgets.button(Icons.FileImport + " Add"))
+            {
+                onAdd.run();
+            }
+        }
+        ImGui.columns(1);
+    }
+
+
+
+    // - - - Sprite Sheet Display - - -
 
 
     private static void spriteSheetDisplay()
     {
-        if (ImGui.beginTabItem("Sprite Sheets"))
+        if (ImGui.beginTabItem(Icons.PhotoVideo + " Sprite Sheets"))
         {
-            if (ImGui.button("Add a SpriteSheet")) open = !open;
-            ImGui.sameLine();
-            if (ImGui.button("Clear")) AssetPool.clearSpriteSheetPool();
+            handleAddAndClear(AssetPool::clearSpriteSheetPool, "Add a SpriteSheet");
+
             if (open)
             {
-                name = Widgets.inputText("Name", name);
-                path = Widgets.inputText("Path", path);
-                Widgets.drawVec2Control("Sprite Size", size);
-                spriteCount = Widgets.drawIntControl("Sprite Count", spriteCount);
-                spriteSpacing = Widgets.drawIntControl("Sprite Spacing", spriteSpacing);
-                ImGui.columns(2);
-                if (ImGui.button("Browse"))
-                {
-                    path = TinyFileDialogs.tinyfd_openFileDialog("Path", EditorSystemManager.projectDir + "/Assets/Textures/", null, null, false);
-                    if (path == null) path = "";
-                }
-                ImGui.nextColumn();
-                if (!name.isEmpty() && !path.isEmpty())
-                {
-                    if (ImGui.button("Add"))
+                Widgets.drawVec2Control(Icons.Expand + "  Sprite Size", size);
+                spriteCount = Widgets.drawIntControl(Icons.ListOl + "  Sprite Count", spriteCount);
+                spriteSpacing = Widgets.drawIntControl(Icons.Underline + " Sprite Spacing", spriteSpacing);
+                addAsset("Sprite Sheet", EditorSystemManager.projectDir + "/Assets/Textures/", !name.isEmpty() && !path.isEmpty(), () -> {
+                    Texture t = new Texture();
+                    if (t.init(path))
                     {
-                        Texture t = new Texture();
-                        if (t.init(path))
-                        {
-                            SpriteSheet sheet = new SpriteSheet(t, (int) size.x, (int) size.y, spriteCount, spriteSpacing);
-                            AssetPool.addSpriteSheet(name, sheet, true);
-                        }
-                        else
-                        {
-                            Logger.FORGE_LOG_ERROR("Bad Texture: " + name);
-                        }
+                        SpriteSheet sheet = new SpriteSheet(t, (int) size.x, (int) size.y, spriteCount, spriteSpacing);
+                        AssetPool.addSpriteSheet(name, sheet, true);
                     }
-                }
-
-                ImGui.columns(1);
+                    else Logger.FORGE_LOG_ERROR("Bad Texture: " + name);
+                });
             }
-            List<SpriteSheet> spriteSheets = AssetPool.getAllSpriteSheets();
-            List<String> spriteSheetNames = AssetPool.getSpriteSheetNames();
-            for (int j = 0; j < spriteSheets.size(); ++j)
-            {
-                if (ImGui.collapsingHeader(spriteSheetNames.get(j)))
-                {
-                    keepSize = Widgets.drawBoolControl("Keep Size", keepSize);
-                    ImGui.sameLine();
-                    if (ImGui.button("Remove"))
-                    {
-                        AssetPool.removeSpriteSheet(spriteSheetNames.get(j));
-                        continue;
-                    }
-                    ImVec2 windowPos = new ImVec2();
-                    ImGui.getWindowPos(windowPos);
-                    ImVec2 windowSize = new ImVec2();
-                    ImGui.getWindowSize(windowSize);
-                    ImVec2 itemSpacing = new ImVec2();
-                    ImGui.getStyle().getItemSpacing(itemSpacing);
-                    float windowX2 = windowPos.x + windowSize.x;
-                    for (int i = 0; i < spriteSheets.get(j).size(); ++i)
-                    {
-                        Sprite sprite = spriteSheets.get(j).getSprite(i);
-                        float spriteWidth = sprite.getWidth() * 2;
-                        float spriteHeight = sprite.getHeight() * 2;
-                        int id = sprite.getTexture().getID();
-                        Vector2f[] texCoords = sprite.getTextureCoordinates();
-
-                        ImGui.pushID(i);
-                        if (ImGui.imageButton(id, spriteWidth, spriteHeight, texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y))
-                        {
-                            GameObject object = PrefabManager.generateDefaultSpriteObject(sprite, keepSize? GridlinesComponent.gridSize.x : sprite.getWidth() / DefaultValues.DEFAULT_SIZE_DOWN_FACTOR, keepSize ? GridlinesComponent.gridSize.y : sprite.getHeight() / DefaultValues.DEFAULT_SIZE_DOWN_FACTOR);
-                            MouseControlComponent.pickupObject(object);
-                        }
-                        ImGui.popID();
-
-                        ImVec2 lastButtonPos = new ImVec2();
-                        ImGui.getItemRectMax(lastButtonPos);
-                        float lastButtonX2 = lastButtonPos.x;
-                        float nextButtonX2 = lastButtonX2 + itemSpacing.x + spriteWidth;
-                        if (i + 1 < spriteSheets.get(j).size() && nextButtonX2 < windowX2)
-                        {
-                            ImGui.sameLine();
-                        }
-
-                    }
-                }
-            }
+            drawSpriteSheets();
             ImGui.endTabItem();
         }
     }
+
+    private static void drawSpriteSheets()
+    {
+        Widgets.text("");
+        List<String> spriteSheetNames = AssetPool.getSpriteSheetNames();
+        for (String sheetName : spriteSheetNames)
+        {
+            if (ImGui.collapsingHeader(sheetName))
+            {
+                drawSpriteSheetOptions(sheetName);
+            }
+        }
+    }
+
+    private static void drawSpriteSheetOptions(String NAME)
+    {
+        keepSize = Widgets.drawBoolControl(Icons.Expand + "  Keep Size", keepSize);
+
+        if (Widgets.button(ICON_REMOVE))
+        {
+            AssetPool.removeSpriteSheet(NAME);
+            return;
+        }
+
+        List<Sprite> sprites = AssetPool.getSpriteSheet(NAME).getSprites();
+        drawSprites(sprites);
+    }
+
+    private static void drawSprites(List<Sprite> SPRITES)
+    {
+        ImVec2 windowPos = new ImVec2();
+        ImVec2 windowSize = new ImVec2();
+        ImGui.getWindowPos(windowPos);
+        ImGui.getWindowSize(windowSize);
+
+        float windowX2 = windowPos.x + windowSize.x;
+
+        for (int i = 0; i < SPRITES.size(); ++i)
+        {
+            Sprite sprite = SPRITES.get(i);
+            drawSpriteButton(sprite, windowX2, i);
+        }
+    }
+
+    private static void drawSpriteButton(Sprite sprite, float windowX2, int index)
+    {
+        float spriteWidth = sprite.getWidth() * 2;
+        float spriteHeight = sprite.getHeight() * 2;
+        int id = sprite.getTexture().getID();
+        Vector2f[] texCoords = sprite.getTextureCoordinates();
+
+        ImGui.pushID(index);
+        if (Widgets.imageButton(id, spriteWidth, spriteHeight, texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y))
+        {
+            GameObject object = PrefabManager.generateDefaultSpriteObject(sprite, keepSize ? GridlinesComponent.gridSize.x : sprite.getWidth() / DefaultValues.DEFAULT_SIZE_DOWN_FACTOR,
+                    keepSize ? GridlinesComponent.gridSize.y : sprite.getHeight() / DefaultValues.DEFAULT_SIZE_DOWN_FACTOR);
+            MouseControlComponent.pickupObject(object);
+        }
+        ImGui.popID();
+
+        ImVec2 lastButtonPos = new ImVec2();
+        ImGui.getItemRectMax(lastButtonPos);
+        float lastButtonX2 = lastButtonPos.x;
+        float nextButtonX2 = lastButtonX2 + spriteWidth;
+        if (nextButtonX2 < windowX2) ImGui.sameLine();
+    }
+
+
+    // - - - Texture - - -
 
     private static void textureDisplay()
     {
-        if (ImGui.beginTabItem("Textures"))
+        if (ImGui.beginTabItem(Icons.FileImage + " Textures"))
         {
-            if (ImGui.button(Icons.Save + "Add a Texture")) open = !open;
-            ImGui.sameLine();
-            if (ImGui.button("Clear")) AssetPool.clearTexturePool();
+            handleAddAndClear(AssetPool::clearTexturePool, "Add a Texture");
+
             if (open)
             {
-                name = Widgets.inputText("Name", name);
-                path = Widgets.inputText("Path", path);
-                ImGui.columns(2);
-                if (ImGui.button("Browse"))
-                {
-                    path = TinyFileDialogs.tinyfd_openFileDialog("Path", EditorSystemManager.projectDir + "/Assets/Textures/", null, null, false);
-                    if (path == null) path = "";
-                }
-                ImGui.nextColumn();
-                if (!name.isEmpty() && !path.isEmpty())
-                {
-                    if (ImGui.button("Add"))
-                    {
-                        AssetPool.addTexture(name, path, true);
-                    }
-                }
-                ImGui.columns(1);
+                addAsset("Texture", EditorSystemManager.projectDir + "/Assets/Textures/", !name.isEmpty() && !path.isEmpty(), () -> {
+                    AssetPool.addTexture(name, path, true);
+                });
             }
-            List<String> names = AssetPool.getTextureNames();
-            for (int j = 0; j < names.size(); ++j)
-            {
-                if (ImGui.collapsingHeader(names.get(j)))
-                {
-                    keepSize = Widgets.drawBoolControl("Keep Size", keepSize);
-                    ImGui.sameLine();
-
-                    if (ImGui.button("Remove"))
-                    {
-                        AssetPool.removeTexture(names.get(j));
-                        continue;
-                    }
-                    Sprite sprite = new Sprite();
-                    Texture t = AssetPool.getTexture(names.get(j));
-                    if (t == null) continue;
-                    sprite.setTexture(t);
-                    ImGui.button(t.getFilepath());
-                    int id = t.getID();
-                    ImGui.pushID(id);
-                    Vector2f[] texCoords = sprite.getTextureCoordinates();
-                    if (ImGui.imageButton(id, sprite.getWidth(), sprite.getHeight(), texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y))
-                    {
-                        GameObject object = PrefabManager.generateDefaultSpriteObject(sprite, keepSize? GridlinesComponent.gridSize.x : sprite.getWidth() / DefaultValues.DEFAULT_SIZE_DOWN_FACTOR, keepSize ? GridlinesComponent.gridSize.y : sprite.getHeight() / DefaultValues.DEFAULT_SIZE_DOWN_FACTOR);
-                        MouseControlComponent.pickupObject(object);
-                    }
-                    ImGui.popID();
-                }
-            }
+            drawTextures();
             ImGui.endTabItem();
         }
     }
 
-    private static void soundDisplay()
+    private static void drawTextures()
     {
-        if (ImGui.beginTabItem("Sounds"))
+        Widgets.text("");
+        List<String> textureNames = AssetPool.getTextureNames();
+        for (String textureName : textureNames)
         {
-            if (ImGui.button("Add a Sound")) open = !open;
-            ImGui.sameLine();
-            if (ImGui.button("Clear")) AssetPool.clearSoundPool();
-            if (open)
+            if (ImGui.collapsingHeader(textureName))
             {
-                name = Widgets.inputText("Name", name);
-                path = Widgets.inputText("Path", path);
-                loop = Widgets.drawBoolControl("Loop", loop);
-                ImGui.columns(2);
-                if (ImGui.button("Browse"))
-                {
-                    path = TinyFileDialogs.tinyfd_openFileDialog("Path", EditorSystemManager.projectDir + "/Assets/Sounds/", null, null, false);
-                    if (path == null) path = "";
-                }
-                ImGui.nextColumn();
-                if (!name.isEmpty() && !path.isEmpty())
-                {
-                    if (ImGui.button("Add"))
-                    {
-                        AssetPool.addSound(name, path, loop, true);
-                    }
-                }
-                ImGui.columns(1);
-            }
-            List<Sound> sounds = AssetPool.getAllSounds();
-            List<String> names = AssetPool.getAllSoundNames();
+                keepSize = Widgets.drawBoolControl(Icons.Expand + "  Keep Size", keepSize);
 
-            for (int i = 0; i < sounds.size(); ++i)
-            {
-                if (ImGui.button("Remove"))
+                if (Widgets.button(ICON_REMOVE))
                 {
-                    AssetPool.removeSound(names.get(i));
+                    AssetPool.removeTexture(textureName);
                     continue;
                 }
-                if (ImGui.button(names.get(i)))
-                {
-                    if (!sounds.get(i).isPlaying())
-                    {
-                        sounds.get(i).play();
-                    }
-                    else
-                    {
-                        sounds.get(i).stop();
-                    }
-                }
+
+                Texture texture = AssetPool.getTexture(textureName);
+                drawTexture(texture);
             }
+        }
+    }
+
+    private static void drawTexture(Texture TEXTURE)
+    {
+        if (TEXTURE == null) return;
+
+        Sprite sprite = new Sprite();
+        sprite.setTexture(TEXTURE);
+
+        Widgets.button(TEXTURE.getFilepath());
+
+        int id = TEXTURE.getID();
+        Vector2f[] texCoords = sprite.getTextureCoordinates();
+
+        if (Widgets.imageButton(id, sprite.getWidth(), sprite.getHeight(), texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y))
+        {
+            GameObject object = PrefabManager.generateDefaultSpriteObject(sprite, keepSize ? GridlinesComponent.gridSize.x : sprite.getWidth() / DefaultValues.DEFAULT_SIZE_DOWN_FACTOR,
+                    keepSize ? GridlinesComponent.gridSize.y : sprite.getHeight() / DefaultValues.DEFAULT_SIZE_DOWN_FACTOR);
+            MouseControlComponent.pickupObject(object);
+        }
+    }
+
+    // - - - Sounds
+    private static void soundDisplay()
+    {
+        if (ImGui.beginTabItem(Icons.Music + " Sounds"))
+        {
+            handleAddAndClear(AssetPool::clearSoundPool, "Add a Sound");
+
+            if (open)
+            {
+                loop = Widgets.drawBoolControl(Icons.SyncAlt + " Looping", loop);
+                addAsset("Sound", EditorSystemManager.projectDir + "/Assets/Sounds/", !name.isEmpty() && !path.isEmpty(), () -> {
+                    AssetPool.addSound(name, path, loop, true);
+                });
+            }
+            drawSounds();
             ImGui.endTabItem();
         }
+    }
+
+    private static void drawSounds()
+    {
+        Widgets.text("");
+        List<String> soundNames = AssetPool.getAllSoundNames();
+
+        for (int i = 0; i < soundNames.size(); ++i)
+        {
+            Sound sound = AssetPool.getSound(soundNames.get(i));
+            String soundName = soundNames.get(i);
+
+            if (Widgets.button(ICON_REMOVE))
+            {
+                AssetPool.removeSound(soundName);
+                continue;
+            }
+
+            ImGui.sameLine();
+
+            if (Widgets.button((sound.isPlaying() ? Icons.Stop : Icons.Play) + " " + soundName))
+            {
+                if (!sound.isPlaying()) sound.play();
+                else sound.stop();
+            }
+        }
+    }
+
+    // - - - Helper to handle adding and clearing assets
+    private static void handleAddAndClear(Runnable clearMethod, String addLabel)
+    {
+        if (Widgets.button(ICON_ADD + " " + addLabel)) open = !open;
+        ImGui.sameLine();
+        if (Widgets.button(Icons.TrashAlt + " Clear")) clearMethod.run();
+        Widgets.text("");
     }
 
     public static void render()
