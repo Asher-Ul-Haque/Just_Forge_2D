@@ -113,7 +113,7 @@ public class AssetPoolDisplay
     {
         if (ImGui.beginTabItem(Icons.PhotoVideo + " Sprite Sheets"))
         {
-            handleAddAndClear(AssetPool::clearSpriteSheetPool, " a SpriteSheet");
+            handleAddAndClear(AssetPool::clearSpriteSheetPool, "a SpriteSheet");
 
             if (open)
             {
@@ -220,7 +220,7 @@ public class AssetPoolDisplay
     {
         if (ImGui.beginTabItem(Icons.FileImage + " Textures"))
         {
-            handleAddAndClear(AssetPool::clearTexturePool, " a Texture");
+            handleAddAndClear(AssetPool::clearTexturePool, "a Texture");
 
             if (open)
             {
@@ -278,7 +278,7 @@ public class AssetPoolDisplay
     {
         if (ImGui.beginTabItem(Icons.Music + " Sounds"))
         {
-            handleAddAndClear(AssetPool::clearSoundPool, " a Sound");
+            handleAddAndClear(AssetPool::clearSoundPool, "a Sound");
 
             if (open)
             {

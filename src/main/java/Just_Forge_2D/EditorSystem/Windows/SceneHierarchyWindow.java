@@ -8,9 +8,11 @@ import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.Components.ComponentList;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
+import Just_Forge_2D.SceneSystem.Camera;
 import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.WindowSystem.GameWindow;
 import imgui.ImGui;
+import org.joml.Vector2f;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -114,10 +116,21 @@ public class SceneHierarchyWindow
             {
                 continue;
             }
-            if (Widgets.button(Icons.Trash))
+            if (ImGui.button("  " + Icons.Trash+"  ##" + i))
             {
                 obj.destroy();
                 continue;
+            }
+            ImGui.sameLine();
+            if (ImGui.button("  " + Icons.Search+"  ##" + i))
+            {
+                Camera camera = GameWindow.getCurrentScene().getCamera();
+                if (camera != null)
+                {
+                    camera.setPosition(new Vector2f(obj.transform.position).sub(new Vector2f(camera.getProjectionSize()).div(2)));
+                    ComponentsWindow.clearSelection();
+                    ComponentsWindow.setActiveGameObject(obj);
+                }
             }
             ImGui.sameLine();
             if (Widgets.button(obj.name + "##" + i))

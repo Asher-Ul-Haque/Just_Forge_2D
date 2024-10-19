@@ -64,6 +64,7 @@ public class EditorCameraComponent extends Component
             float addValue = (float)Math.pow(Math.abs(Mouse.getScrollY() * scrollSensitivity), 1 / this.editorCamera.getZoom());
             addValue *= -Math.signum(Mouse.getScrollY());
             editorCamera.addZoom(addValue);
+            if (addValue < 0) editorCamera.getPosition().lerp(new Vector2f(Mouse.getWorldX(), Mouse.getWorldY()).mul(this.editorCamera.getZoom()), scrollSensitivity);
         }
 
         if (Keyboard.isKeyPressed(Keys.NUM_0))
@@ -75,7 +76,7 @@ public class EditorCameraComponent extends Component
             this.editorCamera.getPosition().lerp(new Vector2f(), lerpTime);
             editorCamera.setZoom(editorCamera.getZoom() + (DefaultValues.DEFAULT_CAMERA_ZOOM - editorCamera.getZoom()) * lerpTime);
             lerpTime += 0.1f * DELTA_TIME;
-            if (Math.abs(this.editorCamera.getPosition().x) <= 1f && Math.abs(this.editorCamera.getPosition().y) <= 1f)
+            if ((Math.abs(this.editorCamera.getPosition().x) <= 1f && Math.abs(this.editorCamera.getPosition().y) <= 1f && Math.abs(this.editorCamera.getZoom() - 1.0f) <0.5f))
             {
                 editorCamera.setPositionAbsolute(new Vector2f(0f, 0f));
                 reset = false;
