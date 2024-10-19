@@ -294,4 +294,11 @@ public class GameWindow extends Window
         else super.setSize(WIDTH, HEIGHT);
         EventManager.notify(null, new Event(EventTypes.ForgeResize));
     }
+
+    @Override
+    public void close()
+    {
+        GameCodeLoader.terminate();
+        super.close();
+    }
 }

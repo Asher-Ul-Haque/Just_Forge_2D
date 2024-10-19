@@ -8,6 +8,7 @@ import Just_Forge_2D.EditorSystem.Themes.Theme;
 import Just_Forge_2D.EventSystem.EventManager;
 import Just_Forge_2D.EventSystem.Events.Event;
 import Just_Forge_2D.EventSystem.Events.EventTypes;
+import Just_Forge_2D.GameSystem.GameCodeLoader;
 import Just_Forge_2D.GameSystem.GameManager;
 import Just_Forge_2D.GameSystem.ProjectManager;
 import Just_Forge_2D.RenderingSystem.Texture;
@@ -198,6 +199,7 @@ public class SplashScreen
             Logger.FORGE_LOG_TRACE("Project Path : " + EditorSystemManager.projectDir);
             GameWindow.get().maximize();
             EditorSystemManager.setCurrentState(EditorSystemManager.state.isEditor);
+            GameCodeLoader.init();
             if (EditorSystemManager.isRelease) EventManager.notify(null, new Event(EventTypes.ForgeStart));
             if (EditorSystemManager.isRelease) GameWindow.get().setTitle(ProjectManager.PROJECT_NAME);
             else GameWindow.get().setTitle("Just Forge 2D    -    " + ProjectManager.PROJECT_NAME);

@@ -9,10 +9,7 @@ import org.lwjgl.util.tinyfd.TinyFileDialogs;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
+import java.nio.file.*;
 
 public class ProjectManager
 {
@@ -20,6 +17,7 @@ public class ProjectManager
     private static final String DEFAULT_PROJECTS_DIR = System.getProperty("user.home") + "/Documents/ForgeProjects";
     private static final String PROJECT_TEMPLATE_DIR = "ProjectTemplate";
     @NotNull public static String PROJECT_NAME = new File(System.getProperty("user.dir")).getName();
+    private static WatchService eyeBall;
 
 
     // - - - Creating new Project - - -

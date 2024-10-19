@@ -41,7 +41,7 @@ public class GameManager
                     processBuilder.directory(new File(EditorSystemManager.projectDir));
                     processBuilder.inheritIO();
 
-                    progressPercentage = 0.9f;
+                    progressPercentage = 0.5f;
                     Process process = processBuilder.start();
                     int exitCode = process.waitFor();
                     if (exitCode != 0)
@@ -50,7 +50,7 @@ public class GameManager
                         progressPercentage = 1f;
                         return;
                     }
-                    progressPercentage = 0.96f;
+                    progressPercentage = 0.9f;
                 }
 
                 try
@@ -63,8 +63,10 @@ public class GameManager
                     Class<?> gameClass = classLoader.loadClass("Main");
                     Constructor<?> constructor = gameClass.getConstructor();
                     game = (Game) constructor.newInstance();
+                    Thread.sleep(1000);
                     success = true;
-                    progressPercentage = 0.99f;
+                    progressPercentage = 1f;
+                    Logger.FORGE_LOG_TRACE("Build successful");
                 }
                 catch (Exception e)
                 {
@@ -73,10 +75,6 @@ public class GameManager
                     progressPercentage = 1f;
                     return;
                 }
-
-                game.init();
-                progressPercentage = 1f;
-                Logger.FORGE_LOG_TRACE("Build successful");
             }
             catch (Exception e)
             {
