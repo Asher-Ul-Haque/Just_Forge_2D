@@ -199,7 +199,6 @@ public class SplashScreen
             GameWindow.get().maximize();
             EditorSystemManager.setCurrentState(EditorSystemManager.state.isEditor);
             if (EditorSystemManager.isRelease) EventManager.notify(null, new Event(EventTypes.ForgeStart));
-            else EventManager.notify(null, new Event(EventTypes.ForgeStop));
             if (EditorSystemManager.isRelease) GameWindow.get().setTitle(ProjectManager.PROJECT_NAME);
             else GameWindow.get().setTitle("Just Forge 2D    -    " + ProjectManager.PROJECT_NAME);
             GameWindow.get().setVisible(true);
