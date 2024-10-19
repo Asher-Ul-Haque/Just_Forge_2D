@@ -185,6 +185,15 @@ public class Scene
         return null;
     }
 
+    public void clearGameObjects()
+    {
+        for (int i = 0; i < gameObjects.size(); ++i)
+        {
+            gameObjects.get(i).destroy();
+        }
+        SceneSystemManager.createMaster(this);
+    }
+
     // - - - Getters and Setters - - -
 
     public Camera getCamera()
@@ -315,4 +324,5 @@ public class Scene
     {
         return this.script;
     }
+
 }

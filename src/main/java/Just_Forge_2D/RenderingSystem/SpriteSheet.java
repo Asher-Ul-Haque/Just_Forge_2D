@@ -108,11 +108,31 @@ public class SpriteSheet
     {
         ImGui.text("Sprite Sheet Editor");
 
+        ImGui.columns(2);
         if (Widgets.button(Icons.TrashAlt + " Delete All Sprites"))
         {
             this.sprites.clear();
             Logger.FORGE_LOG_INFO("Cleared all sprites.");
         }
+
+        ImGui.nextColumn();
+        if (Widgets.button(Icons.PlusSquare + " Add Sprite"))
+        {
+            Vector2f topLeft = new Vector2f(0, 0);
+            Vector2f bottomRight = new Vector2f(this.width, this.height);
+
+            // - - - Convert pixel coordinates to UV coordinates with Y-axis flip
+            Vector2f[] defaultCoords = new Vector2f[] {
+                    new Vector2f(bottomRight.x / texture.getWidth(), 1 - (topLeft.y / texture.getHeight())),  // Top Right
+                    new Vector2f(bottomRight.x / texture.getWidth(), 1 - (bottomRight.y / texture.getHeight())),  // Bottom Right
+                    new Vector2f(topLeft.x / texture.getWidth(), 1 - (bottomRight.y / texture.getHeight())),  // Bottom Left
+                    new Vector2f(topLeft.x / texture.getWidth(), 1 - (topLeft.y / texture.getHeight()))   // Top Left
+            };
+            // - - - Add the new sprite to the list
+            addSprite(defaultCoords, new Vector2f(bottomRight.x - topLeft.x, bottomRight.y - topLeft.y));
+            Logger.FORGE_LOG_INFO("Added a new sprite.");
+        }
+        ImGui.columns(1);
 
         ImGui.separator();
         for (int i = 0; i < sprites.size(); ++i)
@@ -138,11 +158,11 @@ public class SpriteSheet
             );
 
             Vector2f size = new Vector2f(sprite.getWidth(), sprite.getHeight());
-            Widgets.drawVec2Control("Sprite Size (W, H)", size);
+            Widgets.drawVec2Control(Icons.Expand + "  Sprite Size (W, H)", size);
             sprite.setWidth(size.x);
             sprite.setHeight(size.y);
-            Widgets.drawVec2Control("Top Left (X, Y)", topLeft);
-            Widgets.drawVec2Control("Bottom Right (X, Y)", bottomRight);
+            Widgets.drawVec2Control(Icons.BorderStyle +  "  Top Left (X, Y)", topLeft);
+            Widgets.drawVec2Control(Icons.BorderAll + "  Bottom Right (X, Y)", bottomRight);
 
             // - - - Convert pixel coordinates back to UV coordinates with Y-axis flip
             texCoords[0].set(bottomRight.x / texture.getWidth(), 1 - (topLeft.y / texture.getHeight())); // Top Right
@@ -162,27 +182,5 @@ public class SpriteSheet
             ImGui.separator();
             ImGui.popID();
         }
-
-        if (Widgets.button(Icons.PlusSquare + " Add Sprite"))
-        {
-            Vector2f topLeft = new Vector2f(0, 0);
-            Vector2f bottomRight = new Vector2f(this.width, this.height);
-
-            // - - - Convert pixel coordinates to UV coordinates with Y-axis flip
-            Vector2f[] defaultCoords = new Vector2f[] {
-                    new Vector2f(bottomRight.x / texture.getWidth(), 1 - (topLeft.y / texture.getHeight())),  // Top Right
-                    new Vector2f(bottomRight.x / texture.getWidth(), 1 - (bottomRight.y / texture.getHeight())),  // Bottom Right
-                    new Vector2f(topLeft.x / texture.getWidth(), 1 - (bottomRight.y / texture.getHeight())),  // Bottom Left
-                    new Vector2f(topLeft.x / texture.getWidth(), 1 - (topLeft.y / texture.getHeight()))   // Top Left
-            };
-
-            // - - - Add the new sprite to the list
-            addSprite(defaultCoords, new Vector2f(bottomRight.x - topLeft.x, bottomRight.y - topLeft.y));
-            Logger.FORGE_LOG_INFO("Added a new sprite.");
-        }
     }
-
-
-
-
 }

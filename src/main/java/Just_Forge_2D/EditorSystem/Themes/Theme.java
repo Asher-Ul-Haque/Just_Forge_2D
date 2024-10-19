@@ -51,6 +51,7 @@ public abstract class Theme
         ImGui.getStyle().setColor(ImGuiCol.TitleBgCollapsed, windowTitleBgCollapsedColor.x, windowTitleBgCollapsedColor.y, windowTitleBgCollapsedColor.z, windowTitleBgCollapsedColor.w);
         ImGui.getStyle().setWindowRounding(windowRounding);
 
+
         // - - - padding and miscellaneous
         ImGui.getStyle().setWindowPadding(windowPadding.x, windowPadding.y);
     }

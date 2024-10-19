@@ -82,17 +82,13 @@ public class AssetPoolDisplay
 
         if (Widgets.button(ICON_BROWSE))
         {
-            if (assetName.equals("Sprite Sheet"))
-            {
-                path = handleBrowse("Select a Sprite Sheet", assetPath, new String[]{"*.png", "*.jpg", "*.jpeg"});
-            }
-            else if (assetName.equals("Texture"))
-            {
-                path = handleBrowse("Select a Texture", assetPath, new String[]{"*.png", "*.jpg", "*.jpeg"});
-            }
-            else if (assetName.equals("Sound"))
-            {
-                path = handleBrowse("Select a Sound", assetPath, new String[]{"*.wav", "*.mp3", "*.ogg"});
+            switch (assetName) {
+                case "Sprite Sheet" ->
+                        path = handleBrowse("Select a Sprite Sheet", assetPath, new String[]{"*.png", "*.jpg", "*.jpeg"});
+                case "Texture" ->
+                        path = handleBrowse("Select a Texture", assetPath, new String[]{"*.png", "*.jpg", "*.jpeg"});
+                case "Sound" ->
+                        path = handleBrowse("Select a Sound", assetPath, new String[]{"*.wav", "*.mp3", "*.ogg"});
             }
         }
 
@@ -160,13 +156,17 @@ public class AssetPoolDisplay
 
     private static void drawSpriteSheetOptions(String NAME)
     {
+        ImGui.columns(2);
         if (Widgets.button(ICON_REMOVE))
         {
             AssetPool.removeSpriteSheet(NAME);
+
             return;
         }
 
+        ImGui.nextColumn();
         if (Widgets.button(Icons.PencilRuler + "  Edit")) spriteEditorOpen = !spriteEditorOpen;
+        ImGui.columns(1);
         if (spriteEditorOpen)AssetPool.getSpriteSheet(NAME).Editor();
         Widgets.text("");
         List<Sprite> sprites = AssetPool.getSpriteSheet(NAME).getSprites();
@@ -224,9 +224,7 @@ public class AssetPoolDisplay
 
             if (open)
             {
-                addAsset("Texture", EditorSystemManager.projectDir + "/Assets/Textures/", !name.isEmpty() && !path.isEmpty(), () -> {
-                    AssetPool.addTexture(name, path, true);
-                }, () -> {});
+                addAsset("Texture", EditorSystemManager.projectDir + "/Assets/Textures/", !name.isEmpty() && !path.isEmpty(), () -> AssetPool.addTexture(name, path, true), () -> {});
             }
             drawTextures();
             ImGui.endTabItem();
@@ -267,10 +265,10 @@ public class AssetPoolDisplay
         int id = TEXTURE.getID();
         Vector2f[] texCoords = sprite.getTextureCoordinates();
 
-        if (Widgets.imageButton(id, sprite.getWidth(), sprite.getHeight(), texCoords[0].x, texCoords[0].y, texCoords[0].x, texCoords[2].y))
+        if (Widgets.imageButton(id, sprite.getWidth(), sprite.getHeight(), texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y))
         {
-            GameObject object = PrefabManager.generateDefaultSpriteObject(sprite, keepSize ? GridlinesComponent.gridSize.x : sprite.getWidth() / DefaultValues.DEFAULT_SIZE_DOWN_FACTOR,
-                    keepSize ? GridlinesComponent.gridSize.y : sprite.getHeight() / DefaultValues.DEFAULT_SIZE_DOWN_FACTOR);
+            GameObject object = PrefabManager.generateDefaultSpriteObject(sprite, !keepSize ? GridlinesComponent.gridSize.x : sprite.getWidth() / DefaultValues.DEFAULT_SIZE_DOWN_FACTOR,
+                    !keepSize ? GridlinesComponent.gridSize.y : sprite.getHeight() / DefaultValues.DEFAULT_SIZE_DOWN_FACTOR);
             MouseControlComponent.pickupObject(object);
         }
     }
@@ -284,10 +282,7 @@ public class AssetPoolDisplay
 
             if (open)
             {
-                addAsset("Sound", EditorSystemManager.projectDir + "/Assets/Sounds/", !name.isEmpty() && !path.isEmpty(), () -> {
-                    AssetPool.addSound(name, path, loop, true);
-                }, ()->{                loop = Widgets.drawBoolControl(Icons.SyncAlt + " Looping", loop);
-                });
+                addAsset("Sound", EditorSystemManager.projectDir + "/Assets/Sounds/", !name.isEmpty() && !path.isEmpty(), () -> AssetPool.addSound(name, path, loop, true), ()-> loop = Widgets.drawBoolControl(Icons.SyncAlt + " Looping", loop));
             }
             drawSounds();
             ImGui.endTabItem();

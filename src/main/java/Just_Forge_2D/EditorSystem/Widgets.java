@@ -5,7 +5,9 @@ import Just_Forge_2D.Utils.DefaultValues;
 import imgui.ImGui;
 import imgui.ImVec2;
 import imgui.flag.ImGuiCol;
+import imgui.flag.ImGuiCond;
 import imgui.flag.ImGuiTableFlags;
+import imgui.type.ImBoolean;
 import imgui.type.ImInt;
 import imgui.type.ImString;
 import org.joml.Vector2f;
@@ -16,9 +18,12 @@ import org.joml.Vector4f;
 import static Just_Forge_2D.EditorSystem.Themes.Theme.resetDefaultTextColor;
 import static Just_Forge_2D.EditorSystem.Themes.Theme.setDefaultTextColor;
 
-public class Widgets {
+public class Widgets
+{
 
     private static final float DEFAULT_RESET = 0.0f;
+    private static ImBoolean popupOpen = new ImBoolean(false);
+
 
 
     // - - - Vec2 Control - - -
@@ -429,5 +434,77 @@ public class Widgets {
     public static void text(String TEXT, Vector4f COLOR)
     {
         ImGui.textColored(COLOR.x * 256, COLOR.y * 256, COLOR.z * 256, COLOR.w * 256, TEXT);
+    }
+
+
+    // - - - Popup
+    public static short popUp(String TITLE, String TEXT, Runnable EXTRA, Vector2f POSITION, Vector2f SIZE)
+    {
+        short result = 0;
+
+        if (!ImGui.isPopupOpen(TITLE))
+        {
+            ImGui.openPopup(TITLE);
+        }
+
+        if (POSITION != null) ImGui.setNextWindowPos(POSITION.x, POSITION.y);
+        else
+        {
+            float centerX = ImGui.getMainViewport().getSizeX() / 2;
+            ImGui.setNextWindowPos(centerX, 50, ImGuiCond.Appearing, 0.5f, 0);
+        }
+
+        if (SIZE != null) ImGui.setNextWindowSize(SIZE.x, SIZE.y);
+
+        if (ImGui.beginPopupModal(TITLE))
+        {
+            // - - - Display text
+            Theme.setDefaultTextColor(EditorSystemManager.getCurrentTheme().primaryColor);
+            Widgets.text(TEXT);
+            Widgets.text("");
+            Theme.resetDefaultTextColor();
+
+            // - - - Run extra custom input
+            if (EXTRA != null) EXTRA.run();
+
+            // - - - Create the buttons for OK and Cancel
+            ImGui.columns(2);
+            if (Widgets.button(Icons.Check + " OK"))
+            {
+                ImGui.closeCurrentPopup();
+                result = 1;
+            }
+
+            ImGui.nextColumn();
+            if (Widgets.button(Icons.Ban + " Cancel"))
+            {
+                ImGui.closeCurrentPopup();
+                result = -1;
+            }
+
+            ImGui.columns(1);
+            ImGui.endPopup();
+        }
+        return result;
+    }
+
+    public static short popUp(String TITLE, String TEXT, Runnable EXTRA)
+    {
+        return popUp(TITLE, TEXT, EXTRA, null, null);
+    }
+
+    public static short popUp(String TITLE, String TEXT)
+    {
+        return popUp(TITLE, TEXT, null, null, null);
+    }
+
+    public static short popUp(String TITLE, String TEXT, Vector2f POSITION, Vector2f SIZE)
+    {
+        return popUp(TITLE, TEXT, null, POSITION, SIZE);
+    }
+
+    public static short popUp(String TITLE, String TEXT,  Vector2f SIZE)
+    {
+        return popUp(TITLE, TEXT, null, null, SIZE);
     }
 }

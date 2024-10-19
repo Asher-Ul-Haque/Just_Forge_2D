@@ -30,7 +30,7 @@ public class TransformComponent extends Component
 
     public TransformComponent()
     {
-        init(new Vector2f(), new Vector2f(), DefaultValues.DEFAULT_LAYER);
+        init(new Vector2f(), new Vector2f(GridlinesComponent.gridSize), DefaultValues.DEFAULT_LAYER);
     }
 
     public TransformComponent(Vector2f POSITION)
