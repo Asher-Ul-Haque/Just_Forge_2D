@@ -154,4 +154,20 @@ public class ProjectManager
             }
         });
     }
+
+    public static boolean copyFile(String SRC, String DST)
+    {
+        try
+        {
+            Path source = Paths.get(SRC);
+            Path destination = Paths.get(DST);
+            Files.copy(source, destination);
+            return true;
+        }
+        catch (Exception e)
+        {
+            Logger.FORGE_LOG_ERROR("Failed to copy file: " + SRC + " "+ e.getMessage());
+            return false;
+        }
+    }
 }

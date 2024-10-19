@@ -30,6 +30,7 @@ public class AssetPoolDisplay
     private static String name = "";
     private static String path = "";
     private static boolean open = false;
+    private static boolean spriteEditorOpen = false;
     private static boolean keepSize;
 
     // - - - Sprite Sheet
@@ -72,10 +73,11 @@ public class AssetPoolDisplay
     }
 
     // - - - Helper for asset addition
-    private static void addAsset(String assetName, String assetPath, boolean condition, Runnable onAdd)
+    private static void addAsset(String assetName, String assetPath, boolean condition, Runnable onAdd, Runnable EXTRA)
     {
         name = Widgets.inputText(Icons.User + "  Name", name);
         path = Widgets.inputText(Icons.FileImage + "  Path", path);
+        EXTRA.run();
         ImGui.columns(2);
 
         if (Widgets.button(ICON_BROWSE))
@@ -96,7 +98,7 @@ public class AssetPoolDisplay
 
         ImGui.nextColumn();
 
-        if (!name.isEmpty() && !path.isEmpty())
+        if (condition)
         {
             if (Widgets.button(Icons.FileImport + " Add"))
             {
@@ -115,14 +117,13 @@ public class AssetPoolDisplay
     {
         if (ImGui.beginTabItem(Icons.PhotoVideo + " Sprite Sheets"))
         {
-            handleAddAndClear(AssetPool::clearSpriteSheetPool, "Add a SpriteSheet");
+            handleAddAndClear(AssetPool::clearSpriteSheetPool, " a SpriteSheet");
 
             if (open)
             {
-                Widgets.drawVec2Control(Icons.Expand + "  Sprite Size", size);
-                spriteCount = Widgets.drawIntControl(Icons.ListOl + "  Sprite Count", spriteCount);
-                spriteSpacing = Widgets.drawIntControl(Icons.Underline + " Sprite Spacing", spriteSpacing);
-                addAsset("Sprite Sheet", EditorSystemManager.projectDir + "/Assets/Textures/", !name.isEmpty() && !path.isEmpty(), () -> {
+                addAsset("Sprite Sheet", EditorSystemManager.projectDir + "/Assets/Textures/", !name.isEmpty() && !path.isEmpty(),
+                () ->
+                {
                     Texture t = new Texture();
                     if (t.init(path))
                     {
@@ -130,6 +131,12 @@ public class AssetPoolDisplay
                         AssetPool.addSpriteSheet(name, sheet, true);
                     }
                     else Logger.FORGE_LOG_ERROR("Bad Texture: " + name);
+                },
+                () ->
+                {
+                    Widgets.drawVec2Control(Icons.Expand + "  Sprite Size", size);
+                    spriteCount = Widgets.drawIntControl(Icons.ListOl + "  Sprite Count", spriteCount);
+                    spriteSpacing = Widgets.drawIntControl(Icons.Underline + " Sprite Spacing", spriteSpacing);
                 });
             }
             drawSpriteSheets();
@@ -140,6 +147,7 @@ public class AssetPoolDisplay
     private static void drawSpriteSheets()
     {
         Widgets.text("");
+        keepSize = Widgets.drawBoolControl(Icons.Expand + "  Keep Size", keepSize);
         List<String> spriteSheetNames = AssetPool.getSpriteSheetNames();
         for (String sheetName : spriteSheetNames)
         {
@@ -152,16 +160,18 @@ public class AssetPoolDisplay
 
     private static void drawSpriteSheetOptions(String NAME)
     {
-        keepSize = Widgets.drawBoolControl(Icons.Expand + "  Keep Size", keepSize);
-
         if (Widgets.button(ICON_REMOVE))
         {
             AssetPool.removeSpriteSheet(NAME);
             return;
         }
 
+        if (Widgets.button(Icons.PencilRuler + "  Edit")) spriteEditorOpen = !spriteEditorOpen;
+        if (spriteEditorOpen)AssetPool.getSpriteSheet(NAME).Editor();
+        Widgets.text("");
         List<Sprite> sprites = AssetPool.getSpriteSheet(NAME).getSprites();
         drawSprites(sprites);
+        ImGui.newLine();
     }
 
     private static void drawSprites(List<Sprite> SPRITES)
@@ -210,13 +220,13 @@ public class AssetPoolDisplay
     {
         if (ImGui.beginTabItem(Icons.FileImage + " Textures"))
         {
-            handleAddAndClear(AssetPool::clearTexturePool, "Add a Texture");
+            handleAddAndClear(AssetPool::clearTexturePool, " a Texture");
 
             if (open)
             {
                 addAsset("Texture", EditorSystemManager.projectDir + "/Assets/Textures/", !name.isEmpty() && !path.isEmpty(), () -> {
                     AssetPool.addTexture(name, path, true);
-                });
+                }, () -> {});
             }
             drawTextures();
             ImGui.endTabItem();
@@ -257,7 +267,7 @@ public class AssetPoolDisplay
         int id = TEXTURE.getID();
         Vector2f[] texCoords = sprite.getTextureCoordinates();
 
-        if (Widgets.imageButton(id, sprite.getWidth(), sprite.getHeight(), texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y))
+        if (Widgets.imageButton(id, sprite.getWidth(), sprite.getHeight(), texCoords[0].x, texCoords[0].y, texCoords[0].x, texCoords[2].y))
         {
             GameObject object = PrefabManager.generateDefaultSpriteObject(sprite, keepSize ? GridlinesComponent.gridSize.x : sprite.getWidth() / DefaultValues.DEFAULT_SIZE_DOWN_FACTOR,
                     keepSize ? GridlinesComponent.gridSize.y : sprite.getHeight() / DefaultValues.DEFAULT_SIZE_DOWN_FACTOR);
@@ -270,13 +280,13 @@ public class AssetPoolDisplay
     {
         if (ImGui.beginTabItem(Icons.Music + " Sounds"))
         {
-            handleAddAndClear(AssetPool::clearSoundPool, "Add a Sound");
+            handleAddAndClear(AssetPool::clearSoundPool, " a Sound");
 
             if (open)
             {
-                loop = Widgets.drawBoolControl(Icons.SyncAlt + " Looping", loop);
                 addAsset("Sound", EditorSystemManager.projectDir + "/Assets/Sounds/", !name.isEmpty() && !path.isEmpty(), () -> {
                     AssetPool.addSound(name, path, loop, true);
+                }, ()->{                loop = Widgets.drawBoolControl(Icons.SyncAlt + " Looping", loop);
                 });
             }
             drawSounds();
