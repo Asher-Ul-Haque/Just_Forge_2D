@@ -7,6 +7,7 @@ import Just_Forge_2D.Utils.Logger;
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.util.tinyfd.TinyFileDialogs;
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
@@ -166,6 +167,22 @@ public class ProjectManager
         {
             Logger.FORGE_LOG_ERROR("Failed to copy file: " + SRC + " "+ e.getMessage());
             return false;
+        }
+    }
+
+    public static void openProjectInBrowser()
+    {
+        try
+        {
+            File projectDirFile = new File(EditorSystemManager.projectDir);
+            if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.OPEN))
+            {
+                Desktop.getDesktop().open(projectDirFile);
+            }
+        }
+        catch (Exception e)
+        {
+            Logger.FORGE_LOG_ERROR(e.getMessage());
         }
     }
 }

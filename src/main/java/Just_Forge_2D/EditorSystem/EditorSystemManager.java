@@ -7,6 +7,9 @@ import Just_Forge_2D.EditorSystem.Themes.CleanTheme;
 import Just_Forge_2D.EditorSystem.Themes.Theme;
 import Just_Forge_2D.EditorSystem.Windows.ObjectSelector;
 import Just_Forge_2D.EntityComponentSystem.Components.ComponentList;
+import Just_Forge_2D.EventSystem.EventManager;
+import Just_Forge_2D.EventSystem.Events.Event;
+import Just_Forge_2D.EventSystem.Events.EventTypes;
 import Just_Forge_2D.RenderingSystem.Shader;
 import Just_Forge_2D.SceneSystem.MainSceneScript;
 import Just_Forge_2D.SceneSystem.SceneScript;
@@ -133,6 +136,7 @@ public class EditorSystemManager
 
     public static void end()
     {
+        EventManager.notify(null, new Event(EventTypes.ForgeStop));
         AssetPoolSerializer.saveAssetPool(projectDir + "/Assets/Pool.justForgeFile");
         AudioSystemManager.terminate();
         ImGUIManager.destroyImGui();

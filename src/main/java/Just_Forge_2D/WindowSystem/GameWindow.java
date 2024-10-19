@@ -298,7 +298,13 @@ public class GameWindow extends Window
     @Override
     public void close()
     {
+        EventManager.notify(null, new Event(EventTypes.ForgeStop));
         GameCodeLoader.terminate();
         super.close();
+    }
+
+    public void resetTitleBar()
+    {
+        this.setTitle("Just Forge 2D");
     }
 }

@@ -71,6 +71,16 @@ public class SplashScreen
 
 
     // - - - the main render function
+    public static void restart()
+    {
+        timer = splashTime + relapseTime + 0.01f;
+        compiling = false;
+        readyToLoad = false;
+        progress = 0.0f;
+        load = false;
+        isInitialized = false;
+    }
+
     public static void render(float DELTA_TIME)
     {
         initialize();
@@ -207,11 +217,7 @@ public class SplashScreen
         }
         else if (GameManager.getProgressPercentage() >= 1f)
         {
-            timer = splashTime + relapseTime + 0.01f;
-            compiling = false;
-            readyToLoad = false;
-            progress = 0.0f;
-            load = false;
+            restart();
         }
     }
 }

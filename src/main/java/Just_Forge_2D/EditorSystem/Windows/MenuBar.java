@@ -8,6 +8,7 @@ import Just_Forge_2D.EventSystem.EventManager;
 import Just_Forge_2D.EventSystem.Events.Event;
 import Just_Forge_2D.EventSystem.Events.EventTypes;
 import Just_Forge_2D.GameSystem.GameManager;
+import Just_Forge_2D.GameSystem.ProjectManager;
 import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.WindowSystem.GameWindow;
@@ -19,6 +20,29 @@ public class MenuBar
     public static void render()
     {
         ImGui.beginMainMenuBar();
+
+        if (ImGui.beginMenu(Icons.Gamepad + "  Project"))
+        {
+            if (ImGui.menuItem(Icons.Code + "  Recompile Game"))
+            {
+                GameManager.buildUserCode();
+            }
+            if (ImGui.menuItem(Icons.FolderOpen + "  Open in Browser"))
+            {
+                ProjectManager.openProjectInBrowser();
+            }
+            if (ImGui.menuItem(Icons.WindowClose + "  Close"))
+            {
+                EventManager.notify(null, new Event(EventTypes.ForgeStop));
+                EditorSystemManager.setCurrentState(EditorSystemManager.state.isSplashScreen);
+                GameWindow.get().restore();
+                GameWindow.get().resetTitleBar();
+                SplashScreen.restart();
+                SplashScreen.initialize();
+            }
+            ImGui.endMenu();
+        }
+        ImGui.separator();
 
         if (ImGui.beginMenu(Icons.Film + " Scene"))
         {
