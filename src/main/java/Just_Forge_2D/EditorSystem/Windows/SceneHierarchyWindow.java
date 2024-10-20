@@ -39,7 +39,7 @@ public class SceneHierarchyWindow
 
         if (showDeathPopup)
         {
-            if (Widgets.popUp(Icons.Trash + "  Confirm Delete", "Are you sure you want to delete all game objects?") != 0)
+            if (!Widgets.popUp(Icons.Trash, "Confirm Delete", "Are you sure you want to delete all game objects?").equals(Widgets.PopupReturn.NO_INPUT))
             {
                 GameWindow.getCurrentScene().clearGameObjects();
                 showDeathPopup = false;

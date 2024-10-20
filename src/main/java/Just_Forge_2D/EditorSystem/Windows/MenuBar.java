@@ -3,7 +3,6 @@ package Just_Forge_2D.EditorSystem.Windows;
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.EditorSystem.Icons;
 import Just_Forge_2D.EditorSystem.ImGUIManager;
-import Just_Forge_2D.EditorSystem.Widgets;
 import Just_Forge_2D.EventSystem.EventManager;
 import Just_Forge_2D.EventSystem.Events.Event;
 import Just_Forge_2D.EventSystem.Events.EventTypes;
@@ -102,7 +101,7 @@ public class MenuBar
         {
             for (int i = 0; i < ImGUIManager.getRenderable().size(); ++i)
             {
-                ImGUIManager.getRenderable().set(i, Widgets.drawBoolControl(ImGUIManager.getRenderableNames().get(i), ImGUIManager.getRenderable().get(i)));
+                if (ImGUIManager.getRenderableNames().get(i).startsWith("Keyboard")) continue;
                 Boolean b = ImGUIManager.getRenderable().get(i);
                 if (ImGui.checkbox(ImGUIManager.getRenderableNames().get(i), b)) b = !b;
                 ImGUIManager.getRenderable().set(i, b);

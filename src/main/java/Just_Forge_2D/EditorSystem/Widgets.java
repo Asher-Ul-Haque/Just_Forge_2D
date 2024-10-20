@@ -7,6 +7,7 @@ import imgui.ImVec2;
 import imgui.flag.ImGuiCol;
 import imgui.flag.ImGuiCond;
 import imgui.flag.ImGuiTableFlags;
+import imgui.flag.ImGuiWindowFlags;
 import imgui.type.ImBoolean;
 import imgui.type.ImInt;
 import imgui.type.ImString;
@@ -437,14 +438,20 @@ public class Widgets
     }
 
 
-    // - - - Popup
-    public static short popUp(String TITLE, String TEXT, Runnable EXTRA, Vector2f POSITION, Vector2f SIZE)
+    public static enum PopupReturn
     {
-        short result = 0;
+        OK,
+        CANCEL,
+        NO_INPUT
+    }
+    // - - - Popup
+    public static PopupReturn popUp(String ICON, String TITLE, String TEXT, Runnable EXTRA, Vector2f POSITION, Vector2f SIZE)
+    {
+        PopupReturn result = PopupReturn.NO_INPUT;
 
-        if (!ImGui.isPopupOpen(TITLE))
+        if (!ImGui.isPopupOpen("##" +TITLE))
         {
-            ImGui.openPopup(TITLE);
+            ImGui.openPopup("##" + TITLE);
         }
 
         if (POSITION != null) ImGui.setNextWindowPos(POSITION.x, POSITION.y);
@@ -456,12 +463,22 @@ public class Widgets
 
         if (SIZE != null) ImGui.setNextWindowSize(SIZE.x, SIZE.y);
 
-        if (ImGui.beginPopupModal(TITLE))
+        if (ImGui.beginPopupModal("##" + TITLE, ImGuiWindowFlags.NoTitleBar))
         {
             // - - - Display text
             Theme.setDefaultTextColor(EditorSystemManager.getCurrentTheme().primaryColor);
-            Widgets.text(TEXT);
+            ImGui.text(ICON);
+            ImGui.sameLine();
+            float windowWidth = ImGui.getWindowWidth();
+            float titleWidth = ImGui.calcTextSize(TITLE).x;
+            float iconWidth = ImGui.calcTextSize(ICON).x + ImGui.getStyle().getItemSpacing().x;
+            float padding = (windowWidth - (titleWidth + iconWidth)) / 2;
+            if (padding > 0) ImGui.setCursorPosX(ImGui.getCursorPosX() + padding);
+            ImGui.pushFont(ImGUIManager.interExtraBold);
+            ImGui.text(TITLE);
+            ImGui.popFont();
             Widgets.text("");
+            ImGui.text(TEXT);
             Theme.resetDefaultTextColor();
 
             // - - - Run extra custom input
@@ -472,14 +489,14 @@ public class Widgets
             if (Widgets.button(Icons.Check + " OK"))
             {
                 ImGui.closeCurrentPopup();
-                result = 1;
+                result = PopupReturn.OK;
             }
 
             ImGui.nextColumn();
             if (Widgets.button(Icons.Ban + " Cancel"))
             {
                 ImGui.closeCurrentPopup();
-                result = -1;
+                result = PopupReturn.CANCEL;
             }
 
             ImGui.columns(1);
@@ -488,23 +505,23 @@ public class Widgets
         return result;
     }
 
-    public static short popUp(String TITLE, String TEXT, Runnable EXTRA)
+    public static PopupReturn popUp(String ICON, String TITLE, String TEXT, Runnable EXTRA)
     {
-        return popUp(TITLE, TEXT, EXTRA, null, null);
+        return popUp(ICON, TITLE, TEXT, EXTRA, null, null);
     }
 
-    public static short popUp(String TITLE, String TEXT)
+    public static PopupReturn popUp(String ICON, String TITLE, String TEXT)
     {
-        return popUp(TITLE, TEXT, null, null, null);
+        return popUp(ICON, TITLE, TEXT, null, null, null);
     }
 
-    public static short popUp(String TITLE, String TEXT, Vector2f POSITION, Vector2f SIZE)
+    public static PopupReturn popUp(String ICON, String TITLE, String TEXT, Vector2f POSITION, Vector2f SIZE)
     {
-        return popUp(TITLE, TEXT, null, POSITION, SIZE);
+        return popUp(ICON, TITLE, TEXT, null, POSITION, SIZE);
     }
 
-    public static short popUp(String TITLE, String TEXT,  Vector2f SIZE)
+    public static PopupReturn popUp(String ICON, String TITLE, String TEXT,  Vector2f SIZE)
     {
-        return popUp(TITLE, TEXT, null, null, SIZE);
+        return popUp(ICON, TITLE, TEXT, null, null, SIZE);
     }
 }

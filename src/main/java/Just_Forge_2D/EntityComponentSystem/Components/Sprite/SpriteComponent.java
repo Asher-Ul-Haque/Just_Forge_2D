@@ -119,11 +119,7 @@ public class SpriteComponent extends Component
     @Override
     public void editorGUI()
     {
-        if (Widgets.button(Icons.Trash + " Destroy##" + this.getClass().hashCode()))
-        {
-            this.isChanged = true;
-            this.gameObject.removeComponent(this.getClass());
-        }
+        super.deleteButton();
         if (Widgets.colorPicker4(Icons.EyeDropper +"  Color Picker", this.color)) this.isChanged = true;
         setShowAtRuntime(Widgets.drawBoolControl((getShowAtRuntime() ? Icons.Eye : Icons.EyeSlash) + "  Show", getShowAtRuntime()));
         if (this.sprite.getTexture() != null)
@@ -141,6 +137,12 @@ public class SpriteComponent extends Component
     }
 
     public void setChanged()
+    {
+        this.isChanged = true;
+    }
+
+    @Override
+    public void destroy()
     {
         this.isChanged = true;
     }

@@ -1,11 +1,14 @@
 package Just_Forge_2D.EditorSystem.Windows;
 
+import Just_Forge_2D.EditorSystem.Icons;
+import Just_Forge_2D.EditorSystem.Widgets;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.Components.ComponentList;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.Utils.Logger;
 import imgui.ImGui;
+import org.joml.Vector2f;
 import org.joml.Vector4f;
 
 import java.util.ArrayList;
@@ -18,6 +21,7 @@ public class ComponentsWindow
     // - - - private variables
     private static final List<GameObject> activeGameObjects = new ArrayList<>();
     private static final List<Vector4f> activeGameObjectsColors = new ArrayList<>();
+    private static boolean deletePopup = false;
 
 
     // - - - Functions - - -
@@ -30,11 +34,26 @@ public class ComponentsWindow
         if (activeGameObjects.size() == 1 && activeGameObjects.get(0) != null)
         {
             GameObject activeGameObject = activeGameObjects.get(0);
-            if (ImGui.button("Delete"))
+            if (ImGui.button(Icons.Trash + " Delete"))
             {
-                activeGameObject.destroy();
-                clearSelection();
+                deletePopup = !deletePopup;
             }
+            if (deletePopup)
+            {
+                Widgets.PopupReturn returnVal = Widgets.popUp(Icons.ExclamationTriangle, "Delete Confirmation", "Are you sure you want to delete \n" +activeGameObject, new Vector2f(300, 128));
+                switch (returnVal)
+                {
+                    case OK:
+                        activeGameObject.destroy();
+                        clearSelection();
+                        break;
+
+                    case CANCEL:
+                        deletePopup = false;
+                        break;
+                }
+            }
+            Widgets.text("");
             if (activeGameObject != null)
             {
                 if (ImGui.beginPopupContextWindow("Component Adder"))

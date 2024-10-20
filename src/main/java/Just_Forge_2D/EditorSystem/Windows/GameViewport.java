@@ -16,6 +16,7 @@ public class GameViewport
 {
     private static float leftX, rightX, topY, bottomY;
     private static boolean isPlaying = false;
+    private static boolean windowIsHovered = false;
 
     public static void render()
     {
@@ -39,6 +40,7 @@ public class GameViewport
 
         int textureId = GameWindow.getFrameBuffer().getTextureID();
         ImGui.image(textureId, windowSize.x, windowSize.y, 0, 1, 1, 0);
+        windowIsHovered = ImGui.isItemHovered();
 
         float buttonWidth = 80f;
         float buttonPadding = 8f;
@@ -99,6 +101,6 @@ public class GameViewport
 
     public static boolean getWantCaptureMouse()
     {
-        return Mouse.getX() >= leftX && Mouse.getX() <= rightX && Mouse.getY() >= bottomY && Mouse.getY() <= topY;
+        return windowIsHovered;
     }
 }

@@ -1,7 +1,6 @@
 package Just_Forge_2D.EntityComponentSystem;
 
 import Just_Forge_2D.AssetPool.AssetPool;
-import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.Components.TransformComponent;
@@ -181,7 +180,7 @@ public class GameObject
         for (int i = 0; i < components.size(); ++i)
         {
             Component component = components.get(i);
-            ImGui.setCursorPosY(ImGui.getCursorPosY() + EditorSystemManager.getCurrentTheme().framePadding.y);
+            //ImGui.setCursorPosY(ImGui.getCursorPosY() + EditorSystemManager.getCurrentTheme().framePadding.y);
             if (ImGui.collapsingHeader(component.getClass().getSimpleName()))
             {
                 try
