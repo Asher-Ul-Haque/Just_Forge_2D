@@ -143,8 +143,8 @@ public class AssetPoolDisplay
     private static void drawSpriteSheets()
     {
         Widgets.text("");
-        keepSize = Widgets.drawBoolControl(Icons.Expand + "  Keep Size", keepSize);
         List<String> spriteSheetNames = AssetPool.getSpriteSheetNames();
+        if (!spriteSheetNames.isEmpty()) keepSize = Widgets.drawBoolControl(Icons.Expand + "  Keep Size", keepSize);
         for (String sheetName : spriteSheetNames)
         {
             if (ImGui.collapsingHeader(sheetName))

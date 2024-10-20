@@ -112,11 +112,26 @@ Pos=533,50
 Size=300,128
 Collapsed=0
 
+[Window][##Confirm Death]
+Pos=533,50
+Size=300,128
+Collapsed=0
+
+[Window][##Confirm Delete]
+Pos=507,50
+Size=352,92
+Collapsed=0
+
+[Window][##Delete Prefab]
+Pos=545,50
+Size=275,108
+Collapsed=0
+
 [Docking][Data]
 DockSpace       ID=0x6D3A3A6E Window=0x091AB4BE Pos=4,28 Size=1358,692 Split=X Selected=0xAE7BB42F
   DockNode      ID=0x00000007 Parent=0x6D3A3A6E SizeRef=930,692 Split=X
     DockNode    ID=0x00000001 Parent=0x00000007 SizeRef=408,692 Split=Y Selected=0xDF18B7BE
-      DockNode  ID=0x00000003 Parent=0x00000001 SizeRef=160,346 Selected=0x601E4255
+      DockNode  ID=0x00000003 Parent=0x00000001 SizeRef=160,346 Selected=0xDF18B7BE
       DockNode  ID=0x00000004 Parent=0x00000001 SizeRef=160,344 Selected=0x9A68760C
     DockNode    ID=0x00000002 Parent=0x00000007 SizeRef=520,692 Split=Y Selected=0xAE7BB42F
       DockNode  ID=0x00000008 Parent=0x00000002 SizeRef=919,414 CentralNode=1 HiddenTabBar=1 Selected=0xAE7BB42F

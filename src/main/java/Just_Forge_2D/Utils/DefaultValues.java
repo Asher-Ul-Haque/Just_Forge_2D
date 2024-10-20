@@ -102,7 +102,7 @@ public class DefaultValues
     public static final Keys DEFAULT_JUMP_KEY = Keys.SPACE;
 
     // - - - theme
-    public static final boolean DARK_MODE_ENABLED = false;
+    public static final boolean DARK_MODE_ENABLED = true;
     public static final ImVec4 DEFAULT_CLEAN_THEME_SECONDARY_COLOR = new ImVec4(0.129411765f, 0.1450980f, 0.16078f, 1.0f);
     public static final ImVec4 DEFAULT_CLEAN_THEME_PRIMARY_COLOR = new ImVec4(0.97647f, 0.97254902f, 0.968627541f, 1.0f);
     public static final ImVec4 DEFAULT_CLEAN_THEME_TERTIARY_COLOR = new ImVec4(0.203921569f, 0.22745f, 0.2509f, 1.0f);

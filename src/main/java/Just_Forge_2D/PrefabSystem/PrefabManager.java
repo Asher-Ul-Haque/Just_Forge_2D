@@ -1,6 +1,8 @@
 package Just_Forge_2D.PrefabSystem;
 
+import Just_Forge_2D.EditorSystem.Icons;
 import Just_Forge_2D.EditorSystem.InputControls.MouseControlComponent;
+import Just_Forge_2D.EditorSystem.Widgets;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.Sprite;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.Utils.Logger;
@@ -13,11 +15,15 @@ public class PrefabManager
 {
     private static final Map<String, Prefab> prefabRegistry = new HashMap<>();
     private static int defaultPrefabMask = 0;
+    private static boolean showPrefabDeletePopup = false;
+    private static boolean showPrefabClearPopup = false;
 
     public static void registerPrefab(String NAME, Prefab PREFAB)
     {
         prefabRegistry.put(NAME, PREFAB);
     }
+
+    public static void unregisterPrefab(String NAME) {prefabRegistry.remove(NAME);}
 
     public static GameObject createPrefab(String NAME)
     {
@@ -39,20 +45,57 @@ public class PrefabManager
     public static void render()
     {
         ImGui.begin("Prefabs");
+        if (Widgets.button(Icons.Trash + " Delete All"))
+        {
+            showPrefabClearPopup = !showPrefabClearPopup;
+        }
+        Widgets.text("");
+        if (showPrefabClearPopup)
+        {
+            switch(Widgets.popUp(Icons.ExclamationTriangle, "Delete Prefab", "Are you sure you want to delete all prefabs"))
+            {
+                case OK:
+                    prefabRegistry.clear();
+                    showPrefabClearPopup = false;
+                    break;
+
+                case CANCEL:
+                    showPrefabClearPopup = false;
+                    break;
+            }
+        }
 
         for (Map.Entry<String, Prefab> entry : prefabRegistry.entrySet())
         {
             String name = entry.getKey();
             Prefab prefab = entry.getValue();
 
-            if (ImGui.button(name))
+
+            if (Widgets.button(Icons.Trash))
+            {
+                showPrefabDeletePopup = !showPrefabDeletePopup;
+            }
+            ImGui.sameLine();
+            if (Widgets.button(name))
             {
                 GameObject obj = prefab.create();
                 MouseControlComponent.pickupObject(obj);
             }
-        }
+            if (showPrefabDeletePopup)
+            {
+                switch(Widgets.popUp(Icons.ExclamationTriangle, "Delete Prefab", "Are you sure you want to delete prefab\n" + name))
+                {
+                    case OK:
+                        unregisterPrefab(name);
+                        showPrefabDeletePopup = false;
+                        break;
 
+                    case CANCEL:
+                        showPrefabDeletePopup = false;
+                        break;
+                }
+            }
+        }
         ImGui.end();
     }
-
 }

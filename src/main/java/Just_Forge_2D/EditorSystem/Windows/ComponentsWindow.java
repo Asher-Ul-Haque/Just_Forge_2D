@@ -4,8 +4,13 @@ import Just_Forge_2D.EditorSystem.Icons;
 import Just_Forge_2D.EditorSystem.Widgets;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.Components.ComponentList;
+import Just_Forge_2D.EntityComponentSystem.Components.Sprite.Sprite;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
+import Just_Forge_2D.PrefabSystem.NonSpritePrefab;
+import Just_Forge_2D.PrefabSystem.Prefab;
+import Just_Forge_2D.PrefabSystem.PrefabManager;
+import Just_Forge_2D.PrefabSystem.SpritePrefab;
 import Just_Forge_2D.Utils.Logger;
 import imgui.ImGui;
 import org.joml.Vector2f;
@@ -34,10 +39,28 @@ public class ComponentsWindow
         if (activeGameObjects.size() == 1 && activeGameObjects.get(0) != null)
         {
             GameObject activeGameObject = activeGameObjects.get(0);
-            if (ImGui.button(Icons.Trash + " Delete"))
+            ImGui.columns(2);
+            if (Widgets.button(Icons.Trash + " Delete"))
             {
                 deletePopup = !deletePopup;
             }
+            ImGui.nextColumn();
+            if (Widgets.button("Make Prefab"))
+            {
+                SpriteComponent spriteComponent = activeGameObject.getComponent(SpriteComponent.class);
+                Prefab prefab;
+                if (spriteComponent != null)
+                {
+                    Sprite spr = spriteComponent.getSpriteCopy();
+                    prefab = new SpritePrefab(activeGameObject.name, spr, activeGameObject.transform.scale.x, activeGameObject.transform.scale.y);
+                }
+                else
+                {
+                    prefab = new NonSpritePrefab(activeGameObject.name, activeGameObject.transform.scale.x, activeGameObject.transform.scale.y);
+                }
+                PrefabManager.registerPrefab(activeGameObject.name,  prefab);
+            }
+            ImGui.columns(1);
             if (deletePopup)
             {
                 Widgets.PopupReturn returnVal = Widgets.popUp(Icons.ExclamationTriangle, "Delete Confirmation", "Are you sure you want to delete \n" +activeGameObject, new Vector2f(300, 128));

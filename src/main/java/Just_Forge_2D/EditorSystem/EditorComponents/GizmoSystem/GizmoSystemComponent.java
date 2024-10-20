@@ -34,6 +34,7 @@ public class GizmoSystemComponent extends Component
     @Override
     public void editorUpdate(float DELTA_TIME)
     {
+        if (gameObject == null || gameObject.isDead()) return;
         switch (currentGizmo)
         {
             case 0:

@@ -7,6 +7,7 @@ import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.Components.TransformComponent;
 import Just_Forge_2D.RenderingSystem.Texture;
 import Just_Forge_2D.Utils.Logger;
+import imgui.ImGui;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 
@@ -53,6 +54,17 @@ public class SpriteComponent extends Component
     }
 
     // - - - Sprite
+
+    public Sprite getSpriteCopy()
+    {
+        Sprite copy = new Sprite();
+        copy.setHeight(this.sprite.getHeight());
+        copy.setWidth(this.sprite.getWidth());
+        copy.setTexture(this.getTexture());
+        copy.setTextureCoordinates(this.getTextureCoords());
+        return copy;
+    }
+
     public void setSprite(Sprite SPRITE)
     {
         this.sprite = SPRITE;
@@ -120,13 +132,14 @@ public class SpriteComponent extends Component
     public void editorGUI()
     {
         super.deleteButton();
-        if (Widgets.colorPicker4(Icons.EyeDropper +"  Color Picker", this.color)) this.isChanged = true;
-        setShowAtRuntime(Widgets.drawBoolControl((getShowAtRuntime() ? Icons.Eye : Icons.EyeSlash) + "  Show", getShowAtRuntime()));
         if (this.sprite.getTexture() != null)
         {
             Vector2f[] texCoords = this.sprite.getTextureCoordinates();
-            if (Widgets.imageButton(this.sprite.getTextureID(), this.sprite.getWidth() * 2, this.sprite.getHeight() * 2, texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y));
+            ImGui.setCursorPosX(ImGui.getContentRegionAvailX() - sprite.getWidth());
+            Widgets.image(this.sprite.getTextureID(), this.sprite.getWidth() * 2, this.sprite.getHeight() * 2, texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y);
         }
+        if (Widgets.colorPicker4(Icons.EyeDropper +"  Color Picker", this.color)) this.isChanged = true;
+        setShowAtRuntime(Widgets.drawBoolControl((getShowAtRuntime() ? Icons.Eye : Icons.EyeSlash) + "  Show", getShowAtRuntime()));
     }
 
 

@@ -27,6 +27,7 @@ public class SceneHierarchyWindow
     private static String newObjectName = "";
     private static boolean showDeathPopup = false;
     private static boolean showAddPopup = false;
+    private static boolean showSingleDeathPopup = false;
 
     private static List<GameObject> gameObjectList;
 
@@ -118,8 +119,20 @@ public class SceneHierarchyWindow
             }
             if (ImGui.button("  " + Icons.Trash+"  ##" + i))
             {
-                obj.destroy();
-                continue;
+                showSingleDeathPopup = !showSingleDeathPopup;
+            }
+            if (showSingleDeathPopup)
+            {
+                switch (Widgets.popUp(Icons.ExclamationTriangle, "Confirm Death", "Are you sure you want to delete\n" + obj, new Vector2f(300, 128)))
+                {
+                    case OK:
+                        obj.destroy();
+                        break;
+
+                    case CANCEL:
+                        showSingleDeathPopup = false;
+                        break;
+                }
             }
             ImGui.sameLine();
             if (ImGui.button("  " + Icons.Search+"  ##" + i))
