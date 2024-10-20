@@ -4,7 +4,7 @@ import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.RenderingSystem.DebugPencil;
 import Just_Forge_2D.SceneSystem.Camera;
-import Just_Forge_2D.Utils.DefaultValues;
+import Just_Forge_2D.Utils.Settings;
 import Just_Forge_2D.WindowSystem.GameWindow;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
@@ -13,9 +13,9 @@ import org.joml.Vector4f;
 // - - - Grid Lines
 public class GridlinesComponent extends Component
 {
-    public static Vector2f gridSize = new Vector2f(DefaultValues.GRID_WIDTH, DefaultValues.GRID_HEIGHT);
-    public static Vector4f gridColor = new Vector4f(DefaultValues.DEBUG_PENCIL_DEFAULT_COLOR, 1.0f);
-    public static boolean showGrid = DefaultValues.SHOW_GRID;
+    public static Vector2f gridSize = new Vector2f(Settings.GRID_WIDTH(), Settings.GRID_HEIGHT());
+    public static Vector4f gridColor = new Vector4f(Settings.DEBUG_PENCIL_DEFAULT_COLOR, 1.0f);
+    public static boolean showGrid = Settings.SHOW_GRID();
 
 
 

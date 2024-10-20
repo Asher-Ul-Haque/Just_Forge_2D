@@ -8,32 +8,32 @@ import Just_Forge_2D.InputSystem.Keys;
 import Just_Forge_2D.PhysicsSystem.Raycasts.RayCastInfo;
 import Just_Forge_2D.PhysicsSystem.Raycasts.RaycastGun;
 import Just_Forge_2D.RenderingSystem.DebugPencil;
-import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.ForgeMath;
 import Just_Forge_2D.Utils.Logger;
+import Just_Forge_2D.Utils.Settings;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 
 public class KeyboardControllerComponent extends Component
 {
-    protected Keys rightKey = DefaultValues.DEFAULT_MOVE_RIGHT_KEY;
-    protected Keys leftKey = DefaultValues.DEFAULT_MOVE_LEFT_KEY;
-    protected Keys jumpKey = DefaultValues.DEFAULT_JUMP_KEY;
-    protected Keys runKey = DefaultValues.DEFAULT_RUN_KEY;
+    protected Keys rightKey = Settings.DEFAULT_MOVE_RIGHT_KEY;
+    protected Keys leftKey = Settings.DEFAULT_MOVE_LEFT_KEY;
+    protected Keys jumpKey = Settings.DEFAULT_JUMP_KEY;
+    protected Keys runKey = Settings.DEFAULT_RUN_KEY;
 
-    protected float maxWalkSpeed = DefaultValues.DEFAULT_MAX_WALK_SPEED;
-    protected float groundAcceleration = DefaultValues.DEFAULT_GROUND_ACCELERATION;
-    protected float groundDeceleration = DefaultValues.DEFAULT_GROUND_DECELERATION;
-    protected float airAcceleration = DefaultValues.DEFAULT_AIR_ACCELERATION;
-    protected float airDeceleration = DefaultValues.DEFAULT_AIR_DECELERATION;
-    protected float jumpImpulse = DefaultValues.DEFAULT_JUMP_IMPULSE;
-    protected float maxRunSpeed = DefaultValues.DEFAULT_MAX_RUN_SPEED;
-    protected float groundDetectRayLength = DefaultValues.DEFAULT_GROUND_DETECT_RAY_LENGTH;
+    protected float maxWalkSpeed = Settings.DEFAULT_MAX_WALK_SPEED;
+    protected float groundAcceleration = Settings.DEFAULT_GROUND_ACCELERATION;
+    protected float groundDeceleration = Settings.DEFAULT_GROUND_DECELERATION;
+    protected float airAcceleration = Settings.DEFAULT_AIR_ACCELERATION;
+    protected float airDeceleration = Settings.DEFAULT_AIR_DECELERATION;
+    protected float jumpImpulse = Settings.DEFAULT_JUMP_IMPULSE;
+    protected float maxRunSpeed = Settings.DEFAULT_MAX_RUN_SPEED;
+    protected float groundDetectRayLength = Settings.DEFAULT_GROUND_DETECT_RAY_LENGTH;
 
-    protected float coyoteTime = DefaultValues.DEFAULT_COYOTE_TIME;
+    protected float coyoteTime = Settings.DEFAULT_COYOTE_TIME;
     protected transient float coyoteTimer = 0f;
-    protected int maxJumps = DefaultValues.DEFAULT_MAX_JUMPS;
+    protected int maxJumps = Settings.DEFAULT_MAX_JUMPS;
     protected transient int jumpsUsed = 0;
 
     protected RigidBodyComponent rb;

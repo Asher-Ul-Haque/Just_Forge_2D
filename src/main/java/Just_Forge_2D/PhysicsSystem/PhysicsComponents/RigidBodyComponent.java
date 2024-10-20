@@ -5,8 +5,8 @@ import Just_Forge_2D.EditorSystem.Widgets;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.Components.TransformComponent;
 import Just_Forge_2D.PhysicsSystem.Enums.BodyType;
-import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.Logger;
+import Just_Forge_2D.Utils.Settings;
 import Just_Forge_2D.WindowSystem.GameWindow;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
@@ -17,17 +17,17 @@ public class RigidBodyComponent extends Component
 {
     // - - - private variables
     public Vector2f velocity = new Vector2f();
-    private float angularDamping = DefaultValues.ANGULAR_DAMPING;
-    private float linearDamping = DefaultValues.LINEAR_DAMPING;
-    private float density = DefaultValues.DEFAULT_MASS;
+    private float angularDamping = Settings.ANGULAR_DAMPING;
+    private float linearDamping = Settings.LINEAR_DAMPING;
+    private float density = Settings.DEFAULT_MASS;
     private BodyType bodyType = BodyType.Dynamic;
-    private boolean fixedRotation = DefaultValues.ROTATION_FIXED;
-    private boolean continuousCollision = DefaultValues.CONTINUOUS_COLLISION;
+    private boolean fixedRotation = Settings.ROTATION_FIXED;
+    private boolean continuousCollision = Settings.CONTINUOUS_COLLISION;
     private transient Body rawBody = null;
     public float angularVelocity = 0.0f;
-    public float gravityScale = DefaultValues.GRAVITY_SCALE;
-    public float frictionCoefficient = DefaultValues.DEFAULT_FRICTION;
-    public float restitutionCoefficient = DefaultValues.DEFAULT_RESTITUTION;
+    public float gravityScale = Settings.GRAVITY_SCALE;
+    public float frictionCoefficient = Settings.DEFAULT_FRICTION;
+    public float restitutionCoefficient = Settings.DEFAULT_RESTITUTION;
     private boolean isSensor = false;
     private boolean isEditor = false;
 

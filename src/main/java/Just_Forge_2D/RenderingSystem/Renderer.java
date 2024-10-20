@@ -2,8 +2,8 @@ package Just_Forge_2D.RenderingSystem;
 
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
-import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.Logger;
+import Just_Forge_2D.Utils.Settings;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,7 +13,7 @@ import java.util.List;
 public class Renderer
 {
     // - - - private variables
-    private final int MAX_BATCH_SIZE = DefaultValues.MAX_BATCH_SIZE;
+    private final int MAX_BATCH_SIZE = Settings.MAX_BATCH_SIZE;
     private final List<RenderBatch> batches;
     private static Shader currentShader;
 

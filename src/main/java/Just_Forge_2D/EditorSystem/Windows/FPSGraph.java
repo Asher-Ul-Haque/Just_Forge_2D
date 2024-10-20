@@ -1,6 +1,7 @@
 package Just_Forge_2D.EditorSystem.Windows;
 
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
+import Just_Forge_2D.EditorSystem.Icons;
 import Just_Forge_2D.EditorSystem.Themes.Theme;
 import Just_Forge_2D.WindowSystem.GameWindow;
 import imgui.ImGui;
@@ -51,7 +52,7 @@ public class FPSGraph
                 xValuesWrapper[i] = fpsSamples[i];
             }
 
-            ImGui.begin("FPS");
+            ImGui.begin(Icons.ChartLine + "  FPS Graph");
             ImGui.setCursorPos(ImGui.getCursorPosX() + EditorSystemManager.getCurrentTheme().framePadding.x,
                     ImGui.getCursorPosY() + EditorSystemManager.getCurrentTheme().framePadding.y);
             Theme.setDefaultTextColor(EditorSystemManager.getCurrentTheme().tertiaryColor);

@@ -265,16 +265,16 @@ public class ImGUIManager
         imGuiGl3.init("#version 410 core");
         Logger.FORGE_LOG_INFO("Editor GUI ready");
 
-        addRenderWindow(KeyboardControls::editorUpdate, "Keyboard Controls");
-        addRenderWindow(SceneHierarchyWindow::editorGUI, "Scene Hierarchy Window");
-        addRenderWindow(GameViewport::render, "Game Viewport");
-        addRenderWindow(ComponentsWindow::render, "Components Window");
-        addRenderWindow(CameraControlWindow::render, "Camera Controls");
-        addRenderWindow(FPSGraph::render, "FPS Graphs");
-        addRenderWindow(GridControls::render, "Grid Controls");
-        addRenderWindow(AssetPoolDisplay::render, "Asset Pool Display");
-        addRenderWindow(Logs::render, "Logs");
-        addRenderWindow(PrefabManager::render, "Prefabs");
+        addRenderWindow(KeyboardControls::editorUpdate, Icons.Keyboard + "  Keyboard Controls");
+        addRenderWindow(SceneHierarchyWindow::editorGUI, Icons.Video + "  Scene Hierarchy Window");
+        addRenderWindow(GameViewport::render, Icons.Gamepad + "  Game Viewport");
+        addRenderWindow(ComponentsWindow::render, Icons.CodeBranch + "  Components Window");
+        addRenderWindow(CameraControlWindow::render, Icons.Camera + "  Camera Controls");
+        addRenderWindow(FPSGraph::render, Icons.ChartLine + "  FPS Graph");
+        addRenderWindow(GridControls::render, Icons.DigitalTachograph + "  Grid Controls");
+        addRenderWindow(AssetPoolDisplay::render, Icons.Images + "  Asset Pool Display");
+        addRenderWindow(Logs::render, Icons.Blog + "  Logs");
+        addRenderWindow(PrefabManager::render, Icons.Copy + "  Prefabs");
     }
 
 

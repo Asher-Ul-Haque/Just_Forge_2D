@@ -2,6 +2,7 @@ package Just_Forge_2D.EditorSystem.Windows;
 
 import Just_Forge_2D.EditorSystem.EditorComponents.EditorCameraComponent;
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
+import Just_Forge_2D.EditorSystem.Icons;
 import Just_Forge_2D.EditorSystem.Widgets;
 import Just_Forge_2D.SceneSystem.Camera;
 import Just_Forge_2D.WindowSystem.GameWindow;
@@ -13,7 +14,7 @@ public class CameraControlWindow
 {
     public static void render()
     {
-        ImGui.begin("Camera Controls");
+        ImGui.begin(Icons.Camera + "  Camera Controls");
 
         Camera worldCamera = GameWindow.getCurrentScene().getCamera();
         if (worldCamera != null)

@@ -2,8 +2,8 @@ package Just_Forge_2D.GameSystem;
 
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.SceneSystem.SceneSystemManager;
-import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.Logger;
+import Just_Forge_2D.Utils.Settings;
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.util.tinyfd.TinyFileDialogs;
 
@@ -114,7 +114,7 @@ public class ProjectManager
 
     private static String selectProjectDirectory()
     {
-        return TinyFileDialogs.tinyfd_selectFolderDialog("Select Project Directory", Paths.get(DEFAULT_PROJECTS_DIR + DefaultValues.DEFAULT_SAVE_DIR).toAbsolutePath().toString());
+        return TinyFileDialogs.tinyfd_selectFolderDialog("Select Project Directory", Paths.get(DEFAULT_PROJECTS_DIR + Settings.DEFAULT_SAVE_DIR).toAbsolutePath().toString());
     }
 
 
@@ -177,7 +177,17 @@ public class ProjectManager
             File projectDirFile = new File(EditorSystemManager.projectDir);
             if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.OPEN))
             {
-                Desktop.getDesktop().open(projectDirFile);
+                new Thread(() ->
+                {
+                    try
+                    {
+                        Desktop.getDesktop().open(projectDirFile);
+                    }
+                    catch (IOException e)
+                    {
+                        Logger.FORGE_LOG_ERROR(e.getMessage());
+                    }
+                }).start();
             }
         }
         catch (Exception e)

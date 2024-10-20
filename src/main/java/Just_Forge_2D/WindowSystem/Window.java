@@ -7,8 +7,8 @@ import Just_Forge_2D.EventSystem.Observer;
 import Just_Forge_2D.InputSystem.Keyboard;
 import Just_Forge_2D.InputSystem.Mouse;
 import Just_Forge_2D.SceneSystem.Scene;
-import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.Logger;
+import Just_Forge_2D.Utils.Settings;
 import Just_Forge_2D.Utils.TimeKeeper;
 import org.joml.Vector4f;
 import org.lwjgl.BufferUtils;
@@ -492,7 +492,7 @@ public class Window implements Observer
 
     protected void warnFPSSpike()
     {
-        if (Math.abs(this.fps - (int) ( 1.0f / dt)) >= DefaultValues.DEFAULT_FPS)
+        if (Math.abs(this.fps - (int) ( 1.0f / dt)) >= Settings.DEFAULT_FPS)
         {
             Logger.FORGE_LOG_WARNING(this.config.title + " Experiencing lag spike. Current fps: " + this.fps);
         }

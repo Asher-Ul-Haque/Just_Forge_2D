@@ -20,7 +20,7 @@ public class GameViewport
 
     public static void render()
     {
-        ImGui.begin("Game Viewport", ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoScrollWithMouse | ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.NoDecoration);
+        ImGui.begin(Icons.Gamepad + "  Game Viewport", ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoScrollWithMouse |  ImGuiWindowFlags.NoDecoration);
 
         ImVec2 windowSize = getLargestSizeForViewport();
         ImVec2 windowPos = getCenteredPositionForViewport(windowSize);
@@ -53,6 +53,7 @@ public class GameViewport
         {
             isPlaying = !isPlaying;
             EventManager.notify(null, new Event(isPlaying ? EventTypes.ForgeStart : EventTypes.ForgeStop));
+            windowIsHovered = false;
         }
 
         buttonStartX += buttonWidth + buttonPadding;
@@ -62,6 +63,7 @@ public class GameViewport
         if (ImGui.button(SceneSystemManager.isRunning(GameWindow.getCurrentScene()) ? Icons.Pause + " Pause" : Icons.Play + " Play", buttonWidth, 36))
         {
             SceneSystemManager.setPause(GameWindow.getCurrentScene(), !SceneSystemManager.isRunning(GameWindow.getCurrentScene()));
+            windowIsHovered = false;
         }
         ImGui.end();
     }

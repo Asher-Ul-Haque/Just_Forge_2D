@@ -1,23 +1,30 @@
 package Just_Forge_2D.Utils;
 
-import Just_Forge_2D.EditorSystem.Widgets;
 import Just_Forge_2D.InputSystem.Keys;
-import imgui.ImGui;
-import imgui.ImGuiViewport;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import imgui.ImVec2;
 import imgui.ImVec4;
-import imgui.flag.ImGuiWindowFlags;
 import org.jbox2d.common.Vec2;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 
-public class DefaultValues
+import java.io.FileWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+public class Settings
 {
+    private static Settings instance = new Settings();
+
     // - - - Grid
-    public static float GRID_WIDTH = 1f;
-    public static float GRID_HEIGHT = 1f;
-    public static final boolean SHOW_GRID = true;
+    private final float GRID_WIDTH = 1f;
+    public static float GRID_WIDTH() {return instance.GRID_WIDTH;}
+    private final float GRID_HEIGHT = 1f;
+    public static float GRID_HEIGHT() {return instance.GRID_HEIGHT;}
+    private final boolean SHOW_GRID = true;
+    public static boolean SHOW_GRID() {return instance.SHOW_GRID;}
 
     // - - - Render Batching
     public static final int MAX_BATCH_SIZE = 1024;
@@ -121,49 +128,35 @@ public class DefaultValues
     public static final float MAX_IMAGE_DISPLAY_WIDTH = 64;
     public static final float MAX_IMAGE_DISPLAY_HEIGHT = 64;
 
-
-    private static boolean showWindow = true;
-
-    public static void render()
+    public static void save()
     {
-        if (!showWindow) return;
+        Gson gson = new GsonBuilder().create();
 
-        // - - - Get the viewport size (screen dimensions)
-        ImGuiViewport viewport = ImGui.getMainViewport();
-        float screenWidth = viewport.getWorkSizeX();
-        float screenHeight = viewport.getWorkSizeY();
-
-        // - - - Calculate the center position
-        float windowWidth = 800;  // Set the window width
-        float windowHeight = 600; // Set the window height
-        float posX = (screenWidth - windowWidth) / 2.0f;
-        float posY = (screenHeight - windowHeight) / 2.0f;
-
-        // - - - Set the next window position to the center of the screen
-        ImGui.setNextWindowPos(posX, posY);
-        ImGui.setNextWindowSize(windowWidth, windowHeight);
-
-        if (ImGui.begin("Settings", ImGuiWindowFlags.NoCollapse))
+        String json = gson.toJson(instance);
+        try
         {
-            ImGui.setCursorPosX(windowWidth - 64);
-            if (ImGui.button(" X "))
-            {
-                showWindow = false;
-            }
-            gridSettings();
+            FileWriter writer = new FileWriter("Settings.json");
+            writer.write(json);
+            writer.close();
         }
-
-        ImGui.end();
+        catch (Exception e)
+        {
+            Logger.FORGE_LOG_FATAL(e.getMessage());
+        }
     }
 
-    private static void gridSettings()
+    public static void load()
     {
-        if (ImGui.collapsingHeader("Grid Settings"))
+        try
         {
-            Vector2f size = new Vector2f(GRID_WIDTH, GRID_HEIGHT);
-            Widgets.drawVec2Control("Grid Size", size);
-            GRID_WIDTH = Math.max(0.1f, size.x);
-            GRID_HEIGHT = Math.max(0.1f, size.y);
+            String json = new String(Files.readAllBytes(Paths.get("Settings.json")));
+            Gson gson = new GsonBuilder().create();
+            instance = gson.fromJson(json, Settings.class);
+        }
+        catch (Exception e)
+        {
+            Logger.FORGE_LOG_ERROR(e.getMessage());
+            Logger.FORGE_LOG_ERROR("Reverting to Default Settings");
         }
     }
 }

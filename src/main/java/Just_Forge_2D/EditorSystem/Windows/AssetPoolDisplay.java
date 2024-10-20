@@ -12,8 +12,8 @@ import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.PrefabSystem.PrefabManager;
 import Just_Forge_2D.RenderingSystem.SpriteSheet;
 import Just_Forge_2D.RenderingSystem.Texture;
-import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.Logger;
+import Just_Forge_2D.Utils.Settings;
 import imgui.ImGui;
 import imgui.ImVec2;
 import org.joml.Vector2f;
@@ -200,8 +200,8 @@ public class AssetPoolDisplay
         ImGui.pushID(index);
         if (Widgets.imageButton(id, spriteWidth, spriteHeight, texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y))
         {
-            GameObject object = PrefabManager.generateDefaultSpriteObject(sprite, keepSize ? GridlinesComponent.gridSize.x : sprite.getWidth() / DefaultValues.DEFAULT_SIZE_DOWN_FACTOR,
-                    keepSize ? GridlinesComponent.gridSize.y : sprite.getHeight() / DefaultValues.DEFAULT_SIZE_DOWN_FACTOR);
+            GameObject object = PrefabManager.generateDefaultSpriteObject(sprite, keepSize ? GridlinesComponent.gridSize.x : sprite.getWidth() / Settings.DEFAULT_SIZE_DOWN_FACTOR,
+                    keepSize ? GridlinesComponent.gridSize.y : sprite.getHeight() / Settings.DEFAULT_SIZE_DOWN_FACTOR);
             MouseControlComponent.pickupObject(object);
         }
         ImGui.popID();
@@ -267,8 +267,8 @@ public class AssetPoolDisplay
 
         if (Widgets.imageButton(id, sprite.getWidth(), sprite.getHeight(), texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y))
         {
-            GameObject object = PrefabManager.generateDefaultSpriteObject(sprite, !keepSize ? GridlinesComponent.gridSize.x : sprite.getWidth() / DefaultValues.DEFAULT_SIZE_DOWN_FACTOR,
-                    !keepSize ? GridlinesComponent.gridSize.y : sprite.getHeight() / DefaultValues.DEFAULT_SIZE_DOWN_FACTOR);
+            GameObject object = PrefabManager.generateDefaultSpriteObject(sprite, !keepSize ? GridlinesComponent.gridSize.x : sprite.getWidth() / Settings.DEFAULT_SIZE_DOWN_FACTOR,
+                    !keepSize ? GridlinesComponent.gridSize.y : sprite.getHeight() / Settings.DEFAULT_SIZE_DOWN_FACTOR);
             MouseControlComponent.pickupObject(object);
         }
     }
@@ -326,7 +326,7 @@ public class AssetPoolDisplay
 
     public static void render()
     {
-        ImGui.begin("Asset Pool");
+        ImGui.begin(Icons.Images + "  Asset Pool Display");
         if (ImGui.beginTabBar("Window Tabs"))
         {
             textureDisplay();

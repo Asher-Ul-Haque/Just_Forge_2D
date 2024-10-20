@@ -35,7 +35,7 @@ public class ComponentsWindow
 
     public static void render()
     {
-        ImGui.begin("Components");
+        ImGui.begin(Icons.CodeBranch + "  Components Window");
         if (activeGameObjects.size() == 1 && activeGameObjects.get(0) != null)
         {
             GameObject activeGameObject = activeGameObjects.get(0);
@@ -45,7 +45,7 @@ public class ComponentsWindow
                 deletePopup = !deletePopup;
             }
             ImGui.nextColumn();
-            if (Widgets.button("Make Prefab"))
+            if (Widgets.button(Icons.Copy + "  Make Prefab"))
             {
                 SpriteComponent spriteComponent = activeGameObject.getComponent(SpriteComponent.class);
                 Prefab prefab;

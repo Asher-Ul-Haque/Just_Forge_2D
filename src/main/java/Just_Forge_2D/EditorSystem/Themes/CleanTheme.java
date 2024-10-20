@@ -1,16 +1,16 @@
 package Just_Forge_2D.EditorSystem.Themes;
 
-import Just_Forge_2D.Utils.DefaultValues;
+import Just_Forge_2D.Utils.Settings;
 import imgui.ImVec4;
 
 public class CleanTheme extends Theme
 {
     public CleanTheme(boolean DARK)
     {
-        this.secondaryColor = DefaultValues.DEFAULT_CLEAN_THEME_SECONDARY_COLOR;
-        this.primaryColor = DefaultValues.DEFAULT_CLEAN_THEME_PRIMARY_COLOR;
-        this.tertiaryColor = DefaultValues.DEFAULT_CLEAN_THEME_TERTIARY_COLOR;
-        this.quaternaryColor = DefaultValues.DEFAULT_CLEAN_THEME_QUATERNARY_COLOR;
+        this.secondaryColor = Settings.DEFAULT_CLEAN_THEME_SECONDARY_COLOR;
+        this.primaryColor = Settings.DEFAULT_CLEAN_THEME_PRIMARY_COLOR;
+        this.tertiaryColor = Settings.DEFAULT_CLEAN_THEME_TERTIARY_COLOR;
+        this.quaternaryColor = Settings.DEFAULT_CLEAN_THEME_QUATERNARY_COLOR;
         if (DARK)
         {
             ImVec4 temp = new ImVec4(this.secondaryColor);
@@ -24,25 +24,25 @@ public class CleanTheme extends Theme
         this.windowBgColor = primaryColor;
         this.windowChildBgColor = primaryColor;
         this.popupBgColor = secondaryColor;
-        this.popupRounding = DefaultValues.DEFAULT_POPUP_ROUNDING;
+        this.popupRounding = Settings.DEFAULT_POPUP_ROUNDING;
 
-        this.windowBorderSize = DefaultValues.DEFAULT_WINDOW_BORDER_SIZE;
+        this.windowBorderSize = Settings.DEFAULT_WINDOW_BORDER_SIZE;
         this.windowBorderColor = secondaryColor;
         this.windowBorderShadowColor = secondaryColor;
 
         this.windowTitleBgColor = secondaryColor;
         this.windowTitleBgActiveColor = secondaryColor;
         this.windowTitleBgCollapsedColor = tertiaryColor;
-        this.windowRounding = DefaultValues.DEFAULT_WINDOW_ROUNDING;
+        this.windowRounding = Settings.DEFAULT_WINDOW_ROUNDING;
 
-        this.windowPadding = DefaultValues.DEFAULT_WINDOW_PADDING;
+        this.windowPadding = Settings.DEFAULT_WINDOW_PADDING;
 
         this.buttonBgColor = secondaryColor;
         this.buttonBgHoverColor = tertiaryColor;
         this.buttonBgActiveColor = secondaryColor;
 
-        this.framePadding = DefaultValues.DEFAULT_FRAME_PADDING;
-        this.frameRounding = DefaultValues.DEFAULT_FRAME_ROUNDING;
+        this.framePadding = Settings.DEFAULT_FRAME_PADDING;
+        this.frameRounding = Settings.DEFAULT_FRAME_ROUNDING;
 
         this.dockingBorderColor = tertiaryColor;
         this.dockingBgColor = secondaryColor;
@@ -50,15 +50,15 @@ public class CleanTheme extends Theme
 
         this.treeNodeBgColor = secondaryColor;
         this.treeNodeTextColor = primaryColor;
-        this.treeNodeIndent = DefaultValues.DEFAULT_TREE_NODE_INDENT;
+        this.treeNodeIndent = Settings.DEFAULT_TREE_NODE_INDENT;
 
         this.tabBgColor = secondaryColor;
         this.tabHoveredColor = tertiaryColor;
         this.tabActiveColor = secondaryColor;
         this.tabUnfocusedColor = secondaryColor;
         this.tabUnfocusedActiveColor = secondaryColor;
-        this.tabRounding = DefaultValues.DEFAULT_TAB_ROUNDING;
-        this.tabBorder = DefaultValues.DEFAULT_TAB_BORDER;
+        this.tabRounding = Settings.DEFAULT_TAB_ROUNDING;
+        this.tabBorder = Settings.DEFAULT_TAB_BORDER;
 
         this.checkMarkColor = this.primaryColor;
         this.frameBgColor = this.secondaryColor;

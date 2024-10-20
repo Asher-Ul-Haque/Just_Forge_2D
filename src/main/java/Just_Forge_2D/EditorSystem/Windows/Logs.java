@@ -1,6 +1,7 @@
 package Just_Forge_2D.EditorSystem.Windows;
 
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
+import Just_Forge_2D.EditorSystem.Icons;
 import Just_Forge_2D.EditorSystem.Themes.Theme;
 import Just_Forge_2D.Utils.Logger;
 import imgui.ImGui;
@@ -18,7 +19,7 @@ public class Logs
 
     public static void render()
     {
-        ImGui.begin("Logger", ImGuiWindowFlags.AlwaysVerticalScrollbar | ImGuiWindowFlags.AlwaysHorizontalScrollbar);
+        ImGui.begin(Icons.Blog + "  Logs", ImGuiWindowFlags.AlwaysVerticalScrollbar | ImGuiWindowFlags.AlwaysHorizontalScrollbar);
 
         // Checkbox UI to toggle log levels
         Theme.setDefaultTextColor(EditorSystemManager.getCurrentTheme().secondaryColor);

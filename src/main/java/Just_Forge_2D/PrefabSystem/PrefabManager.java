@@ -44,7 +44,7 @@ public class PrefabManager
 
     public static void render()
     {
-        ImGui.begin("Prefabs");
+        ImGui.begin(Icons.Copy + "  Prefabs");
         if (Widgets.button(Icons.Trash + " Delete All"))
         {
             showPrefabClearPopup = !showPrefabClearPopup;

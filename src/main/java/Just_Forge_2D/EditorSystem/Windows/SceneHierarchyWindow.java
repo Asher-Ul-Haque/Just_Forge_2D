@@ -33,7 +33,7 @@ public class SceneHierarchyWindow
 
     public static void editorGUI()
     {
-        ImGui.begin("Scene Hierarchy");
+        ImGui.begin(Icons.Video + "  Scene Hierarchy Window");
 
         ImGui.columns(2);
         if (Widgets.button(Icons.Trash + " Delete All")) {showDeathPopup = !showDeathPopup;}

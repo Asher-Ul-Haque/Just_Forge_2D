@@ -13,8 +13,8 @@ import Just_Forge_2D.EventSystem.Events.EventTypes;
 import Just_Forge_2D.RenderingSystem.Shader;
 import Just_Forge_2D.SceneSystem.MainSceneScript;
 import Just_Forge_2D.SceneSystem.SceneScript;
-import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.Logger;
+import Just_Forge_2D.Utils.Settings;
 import Just_Forge_2D.WindowSystem.GameWindow;
 import Just_Forge_2D.WindowSystem.WindowConfig;
 import Just_Forge_2D.WindowSystem.WindowSystemManager;
@@ -126,7 +126,7 @@ public class EditorSystemManager
         WindowSystemManager.initialize();
         editorWindowConfig = new WindowConfig();
         editorWindowConfig.setHeight(800);
-        if (currentTheme == null) currentTheme = new CleanTheme(DefaultValues.DARK_MODE_ENABLED);
+        if (currentTheme == null) currentTheme = new CleanTheme(Settings.DARK_MODE_ENABLED);
         GameWindow.get();
         EditorSystemManager.setSelector();
         setEditorLayer();

@@ -4,8 +4,8 @@ import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.EventSystem.Events.Event;
 import Just_Forge_2D.EventSystem.Events.EventTypes;
 import Just_Forge_2D.EventSystem.Observer;
-import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.Logger;
+import Just_Forge_2D.Utils.Settings;
 import Just_Forge_2D.WindowSystem.GameWindow;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
@@ -19,7 +19,7 @@ public class Camera implements Observer
     // - - - projection
     private final Matrix4f projectionMatrix;
     private final Matrix4f inverseProjectionMatrix;
-    private Vector2f projectionSize = DefaultValues.DEFAULT_CAMERA_PROJECTION_SIZE;
+    private Vector2f projectionSize = Settings.DEFAULT_CAMERA_PROJECTION_SIZE;
 
     // - - - view
     private final Matrix4f viewMatrix;
@@ -27,7 +27,7 @@ public class Camera implements Observer
 
     // - - - position and zoom
     private Vector2f position;
-    private float zoom = DefaultValues.DEFAULT_CAMERA_ZOOM;
+    private float zoom = Settings.DEFAULT_CAMERA_ZOOM;
     private Vector3f rotation = new Vector3f();
 
 
@@ -164,7 +164,7 @@ public class Camera implements Observer
         if (EVENT.type.equals(EventTypes.ForgeResize))
         {
             float aspectRatio = (float) GameWindow.getFrameBuffer().getSize().x / (float) GameWindow.getFrameBuffer().getSize().y;
-            float orthoWidth = DefaultValues.DEFAULT_CAMERA_PROJECTION_SIZE.x;
+            float orthoWidth = Settings.DEFAULT_CAMERA_PROJECTION_SIZE.x;
             float orthoHeight = orthoWidth / aspectRatio;
             this.projectionSize = new Vector2f(orthoWidth, orthoHeight);
         }

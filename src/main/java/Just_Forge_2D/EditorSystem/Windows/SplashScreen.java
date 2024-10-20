@@ -13,8 +13,8 @@ import Just_Forge_2D.GameSystem.GameManager;
 import Just_Forge_2D.GameSystem.ProjectManager;
 import Just_Forge_2D.RenderingSystem.Texture;
 import Just_Forge_2D.SceneSystem.MainSceneScript;
-import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.Logger;
+import Just_Forge_2D.Utils.Settings;
 import Just_Forge_2D.WindowSystem.GameWindow;
 import Just_Forge_2D.WindowSystem.WindowSystemManager;
 import imgui.ImGui;
@@ -59,7 +59,7 @@ public class SplashScreen
             {
                 logoTexture = new Texture();
                 logoTexture.init("Assets/Textures/icon.png");
-                AssetPool.addTexture("Default", DefaultValues.DEFAULT_ICON_PATH, true);
+                AssetPool.addTexture("Default", Settings.DEFAULT_ICON_PATH, true);
             }
 
             // - - - flip the flags
