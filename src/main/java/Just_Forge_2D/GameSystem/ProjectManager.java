@@ -10,7 +10,10 @@ import org.lwjgl.util.tinyfd.TinyFileDialogs;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 public class ProjectManager
 {
@@ -18,7 +21,44 @@ public class ProjectManager
     private static final String DEFAULT_PROJECTS_DIR = System.getProperty("user.home") + "/Documents/ForgeProjects";
     private static final String PROJECT_TEMPLATE_DIR = "ProjectTemplate";
     @NotNull public static String PROJECT_NAME = new File(System.getProperty("user.dir")).getName();
-    private static WatchService eyeBall;
+
+
+    // - - - Get the last project path:
+    public static void saveLastProjectPath()
+    {
+        Path path = Paths.get("Configurations/lastProject.justForgeFile");
+        try
+        {
+            Files.write(path, Paths.get(EditorSystemManager.projectDir).toAbsolutePath().toString().getBytes());
+            System.out.println("File written to: " + path);
+        }
+        catch (IOException e)
+        {
+            Logger.FORGE_LOG_WARNING(e.getMessage());
+        }
+    }
+
+    public static File getLastProjectPath()
+    {
+        Path path = Paths.get("Configurations/lastProject.justForgeFile");
+        try
+        {
+            if (Files.exists(path))
+            {
+                String projectPath = new String(Files.readAllBytes(path)).trim();
+                return new File(projectPath);
+            }
+            else
+            {
+                Logger.FORGE_LOG_WARNING("Last project path file does not exist.");
+            }
+        }
+        catch (IOException e)
+        {
+            Logger.FORGE_LOG_WARNING(e.getMessage());
+        }
+        return null;
+    }
 
 
     // - - - Creating new Project - - -

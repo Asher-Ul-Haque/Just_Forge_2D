@@ -10,7 +10,6 @@ import Just_Forge_2D.EventSystem.Events.Event;
 import Just_Forge_2D.EventSystem.Events.EventTypes;
 import Just_Forge_2D.GameSystem.GameManager;
 import Just_Forge_2D.GameSystem.ProjectManager;
-import Just_Forge_2D.PrefabSystem.PrefabSerializer;
 import Just_Forge_2D.RenderingSystem.Texture;
 import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.Utils.Settings;
@@ -21,6 +20,8 @@ import imgui.ImVec4;
 import imgui.flag.ImGuiCol;
 import imgui.flag.ImGuiWindowFlags;
 import org.joml.Vector4f;
+
+import java.io.IOException;
 
 public class SplashScreen
 {
@@ -59,6 +60,25 @@ public class SplashScreen
                 logoTexture = new Texture();
                 logoTexture.init("Assets/Textures/icon.png");
                 AssetPool.addTexture("Default", Settings.DEFAULT_ICON_PATH, true);
+            }
+
+            if (!EditorSystemManager.isRelease)
+            {
+                new Thread(()->
+                {
+                    String gradlewCommand = System.getProperty("os.name").toLowerCase().contains("win") ? "gradlew.bat" : "./gradlew";
+                    ProcessBuilder processBuilder = new ProcessBuilder(gradlewCommand, "build");
+                    processBuilder.directory(ProjectManager.getLastProjectPath());
+                    processBuilder.inheritIO();
+                    try
+                    {
+                        processBuilder.start();
+                    }
+                    catch (IOException e)
+                    {
+                        Logger.FORGE_LOG_WARNING("Failed Early Compilation :  " + e);
+                    }
+                }).start();
             }
 
             // - - - flip the flags
@@ -206,7 +226,6 @@ public class SplashScreen
             if (!EditorSystemManager.isRelease)
             {
                 AssetPoolSerializer.loadAssetPool(EditorSystemManager.projectDir + "/.forge/Pool.justForgeFile");
-                PrefabSerializer.loadPrefabs(EditorSystemManager.projectDir + "/.forge/Prefabs.justForgeFile");
             }
             if (EditorSystemManager.currentSceneInitializer == null || GameWindow.getCurrentScene() == null)
             {

@@ -27,6 +27,10 @@ public class GameManager
 
     public static void buildUserCode()
     {
+        buildUserCode(new File(EditorSystemManager.projectDir));
+    }
+    public static void buildUserCode(File DIRECTORY)
+    {
         Logger.FORGE_LOG_INFO("Reading Your Code");
         progressPercentage = 0.1f;
 
@@ -38,7 +42,7 @@ public class GameManager
                 {
                     String gradlewCommand = System.getProperty("os.name").toLowerCase().contains("win") ? "gradlew.bat" : "./gradlew";
                     ProcessBuilder processBuilder = new ProcessBuilder(gradlewCommand, "build");
-                    processBuilder.directory(new File(EditorSystemManager.projectDir));
+                    processBuilder.directory(DIRECTORY);
                     processBuilder.inheritIO();
 
                     progressPercentage = 0.5f;
