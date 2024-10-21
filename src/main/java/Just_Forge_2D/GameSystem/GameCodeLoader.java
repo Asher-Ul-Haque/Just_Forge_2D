@@ -25,20 +25,23 @@ public class GameCodeLoader
         {
             game.init();
         }
-        try
+        if (!watch && !EditorSystemManager.isRelease)
         {
-            eyeBall = FileSystems.getDefault().newWatchService();
-            Path codeDir = Paths.get(EditorSystemManager.projectDir + "/src/main/java");
-            codeDir.register(eyeBall, ENTRY_CREATE, ENTRY_DELETE, ENTRY_MODIFY);
-            watch = true;
+            try
+            {
+                eyeBall = FileSystems.getDefault().newWatchService();
+                Path codeDir = Paths.get(EditorSystemManager.projectDir + "/src/main/java");
+                codeDir.register(eyeBall, ENTRY_CREATE, ENTRY_DELETE, ENTRY_MODIFY);
+                watch = true;
 
-            // - - - Start the watcher thread
-            startEyeBalling();
-        }
-        catch (IOException e)
-        {
-            Logger.FORGE_LOG_ERROR(e.getMessage());
-            Logger.FORGE_LOG_ERROR("Failed to Eye Ball Game Code");
+                // - - - Start the watcher thread
+                startEyeBalling();
+            }
+            catch (IOException e)
+            {
+                Logger.FORGE_LOG_ERROR(e.getMessage());
+                Logger.FORGE_LOG_ERROR("Failed to Eye Ball Game Code");
+            }
         }
     }
 
@@ -90,12 +93,10 @@ public class GameCodeLoader
                 {
                     lastModifiedTime = currentTime;
                     Logger.FORGE_LOG_INFO("Change Detected");
-
                     GameManager.buildUserCode();
-                    init();
                 }
 
-                // - - -Reset the key, exit loop if the directory is inaccessible
+                // - - - Reset the key, exit loop if the directory is inaccessible
                 boolean valid = key.reset();
                 if (!valid)
                 {

@@ -28,12 +28,6 @@ public class AssetPoolSerializer
         Gson gson = new Gson();
         AssetPoolData data = gson.fromJson(json, AssetPoolData.class);
 
-        // - - - Clear existing pools
-        clearTexturePool();
-        clearSpriteSheetPool();
-        clearShaderPool();
-        clearSoundPool();
-
         // - - - Populate from deserialized data
         data.nameToFileTextures.forEach((name, filePath) ->
         {
@@ -94,7 +88,7 @@ public class AssetPoolSerializer
         }
         catch (Exception e)
         {
-            Logger.FORGE_LOG_FATAL(e.getMessage());
+            Logger.FORGE_LOG_WARNING(e.getMessage());
         }
     }
 

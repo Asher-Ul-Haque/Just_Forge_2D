@@ -10,6 +10,7 @@ import Just_Forge_2D.EntityComponentSystem.Components.ComponentList;
 import Just_Forge_2D.EventSystem.EventManager;
 import Just_Forge_2D.EventSystem.Events.Event;
 import Just_Forge_2D.EventSystem.Events.EventTypes;
+import Just_Forge_2D.PrefabSystem.PrefabSerializer;
 import Just_Forge_2D.RenderingSystem.Shader;
 import Just_Forge_2D.SceneSystem.MainSceneScript;
 import Just_Forge_2D.SceneSystem.SceneScript;
@@ -38,16 +39,16 @@ public class EditorSystemManager
     {
         if (INITIALIZER == null)
         {
-            Logger.FORGE_LOG_ERROR("Cant assign null as initializer");
+            GameWindow.changeScene(new MainSceneScript());
             return;
         }
-        EditorSystemManager.currentSceneInitializer = INITIALIZER;
         try
         {
-            GameWindow.changeScene(currentSceneInitializer.getDeclaredConstructor().newInstance());
+            GameWindow.changeScene(GameWindow.getCurrentScene().getScript().getClass().getDeclaredConstructor().newInstance());
         }
         catch (Exception e)
         {
+            EditorSystemManager.currentSceneInitializer = INITIALIZER;
             Logger.FORGE_LOG_FATAL("Couldn't change scene");
             GameWindow.changeScene(new MainSceneScript());
         }
@@ -137,7 +138,11 @@ public class EditorSystemManager
     public static void end()
     {
         EventManager.notify(null, new Event(EventTypes.ForgeStop));
-        AssetPoolSerializer.saveAssetPool(projectDir + "/Assets/Pool.justForgeFile");
+        if (!isRelease)
+        {
+            AssetPoolSerializer.saveAssetPool(projectDir + "/.forge/Pool.justForgeFile");
+            PrefabSerializer.savePrefabs(projectDir + "/.forge/Prefabs.justForgeFile");
+        }
         AudioSystemManager.terminate();
         ImGUIManager.destroyImGui();
         Logger.flushToFile();

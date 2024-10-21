@@ -27,12 +27,16 @@ public class Settings
     public static boolean SHOW_GRID() {return instance.SHOW_GRID;}
 
     // - - - Render Batching
-    public static final int MAX_BATCH_SIZE = 1024;
+    private final int MAX_BATCH_SIZE = 1024;
+    public static int MAX_BATCH_SIZE() {return instance.MAX_BATCH_SIZE;}
 
     // - - - Debug Pencil
-    public static final int DEBUG_PENCIL_MAX_LINES = 32768;
-    public static final int DEBUG_PENCIL_DEFAULT_LIFE = 1;
-    public static final Vector3f DEBUG_PENCIL_DEFAULT_COLOR = new Vector3f(1, 1, 1);
+    private final int DEBUG_PENCIL_MAX_LINES = 32768;
+    public static int DEBUG_PENCIL_MAX_LINES() { return instance.DEBUG_PENCIL_MAX_LINES;}
+    private final int DEBUG_PENCIL_DEFAULT_LIFE = 1;
+    public static int DEBUG_PENCIL_DEFAULT_LIFE() {return instance.DEBUG_PENCIL_DEFAULT_LIFE;}
+    private final Vector3f DEBUG_PENCIL_DEFAULT_COLOR = new Vector3f(1, 1, 1);
+    public static Vector3f DEBUG_PENCIL_DEFAULT_COLOR() {return instance.DEBUG_PENCIL_DEFAULT_COLOR;}
     public static final int DEBUG_PENCIL_DEFAULT_WIDTH = 4;
     public static final int DEBUG_PENCIL_MAX_CIRCLE_PRECISION = 100;
     public static final int DEBUG_PENCIL_MIN_CIRCLE_PRECISION = 16;

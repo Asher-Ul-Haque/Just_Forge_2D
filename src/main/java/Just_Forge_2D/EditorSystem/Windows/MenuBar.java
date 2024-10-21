@@ -1,13 +1,16 @@
 package Just_Forge_2D.EditorSystem.Windows;
 
+import Just_Forge_2D.AssetPool.AssetPoolSerializer;
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.EditorSystem.Icons;
 import Just_Forge_2D.EditorSystem.ImGUIManager;
 import Just_Forge_2D.EventSystem.EventManager;
 import Just_Forge_2D.EventSystem.Events.Event;
 import Just_Forge_2D.EventSystem.Events.EventTypes;
+import Just_Forge_2D.GameSystem.GameCodeLoader;
 import Just_Forge_2D.GameSystem.GameManager;
 import Just_Forge_2D.GameSystem.ProjectManager;
+import Just_Forge_2D.PrefabSystem.PrefabSerializer;
 import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.Utils.Settings;
 import Just_Forge_2D.WindowSystem.GameWindow;
@@ -32,6 +35,10 @@ public class MenuBar
             }
             if (ImGui.menuItem(Icons.WindowClose + "  Close"))
             {
+                AssetPoolSerializer.saveAssetPool(EditorSystemManager.projectDir + "/.forge/Pool.justForgeFile");
+                PrefabSerializer.savePrefabs(EditorSystemManager.projectDir + "/.forge/Assets/Prefabs.justForgeFile");
+                GameCodeLoader.terminate();
+                GameCodeLoader.closeEye();
                 EventManager.notify(null, new Event(EventTypes.ForgeStop));
                 EditorSystemManager.setCurrentState(EditorSystemManager.state.isSplashScreen);
                 GameWindow.get().restore();

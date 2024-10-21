@@ -13,7 +13,7 @@ import java.util.List;
 public class Renderer
 {
     // - - - private variables
-    private final int MAX_BATCH_SIZE = Settings.MAX_BATCH_SIZE;
+    private final int MAX_BATCH_SIZE = Settings.MAX_BATCH_SIZE();
     private final List<RenderBatch> batches;
     private static Shader currentShader;
 

@@ -14,7 +14,7 @@ import org.joml.Vector4f;
 public class GridlinesComponent extends Component
 {
     public static Vector2f gridSize = new Vector2f(Settings.GRID_WIDTH(), Settings.GRID_HEIGHT());
-    public static Vector4f gridColor = new Vector4f(Settings.DEBUG_PENCIL_DEFAULT_COLOR, 1.0f);
+    public static Vector4f gridColor = new Vector4f(Settings.DEBUG_PENCIL_DEFAULT_COLOR(), 1.0f);
     public static boolean showGrid = Settings.SHOW_GRID();
 
 

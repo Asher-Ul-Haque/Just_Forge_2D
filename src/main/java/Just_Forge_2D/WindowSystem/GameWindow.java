@@ -235,6 +235,7 @@ public class GameWindow extends Window
                 Logger.FORGE_LOG_INFO("Starting Game");
                 EditorSystemManager.isRuntimePlaying = true;
                 SceneSystemManager.save(currentScene);
+                GameCodeLoader.init();
                 try
                 {
                     GameWindow.changeScene(GameWindow.getCurrentScene().getScript().getClass().getDeclaredConstructor().newInstance());

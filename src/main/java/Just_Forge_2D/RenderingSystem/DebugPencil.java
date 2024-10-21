@@ -22,7 +22,7 @@ public class DebugPencil
     // - - - Private Variables - - -
 
     // - - - lines
-    private static final int MAX_LINES = Settings.DEBUG_PENCIL_MAX_LINES;
+    private static final int MAX_LINES = Settings.DEBUG_PENCIL_MAX_LINES();
     private static final List<Line> lines = new ArrayList<>();
 
     // - - - rendering info
@@ -34,8 +34,8 @@ public class DebugPencil
     private static boolean started = false;
 
     // - - - Defaults
-    private static final int defaultLifetime = Settings.DEBUG_PENCIL_DEFAULT_LIFE;
-    private static final Vector3f defaultColor = Settings.DEBUG_PENCIL_DEFAULT_COLOR;
+    private static final int defaultLifetime = Settings.DEBUG_PENCIL_DEFAULT_LIFE();
+    private static final Vector3f defaultColor = Settings.DEBUG_PENCIL_DEFAULT_COLOR();
     private static final int defaultWidth = Settings.DEBUG_PENCIL_DEFAULT_WIDTH;
     private static final float defaultRotation = Settings.DEBUG_PENCIL_DEFAULT_ROTATION;
 
@@ -46,6 +46,10 @@ public class DebugPencil
     // - - - start
     public static void start()
     {
+        if (shader == null)
+        {
+            AssetPool.addShader("Debug", "Assets/Shaders/Debug.glsl");
+        }
         // - - - Generate the vao
         vaoID = glGenVertexArrays();
         glBindVertexArray(vaoID);

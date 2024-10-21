@@ -8,11 +8,10 @@ import Just_Forge_2D.EditorSystem.Themes.Theme;
 import Just_Forge_2D.EventSystem.EventManager;
 import Just_Forge_2D.EventSystem.Events.Event;
 import Just_Forge_2D.EventSystem.Events.EventTypes;
-import Just_Forge_2D.GameSystem.GameCodeLoader;
 import Just_Forge_2D.GameSystem.GameManager;
 import Just_Forge_2D.GameSystem.ProjectManager;
+import Just_Forge_2D.PrefabSystem.PrefabSerializer;
 import Just_Forge_2D.RenderingSystem.Texture;
-import Just_Forge_2D.SceneSystem.MainSceneScript;
 import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.Utils.Settings;
 import Just_Forge_2D.WindowSystem.GameWindow;
@@ -140,7 +139,7 @@ public class SplashScreen
         float buttonY = 128f;
 
         ImGui.setCursorPos(buttonX, buttonY);
-        if (timer > splashTime + relapseTime)
+        if (timer > splashTime + relapseTime && !EditorSystemManager.isRelease)
         {
             ImGui.pushFont(ImGUIManager.interExtraBold);
             if (ImGui.button("Create New Project", buttonWidth, buttonHeight))
@@ -184,7 +183,10 @@ public class SplashScreen
         Theme.resetDefaultTextColor();
 
         if (load) cleanup();
-        if (!EditorSystemManager.isRelease) if (!GameWindow.get().isVisible()) GameWindow.get().setVisible(true);
+        if (!EditorSystemManager.isRelease)
+        {
+            if (!GameWindow.get().isVisible()) GameWindow.get().setVisible(true);
+        }
         load = true;
     }
 
@@ -196,20 +198,24 @@ public class SplashScreen
             Logger.FORGE_LOG_TRACE("Compiling");
             compiling = true;
             Logger.FORGE_LOG_TRACE("Building user code");
+            GameWindow.get().setCurrentScene(null);
             GameManager.buildUserCode();
         }
         if (GameManager.isSuccess())
         {
-            AssetPoolSerializer.loadAssetPool(EditorSystemManager.projectDir + "/Assets/Pool.justForgeFile");
-            if (EditorSystemManager.currentSceneInitializer == null)
+            if (!EditorSystemManager.isRelease)
             {
-                EditorSystemManager.setCurrentSceneInitializer(MainSceneScript.class);
+                AssetPoolSerializer.loadAssetPool(EditorSystemManager.projectDir + "/.forge/Pool.justForgeFile");
+                PrefabSerializer.loadPrefabs(EditorSystemManager.projectDir + "/.forge/Prefabs.justForgeFile");
+            }
+            if (EditorSystemManager.currentSceneInitializer == null || GameWindow.getCurrentScene() == null)
+            {
+                EditorSystemManager.setCurrentSceneInitializer(null);
             }
             GameWindow.get().setVisible(false);
             Logger.FORGE_LOG_TRACE("Project Path : " + EditorSystemManager.projectDir);
             GameWindow.get().maximize();
             EditorSystemManager.setCurrentState(EditorSystemManager.state.isEditor);
-            GameCodeLoader.init();
             if (EditorSystemManager.isRelease) EventManager.notify(null, new Event(EventTypes.ForgeStart));
             if (EditorSystemManager.isRelease) GameWindow.get().setTitle(ProjectManager.PROJECT_NAME);
             else GameWindow.get().setTitle("Just Forge 2D    -    " + ProjectManager.PROJECT_NAME);

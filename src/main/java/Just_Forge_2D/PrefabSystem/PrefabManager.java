@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class PrefabManager
 {
-    private static final Map<String, Prefab> prefabRegistry = new HashMap<>();
+    protected static final Map<String, Prefab> prefabRegistry = new HashMap<>();
     private static int defaultPrefabMask = 0;
     private static boolean showPrefabDeletePopup = false;
     private static boolean showPrefabClearPopup = false;
