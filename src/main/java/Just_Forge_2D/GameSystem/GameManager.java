@@ -20,6 +20,7 @@ public class GameManager
 {
     protected static Game game;
     protected static volatile boolean success = false; // should we visible to other threads
+    protected static volatile boolean earlyCompileSuccess = false; // should we visible to other threads
     private static Path destinationDirPath = Paths.get(EditorSystemManager.projectDir);
     private static volatile float progressPercentage; // should be visible to other threads
 
@@ -27,12 +28,13 @@ public class GameManager
 
     public static void buildUserCode()
     {
-        buildUserCode(new File(EditorSystemManager.projectDir));
+        buildUserCode(new File(EditorSystemManager.projectDir), true);
     }
-    public static void buildUserCode(File DIRECTORY)
+
+    public static void buildUserCode(File DIRECTORY, boolean IS_NOT_EARLY)
     {
         Logger.FORGE_LOG_INFO("Reading Your Code");
-        progressPercentage = 0.1f;
+        if (IS_NOT_EARLY) progressPercentage = 0.1f;
 
         new Thread(() ->
         {
@@ -45,16 +47,16 @@ public class GameManager
                     processBuilder.directory(DIRECTORY);
                     processBuilder.inheritIO();
 
-                    progressPercentage = 0.5f;
+                    if (IS_NOT_EARLY) progressPercentage = 0.5f;
                     Process process = processBuilder.start();
                     int exitCode = process.waitFor();
                     if (exitCode != 0)
                     {
                         Logger.FORGE_LOG_FATAL("Error in user code. Exit code : " + exitCode);
-                        progressPercentage = 1f;
+                        if (IS_NOT_EARLY) progressPercentage = 1f;
                         return;
                     }
-                    progressPercentage = 0.9f;
+                    if (IS_NOT_EARLY) progressPercentage = 0.9f;
                 }
 
                 try
@@ -62,32 +64,37 @@ public class GameManager
                     Path projectPath = Paths.get(EditorSystemManager.projectDir);
                     Path classesDir = projectPath.resolve("build/classes/java/main");
                     URLClassLoader classLoader = new URLClassLoader(new URL[]{classesDir.toUri().toURL()});
-                    progressPercentage = 0.98f;
+                    if (IS_NOT_EARLY) progressPercentage = 0.98f;
 
                     Class<?> gameClass = classLoader.loadClass("Main");
                     Constructor<?> constructor = gameClass.getConstructor();
                     game = (Game) constructor.newInstance();
                     Thread.sleep(1000);
-                    success = true;
-                    progressPercentage = 1f;
+                    if (IS_NOT_EARLY) success = true;
+                    else earlyCompileSuccess = true;
+                    if (IS_NOT_EARLY) progressPercentage = 1f;
                     Logger.FORGE_LOG_TRACE("Build successful");
                 }
                 catch (Exception e)
                 {
                     Logger.FORGE_LOG_ERROR(e.getMessage());
                     Logger.FORGE_LOG_FATAL("Couldn't find an entry point in the user code. Ensure that the Game Interface is implemented.");
-                    progressPercentage = 1f;
+                    if (IS_NOT_EARLY) progressPercentage = 1f;
+                    if (IS_NOT_EARLY) success = false;
+                    else earlyCompileSuccess = false;
                     return;
                 }
             }
             catch (Exception e)
             {
+                if (IS_NOT_EARLY) success = true;
+                else earlyCompileSuccess = true;
                 Logger.FORGE_LOG_FATAL("Failed to build user code: " + e.getMessage());
             }
 
 
             // Check the success variable here if needed
-            if (success)
+            if (success && IS_NOT_EARLY || !IS_NOT_EARLY && earlyCompileSuccess)
             {
                 Logger.FORGE_LOG_INFO("The build was successful, and the Main class was loaded.");
             }
@@ -98,7 +105,7 @@ public class GameManager
         }).start();
     }
 
-    public static void compileCode()
+    public static void compileJar()
     {
         Logger.FORGE_LOG_TRACE("Building Game");
         ImGui.begin("Building the game");
@@ -217,8 +224,7 @@ public class GameManager
             {
                 ProcessBuilder processBuilder = new ProcessBuilder("java", "-jar", jarFiles[0].getName());
                 processBuilder.directory(destinationDir);
-                processBuilder.inheritIO();  // To show the output of the JAR in the console
-                processBuilder.start().waitFor();  // Wait for the JAR process to finish
+                processBuilder.start().waitFor();  // - - - Wait for the JAR process to finish
             }
             catch (Exception e)
             {
@@ -236,5 +242,10 @@ public class GameManager
     public static float getProgressPercentage()
     {
         return progressPercentage;
+    }
+
+    public static boolean isEarlyCompileSuccess()
+    {
+        return earlyCompileSuccess;
     }
 }

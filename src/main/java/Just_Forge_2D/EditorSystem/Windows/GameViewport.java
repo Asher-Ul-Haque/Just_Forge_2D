@@ -55,6 +55,7 @@ public class GameViewport
             EventManager.notify(null, new Event(isPlaying ? EventTypes.ForgeStart : EventTypes.ForgeStop));
             windowIsHovered = false;
         }
+        if (ImGui.isItemHovered()) windowIsHovered = false;
 
         buttonStartX += buttonWidth + buttonPadding;
 
@@ -65,6 +66,7 @@ public class GameViewport
             SceneSystemManager.setPause(GameWindow.getCurrentScene(), !SceneSystemManager.isRunning(GameWindow.getCurrentScene()));
             windowIsHovered = false;
         }
+        if (ImGui.isItemHovered()) windowIsHovered = false;
         ImGui.end();
     }
 

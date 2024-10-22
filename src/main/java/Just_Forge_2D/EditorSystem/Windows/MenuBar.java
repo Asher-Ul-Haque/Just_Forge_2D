@@ -92,7 +92,7 @@ public class MenuBar
         {
             if (ImGui.menuItem(Icons.MugHot + "  Build JAR"))
             {
-                GameManager.compileCode();
+                GameManager.compileJar();
             }
             if (ImGui.menuItem(Icons.Terminal + "  Run JAR"))
             {

@@ -21,7 +21,7 @@ import imgui.flag.ImGuiCol;
 import imgui.flag.ImGuiWindowFlags;
 import org.joml.Vector4f;
 
-import java.io.IOException;
+import java.io.File;
 
 public class SplashScreen
 {
@@ -62,24 +62,7 @@ public class SplashScreen
                 AssetPool.addTexture("Default", Settings.DEFAULT_ICON_PATH, true);
             }
 
-            if (!EditorSystemManager.isRelease)
-            {
-                new Thread(()->
-                {
-                    String gradlewCommand = System.getProperty("os.name").toLowerCase().contains("win") ? "gradlew.bat" : "./gradlew";
-                    ProcessBuilder processBuilder = new ProcessBuilder(gradlewCommand, "build");
-                    processBuilder.directory(ProjectManager.getLastProjectPath());
-                    processBuilder.inheritIO();
-                    try
-                    {
-                        processBuilder.start();
-                    }
-                    catch (IOException e)
-                    {
-                        Logger.FORGE_LOG_WARNING("Failed Early Compilation :  " + e);
-                    }
-                }).start();
-            }
+            if (!EditorSystemManager.isRelease) startEarlyCompilation();
 
             // - - - flip the flags
             Logger.FORGE_LOG_TRACE("Getting Ready to go");
@@ -197,7 +180,8 @@ public class SplashScreen
         ImVec4 color = EditorSystemManager.getCurrentTheme().tertiaryColor;
         ImGui.pushStyleColor(ImGuiCol.PlotHistogram, color.x, color.y, color.z, color.w);
         ImGui.pushStyleColor(ImGuiCol.FrameBg, backColor.x, backColor.y, backColor.z, backColor.w);
-        progress = Math.min(GameManager.getProgressPercentage(), progress + 0.01f);
+        if (canEarlyReturn()) progress = 1f;
+        else progress = Math.min(GameManager.getProgressPercentage(), progress + 0.01f);
         ImGui.progressBar(progress, ImGui.getContentRegionAvailX(), 14);
         ImGui.popStyleColor(2);
         Theme.resetDefaultTextColor();
@@ -213,7 +197,8 @@ public class SplashScreen
     // - - - finish up
     public static void cleanup()
     {
-        if (!compiling)
+        // - - - Check if lastProjectPath is null before comparing
+        if (!compiling && !canEarlyReturn())
         {
             Logger.FORGE_LOG_TRACE("Compiling");
             compiling = true;
@@ -221,8 +206,11 @@ public class SplashScreen
             GameWindow.get().setCurrentScene(null);
             GameManager.buildUserCode();
         }
-        if (GameManager.isSuccess())
+
+        // Ensure success or that the paths match
+        if (GameManager.isSuccess() || canEarlyReturn())
         {
+            progress = 1f;
             if (!EditorSystemManager.isRelease)
             {
                 AssetPoolSerializer.loadAssetPool(EditorSystemManager.projectDir + "/.forge/Pool.justForgeFile");
@@ -231,13 +219,19 @@ public class SplashScreen
             {
                 EditorSystemManager.setCurrentSceneInitializer(null);
             }
+
             GameWindow.get().setVisible(false);
             Logger.FORGE_LOG_TRACE("Project Path : " + EditorSystemManager.projectDir);
             GameWindow.get().maximize();
             EditorSystemManager.setCurrentState(EditorSystemManager.state.isEditor);
-            if (EditorSystemManager.isRelease) EventManager.notify(null, new Event(EventTypes.ForgeStart));
-            if (EditorSystemManager.isRelease) GameWindow.get().setTitle(ProjectManager.PROJECT_NAME);
-            else GameWindow.get().setTitle("Just Forge 2D    -    " + ProjectManager.PROJECT_NAME);
+
+            if (EditorSystemManager.isRelease)
+            {
+                EventManager.notify(null, new Event(EventTypes.ForgeStart));
+            }
+
+            String windowTitle = EditorSystemManager.isRelease ? ProjectManager.PROJECT_NAME : "Just Forge 2D    -    " + ProjectManager.PROJECT_NAME;
+            GameWindow.get().setTitle(windowTitle);
             GameWindow.get().setVisible(true);
         }
         else if (GameManager.getProgressPercentage() >= 1f)
@@ -245,4 +239,25 @@ public class SplashScreen
             restart();
         }
     }
+
+    private static void startEarlyCompilation()
+    {
+        if (!EditorSystemManager.isRelease) {
+
+            new Thread(() ->
+            {
+                GameManager.buildUserCode(ProjectManager.getLastProjectPath(), false);
+            }).start();
+        }
+    }
+
+    private static boolean canEarlyReturn()
+    {
+        File lastProjectPath = ProjectManager.getLastProjectPath();
+        File currentProjectPath = new File(EditorSystemManager.projectDir);
+        if (lastProjectPath == null) return false;
+        if (!lastProjectPath.equals(currentProjectPath)) return false;
+        return GameManager.isEarlyCompileSuccess();
+    }
+
 }
