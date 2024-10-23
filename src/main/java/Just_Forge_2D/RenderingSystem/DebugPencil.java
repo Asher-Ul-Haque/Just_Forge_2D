@@ -36,7 +36,7 @@ public class DebugPencil
     // - - - Defaults
     private static final int defaultLifetime = Settings.DEBUG_PENCIL_DEFAULT_LIFE();
     private static final Vector3f defaultColor = Settings.DEBUG_PENCIL_DEFAULT_COLOR();
-    private static final int defaultWidth = Settings.DEBUG_PENCIL_DEFAULT_WIDTH;
+    private static int width = Settings.DEBUG_PENCIL_DEFAULT_WIDTH;
     private static final float defaultRotation = Settings.DEBUG_PENCIL_DEFAULT_ROTATION;
 
 
@@ -71,7 +71,7 @@ public class DebugPencil
         glEnableVertexAttribArray(1);
 
         // - - - set width
-        glLineWidth(defaultWidth);
+        glLineWidth(width);
     }
 
     // - - - frame start
@@ -149,7 +149,18 @@ public class DebugPencil
 
 
     // - - - | Add Stuff | - - -
-    // TODO: Add other primitives and other constants for common values like colors
+
+
+    // - - - width
+    public static void setWidth(int WIDTH)
+    {
+        width = Math.min(1, WIDTH);
+    }
+
+    public static int getWidth()
+    {
+        return width;
+    }
 
 
     // - - - Add Lines - - -

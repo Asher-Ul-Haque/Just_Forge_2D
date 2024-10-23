@@ -77,6 +77,11 @@ public class Sound extends Component
         valid = true;
     }
 
+    private boolean loadMP3(String FILE_PATH)
+    {
+        return true;
+    }
+
     public void delete()
     {
         alDeleteSources(sourceID);

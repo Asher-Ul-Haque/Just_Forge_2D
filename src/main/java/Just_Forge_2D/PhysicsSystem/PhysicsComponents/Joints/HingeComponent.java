@@ -284,7 +284,6 @@ public class HingeComponent extends BaseJointComponent
     public void debugDraw()
     {
         if (other == null) return;
-        if (joint == null) DebugPencil.addLine(this.gameObject.transform.position, other.transform.position);
-        else DebugPencil.addLine(this.getAnchorA(), this.getAnchorB());
+        DebugPencil.addLine(this.gameObject.transform.position, other.transform.position, color);
     }
 }

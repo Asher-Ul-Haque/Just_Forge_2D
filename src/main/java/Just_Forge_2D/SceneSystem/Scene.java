@@ -112,6 +112,10 @@ public class Scene
     public void init()
     {
         this.camera = Mouse.getWorldCamera();
+        if (!EditorSystemManager.isRelease)
+        {
+            this.gameObjects.add(0, SceneSystemManager.createMaster(this));
+        }
         EventManager.addObserver(this.camera);
         if (this.savePath.isEmpty()) setSavePath(this.script.savePath);
         this.script.loadResources(this);
@@ -133,7 +137,6 @@ public class Scene
             }
         }
         this.script.init(this);
-        if (!EditorSystemManager.isRelease) SceneSystemManager.createMaster(this);
         Logger.FORGE_LOG_INFO("Scene: " + this.script + " Initialized");
     }
 
@@ -187,11 +190,10 @@ public class Scene
 
     public void clearGameObjects()
     {
-        for (int i = 0; i < gameObjects.size(); ++i)
+        for (int i = 1; i < gameObjects.size(); ++i)
         {
             gameObjects.get(i).destroy();
         }
-        SceneSystemManager.createMaster(this);
     }
 
     // - - - Getters and Setters - - -

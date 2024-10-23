@@ -69,6 +69,7 @@ public class ComponentsWindow
                     case OK:
                         activeGameObject.destroy();
                         clearSelection();
+                        deletePopup = false;
                         break;
 
                     case CANCEL:

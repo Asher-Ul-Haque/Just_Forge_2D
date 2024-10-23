@@ -33,7 +33,7 @@ public class CylinderColliderComponent extends ColliderComponent
     public void recalculateColliders()
     {
         float circleRadius = this.scale.x / 2.0f;
-        float boxHeight = this.scale.y - (2 * circleRadius);
+        float boxHeight = Math.abs(this.scale.y - (2 * circleRadius));
         topCircle.setRadius(circleRadius);
         bottomCircle.setRadius(circleRadius);
         topCircle.setOffset(new Vector2f(new Vector2f(offset).add(0, boxHeight / 2f)));
@@ -52,7 +52,8 @@ public class CylinderColliderComponent extends ColliderComponent
         return bottomCircle;
     }
 
-    public BoxColliderComponent getBox() {
+    public BoxColliderComponent getBox()
+    {
         return box;
     }
 
@@ -159,9 +160,9 @@ public class CylinderColliderComponent extends ColliderComponent
     {
         super.editorGUI();
         autoScale = Widgets.drawBoolControl(Icons.ExpandArrowsAlt+ "  Auto Scale", autoScale);
-        if (!autoScale) return;
+        recalculateColliders();
+        if (autoScale) return;
         Widgets.drawVec2Control(Icons.Expand + "  Size", this.scale);
         Widgets.drawVec2Control(Icons.LocationArrow + "  Offset", this.offset);
-        recalculateColliders();
     }
 }

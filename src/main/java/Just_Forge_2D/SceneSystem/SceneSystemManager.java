@@ -145,7 +145,7 @@ public class SceneSystemManager
         return SCENE.isRunning;
     }
 
-    public static void createMaster(Scene SCENE)
+    protected static GameObject createMaster(Scene SCENE)
     {
         GameObject master = new GameObject("Master");
         master.noSerialize();
@@ -154,6 +154,6 @@ public class SceneSystemManager
         master.addComponent(new GizmoSystemComponent());
         master.addComponent(new MouseControlComponent());
         master.addComponent(new NonPickableComponent());
-        SCENE.addGameObject(master);
+        return master;
     }
 }

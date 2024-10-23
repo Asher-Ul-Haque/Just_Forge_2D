@@ -3,6 +3,7 @@ package Just_Forge_2D.PhysicsSystem.PhysicsComponents.Joints;
 import Just_Forge_2D.EditorSystem.Widgets;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent;
+import Just_Forge_2D.RenderingSystem.DebugPencil;
 import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.WindowSystem.GameWindow;
 import imgui.ImGui;
@@ -215,5 +216,13 @@ public class SpringComponent extends BaseJointComponent
     {
         if (this.joint == null) return;
         GameWindow.getCurrentScene().getPhysics().rawWorld.getWorld().destroyJoint(joint);
+    }
+
+    @Override
+    public void debugDraw()
+    {
+        if (other == null) return;
+        if (joint == null) DebugPencil.addLine(this.gameObject.transform.position, other.transform.position);
+        else DebugPencil.addLine(this.getAnchorA(), this.getAnchorB());
     }
 }

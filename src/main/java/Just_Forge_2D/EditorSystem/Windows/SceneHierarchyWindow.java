@@ -8,6 +8,9 @@ import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.Components.ComponentList;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
+import Just_Forge_2D.EventSystem.EventManager;
+import Just_Forge_2D.EventSystem.Events.Event;
+import Just_Forge_2D.EventSystem.Events.EventTypes;
 import Just_Forge_2D.SceneSystem.Camera;
 import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.WindowSystem.GameWindow;
@@ -42,6 +45,7 @@ public class SceneHierarchyWindow
         {
             if (!Widgets.popUp(Icons.Trash, "Confirm Delete", "Are you sure you want to delete all game objects?").equals(Widgets.PopupReturn.NO_INPUT))
             {
+                EventManager.notify(null, new Event(EventTypes.ForgeStop));
                 GameWindow.getCurrentScene().clearGameObjects();
                 showDeathPopup = false;
             }
@@ -109,6 +113,29 @@ public class SceneHierarchyWindow
             Theme.resetDefaultTextColor();
         }
 
+        if (showSingleDeathPopup)
+        {
+            GameObject obj = ComponentsWindow.getActiveGameObject();
+            if (obj == null)
+            {
+                showSingleDeathPopup = false;
+            }
+            else
+            {
+                switch (Widgets.popUp(Icons.ExclamationTriangle, "Confirm Death", "Are you sure you want to delete\n" + obj, new Vector2f(300, 128)))
+                {
+                    case OK:
+                        obj.destroy();
+                        showSingleDeathPopup = false;
+                        break;
+
+                    case CANCEL:
+                        showSingleDeathPopup = false;
+                        break;
+                }
+            }
+        }
+
 
         for (int i = 0; i < gameObjectList.size(); ++i)
         {
@@ -120,19 +147,7 @@ public class SceneHierarchyWindow
             if (ImGui.button("  " + Icons.Trash+"  ##" + i))
             {
                 showSingleDeathPopup = !showSingleDeathPopup;
-            }
-            if (showSingleDeathPopup)
-            {
-                switch (Widgets.popUp(Icons.ExclamationTriangle, "Confirm Death", "Are you sure you want to delete\n" + obj, new Vector2f(300, 128)))
-                {
-                    case OK:
-                        obj.destroy();
-                        break;
-
-                    case CANCEL:
-                        showSingleDeathPopup = false;
-                        break;
-                }
+                ComponentsWindow.setActiveGameObject(obj);
             }
             ImGui.sameLine();
             if (ImGui.button("  " + Icons.Search+"  ##" + i))

@@ -179,7 +179,7 @@ public class GameWindow extends Window
                     }
                     GameCodeLoader.loop(dt);
                     currentScene.render(dt);
-                    if (!EditorSystemManager.isRelease) DebugPencil.draw();
+                    DebugPencil.draw();
                 }
 
                 // - - - Finish drawing to texture so that imgui should be rendered to the window

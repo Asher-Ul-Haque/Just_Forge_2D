@@ -28,7 +28,6 @@ public class ColliderManager
         PolygonShape shape = new PolygonShape();
         Vector2f halfSize = new Vector2f(COLLIDER.getHalfSize()).mul(0.5f); // Dont ask me why half. I fine tuned in testing
         Vector2f offset = COLLIDER.getOffset();
-        Vector2f origin = new Vector2f(COLLIDER.getOrigin());
         shape.setAsBox(halfSize.x, halfSize.y, new Vec2(offset.x, offset.y), 0);
 
         createFixture(shape, RB, COLLIDER, body);
@@ -71,6 +70,11 @@ public class ColliderManager
         if (body == null)
         {
             Logger.FORGE_LOG_WARNING("Raw body must not be null, while adding a collider");
+            return;
+        }
+        if (RB.gameObject.transform.scale.x == RB.gameObject.transform.scale.y)
+        {
+            addCircleCollider(RB, COLLIDER.getBottomCircle());
             return;
         }
 

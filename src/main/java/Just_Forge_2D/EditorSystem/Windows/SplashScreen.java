@@ -62,7 +62,7 @@ public class SplashScreen
                 AssetPool.addTexture("Default", Settings.DEFAULT_ICON_PATH, true);
             }
 
-            if (!EditorSystemManager.isRelease) startEarlyCompilation();
+           // if (!EditorSystemManager.isRelease) startEarlyCompilation();
 
             // - - - flip the flags
             Logger.FORGE_LOG_TRACE("Getting Ready to go");
