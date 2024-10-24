@@ -27,6 +27,7 @@
         * [x] Ability to save default values to a json file
         * [x] Debug Pencil at runtime
         * [x] Make Pencil width dynamic
+        * [ ] Remove Dependency on TinyFileDialogs for popups.
     * ## Windowing System
         * [x] In Main Window think if we want to resize the frame buffer or the window when we resize 
 

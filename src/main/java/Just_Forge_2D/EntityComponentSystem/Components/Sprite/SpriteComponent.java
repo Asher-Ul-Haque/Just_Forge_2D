@@ -3,6 +3,7 @@ package Just_Forge_2D.EntityComponentSystem.Components.Sprite;
 import Just_Forge_2D.AssetPool.AssetPool;
 import Just_Forge_2D.EditorSystem.Icons;
 import Just_Forge_2D.EditorSystem.Widgets;
+import Just_Forge_2D.EditorSystem.Windows.AssetPoolDisplay;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.Components.TransformComponent;
 import Just_Forge_2D.RenderingSystem.Texture;
@@ -136,7 +137,10 @@ public class SpriteComponent extends Component
         {
             Vector2f[] texCoords = this.sprite.getTextureCoordinates();
             ImGui.setCursorPosX(ImGui.getContentRegionAvailX() - sprite.getWidth());
-            Widgets.image(this.sprite.getTextureID(), this.sprite.getWidth() * 2, this.sprite.getHeight() * 2, texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y);
+            if (Widgets.imageButton(this.sprite.getTextureID(), this.sprite.getWidth() * 2, this.sprite.getHeight() * 2, texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y))
+            {
+                AssetPoolDisplay.enableSelection(this::setSprite);
+            }
         }
         if (Widgets.colorPicker4(Icons.EyeDropper +"  Color Picker", this.color)) this.isChanged = true;
         setShowAtRuntime(Widgets.drawBoolControl((getShowAtRuntime() ? Icons.Eye : Icons.EyeSlash) + "  Show", getShowAtRuntime()));

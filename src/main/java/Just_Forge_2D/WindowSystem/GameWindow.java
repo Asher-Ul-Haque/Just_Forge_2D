@@ -172,12 +172,12 @@ public class GameWindow extends Window
                     if (EditorSystemManager.isRuntimePlaying)
                     {
                         currentScene.update(dt);
+                        GameCodeLoader.loop(dt);
                     }
                     else if (!EditorSystemManager.isRelease)
                     {
                         currentScene.editorUpdate(dt);
                     }
-                    GameCodeLoader.loop(dt);
                     currentScene.render(dt);
                     DebugPencil.draw();
                 }

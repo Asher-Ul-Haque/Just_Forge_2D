@@ -81,4 +81,15 @@ public class Sprite
     {
         this.height = NEW_HEIGHT;
     }
+
+    public Sprite copy()
+    {
+        Sprite copy = new Sprite();
+        copy.setWidth(this.getWidth());
+        copy.setHeight(this.getHeight());
+        copy.setTexture(this.getTexture());
+        copy.setTextureCoordinates(this.getTextureCoordinates());
+
+        return copy;
+    }
 }

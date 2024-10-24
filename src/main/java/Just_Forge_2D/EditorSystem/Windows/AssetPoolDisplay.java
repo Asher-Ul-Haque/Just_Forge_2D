@@ -23,6 +23,7 @@ import org.lwjgl.system.MemoryUtil;
 import org.lwjgl.util.tinyfd.TinyFileDialogs;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 public class AssetPoolDisplay
 {
@@ -46,8 +47,27 @@ public class AssetPoolDisplay
     private static final String ICON_REMOVE = Icons.TrashAlt + " Remove";
     private static final String ICON_BROWSE = Icons.FolderOpen + " Browse";
 
+    // - - - Mode
+    public enum Mode
+    {
+        SELECTION,
+        CREATION
+    }
+
+    private static Mode mode = Mode.CREATION;
+    private static Consumer<Sprite> onSpriteSelection;
+
+
 
     // - - - | Functions | - - -
+
+
+
+    public static void enableSelection(Consumer<Sprite> CALLBACK)
+    {
+        mode = Mode.SELECTION;
+        onSpriteSelection = CALLBACK;
+    }
 
 
     // - - - Centralized handling for browsing path
@@ -82,7 +102,8 @@ public class AssetPoolDisplay
 
         if (Widgets.button(ICON_BROWSE))
         {
-            switch (assetName) {
+            switch (assetName)
+            {
                 case "Sprite Sheet" ->
                         path = handleBrowse("Select a Sprite Sheet", assetPath, new String[]{"*.png", "*.jpg", "*.jpeg"});
                 case "Texture" ->
@@ -200,9 +221,19 @@ public class AssetPoolDisplay
         ImGui.pushID(index);
         if (Widgets.imageButton(id, spriteWidth, spriteHeight, texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y))
         {
-            GameObject object = PrefabManager.generateDefaultSpriteObject(sprite, keepSize ? GridlinesComponent.gridSize.x : sprite.getWidth() / Settings.DEFAULT_SIZE_DOWN_FACTOR,
-                    keepSize ? GridlinesComponent.gridSize.y : sprite.getHeight() / Settings.DEFAULT_SIZE_DOWN_FACTOR);
-            MouseControlComponent.pickupObject(object);
+            switch (mode)
+            {
+                case CREATION:
+                    GameObject object = PrefabManager.generateDefaultSpriteObject(sprite, keepSize ? GridlinesComponent.gridSize.x : sprite.getWidth() / Settings.DEFAULT_SIZE_DOWN_FACTOR,
+                        keepSize ? GridlinesComponent.gridSize.y : sprite.getHeight() / Settings.DEFAULT_SIZE_DOWN_FACTOR);
+                    MouseControlComponent.pickupObject(object);
+                    break;
+
+                case SELECTION:
+                    onSpriteSelection.accept(sprite.copy());
+                    mode = Mode.CREATION;
+                    break;
+            }
         }
         ImGui.popID();
 
@@ -267,9 +298,19 @@ public class AssetPoolDisplay
 
         if (Widgets.imageButton(id, sprite.getWidth(), sprite.getHeight(), texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y))
         {
-            GameObject object = PrefabManager.generateDefaultSpriteObject(sprite, !keepSize ? GridlinesComponent.gridSize.x : sprite.getWidth() / Settings.DEFAULT_SIZE_DOWN_FACTOR,
-                    !keepSize ? GridlinesComponent.gridSize.y : sprite.getHeight() / Settings.DEFAULT_SIZE_DOWN_FACTOR);
-            MouseControlComponent.pickupObject(object);
+            switch (mode)
+            {
+                case CREATION:
+                    GameObject object = PrefabManager.generateDefaultSpriteObject(sprite, !keepSize ? GridlinesComponent.gridSize.x : sprite.getWidth() / Settings.DEFAULT_SIZE_DOWN_FACTOR,
+                            !keepSize ? GridlinesComponent.gridSize.y : sprite.getHeight() / Settings.DEFAULT_SIZE_DOWN_FACTOR);
+                    MouseControlComponent.pickupObject(object);
+                    break;
+
+                case SELECTION:
+                    onSpriteSelection.accept(sprite.copy());
+                    mode = Mode.CREATION;
+                    break;
+            }
         }
     }
 

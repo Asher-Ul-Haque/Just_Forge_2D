@@ -89,7 +89,7 @@ public class Logger
 
                 // - - - Redirect System.err to the custom logger (System.out can stay normal)
                 PrintStream logStream = new PrintStream(new LoggerOutputStream(true)); // true = for System.err
-                System.setErr(logStream);
+                if (!EditorSystemManager.isRelease) System.setErr(logStream);
             }
 
             catch (IOException e)

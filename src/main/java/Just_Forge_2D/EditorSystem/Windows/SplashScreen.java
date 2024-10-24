@@ -62,7 +62,7 @@ public class SplashScreen
                 AssetPool.addTexture("Default", Settings.DEFAULT_ICON_PATH, true);
             }
 
-           // if (!EditorSystemManager.isRelease) startEarlyCompilation();
+            // if (!EditorSystemManager.isRelease) startEarlyCompilation();
 
             // - - - flip the flags
             Logger.FORGE_LOG_TRACE("Getting Ready to go");
@@ -98,7 +98,7 @@ public class SplashScreen
         float imageY = (GameWindow.get().getHeight() - (float) logoTexture.getHeight()) / 2.0f;
         if (timer > splashTime + relapseTime && !readyToLoad)
         {
-            imageX -= ((float) GameWindow.get().getWidth() / 4);
+            if (!EditorSystemManager.isRelease) imageX -= ((float) GameWindow.get().getWidth() / 4);
         }
         ImGui.setCursorPos(imageX, imageY);
         ImGui.image(logoTexture.getID(), (float) logoTexture.getWidth(), (float) logoTexture.getHeight(), 0, 1, 1, 0);
@@ -112,7 +112,7 @@ public class SplashScreen
             }
             else
             {
-                GameWindow.get().setVisible(false);
+                if (!EditorSystemManager.isRelease) GameWindow.get().setVisible(false);
             }
         }
         ImGui.end();
@@ -124,7 +124,7 @@ public class SplashScreen
         if (!GameWindow.get().isDecorated())
         {
             Logger.FORGE_LOG_TRACE("Getting the window back");
-            GameWindow.get().setDecorated(true);
+            if (!EditorSystemManager.isRelease) GameWindow.get().setDecorated(true);
             GameWindow.get().setAlwaysOnTop(false);
             GameWindow.get().setVisible(true);
         }
@@ -222,6 +222,7 @@ public class SplashScreen
 
             GameWindow.get().setVisible(false);
             Logger.FORGE_LOG_TRACE("Project Path : " + EditorSystemManager.projectDir);
+            GameWindow.get().setDecorated(true);
             GameWindow.get().maximize();
             EditorSystemManager.setCurrentState(EditorSystemManager.state.isEditor);
 
@@ -259,5 +260,4 @@ public class SplashScreen
         if (!lastProjectPath.equals(currentProjectPath)) return false;
         return GameManager.isEarlyCompileSuccess();
     }
-
 }
