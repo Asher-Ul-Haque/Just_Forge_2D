@@ -1,6 +1,8 @@
 package Just_Forge_2D.EditorSystem.EditorComponents.GizmoSystem;
 
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.Sprite;
+import Just_Forge_2D.InputSystem.Keyboard;
+import Just_Forge_2D.InputSystem.Keys;
 import Just_Forge_2D.InputSystem.Mouse;
 import Just_Forge_2D.Utils.Logger;
 
@@ -22,11 +24,25 @@ public class TranslationGizmoComponent extends GizmoComponent
         {
             if (xAxisActive && !yAxisActive)
             {
-                activeGameObject.transform.position.x -= Mouse.getWorldDeltaX();
+                if (Keyboard.isKeyPressed(Keys.RIGHT_SHIFT) || Keyboard.isKeyPressed(Keys.LEFT_SHIFT))
+                {
+                    activeGameObject.transform.position.x = Mouse.getWorldX();
+                }
+                else
+                {
+                    activeGameObject.transform.position.x -= Mouse.getWorldDeltaX();
+                }
             }
             else if (yAxisActive && !xAxisActive)
             {
-                activeGameObject.transform.position.y -= Mouse.getWorldDeltaY();
+                if (Keyboard.isKeyPressed(Keys.RIGHT_SHIFT) || Keyboard.isKeyPressed(Keys.LEFT_SHIFT))
+                {
+                    activeGameObject.transform.position.y = Mouse.getWorldY();
+                }
+                else
+                {
+                    activeGameObject.transform.position.y -= Mouse.getWorldDeltaY();
+                }
             }
         }
         super.editorUpdate(DELTA_TIME);

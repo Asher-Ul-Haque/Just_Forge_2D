@@ -1,8 +1,11 @@
 package Just_Forge_2D.AnimationSystem;
 
+import Just_Forge_2D.EditorSystem.Icons;
+import Just_Forge_2D.EditorSystem.Widgets;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.Utils.Logger;
+import Just_Forge_2D.WindowSystem.GameWindow;
 import imgui.ImGui;
 import imgui.type.ImString;
 
@@ -68,15 +71,23 @@ public class AnimationComponent extends Component
         {
             if (state.title.equals(TITLE))
             {
-                defaultStateTitle = TITLE;
-                if (currentState == null)
-                {
-                    currentState = state;
-                    return;
-                }
+                setDefaultState(state);
+                return;
             }
         }
         Logger.FORGE_LOG_ERROR("Unable to find state : " + TITLE + " to set to default");
+    }
+
+    public void setDefaultState(AnimationState STATE)
+    {
+        if (states.contains(STATE))
+        {
+            defaultStateTitle = STATE.title;
+            if (currentState == null)
+            {
+                currentState = STATE;
+            }
+        }
     }
 
 
@@ -164,9 +175,34 @@ public class AnimationComponent extends Component
     @Override
     public void editorGUI()
     {
-        if (ImGui.button("Destroy"))
+        super.deleteButton();
+        if (ImGui.collapsingHeader(Icons.List + "  Animations"))
         {
-            this.gameObject.removeComponent(this.getClass());
+            if (Widgets.button(Icons.PlusSquare + "  Add Animation"))
+            {
+                this.addState(new AnimationState("New Animation", false));
+            }
+
+            for (int i = 0; i < this.states.size(); i++)
+            {
+                AnimationState animation = states.get(i);
+                if (Widgets.button(Icons.Trash + "  Delete"))
+                {
+                    //this.removeState(animation);
+                    continue;
+                }
+
+                Widgets.text("Animation: " + animation.title);
+                animation.editorGUI(GameWindow.get().getDeltaTime());
+
+                //  - - - Set default animation
+                if (Widgets.button(Icons.Star + "  Set as Default"))
+                {
+                    setDefaultState(animation.title);
+                }
+
+                // - - - Add trigger controls
+            }
         }
         for (AnimationState state : states)
         {
@@ -210,4 +246,5 @@ public class AnimationComponent extends Component
         }
         return null;
     }
+
 }

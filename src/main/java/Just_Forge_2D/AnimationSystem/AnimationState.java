@@ -1,11 +1,16 @@
 package Just_Forge_2D.AnimationSystem;
 
 import Just_Forge_2D.AssetPool.AssetPool;
+import Just_Forge_2D.EditorSystem.Icons;
+import Just_Forge_2D.EditorSystem.Widgets;
 import Just_Forge_2D.EntityComponentSystem.Components.Sprite.Sprite;
 import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.Utils.Settings;
+import imgui.ImGui;
+import org.joml.Vector2f;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class AnimationState
@@ -18,6 +23,9 @@ public class AnimationState
     private transient int currentSprite = 0;
     public boolean doesLoop = false;
     public boolean isFinished = false;
+    private float previewSpeed = Settings.DEFAULT_FRAME_TIME;
+    private transient boolean isPreviewing;
+    private transient float elapsedTime = 0;
 
 
     // - - - Functions - - -
@@ -139,4 +147,97 @@ public class AnimationState
     {
         return this.doesLoop;
     }
+
+
+    // - - - Editor
+    public void editorGUI(float DELTA_TIME)
+    {
+        // - - - Loop through frames and display their editorGUI
+        if (ImGui.collapsingHeader(Icons.Film + "  Frames"))
+        {
+            // - - - Add a new frame
+            if (Widgets.button(Icons.PlusSquare + "  Add Frame"))
+            {
+                addFrame(new Sprite());
+            }
+            for (int i = 0; i < animationFrames.size(); i++)
+            {
+                if (Widgets.button(Icons.Trash + "  Remove Frame"))
+                {
+                    animationFrames.remove(i);
+                    continue;
+                }
+                animationFrames.get(i).editorGUI();
+
+                // - - - Reordering options (Up/Down buttons)
+                if (i > 0 && Widgets.button(Icons.ArrowUp + "  Move Up"))
+                {
+                    Collections.swap(animationFrames, i, i - 1);
+                }
+                if (i < animationFrames.size() - 1 && Widgets.button(Icons.ArrowDown + "  Move Down"))
+                {
+                    Collections.swap(animationFrames, i, i + 1);
+                }
+            }
+        }
+
+
+        // - - - Animation preview controls
+        previewSpeed = Math.max(Float.MIN_VALUE, Widgets.drawFloatControl(Icons.HourglassHalf + "  Preview Speed", previewSpeed));
+
+        if (Widgets.button(isPreviewing ? (Icons.Pause + " Pause") : (Icons.Play + "  Play")))
+        {
+            isPreviewing = !isPreviewing;
+        }
+
+        if (isPreviewing)
+        {
+            elapsedTime += DELTA_TIME * previewSpeed;
+            float totalAnimationDuration = calculateTotalDuration();
+
+            if (totalAnimationDuration > 0)
+            {
+                if (elapsedTime >= totalAnimationDuration)
+                {
+                    elapsedTime %= totalAnimationDuration;
+                    if (!isLooping()) isPreviewing = false;
+                }
+
+                // - - - Find the current frame based on elapsedTime
+                Sprite currentFrameSprite = getCurrentFrameSprite(elapsedTime);
+                if (currentFrameSprite != null)
+                {
+                    Vector2f[] texCoords = currentFrameSprite.getTextureCoordinates();
+                    Widgets.image(currentFrameSprite.getTextureID(), currentFrameSprite.getWidth() * 2, currentFrameSprite.getHeight() * 2,
+                            texCoords);
+                }
+            }
+        }
+    }
+
+    private float calculateTotalDuration()
+    {
+        float totalDuration = 0;
+        for (Frame frame : animationFrames)
+        {
+            totalDuration += frame.frameTime;
+        }
+        return totalDuration;
+    }
+
+    // - - - Helper function to get the current frame sprite based on elapsed time
+    private Sprite getCurrentFrameSprite(float elapsedTime)
+    {
+        float currentTime = 0;
+        for (Frame frame : animationFrames)
+        {
+            currentTime += frame.frameTime;
+            if (elapsedTime <= currentTime)
+            {
+                return frame.sprite;
+            }
+        }
+        return null; // Fallback, should not happen in looping animations
+    }
+
 }

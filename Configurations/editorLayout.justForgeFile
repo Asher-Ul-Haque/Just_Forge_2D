@@ -197,6 +197,6 @@ DockSpace             ID=0x6D3A3A6E Window=0x091AB4BE Pos=4,28 Size=1358,692 Spl
             DockNode  ID=0x00000008 Parent=0x00000002 SizeRef=919,452 CentralNode=1 HiddenTabBar=1 Selected=0x15EFE5EF
             DockNode  ID=0x00000005 Parent=0x00000002 SizeRef=919,238 Selected=0x9FD216C5
         DockNode      ID=0x0000000A Parent=0x00000009 SizeRef=426,692 Selected=0xA115F62D
-      DockNode        ID=0x00000006 Parent=0x0000000C SizeRef=1358,284 Selected=0xA3D2569A
+      DockNode        ID=0x00000006 Parent=0x0000000C SizeRef=1358,284 Selected=0xA079815D
   DockNode            ID=0x00000010 Parent=0x6D3A3A6E SizeRef=456,692 Selected=0x41EB0D78
 
