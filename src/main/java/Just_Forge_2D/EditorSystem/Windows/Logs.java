@@ -1,8 +1,7 @@
 package Just_Forge_2D.EditorSystem.Windows;
 
-import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.EditorSystem.Icons;
-import Just_Forge_2D.EditorSystem.Themes.Theme;
+import Just_Forge_2D.EditorSystem.Widgets;
 import Just_Forge_2D.Utils.Logger;
 import imgui.ImGui;
 import imgui.flag.ImGuiWindowFlags;
@@ -21,21 +20,17 @@ public class Logs
     {
         ImGui.begin(Icons.Blog + "  Logs", ImGuiWindowFlags.AlwaysVerticalScrollbar | ImGuiWindowFlags.AlwaysHorizontalScrollbar);
 
-        // Checkbox UI to toggle log levels
-        Theme.setDefaultTextColor(EditorSystemManager.getCurrentTheme().secondaryColor);
-        ImGui.text("Show Logs: \t");
-        if (ImGui.checkbox("FATAL", showFatal)) showFatal = !showFatal;
-        ImGui.sameLine();
-        if (ImGui.checkbox("ERROR", showError)) showError = !showError;
-        ImGui.sameLine();
-        if (ImGui.checkbox("WARNING", showWarning)) showWarning = !showWarning;
-        ImGui.sameLine();
-        if (ImGui.checkbox("INFO", showInfo)) showInfo = !showInfo;
-        ImGui.sameLine();
-        if (ImGui.checkbox("DEBUG", showDebug)) showDebug = !showDebug;
-        ImGui.sameLine();
-        if (ImGui.checkbox("TRACE", showTrace)) showTrace = !showTrace;
-        Theme.resetDefaultTextColor();
+        // - - - Checkbox UI to toggle log levels
+        if (ImGui.collapsingHeader(Icons.Filter + "  Filters"))
+        {
+            showFatal = Widgets.drawBoolControl(Icons.SkullCrossbones + "  FATAL", showFatal);
+            showError = Widgets.drawBoolControl(Icons.ExclamationTriangle + "  ERROR", showError);
+            showWarning = Widgets.drawBoolControl(Icons.Exclamation + "  WARNING", showWarning);
+            showInfo = Widgets.drawBoolControl(Icons.InfoCircle + "  INFO", showInfo);
+            showDebug = Widgets.drawBoolControl(Icons.Bug + "  DEBUG", showDebug);
+            showTrace = Widgets.drawBoolControl(Icons.Comment + "  TRACE", showTrace);
+        }
+        Widgets.text("");
 
         for (int i = Logger.getReadBuffer().length - 1; i > 0; --i)
         {
@@ -43,7 +38,7 @@ public class Logs
             if (e == null) continue;
             float r = 1f, g = 1f, b = 1f;
 
-            // Apply color coding based on the log type
+            // - - - Apply color coding based on the log type
             if (e.startsWith("[FATAL]") && showFatal)
             {
                 r = 1;

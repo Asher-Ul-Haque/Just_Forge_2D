@@ -72,10 +72,12 @@ public class SceneHierarchyWindow
             ImGui.columns(1);
         }
 
+        Widgets.text("");
 
         gameObjectList = GameWindow.getCurrentScene().getGameObjects();
 
-        if (ImGui.collapsingHeader(Icons.Filter + "  Filters")) {
+        if (ImGui.collapsingHeader(Icons.Filter + "  Filters"))
+        {
             nameFilter = Widgets.inputText("Filter by name", nameFilter);
 
 
@@ -84,7 +86,7 @@ public class SceneHierarchyWindow
             ImGui.beginChild("##ComponentFilterChild", ImGui.getContentRegionAvailX(), 200, true);
             Theme.resetDefaultTextColor();
             Theme.setDefaultTextColor(EditorSystemManager.getCurrentTheme().secondaryColor);
-            for (Class<? extends Component> componentClass : ComponentList.types) {
+            for (Class<? extends Component> componentClass : ComponentList.getTypes()) {
                 boolean isSelected = componentFilters.getOrDefault(componentClass, false);
                 if (ImGui.checkbox(componentClass.getSimpleName(), isSelected)) {
                     componentFilters.put(componentClass, !isSelected);
@@ -112,6 +114,8 @@ public class SceneHierarchyWindow
 
             Theme.resetDefaultTextColor();
         }
+
+        Widgets.text("");
 
         if (showSingleDeathPopup)
         {

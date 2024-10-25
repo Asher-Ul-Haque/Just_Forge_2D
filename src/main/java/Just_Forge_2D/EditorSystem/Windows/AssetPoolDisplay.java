@@ -83,6 +83,7 @@ public class AssetPoolDisplay
             {
                 filterBuffer.put(MemoryUtil.memUTF8(filter));
             }
+
             // - - - Flip the buffer for reading
             filterBuffer.flip();
 
@@ -165,7 +166,10 @@ public class AssetPoolDisplay
     {
         Widgets.text("");
         List<String> spriteSheetNames = AssetPool.getSpriteSheetNames();
-        if (!spriteSheetNames.isEmpty()) keepSize = Widgets.drawBoolControl(Icons.Expand + "  Keep Size", keepSize);
+        if (mode.equals(Mode.CREATION))
+        {
+            if (!spriteSheetNames.isEmpty()) keepSize = Widgets.drawBoolControl(Icons.Expand + "  Keep Size", keepSize);
+        }
         for (String sheetName : spriteSheetNames)
         {
             if (ImGui.collapsingHeader(sheetName))
@@ -177,19 +181,22 @@ public class AssetPoolDisplay
 
     private static void drawSpriteSheetOptions(String NAME)
     {
-        ImGui.columns(2);
-        if (Widgets.button(ICON_REMOVE))
+        if (mode.equals(Mode.CREATION))
         {
-            AssetPool.removeSpriteSheet(NAME);
+            ImGui.columns(2);
+            if (Widgets.button(ICON_REMOVE))
+            {
+                AssetPool.removeSpriteSheet(NAME);
 
-            return;
+                return;
+            }
+
+            ImGui.nextColumn();
+            if (Widgets.button(Icons.PencilRuler + "  Edit")) spriteEditorOpen = !spriteEditorOpen;
+            ImGui.columns(1);
+            if (spriteEditorOpen) AssetPool.getSpriteSheet(NAME).Editor();
+            Widgets.text("");
         }
-
-        ImGui.nextColumn();
-        if (Widgets.button(Icons.PencilRuler + "  Edit")) spriteEditorOpen = !spriteEditorOpen;
-        ImGui.columns(1);
-        if (spriteEditorOpen)AssetPool.getSpriteSheet(NAME).Editor();
-        Widgets.text("");
         List<Sprite> sprites = AssetPool.getSpriteSheet(NAME).getSprites();
         drawSprites(sprites);
         ImGui.newLine();
@@ -251,11 +258,15 @@ public class AssetPoolDisplay
     {
         if (ImGui.beginTabItem(Icons.FileImage + " Textures"))
         {
-            handleAddAndClear(AssetPool::clearTexturePool, "a Texture");
-
-            if (open)
+            if (mode.equals(Mode.CREATION))
             {
-                addAsset("Texture", EditorSystemManager.projectDir + "/Assets/Textures/", !name.isEmpty() && !path.isEmpty(), () -> AssetPool.addTexture(name, path, true), () -> {});
+                handleAddAndClear(AssetPool::clearTexturePool, "a Texture");
+
+                if (open)
+                {
+                    addAsset("Texture", EditorSystemManager.projectDir + "/Assets/Textures/", !name.isEmpty() && !path.isEmpty(), () -> AssetPool.addTexture(name, path, true), () -> {
+                    });
+                }
             }
             drawTextures();
             ImGui.endTabItem();
@@ -270,16 +281,18 @@ public class AssetPoolDisplay
         {
             if (ImGui.collapsingHeader(textureName))
             {
-                keepSize = Widgets.drawBoolControl(Icons.Expand + "  Keep Size", keepSize);
-
-                if (Widgets.button(ICON_REMOVE))
+                if (mode.equals(Mode.CREATION))
                 {
-                    AssetPool.removeTexture(textureName);
-                    continue;
+                    keepSize = Widgets.drawBoolControl(Icons.Expand + "  Keep Size", keepSize);
+
+                    if (Widgets.button(ICON_REMOVE))
+                    {
+                        AssetPool.removeTexture(textureName);
+                        continue;
+                    }
                 }
 
-                Texture texture = AssetPool.getTexture(textureName);
-                drawTexture(texture);
+                drawTexture(AssetPool.getTexture(textureName));
             }
         }
     }
@@ -367,12 +380,19 @@ public class AssetPoolDisplay
 
     public static void render()
     {
-        ImGui.begin(Icons.Images + "  Asset Pool Display");
+        ImGui.begin(Icons.Images + "  Asset Pool");
         if (ImGui.beginTabBar("Window Tabs"))
         {
-            textureDisplay();
-            spriteSheetDisplay();
-            soundDisplay();
+            switch (mode)
+            {
+                case CREATION:
+                    soundDisplay();
+
+                case SELECTION:
+                    textureDisplay();
+                    spriteSheetDisplay();
+                    break;
+            }
             ImGui.endTabBar();
         }
         ImGui.end();

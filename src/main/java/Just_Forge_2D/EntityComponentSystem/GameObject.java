@@ -12,7 +12,6 @@ import Just_Forge_2D.Utils.JsonHandlers.GameObjectJsonHandler;
 import Just_Forge_2D.Utils.Logger;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import imgui.ImGui;
 import org.lwjgl.util.tinyfd.TinyFileDialogs;
 
 import java.util.ArrayList;
@@ -174,26 +173,6 @@ public class GameObject
 
 
     // - - - Editor Stuff - - -
-
-    public void editorGUI()
-    {
-        for (int i = 0; i < components.size(); ++i)
-        {
-            Component component = components.get(i);
-            //ImGui.setCursorPosY(ImGui.getCursorPosY() + EditorSystemManager.getCurrentTheme().framePadding.y);
-            if (ImGui.collapsingHeader(component.getClass().getSimpleName()))
-            {
-                try
-                {
-                    component.editorGUI();
-                }
-                catch (Exception e)
-                {
-                    handleComponentException(component, e);
-                }
-            }
-        }
-    }
 
     public void editorUpdate(float DELTA_TIME)
     {

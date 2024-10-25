@@ -1,6 +1,7 @@
 package Just_Forge_2D.EditorSystem.Windows;
 
 import Just_Forge_2D.EditorSystem.Icons;
+import Just_Forge_2D.EditorSystem.ImGUIManager;
 import Just_Forge_2D.EditorSystem.Widgets;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.Components.ComponentList;
@@ -61,6 +62,7 @@ public class ComponentsWindow
                 PrefabManager.registerPrefab(activeGameObject.name,  prefab);
             }
             ImGui.columns(1);
+            Widgets.text("");
             if (deletePopup)
             {
                 Widgets.PopupReturn returnVal = Widgets.popUp(Icons.ExclamationTriangle, "Delete Confirmation", "Are you sure you want to delete \n" +activeGameObject, new Vector2f(300, 128));
@@ -80,22 +82,44 @@ public class ComponentsWindow
             Widgets.text("");
             if (activeGameObject != null)
             {
-                if (ImGui.beginPopupContextWindow("Component Adder"))
+                if (ImGui.beginPopupContextWindow(Icons.UserCog + "  Component Adder"))
                 {
                     String message = "Add Component";
                     ImGui.setCursorPosX((ImGui.getContentRegionAvailX() - ImGui.calcTextSize(message).x) / 2f);
+                    ImGui.pushFont(ImGUIManager.interExtraBold);
                     ImGui.text(message);
+                    ImGui.popFont();
+                    Widgets.text("");
+
                     int delay = 2;
-                    for (Class<? extends Component> type : ComponentList.types)
+                    for (Class<? extends Component> type : ComponentList.getTypes())
                     {
+                        // - - - Skip components already added to the active game object
                         if (activeGameObject.getComponent(type) != null) continue;
+
+                        // - - - Get component registry info for dependencies
+                        ComponentList.ComponentRegistry registry = ComponentList.getComponentInfo(type);
+
+                        // - - - Check if all required components are present
+                        List<Class<? extends Component>> requiredTypes = registry.requiredComponents();
+                        if (requiredTypes != null)
+                        {
+                            boolean allRequirementsMet = requiredTypes.stream()
+                                    .allMatch(requiredType -> activeGameObject.getComponent(requiredType) != null);
+
+                            // - - - If not all requirements are met, skip this component
+                            if (!allRequirementsMet) continue;
+                        }
+
+                        // - - - Add a separator between groups of components
                         if (delay-- == 0)
                         {
                             ImGui.separator();
                             delay = 2;
                         }
 
-                        if (ImGui.menuItem(type.getSimpleName()))
+                        // - - - Display the menu item and handle the component addition on click
+                        if (ImGui.menuItem(registry.name()))
                         {
                             try
                             {
@@ -104,14 +128,29 @@ public class ComponentsWindow
                             }
                             catch (Exception e)
                             {
-                                Logger.FORGE_LOG_ERROR("Cant add component : " + type.getSimpleName());
+                                Logger.FORGE_LOG_ERROR("Can't add component: " + registry.name());
                                 Logger.FORGE_LOG_ERROR(e.getCause());
                             }
                         }
                     }
                     ImGui.endPopup();
                 }
-                activeGameObject.editorGUI();
+
+                List<Component> components = activeGameObject.getComponents();
+                for (int i = 0; i < components.size(); ++i)
+                {
+                    Component component = components.get(i);
+                    String name = component.getClass().getSimpleName();
+                    ComponentList.ComponentRegistry componentRegistry = ComponentList.getComponentInfo(component.getClass());
+                    if (componentRegistry != null)
+                    {
+                        name = componentRegistry.name();
+                    }
+                    if (ImGui.collapsingHeader(name))
+                    {
+                        component.editorGUI();
+                    }
+                }
             }
         }
         else

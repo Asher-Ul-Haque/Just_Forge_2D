@@ -171,7 +171,7 @@ public class SplashScreen
     private static void displayLoadingPage()
     {
         ImGui.setCursorPosX((ImGui.getWindowWidth() - ImGui.calcTextSize("Loading Project: " + ProjectManager.PROJECT_NAME).x) / 2);
-        ImGui.setCursorPosY(GameWindow.get().getHeight() - 36);
+        ImGui.setCursorPosY(GameWindow.get().getHeight() - 40);
         Theme.setDefaultTextColor(EditorSystemManager.getCurrentTheme().secondaryColor);
         String title = "Loading Project: " + ProjectManager.PROJECT_NAME;
         ImGui.text(title);
