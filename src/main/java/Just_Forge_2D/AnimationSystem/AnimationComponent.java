@@ -176,33 +176,29 @@ public class AnimationComponent extends Component
     public void editorGUI()
     {
         super.deleteButton();
-        if (ImGui.collapsingHeader(Icons.List + "  Animations"))
+        if (Widgets.button(Icons.PlusSquare + "  Add Animation"))
         {
-            if (Widgets.button(Icons.PlusSquare + "  Add Animation"))
+            this.addState(new AnimationState("New Animation", false));
+        }
+        for (int i = 0; i < this.states.size(); i++)
+        {
+            AnimationState animation = states.get(i);
+            if (Widgets.button(Icons.Trash + "  Delete"))
             {
-                this.addState(new AnimationState("New Animation", false));
+                //this.removeState(animation);
+                continue;
             }
 
-            for (int i = 0; i < this.states.size(); i++)
+            Widgets.text("Animation: " + animation.title);
+            animation.editorGUI(GameWindow.get().getDeltaTime());
+
+            //  - - - Set default animation
+            if (Widgets.button(Icons.Star + "  Set as Default"))
             {
-                AnimationState animation = states.get(i);
-                if (Widgets.button(Icons.Trash + "  Delete"))
-                {
-                    //this.removeState(animation);
-                    continue;
-                }
-
-                Widgets.text("Animation: " + animation.title);
-                animation.editorGUI(GameWindow.get().getDeltaTime());
-
-                //  - - - Set default animation
-                if (Widgets.button(Icons.Star + "  Set as Default"))
-                {
-                    setDefaultState(animation.title);
-                }
-
-                // - - - Add trigger controls
+                setDefaultState(animation.title);
             }
+
+            // - - - Add trigger controls
         }
         for (AnimationState state : states)
         {
