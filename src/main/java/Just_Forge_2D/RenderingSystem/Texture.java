@@ -3,11 +3,10 @@ package Just_Forge_2D.RenderingSystem;
 import Just_Forge_2D.Utils.Logger;
 import org.lwjgl.BufferUtils;
 
-import java.io.InputStream;
+import java.io.File;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 
-import static Just_Forge_2D.EditorSystem.EditorSystemManager.preferJarAssets;
 import static org.lwjgl.opengl.GL11C.*;
 import static org.lwjgl.stb.STBImage.*;
 
@@ -46,7 +45,7 @@ public class Texture
             glBindTexture(GL_TEXTURE_2D, textureID);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, WIDTH, HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, WIDTH, HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
 
             init(FILE_PATH);
         }
@@ -59,59 +58,29 @@ public class Texture
     // - - - init
     public boolean init(String FILEPATH)
     {
-        this.filepath = FILEPATH;
-        boolean success = loadTexture(preferJarAssets);
+        this.filepath = new File(FILEPATH).getAbsolutePath();
 
-        if (!success)
-        {
-            Logger.FORGE_LOG_DEBUG("Switching loading mode and retrying");
-            preferJarAssets = !preferJarAssets;
-            success = loadTexture(preferJarAssets);
-        }
-
-        return success;
-    }
-
-    private boolean loadTexture(boolean FROM_JAR)
-    {
+        // - - - Generate the texture on GPU
         try
         {
             textureID = glGenTextures();
+            glBindTexture(GL_TEXTURE_2D, textureID);
+
+            // - - - Set texture parameters
+            // Repeat texture in both directions
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+            // - - - When shrinking or stretching pixelate it
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+            // - - - gET RGB data
             IntBuffer width = BufferUtils.createIntBuffer(1);
             IntBuffer height = BufferUtils.createIntBuffer(1);
             IntBuffer channels = BufferUtils.createIntBuffer(1);
             stbi_set_flip_vertically_on_load(true);
-            ByteBuffer image = null;
-
-            if (FROM_JAR)
-            {
-                Logger.FORGE_LOG_DEBUG("Attempting to load image form JAR: " + filepath);
-                try
-                {
-                    InputStream inputStream = Texture.class.getResourceAsStream(filepath);
-                    if (inputStream != null)
-                    {
-                        byte[] bytes = inputStream.readAllBytes();
-                        ByteBuffer buffer = BufferUtils.createByteBuffer(bytes.length);
-                        buffer.put(bytes);
-                        image = stbi_load_from_memory(buffer, width, height, channels, 0);
-                    }
-                    else
-                    {
-                        Logger.FORGE_LOG_ERROR(filepath);
-                        Logger.FORGE_LOG_ERROR(true + " oh noes");
-                    }
-                }
-                catch (Exception e)
-                {
-                    Logger.FORGE_LOG_WARNING(e.getMessage());
-                }
-            }
-            else
-            {
-                Logger.FORGE_LOG_DEBUG("Attempting to load from file system: " + filepath);
-                image = stbi_load(filepath, width, height, channels, 0);
-            }
+            ByteBuffer image = stbi_load(filepath, width, height, channels, 0);
 
             if (image != null)
             {
@@ -135,25 +104,17 @@ public class Texture
                         yield -1;
                     }
                 };
-                glBindTexture(GL_TEXTURE_2D, textureID);
-                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
                 glTexImage2D(GL_TEXTURE_2D, 0, textureType, width.get(0), height.get(0), 0, textureType, GL_UNSIGNED_BYTE, image);
                 stbi_image_free(image);
-
-                Logger.FORGE_LOG_DEBUG("Image loaded successfully: " + filepath);
-                return true;
             }
-            else
-            {
-                return false;
-            }
+            Logger.FORGE_LOG_DEBUG("Loaded image sucessfully: " + filepath);
+            return true;
         }
-        catch (Exception e)
+        catch (Throwable e)
         {
-            Logger.FORGE_LOG_FATAL(e.getMessage());
+            Logger.FORGE_LOG_ERROR("Could not load image: " + filepath);
+            Logger.FORGE_LOG_ERROR(e.getMessage());
             return false;
         }
     }

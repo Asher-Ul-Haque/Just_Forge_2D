@@ -55,7 +55,7 @@ public class RenderBatch implements Comparable<RenderBatch>
     private final SpriteComponent[] sprites;
     private int spriteCount;
     protected boolean hasRoom;
-    private final List<Texture> textures;
+    protected final List<Texture> textures;
     private final int maxBatchSize;
     private final int layer;
 

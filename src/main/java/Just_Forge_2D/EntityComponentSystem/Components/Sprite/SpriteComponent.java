@@ -151,6 +151,7 @@ public class SpriteComponent extends Component
     public void setTexture(Texture TEXTURE)
     {
         this.sprite.setTexture(TEXTURE);
+        setChanged();
     }
 
     public void setChanged()

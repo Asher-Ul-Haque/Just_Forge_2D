@@ -1,5 +1,6 @@
 package Just_Forge_2D.AssetPool;
 
+import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.RenderingSystem.SpriteSheet;
 import Just_Forge_2D.RenderingSystem.Texture;
 import Just_Forge_2D.Utils.Logger;
@@ -45,8 +46,7 @@ public class AssetPoolSerializer
         {
             SpriteSheet sheet = data.spriteSheetPool.get(filePath);
 
-            Texture t = new Texture();
-            t.init(filePath);
+            Texture t = makeTexture(filePath);
             SpriteSheet newSheet = new SpriteSheet(t, sheet.getWidth(), sheet.getHeight(), sheet.size(), sheet.getSpacing());
             addSpriteSheet(name, newSheet, true);
         });
@@ -103,5 +103,15 @@ public class AssetPoolSerializer
         {
             Logger.FORGE_LOG_FATAL(e.getMessage());
         }
+    }
+
+    public static void loadAssetPool()
+    {
+        loadAssetPool(EditorSystemManager.projectDir + "/.forge/Pool.justForgeFile");
+    }
+
+    public static void saveAssetPool()
+    {
+        saveAssetPool(EditorSystemManager.projectDir + "/.forge/Pool.justForgeFile");
     }
 }

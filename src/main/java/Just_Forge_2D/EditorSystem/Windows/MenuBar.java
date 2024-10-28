@@ -1,5 +1,6 @@
 package Just_Forge_2D.EditorSystem.Windows;
 
+import Just_Forge_2D.AssetPool.AssetPool;
 import Just_Forge_2D.AssetPool.AssetPoolSerializer;
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.EditorSystem.Icons;
@@ -27,6 +28,10 @@ public class MenuBar
             if (ImGui.menuItem(Icons.Code + "  Recompile Game"))
             {
                 GameManager.buildUserCode();
+            }
+            if (ImGui.menuItem(Icons.Redo + "  Reload Assets"))
+            {
+                AssetPool.reloadAssets();
             }
             if (ImGui.menuItem(Icons.FolderOpen + "  Open in Browser"))
             {

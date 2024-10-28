@@ -19,11 +19,13 @@ public class Sound extends Component
     private int sourceID;
     private final String filepath;
     public final boolean valid;
+    private boolean loop;
 
     private boolean isPlaying = false;
 
     public Sound(String FILEPATH, boolean LOOPS)
     {
+        this.loop = LOOPS;
         this.filepath = FILEPATH;
 
         // - - - allocate space to store the return information from stb
@@ -80,6 +82,11 @@ public class Sound extends Component
     private boolean loadMP3(String FILE_PATH)
     {
         return true;
+    }
+
+    public boolean loops()
+    {
+        return this.loop;
     }
 
     public void delete()
@@ -154,6 +161,7 @@ public class Sound extends Component
 
     public void setLooping(boolean LOOPS)
     {
+        this.loop = LOOPS;
         alSourcei(sourceID, AL_LOOPING, LOOPS ? 1 : 0);
     }
 

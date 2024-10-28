@@ -149,13 +149,8 @@ public class AssetPool
         }
         else
         {
-            Texture texture = new Texture();
-            if (texture.init(FILE_PATH)) return texture;
-            else
-            {
-                Logger.FORGE_LOG_WARNING("Bad Texture at : " + FILE_PATH);
-                return null;
-            }
+            addTexture(FILE_PATH, FILE_PATH, true);
+            return getTexture(FILE_PATH);
         }
     }
 
@@ -333,5 +328,28 @@ public class AssetPool
     public static List<String> getAllSoundNames()
     {
         return new ArrayList<>(nameToFileSounds.keySet());
+    }
+
+    public static void reloadAssets()
+    {
+        for (Texture t : texturePool.values())
+        {
+            t.init(t.getFilepath());
+        }
+        for (SpriteSheet s : spriteSheetPool.values())
+        {
+            s.getTexture().init(s.getTexture().getFilepath());
+        }
+        for (Map.Entry<String, Sound> entry : soundPool.entrySet())
+        {
+            Sound sound = entry.getValue();
+            entry.setValue(new Sound(sound.getFilePath(), sound.loops()));
+        }
+
+        for (Map.Entry<String, Shader> entry : shaderPool.entrySet())
+        {
+            Shader shader = entry.getValue();
+            shader.compile();
+        }
     }
 }

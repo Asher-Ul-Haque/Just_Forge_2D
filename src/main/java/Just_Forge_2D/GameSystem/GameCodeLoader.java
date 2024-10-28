@@ -2,9 +2,11 @@ package Just_Forge_2D.GameSystem;
 
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.Utils.Logger;
+import Just_Forge_2D.WindowSystem.GameWindow;
 
 import java.io.IOException;
 import java.nio.file.*;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.List;
 
 import static Just_Forge_2D.GameSystem.GameManager.game;
@@ -25,24 +27,6 @@ public class GameCodeLoader
         {
             game.init();
         }
-        if (!watch && !EditorSystemManager.isRelease)
-        {
-            try
-            {
-                eyeBall = FileSystems.getDefault().newWatchService();
-                Path codeDir = Paths.get(EditorSystemManager.projectDir + "/src/main/java");
-                codeDir.register(eyeBall, ENTRY_CREATE, ENTRY_DELETE, ENTRY_MODIFY);
-                watch = true;
-
-                // - - - Start the watcher thread
-                startEyeBalling();
-            }
-            catch (IOException e)
-            {
-                Logger.FORGE_LOG_ERROR(e.getMessage());
-                Logger.FORGE_LOG_ERROR("Failed to Eye Ball Game Code");
-            }
-        }
     }
 
     public static void loop(float DELTA_TIME)
@@ -62,52 +46,96 @@ public class GameCodeLoader
         closeEye();
     }
 
-    private static void startEyeBalling()
+    private static void registerAllDirectories(Path start) throws IOException
     {
-        // - - -If the watcher thread is already running, we don't start a new one
-        if (watcherThread != null && watcherThread.isAlive())
-        {
-            return;
-        }
-
-        watcherThread = new Thread(() ->
-        {
-            while (watch)
+        Files.walkFileTree(start, new SimpleFileVisitor<Path>() {
+            @Override
+            public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException
             {
-                WatchKey key;
-                try
+                dir.register(eyeBall, ENTRY_CREATE, ENTRY_DELETE, ENTRY_MODIFY);
+                return FileVisitResult.CONTINUE;
+            }
+        });
+    }
+    public static void openEye()
+    {
+        if (!watch && !EditorSystemManager.isRelease)
+        {
+            try
+            {
+                eyeBall = FileSystems.getDefault().newWatchService();
+                registerAllDirectories(Paths.get(EditorSystemManager.projectDir + "/src/main/java"));
+                registerAllDirectories(Paths.get(EditorSystemManager.projectDir + "/Assets"));
+                watch = true;
+
+                // - - - Start the watcher thread - -
+
+                // - - -If the watcher thread is already running, we don't start a new one
+                if (watcherThread != null && watcherThread.isAlive())
                 {
-                    // Wait for a file system event
-                    key = eyeBall.take();
-                }
-                catch (InterruptedException e)
-                {
-                    Logger.FORGE_LOG_ERROR("Eye Balling interrupted.");
                     return;
                 }
 
-                List<WatchEvent<?>> events = key.pollEvents();
-                if (events.isEmpty()) return;
-                long currentTime = System.currentTimeMillis();
-                if (currentTime - lastModifiedTime > DEBOUNCE_DELAY)
+                watcherThread = new Thread(() ->
                 {
-                    lastModifiedTime = currentTime;
-                    Logger.FORGE_LOG_INFO("Change Detected");
-                    GameManager.buildUserCode();
-                }
+                    while (watch)
+                    {
+                        WatchKey key;
+                        try
+                        {
+                            // Wait for a file system event
+                            key = eyeBall.take();
+                        }
+                        catch (InterruptedException e)
+                        {
+                            Logger.FORGE_LOG_ERROR("Eye Balling interrupted.");
+                            return;
+                        }
 
-                // - - - Reset the key, exit loop if the directory is inaccessible
-                boolean valid = key.reset();
-                if (!valid)
-                {
-                    Logger.FORGE_LOG_ERROR("Directory no longer accessible, stopping watcher.");
-                    break;
-                }
+                        // Retrieve all events for the key
+                        List<WatchEvent<?>> events = key.pollEvents();
+                        if (!events.isEmpty())
+                        {
+                            long currentTime = System.currentTimeMillis();
+                            if (currentTime - lastModifiedTime > DEBOUNCE_DELAY)
+                            {
+                                lastModifiedTime = currentTime;
+
+                                // Check if changes were in src/main/java or Assets
+                                Path changedDir = (Path) key.watchable();
+                                String changedDirPath = changedDir.toString();
+                                Logger.FORGE_LOG_INFO("Change Detected in " + changedDirPath);
+
+                                if (changedDirPath.contains("src/main/java"))
+                                {
+                                    GameManager.buildUserCode();
+                                }
+                                else if (changedDirPath.contains("Assets"))
+                                {
+                                    GameWindow.getCurrentScene().getRenderer().reload();
+                                }
+                            }
+                        }
+
+                        // Reset the key and stop watching if it becomes invalid
+                        boolean valid = key.reset();
+                        if (!valid)
+                        {
+                            Logger.FORGE_LOG_ERROR("Directory no longer accessible, stopping watcher.");
+                            break;
+                        }
+                    }
+                });
+
+                // - - - Start the thread
+                watcherThread.start();
             }
-        });
-
-        // - - - Start the thread
-        watcherThread.start();
+            catch (IOException e)
+            {
+                Logger.FORGE_LOG_ERROR(e.getMessage());
+                Logger.FORGE_LOG_ERROR("Failed to Eye Ball");
+            }
+        }
     }
 
     public static void closeEye()
