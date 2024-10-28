@@ -48,7 +48,7 @@ public class DebugPencil
     {
         if (shader == null)
         {
-            AssetPool.addShader("Debug", "Assets/Shaders/Debug.glsl");
+            AssetPool.addShader("Debug", "Assets/Shaders/debug.glsl");
         }
         // - - - Generate the vao
         vaoID = glGenVertexArrays();

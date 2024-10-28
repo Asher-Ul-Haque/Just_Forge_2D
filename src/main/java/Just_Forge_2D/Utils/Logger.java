@@ -103,7 +103,7 @@ public class Logger
     // - - - Logging functions - - -
     public static void FORGE_LOG_FATAL(Object... ARGS)
     {
-        if (EditorSystemManager.isRelease) return;
+        //if (EditorSystemManager.isRelease) return;
         String message = formatMessage("[FATAL]  ", ARGS);
         addToReadBuffer(message);
         System.out.println(ANSI_RESET + ANSI_RED_BG + message + ANSI_RESET);
@@ -112,7 +112,7 @@ public class Logger
 
     public static void FORGE_LOG_ERROR(Object... ARGS)
     {
-        if (EditorSystemManager.isRelease) return;
+        //if (EditorSystemManager.isRelease) return;
         String message = formatMessage("[ERROR]  ", ARGS);
         addToReadBuffer(message);
         System.out.println(ANSI_RED + message + ANSI_RESET);
@@ -121,7 +121,7 @@ public class Logger
 
     public static void FORGE_LOG_WARNING(Object... ARGS)
     {
-        if (EditorSystemManager.isRelease) return;
+        //if (EditorSystemManager.isRelease) return;
         String message = formatMessage("[WARNING]", ARGS);
         addToReadBuffer(message);
         System.out.println(ANSI_PASTEL_RED + message + ANSI_RESET);
@@ -130,7 +130,7 @@ public class Logger
 
     public static void FORGE_LOG_DEBUG(Object... ARGS)
     {
-        if (EditorSystemManager.isRelease) return;
+        //if (EditorSystemManager.isRelease) return;
         String message = formatMessage("[DEBUG]  ", ARGS);
         addToReadBuffer(message);
         System.out.println(ANSI_BLUE + message + ANSI_RESET);
@@ -139,7 +139,7 @@ public class Logger
 
     public static void FORGE_LOG_TRACE(Object... ARGS)
     {
-        if (EditorSystemManager.isRelease) return;
+        //if (EditorSystemManager.isRelease) return;
         String message = formatMessage("[TRACE]  ", ARGS);
         addToReadBuffer(message);
         System.out.println(ANSI_PURPLE + message + ANSI_RESET);
@@ -148,7 +148,7 @@ public class Logger
 
     public static void FORGE_LOG_INFO(Object... ARGS)
     {
-        if (EditorSystemManager.isRelease) return;
+        //if (EditorSystemManager.isRelease) return;
         String message = formatMessage("[INFO]   ", ARGS);
         addToReadBuffer(message);
         System.out.println(ANSI_GREEN + message + ANSI_RESET);

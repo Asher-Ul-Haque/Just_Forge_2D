@@ -7,7 +7,6 @@ import Just_Forge_2D.RenderingSystem.SpriteSheet;
 import Just_Forge_2D.RenderingSystem.Texture;
 import Just_Forge_2D.Utils.Logger;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,14 +33,13 @@ public class AssetPool
 
     private static void shaderAdder(String NAME, String FILE_PATH)
     {
-        File file = new File(FILE_PATH);
-        if (!AssetPool.shaderPool.containsKey(file.getAbsolutePath()))
+        if (!AssetPool.shaderPool.containsKey(FILE_PATH))
         {
             Logger.FORGE_LOG_DEBUG("Shader with path: " + FILE_PATH + " Hashed in shader Asset Pool and loaded");
             Shader shader = new Shader(FILE_PATH);
             shader.compile();
-            nameToFileShader.put(NAME, file.getAbsolutePath());
-            AssetPool.shaderPool.put(file.getAbsolutePath(), shader);
+            nameToFileShader.put(NAME, FILE_PATH);
+            AssetPool.shaderPool.put(FILE_PATH, shader);
         }
         else
         {
@@ -100,15 +98,14 @@ public class AssetPool
 
     private static void textureAdder(String NAME, String FILE_PATH)
     {
-        File file = new File(FILE_PATH);
-        if (!AssetPool.texturePool.containsKey(file.getAbsolutePath()))
+        if (!AssetPool.texturePool.containsKey(FILE_PATH))
         {
             Logger.FORGE_LOG_DEBUG("Texture with path: " + FILE_PATH + " Hashed in shader Asset Pool and loaded");
             Texture texture = new Texture();
             if (texture.init(FILE_PATH))
             {
-                AssetPool.nameToFileTextures.put(NAME, file.getAbsolutePath());
-                AssetPool.texturePool.put(file.getAbsolutePath(), texture);
+                AssetPool.nameToFileTextures.put(NAME, FILE_PATH);
+                AssetPool.texturePool.put(FILE_PATH, texture);
             }
             else
             {
@@ -145,12 +142,10 @@ public class AssetPool
 
     public static Texture makeTexture(String FILE_PATH)
     {
-        File file = new File(FILE_PATH);
-
-        if (AssetPool.texturePool.containsKey(file.getAbsolutePath()))
+        if (AssetPool.texturePool.containsKey(FILE_PATH))
         {
             Logger.FORGE_LOG_TRACE("Loaded texture: " + FILE_PATH);
-            return AssetPool.texturePool.get(file.getAbsolutePath());
+            return AssetPool.texturePool.get(FILE_PATH);
         }
         else
         {
@@ -199,18 +194,17 @@ public class AssetPool
 
     // - - - sprite sheets - - -
 
-    private static void spriteSheetAdder(String NAME, SpriteSheet SPRITE_SHEET, String PATH)
+    private static void spriteSheetAdder(String NAME, SpriteSheet SPRITE_SHEET, String FILE_PATH)
     {
-        File file = new File(PATH);
-        if (!AssetPool.spriteSheetPool.containsKey(file.getAbsolutePath()))
+        if (!AssetPool.spriteSheetPool.containsKey(FILE_PATH))
         {
-            nameToFileSpriteSheet.put(NAME, file.getAbsolutePath());
-            AssetPool.spriteSheetPool.put(file.getAbsolutePath(), SPRITE_SHEET);
-            Logger.FORGE_LOG_DEBUG("Sprite sheet with path: " + file.getAbsolutePath() + " Hashed in Asset Pool and loaded");
+            nameToFileSpriteSheet.put(NAME, FILE_PATH);
+            AssetPool.spriteSheetPool.put(FILE_PATH, SPRITE_SHEET);
+            Logger.FORGE_LOG_DEBUG("Sprite sheet with path: " + FILE_PATH + " Hashed in Asset Pool and loaded");
         }
         else
         {
-            Logger.FORGE_LOG_WARNING("Sprite Sheet at: " + file.getAbsolutePath() + " already exists in Asset Pool");
+            Logger.FORGE_LOG_WARNING("Sprite Sheet at: " + FILE_PATH + " already exists in Asset Pool");
         }
     }
 
@@ -272,18 +266,17 @@ public class AssetPool
 
     private static void soundAdder(String NAME, String FILE_PATH, boolean DOES_LOOP)
     {
-        File file = new File(FILE_PATH);
-        if (!AssetPool.soundPool.containsKey(file.getAbsolutePath()))
+        if (!AssetPool.soundPool.containsKey(FILE_PATH))
         {
             Logger.FORGE_LOG_DEBUG("Sound with path: " + FILE_PATH + " Hashed in Asset Pool and loaded");
-            Sound sound = new Sound(file.getAbsolutePath(), DOES_LOOP);
+            Sound sound = new Sound(FILE_PATH, DOES_LOOP);
             if (!sound.valid)
             {
                 Logger.FORGE_LOG_ERROR("Bad Sound : " + NAME);
                 return;
             }
-            nameToFileSounds.put(NAME, file.getAbsolutePath());
-            AssetPool.soundPool.put(file.getAbsolutePath(), sound);
+            nameToFileSounds.put(NAME, FILE_PATH);
+            AssetPool.soundPool.put(FILE_PATH, sound);
         }
     }
 

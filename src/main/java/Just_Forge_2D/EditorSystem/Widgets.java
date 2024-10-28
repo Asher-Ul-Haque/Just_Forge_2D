@@ -343,8 +343,7 @@ public class Widgets
 
         ImGui.pushID(label);
 
-        // Using ImGui.table for proper alignment instead of ImGui.columns
-        if (ImGui.beginTable("##tableEnumControl", 2, ImGuiTableFlags.SizingStretchSame))
+        if (ImGui.beginTable("##tableEnumControl", 2, ImGuiTableFlags.NoPadOuterX))
         {
             ImGui.tableNextColumn();
             setDefaultTextColor(EditorSystemManager.getCurrentTheme().tertiaryColor);
@@ -354,7 +353,6 @@ public class Widgets
             ImGui.tableNextColumn();
             ImInt index = new ImInt(indexOf(currentEnumName, enumValues));
 
-            //ImGui.setCursorPos(ImGui.getCursorPosX() + EditorSystemManager.getCurrentTheme().framePadding.x, ImGui.getCursorPosY() + EditorSystemManager.getCurrentTheme().framePadding.y);
             if (ImGui.combo("##" + label, index, enumValues, enumValues.length))
             {
                 ImGui.endTable();
