@@ -1,5 +1,6 @@
 package Just_Forge_2D.AudioSystem;
 
+import Just_Forge_2D.AudioSystem.TinySound.TinySound;
 import Just_Forge_2D.Utils.Logger;
 import org.lwjgl.openal.AL;
 import org.lwjgl.openal.ALC;
@@ -40,6 +41,7 @@ public class AudioSystemManager
             Logger.FORGE_LOG_ERROR("Audio Not supported");
             assert false;
         }
+        TinySound.init();
         isOpenAInitialized = true;
     }
 

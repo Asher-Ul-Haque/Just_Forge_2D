@@ -1,16 +1,18 @@
 package Just_Forge_2D.AudioSystem;
 
+import Just_Forge_2D.AudioSystem.TinySound.LowLevelSound;
+import Just_Forge_2D.AudioSystem.TinySound.TinySound;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.Utils.Logger;
 import org.joml.Vector3f;
+import org.lwjgl.stb.STBVorbis;
+import org.lwjgl.system.MemoryStack;
 
 import java.nio.IntBuffer;
 import java.nio.ShortBuffer;
 
 import static org.lwjgl.openal.AL10.*;
 import static org.lwjgl.openal.AL11.AL_SEC_OFFSET;
-import static org.lwjgl.stb.STBVorbis.stb_vorbis_decode_filename;
-import static org.lwjgl.system.MemoryStack.*;
 import static org.lwjgl.system.libc.LibCStdlib.free;
 
 public class Sound extends Component
@@ -19,69 +21,72 @@ public class Sound extends Component
     private int sourceID;
     private final String filepath;
     public final boolean valid;
+    private LowLevelSound wav;
     private boolean loop;
+    private float volume = 1.0f;
+    private float pitch;
 
     private boolean isPlaying = false;
 
-    public Sound(String FILEPATH, boolean LOOPS)
-    {
+    public Sound(String FILEPATH, boolean LOOPS) {
         this.loop = LOOPS;
         this.filepath = FILEPATH;
 
-        // - - - allocate space to store the return information from stb
-        stackPush();
-        IntBuffer channelsBuffer = stackMallocInt(1);
-        stackPush();
-        IntBuffer sampleRateBuffer = stackMallocInt(1);
-
-        ShortBuffer rawAudioBuffer = stb_vorbis_decode_filename(FILEPATH, channelsBuffer, sampleRateBuffer);
-        if (rawAudioBuffer == null)
-        {
-            Logger.FORGE_LOG_ERROR("Could not load sound: " + FILEPATH);
-            stackPop();
-            stackPop();
+        if (FILEPATH.endsWith(".ogg")) {
+            valid = loadOgg(FILEPATH);
+        } else if (FILEPATH.endsWith(".wav")) {
+            valid = loadWav(FILEPATH);
+        } else {
+            Logger.FORGE_LOG_ERROR("Unsupported sound format: " + FILEPATH);
             valid = false;
-            return;
         }
-
-        // - - - retrieve the extra information that was store d on the buffers
-        int channels = channelsBuffer.get();
-        int sampleRate = sampleRateBuffer.get();
-
-        // - - - free
-        stackPop();
-        stackPop();
-
-        // - - - find the correct format
-        int format = -1;
-        if (channels == 1)
-        {
-            format = AL_FORMAT_MONO16;
-        }
-        else if (channels == 2)
-        {
-            format = AL_FORMAT_STEREO16;
-        }
-
-        bufferID = alGenBuffers();
-        alBufferData(bufferID, format, rawAudioBuffer, sampleRate);
-
-        // - - - generate the source
-        sourceID = alGenSources();
-        alSourcei(sourceID, AL_BUFFER, bufferID);
-        alSourcei(sourceID, AL_LOOPING, LOOPS ? 1 : 0);
-        alSourcei(sourceID, AL_POSITION, 0);
-        alSourcef(sourceID, AL_GAIN, 1.0f);
-        alSourcef(sourceID, AL_PITCH, 1.0f);
-
-        // - - - free raw buffers
-        free(rawAudioBuffer);
-        valid = true;
     }
 
-    private boolean loadMP3(String FILE_PATH)
-    {
-        return true;
+    private boolean loadOgg(String FILEPATH) {
+        try (MemoryStack stack = MemoryStack.stackPush()) {
+            IntBuffer channelsBuffer = stack.mallocInt(1);
+            IntBuffer sampleRateBuffer = stack.mallocInt(1);
+
+            ShortBuffer rawAudioBuffer = STBVorbis.stb_vorbis_decode_filename(FILEPATH, channelsBuffer, sampleRateBuffer);
+            if (rawAudioBuffer == null) {
+                Logger.FORGE_LOG_ERROR("Could not load .ogg sound: " + FILEPATH);
+                return false;
+            }
+
+            int channels = channelsBuffer.get(0);
+            int sampleRate = sampleRateBuffer.get(0);
+            int format = (channels == 1) ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16;
+
+            bufferID = alGenBuffers();
+            alBufferData(bufferID, format, rawAudioBuffer, sampleRate);
+
+            createSource();
+            free(rawAudioBuffer);
+            return true;
+        }
+    }
+
+    private boolean loadWav(String FILEPATH) {
+        try {
+            wav = TinySound.loadSound(new java.io.File(FILEPATH));
+            if (wav == null) {
+                Logger.FORGE_LOG_ERROR("Could not load .wav sound: " + FILEPATH);
+                return false;
+            }
+            // Logic for managing TinySound playback within OpenAL goes here, if applicable
+            return true;
+        } catch (Exception e) {
+            Logger.FORGE_LOG_ERROR("Could not load .wav sound: " + FILEPATH + " Error: " + e.getMessage());
+            return false;
+        }
+    }
+
+    private void createSource() {
+        sourceID = alGenSources();
+        alSourcei(sourceID, AL_BUFFER, bufferID);
+        alSourcei(sourceID, AL_LOOPING, loop ? 1 : 0);
+        alSourcef(sourceID, AL_GAIN, 1.0f);
+        alSourcef(sourceID, AL_PITCH, 1.0f);
     }
 
     public boolean loops()
@@ -97,6 +102,12 @@ public class Sound extends Component
 
     public void play()
     {
+        if (wav != null && !isPlaying)
+        {
+            wav.play(volume, pitch);
+            isPlaying = true;
+            return;
+        }
         int state = alGetSourcei(sourceID, AL_SOURCE_STATE);
         if (state == AL_STOPPED)
         {
@@ -115,8 +126,9 @@ public class Sound extends Component
     {
         if (isPlaying)
         {
-            alSourceStop(sourceID);
             isPlaying = false;
+            if (wav == null) alSourceStop(sourceID);
+            else wav.stop();
         }
     }
 
@@ -151,11 +163,13 @@ public class Sound extends Component
 
     public void setVolume(float VOLUME)
     {
+        volume = VOLUME;
         alSourcef(sourceID, AL_GAIN, VOLUME);
     }
 
     public void setPitch(float PITCH)
     {
+        pitch = PITCH;
         alSourcef(sourceID, AL_PITCH, PITCH);
     }
 
@@ -172,6 +186,7 @@ public class Sound extends Component
 
     public boolean isPlaying()
     {
+        if (wav != null) return isPlaying;
         int state = alGetSourcei(sourceID, AL_SOURCE_STATE);
         if (state == AL_STOPPED)
         {

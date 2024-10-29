@@ -82,7 +82,7 @@ public class SoundPlayerComponent extends Component
     private boolean warn()
     {
         if (this.sound != null) return false;
-        Logger.FORGE_LOG_ERROR(this.gameObject + "'s Sound PLayer has no Sound");
+        Logger.FORGE_LOG_ERROR(this.gameObject + "'s LowLevelSound PLayer has no LowLevelSound");
         return true;
     }
 

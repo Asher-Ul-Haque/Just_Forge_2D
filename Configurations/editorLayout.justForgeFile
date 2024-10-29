@@ -195,7 +195,7 @@ Column 1  Weight=0.0935
 DockSpace             ID=0x6D3A3A6E Window=0x091AB4BE Pos=4,28 Size=1358,692 Split=X Selected=0xAE7BB42F
   DockNode            ID=0x0000000F Parent=0x6D3A3A6E SizeRef=981,692 Split=X
     DockNode          ID=0x0000000B Parent=0x0000000F SizeRef=374,692 Split=Y Selected=0x2FDAADFC
-      DockNode        ID=0x0000000D Parent=0x0000000B SizeRef=320,412 Selected=0x446D1056
+      DockNode        ID=0x0000000D Parent=0x0000000B SizeRef=320,412 Selected=0x290EB6F3
       DockNode        ID=0x0000000E Parent=0x0000000B SizeRef=320,278 Selected=0xB59FF763
     DockNode          ID=0x0000000C Parent=0x0000000F SizeRef=605,692 Split=Y
       DockNode        ID=0x00000009 Parent=0x0000000C SizeRef=1358,406 Split=X
