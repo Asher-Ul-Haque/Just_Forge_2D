@@ -79,15 +79,19 @@ public class Renderer
     public void destroyGameObject(GameObject GO)
     {
         Logger.FORGE_LOG_DEBUG("Destroying Game Object from the scene: " + GO);
+
         if (GO.getComponent(SpriteComponent.class) == null) return;
-        for (RenderBatch batch: batches)
+
+        for (int i = 0; i < batches.size(); i++)
         {
+            RenderBatch batch = batches.get(i);
             if (batch.destroyIfExists(GO))
             {
-                return;
+                break;
             }
         }
     }
+
 
     // - - - use
     public void render()

@@ -39,7 +39,7 @@ public class AssetPoolDisplay
     private static int spriteCount;
     private static int spriteSpacing;
 
-    // - - - Sound
+    // - - - LowLevelSound
     private static boolean loop;
 
     // - - - Icons

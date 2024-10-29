@@ -71,7 +71,7 @@ public class AssetPoolSerializer
             }
             else
             {
-                Logger.FORGE_LOG_WARNING("Sound file not found: " + filePath);
+                Logger.FORGE_LOG_WARNING("LowLevelSound file not found: " + filePath);
             }
         });
     }

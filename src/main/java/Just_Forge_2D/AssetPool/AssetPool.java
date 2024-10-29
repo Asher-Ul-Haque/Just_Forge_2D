@@ -263,11 +263,11 @@ public class AssetPool
     {
         if (!AssetPool.soundPool.containsKey(FILE_PATH))
         {
-            Logger.FORGE_LOG_DEBUG("Sound with path: " + FILE_PATH + " Hashed in Asset Pool and loaded");
+            Logger.FORGE_LOG_DEBUG("LowLevelSound with path: " + FILE_PATH + " Hashed in Asset Pool and loaded");
             Sound sound = new Sound(FILE_PATH, DOES_LOOP);
             if (!sound.valid)
             {
-                Logger.FORGE_LOG_ERROR("Bad Sound : " + NAME);
+                Logger.FORGE_LOG_ERROR("Bad LowLevelSound : " + NAME);
                 return;
             }
             nameToFileSounds.put(NAME, FILE_PATH);
@@ -291,7 +291,7 @@ public class AssetPool
         String path = nameToFileSounds.get(NAME);
         if (!nameToFileSounds.containsKey(NAME) || !AssetPool.soundPool.containsKey(path))
         {
-            Logger.FORGE_LOG_ERROR("Sound: " + NAME + " does not exist");
+            Logger.FORGE_LOG_ERROR("LowLevelSound: " + NAME + " does not exist");
             return null;
         }
         return AssetPool.soundPool.get(path);
@@ -305,17 +305,17 @@ public class AssetPool
             soundPool.get(path).delete();
             soundPool.remove(path);
             nameToFileSounds.remove(NAME);
-            Logger.FORGE_LOG_DEBUG("Sound: " + NAME + " removed from AssetPool");
+            Logger.FORGE_LOG_DEBUG("LowLevelSound: " + NAME + " removed from AssetPool");
         }
         else
         {
-            Logger.FORGE_LOG_WARNING("Sound: " + NAME + " doesn't exist in AssetPool");
+            Logger.FORGE_LOG_WARNING("LowLevelSound: " + NAME + " doesn't exist in AssetPool");
         }
     }
 
     public static void clearSoundPool()
     {
-        Logger.FORGE_LOG_WARNING("Clearing Sound Pool");
+        Logger.FORGE_LOG_WARNING("Clearing LowLevelSound Pool");
         nameToFileSounds.clear();
         soundPool.clear();
     }
