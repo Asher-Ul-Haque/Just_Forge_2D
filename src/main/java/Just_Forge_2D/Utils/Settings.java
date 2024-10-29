@@ -132,6 +132,31 @@ public class Settings
     public static final float MAX_IMAGE_DISPLAY_WIDTH = 64;
     public static final float MAX_IMAGE_DISPLAY_HEIGHT = 64;
 
+    // - - - Text Component:
+    private final String DEFAULT_TEXT = "FORGE";
+    public static String DEFAULT_TEXT() { return instance.DEFAULT_TEXT;}
+
+    private final float DEFAULT_CHARACTER_SPACING = 1f;
+    public static float DEFAULT_CHARACTER_SPACING() {return instance.DEFAULT_CHARACTER_SPACING;}
+
+    private final float DEFAULT_TAB_SPACING = 4f;
+    public static float DEFAULT_TAB_SPACING() {return instance.DEFAULT_TAB_SPACING;}
+
+    private final float DEFAULT_LINE_HEIGHT = 1f;
+    public static float DEFAULT_LINE_HEIGHT() {return instance.DEFAULT_LINE_HEIGHT;}
+
+    private final float DEFAULT_TEXT_SIZE = 1f;
+    public static float DEFAULT_TEXT_SIZE() {return instance.DEFAULT_TEXT_SIZE;}
+
+    private final boolean DEFAULT_TEXT_MOVE_WITH_MASTER = false;
+    public static boolean DEFAULT_TEXT_MOVE_WITH_MASTER() {return instance.DEFAULT_TEXT_MOVE_WITH_MASTER;}
+
+    private final int DEFAULT_TEXT_LAYER = 1;
+    public static int DEFAULT_TEXT_LAYER() {return instance.DEFAULT_TEXT_LAYER;}
+
+    private final Vector4f DEFAULT_CHARACTER_COLOR = new Vector4f(1.0f);
+    public static Vector4f DEFAULT_CHARACTER_COLOR() {return instance.DEFAULT_CHARACTER_COLOR;}
+
     public static void save()
     {
         Gson gson = new GsonBuilder().create();

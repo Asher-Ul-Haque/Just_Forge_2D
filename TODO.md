@@ -6,10 +6,10 @@
     * ##  Asset Pool
         * [x] Revamp the display to be able to add assets at runtime through the editor
     * ##  Audio System
-        * [ ] show bad sound if not able to load 
+        * [x] show bad sound if not able to load 
         * [x] Actually test if it works
         * [x] Actually make a nice controller for it.
-        * [ ] .wav and .mp3 support.
+        * [x] .wav and .mp3 support.
     * ##  Editor System
         * [ ] Major cleanup, maybe make a new package and shift engine side responsibilities to it
         * [ ] Make the ability to copy-paste multiple objects at once
@@ -27,15 +27,15 @@
         * [x] Ability to save default values to a json file
         * [x] Debug Pencil at runtime
         * [x] Make Pencil width dynamic
-        * [ ] Remove Dependency on TinyFileDialogs for popups.
+        * [x] Remove Dependency on TinyFileDialogs for popups.
     * ## Windowing System
         * [x] In Main Window think if we want to resize the frame buffer or the window when we resize 
 
 
 # Features that Would be very cool
-* [ ] Make Lasso Select
+* [ ]  Make Lasso Select
 * [ ]  Multi Thread Editor Runtime, Game Runtime and Rendering
-* [ ] Add Liquid Fun support
+* [ ]  Add Liquid Fun support
 * [ ]  UDP multi player, server client architecture
 * [ ]  WebGL rendering to make web games
 * [ ]  Lighting System

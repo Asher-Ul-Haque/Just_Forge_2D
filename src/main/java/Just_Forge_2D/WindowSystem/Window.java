@@ -6,7 +6,6 @@ import Just_Forge_2D.EventSystem.Events.Event;
 import Just_Forge_2D.EventSystem.Observer;
 import Just_Forge_2D.InputSystem.Keyboard;
 import Just_Forge_2D.InputSystem.Mouse;
-import Just_Forge_2D.Main;
 import Just_Forge_2D.SceneSystem.Scene;
 import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.Utils.Settings;
@@ -17,11 +16,9 @@ import org.lwjgl.glfw.GLFWImage;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.stb.STBImage;
 
-import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 
-import static Just_Forge_2D.EditorSystem.EditorSystemManager.preferJarAssets;
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
@@ -34,8 +31,6 @@ import static org.lwjgl.opengl.GL11C.glBlendFunc;
 import static org.lwjgl.opengl.GL11C.glClearColor;
 import static org.lwjgl.opengl.GL11C.glEnable;
 import static org.lwjgl.opengl.GL11C.glViewport;
-import static org.lwjgl.stb.STBImage.stbi_load;
-import static org.lwjgl.stb.STBImage.stbi_load_from_memory;
 
 public class Window implements Observer
 {
@@ -305,17 +300,15 @@ public class Window implements Observer
     // - - - icon
     public void setIcon(String IMAGE_PATH)
     {
-        Logger.FORGE_LOG_DEBUG("Setting Icon for " + this.config.title + " to: " + IMAGE_PATH);
-
-        if (System.getProperty("os.name").toLowerCase().contains("mac")) {
-            Logger.FORGE_LOG_ERROR("Mac OS doesn't allow for window icons");
+        Logger.FORGE_LOG_DEBUG("Setting Icon for " + this.config.title + " to : " + IMAGE_PATH);
+        if (System.getProperty("os.name").toLowerCase().contains("mac"))
+        {
+            Logger.FORGE_LOG_ERROR("Mac OS doesnt allow for window icons");
             return;
         }
-
         if (IMAGE_PATH == null)
         {
-            Logger.FORGE_LOG_WARNING("No Icon Path specified, using default icon for " + this.config.title);
-            return;
+            Logger.FORGE_LOG_WARNING("No Icon Path specified, going with default icon for " + this.config.title);
         }
         else
         {
@@ -325,56 +318,29 @@ public class Window implements Observer
         IntBuffer width = BufferUtils.createIntBuffer(1);
         IntBuffer height = BufferUtils.createIntBuffer(1);
         IntBuffer channels = BufferUtils.createIntBuffer(1);
-        ByteBuffer image = null;
 
-        try
+        // - - - Load the image
+        ByteBuffer image = STBImage.stbi_load(this.config.iconPath, width, height, channels, 4);
+        if (image == null)
         {
-            if (preferJarAssets)
-            {
-                Logger.FORGE_LOG_DEBUG("Loading icon from JAR: " + IMAGE_PATH);
-                try (InputStream inputStream = Main.class.getResourceAsStream("/" + IMAGE_PATH))
-                {
-                    if (inputStream != null)
-                    {
-                        byte[] bytes = inputStream.readAllBytes();
-                        ByteBuffer buffer = BufferUtils.createByteBuffer(bytes.length);
-                        buffer.put(bytes).flip();
-                        image = stbi_load_from_memory(buffer, width, height, channels, 4);
-                    }
-                    else
-                    {
-                        Logger.FORGE_LOG_ERROR("Icon file not found in JAR: " + IMAGE_PATH);
-                    }
-                }
-            }
-            else
-            {
-                Logger.FORGE_LOG_DEBUG("Loading icon from file system: " + IMAGE_PATH);
-                image = stbi_load(IMAGE_PATH, width, height, channels, 4);
-            }
-        }
-        catch (Exception e)
-        {
-            Logger.FORGE_LOG_ERROR("Failed to load icon: " + e.getMessage());
-        }
-
-        if (image == null) {
-            Logger.FORGE_LOG_ERROR("Failed to load icon image: " + IMAGE_PATH);
+            Logger.FORGE_LOG_ERROR("Failed to load icon image : " + this.config.iconPath + " for " + this.config.title);
             return;
         }
 
+        // - - - create the image
         GLFWImage icon = GLFWImage.malloc();
         icon.set(width.get(), height.get(), image);
 
+        // - - - set the icon
         GLFWImage.Buffer icons = GLFWImage.malloc(1);
         icons.put(0, icon);
         glfwSetWindowIcon(this.glfwWindowPtr, icons);
 
+        // - - - Free the resources
         STBImage.stbi_image_free(image);
         icon.free();
         icons.free();
     }
-
 
     // - - - title
     public String getTitle()

@@ -1,6 +1,7 @@
 package Just_Forge_2D.TextSystem;
 
 import Just_Forge_2D.AssetPool.AssetPool;
+import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.EditorSystem.Icons;
 import Just_Forge_2D.EditorSystem.Widgets;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
@@ -9,32 +10,44 @@ import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.PrefabSystem.PrefabManager;
 import Just_Forge_2D.RenderingSystem.SpriteSheet;
+import Just_Forge_2D.RenderingSystem.Texture;
 import Just_Forge_2D.Utils.Logger;
+import Just_Forge_2D.Utils.Settings;
 import Just_Forge_2D.WindowSystem.GameWindow;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class TextComponent extends Component
 {
-    protected String text = "Just\tForge\n2D";
+    protected String text = Settings.DEFAULT_TEXT();
     protected transient List<GameObject> characters;
-    protected float characterSpacing = 1f;
-    protected float tabSpacing = 4 * characterSpacing;
-    protected float lineHeight = 1f;
-    protected float size = 1f;
-    protected int layer = 0;
+    protected float characterSpacing = Settings.DEFAULT_CHARACTER_SPACING();
+    protected float tabSpacing = Settings.DEFAULT_TAB_SPACING();
+    protected float lineHeight = Settings.DEFAULT_LINE_HEIGHT();
+    protected float size = Settings.DEFAULT_TEXT_SIZE();
+    protected int layer = Settings.DEFAULT_TEXT_LAYER();
     protected String font = "font";
     protected Vector4f characterColor = new Vector4f(1.0f);
     protected boolean moveWithMaster = true;
     protected Vector2f firstCharacterOffset = new Vector2f();
+    private static boolean tried = false;
 
     public TextComponent()
     {
         this.characters = new ArrayList<>();
+        if (!tried)
+        {
+            String path = Paths.get(EditorSystemManager.projectDir + "/Assets/Textures/font.png").toString();
+            Texture t = AssetPool.makeTexture(path);
+            t.init(path);
+            AssetPool.addSpriteSheet("font", new SpriteSheet(t, 16, 16, 36, 0));
+            tried = true;
+        }
     }
 
     @Override
@@ -134,9 +147,6 @@ public class TextComponent extends Component
             }
         }
     }
-
-
-
 
     @Override
     public void editorGUI()
