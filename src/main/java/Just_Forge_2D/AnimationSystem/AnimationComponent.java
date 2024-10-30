@@ -7,7 +7,6 @@ import Just_Forge_2D.EntityComponentSystem.Components.SpriteComponent;
 import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.WindowSystem.GameWindow;
 import imgui.ImGui;
-import imgui.type.ImString;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,6 +15,11 @@ import java.util.Objects;
 
 public class AnimationComponent extends Component
 {
+    private boolean editorUpdate = false;
+    private transient String to = "";
+    private transient String from = "";
+    private transient String trigger = "";
+
     // - - - static class for triggering
     private static class StateTrigger
     {
@@ -158,7 +162,7 @@ public class AnimationComponent extends Component
     @Override
     public void editorUpdate(float DELTA_TIME)
     {
-        update(DELTA_TIME);
+        if (editorUpdate) update(DELTA_TIME);
     }
 
 
@@ -176,43 +180,83 @@ public class AnimationComponent extends Component
     public void editorGUI()
     {
         super.deleteButton();
+        editorUpdate = Widgets.drawBoolControl(Icons.PenAlt + "  Editor Update", editorUpdate);
+
+        Widgets.text("");
         if (Widgets.button(Icons.PlusSquare + "  Add Animation"))
         {
-            this.addState(new AnimationState("New Animation", false));
+            this.addState(new AnimationState("New Animation", false, gameObject.getComponent(SpriteComponent.class).getSpriteCopy()));
         }
+
         for (int i = 0; i < this.states.size(); i++)
         {
             AnimationState animation = states.get(i);
-            if (Widgets.button(Icons.Trash + "  Delete"))
+            if (ImGui.collapsingHeader(states.get(i).title))
             {
-                //this.removeState(animation);
-                continue;
-            }
 
-            Widgets.text("Animation: " + animation.title);
-            animation.editorGUI(GameWindow.get().getDeltaTime());
+                ImGui.separator();
+                if (Widgets.button(Icons.Trash + "  Delete" + " ##" + i))
+                {
+                    this.removeState(animation);
+                    continue;
+                }
+                Widgets.text("");
 
-            //  - - - Set default animation
-            if (Widgets.button(Icons.Star + "  Set as Default"))
-            {
-                setDefaultState(animation.title);
-            }
+                animation.title = Widgets.inputText("Title: ", animation.title);
+                if (Widgets.button(Icons.Star + "  Set as Default" + " ##" + i))
+                {
+                    setDefaultState(animation.title);
+                }
+                ImGui.sameLine();
+                animation.previewControls(GameWindow.get().getDeltaTime());
 
-            // - - - Add trigger controls
-        }
-        for (AnimationState state : states)
-        {
-            ImString title = new ImString(state.title);
-            ImGui.inputText("State: ", title);
-            state.title = title.get();
+                ImGui.sameLine();
+                animation.newFrameControls();
+                Widgets.text("");
+                animation.editorGUI();
+                Widgets.text("");
+                ImGui.separator();
+                Widgets.text("");
 
-            int index = 0;
-            for (Frame frame: state.animationFrames)
-            {
-                float[] tmp = new float[]{frame.frameTime};
-                ImGui.dragFloat("Frame(" + index + ") Time: ", tmp, 0.01f);
-                frame.frameTime = tmp[0];
-                index++;
+                // - - - Trigger management
+                for (StateTrigger trigger : stateTransfers.keySet())
+                {
+                    if (trigger.state.equals(animation.title))
+                    {
+                        String toState = stateTransfers.get(trigger);
+
+                        if (Widgets.button(Icons.Trash + "  ##" + i))
+                        {
+                            stateTransfers.remove(trigger);
+                        }
+                        ImGui.sameLine();
+
+                        if (ImGui.beginCombo("##toStateCombo" + i, toState))
+                        {
+                            for (AnimationState state : states)
+                            {
+                                if (ImGui.selectable(state.title, state.title.equals(toState)))
+                                {
+                                    stateTransfers.put(trigger, state.title);
+                                    addStateTrigger(animation.title, state.title, trigger.trigger);
+                                }
+                            }
+                            ImGui.endCombo();
+                        }
+                        ImGui.sameLine();
+
+                        Widgets.text(trigger.trigger);
+                    }
+                }
+                // - - - Add New Trigger UI
+                Widgets.text("");
+                to = Widgets.inputText("To State", to);
+                trigger = Widgets.inputText("Trigger", trigger);
+                if (Widgets.button(Icons.PlusSquare + " Add Trigger"))
+                {
+                    addStateTrigger(animation.title, to, trigger);
+                }
+                Widgets.text("");
             }
         }
     }
@@ -243,4 +287,27 @@ public class AnimationComponent extends Component
         return null;
     }
 
+    public void removeState(AnimationState STATE)
+    {
+        if (!states.contains(STATE))
+        {
+            Logger.FORGE_LOG_WARNING("State not found: " + STATE.title);
+            return;
+        }
+
+        // - - -Remove the state from the list
+        states.remove(STATE);
+
+        // - - - Remove any state triggers associated with the state
+        stateTransfers.keySet().removeIf(trigger -> trigger.state.equals(STATE.title));
+
+        // - - - Reset default state if it's the one being removed
+        if (Objects.equals(defaultStateTitle, STATE.title))
+        {
+            defaultStateTitle = "";
+            currentState = null;
+        }
+
+        Logger.FORGE_LOG_INFO("Removed state: " + STATE.title);
+    }
 }

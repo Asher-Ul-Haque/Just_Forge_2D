@@ -142,7 +142,7 @@ public class Settings
     public static TextureMaximizeFilter DEFAULT_TEXTURE_MAX_FILTER() { return instance.DEFAULT_TEXTURE_MAX_FILTER;}
 
     // - - - Log files
-    private final int MAX_LOG_FILE_LIMIT = 16;
+    private final int MAX_LOG_FILE_LIMIT = 15;
     public static int MAX_LOG_FILE_LIMIT() { return instance.MAX_LOG_FILE_LIMIT;}
 
     // - - - Max Display Size

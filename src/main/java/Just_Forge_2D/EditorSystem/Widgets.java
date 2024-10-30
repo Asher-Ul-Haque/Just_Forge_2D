@@ -408,10 +408,11 @@ public class Widgets
         return ImGui.button(LABEL);
     }
 
-    public static boolean imageButton(int TEXTURE_ID, float SIZE_X, float SIZE_Y, float UV0_X, float UV0_Y, float UV1_X, float UV1_Y)
+    public static boolean imageButton(int TEXTURE_ID, float SIZE_X, float SIZE_Y, float UV0_X, float UV0_Y, float UV1_X, float UV1_Y, boolean CENTER)
     {
         if (SIZE_X < Settings.MAX_IMAGE_DISPLAY_HEIGHT && SIZE_Y < Settings.MAX_IMAGE_DISPLAY_WIDTH)
         {
+            if (CENTER) ImGui.setCursorPosX(Math.abs(ImGui.getContentRegionAvailX() - SIZE_X) / 2f);
             return ImGui.imageButton(TEXTURE_ID, SIZE_X, SIZE_Y, UV0_X, UV0_Y, UV1_X, UV1_Y);
         }
 
@@ -420,18 +421,30 @@ public class Widgets
         float displayWidth = SIZE_X * scaleFactor;
         float displayHeight = SIZE_Y * scaleFactor;
 
+        if (CENTER) ImGui.setCursorPosX(Math.abs(ImGui.getContentRegionAvailX() - displayWidth) / 2f);
         return ImGui.imageButton(TEXTURE_ID, displayWidth, displayHeight, UV0_X, UV0_Y, UV1_X, UV1_Y);
+    }
+
+    public static boolean imageButton(int TEXTURE_ID, float SIZE_X, float SIZE_Y, float UV0_X, float UV0_Y, float UV1_X, float UV1_Y)
+    {
+        return imageButton(TEXTURE_ID, SIZE_X, SIZE_Y, UV0_X, UV0_Y, UV1_X, UV1_Y, false);
+    }
+
+    public static boolean imageButton(int TEXTURE_ID, float SIZE_X, float SIZE_Y, Vector2f[] TEXTURE_COORDS, boolean CENTER)
+    {
+        return Widgets.imageButton(TEXTURE_ID, SIZE_X, SIZE_Y, TEXTURE_COORDS[2].x, TEXTURE_COORDS[0].y, TEXTURE_COORDS[0].x, TEXTURE_COORDS[2].y, CENTER);
     }
 
     public static boolean imageButton(int TEXTURE_ID, float SIZE_X, float SIZE_Y, Vector2f[] TEXTURE_COORDS)
     {
-        return Widgets.imageButton(TEXTURE_ID, SIZE_X, SIZE_Y, TEXTURE_COORDS[2].x, TEXTURE_COORDS[0].y, TEXTURE_COORDS[0].x, TEXTURE_COORDS[2].y);
+        return Widgets.imageButton(TEXTURE_ID, SIZE_X, SIZE_Y, TEXTURE_COORDS[2].x, TEXTURE_COORDS[0].y, TEXTURE_COORDS[0].x, TEXTURE_COORDS[2].y, false);
     }
 
-    public static void image(int TEXTURE_ID, float SIZE_X, float SIZE_Y, float UV0_X, float UV0_Y, float UV1_X, float UV1_Y)
+    public static void image(int TEXTURE_ID, float SIZE_X, float SIZE_Y, float UV0_X, float UV0_Y, float UV1_X, float UV1_Y, boolean CENTER)
     {
         if (SIZE_X < Settings.MAX_IMAGE_DISPLAY_HEIGHT && SIZE_Y < Settings.MAX_IMAGE_DISPLAY_WIDTH)
         {
+            if (CENTER) ImGui.setCursorPosX(Math.abs(ImGui.getContentRegionAvailX() - SIZE_X) / 2f);
             ImGui.image(TEXTURE_ID, SIZE_X, SIZE_Y, UV0_X, UV0_Y, UV1_X, UV1_Y);
             return;
         }
@@ -441,13 +454,26 @@ public class Widgets
         float displayWidth = SIZE_X * scaleFactor;
         float displayHeight = SIZE_Y * scaleFactor;
 
+        if (CENTER) ImGui.setCursorPosX(Math.abs(ImGui.getContentRegionAvailX() - displayWidth) / 2f);
         ImGui.image(TEXTURE_ID, displayWidth, displayHeight, UV0_X, UV0_Y, UV1_X, UV1_Y);
+    }
+
+    public static void image(int TEXTURE_ID, float SIZE_X, float SIZE_Y, float UV0_X, float UV0_Y, float UV1_X, float UV1_Y)
+    {
+        image(TEXTURE_ID, SIZE_X, SIZE_Y, UV0_X, UV0_Y, UV1_X, UV1_Y, false);
     }
 
     public static void image(int TEXTURE_ID, float SIZE_X, float SIZE_Y, Vector2f[] TEXTURE_COORDS)
     {
-        Widgets.image(TEXTURE_ID, SIZE_X, SIZE_Y, TEXTURE_COORDS[2].x, TEXTURE_COORDS[0].y, TEXTURE_COORDS[0].x, TEXTURE_COORDS[2].y);
+        Widgets.image(TEXTURE_ID, SIZE_X, SIZE_Y, TEXTURE_COORDS[2].x, TEXTURE_COORDS[0].y, TEXTURE_COORDS[0].x, TEXTURE_COORDS[2].y, false);
     }
+
+    public static void image(int TEXTURE_ID, float SIZE_X, float SIZE_Y, Vector2f[] TEXTURE_COORDS, boolean CENTER)
+    {
+        Widgets.image(TEXTURE_ID, SIZE_X, SIZE_Y, TEXTURE_COORDS[2].x, TEXTURE_COORDS[0].y, TEXTURE_COORDS[0].x, TEXTURE_COORDS[2].y, CENTER);
+    }
+
+
     public static void text(String TEXT)
     {
         Theme.setDefaultTextColor(EditorSystemManager.getCurrentTheme().secondaryColor);

@@ -19,12 +19,12 @@ public class Frame
     public void editorGUI()
     {
         // - - - Show sprite preview as an image button
-        if (Widgets.imageButton(sprite.getTextureID(), sprite.getWidth(), sprite.getHeight(), sprite.getTextureCoordinates()))
+        if (Widgets.imageButton(sprite.getTextureID(), sprite.getWidth(), sprite.getHeight(), sprite.getTextureCoordinates(), true))
         {
             AssetPoolDisplay.enableSelection((Sprite SP)->{this.sprite = SP;});
         }
 
         // - - - Editable frame time
-        Widgets.drawFloatControl(Icons.Clock + "  Frame Time", frameTime);
+        frameTime = Widgets.drawFloatControl(Icons.Clock + "  Frame Time", frameTime);
     }
 }

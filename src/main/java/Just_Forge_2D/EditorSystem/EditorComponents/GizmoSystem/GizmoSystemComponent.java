@@ -41,28 +41,35 @@ public class GizmoSystemComponent extends Component
     @Override
     public void editorUpdate(float DELTA_TIME)
     {
-        switch (currentGizmo)
+        try
         {
-            case 0:
-                gameObject.getComponent(TranslationGizmoComponent.class).setUsing(true);
-                gameObject.getComponent(ScaleGizmoComponent.class).setUsing(false);
-                break;
+            switch (currentGizmo)
+            {
+                case 0:
+                    gameObject.getComponent(TranslationGizmoComponent.class).setUsing(true);
+                    gameObject.getComponent(ScaleGizmoComponent.class).setUsing(false);
+                    break;
 
-            case 1:
-                gameObject.getComponent(TranslationGizmoComponent.class).setUsing(false);
-                gameObject.getComponent(ScaleGizmoComponent.class).setUsing(true);
-                break;
-        }
+                case 1:
+                    gameObject.getComponent(TranslationGizmoComponent.class).setUsing(false);
+                    gameObject.getComponent(ScaleGizmoComponent.class).setUsing(true);
+                    break;
+            }
 
-        if (Keyboard.isKeyBeginPress(Keys.T))
-        {
-            Logger.FORGE_LOG_INFO("Switched to Translate Gizmo");
-            currentGizmo = 0;
+            if (Keyboard.isKeyBeginPress(Keys.T))
+            {
+                Logger.FORGE_LOG_INFO("Switched to Translate Gizmo");
+                currentGizmo = 0;
+            }
+            else if (Keyboard.isKeyBeginPress(Keys.S))
+            {
+                Logger.FORGE_LOG_INFO("Switched to scale gizmo");
+                currentGizmo = 1;
+            }
         }
-        else if (Keyboard.isKeyBeginPress(Keys.S))
+        catch (NullPointerException e)
         {
-            Logger.FORGE_LOG_INFO("Switched to scale gizmo");
-            currentGizmo = 1;
+            gameObject.destroy();
         }
     }
 }

@@ -378,6 +378,7 @@ public class AssetPoolDisplay
     // - - - Helper to handle adding and clearing assets
     private static void handleAddAndClear(Runnable clearMethod, String addLabel)
     {
+        if (mode.equals(Mode.SELECTION)) return;
         if (Widgets.button(ICON_ADD + " " + addLabel)) open = !open;
         ImGui.sameLine();
         if (Widgets.button(Icons.TrashAlt + " Clear")) clearMethod.run();
@@ -392,9 +393,18 @@ public class AssetPoolDisplay
             switch (mode)
             {
                 case CREATION:
+                    textureDisplay();
+                    spriteSheetDisplay();
                     soundDisplay();
+                    break;
 
                 case SELECTION:
+                    if (Widgets.button("Stop Selection"))
+                    {
+                        onSpriteSelection = null;
+                        mode = Mode.CREATION;
+                    }
+                    Widgets.text("");
                     textureDisplay();
                     spriteSheetDisplay();
                     break;

@@ -49,7 +49,7 @@ public class CircleColliderComponent extends ColliderComponent
     {
         super.editorGUI();
         autoScale = Widgets.drawBoolControl(Icons.ExpandArrowsAlt+ "  Auto Scale", autoScale);
-        if (!autoScale) return;
+        if (autoScale) return;
         this.radius = Widgets.drawFloatControl(Icons.Circle + "  Radius", this.radius);
         Widgets.drawVec2Control(Icons.LocationArrow + "  Offset", this.offset);
     }

@@ -3,6 +3,7 @@ package Just_Forge_2D.AnimationSystem;
 import Just_Forge_2D.AssetPool.AssetPool;
 import Just_Forge_2D.EditorSystem.Icons;
 import Just_Forge_2D.EditorSystem.Widgets;
+import Just_Forge_2D.EditorSystem.Windows.AssetPoolDisplay;
 import Just_Forge_2D.RenderingSystem.Sprite;
 import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.Utils.Settings;
@@ -18,7 +19,7 @@ public class AnimationState
     // - - - private variables
     public String title;
     public List<Frame> animationFrames = new ArrayList<>();
-    private static final Sprite defaultSprite = new Sprite();
+    private static Sprite defaultSprite = new Sprite();
     private transient float timeTracker = 0.0f;
     private transient int currentSprite = 0;
     public boolean doesLoop = false;
@@ -33,13 +34,12 @@ public class AnimationState
 
     // - - - Constructor - - -
 
-    public AnimationState() {}
-
-    public AnimationState(String TITLE, boolean LOOP)
+    public AnimationState(String TITLE, boolean LOOP, Sprite DEFAULT)
     {
         Logger.FORGE_LOG_DEBUG("Adding new animation state : " + TITLE);
         this.title = TITLE;
         this.doesLoop = LOOP;
+        defaultSprite = DEFAULT;
         this.animationFrames = new ArrayList<>();
         this.isFinished = false;
     }
@@ -150,42 +150,9 @@ public class AnimationState
 
 
     // - - - Editor
-    public void editorGUI(float DELTA_TIME)
+    protected void previewControls(float DELTA_TIME)
     {
-        // - - - Loop through frames and display their editorGUI
-        if (ImGui.collapsingHeader(Icons.Film + "  Frames"))
-        {
-            // - - - Add a new frame
-            if (Widgets.button(Icons.PlusSquare + "  Add Frame"))
-            {
-                addFrame(new Sprite());
-            }
-            for (int i = 0; i < animationFrames.size(); i++)
-            {
-                if (Widgets.button(Icons.Trash + "  Remove Frame"))
-                {
-                    animationFrames.remove(i);
-                    continue;
-                }
-                animationFrames.get(i).editorGUI();
-
-                // - - - Reordering options (Up/Down buttons)
-                if (i > 0 && Widgets.button(Icons.ArrowUp + "  Move Up"))
-                {
-                    Collections.swap(animationFrames, i, i - 1);
-                }
-                if (i < animationFrames.size() - 1 && Widgets.button(Icons.ArrowDown + "  Move Down"))
-                {
-                    Collections.swap(animationFrames, i, i + 1);
-                }
-            }
-        }
-
-
-        // - - - Animation preview controls
-        previewSpeed = Math.max(Float.MIN_VALUE, Widgets.drawFloatControl(Icons.HourglassHalf + "  Preview Speed", previewSpeed));
-
-        if (Widgets.button(isPreviewing ? (Icons.Pause + " Pause") : (Icons.Play + "  Play")))
+        if (Widgets.button(isPreviewing ? (Icons.Stop + " Stop") : (Icons.Play + "  Play")))
         {
             isPreviewing = !isPreviewing;
         }
@@ -209,9 +176,57 @@ public class AnimationState
                 {
                     Vector2f[] texCoords = currentFrameSprite.getTextureCoordinates();
                     Widgets.image(currentFrameSprite.getTextureID(), currentFrameSprite.getWidth() * 2, currentFrameSprite.getHeight() * 2,
-                            texCoords);
+                            texCoords, true);
                 }
             }
+        }
+    }
+
+    protected void newFrameControls()
+    {
+        // - - - Add a new frame
+        if (Widgets.button(Icons.PlusSquare + "  Add Frame" + " ##" + hashCode()))
+        {
+            Sprite n = new Sprite();
+            n.setWrap_sFilter(defaultSprite.getWrap_s());
+            n.setWrap_tFilter(defaultSprite.getWrap_t());
+            n.setMaximizeFilter(defaultSprite.getMaximizeFilter());
+            n.setMinimizeFilter(defaultSprite.getMinimizeFilter());
+            addFrame(n);
+        }
+        if (Widgets.drawBoolControl(Icons.Redo + "  Looping", doesLoop) != doesLoop) setLoop(!doesLoop);
+        previewSpeed = Math.max(Float.MIN_VALUE, Widgets.drawFloatControl(Icons.HourglassHalf + "  Preview Speed", previewSpeed));
+    }
+
+    public void editorGUI()
+    {
+        // - - - Animation preview controls
+        Widgets.text(AssetPoolDisplay.getMode().equals(AssetPoolDisplay.Mode.SELECTION) ? "Click on any Texture or Sprite Sheet in the Asset Pool" : "");
+
+
+        // - - - Loop through frames and display their editorGUI
+        for (int i = 0; i < animationFrames.size(); i++)
+        {
+            animationFrames.get(i).editorGUI();
+
+            if (Widgets.button(Icons.Trash + "  Remove Frame" + " ##" + hashCode()))
+            {
+                animationFrames.remove(i);
+                continue;
+            }
+            ImGui.sameLine();
+
+            // - - - Reordering options (Up/Down buttons)
+            if (i > 0 && Widgets.button(Icons.ArrowUp + "  Move Up" + " ##" + hashCode() + i))
+            {
+                Collections.swap(animationFrames, i, i - 1);
+            }
+            ImGui.sameLine();
+            if (i < animationFrames.size() - 1 && Widgets.button(Icons.ArrowDown + "  Move Down" + " ##" + hashCode() + i))
+            {
+                Collections.swap(animationFrames, i, i + 1);
+            }
+            Widgets.text("");
         }
     }
 
@@ -237,7 +252,7 @@ public class AnimationState
                 return frame.sprite;
             }
         }
-        return null; // Fallback, should not happen in looping animations
+        return null; // - - - Fallback, should not happen in looping animations
     }
 
 }

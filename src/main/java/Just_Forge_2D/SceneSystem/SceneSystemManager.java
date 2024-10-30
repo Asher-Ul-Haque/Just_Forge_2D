@@ -29,6 +29,7 @@ public class SceneSystemManager
     public static Set<String> sceneScripts = new HashSet<>();
     public static void save(Scene SCENE)
     {
+        if (SCENE == null) return;
         Gson gson = new GsonBuilder()
                 .setPrettyPrinting()
                 .registerTypeAdapter(Component.class, new ComponentJsonHandler())
@@ -65,6 +66,7 @@ public class SceneSystemManager
 
     public static void load(Scene SCENE)
     {
+        if (SCENE == null) return;
         Gson gson = new GsonBuilder()
                 .setPrettyPrinting()
                 .registerTypeAdapter(Component.class, new ComponentJsonHandler())

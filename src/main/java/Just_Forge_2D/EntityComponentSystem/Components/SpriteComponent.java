@@ -57,16 +57,22 @@ public class SpriteComponent extends Component
     public Sprite getSpriteCopy()
     {
         Sprite copy = new Sprite();
+        this.sprite.applyTextureFilters();
         copy.setHeight(this.sprite.getHeight());
         copy.setWidth(this.sprite.getWidth());
         copy.setTexture(this.getTexture());
         copy.setTextureCoordinates(this.getTextureCoords());
+        copy.setMinimizeFilter(this.sprite.getMinimizeFilter());
+        copy.setMaximizeFilter(this.sprite.getMaximizeFilter());
+        copy.setWrap_sFilter(this.sprite.getWrap_s());
+        copy.setWrap_tFilter(this.sprite.getWrap_t());
         return copy;
     }
 
     public void setSprite(Sprite SPRITE)
     {
         this.sprite = SPRITE;
+        this.sprite.applyTextureFilters();
         this.isChanged = true;
     }
 
@@ -98,10 +104,8 @@ public class SpriteComponent extends Component
     @Override
     public void start()
     {
-        if (this.gameObject.transform == null)
-        {
-            this.sprite.setTexture(AssetPool.makeTexture(this.sprite.getTexture().getFilepath()));
-        }
+        this.sprite.setTexture(AssetPool.makeTexture(this.sprite.getTexture().getFilepath()));
+        this.sprite.applyTextureFilters();
         this.lastTransform = gameObject.transform.copy();
     }
 
@@ -138,8 +142,7 @@ public class SpriteComponent extends Component
         if (this.sprite.getTexture() != null)
         {
             Vector2f[] texCoords = this.sprite.getTextureCoordinates();
-            ImGui.setCursorPosX((ImGui.getContentRegionAvailX() * 0.5f));
-            if (Widgets.imageButton(this.sprite.getTextureID(), this.sprite.getWidth() * 2, this.sprite.getHeight() * 2, texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y))
+            if (Widgets.imageButton(this.sprite.getTextureID(), this.sprite.getWidth() * 2, this.sprite.getHeight() * 2, texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y, true))
             {
                 AssetPoolDisplay.enableSelection(this::setSprite);
             }
@@ -147,7 +150,8 @@ public class SpriteComponent extends Component
 
             if (Widgets.button(Icons.Trash))
             {
-                setSprite(new Sprite());
+                Sprite n = new Sprite();
+                setSprite(n);
             }
             Widgets.text("");
 

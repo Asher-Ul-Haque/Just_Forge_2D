@@ -170,7 +170,7 @@ public class Texture
     {
         this.MAX_FILTER = MAX;
         this.MIN_FILTER = MIN;
-        this.WARP_T = S;
+        this.WARP_S = S;
         this.WARP_T = T;
         init(this.getFilepath());
     }

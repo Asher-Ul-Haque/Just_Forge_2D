@@ -64,7 +64,7 @@ public class BoxColliderComponent extends ColliderComponent
     {
         super.editorGUI();
         autoScale = Widgets.drawBoolControl(Icons.ExpandArrowsAlt+ "  Auto Scale", autoScale);
-        if (!autoScale) return;
+        if (autoScale) return;
         Widgets.drawVec2Control(Icons.Expand + "  Half Size", this.halfSize);
         Widgets.drawVec2Control(Icons.MapPin + "  Origin", this.origin);
         Widgets.drawVec2Control(Icons.LocationArrow + "  Offset", this.offset);

@@ -374,10 +374,7 @@ public class RigidBodyComponent extends Component
     {
         isEditor = true;
         // - - - destroy button
-        if (Widgets.button(Icons.Trash + " Destroy##" + this.getClass().hashCode()))
-        {
-            this.gameObject.removeComponent(this.getClass());
-        }
+        super.deleteButton();
 
         // - - - body type
 
