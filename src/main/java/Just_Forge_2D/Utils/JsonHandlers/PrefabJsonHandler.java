@@ -1,11 +1,11 @@
 package Just_Forge_2D.Utils.JsonHandlers;
 
-import Just_Forge_2D.EntityComponentSystem.Components.Sprite.Sprite;
-import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
+import Just_Forge_2D.EntityComponentSystem.Components.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.PrefabSystem.NonSpritePrefab;
 import Just_Forge_2D.PrefabSystem.Prefab;
 import Just_Forge_2D.PrefabSystem.SpritePrefab;
+import Just_Forge_2D.RenderingSystem.Sprite;
 import com.google.gson.*;
 
 import java.lang.reflect.Type;

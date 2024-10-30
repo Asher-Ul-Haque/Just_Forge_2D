@@ -7,7 +7,7 @@ import Just_Forge_2D.EditorSystem.Windows.ComponentsWindow;
 import Just_Forge_2D.EditorSystem.Windows.GridControls;
 import Just_Forge_2D.EditorSystem.Windows.ObjectSelector;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
-import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
+import Just_Forge_2D.EntityComponentSystem.Components.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.EventSystem.Events.Event;
 import Just_Forge_2D.EventSystem.Observer;

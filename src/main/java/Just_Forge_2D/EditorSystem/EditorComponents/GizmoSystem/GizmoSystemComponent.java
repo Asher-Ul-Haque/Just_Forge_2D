@@ -1,17 +1,18 @@
 package Just_Forge_2D.EditorSystem.EditorComponents.GizmoSystem;
 
-import Just_Forge_2D.AssetPool.AssetPool;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.InputSystem.Keyboard;
 import Just_Forge_2D.InputSystem.Keys;
 import Just_Forge_2D.RenderingSystem.SpriteSheet;
+import Just_Forge_2D.RenderingSystem.Texture;
 import Just_Forge_2D.Utils.Logger;
 
 // - - - Gizmo System
 public class GizmoSystemComponent extends Component
 {
     // - - - private variables
-    private SpriteSheet gizmos = new SpriteSheet(AssetPool.makeTexture("Assets/Textures/gizmos.png"), 24, 48, 3, 0);
+    private Texture gizmoTexture;
+    private SpriteSheet gizmos;
     private int currentGizmo = 0;
 
 
@@ -23,6 +24,12 @@ public class GizmoSystemComponent extends Component
     @Override
     public void start()
     {
+        if (gizmos == null)
+        {
+            if (gizmoTexture == null) gizmoTexture = new Texture();
+            gizmoTexture.init("Assets/Textures/gizmos.png");
+            gizmos = new SpriteSheet(gizmoTexture, 24, 48, 3, 0);
+        }
         Logger.FORGE_LOG_INFO("Adding Gizmo System to " + gameObject);
         gameObject.addComponent(new TranslationGizmoComponent(gizmos.getSprite(1)));
         gameObject.addComponent(new ScaleGizmoComponent(gizmos.getSprite(2)));
@@ -34,7 +41,6 @@ public class GizmoSystemComponent extends Component
     @Override
     public void editorUpdate(float DELTA_TIME)
     {
-        if (gameObject == null || gameObject.isDead()) return;
         switch (currentGizmo)
         {
             case 0:
@@ -48,12 +54,12 @@ public class GizmoSystemComponent extends Component
                 break;
         }
 
-        if (Keyboard.isKeyPressed(Keys.T))
+        if (Keyboard.isKeyBeginPress(Keys.T))
         {
             Logger.FORGE_LOG_INFO("Switched to Translate Gizmo");
             currentGizmo = 0;
         }
-        else if (Keyboard.isKeyPressed(Keys.S))
+        else if (Keyboard.isKeyBeginPress(Keys.S))
         {
             Logger.FORGE_LOG_INFO("Switched to scale gizmo");
             currentGizmo = 1;

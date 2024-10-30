@@ -1,11 +1,12 @@
 package Just_Forge_2D.RenderingSystem;
 
 import Just_Forge_2D.Utils.Logger;
+import Just_Forge_2D.Utils.Settings;
 import org.lwjgl.BufferUtils;
 
-import java.io.File;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
+import java.nio.file.Paths;
 
 import static org.lwjgl.opengl.GL11C.*;
 import static org.lwjgl.stb.STBImage.*;
@@ -17,6 +18,10 @@ public class Texture
     private String filepath;
     private int textureID;
     private int width, height;
+    private TextureMinimizeFilter MIN_FILTER = Settings.DEFAULT_TEXTURE_MIN_FILTER();
+    private TextureMaximizeFilter MAX_FILTER = Settings.DEFAULT_TEXTURE_MAX_FILTER();
+    private TextureWrapping WARP_S = Settings.DEFAULT_TEXTURE_WRAP_S();
+    private TextureWrapping WARP_T = Settings.DEFAULT_TEXTURE_WRAP_T();
 
     // - - - Functions - - -
 
@@ -31,8 +36,8 @@ public class Texture
         // - - - Generate the texture on GPU
         textureID = glGenTextures();
         glBindTexture(GL_TEXTURE_2D, textureID);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, MIN_FILTER.OPEN_GL_FILTER);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, MAX_FILTER.OPEN_GL_FILTER);
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, WIDTH, HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
     }
 
@@ -43,8 +48,8 @@ public class Texture
             // - - - Generate the texture on GPU
             textureID = glGenTextures();
             glBindTexture(GL_TEXTURE_2D, textureID);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, MIN_FILTER.OPEN_GL_FILTER);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, MAX_FILTER.OPEN_GL_FILTER);
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, WIDTH, HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
 
             init(FILE_PATH);
@@ -58,7 +63,7 @@ public class Texture
     // - - - init
     public boolean init(String FILEPATH)
     {
-        this.filepath = new File(FILEPATH).getAbsolutePath();
+        this.filepath = Paths.get(FILEPATH).toString();
 
         // - - - Generate the texture on GPU
         try
@@ -68,12 +73,12 @@ public class Texture
 
             // - - - Set texture parameters
             // Repeat texture in both directions
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, WARP_S.OPEN_GL_FILTER);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, WARP_T.OPEN_GL_FILTER);
 
             // - - - When shrinking or stretching pixelate it
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, MIN_FILTER.OPEN_GL_FILTER);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, MAX_FILTER.OPEN_GL_FILTER);
 
             // - - - gET RGB data
             IntBuffer width = BufferUtils.createIntBuffer(1);
@@ -159,5 +164,14 @@ public class Texture
         if (OBJECT == null) return false;
         if (!(OBJECT instanceof Texture oTexture)) return false;
         return oTexture.getWidth() == this.width && oTexture.getHeight() == this.height && oTexture.getID() == this.textureID && oTexture.getFilepath().equals(this.filepath);
+    }
+
+    public void setFilters(TextureMaximizeFilter MAX, TextureMinimizeFilter MIN, TextureWrapping S, TextureWrapping T)
+    {
+        this.MAX_FILTER = MAX;
+        this.MIN_FILTER = MIN;
+        this.WARP_T = S;
+        this.WARP_T = T;
+        init(this.getFilepath());
     }
 }

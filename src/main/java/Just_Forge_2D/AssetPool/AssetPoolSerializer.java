@@ -18,7 +18,7 @@ public class AssetPoolSerializer
 {
     private static String serialize()
     {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        Gson gson = new GsonBuilder().setPrettyPrinting().serializeSpecialFloatingPointValues().create();
         AssetPoolData data = new AssetPoolData(nameToFileTextures, nameToFileSpriteSheet, nameToFileShader,
                 nameToFileSounds, shaderPool, texturePool, spriteSheetPool, soundPool);
         return gson.toJson(data);

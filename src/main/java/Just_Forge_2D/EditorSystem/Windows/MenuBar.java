@@ -11,6 +11,7 @@ import Just_Forge_2D.EventSystem.Events.EventTypes;
 import Just_Forge_2D.GameSystem.GameCodeLoader;
 import Just_Forge_2D.GameSystem.GameManager;
 import Just_Forge_2D.GameSystem.ProjectManager;
+import Just_Forge_2D.SceneSystem.SceneSystemManager;
 import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.Utils.Settings;
 import Just_Forge_2D.WindowSystem.GameWindow;
@@ -40,6 +41,7 @@ public class MenuBar
             if (ImGui.menuItem(Icons.WindowClose + "  Close"))
             {
                 AssetPoolSerializer.saveAssetPool(EditorSystemManager.projectDir + "/.forge/Pool.justForgeFile");
+                SceneSystemManager.save(GameWindow.getCurrentScene());
                 GameCodeLoader.terminate();
                 GameCodeLoader.closeEye();
                 EventManager.notify(null, new Event(EventTypes.ForgeStop));

@@ -1,9 +1,9 @@
 package Just_Forge_2D.EditorSystem.EditorComponents.GizmoSystem;
 
-import Just_Forge_2D.EntityComponentSystem.Components.Sprite.Sprite;
 import Just_Forge_2D.InputSystem.Keyboard;
 import Just_Forge_2D.InputSystem.Keys;
 import Just_Forge_2D.InputSystem.Mouse;
+import Just_Forge_2D.RenderingSystem.Sprite;
 import Just_Forge_2D.Utils.Logger;
 
 // - - - Translation Gizmo

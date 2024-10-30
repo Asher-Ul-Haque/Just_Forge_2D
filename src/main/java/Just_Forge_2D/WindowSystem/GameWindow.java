@@ -299,6 +299,7 @@ public class GameWindow extends Window
     @Override
     public void close()
     {
+        if (!EditorSystemManager.isRelease) SceneSystemManager.save(currentScene);
         EventManager.notify(null, new Event(EventTypes.ForgeStop));
         GameCodeLoader.terminate();
         super.close();

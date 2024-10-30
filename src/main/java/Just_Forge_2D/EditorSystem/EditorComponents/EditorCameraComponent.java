@@ -6,6 +6,7 @@ import Just_Forge_2D.InputSystem.Keys;
 import Just_Forge_2D.InputSystem.Mouse;
 import Just_Forge_2D.SceneSystem.Camera;
 import Just_Forge_2D.Utils.Settings;
+import Just_Forge_2D.WindowSystem.GameWindow;
 import org.joml.Vector2f;
 
 import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_RIGHT;
@@ -64,7 +65,7 @@ public class EditorCameraComponent extends Component
             float addValue = (float)Math.pow(Math.abs(Mouse.getScrollY() * scrollSensitivity), 1 / this.editorCamera.getZoom());
             addValue *= -Math.signum(Mouse.getScrollY());
             editorCamera.addZoom(addValue);
-            if (addValue < 0) editorCamera.getPosition().lerp(new Vector2f(Mouse.getWorldX(), Mouse.getWorldY()).mul(this.editorCamera.getZoom()), scrollSensitivity);
+            if (addValue < 0) editorCamera.getPosition().lerp(new Vector2f(Mouse.getScreenX(GameWindow.getFrameBuffer().getSize().x), Mouse.getScreenY(GameWindow.getFrameBuffer().getSize().y)).mul(this.editorCamera.getZoom()), scrollSensitivity);
         }
 
         if (Keyboard.isKeyPressed(Keys.NUM_0))

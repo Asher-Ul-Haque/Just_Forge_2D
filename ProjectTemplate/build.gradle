@@ -1,86 +1,48 @@
-import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
-
-plugins
-{
+plugins {
     id 'java'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
 
 def engineJar = ""
+
 def osName = System.getProperty("os.name").toLowerCase()
 def osArch = System.getProperty("os.arch").toLowerCase()
 
-if (osName.contains("linux"))
-{
+if (osName.contains("linux")) {
     engineJar = 'Just-Forge-2D-SNAPSHOT-1.3-linux'
-}
-else if (osName.contains("mac"))
-{
-    engineJar = 'Just-Forge-2D-SNAPSHOT-1.2-macos' // coming soon
-}
-else if (osName.contains("win"))
-{
-    if (osArch.contains("amd64"))
-    {
+} else if (osName.contains("mac")) {
+    engineJar = 'Just-Forge-2D-SNAPSHOT-1.2-macos'
+} else if (osName.contains("win")) {
+    if (osArch.contains("amd64")) {
         engineJar = 'Just-Forge-2D-SNAPSHOT-1.2-win64'
-    }
-    else if (osArch.contains("x86"))
-    {
-        engineJar = 'Just-Forge-2D-SNAPSHOT-1.2-win32' // coming soon
-    }
-    else
-    {
+    } else if (osArch.contains("x86")) {
+        engineJar = 'Just-Forge-2D-SNAPSHOT-1.2-win32'
+    } else {
         throw new GradleException("Unsupported Windows architecture: " + osArch)
     }
-}
-else
-{
+} else {
     throw new GradleException("Unsupported operating system: " + osName)
 }
 
-repositories
-{
-    flatDir
-    {
-        dirs 'libs' // This is where the engine JAR is located, if you want any other libraries, store them here
+repositories {
+    flatDir {
+        dirs 'libs' // This is where the engine JAR is located
     }
     mavenCentral()
 }
 
-dependencies
-{
-    if (engineJar != null)
-    {
+shadowJar {
+    archiveClassifier.set('all')
+    mergeServiceFiles()
+    manifest {
+        attributes 'Main-Class': 'Just_Forge_2D.Main'
+    }
+}
+
+dependencies {
+    if (engineJar != null) {
         implementation name: engineJar
-    }
-    else
-    {
+    } else {
         throw new GradleException("Engine JAR could not be resolved")
-    }
-}
-
-tasks.register('jarWithAssets', ShadowJar)
-{
-    archiveClassifier.set('with-assets')
-    configurations = [project.configurations.runtimeClasspath]
-
-    from('Assets')
-    {
-        into 'Assets'
-    }
-
-    manifest
-    {
-        attributes 'Main-Class': 'Just_Forge_2D.Main'
-    }
-}
-
-tasks.register('jarWithoutAssets', ShadowJar)
-{
-    archiveClassifier.set('without-assets')
-    configurations = [project.configurations.runtimeClasspath]
-
-    manifest
-    {
-        attributes 'Main-Class': 'Just_Forge_2D.Main'
     }
 }

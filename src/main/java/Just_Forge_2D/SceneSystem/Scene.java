@@ -4,7 +4,7 @@ import Just_Forge_2D.AnimationSystem.AnimationComponent;
 import Just_Forge_2D.AssetPool.AssetPool;
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
-import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
+import Just_Forge_2D.EntityComponentSystem.Components.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.Components.TransformComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.EventSystem.EventManager;

@@ -5,13 +5,13 @@ import Just_Forge_2D.EditorSystem.ImGUIManager;
 import Just_Forge_2D.EditorSystem.Widgets;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.Components.ComponentList;
-import Just_Forge_2D.EntityComponentSystem.Components.Sprite.Sprite;
-import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
+import Just_Forge_2D.EntityComponentSystem.Components.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.PrefabSystem.NonSpritePrefab;
 import Just_Forge_2D.PrefabSystem.Prefab;
 import Just_Forge_2D.PrefabSystem.PrefabManager;
 import Just_Forge_2D.PrefabSystem.SpritePrefab;
+import Just_Forge_2D.RenderingSystem.Sprite;
 import Just_Forge_2D.Utils.Logger;
 import imgui.ImGui;
 import org.joml.Vector2f;
@@ -114,7 +114,9 @@ public class ComponentsWindow
                         // - - - Add a separator between groups of components
                         if (delay-- == 0)
                         {
+                            Widgets.text("");
                             ImGui.separator();
+                            Widgets.text("");
                             delay = 2;
                         }
 

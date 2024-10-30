@@ -3,7 +3,7 @@ package Just_Forge_2D.AnimationSystem;
 import Just_Forge_2D.AssetPool.AssetPool;
 import Just_Forge_2D.EditorSystem.Icons;
 import Just_Forge_2D.EditorSystem.Widgets;
-import Just_Forge_2D.EntityComponentSystem.Components.Sprite.Sprite;
+import Just_Forge_2D.RenderingSystem.Sprite;
 import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.Utils.Settings;
 import imgui.ImGui;

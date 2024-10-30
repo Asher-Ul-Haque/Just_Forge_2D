@@ -1,8 +1,8 @@
 package Just_Forge_2D.PrefabSystem;
 
-import Just_Forge_2D.EntityComponentSystem.Components.Sprite.Sprite;
-import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
+import Just_Forge_2D.EntityComponentSystem.Components.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
+import Just_Forge_2D.RenderingSystem.Sprite;
 import Just_Forge_2D.WindowSystem.GameWindow;
 
 public class SpritePrefab implements Prefab

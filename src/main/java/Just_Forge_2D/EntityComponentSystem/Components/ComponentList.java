@@ -3,7 +3,6 @@ package Just_Forge_2D.EntityComponentSystem.Components;
 import Just_Forge_2D.AnimationSystem.AnimationComponent;
 import Just_Forge_2D.AudioSystem.SoundPlayerComponent;
 import Just_Forge_2D.EditorSystem.Icons;
-import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
 import Just_Forge_2D.ParticleSystem.ParticleSystemComponent;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.*;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Joints.HingeComponent;

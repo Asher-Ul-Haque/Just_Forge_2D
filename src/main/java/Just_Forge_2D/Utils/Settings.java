@@ -1,6 +1,9 @@
 package Just_Forge_2D.Utils;
 
 import Just_Forge_2D.InputSystem.Keys;
+import Just_Forge_2D.RenderingSystem.TextureMaximizeFilter;
+import Just_Forge_2D.RenderingSystem.TextureMinimizeFilter;
+import Just_Forge_2D.RenderingSystem.TextureWrapping;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import imgui.ImVec2;
@@ -127,6 +130,20 @@ public class Settings
     public static final float DEFAULT_TREE_NODE_INDENT = 16f;
     public static final float DEFAULT_TAB_ROUNDING = 4f;
     public static final float DEFAULT_TAB_BORDER = 0f;
+
+    // - - - Texture
+    private final TextureWrapping DEFAULT_TEXTURE_WRAP_S = TextureWrapping.REPEAT;
+    private final TextureWrapping DEFAULT_TEXTURE_WRAP_T = TextureWrapping.REPEAT;
+    private final TextureMinimizeFilter DEFAULT_TEXTURE_MIN_FILTER = TextureMinimizeFilter.LINEAR;
+    private final TextureMaximizeFilter DEFAULT_TEXTURE_MAX_FILTER = TextureMaximizeFilter.LINEAR;
+    public static TextureWrapping DEFAULT_TEXTURE_WRAP_S() { return instance.DEFAULT_TEXTURE_WRAP_S;}
+    public static TextureWrapping DEFAULT_TEXTURE_WRAP_T() { return instance.DEFAULT_TEXTURE_WRAP_T;}
+    public static TextureMinimizeFilter DEFAULT_TEXTURE_MIN_FILTER() { return instance.DEFAULT_TEXTURE_MIN_FILTER;}
+    public static TextureMaximizeFilter DEFAULT_TEXTURE_MAX_FILTER() { return instance.DEFAULT_TEXTURE_MAX_FILTER;}
+
+    // - - - Log files
+    private final int MAX_LOG_FILE_LIMIT = 16;
+    public static int MAX_LOG_FILE_LIMIT() { return instance.MAX_LOG_FILE_LIMIT;}
 
     // - - - Max Display Size
     public static final float MAX_IMAGE_DISPLAY_WIDTH = 64;

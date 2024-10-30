@@ -1,12 +1,10 @@
-package Just_Forge_2D.EntityComponentSystem.Components.Sprite;
+package Just_Forge_2D.EntityComponentSystem.Components;
 
 import Just_Forge_2D.AssetPool.AssetPool;
 import Just_Forge_2D.EditorSystem.Icons;
 import Just_Forge_2D.EditorSystem.Widgets;
 import Just_Forge_2D.EditorSystem.Windows.AssetPoolDisplay;
-import Just_Forge_2D.EntityComponentSystem.Components.Component;
-import Just_Forge_2D.EntityComponentSystem.Components.TransformComponent;
-import Just_Forge_2D.RenderingSystem.Texture;
+import Just_Forge_2D.RenderingSystem.*;
 import Just_Forge_2D.Utils.Logger;
 import imgui.ImGui;
 import org.joml.Vector2f;
@@ -133,17 +131,55 @@ public class SpriteComponent extends Component
     public void editorGUI()
     {
         super.deleteButton();
+        if (AssetPoolDisplay.getMode().equals(AssetPoolDisplay.Mode.SELECTION))
+        {
+            Widgets.text("Click on any Texture or Sprite Sheet in the Asset Pool");
+        }
         if (this.sprite.getTexture() != null)
         {
             Vector2f[] texCoords = this.sprite.getTextureCoordinates();
-            ImGui.setCursorPosX(ImGui.getContentRegionAvailX() - sprite.getWidth());
+            ImGui.setCursorPosX((ImGui.getContentRegionAvailX() * 0.5f));
             if (Widgets.imageButton(this.sprite.getTextureID(), this.sprite.getWidth() * 2, this.sprite.getHeight() * 2, texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y))
+            {
+                AssetPoolDisplay.enableSelection(this::setSprite);
+            }
+            ImGui.setCursorPosX((ImGui.getContentRegionAvailX() * 0.5f));
+
+            if (Widgets.button(Icons.Trash))
+            {
+                setSprite(new Sprite());
+            }
+            Widgets.text("");
+
+            TextureMaximizeFilter max = Widgets.drawEnumControls(TextureMaximizeFilter.class, Icons.Box + "  Texture Maximize Filter", sprite.getMaximizeFilter());
+            if (max != null) sprite.setMaximizeFilter(max);
+
+            TextureMinimizeFilter min = Widgets.drawEnumControls(TextureMinimizeFilter.class, Icons.Box + "  Texture Minimize Filter", sprite.getMinimizeFilter());
+            if (min != null) sprite.setMinimizeFilter(min);
+
+            TextureWrapping wrap = Widgets.drawEnumControls(TextureWrapping.class, Icons.Box + "  Texture Wrap S Filter", sprite.getWrap_s());
+            if (wrap != null) sprite.setWrap_sFilter(wrap);
+
+            wrap = Widgets.drawEnumControls(TextureWrapping.class, Icons.Box + "  Texture Wrap T Filter", sprite.getWrap_t());
+            if (wrap != null) sprite.setWrap_tFilter(wrap);
+
+            if (Widgets.button("Apply Filter"))
+            {
+                sprite.applyTextureFilters();
+            }
+
+        }
+        else
+        {
+            ImGui.setCursorPosX((ImGui.getContentRegionAvailX() * 0.5f));
+            if (Widgets.button(Icons.PlusSquare + "  Add Texture"))
             {
                 AssetPoolDisplay.enableSelection(this::setSprite);
             }
         }
         if (Widgets.colorPicker4(Icons.EyeDropper +"  Color Picker", this.color)) this.isChanged = true;
         setShowAtRuntime(Widgets.drawBoolControl((getShowAtRuntime() ? Icons.Eye : Icons.EyeSlash) + "  Show", getShowAtRuntime()));
+        Widgets.text("");
     }
 
 

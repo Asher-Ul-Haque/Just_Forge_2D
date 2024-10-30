@@ -7,9 +7,9 @@ import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.EditorSystem.Icons;
 import Just_Forge_2D.EditorSystem.InputControls.MouseControlComponent;
 import Just_Forge_2D.EditorSystem.Widgets;
-import Just_Forge_2D.EntityComponentSystem.Components.Sprite.Sprite;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.PrefabSystem.PrefabManager;
+import Just_Forge_2D.RenderingSystem.Sprite;
 import Just_Forge_2D.RenderingSystem.SpriteSheet;
 import Just_Forge_2D.RenderingSystem.Texture;
 import Just_Forge_2D.Utils.Logger;
@@ -67,6 +67,11 @@ public class AssetPoolDisplay
     {
         mode = Mode.SELECTION;
         onSpriteSelection = CALLBACK;
+    }
+
+    public static Mode getMode()
+    {
+        return mode;
     }
 
 
@@ -353,7 +358,7 @@ public class AssetPoolDisplay
             Sound sound = AssetPool.getSound(soundNames.get(i));
             String soundName = soundNames.get(i);
 
-            if (Widgets.button(ICON_REMOVE))
+            if (Widgets.button(ICON_REMOVE + " ##" + i))
             {
                 AssetPool.removeSound(soundName);
                 continue;

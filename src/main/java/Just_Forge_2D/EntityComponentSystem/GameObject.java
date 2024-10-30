@@ -2,7 +2,7 @@ package Just_Forge_2D.EntityComponentSystem;
 
 import Just_Forge_2D.AssetPool.AssetPool;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
-import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
+import Just_Forge_2D.EntityComponentSystem.Components.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.Components.TransformComponent;
 import Just_Forge_2D.EventSystem.EventManager;
 import Just_Forge_2D.EventSystem.Events.Event;

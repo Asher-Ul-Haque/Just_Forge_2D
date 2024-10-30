@@ -2,7 +2,6 @@ package Just_Forge_2D.RenderingSystem;
 
 import Just_Forge_2D.EditorSystem.Icons;
 import Just_Forge_2D.EditorSystem.Widgets;
-import Just_Forge_2D.EntityComponentSystem.Components.Sprite.Sprite;
 import Just_Forge_2D.Utils.Logger;
 import imgui.ImGui;
 import org.joml.Vector2f;

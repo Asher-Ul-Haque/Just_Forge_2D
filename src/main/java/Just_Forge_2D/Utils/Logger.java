@@ -10,7 +10,9 @@ import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Logger
 {
@@ -40,10 +42,32 @@ public class Logger
         readBufferIndex = (readBufferIndex + 1) % maxReadBuffer;
     }
 
+    private static void maintainLogFileLimit(int MAX_FILES)
+    {
+        try {
+            Path logDir = LOG_FILE_PATH.getParent();
+            List<Path> logFiles = Files.list(logDir)
+                    .filter(path -> path.getFileName().toString().endsWith(".justForgeLog"))
+                    .sorted(Comparator.comparingLong(path -> path.toFile().lastModified()))
+                    .collect(Collectors.toList());
+
+            // - - - Delete oldest files if we exceed the maximum allowed number
+            while (logFiles.size() > MAX_FILES)
+            {
+                Files.delete(logFiles.remove(0));
+            }
+        }
+        catch (IOException e)
+        {
+            Logger.FORGE_LOG_ERROR("Failed to maintain log file limit: " + e.getMessage());
+        }
+    }
+
     static
     {
         if (!EditorSystemManager.isRelease)
         {
+            maintainLogFileLimit(Settings.MAX_LOG_FILE_LIMIT());
             // - - - Ensure the log file and directory are created at the start
             try
             {
