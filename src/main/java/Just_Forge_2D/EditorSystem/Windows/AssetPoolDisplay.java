@@ -126,6 +126,7 @@ public class AssetPoolDisplay
             if (Widgets.button(Icons.FileImport + " Add"))
             {
                 onAdd.run();
+                open = false;
             }
         }
         ImGui.columns(1);

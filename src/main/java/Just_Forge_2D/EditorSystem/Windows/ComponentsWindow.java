@@ -115,8 +115,6 @@ public class ComponentsWindow
                         if (delay-- == 0)
                         {
                             Widgets.text("");
-                            ImGui.separator();
-                            Widgets.text("");
                             delay = 2;
                         }
 

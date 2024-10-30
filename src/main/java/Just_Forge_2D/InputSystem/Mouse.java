@@ -273,6 +273,15 @@ public class Mouse
         return isMouseButtonDown(BUTTON);
     }
 
+    public static boolean isAnyMouseButtonDown()
+    {
+        for (boolean b : mouse.isMouseButtonPressed)
+        {
+            if (b) return b;
+        }
+        return false;
+    }
+
 
     // - - - View port - - -
 

@@ -165,7 +165,7 @@ public class SceneHierarchyWindow
                 }
             }
             ImGui.sameLine();
-            if (Widgets.button(obj.name + "##" + i))
+            if (ImGui.button(obj.name + "##" + i))
             {
                 Logger.FORGE_LOG_TRACE("Selected Object: " + obj.name);
                 ComponentsWindow.clearSelection();
