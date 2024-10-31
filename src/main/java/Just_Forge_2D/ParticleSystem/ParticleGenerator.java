@@ -1,46 +1,24 @@
 package Just_Forge_2D.ParticleSystem;
 
-import Just_Forge_2D.EntityComponentSystem.Components.CameraControlComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
-import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.*;
-import Just_Forge_2D.PhysicsSystem.PhysicsComponents.KeyboardControllerComponent;
-import Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent;
-import Just_Forge_2D.Utils.Logger;
-import Just_Forge_2D.WindowSystem.GameWindow;
-import org.jbox2d.particle.ParticleDef;
-import org.jbox2d.particle.ParticleSystem;
+import Just_Forge_2D.PrefabSystem.PrefabManager;
+import Just_Forge_2D.RenderingSystem.Sprite;
 
 public class ParticleGenerator
 {
-    private GameObject template;
-    private ParticleSystem particleSystem;
-    private final int index = 0;
+    protected Sprite sprite;
+    protected final GameObject template;
 
-    public ParticleGenerator(GameObject TEMPLATE, boolean KEEP_PHYSICS, ParticleSystem SYSTEM)
+    public ParticleGenerator(Sprite SPRITE, String NAME, float SIZE_X, float SIZE_Y)
     {
-        this.particleSystem = SYSTEM;
-        GameObject template = TEMPLATE.copy();
-        template.name = TEMPLATE.name + " particle: " + index;
-        template.noSerialize();
-        template.removeComponent(CameraControlComponent.class);
-        template.removeComponent(ParticleSystemComponent.class);
-        template.removeComponent(KeyboardControllerComponent.class);
-        if (!KEEP_PHYSICS)
-        {
-            template.removeComponent(RigidBodyComponent.class);
-            template.removeComponent(BoxColliderComponent.class);
-            template.removeComponent(CircleColliderComponent.class);
-            template.removeComponent(PolygonColliderComponent.class);
-            template.removeComponent(EdgeColliderComponent.class);
-            template.removeComponent(CylinderColliderComponent.class);
-        }
-        this.template = template;
-        Logger.FORGE_LOG_TRACE("Template created");
+        sprite = SPRITE;
+        int index = 0;
+        template = PrefabManager.generateObject(SPRITE, SIZE_X, SIZE_Y);
+        template.name = NAME + " particle: " + index;
     }
 
-    public Particle create(ParticleDef DEF)
+    public Particle create()
     {
-        int particleID = GameWindow.getCurrentScene().getPhysics().rawWorld.getWorld().createParticle(DEF);
-        return new Particle(this.template.copy(), particleID);
+        return new Particle(this.template.copy());
     }
 }

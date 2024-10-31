@@ -288,12 +288,20 @@ public class GameWindow extends Window
     @Override
     public void setSize(int WIDTH, int HEIGHT)
     {
-        if (EditorSystemManager.getCurrentState().equals(EditorSystemManager.state.isEditor) && !EditorSystemManager.isRelease)
+        if (WIDTH <= 0 || HEIGHT <= 0)
         {
-            this.framebuffer = new Framebuffer(WIDTH, HEIGHT);
+            Logger.FORGE_LOG_WARNING("Cannot resize " + this.config.title + " to : " + WIDTH + " : " + HEIGHT);
+            return;
         }
-        else super.setSize(WIDTH, HEIGHT);
-        EventManager.notify(null, new Event(EventTypes.ForgeResize));
+        if (this.config.resizable)
+        {
+            if (EditorSystemManager.getCurrentState().equals(EditorSystemManager.state.isEditor) && !EditorSystemManager.isRelease)
+            {
+                this.framebuffer = new Framebuffer(WIDTH, HEIGHT);
+            }
+            else super.setSize(WIDTH, HEIGHT);
+            EventManager.notify(null, new Event(EventTypes.ForgeResize));
+        }
     }
 
     @Override

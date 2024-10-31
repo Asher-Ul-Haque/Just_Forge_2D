@@ -6,9 +6,10 @@ import Just_Forge_2D.EditorSystem.Widgets;
 import Just_Forge_2D.EditorSystem.Windows.AssetPoolDisplay;
 import Just_Forge_2D.RenderingSystem.*;
 import Just_Forge_2D.Utils.Logger;
-import imgui.ImGui;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
+
+import java.util.function.Consumer;
 
 // - - - Component for rendering sprites
 public class SpriteComponent extends Component
@@ -71,6 +72,7 @@ public class SpriteComponent extends Component
 
     public void setSprite(Sprite SPRITE)
     {
+        if (SPRITE.equals(this.sprite)) return;
         this.sprite = SPRITE;
         this.sprite.applyTextureFilters();
         this.isChanged = true;
@@ -131,56 +133,59 @@ public class SpriteComponent extends Component
 
     // - - - Editor Functionality - - -
 
-    @Override
-    public void editorGUI()
+    public static Sprite spriteGUI(Sprite SPR, Consumer<Sprite> CALLBACK)
     {
-        super.deleteButton();
         if (AssetPoolDisplay.getMode().equals(AssetPoolDisplay.Mode.SELECTION))
         {
             Widgets.text("Click on any Texture or Sprite Sheet in the Asset Pool");
         }
-        if (this.sprite.getTexture() != null)
+        if (SPR.getTexture() != null)
         {
-            Vector2f[] texCoords = this.sprite.getTextureCoordinates();
-            if (Widgets.imageButton(this.sprite.getTextureID(), this.sprite.getWidth() * 2, this.sprite.getHeight() * 2, texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y, true))
+            Vector2f[] texCoords = SPR.getTextureCoordinates();
+            if (Widgets.imageButton(SPR.getTextureID(), SPR.getWidth() * 2, SPR.getHeight() * 2, texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y, true))
             {
-                AssetPoolDisplay.enableSelection(this::setSprite);
+                AssetPoolDisplay.enableSelection(CALLBACK);
             }
-            ImGui.setCursorPosX((ImGui.getContentRegionAvailX() * 0.5f));
 
-            if (Widgets.button(Icons.Trash))
+            if (Widgets.button(Icons.Trash, true))
             {
                 Sprite n = new Sprite();
-                setSprite(n);
+                n.applyTextureFilters();
+                return n;
             }
-            Widgets.text("");
 
-            TextureMaximizeFilter max = Widgets.drawEnumControls(TextureMaximizeFilter.class, Icons.Box + "  Texture Maximize Filter", sprite.getMaximizeFilter());
-            if (max != null) sprite.setMaximizeFilter(max);
+            TextureMaximizeFilter max = Widgets.drawEnumControls(TextureMaximizeFilter.class, Icons.Box + "  Texture Maximize Filter", SPR.getMaximizeFilter());
+            if (max != null) SPR.setMaximizeFilter(max);
 
-            TextureMinimizeFilter min = Widgets.drawEnumControls(TextureMinimizeFilter.class, Icons.Box + "  Texture Minimize Filter", sprite.getMinimizeFilter());
-            if (min != null) sprite.setMinimizeFilter(min);
+            TextureMinimizeFilter min = Widgets.drawEnumControls(TextureMinimizeFilter.class, Icons.Box + "  Texture Minimize Filter", SPR.getMinimizeFilter());
+            if (min != null) SPR.setMinimizeFilter(min);
 
-            TextureWrapping wrap = Widgets.drawEnumControls(TextureWrapping.class, Icons.Box + "  Texture Wrap S Filter", sprite.getWrap_s());
-            if (wrap != null) sprite.setWrap_sFilter(wrap);
+            TextureWrapping wrap = Widgets.drawEnumControls(TextureWrapping.class, Icons.Box + "  Texture Wrap S Filter", SPR.getWrap_s());
+            if (wrap != null) SPR.setWrap_sFilter(wrap);
 
-            wrap = Widgets.drawEnumControls(TextureWrapping.class, Icons.Box + "  Texture Wrap T Filter", sprite.getWrap_t());
-            if (wrap != null) sprite.setWrap_tFilter(wrap);
+            wrap = Widgets.drawEnumControls(TextureWrapping.class, Icons.Box + "  Texture Wrap T Filter", SPR.getWrap_t());
+            if (wrap != null) SPR.setWrap_tFilter(wrap);
 
             if (Widgets.button("Apply Filter"))
             {
-                sprite.applyTextureFilters();
+                SPR.applyTextureFilters();
             }
-
         }
         else
         {
-            ImGui.setCursorPosX((ImGui.getContentRegionAvailX() * 0.5f));
-            if (Widgets.button(Icons.PlusSquare + "  Add Texture"))
+            if (Widgets.button(Icons.Image, true))
             {
-                AssetPoolDisplay.enableSelection(this::setSprite);
+                AssetPoolDisplay.enableSelection(CALLBACK);
             }
         }
+        return SPR;
+    }
+
+    @Override
+    public void editorGUI()
+    {
+        super.deleteButton();
+        setSprite(spriteGUI(this.sprite, this::setSprite));
         if (Widgets.colorPicker4(Icons.EyeDropper +"  Color Picker", this.color)) this.isChanged = true;
         setShowAtRuntime(Widgets.drawBoolControl((getShowAtRuntime() ? Icons.Eye : Icons.EyeSlash) + "  Show", getShowAtRuntime()));
         Widgets.text("");

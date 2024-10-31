@@ -3,6 +3,7 @@ package Just_Forge_2D.ParticleSystem;
 import Just_Forge_2D.EntityComponentSystem.Components.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import org.joml.Vector2f;
+import org.joml.Vector4f;
 
 public class Particle
 {
@@ -13,10 +14,9 @@ public class Particle
     protected Vector2f velocity;
     protected float angularVelocity;
 
-    protected Particle(GameObject CORE, int ID)
+    protected Particle(GameObject CORE)
     {
         this.core = CORE;
-        this.ID = ID;
         this.core.noSerialize();
     }
 
@@ -24,5 +24,13 @@ public class Particle
     {
         SpriteComponent sprite = this.core.getComponent(SpriteComponent.class);
         if (sprite != null) sprite.setShowAtRuntime(REALLY);
+    }
+
+    protected void wake(Vector4f COLOR)
+    {
+        SpriteComponent sprite = this.core.getComponent(SpriteComponent.class);
+        if (sprite == null) return;
+        sprite.setShowAtRuntime(true);
+        sprite.setColor(COLOR);
     }
 }

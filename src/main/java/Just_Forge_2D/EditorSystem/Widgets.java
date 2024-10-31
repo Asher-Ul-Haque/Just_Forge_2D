@@ -400,12 +400,22 @@ public class Widgets
         ImGui.pushStyleColor(ImGuiCol.ButtonActive, r + 0.05f, g + 0.05f, b + 0.05f, 1.0f);
     }
 
-    public static boolean button(String LABEL)
+    public static boolean button(String LABEL, boolean CENTER)
     {
         LABEL = "  " + LABEL + "  ";
         ImVec2 framePadding = EditorSystemManager.getCurrentTheme().framePadding;
+        float textWidth = ImGui.calcTextSize(LABEL).x + ImGui.getStyle().getFramePaddingX() * 2;
+        if (CENTER)
+        {
+            ImGui.setCursorPosX((ImGui.getContentRegionAvailX() - textWidth) * 0.5f);
+        }
         if (LABEL.length() < 50) return ImGui.button(LABEL, 0 ,ImGui.getFontSize() + (framePadding.y * 2));
         return ImGui.button(LABEL);
+    }
+
+    public static boolean button(String LABEL)
+    {
+        return button(LABEL, false);
     }
 
     public static boolean imageButton(int TEXTURE_ID, float SIZE_X, float SIZE_Y, float UV0_X, float UV0_Y, float UV1_X, float UV1_Y, boolean CENTER)

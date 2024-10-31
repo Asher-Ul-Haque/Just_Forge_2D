@@ -399,14 +399,14 @@ public class AssetPoolDisplay
                     break;
 
                 case SELECTION:
-                    if (Widgets.button("Stop Selection"))
+                    textureDisplay();
+                    spriteSheetDisplay();
+                    ImGui.newLine();
+                    if (Widgets.button("Stop Selection", true))
                     {
                         onSpriteSelection = null;
                         mode = Mode.CREATION;
                     }
-                    Widgets.text("");
-                    textureDisplay();
-                    spriteSheetDisplay();
                     break;
             }
             ImGui.endTabBar();

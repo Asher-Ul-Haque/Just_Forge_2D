@@ -27,6 +27,7 @@ public class ComponentList
         registerComponent(TransformComponent.class, Icons.ExpandArrowsAlt + "  Transform Component", null);
         registerComponent(SpriteComponent.class, Icons.Image + "  Sprite Component", List.of(TransformComponent.class));
 
+        registerComponent(WindowManagerComponent.class, Icons.WindowMaximize + "  Window Manager", List.of());
         registerComponent(RigidBodyComponent.class, Icons.Weight + "  Physics Component", List.of(TransformComponent.class));
         registerComponent(CircleColliderComponent.class, Icons.Circle + "  Circle Collider", List.of(RigidBodyComponent.class));
         registerComponent(BoxColliderComponent.class, Icons.Square + "  Box Collider", List.of(RigidBodyComponent.class));
