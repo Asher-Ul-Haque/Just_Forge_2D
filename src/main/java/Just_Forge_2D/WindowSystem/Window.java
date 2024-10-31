@@ -366,8 +366,9 @@ public class Window implements Observer
 
     public void setOpacity(float OPACITY)
     {
-        Logger.FORGE_LOG_DEBUG("Setting opacity of " + this.config.title + " to : " + OPACITY % 1.0f);
-        glfwSetWindowOpacity(this.glfwWindowPtr, OPACITY % 1.0f);
+        float clamped = Math.max(0f, Math.min(1f, OPACITY));
+        Logger.FORGE_LOG_DEBUG("Setting opacity of " + this.config.title + " to : " + clamped);
+        glfwSetWindowOpacity(this.glfwWindowPtr, clamped);
     }
 
     // - - - hide or show

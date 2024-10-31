@@ -36,10 +36,16 @@ public class PrefabManager
         return null;
     }
 
-    public static GameObject generateDefaultSpriteObject(Sprite SPRITE, float SIZE_X, float SIZE_Y)
+    public static GameObject generateObject(Sprite SPRITE, float SIZE_X, float SIZE_Y)
     {
         SpritePrefab spritePrefab = new SpritePrefab("Auto Generated " + ++defaultPrefabMask, SPRITE, SIZE_X, SIZE_Y);
         return spritePrefab.create();
+    }
+
+    public static GameObject generateObject(float SIZE_X, float SIZE_Y)
+    {
+        NonSpritePrefab nonSpritePrefab = new NonSpritePrefab("Auto Generated " + ++defaultPrefabMask, SIZE_X, SIZE_Y);
+        return nonSpritePrefab.create();
     }
 
     public static void render()

@@ -118,7 +118,6 @@ public class SceneSystemManager
             maxCompoId++;
             GameObject.init(maxGoId);
             Component.init(maxCompoId);
-
         }
     }
 

@@ -51,8 +51,8 @@ public class GizmoComponent extends Component
 
     public GizmoComponent(Sprite ARROW)
     {
-        this.xAxisGizmo = PrefabManager.generateDefaultSpriteObject(ARROW, gizmoWidth, gizmoHeight);
-        this.yAxisGizmo = PrefabManager.generateDefaultSpriteObject(ARROW, gizmoWidth, gizmoHeight);
+        this.xAxisGizmo = PrefabManager.generateObject(ARROW, gizmoWidth, gizmoHeight);
+        this.yAxisGizmo = PrefabManager.generateObject(ARROW, gizmoWidth, gizmoHeight);
         this.xAxisSprite = this.xAxisGizmo.getComponent(SpriteComponent.class);
         this.yAxisSprite = this.yAxisGizmo.getComponent(SpriteComponent.class);
         this.xAxisGizmo.transform.position.add(this.xAxisOffset);

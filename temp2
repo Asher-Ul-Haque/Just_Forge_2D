@@ -14,8 +14,7 @@ import Just_Forge_2D.PhysicsSystem.PhysicsSystemManager;
 import Just_Forge_2D.RenderingSystem.Renderer;
 import Just_Forge_2D.Utils.Logger;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 // - - - Abstract class for all the scenes
 public class Scene
@@ -29,6 +28,9 @@ public class Scene
 
     // - - - ALl the objects
     private final List<GameObject> gameObjects;
+    private final Map<Integer, GameObject> gameObjectsById = new HashMap<>();
+    private final Map<String, GameObject> gameObjectsByName = new HashMap<>();
+    private final Set<GameObject> pendingObjects = new HashSet<>();
 
     // - - - Scene Rendering
     private final Renderer renderer;
@@ -36,7 +38,6 @@ public class Scene
 
     // - - - saving and loading
     private final PhysicsSystemManager physics;
-    private final List<GameObject> pendingObjects;
 
     private final String name;
 
@@ -52,7 +53,6 @@ public class Scene
         this.renderer = INITIALIZER.renderer;
         this.gameObjects = new ArrayList<>();
         this.isRunning = false;
-        this.pendingObjects = new ArrayList<>();
         this.name = NAME;
     }
 
@@ -62,43 +62,58 @@ public class Scene
     public void start()
     {
         Logger.FORGE_LOG_INFO("Starting Scene : " + this.script);
-        for (int i = 0; i < gameObjects.size(); ++i)
+        for (GameObject go : gameObjectsById.values())
         {
-            GameObject go = gameObjects.get(i);
-            if (this.renderer != null && go.hasComponent(SpriteComponent.class)) this.renderer.add(go);
-            if (this.physics != null && go.hasComponent(RigidBodyComponent.class)) this.physics.add(go);
+            // - - - Register with renderer and physics if applicable
+            if (this.renderer != null && go.hasComponent(SpriteComponent.class))
+            {
+                this.renderer.add(go);
+            }
+            if (this.physics != null && go.hasComponent(RigidBodyComponent.class))
+            {
+                this.physics.add(go);
+            }
+
+            // - - - Start the game object
             go.start();
         }
         isRunning = true;
         Logger.FORGE_LOG_INFO("Scene: " + this + " Started");
     }
 
+
+
     public void update(float DELTA_TIME)
     {
         if (!this.isRunning) return;
-        this.camera.adjustProjection();
+
         this.script.update(DELTA_TIME);
         if (this.physics != null) this.physics.update(DELTA_TIME);
-        for (int i = 0; i < gameObjects.size(); ++i)
+
+        this.camera.adjustProjection();
+
+        // - - - Update objects and remove dead ones
+        gameObjectsById.values().removeIf(go ->
         {
-            GameObject go = gameObjects.get(i);
             go.update(DELTA_TIME);
-
-            if (go.isDead())
+            boolean isDead = go.isDead();
+            if (isDead)
             {
-                gameObjects.remove(i);
-                if (this.physics != null) this.physics.destroyGameObject(go);
-                if (this.renderer != null) this.renderer.destroyGameObject(go);
-                i--;
+                if (physics != null) physics.destroyGameObject(go);
+                if (renderer != null) renderer.destroyGameObject(go);
+                gameObjectsByName.remove(go.name);
             }
-        }
+            return isDead;
+        });
 
+        // - - - Add pending objects to the active pool
         for (GameObject go : pendingObjects)
         {
-            gameObjects.add(go);
+            gameObjectsById.put(go.getUniqueID(), go);
+            gameObjectsByName.put(go.name, go);
             go.start();
-            if (this.renderer != null && go.hasComponent(SpriteComponent.class)) this.renderer.destroyGameObject(go);
-            if (this.physics != null && go.hasComponent(SpriteComponent.class)) this.physics.destroyGameObject(go);
+            if (renderer != null && go.hasComponent(SpriteComponent.class)) renderer.add(go);
+            if (physics != null && go.hasComponent(RigidBodyComponent.class)) physics.add(go);
         }
         pendingObjects.clear();
     }
@@ -114,7 +129,8 @@ public class Scene
         this.camera = Mouse.getWorldCamera();
         if (!EditorSystemManager.isRelease)
         {
-            this.gameObjects.add(0, SceneSystemManager.createMaster(this));
+            addGameObject(SceneSystemManager.createMaster(this));
+            //this.gameObjects.add(0, SceneSystemManager.createMaster(this));
         }
         EventManager.addObserver(this.camera);
         if (this.savePath.isEmpty()) setSavePath(this.script.savePath);
@@ -159,20 +175,20 @@ public class Scene
         }
         else
         {
-            gameObjects.add(GAME_OBJECT);
+            gameObjectsById.put(GAME_OBJECT.getUniqueID(), GAME_OBJECT);
+            gameObjectsByName.put(GAME_OBJECT.name, GAME_OBJECT);
         }
+    }
+
+    public void addGameObjectIfNotPresent(GameObject GAME_OBJECT)
+    {
+        if (pendingObjects.contains(GAME_OBJECT) || gameObjects.contains(GAME_OBJECT)) return;
+        addGameObject(GAME_OBJECT);
     }
 
     public GameObject getGameObject(int GAME_OBJECT_ID)
     {
-        for (GameObject object : gameObjects)
-        {
-            if (object.getUniqueID() == GAME_OBJECT_ID)
-            {
-                return object;
-            }
-        }
-        return null;
+        return gameObjectsById.get(GAME_OBJECT_ID);
     }
 
     public GameObject getGameObject(String NAME)
@@ -186,14 +202,6 @@ public class Scene
         }
         Logger.FORGE_LOG_WARNING("Found no game object with Name: " + NAME + " in scene: " + this);
         return null;
-    }
-
-    public void removeGameObject(GameObject GAME_OBJECT)
-    {
-        if (this.physics != null) this.physics.destroyGameObject(GAME_OBJECT);
-        if (this.renderer != null) this.renderer.destroyGameObject(GAME_OBJECT);
-        this.gameObjects.remove(GAME_OBJECT);
-        this.pendingObjects.remove(GAME_OBJECT);
     }
 
     public void clearGameObjects()
@@ -220,28 +228,31 @@ public class Scene
 
     public void editorUpdate(float DELTA_TIME)
     {
-        this.camera.adjustProjection();
         this.script.editorUpdate(DELTA_TIME);
-        for (int i = 0; i < gameObjects.size(); ++i)
+        this.camera.adjustProjection();
+
+        // - - - Update objects and remove dead ones
+        gameObjectsById.values().removeIf(go ->
         {
-            GameObject go = gameObjects.get(i);
             go.editorUpdate(DELTA_TIME);
-
-            if (go.isDead())
+            boolean isDead = go.isDead();
+            if (isDead)
             {
-                gameObjects.remove(i);
-                if (this.renderer != null) this.renderer.destroyGameObject(go);
-                if (this.physics != null) this.physics.destroyGameObject(go);
-                i--;
+                if (physics != null) physics.destroyGameObject(go);
+                if (renderer != null) renderer.destroyGameObject(go);
+                gameObjectsByName.remove(go.name);
             }
-        }
+            return isDead;
+        });
 
+        // - - - Add pending objects to the active pool
         for (GameObject go : pendingObjects)
         {
-            gameObjects.add(go);
-
-            if (this.renderer != null) this.renderer.add(go);
-            if (this.physics != null) this.physics.add(go);
+            gameObjectsById.put(go.getUniqueID(), go);
+            gameObjectsByName.put(go.name, go);
+            go.start();
+            if (renderer != null && go.hasComponent(SpriteComponent.class)) renderer.add(go);
+            if (physics != null && go.hasComponent(RigidBodyComponent.class)) physics.add(go);
         }
         pendingObjects.clear();
     }
@@ -249,7 +260,7 @@ public class Scene
 
     public List<GameObject> getGameObjects()
     {
-        return this.gameObjects;
+        return new ArrayList<>(this.gameObjectsById.values());
     }
 
     public List<GameObject> getGameObjects(List<Class<? extends Component>> TYPES)

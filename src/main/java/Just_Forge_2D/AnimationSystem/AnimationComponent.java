@@ -7,6 +7,7 @@ import Just_Forge_2D.EntityComponentSystem.Components.SpriteComponent;
 import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.WindowSystem.GameWindow;
 import imgui.ImGui;
+import imgui.type.ImString;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -66,6 +67,7 @@ public class AnimationComponent extends Component
 
     public void addStateTrigger(String FROM, String TO, String ON_TRIGGER)
     {
+        if (TO.equals(FROM)) return;
         this.stateTransfers.put(new StateTrigger(FROM, ON_TRIGGER), TO);
     }
 
@@ -245,11 +247,12 @@ public class AnimationComponent extends Component
                         }
                         ImGui.sameLine();
 
-                        Widgets.text(trigger.trigger);
+                        ImGui.inputText(trigger.trigger, new ImString(trigger.trigger));
                     }
                 }
                 // - - - Add New Trigger UI
                 Widgets.text("");
+                Widgets.text("Add a Trigger");
                 to = Widgets.inputText("To State", to);
                 trigger = Widgets.inputText("Trigger", trigger);
                 if (Widgets.button(Icons.PlusSquare + " Add Trigger"))

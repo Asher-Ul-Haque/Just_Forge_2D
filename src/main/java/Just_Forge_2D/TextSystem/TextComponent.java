@@ -104,7 +104,7 @@ public class TextComponent extends Component
     {
         int spriteIndex = getSpriteIndex(character);
         Sprite sprite = FONT.getSprite(spriteIndex);
-        GameObject object = PrefabManager.generateDefaultSpriteObject(sprite, size, size);
+        GameObject object = PrefabManager.generateObject(sprite, size, size);
         object.name = this.gameObject + " char : " + character +  " index : " + spriteIndex;
         GameWindow.getCurrentScene().addGameObject(object);
         object.getComponent(SpriteComponent.class).setColor(characterColor);
