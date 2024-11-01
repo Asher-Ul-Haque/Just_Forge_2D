@@ -102,23 +102,7 @@ public class ParticleSystemComponent extends Component implements Observer
     @Override
     public void start()
     {
-        if (generator == null)
-        {
-            SpriteComponent spr = this.gameObject.getComponent(SpriteComponent.class);
-            if (spr == null)
-            {
-                Logger.FORGE_LOG_WARNING("No Sprite Component for Particle Component");
-                return;
-            }
-            Sprite sprite = spr.getSpriteCopy();
-            if (sprite == null)
-            {
-                Logger.FORGE_LOG_WARNING("No Sprite Component for Particle Component");
-                return;
-            }
-
-            generator = new ParticleGenerator(sprite, this.gameObject.name, maxSize.x, maxSize.y);
-        }
+        makeBackupGenerator();
         randomizer = new Random(this.gameObject.getUniqueID());
 
         for (int i = particles.size(); i < maxParticles; ++i)
@@ -225,27 +209,56 @@ public class ParticleSystemComponent extends Component implements Observer
         }
     }
 
+    public void makeBackupGenerator()
+    {
+        if (generator == null)
+        {
+            SpriteComponent spr = this.gameObject.getComponent(SpriteComponent.class);
+            if (spr == null)
+            {
+                Logger.FORGE_LOG_WARNING("No Sprite Component for Particle Component");
+                return;
+            }
+            Sprite sprite = spr.getSpriteCopy();
+            if (sprite == null)
+            {
+                Logger.FORGE_LOG_WARNING("No Sprite Component for Particle Component");
+                return;
+            }
+
+            generator = new ParticleGenerator(sprite, this.gameObject.name, maxSize.x, maxSize.y);
+        }
+    }
+
     @Override
     public void editorGUI()
     {
         super.deleteButton();
 
+        makeBackupGenerator();
         generator.setSprite(SpriteComponent.spriteGUI(generator.sprite, generator::setSprite, this.hashCode()));
 
+        Widgets.text("");
         Widgets.drawVec2Control(Icons.MinusCircle + "  Minimum Size", minSize);
         Widgets.drawVec2Control(Icons.PlusCircle + "  Maximum Size", maxSize);
         Widgets.drawVec2Control(Icons.MapPin + "  Offset", offset);
+        Widgets.text("");
         maxParticles = Widgets.drawIntControl(Icons.Braille + "  Max Particles", maxParticles);
+        particleLayer = Widgets.drawIntControl(Icons.LayerGroup + "  Particle Layer", particleLayer);
         minLifespan = Widgets.drawFloatControl(Icons.Skull + "  Minimum Lifespan", minLifespan);
         maxLifespan = Widgets.drawFloatControl(Icons.Skull + "  Maximum Lifespan", maxLifespan);
+        Widgets.text("");
         fanStart = Widgets.drawFloatControl(Icons.CircleNotch + "  Minimum Angle", fanStart);
         fanEnd = Widgets.drawFloatControl(Icons.CircleNotch + "  Maximum Angle", fanEnd);
+        Widgets.text("");
         angularVelocity = Widgets.drawFloatControl(Icons.CircleNotch + "  Angular Velocity", angularVelocity);
         minSpeed = Widgets.drawFloatControl(Icons.Running + "  Minimum Speed", minSpeed);
         maxSpeed = Widgets.drawFloatControl(Icons.Running + "  Maximum Speed", maxSpeed);
+        Widgets.text("");
         Widgets.colorPicker4(Icons.EyeDropper + "  Minimum Angle Color", startColor);
         Widgets.colorPicker4(Icons.EyeDropper + "  Maximum Angle Color", finalColor);
         Widgets.colorPicker4(Icons.EyeDropper + "  Debug Color", debugColor);
+        Widgets.text("");
         debugDrawAtRuntime = Widgets.drawBoolControl(Icons.Pen + "  Debug Draw At Runtime", debugDrawAtRuntime);
         useOnce = Widgets.drawBoolControl(Icons.DiceOne + "  Use Once", useOnce);
         if (Widgets.button(Icons.PowerOff + "  Reset All", true)) resetAll = true;

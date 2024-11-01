@@ -148,7 +148,7 @@ public class AssetPoolDisplay
                 addAsset("Sprite Sheet", EditorSystemManager.projectDir + "/Assets/Textures/", !name.isEmpty() && !path.isEmpty(),
                 () ->
                 {
-                    Texture t = AssetPool.makeTexture(path);
+                    Texture t = new Texture();
                     if (t.init(path))
                     {
                         SpriteSheet sheet = new SpriteSheet(t, (int) size.x, (int) size.y, spriteCount, spriteSpacing);

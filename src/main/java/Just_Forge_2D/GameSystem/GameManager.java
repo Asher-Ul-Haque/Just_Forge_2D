@@ -82,14 +82,23 @@ public class GameManager
                     if (IS_NOT_EARLY) progressPercentage = 1f;
                     if (IS_NOT_EARLY) success = false;
                     else earlyCompileSuccess = false;
+                    if (EditorSystemManager.isRelease)
+                    {
+                        System.exit(0);
+                    }
                     return;
                 }
             }
             catch (Exception e)
             {
-                if (IS_NOT_EARLY) success = true;
-                else earlyCompileSuccess = true;
+                if (IS_NOT_EARLY) success = false;
+                else earlyCompileSuccess = false;
                 Logger.FORGE_LOG_FATAL("Failed to build user code: " + e.getMessage());
+                if (EditorSystemManager.isRelease)
+                {
+                    System.exit(0);
+                }
+                return;
             }
 
 
@@ -139,7 +148,7 @@ public class GameManager
                 {
                     try
                     {
-                        File[] directoriesToCreate = {new File(destinationDirPath.resolve("Assets").toString()), new File(destinationDirPath.resolve("Saves").toString())};
+                        File[] directoriesToCreate = {new File(destinationDirPath.resolve("Assets").toString()), new File(destinationDirPath.resolve("SceneScripts").toString())};
                         for (File dir : directoriesToCreate)
                         {
                             if (!dir.exists())
@@ -202,36 +211,33 @@ public class GameManager
 
     public static void runCode()
     {
-        new Thread(() ->
+        File destinationDir = destinationDirPath.toFile();
+        if (!destinationDir.exists() || !destinationDir.isDirectory())
         {
-            File destinationDir = destinationDirPath.toFile();
-            if (!destinationDir.exists() || !destinationDir.isDirectory())
-            {
-                Logger.FORGE_LOG_ERROR("The specified destination directory does not exist or is not a directory.");
-                TinyFileDialogs.tinyfd_notifyPopup("Error", "The specified destination directory does not exist or is not a directory", "error");
-                return;
-            }
+            Logger.FORGE_LOG_ERROR("The specified destination directory does not exist or is not a directory.");
+            TinyFileDialogs.tinyfd_notifyPopup("Error", "The specified destination directory does not exist or is not a directory", "error");
+            return;
+        }
 
-            File[] jarFiles = destinationDir.listFiles((dir, name) -> name.endsWith(".jar"));
-            if (jarFiles == null || jarFiles.length == 0)
-            {
-                Logger.FORGE_LOG_ERROR("No JAR files found in the directory.");
-                TinyFileDialogs.tinyfd_notifyPopup("Error", "No JAR files found in your directory", "error");
-                return;
-            }
+        File[] jarFiles = destinationDir.listFiles((dir, name) -> name.endsWith(".jar"));
+        if (jarFiles == null || jarFiles.length == 0)
+        {
+            Logger.FORGE_LOG_ERROR("No JAR files found in the directory.");
+            TinyFileDialogs.tinyfd_notifyPopup("Error", "No JAR files found in your directory", "error");
+            return;
+        }
 
-            try
-            {
-                ProcessBuilder processBuilder = new ProcessBuilder("java", "-jar", jarFiles[0].getName());
-                processBuilder.directory(destinationDir);
-                processBuilder.start().waitFor();  // - - - Wait for the JAR process to finish
-            }
-            catch (Exception e)
-            {
-                TinyFileDialogs.tinyfd_notifyPopup("Failed to run the code", e.getMessage(), "error");
-                Logger.FORGE_LOG_FATAL("Failed to run the code: " + e.getMessage());
-            }
-        }).start();
+        try
+        {
+            ProcessBuilder processBuilder = new ProcessBuilder("java", "-jar", jarFiles[0].getName());
+            processBuilder.directory(destinationDir);
+            processBuilder.start();
+        }
+        catch (Exception e)
+        {
+            TinyFileDialogs.tinyfd_notifyPopup("Failed to run the code", e.getMessage(), "error");
+            Logger.FORGE_LOG_FATAL("Failed to run the code: " + e.getMessage());
+        }
     }
 
     public static boolean isSuccess()

@@ -82,8 +82,8 @@ public class ObjectSelector
         glBindFramebuffer(GL_READ_FRAMEBUFFER, fbo);
         glReadBuffer(GL_COLOR_ATTACHMENT0);
 
-        float[] pixels = new float[3];
-        glReadPixels(X, Y, 1, 1, GL_RGB, GL_FLOAT, pixels);
+        float[] pixels = new float[4];
+        glReadPixels(X, Y, 1, 1, GL_RGBA, GL_FLOAT, pixels);
 
         return (int)(pixels[0]) - 1;
     }
@@ -94,8 +94,8 @@ public class ObjectSelector
         glReadBuffer(GL_COLOR_ATTACHMENT0);
 
         Vector2i size = new Vector2i(END).sub(START).absolute();
-        float[] pixels = new float[3 * size.x * size.y];
-        glReadPixels(START.x, START.y, size.x, size.y, GL_RGB, GL_FLOAT, pixels);
+        float[] pixels = new float[4 * size.x * size.y];
+        glReadPixels(START.x, START.y, size.x, size.y, GL_RGBA, GL_FLOAT, pixels);
         for (int i = 0; i < pixels.length; ++i)
         {
             pixels[i] -= 1;

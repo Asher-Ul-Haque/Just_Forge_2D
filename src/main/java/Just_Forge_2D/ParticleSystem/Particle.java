@@ -17,7 +17,6 @@ public class Particle
     protected Particle(GameObject CORE)
     {
         this.core = CORE;
-        this.core.noSerialize();
     }
 
     protected void wake(boolean REALLY)

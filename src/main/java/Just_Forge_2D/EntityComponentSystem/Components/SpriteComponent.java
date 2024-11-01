@@ -166,7 +166,7 @@ public class SpriteComponent extends Component
             wrap = Widgets.drawEnumControls(TextureWrapping.class, Icons.Box + "  Texture Wrap T Filter", SPR.getWrap_t());
             if (wrap != null) SPR.setWrap_tFilter(wrap);
 
-            if (Widgets.button("Apply Filter" + " ##" + HASHCODE))
+            if (Widgets.button("Apply Filter" + " ##" + HASHCODE, true))
             {
                 SPR.applyTextureFilters();
             }

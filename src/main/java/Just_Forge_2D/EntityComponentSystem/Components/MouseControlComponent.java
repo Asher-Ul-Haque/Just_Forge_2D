@@ -5,6 +5,7 @@ import Just_Forge_2D.EditorSystem.Widgets;
 import Just_Forge_2D.InputSystem.Mouse;
 import Just_Forge_2D.InputSystem.MouseButtons;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent;
+import Just_Forge_2D.Utils.Logger;
 import org.joml.Vector2f;
 
 public class MouseControlComponent extends Component
@@ -52,6 +53,8 @@ public class MouseControlComponent extends Component
         {
             rb.setTransform(this.gameObject.transform);
         }
+        Logger.FORGE_LOG_INFO(gameObject.transform.position + " Game OBject pos");
+        Logger.FORGE_LOG_INFO(targetPosition + " Target Position");
     }
 
     protected boolean moveCondition()

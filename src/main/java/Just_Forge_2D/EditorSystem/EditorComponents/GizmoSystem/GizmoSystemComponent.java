@@ -5,7 +5,10 @@ import Just_Forge_2D.InputSystem.Keyboard;
 import Just_Forge_2D.InputSystem.Keys;
 import Just_Forge_2D.RenderingSystem.SpriteSheet;
 import Just_Forge_2D.RenderingSystem.Texture;
+import Just_Forge_2D.RenderingSystem.TextureMaximizeFilter;
+import Just_Forge_2D.RenderingSystem.TextureMinimizeFilter;
 import Just_Forge_2D.Utils.Logger;
+import Just_Forge_2D.Utils.Settings;
 
 // - - - Gizmo System
 public class GizmoSystemComponent extends Component
@@ -28,6 +31,7 @@ public class GizmoSystemComponent extends Component
         {
             if (gizmoTexture == null) gizmoTexture = new Texture();
             gizmoTexture.init("Assets/Textures/gizmos.png");
+            gizmoTexture.setFilters(TextureMaximizeFilter.LINEAR, TextureMinimizeFilter.LINEAR, Settings.DEFAULT_TEXTURE_WRAP_S(), Settings.DEFAULT_TEXTURE_WRAP_T());
             gizmos = new SpriteSheet(gizmoTexture, 24, 48, 3, 0);
         }
         Logger.FORGE_LOG_INFO("Adding Gizmo System to " + gameObject);
@@ -58,13 +62,7 @@ public class GizmoSystemComponent extends Component
 
             if (Keyboard.isKeyBeginPress(Keys.T))
             {
-                Logger.FORGE_LOG_INFO("Switched to Translate Gizmo");
-                currentGizmo = 0;
-            }
-            else if (Keyboard.isKeyBeginPress(Keys.S))
-            {
-                Logger.FORGE_LOG_INFO("Switched to scale gizmo");
-                currentGizmo = 1;
+                currentGizmo = (currentGizmo + 1) % 2;
             }
         }
         catch (NullPointerException e)

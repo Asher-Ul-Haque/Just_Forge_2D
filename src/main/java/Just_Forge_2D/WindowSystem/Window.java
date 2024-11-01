@@ -100,7 +100,8 @@ public class Window implements Observer
         glfwSetCursorPosCallback(this.glfwWindowPtr, Mouse::mousePositionCallback);
         glfwSetMouseButtonCallback(this.glfwWindowPtr, Mouse::mouseButtonCallback);
         glfwSetScrollCallback(this.glfwWindowPtr, Mouse::mouseScrollCallback);
-        glfwSetWindowSizeCallback(this.glfwWindowPtr, (w, newWidth, newHeight) -> {
+        glfwSetWindowSizeCallback(this.glfwWindowPtr, (w, newWidth, newHeight) ->
+        {
             this.config.width = newWidth;
             this.config.height = newHeight;
         });

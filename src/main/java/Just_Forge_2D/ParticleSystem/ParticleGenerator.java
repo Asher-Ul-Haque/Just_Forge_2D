@@ -1,5 +1,6 @@
 package Just_Forge_2D.ParticleSystem;
 
+import Just_Forge_2D.EditorSystem.EditorComponents.NonPickableComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.PrefabSystem.PrefabManager;
 import Just_Forge_2D.RenderingSystem.Sprite;
@@ -29,7 +30,8 @@ public class ParticleGenerator
         {
             template = PrefabManager.generateObject(sprite, size_x, size_y);
             template.name = name + " particle: ";
-
+            template.addComponent(new NonPickableComponent());
+            template.noSerialize();
         }
         return new Particle(this.template.copy());
     }

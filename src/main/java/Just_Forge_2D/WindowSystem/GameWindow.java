@@ -7,7 +7,7 @@ package Just_Forge_2D.WindowSystem;
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.EditorSystem.ImGUIManager;
 import Just_Forge_2D.EditorSystem.Windows.ComponentsWindow;
-import Just_Forge_2D.EditorSystem.Windows.MainWindowConfig;
+import Just_Forge_2D.EditorSystem.Windows.GameWindowConfig;
 import Just_Forge_2D.EditorSystem.Windows.ObjectSelector;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.EventSystem.EventManager;
@@ -89,7 +89,7 @@ public class GameWindow extends Window
         if (GameWindow.window == null)
         {
             Logger.FORGE_LOG_ERROR("No Window config specified");
-            GameWindow.window = new GameWindow(new MainWindowConfig());
+            GameWindow.window = new GameWindow(new GameWindowConfig());
         }
         return GameWindow.window;
     }
@@ -295,11 +295,20 @@ public class GameWindow extends Window
         }
         if (this.config.resizable)
         {
-            if (EditorSystemManager.getCurrentState().equals(EditorSystemManager.state.isEditor) && !EditorSystemManager.isRelease)
+            this.framebuffer = new Framebuffer(WIDTH, HEIGHT);
+            if (EditorSystemManager.isRelease)
             {
-                this.framebuffer = new Framebuffer(WIDTH, HEIGHT);
+                super.setSize(WIDTH, HEIGHT);
+                float aspectWidth = WIDTH;
+                float aspectHeight = aspectWidth / ((float) GameWindow.getFrameBuffer().getSize().x / GameWindow.getFrameBuffer().getSize().y);
+                if (aspectHeight > HEIGHT)
+                {
+                    // - - - switch to pillar mode
+                    aspectHeight = HEIGHT;
+                    aspectWidth = aspectHeight * ((float) GameWindow.getFrameBuffer().getSize().x / GameWindow.getFrameBuffer().getSize().y);
+                }
+                Mouse.setGameViewport(new Vector2f(0,  -WindowSystemManager.getDecorationSize(this)[1]), new Vector2f(aspectWidth, aspectHeight));
             }
-            else super.setSize(WIDTH, HEIGHT);
             EventManager.notify(null, new Event(EventTypes.ForgeResize));
         }
     }

@@ -56,8 +56,7 @@ public class EditorSystemManager
 
     public static Class<? extends SceneScript> currentSceneInitializer;
     public static String projectDir = System.getProperty("user.dir");
-    public static boolean isRelease = false;
-    public static boolean preferJarAssets = true;
+    public static boolean isRelease = true;
 
     public static state getCurrentState()
     {
@@ -85,11 +84,11 @@ public class EditorSystemManager
     public static void compileShaders()
     {
         AssetPool.addShader("Default", "Assets/Shaders/default.glsl", true);
+        AssetPool.addShader("Debug", "Assets/Shaders/debug.glsl", true);
         EditorSystemManager.defaultShader = AssetPool.getShader("Default");
 
         if (!EditorSystemManager.isRelease)
         {
-            AssetPool.addShader("Debug", "Assets/Shaders/debug.glsl", true);
             EditorSystemManager.selectorShader = new Shader("Assets/Shaders/selector.glsl");
             selectorShader.compile();
         }

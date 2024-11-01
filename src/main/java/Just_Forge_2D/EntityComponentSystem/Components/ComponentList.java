@@ -24,24 +24,24 @@ public class ComponentList
 
     public static void initialize()
     {
-        registerComponent(TransformComponent.class, Icons.ExpandArrowsAlt + "  Transform Component", null);
-        registerComponent(SpriteComponent.class, Icons.Image + "  Sprite Component", List.of(TransformComponent.class));
+        registerComponent(TransformComponent.class, Icons.ExpandArrowsAlt + "  Transform", null);
+        registerComponent(SpriteComponent.class, Icons.Image + "  Sprite", List.of(TransformComponent.class));
 
-        registerComponent(WindowManagerComponent.class, Icons.WindowMaximize + "  Window Manager", List.of());
-        registerComponent(RigidBodyComponent.class, Icons.Weight + "  Physics Component", List.of(TransformComponent.class));
+        registerComponent(WindowManagerComponent.class, Icons.WindowMaximize + "  Window Manager", null);
+        registerComponent(RigidBodyComponent.class, Icons.Weight + "  Physics", List.of(TransformComponent.class));
         registerComponent(CircleColliderComponent.class, Icons.Circle + "  Circle Collider", List.of(RigidBodyComponent.class));
         registerComponent(BoxColliderComponent.class, Icons.Square + "  Box Collider", List.of(RigidBodyComponent.class));
         registerComponent(CylinderColliderComponent.class, Icons.Pills + "  Cylinder Collider", List.of(RigidBodyComponent.class));
         registerComponent(PolygonColliderComponent.class, Icons.DrawPolygon + "  Polygon Collider", List.of(RigidBodyComponent.class));
         registerComponent(EdgeColliderComponent.class, Icons.Underline + "  Edge Collider", List.of(RigidBodyComponent.class));
 
-        registerComponent(KeyboardControllerComponent.class, Icons.Keyboard + "  KeyboardController", List.of(TransformComponent.class));
-        registerComponent(MouseControlComponent.class, Icons.Mouse + "  MouseControl", List.of(TransformComponent.class));
-        registerComponent(CameraControlComponent.class, Icons.Camera + "  CameraControl", List.of(TransformComponent.class));
+        registerComponent(KeyboardControllerComponent.class, Icons.Keyboard + "  Keyboard Controller", List.of(TransformComponent.class));
+        registerComponent(MouseControlComponent.class, Icons.Mouse + "  Mouse Controller", List.of(TransformComponent.class));
+        registerComponent(CameraControlComponent.class, Icons.Camera + "  Camera Controller", List.of(TransformComponent.class));
 
         registerComponent(AnimationComponent.class, Icons.Film + "  Animation", List.of(SpriteComponent.class));
-        registerComponent(SoundPlayerComponent.class, Icons.Music + "  SoundPlayer", null);
-        registerComponent(ParticleSystemComponent.class, Icons.Icons + "  ParticleSystem", List.of(SpriteComponent.class));
+        registerComponent(SoundPlayerComponent.class, Icons.Music + "  Sound Player", null);
+        registerComponent(ParticleSystemComponent.class, Icons.Braille + "  Particle System", List.of(SpriteComponent.class));
         registerComponent(TextComponent.class, Icons.EnvelopeOpenText + "  Text", List.of(TransformComponent.class));
 
         registerComponent(SpringComponent.class, Icons.Icons + "  Spring", List.of(RigidBodyComponent.class));

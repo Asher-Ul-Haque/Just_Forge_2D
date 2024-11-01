@@ -2,7 +2,6 @@ package Just_Forge_2D.AudioSystem;
 
 import Just_Forge_2D.AudioSystem.TinySound.LowLevelSound;
 import Just_Forge_2D.AudioSystem.TinySound.TinySound;
-import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.Utils.Logger;
 import org.joml.Vector3f;
 import org.lwjgl.stb.STBVorbis;
@@ -15,7 +14,7 @@ import static org.lwjgl.openal.AL10.*;
 import static org.lwjgl.openal.AL11.AL_SEC_OFFSET;
 import static org.lwjgl.system.libc.LibCStdlib.free;
 
-public class Sound extends Component
+public class Sound
 {
     private int bufferID;
     private int sourceID;
@@ -28,27 +27,36 @@ public class Sound extends Component
 
     private boolean isPlaying = false;
 
-    public Sound(String FILEPATH, boolean LOOPS) {
+    public Sound(String FILEPATH, boolean LOOPS)
+    {
         this.loop = LOOPS;
         this.filepath = FILEPATH;
 
-        if (FILEPATH.endsWith(".ogg")) {
+        if (FILEPATH.endsWith(".ogg"))
+        {
             valid = loadOgg(FILEPATH);
-        } else if (FILEPATH.endsWith(".wav")) {
+        }
+        else if (FILEPATH.endsWith(".wav"))
+        {
             valid = loadWav(FILEPATH);
-        } else {
+        }
+        else
+        {
             Logger.FORGE_LOG_ERROR("Unsupported sound format: " + FILEPATH);
             valid = false;
         }
     }
 
-    private boolean loadOgg(String FILEPATH) {
-        try (MemoryStack stack = MemoryStack.stackPush()) {
+    private boolean loadOgg(String FILEPATH)
+    {
+        try (MemoryStack stack = MemoryStack.stackPush())
+        {
             IntBuffer channelsBuffer = stack.mallocInt(1);
             IntBuffer sampleRateBuffer = stack.mallocInt(1);
 
             ShortBuffer rawAudioBuffer = STBVorbis.stb_vorbis_decode_filename(FILEPATH, channelsBuffer, sampleRateBuffer);
-            if (rawAudioBuffer == null) {
+            if (rawAudioBuffer == null)
+            {
                 Logger.FORGE_LOG_ERROR("Could not load .ogg sound: " + FILEPATH);
                 return false;
             }
@@ -66,22 +74,28 @@ public class Sound extends Component
         }
     }
 
-    private boolean loadWav(String FILEPATH) {
-        try {
+    private boolean loadWav(String FILEPATH)
+    {
+        try
+        {
             wav = TinySound.loadSound(new java.io.File(FILEPATH));
-            if (wav == null) {
+            if (wav == null)
+            {
                 Logger.FORGE_LOG_ERROR("Could not load .wav sound: " + FILEPATH);
                 return false;
             }
-            // Logic for managing TinySound playback within OpenAL goes here, if applicable
+            // - - - Logic for managing TinySound playback within OpenAL goes here, if applicable
             return true;
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             Logger.FORGE_LOG_ERROR("Could not load .wav sound: " + FILEPATH + " Error: " + e.getMessage());
             return false;
         }
     }
 
-    private void createSource() {
+    private void createSource()
+    {
         sourceID = alGenSources();
         alSourcei(sourceID, AL_BUFFER, bufferID);
         alSourcei(sourceID, AL_LOOPING, loop ? 1 : 0);

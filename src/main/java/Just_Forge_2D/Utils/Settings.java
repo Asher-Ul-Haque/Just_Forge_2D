@@ -134,8 +134,8 @@ public class Settings
     // - - - Texture
     private final TextureWrapping DEFAULT_TEXTURE_WRAP_S = TextureWrapping.REPEAT;
     private final TextureWrapping DEFAULT_TEXTURE_WRAP_T = TextureWrapping.REPEAT;
-    private final TextureMinimizeFilter DEFAULT_TEXTURE_MIN_FILTER = TextureMinimizeFilter.LINEAR;
-    private final TextureMaximizeFilter DEFAULT_TEXTURE_MAX_FILTER = TextureMaximizeFilter.LINEAR;
+    private final TextureMinimizeFilter DEFAULT_TEXTURE_MIN_FILTER = TextureMinimizeFilter.NEAREST;
+    private final TextureMaximizeFilter DEFAULT_TEXTURE_MAX_FILTER = TextureMaximizeFilter.NEAREST;
     public static TextureWrapping DEFAULT_TEXTURE_WRAP_S() { return instance.DEFAULT_TEXTURE_WRAP_S;}
     public static TextureWrapping DEFAULT_TEXTURE_WRAP_T() { return instance.DEFAULT_TEXTURE_WRAP_T;}
     public static TextureMinimizeFilter DEFAULT_TEXTURE_MIN_FILTER() { return instance.DEFAULT_TEXTURE_MIN_FILTER;}

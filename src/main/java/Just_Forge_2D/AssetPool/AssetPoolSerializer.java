@@ -46,7 +46,8 @@ public class AssetPoolSerializer
         {
             SpriteSheet sheet = data.spriteSheetPool.get(filePath);
 
-            Texture t = makeTexture(filePath);
+            Texture t = new Texture();
+            if (!t.init(filePath)) return;
             SpriteSheet newSheet = new SpriteSheet(t, sheet.getWidth(), sheet.getHeight(), sheet.size(), sheet.getSpacing());
             addSpriteSheet(name, newSheet, true);
         });

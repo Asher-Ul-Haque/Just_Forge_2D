@@ -14,7 +14,6 @@ import org.joml.Vector2f;
 
 public class GameViewport
 {
-    private static float leftX, rightX, topY, bottomY;
     private static boolean isPlaying = false;
     private static boolean windowIsHovered = false;
 
@@ -31,10 +30,6 @@ public class GameViewport
         ImGui.getCursorScreenPos(topLeft);
         topLeft.x -= ImGui.getScrollX();
         topLeft.y -= ImGui.getScrollY();
-        leftX = topLeft.x;
-        bottomY = topLeft.y;
-        rightX = topLeft.x + windowSize.x;
-        topY = topLeft.y + windowSize.y;
 
         Mouse.setGameViewport(new Vector2f(topLeft.x, topLeft.y), new Vector2f(windowSize.x, windowSize.y));
 

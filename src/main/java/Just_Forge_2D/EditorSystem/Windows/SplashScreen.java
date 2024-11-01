@@ -22,8 +22,6 @@ import imgui.flag.ImGuiCol;
 import imgui.flag.ImGuiWindowFlags;
 import org.joml.Vector4f;
 
-import java.io.File;
-
 public class SplashScreen
 {
 
@@ -181,8 +179,7 @@ public class SplashScreen
         ImVec4 color = EditorSystemManager.getCurrentTheme().tertiaryColor;
         ImGui.pushStyleColor(ImGuiCol.PlotHistogram, color.x, color.y, color.z, color.w);
         ImGui.pushStyleColor(ImGuiCol.FrameBg, backColor.x, backColor.y, backColor.z, backColor.w);
-        if (canEarlyReturn()) progress = 1f;
-        else progress = Math.min(GameManager.getProgressPercentage(), progress + 0.01f);
+        progress = Math.min(GameManager.getProgressPercentage(), progress + 0.01f);
         ImGui.progressBar(progress, ImGui.getContentRegionAvailX(), 14);
         ImGui.popStyleColor(2);
         Theme.resetDefaultTextColor();
@@ -199,7 +196,7 @@ public class SplashScreen
     public static void cleanup()
     {
         // - - - Check if lastProjectPath is null before comparing
-        if (!compiling && !canEarlyReturn())
+        if (!compiling)
         {
             Logger.FORGE_LOG_TRACE("Compiling");
             compiling = true;
@@ -209,7 +206,7 @@ public class SplashScreen
         }
 
         // Ensure success or that the paths match
-        if (GameManager.isSuccess() || canEarlyReturn())
+        if (GameManager.isSuccess() && GameManager.getProgressPercentage() == 1f)
         {
             progress = 1f;
             if (!EditorSystemManager.isRelease)
@@ -237,29 +234,13 @@ public class SplashScreen
             GameWindow.get().setTitle(windowTitle);
             GameWindow.get().setVisible(true);
         }
-        else if (GameManager.getProgressPercentage() >= 1f)
+        else if (!GameManager.isSuccess() && GameManager.getProgressPercentage() == 1f)
         {
-            restart();
+            EditorSystemManager.setCurrentState(EditorSystemManager.state.isSplashScreen);
+            GameWindow.get().restore();
+            GameWindow.get().resetTitleBar();
+            SplashScreen.restart();
+            SplashScreen.initialize();
         }
-    }
-
-    private static void startEarlyCompilation()
-    {
-        if (!EditorSystemManager.isRelease) {
-
-            new Thread(() ->
-            {
-                GameManager.buildUserCode(ProjectManager.getLastProjectPath(), false);
-            }).start();
-        }
-    }
-
-    private static boolean canEarlyReturn()
-    {
-        File lastProjectPath = ProjectManager.getLastProjectPath();
-        File currentProjectPath = new File(EditorSystemManager.projectDir);
-        if (lastProjectPath == null) return false;
-        if (!lastProjectPath.equals(currentProjectPath)) return false;
-        return GameManager.isEarlyCompileSuccess();
     }
 }

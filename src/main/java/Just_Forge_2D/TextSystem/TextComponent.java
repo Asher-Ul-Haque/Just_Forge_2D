@@ -1,6 +1,7 @@
 package Just_Forge_2D.TextSystem;
 
 import Just_Forge_2D.AssetPool.AssetPool;
+import Just_Forge_2D.EditorSystem.EditorComponents.NonPickableComponent;
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.EditorSystem.Icons;
 import Just_Forge_2D.EditorSystem.Widgets;
@@ -43,7 +44,7 @@ public class TextComponent extends Component
         if (!tried)
         {
             String path = Paths.get(EditorSystemManager.projectDir + "/Assets/Textures/font.png").toString();
-            Texture t = AssetPool.makeTexture(path);
+            Texture t = new Texture();
             t.init(path);
             AssetPool.addSpriteSheet("font", new SpriteSheet(t, 16, 16, 36, 0));
             tried = true;
@@ -110,6 +111,7 @@ public class TextComponent extends Component
         object.getComponent(SpriteComponent.class).setColor(characterColor);
         object.transform.layer = layer;
         object.noSerialize();
+        object.addComponent(new NonPickableComponent());
         return object;
     }
 

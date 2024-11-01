@@ -3,9 +3,9 @@ package Just_Forge_2D.EditorSystem.Windows;
 import Just_Forge_2D.WindowSystem.WindowConfig;
 import Just_Forge_2D.WindowSystem.WindowSystemManager;
 
-public class MainWindowConfig extends WindowConfig
+public class GameWindowConfig extends WindowConfig
 {
-    public MainWindowConfig()
+    public GameWindowConfig()
     {
         super();
         this.width = WindowSystemManager.getMonitorSize().x;
