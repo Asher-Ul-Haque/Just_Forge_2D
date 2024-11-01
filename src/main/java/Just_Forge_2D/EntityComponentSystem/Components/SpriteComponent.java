@@ -106,7 +106,7 @@ public class SpriteComponent extends Component
     @Override
     public void start()
     {
-        this.sprite.setTexture(AssetPool.makeTexture(this.sprite.getTexture().getFilepath()));
+        if (sprite.getTexture() != null) this.sprite.setTexture(AssetPool.makeTexture(this.sprite.getTexture().getFilepath()));
         this.sprite.applyTextureFilters();
         this.lastTransform = gameObject.transform.copy();
     }
@@ -133,7 +133,7 @@ public class SpriteComponent extends Component
 
     // - - - Editor Functionality - - -
 
-    public static Sprite spriteGUI(Sprite SPR, Consumer<Sprite> CALLBACK)
+    public static Sprite spriteGUI(Sprite SPR, Consumer<Sprite> CALLBACK, int HASHCODE)
     {
         if (AssetPoolDisplay.getMode().equals(AssetPoolDisplay.Mode.SELECTION))
         {
@@ -147,7 +147,7 @@ public class SpriteComponent extends Component
                 AssetPoolDisplay.enableSelection(CALLBACK);
             }
 
-            if (Widgets.button(Icons.Trash, true))
+            if (Widgets.button(Icons.Trash + " ##" + HASHCODE, true))
             {
                 Sprite n = new Sprite();
                 n.applyTextureFilters();
@@ -166,14 +166,14 @@ public class SpriteComponent extends Component
             wrap = Widgets.drawEnumControls(TextureWrapping.class, Icons.Box + "  Texture Wrap T Filter", SPR.getWrap_t());
             if (wrap != null) SPR.setWrap_tFilter(wrap);
 
-            if (Widgets.button("Apply Filter"))
+            if (Widgets.button("Apply Filter" + " ##" + HASHCODE))
             {
                 SPR.applyTextureFilters();
             }
         }
         else
         {
-            if (Widgets.button(Icons.Image, true))
+            if (Widgets.button(Icons.Image + " ##" + HASHCODE, true))
             {
                 AssetPoolDisplay.enableSelection(CALLBACK);
             }
@@ -185,7 +185,7 @@ public class SpriteComponent extends Component
     public void editorGUI()
     {
         super.deleteButton();
-        setSprite(spriteGUI(this.sprite, this::setSprite));
+        setSprite(spriteGUI(this.sprite, this::setSprite, this.hashCode()));
         if (Widgets.colorPicker4(Icons.EyeDropper +"  Color Picker", this.color)) this.isChanged = true;
         setShowAtRuntime(Widgets.drawBoolControl((getShowAtRuntime() ? Icons.Eye : Icons.EyeSlash) + "  Show", getShowAtRuntime()));
         Widgets.text("");

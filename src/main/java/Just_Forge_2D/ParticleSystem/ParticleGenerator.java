@@ -7,18 +7,36 @@ import Just_Forge_2D.RenderingSystem.Sprite;
 public class ParticleGenerator
 {
     protected Sprite sprite;
-    protected final GameObject template;
+    protected String name;
+    protected float size_x;
+    protected float size_y;
+
+    protected transient GameObject template;
 
     public ParticleGenerator(Sprite SPRITE, String NAME, float SIZE_X, float SIZE_Y)
     {
         sprite = SPRITE;
-        int index = 0;
+        name = NAME;
+        size_x = SIZE_X;
+        size_y = SIZE_Y;
         template = PrefabManager.generateObject(SPRITE, SIZE_X, SIZE_Y);
-        template.name = NAME + " particle: " + index;
+        template.name = NAME + " particle: ";
     }
 
     public Particle create()
     {
+        if (template == null)
+        {
+            template = PrefabManager.generateObject(sprite, size_x, size_y);
+            template.name = name + " particle: ";
+
+        }
         return new Particle(this.template.copy());
+    }
+
+    public void setSprite(Sprite SPRITE)
+    {
+        if (this.sprite == SPRITE) return;
+        this.sprite = SPRITE;
     }
 }

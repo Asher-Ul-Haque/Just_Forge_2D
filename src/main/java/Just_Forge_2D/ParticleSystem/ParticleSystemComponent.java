@@ -1,5 +1,7 @@
 package Just_Forge_2D.ParticleSystem;
 
+import Just_Forge_2D.EditorSystem.Icons;
+import Just_Forge_2D.EditorSystem.Widgets;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.Components.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
@@ -35,7 +37,7 @@ public class ParticleSystemComponent extends Component implements Observer
     protected float minSpeed = 0.1f;
     protected float maxSpeed = 0.5f;
     protected boolean debugDrawAtRuntime = false;
-    protected transient ParticleGenerator generator;
+    protected ParticleGenerator generator;
     protected Vector4f debugColor = new Vector4f(1.0f).sub(GameWindow.get().getClearColor());
     protected boolean useOnce = false;
     protected Vector2f offset = new Vector2f();
@@ -100,20 +102,23 @@ public class ParticleSystemComponent extends Component implements Observer
     @Override
     public void start()
     {
-        SpriteComponent spr = this.gameObject.getComponent(SpriteComponent.class);
-        if (spr == null)
+        if (generator == null)
         {
-            Logger.FORGE_LOG_WARNING("No Sprite Component for Particle Component");
-            return;
-        }
-        Sprite sprite = spr.getSpriteCopy();
-        if (sprite == null)
-        {
-            Logger.FORGE_LOG_WARNING("No Sprite Component for Particle Component");
-            return;
-        }
+            SpriteComponent spr = this.gameObject.getComponent(SpriteComponent.class);
+            if (spr == null)
+            {
+                Logger.FORGE_LOG_WARNING("No Sprite Component for Particle Component");
+                return;
+            }
+            Sprite sprite = spr.getSpriteCopy();
+            if (sprite == null)
+            {
+                Logger.FORGE_LOG_WARNING("No Sprite Component for Particle Component");
+                return;
+            }
 
-        generator = new ParticleGenerator(sprite, this.gameObject.name, maxSize.x, maxSize.y);
+            generator = new ParticleGenerator(sprite, this.gameObject.name, maxSize.x, maxSize.y);
+        }
         randomizer = new Random(this.gameObject.getUniqueID());
 
         for (int i = particles.size(); i < maxParticles; ++i)
@@ -177,14 +182,32 @@ public class ParticleSystemComponent extends Component implements Observer
 
     protected void clamp()
     {
-        fanStart = Math.min(fanEnd, fanStart);
-        fanEnd = Math.max(fanStart, fanEnd);
+        // - - - Angle clamping
+        if (fanStart > fanEnd)
+        {
+            float temp = fanStart;
+            fanStart = fanEnd;
+            fanEnd = temp;
+        }
+
+        // - - - Lifespan clamping
         maxLifespan = Math.max(0.001f, maxLifespan);
-        minLifespan = Math.max(Math.min(maxLifespan, minLifespan), 0f);
-        maxSpeed = Math.max(0f, maxSpeed);
-        minSpeed = Math.max(Math.min(minSpeed, maxSpeed), 0f);
-        maxParticles = Math.max(0, maxParticles);
+        minLifespan = Math.min(maxLifespan, Math.max(0f, minLifespan));
+
+        // - - - Speed clamping
+        maxSpeed = Math.max(0f, maxSpeed); // - - - Ensure maxSpeed has a minimum bound of 0
+        minSpeed = Math.min(maxSpeed, Math.max(0f, minSpeed)); // - - - minSpeed ≤ maxSpeed and ≥ 0f
+
+        // - - - Particle count clamping
+        maxParticles = Math.max(0, maxParticles); // - - - Ensure at least 0 particle
+
+        // - - - Size clamping
+        maxSize.x = Math.max(0.01f, maxSize.x); // - - - Ensure non-zero positive size
+        maxSize.y = Math.max(0.01f, maxSize.y);
+        minSize.x = Math.min(maxSize.x, Math.max(0.01f, minSize.x)); // - - - -minSize ≤ maxSize and ≥ smallest bound
+        minSize.y = Math.min(maxSize.y, Math.max(0.01f, minSize.y));
     }
+
 
     @Override
     public void onNotify(GameObject OBJECT, Event EVENT)
@@ -205,5 +228,27 @@ public class ParticleSystemComponent extends Component implements Observer
     @Override
     public void editorGUI()
     {
+        super.deleteButton();
+
+        generator.setSprite(SpriteComponent.spriteGUI(generator.sprite, generator::setSprite, this.hashCode()));
+
+        Widgets.drawVec2Control(Icons.MinusCircle + "  Minimum Size", minSize);
+        Widgets.drawVec2Control(Icons.PlusCircle + "  Maximum Size", maxSize);
+        Widgets.drawVec2Control(Icons.MapPin + "  Offset", offset);
+        maxParticles = Widgets.drawIntControl(Icons.Braille + "  Max Particles", maxParticles);
+        minLifespan = Widgets.drawFloatControl(Icons.Skull + "  Minimum Lifespan", minLifespan);
+        maxLifespan = Widgets.drawFloatControl(Icons.Skull + "  Maximum Lifespan", maxLifespan);
+        fanStart = Widgets.drawFloatControl(Icons.CircleNotch + "  Minimum Angle", fanStart);
+        fanEnd = Widgets.drawFloatControl(Icons.CircleNotch + "  Maximum Angle", fanEnd);
+        angularVelocity = Widgets.drawFloatControl(Icons.CircleNotch + "  Angular Velocity", angularVelocity);
+        minSpeed = Widgets.drawFloatControl(Icons.Running + "  Minimum Speed", minSpeed);
+        maxSpeed = Widgets.drawFloatControl(Icons.Running + "  Maximum Speed", maxSpeed);
+        Widgets.colorPicker4(Icons.EyeDropper + "  Minimum Angle Color", startColor);
+        Widgets.colorPicker4(Icons.EyeDropper + "  Maximum Angle Color", finalColor);
+        Widgets.colorPicker4(Icons.EyeDropper + "  Debug Color", debugColor);
+        debugDrawAtRuntime = Widgets.drawBoolControl(Icons.Pen + "  Debug Draw At Runtime", debugDrawAtRuntime);
+        useOnce = Widgets.drawBoolControl(Icons.DiceOne + "  Use Once", useOnce);
+        if (Widgets.button(Icons.PowerOff + "  Reset All", true)) resetAll = true;
+        clamp();
     }
 }

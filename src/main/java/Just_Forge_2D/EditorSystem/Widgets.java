@@ -402,9 +402,10 @@ public class Widgets
 
     public static boolean button(String LABEL, boolean CENTER)
     {
-        LABEL = "  " + LABEL + "  ";
+        LABEL = " " + LABEL + " ";
         ImVec2 framePadding = EditorSystemManager.getCurrentTheme().framePadding;
-        float textWidth = ImGui.calcTextSize(LABEL).x + ImGui.getStyle().getFramePaddingX() * 2;
+        String mainLabel = LABEL.contains(" ##") ? LABEL.substring(0, LABEL.indexOf(" ##")) : LABEL;
+        float textWidth = ImGui.calcTextSize(mainLabel).x + ImGui.getStyle().getFramePaddingX() * 2;
         if (CENTER)
         {
             ImGui.setCursorPosX((ImGui.getContentRegionAvailX() - textWidth) * 0.5f);
