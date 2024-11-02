@@ -282,31 +282,38 @@ public class ImGUIManager
 
     public static void update(float DELTA_TIME, Scene SCENE)
     {
-        startFrame(DELTA_TIME);
-        switch (EditorSystemManager.currentState)
+        try
         {
-            case isEditor:
-                if (ConfigFlags.dockingEnable) setupDockSpace();
-                SCENE.editorGUI();
-                MenuBar.render();
+            startFrame(DELTA_TIME);
+            switch (EditorSystemManager.currentState)
+            {
+                case isEditor:
+                    if (ConfigFlags.dockingEnable) setupDockSpace();
+                    SCENE.editorGUI();
+                    MenuBar.render();
 
-                for (int i = 0; i < toRender.size(); ++i)
-                {
-                    if (toRender.get(i))
+                    for (int i = 0; i < toRender.size(); ++i)
                     {
-                        renderWindows.get(i).run();
+                        if (toRender.get(i))
+                        {
+                            renderWindows.get(i).run();
+                        }
                     }
-                }
-                ImGui.end();
-                break;
+                    ImGui.end();
+                    break;
 
-            case isSplashScreen:
-                SplashScreen.render(DELTA_TIME);
-                break;
+                case isSplashScreen:
+                    SplashScreen.render(DELTA_TIME);
+                    break;
+            }
+
+            ImGui.render();
+            endFrame();
         }
-
-        ImGui.render();
-        endFrame();
+        catch (Exception e)
+        {
+            Logger.FORGE_LOG_FATAL(e.getMessage());
+        }
     }
 
     private static void startFrame(final float DELTA_TIME)

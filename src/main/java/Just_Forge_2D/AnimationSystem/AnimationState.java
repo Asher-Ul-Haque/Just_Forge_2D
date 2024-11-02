@@ -24,7 +24,7 @@ public class AnimationState
     private transient int currentSprite = 0;
     public boolean doesLoop = false;
     public boolean isFinished = false;
-    private float previewSpeed = Settings.DEFAULT_FRAME_TIME;
+    private float previewSpeed = Settings.DEFAULT_FRAME_TIME();
     private transient boolean isPreviewing;
     private transient float elapsedTime = 0;
 
@@ -54,7 +54,7 @@ public class AnimationState
 
     public void addFrame(Sprite SPRITE)
     {
-        animationFrames.add(new Frame(SPRITE, Settings.DEFAULT_FRAME_TIME));
+        animationFrames.add(new Frame(SPRITE, Settings.DEFAULT_FRAME_TIME()));
     }
 
     public void addFrames(List<Sprite> SPRITES, float FRAME_TIME)

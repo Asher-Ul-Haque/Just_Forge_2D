@@ -56,7 +56,7 @@ public class EditorSystemManager
 
     public static Class<? extends SceneScript> currentSceneInitializer;
     public static String projectDir = System.getProperty("user.dir");
-    public static boolean isRelease = true;
+    public static boolean isRelease = false;
 
     public static state getCurrentState()
     {
@@ -127,7 +127,7 @@ public class EditorSystemManager
         WindowSystemManager.initialize();
         editorWindowConfig = new WindowConfig();
         editorWindowConfig.setHeight(800);
-        if (currentTheme == null) currentTheme = new CleanTheme(Settings.DARK_MODE_ENABLED);
+        if (currentTheme == null) currentTheme = new CleanTheme(Settings.DARK_MODE_ENABLED());
         GameWindow.get();
         EditorSystemManager.setSelector();
         setEditorLayer();
@@ -145,6 +145,7 @@ public class EditorSystemManager
         }
         AudioSystemManager.terminate();
         ImGUIManager.destroyImGui();
+        Settings.save();
         Logger.flushToFile();
     }
 }

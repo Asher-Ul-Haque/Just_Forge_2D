@@ -296,6 +296,10 @@ public class GameWindow extends Window
         if (this.config.resizable)
         {
             this.framebuffer = new Framebuffer(WIDTH, HEIGHT);
+            if (EditorSystemManager.getCurrentState().equals(EditorSystemManager.state.isSplashScreen))
+            {
+                super.setSize(WIDTH, HEIGHT);
+            }
             if (EditorSystemManager.isRelease)
             {
                 super.setSize(WIDTH, HEIGHT);

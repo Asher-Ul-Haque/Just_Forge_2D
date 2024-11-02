@@ -154,7 +154,7 @@ public class ProjectManager
 
     private static String selectProjectDirectory()
     {
-        return TinyFileDialogs.tinyfd_selectFolderDialog("Select Project Directory", Paths.get(DEFAULT_PROJECTS_DIR + Settings.DEFAULT_SAVE_DIR).toAbsolutePath().toString());
+        return TinyFileDialogs.tinyfd_selectFolderDialog("Select Project Directory", Paths.get(DEFAULT_PROJECTS_DIR + Settings.DEFAULT_SAVE_DIR()).toAbsolutePath().toString());
     }
 
 

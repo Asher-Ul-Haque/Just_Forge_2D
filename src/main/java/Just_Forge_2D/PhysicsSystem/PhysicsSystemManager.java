@@ -17,7 +17,7 @@ import org.jbox2d.dynamics.Fixture;
 public class PhysicsSystemManager
 {
     private Scene owner;
-    private float fixedDelta = Settings.PHYSICS_DELTA_TIME;
+    private float fixedDelta = Settings.PHYSICS_DELTA_TIME();
     public PhysicsWorld rawWorld;
 
 

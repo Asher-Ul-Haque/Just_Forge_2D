@@ -58,7 +58,7 @@ public class SplashScreen
             {
                 logoTexture = new Texture();
                 logoTexture.init("Assets/Textures/icon.png");
-                AssetPool.addTexture("Default", Settings.DEFAULT_ICON_PATH, true);
+                AssetPool.addTexture("Default", Settings.DEFAULT_ICON_PATH(), true);
             }
 
             // if (!EditorSystemManager.isRelease) startEarlyCompilation();

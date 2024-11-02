@@ -18,10 +18,10 @@ public class EditorCameraComponent extends Component
     private final Camera editorCamera;
 
     // - - - sensitivity
-    public static float dragDebounce = Settings.DEFAULT_EDITOR_CAMERA_DRAG_DEBOUNCE;
-    public static float lerpTime = Settings.DEFAULT_EDITOR_CAMERA_LERP_TIME;
-    public static float dragSensitivity = Settings.DEFAULT_EDITOR_CAMERA_DRAG_SENSITIVITY;
-    public static float scrollSensitivity = Settings.DEFAULT_EDITOR_CAMERA_SCROLL_SENSITIVITY;
+    public static float dragDebounce = Settings.DEFAULT_EDITOR_CAMERA_DRAG_DEBOUNCE();
+    public static float lerpTime = Settings.DEFAULT_EDITOR_CAMERA_LERP_TIME();
+    public static float dragSensitivity = Settings.DEFAULT_EDITOR_CAMERA_DRAG_SENSITIVITY();
+    public static float scrollSensitivity = Settings.DEFAULT_EDITOR_CAMERA_SCROLL_SENSITIVITY();
 
     // - - - everything else
     private Vector2f clickOrigin = new Vector2f();
@@ -101,7 +101,7 @@ public class EditorCameraComponent extends Component
         }
         if (dragDebounce <= 0.0f && !Mouse.isMouseButtonDown(GLFW_MOUSE_BUTTON_RIGHT))
         {
-            dragDebounce = Settings.DEFAULT_EDITOR_CAMERA_DRAG_DEBOUNCE;
+            dragDebounce = Settings.DEFAULT_EDITOR_CAMERA_DRAG_DEBOUNCE();
         }
 
         if (Mouse.getScrollY() != 0.0f && this.editorCamera.getZoom() != 0)
@@ -119,14 +119,14 @@ public class EditorCameraComponent extends Component
         if (reset)
         {
             this.editorCamera.getPosition().lerp(new Vector2f(), lerpTime);
-            editorCamera.setZoom(editorCamera.getZoom() + (Settings.DEFAULT_CAMERA_ZOOM - editorCamera.getZoom()) * lerpTime);
+            editorCamera.setZoom(editorCamera.getZoom() + (Settings.DEFAULT_CAMERA_ZOOM() - editorCamera.getZoom()) * lerpTime);
             lerpTime += 0.1f * DELTA_TIME;
             if ((Math.abs(this.editorCamera.getPosition().x) <= 1f && Math.abs(this.editorCamera.getPosition().y) <= 1f && Math.abs(this.editorCamera.getZoom() - 1.0f) <0.5f))
             {
                 editorCamera.setPositionAbsolute(new Vector2f(0f, 0f));
                 reset = false;
-                lerpTime = Settings.DEFAULT_EDITOR_CAMERA_LERP_TIME;
-                this.editorCamera.setZoom(Settings.DEFAULT_CAMERA_ZOOM);
+                lerpTime = Settings.DEFAULT_EDITOR_CAMERA_LERP_TIME();
+                this.editorCamera.setZoom(Settings.DEFAULT_CAMERA_ZOOM());
             }
         }
     }

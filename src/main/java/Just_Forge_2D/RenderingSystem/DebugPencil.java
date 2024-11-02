@@ -36,8 +36,8 @@ public class DebugPencil
     // - - - Defaults
     private static final int defaultLifetime = Settings.DEBUG_PENCIL_DEFAULT_LIFE();
     private static final Vector3f defaultColor = Settings.DEBUG_PENCIL_DEFAULT_COLOR();
-    private static int width = Settings.DEBUG_PENCIL_DEFAULT_WIDTH;
-    private static final float defaultRotation = Settings.DEBUG_PENCIL_DEFAULT_ROTATION;
+    private static int width = Settings.DEBUG_PENCIL_DEFAULT_WIDTH();
+    private static final float defaultRotation = Settings.DEBUG_PENCIL_DEFAULT_ROTATION();
 
 
     // - - - | Functions | - - -
@@ -265,7 +265,7 @@ public class DebugPencil
     // - - - default
     public static void addCircle(Vector2f CENTER, float RADIUS, Vector3f COLOR, int LIFETIME)
     {
-        int segments = Math.max(Settings.DEBUG_PENCIL_MIN_CIRCLE_PRECISION, Math.min(Settings.DEBUG_PENCIL_MAX_CIRCLE_PRECISION, (int) (RADIUS * 16)));
+        int segments = Math.max(Settings.DEBUG_PENCIL_MIN_CIRCLE_PRECISION(), Math.min(Settings.DEBUG_PENCIL_MAX_CIRCLE_PRECISION(), (int) (RADIUS * 16)));
         Vector2f[] points = new Vector2f[segments];
         float increment = (float) (2 * Math.PI / segments);
         float currentAngle = 0;

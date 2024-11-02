@@ -237,8 +237,8 @@ public class AssetPoolDisplay
             switch (mode)
             {
                 case CREATION:
-                    GameObject object = PrefabManager.generateObject(sprite, keepSize ? GridlinesComponent.gridSize.x : sprite.getWidth() / Settings.DEFAULT_SIZE_DOWN_FACTOR,
-                        keepSize ? GridlinesComponent.gridSize.y : sprite.getHeight() / Settings.DEFAULT_SIZE_DOWN_FACTOR);
+                    GameObject object = PrefabManager.generateObject(sprite, keepSize ? GridlinesComponent.gridSize.x : sprite.getWidth() / Settings.DEFAULT_SIZE_DOWN_FACTOR(),
+                        keepSize ? GridlinesComponent.gridSize.y : sprite.getHeight() / Settings.DEFAULT_SIZE_DOWN_FACTOR());
                     MouseControlComponent.pickupObject(object);
                     break;
 
@@ -320,8 +320,8 @@ public class AssetPoolDisplay
             switch (mode)
             {
                 case CREATION:
-                    GameObject object = PrefabManager.generateObject(sprite, !keepSize ? GridlinesComponent.gridSize.x : sprite.getWidth() / Settings.DEFAULT_SIZE_DOWN_FACTOR,
-                            !keepSize ? GridlinesComponent.gridSize.y : sprite.getHeight() / Settings.DEFAULT_SIZE_DOWN_FACTOR);
+                    GameObject object = PrefabManager.generateObject(sprite, !keepSize ? GridlinesComponent.gridSize.x : sprite.getWidth() / Settings.DEFAULT_SIZE_DOWN_FACTOR(),
+                            !keepSize ? GridlinesComponent.gridSize.y : sprite.getHeight() / Settings.DEFAULT_SIZE_DOWN_FACTOR());
                     MouseControlComponent.pickupObject(object);
                     break;
 

@@ -494,7 +494,7 @@ public class Window implements Observer
 
     protected void warnFPSSpike()
     {
-        if (Math.abs(this.fps - (int) ( 1.0f / dt)) >= Settings.DEFAULT_FPS)
+        if (Math.abs(this.fps - (int) ( 1.0f / dt)) >= Settings.DEFAULT_FPS())
         {
             Logger.FORGE_LOG_WARNING(this.config.title + " Experiencing lag spike. Current fps: " + this.fps);
         }

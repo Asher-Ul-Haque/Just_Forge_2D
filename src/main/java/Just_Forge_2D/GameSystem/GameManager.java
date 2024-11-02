@@ -231,7 +231,19 @@ public class GameManager
         {
             ProcessBuilder processBuilder = new ProcessBuilder("java", "-jar", jarFiles[0].getName());
             processBuilder.directory(destinationDir);
-            processBuilder.start();
+            processBuilder.inheritIO();
+            new Thread(() ->
+            {
+                try
+                {
+                    processBuilder.start();
+                }
+                catch (Exception e)
+                {
+                    TinyFileDialogs.tinyfd_notifyPopup("Failed to run the code", e.getMessage(), "error");
+                    Logger.FORGE_LOG_FATAL("Failed to run the code: " + e.getMessage());
+                }
+            }).start();
         }
         catch (Exception e)
         {

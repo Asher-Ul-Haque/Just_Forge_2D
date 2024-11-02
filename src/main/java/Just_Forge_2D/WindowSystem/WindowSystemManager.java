@@ -72,7 +72,7 @@ public class WindowSystemManager
         if (vidMode == null)
         {
             Logger.FORGE_LOG_FATAL("Error in getting Monitor Size. Window System Panic");
-            return new Vector2i(Settings.DEFAULT_WINDOW_WIDTH, Settings.DEFAULT_WINDOW_HEIGHT);
+            return new Vector2i(Settings.DEFAULT_WINDOW_WIDTH(), Settings.DEFAULT_WINDOW_HEIGHT());
         }
         return new Vector2i(vidMode.width(), vidMode.height());
     }

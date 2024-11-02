@@ -17,23 +17,23 @@ import org.joml.Vector4f;
 
 public class KeyboardControllerComponent extends Component
 {
-    protected Keys rightKey = Settings.DEFAULT_MOVE_RIGHT_KEY;
-    protected Keys leftKey = Settings.DEFAULT_MOVE_LEFT_KEY;
-    protected Keys jumpKey = Settings.DEFAULT_JUMP_KEY;
-    protected Keys runKey = Settings.DEFAULT_RUN_KEY;
+    protected Keys rightKey = Settings.DEFAULT_MOVE_RIGHT_KEY();
+    protected Keys leftKey = Settings.DEFAULT_MOVE_LEFT_KEY();
+    protected Keys jumpKey = Settings.DEFAULT_JUMP_KEY();
+    protected Keys runKey = Settings.DEFAULT_RUN_KEY();
 
-    protected float maxWalkSpeed = Settings.DEFAULT_MAX_WALK_SPEED;
-    protected float groundAcceleration = Settings.DEFAULT_GROUND_ACCELERATION;
-    protected float groundDeceleration = Settings.DEFAULT_GROUND_DECELERATION;
-    protected float airAcceleration = Settings.DEFAULT_AIR_ACCELERATION;
-    protected float airDeceleration = Settings.DEFAULT_AIR_DECELERATION;
-    protected float jumpImpulse = Settings.DEFAULT_JUMP_IMPULSE;
-    protected float maxRunSpeed = Settings.DEFAULT_MAX_RUN_SPEED;
-    protected float groundDetectRayLength = Settings.DEFAULT_GROUND_DETECT_RAY_LENGTH;
+    protected float maxWalkSpeed = Settings.DEFAULT_MAX_WALK_SPEED();
+    protected float groundAcceleration = Settings.DEFAULT_GROUND_ACCELERATION();
+    protected float groundDeceleration = Settings.DEFAULT_GROUND_DECELERATION();
+    protected float airAcceleration = Settings.DEFAULT_AIR_ACCELERATION();
+    protected float airDeceleration = Settings.DEFAULT_AIR_DECELERATION();
+    protected float jumpImpulse = Settings.DEFAULT_JUMP_IMPULSE();
+    protected float maxRunSpeed = Settings.DEFAULT_MAX_RUN_SPEED();
+    protected float groundDetectRayLength = Settings.DEFAULT_GROUND_DETECT_RAY_LENGTH();
 
-    protected float coyoteTime = Settings.DEFAULT_COYOTE_TIME;
+    protected float coyoteTime = Settings.DEFAULT_COYOTE_TIME();
     protected transient float coyoteTimer = 0f;
-    protected int maxJumps = Settings.DEFAULT_MAX_JUMPS;
+    protected int maxJumps = Settings.DEFAULT_MAX_JUMPS();
     protected transient int jumpsUsed = 0;
 
     protected RigidBodyComponent rb;

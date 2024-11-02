@@ -17,17 +17,17 @@ public class RigidBodyComponent extends Component
 {
     // - - - private variables
     public Vector2f velocity = new Vector2f();
-    private float angularDamping = Settings.ANGULAR_DAMPING;
-    private float linearDamping = Settings.LINEAR_DAMPING;
-    private float density = Settings.DEFAULT_MASS;
+    private float angularDamping = Settings.ANGULAR_DAMPING();
+    private float linearDamping = Settings.LINEAR_DAMPING();
+    private float density = Settings.DEFAULT_MASS();
     private BodyType bodyType = BodyType.Dynamic;
-    private boolean fixedRotation = Settings.ROTATION_FIXED;
-    private boolean continuousCollision = Settings.CONTINUOUS_COLLISION;
+    private boolean fixedRotation = Settings.ROTATION_FIXED();
+    private boolean continuousCollision = Settings.CONTINUOUS_COLLISION();
     private transient Body rawBody = null;
     public float angularVelocity = 0.0f;
-    public float gravityScale = Settings.GRAVITY_SCALE;
-    public float frictionCoefficient = Settings.DEFAULT_FRICTION;
-    public float restitutionCoefficient = Settings.DEFAULT_RESTITUTION;
+    public float gravityScale = Settings.GRAVITY_SCALE();
+    public float frictionCoefficient = Settings.DEFAULT_FRICTION();
+    public float restitutionCoefficient = Settings.DEFAULT_RESTITUTION();
     private boolean isSensor = false;
     private boolean isEditor = false;
 

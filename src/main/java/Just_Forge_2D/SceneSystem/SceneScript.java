@@ -11,7 +11,7 @@ public abstract class SceneScript
     public GameObject master;
     public Renderer renderer;
     public PhysicsWorld physicsWorld;
-    public String savePath = EditorSystemManager.projectDir + Settings.DEFAULT_SAVE_DIR + this.getClass().getSimpleName() + ".justForgeFile";
+    public String savePath = EditorSystemManager.projectDir + Settings.DEFAULT_SAVE_DIR() + this.getClass().getSimpleName() + ".justForgeFile";
     public abstract void init(Scene SCENE);
     public abstract void loadResources(Scene SCENE);
     public void editorGUI(){};

@@ -13,7 +13,7 @@ public class TransformComponent extends Component
     public Vector2f position;
     public int layer;
     public Vector2f scale;
-    public float rotation = Settings.DEFAULT_ROTATION;
+    public float rotation = Settings.DEFAULT_ROTATION();
 
 
     // - - - | Functions | - - -
@@ -30,17 +30,17 @@ public class TransformComponent extends Component
 
     public TransformComponent()
     {
-        init(new Vector2f(), new Vector2f(GridlinesComponent.gridSize), Settings.DEFAULT_LAYER);
+        init(new Vector2f(), new Vector2f(GridlinesComponent.gridSize), Settings.DEFAULT_LAYER());
     }
 
     public TransformComponent(Vector2f POSITION)
     {
-        init(POSITION, new Vector2f(), Settings.DEFAULT_LAYER);
+        init(POSITION, new Vector2f(), Settings.DEFAULT_LAYER());
     }
 
     public TransformComponent(Vector2f POSITION, Vector2f SCALE)
     {
-        init(POSITION, SCALE, Settings.DEFAULT_LAYER);
+        init(POSITION, SCALE, Settings.DEFAULT_LAYER());
     }
 
     public TransformComponent(Vector2f POSITION, Vector2f SCALE, int LAYER)
@@ -50,7 +50,7 @@ public class TransformComponent extends Component
 
     public TransformComponent(Vector2f POSITION, int LAYER)
     {
-        init(POSITION, new Vector2f(), Settings.DEFAULT_LAYER);
+        init(POSITION, new Vector2f(), LAYER);
     }
 
 

@@ -63,7 +63,7 @@ public class MenuBar
             }
             if (ImGui.menuItem(Icons.Save+ " Save As", ""))
             {
-                String savePath = TinyFileDialogs.tinyfd_saveFileDialog("Choose Save Location", EditorSystemManager.projectDir + Settings.DEFAULT_SAVE_DIR,null,null);
+                String savePath = TinyFileDialogs.tinyfd_saveFileDialog("Choose Save Location", EditorSystemManager.projectDir + Settings.DEFAULT_SAVE_DIR(),null,null);
                 if (savePath != null)
                 {
                     if (!savePath.endsWith(".justForgeFile")) savePath += ".justForgeFile";
@@ -77,7 +77,7 @@ public class MenuBar
             }
             if (ImGui.menuItem(Icons.FileImport + " Load From", ""))
             {
-                String savePath = TinyFileDialogs.tinyfd_openFileDialog("Choose Save Location", EditorSystemManager.projectDir + Settings.DEFAULT_SAVE_DIR,null,null, false);
+                String savePath = TinyFileDialogs.tinyfd_openFileDialog("Choose Save Location", EditorSystemManager.projectDir + Settings.DEFAULT_SAVE_DIR(),null,null, false);
                 if (savePath != null)
                 {
                     if (!savePath.endsWith(".justForgeFile"))
