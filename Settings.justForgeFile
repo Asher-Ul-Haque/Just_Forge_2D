@@ -52,9 +52,9 @@
   "DEFAULT_FPS": 60.0,
   "DEFAULT_WINDOW_TITLE": "Just Forge 2D",
   "DEFAULT_CLEAR_COLOR": {
-    "x": 0.0,
-    "y": 0.0,
-    "z": 0.0,
+    "x": 0.76833975,
+    "y": 0.43905127,
+    "z": 0.43905127,
     "w": 1.0
   },
   "DEFAULT_ICON_PATH": "Assets/Textures/logo.png",

@@ -9,7 +9,7 @@ import org.joml.Vector4f;
 
 public class WindowManagerComponent extends Component
 {
-    protected Vector4f cacheBgColor = GameWindow.get().getClearColor();
+    protected Vector4f cacheBgColor = new Vector4f(GameWindow.get().getClearColor());
     protected Vector2i cacheSize = new Vector2i(GameWindow.get().getWidth(), GameWindow.get().getHeight());
     protected boolean cacheDecorated = GameWindow.get().isDecorated();
     protected boolean cacheVsync = GameWindow.get().isVsync();
@@ -100,7 +100,7 @@ public class WindowManagerComponent extends Component
         // - - - Position control:
         if (Widgets.button(Icons.Check + " " + " ##" + "window pos")) setPosition(cachePosition);
         ImGui.sameLine();
-        Widgets.drawVec2Control(Icons.MapPin + "  Window Position", cacheSize, 100, 100);
+        Widgets.drawVec2Control(Icons.MapPin + "  Window Position", cachePosition, 100, 100);
 
         // - - - Background color control
         if (Widgets.button(Icons.Check + " " + " ##" + "window color")) setBackgroundColor(cacheBgColor);

@@ -46,9 +46,5 @@
            int id = int(fTextureID);
            texColor = fColor * texture(uTextures[id], fTextureCoords);
         }
-        if (texColor.a < 0.5)
-        {
-            discard;
-        }
         color = vec3(fEntityID, fEntityID, fEntityID);
     }

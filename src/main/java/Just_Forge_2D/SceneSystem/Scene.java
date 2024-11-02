@@ -226,6 +226,15 @@ public class Scene
         {
             GameObject go = gameObjects.get(i);
             go.editorUpdate(DELTA_TIME);
+            SpriteComponent spr = go.getComponent(SpriteComponent.class);
+            if (spr != null)
+            {
+                if (!spr.hasBeenRead() && this.renderer != null)
+                {
+                    spr.start();
+                    this.renderer.add(go);
+                }
+            }
 
             if (go.isDead())
             {
@@ -239,7 +248,6 @@ public class Scene
         for (GameObject go : pendingObjects)
         {
             gameObjects.add(go);
-
             if (this.renderer != null) this.renderer.add(go);
             if (this.physics != null) this.physics.add(go);
         }

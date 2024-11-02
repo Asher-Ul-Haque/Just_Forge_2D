@@ -6,6 +6,7 @@ import Just_Forge_2D.EditorSystem.Widgets;
 import Just_Forge_2D.EditorSystem.Windows.AssetPoolDisplay;
 import Just_Forge_2D.RenderingSystem.*;
 import Just_Forge_2D.Utils.Logger;
+import Just_Forge_2D.WindowSystem.GameWindow;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 
@@ -20,6 +21,7 @@ public class SpriteComponent extends Component
     private transient TransformComponent lastTransform = new TransformComponent();
     private transient boolean isChanged = true;
     private boolean showAtRuntime = true;
+    private transient boolean read = false;
 
 
     // - - - | Functions | - - -
@@ -106,9 +108,10 @@ public class SpriteComponent extends Component
     @Override
     public void start()
     {
-        if (sprite.getTexture() != null) this.sprite.setTexture(AssetPool.makeTexture(this.sprite.getTexture().getFilepath()));
+        if (this.getTexture() != null) this.sprite.setTexture(AssetPool.makeTexture(getTexture().getFilepath()));
         this.sprite.applyTextureFilters();
         this.lastTransform = gameObject.transform.copy();
+        read = true;
     }
 
     // - - - Update if data changes
@@ -208,5 +211,14 @@ public class SpriteComponent extends Component
     public void destroy()
     {
         this.isChanged = true;
+        // - - - TODO: change this
+        Renderer renderer = GameWindow.getCurrentScene().getRenderer();
+        if (renderer != null) renderer.destroyGameObject(this.gameObject);
+        read = false;
+    }
+
+    public boolean hasBeenRead()
+    {
+        return read;
     }
 }
