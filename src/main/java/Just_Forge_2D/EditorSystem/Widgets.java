@@ -28,7 +28,7 @@ public class Widgets
 
 
     // - - - Vec2 Control - - -
-    public static void drawVec2Control(String label, Vector2f values, float resetValue, float JUMP)
+    public static void drawVec2Control(String label, Vector2f values, float resetValue, float JUMP, boolean INT)
     {
         ImGui.pushID(label);
 
@@ -59,8 +59,18 @@ public class Widgets
             }
             ImGui.popStyleColor(3);
             ImGui.sameLine();
-            float[] vecValuesX = {values.x};
-            ImGui.dragFloat("##X", vecValuesX, JUMP);
+            if (INT)
+            {
+                int[] vecValuesX = {(int) values.x};
+                ImGui.dragInt("##X", vecValuesX, JUMP);
+                values.set(vecValuesX[0], values.y);
+            }
+            else
+            {
+                float[] vecValuesX = {values.x};
+                ImGui.dragFloat("##X", vecValuesX, JUMP);
+                values.set(vecValuesX[0], values.y);
+            }
             ImGui.popItemWidth();
 
             ImGui.sameLine();
@@ -74,11 +84,20 @@ public class Widgets
             }
             ImGui.popStyleColor(3);
             ImGui.sameLine();
-            float[] vecValuesY = {values.y};
-            ImGui.dragFloat("##Y", vecValuesY, JUMP);
+            if (INT)
+            {
+                int[] vecValuesY = {(int) values.y};
+                ImGui.dragInt("##Y", vecValuesY, JUMP);
+                values.set(values.x, vecValuesY[0]);
+            }
+            else
+            {
+                float[] vecValuesY = {values.y};
+                ImGui.dragFloat("##Y", vecValuesY, JUMP);
+                values.set(values.x, vecValuesY[0]);
+            }
             ImGui.popItemWidth();
 
-            values.set(vecValuesX[0], vecValuesY[0]);
 
             ImGui.endTable();
         }
@@ -86,18 +105,21 @@ public class Widgets
         ImGui.popID();
     }
 
-
+    public static void drawVec2Control(String label, Vector2f values, float resetValue, float JUMP)
+    {
+        drawVec2Control(label, values, resetValue, JUMP, false);
+    }
 
     public static void drawVec2Control(String label, Vector2i values, float resetValue, float JUMP)
     {
         Vector2f valuesCpy = new Vector2f(values);
-        drawVec2Control(label, valuesCpy, resetValue, JUMP);
+        drawVec2Control(label, valuesCpy, resetValue, JUMP, true);
         values.set((int) valuesCpy.x, (int) valuesCpy.y);
     }
 
     public static void drawVec2Control(String label, Vector2f values)
     {
-        drawVec2Control(label, values, DEFAULT_RESET, 0.1f);
+        drawVec2Control(label, values, DEFAULT_RESET, 0.1f, false);
     }
 
     public static void drawVec2Control(String label, Vector2i values)

@@ -43,6 +43,7 @@ public class MouseControlComponent extends Component
         // - - - lerp between current position and target position
         if (moveCondition())
         {
+            Logger.FORGE_LOG_TRACE("Detected");
             currentPosition.lerp(targetPosition, lerpSpeed * DELTA_TIME);
         }
 

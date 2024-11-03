@@ -95,12 +95,12 @@ public class WindowManagerComponent extends Component
         // - - - Size control
         if (Widgets.button(Icons.Check + " " + " ##" + "window size")) setWindowSize(cacheSize);
         ImGui.sameLine();
-        Widgets.drawVec2Control(Icons.Expand + " Window Size", cacheSize, 100, 100);
+        Widgets.drawVec2Control(Icons.Expand + " Window Size", cacheSize);
 
         // - - - Position control:
         if (Widgets.button(Icons.Check + " " + " ##" + "window pos")) setPosition(cachePosition);
         ImGui.sameLine();
-        Widgets.drawVec2Control(Icons.MapPin + "  Window Position", cachePosition, 100, 100);
+        Widgets.drawVec2Control(Icons.MapPin + "  Window Position", cachePosition);
 
         // - - - Background color control
         if (Widgets.button(Icons.Check + " " + " ##" + "window color")) setBackgroundColor(cacheBgColor);

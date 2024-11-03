@@ -305,13 +305,14 @@ public class GameWindow extends Window
                 super.setSize(WIDTH, HEIGHT);
                 float aspectWidth = WIDTH;
                 float aspectHeight = aspectWidth / ((float) GameWindow.getFrameBuffer().getSize().x / GameWindow.getFrameBuffer().getSize().y);
+                float scaleDown = HEIGHT / aspectHeight;
                 if (aspectHeight > HEIGHT)
                 {
                     // - - - switch to pillar mode
                     aspectHeight = HEIGHT;
                     aspectWidth = aspectHeight * ((float) GameWindow.getFrameBuffer().getSize().x / GameWindow.getFrameBuffer().getSize().y);
                 }
-                Mouse.setGameViewport(new Vector2f(0,  -WindowSystemManager.getDecorationSize(this)[1]), new Vector2f(aspectWidth, aspectHeight));
+                Mouse.setGameViewport(new Vector2f(0,  -scaleDown), new Vector2f(aspectWidth, aspectHeight));
             }
             EventManager.notify(null, new Event(EventTypes.ForgeResize));
         }

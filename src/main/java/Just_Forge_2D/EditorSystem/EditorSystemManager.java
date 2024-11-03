@@ -56,7 +56,7 @@ public class EditorSystemManager
 
     public static Class<? extends SceneScript> currentSceneInitializer;
     public static String projectDir = System.getProperty("user.dir");
-    public static boolean isRelease = false;
+    public static final boolean isRelease = true;
 
     public static state getCurrentState()
     {
