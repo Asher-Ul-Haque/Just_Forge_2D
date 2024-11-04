@@ -2,7 +2,9 @@ package Just_Forge_2D.SceneSystem;
 
 import Just_Forge_2D.AnimationSystem.AnimationComponent;
 import Just_Forge_2D.AssetPool.AssetPool;
+import Just_Forge_2D.EditorSystem.EditorComponents.NonPickableComponent;
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
+import Just_Forge_2D.EditorSystem.InputControls.MouseControlComponent;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.Components.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.Components.TransformComponent;
@@ -231,8 +233,16 @@ public class Scene
             {
                 if (!spr.hasBeenRead() && this.renderer != null)
                 {
-                    spr.start();
-                    this.renderer.add(go);
+                    if (go.isDead())
+                    {
+                        spr.destroy();
+                        this.renderer.destroyGameObject(go);
+                    }
+                    else if (!go.equals(MouseControlComponent.holdingObject) && !go.hasComponent(NonPickableComponent.class))
+                    {
+                        spr.start();
+                        this.renderer.add(go);
+                    }
                 }
             }
 

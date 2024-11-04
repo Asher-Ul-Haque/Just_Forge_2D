@@ -29,7 +29,7 @@ import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_LEFT;
 public class MouseControlComponent extends Component implements Observer
 {
     // - - - private variable for the thing being held
-    static GameObject holdingObject = null;
+    public static GameObject holdingObject = null;
     static private final float debounceTime = 0.4f;
     static private float debounce = debounceTime;
 

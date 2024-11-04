@@ -20,8 +20,11 @@ public class KeyboardControls
 
         if (Keyboard.isKeyPressed(Keys.ESCAPE))
         {
-            if (MouseControlComponent.holdingObject != null) MouseControlComponent.holdingObject.destroy();
-            MouseControlComponent.holdingObject = (null);
+            if (MouseControlComponent.holdingObject != null)
+            {
+                MouseControlComponent.holdingObject.destroy();
+            }
+            MouseControlComponent.holdingObject = null;
             ComponentsWindow.clearSelection();
         }
 
