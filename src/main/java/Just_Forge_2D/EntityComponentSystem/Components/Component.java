@@ -38,7 +38,7 @@ public abstract class Component
 
     // - - - Editor Part - - -
 
-    protected void deleteButton()
+    protected final void deleteButton()
     {
         if (Widgets.button(Icons.Trash + " Destroy##" + this.getClass().hashCode()))
         {

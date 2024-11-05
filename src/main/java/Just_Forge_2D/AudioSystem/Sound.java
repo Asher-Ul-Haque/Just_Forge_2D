@@ -22,7 +22,7 @@ public class Sound
     public final boolean valid;
     private LowLevelSound wav;
     private boolean loop;
-    private float volume = 1.0f;
+    private int volume = 100;
     private float pitch;
 
     private boolean isPlaying = false;
@@ -177,8 +177,18 @@ public class Sound
 
     public void setVolume(float VOLUME)
     {
-        volume = VOLUME;
-        alSourcef(sourceID, AL_GAIN, VOLUME);
+        volume = (int) Math.max(0, Math.min(100, VOLUME));
+        alSourcef(sourceID, AL_GAIN, Math.max(0.0f, Math.min(1.0f, VOLUME / 100)));
+    }
+
+    public int getVolume()
+    {
+        return volume;
+    }
+
+    public float getPitch()
+    {
+        return pitch;
     }
 
     public void setPitch(float PITCH)

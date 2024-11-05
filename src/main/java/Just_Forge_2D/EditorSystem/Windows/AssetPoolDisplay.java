@@ -51,12 +51,14 @@ public class AssetPoolDisplay
     // - - - Mode
     public enum Mode
     {
-        SELECTION,
+        SPRITE_SELECTION,
+        SOUND_SELECTION,
         CREATION
     }
 
     private static Mode mode = Mode.CREATION;
     private static Consumer<Sprite> onSpriteSelection;
+    private static Consumer<Sound> onSoundSelection;
 
 
 
@@ -64,10 +66,16 @@ public class AssetPoolDisplay
 
 
 
-    public static void enableSelection(Consumer<Sprite> CALLBACK)
+    public static void enableSpriteSelection(Consumer<Sprite> CALLBACK)
     {
-        mode = Mode.SELECTION;
+        mode = Mode.SPRITE_SELECTION;
         onSpriteSelection = CALLBACK;
+    }
+
+    public static void enableSoundSelection(Consumer<Sound> CALLBACK)
+    {
+        mode = Mode.SOUND_SELECTION;
+        onSoundSelection = CALLBACK;
     }
 
     public static Mode getMode()
@@ -116,7 +124,7 @@ public class AssetPoolDisplay
                 case "Texture" ->
                         path = handleBrowse("Select a Texture", assetPath, new String[]{"*.png", "*.jpg", "*.jpeg"});
                 case "Sound" ->
-                        path = handleBrowse("Select a Sound", assetPath, new String[]{"*.wav", "*.mp3", "*.ogg"});
+                        path = handleBrowse("Select a Sound", assetPath, new String[]{"*.wav", "*.ogg"});
             }
         }
 
@@ -339,7 +347,7 @@ public class AssetPoolDisplay
                 MouseControlComponent.pickupObject(object);
                 break;
 
-            case SELECTION:
+            case SPRITE_SELECTION:
                 onSpriteSelection.accept(sprite.copy());
                 mode = Mode.CREATION;
                 break;
@@ -351,11 +359,14 @@ public class AssetPoolDisplay
     {
         if (ImGui.beginTabItem(Icons.Music + " Sounds"))
         {
-            handleAddAndClear(AssetPool::clearSoundPool, "a Sound");
-
-            if (open)
+            if (mode.equals(Mode.CREATION))
             {
-                addAsset("Sound", EditorSystemManager.projectDir + "/Assets/Sounds/", !name.isEmpty() && !path.isEmpty(), () -> AssetPool.addSound(name, path, loop, true), ()-> loop = Widgets.drawBoolControl(Icons.SyncAlt + " Looping", loop));
+                handleAddAndClear(AssetPool::clearSoundPool, "a Sound");
+
+                if (open)
+                {
+                    addAsset("Sound", EditorSystemManager.projectDir + "/Assets/Sounds/", !name.isEmpty() && !path.isEmpty(), () -> AssetPool.addSound(name, path, loop, true), () -> loop = Widgets.drawBoolControl(Icons.SyncAlt + " Looping", loop));
+                }
             }
             drawSounds();
             ImGui.endTabItem();
@@ -382,8 +393,18 @@ public class AssetPoolDisplay
 
             if (Widgets.button((sound.isPlaying() ? Icons.Stop : Icons.Play) + " " + soundName))
             {
-                if (!sound.isPlaying()) sound.play();
-                else sound.stop();
+                switch (mode)
+                {
+                    case SOUND_SELECTION:
+                        onSoundSelection.accept(sound);
+                        mode = Mode.CREATION;
+                        break;
+
+                    case CREATION:
+                        if (!sound.isPlaying()) sound.play();
+                        else sound.stop();
+                        break;
+                }
             }
         }
     }
@@ -391,7 +412,7 @@ public class AssetPoolDisplay
     // - - - Helper to handle adding and clearing assets
     private static void handleAddAndClear(Runnable clearMethod, String addLabel)
     {
-        if (mode.equals(Mode.SELECTION)) return;
+        if (mode.equals(Mode.SPRITE_SELECTION)) return;
         if (Widgets.button(ICON_ADD + " " + addLabel)) open = !open;
         ImGui.sameLine();
         if (Widgets.button(Icons.TrashAlt + " Clear")) clearMethod.run();
@@ -411,7 +432,17 @@ public class AssetPoolDisplay
                     soundDisplay();
                     break;
 
-                case SELECTION:
+                case SOUND_SELECTION:
+                    soundDisplay();
+                    ImGui.newLine();
+                    if (Widgets.button("Stop Selection", true))
+                    {
+                        onSoundSelection = null;
+                        mode = Mode.CREATION;
+                    }
+                    break;
+
+                case SPRITE_SELECTION:
                     textureDisplay();
                     spriteSheetDisplay();
                     ImGui.newLine();

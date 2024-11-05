@@ -201,7 +201,7 @@ public class AnimationState
     public void editorGUI()
     {
         // - - - Animation preview controls
-        Widgets.text(AssetPoolDisplay.getMode().equals(AssetPoolDisplay.Mode.SELECTION) ? "Click on any Texture or Sprite Sheet in the Asset Pool" : "");
+        Widgets.text(AssetPoolDisplay.getMode().equals(AssetPoolDisplay.Mode.SPRITE_SELECTION) ? "Click on any Texture or Sprite Sheet in the Asset Pool" : "");
 
 
         // - - - Loop through frames and display their editorGUI

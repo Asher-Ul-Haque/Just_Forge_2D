@@ -210,6 +210,7 @@ public class SplashScreen
             if (!EditorSystemManager.isRelease)
             {
                 AssetPoolSerializer.loadAssetPool(EditorSystemManager.projectDir + "/.forge/Pool.justForgeFile");
+                AssetPool.addSound("Default", "default.ogg", false, false);
                 GameCodeLoader.openEye();
             }
             if (EditorSystemManager.currentSceneInitializer == null || GameWindow.getCurrentScene() == null)

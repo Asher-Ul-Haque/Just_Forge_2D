@@ -21,7 +21,7 @@ public class Frame
         // - - - Show sprite preview as an image button
         if (Widgets.imageButton(sprite.getTextureID(), sprite.getWidth(), sprite.getHeight(), sprite.getTextureCoordinates(), true))
         {
-            AssetPoolDisplay.enableSelection((Sprite SP)->{this.sprite = SP;});
+            AssetPoolDisplay.enableSpriteSelection((Sprite SP)->{this.sprite = SP;});
         }
 
         // - - - Editable frame time

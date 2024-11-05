@@ -149,7 +149,7 @@ public class SpriteComponent extends Component
 
     public static Sprite spriteGUI(Sprite SPR, Consumer<Sprite> CALLBACK, int HASHCODE)
     {
-        if (AssetPoolDisplay.getMode().equals(AssetPoolDisplay.Mode.SELECTION))
+        if (AssetPoolDisplay.getMode().equals(AssetPoolDisplay.Mode.SPRITE_SELECTION))
         {
             Widgets.text("Click on any Texture or Sprite Sheet in the Asset Pool");
         }
@@ -158,7 +158,7 @@ public class SpriteComponent extends Component
             Vector2f[] texCoords = SPR.getTextureCoordinates();
             if (Widgets.imageButton(SPR.getTextureID(), SPR.getWidth() * 2, SPR.getHeight() * 2, texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y, true))
             {
-                AssetPoolDisplay.enableSelection(CALLBACK);
+                AssetPoolDisplay.enableSpriteSelection(CALLBACK);
             }
 
             if (Widgets.button(Icons.Trash + " ##" + HASHCODE, true))
@@ -189,7 +189,7 @@ public class SpriteComponent extends Component
         {
             if (Widgets.button(Icons.Image + " ##" + HASHCODE, true))
             {
-                AssetPoolDisplay.enableSelection(CALLBACK);
+                AssetPoolDisplay.enableSpriteSelection(CALLBACK);
             }
         }
         return SPR;
