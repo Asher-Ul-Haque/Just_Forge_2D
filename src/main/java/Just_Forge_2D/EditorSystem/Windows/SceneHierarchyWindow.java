@@ -1,8 +1,8 @@
 package Just_Forge_2D.EditorSystem.Windows;
 
+import Just_Forge_2D.EditorSystem.EditorComponents.NonPickableComponent;
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.EditorSystem.Icons;
-import Just_Forge_2D.EditorSystem.Themes.Theme;
 import Just_Forge_2D.EditorSystem.Widgets;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.Components.ComponentList;
@@ -12,6 +12,7 @@ import Just_Forge_2D.EventSystem.EventManager;
 import Just_Forge_2D.EventSystem.Events.Event;
 import Just_Forge_2D.EventSystem.Events.EventTypes;
 import Just_Forge_2D.SceneSystem.Camera;
+import Just_Forge_2D.Themes.Theme;
 import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.WindowSystem.GameWindow;
 import imgui.ImGui;
@@ -144,7 +145,7 @@ public class SceneHierarchyWindow
         for (int i = 0; i < gameObjectList.size(); ++i)
         {
             GameObject obj = gameObjectList.get(i);
-            if (!obj.getSerializationStatus())
+            if (!obj.getSerializationStatus() || obj.hasComponent(NonPickableComponent.class))
             {
                 continue;
             }

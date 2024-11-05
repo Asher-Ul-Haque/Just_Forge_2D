@@ -21,7 +21,8 @@ public class SpriteComponent extends Component
     private transient TransformComponent lastTransform = new TransformComponent();
     private transient boolean isChanged = true;
     private boolean showAtRuntime = true;
-    private transient boolean read = false;
+    private boolean read = false;
+    private boolean wrote = false;
 
 
     // - - - | Functions | - - -
@@ -108,10 +109,11 @@ public class SpriteComponent extends Component
     @Override
     public void start()
     {
-        if (this.getTexture() != null) this.sprite.setTexture(AssetPool.makeTexture(getTexture().getFilepath()));
+        if (sprite.getTexture() != null) this.sprite.setTexture(AssetPool.makeTexture(this.sprite.getTexture().getFilepath()));
         this.sprite.applyTextureFilters();
         this.lastTransform = gameObject.transform.copy();
         read = true;
+        wrote = false;
     }
 
     // - - - Update if data changes
@@ -130,6 +132,15 @@ public class SpriteComponent extends Component
     public void editorUpdate(float DELTA_TIME)
     {
         update(DELTA_TIME);
+        if (!read)
+        {
+            Renderer renderer = GameWindow.getCurrentScene().getRenderer();
+            if (renderer != null)
+            {
+                start();
+                renderer.add(this.gameObject);
+            }
+        }
     }
 
 
@@ -210,15 +221,11 @@ public class SpriteComponent extends Component
     @Override
     public void destroy()
     {
-        this.isChanged = true;
-        // - - - TODO: change this
         Renderer renderer = GameWindow.getCurrentScene().getRenderer();
-        if (renderer != null) renderer.destroyGameObject(this.gameObject);
-        read = false;
-    }
-
-    public boolean hasBeenRead()
-    {
-        return read;
+        if (renderer != null)
+        {
+            renderer.destroyGameObject(this.gameObject);
+        }
+        this.isChanged = true;
     }
 }

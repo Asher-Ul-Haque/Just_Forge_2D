@@ -2,7 +2,7 @@ package Just_Forge_2D.EditorSystem.Windows;
 
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.EditorSystem.Icons;
-import Just_Forge_2D.EditorSystem.Themes.Theme;
+import Just_Forge_2D.Themes.Theme;
 import Just_Forge_2D.WindowSystem.GameWindow;
 import imgui.ImGui;
 import imgui.extension.implot.ImPlot;

@@ -22,6 +22,7 @@ import org.joml.Vector3f;
 import org.joml.Vector4f;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_LEFT;
@@ -184,6 +185,43 @@ public class MouseControlComponent extends Component implements Observer
                     ComponentsWindow.addActiveGameObject(picked);
                 }
             }
+        }
+        if (ComponentsWindow.getActiveGameObjects().size() > 1)
+        {
+            // - - - Get the active game objects
+            List<GameObject> activeGameObjects = ComponentsWindow.getActiveGameObjects();
+
+            // - - - Initialize the min and max points for the bounding box
+            float minX = Float.MAX_VALUE;
+            float minY = Float.MAX_VALUE;
+            float maxX = Float.MIN_VALUE;
+            float maxY = Float.MIN_VALUE;
+
+            // - - - Find the bounds by iterating through all selected game objects
+            for (GameObject gameObject : activeGameObjects)
+            {
+                Vector2f position = gameObject.transform.position;
+                Vector2f scale = gameObject.transform.scale;
+
+                // - - - Calculate the object's corners
+                float left = position.x - scale.x / 2f;
+                float right = position.x + scale.x / 2f;
+                float bottom = position.y - scale.y / 2f;
+                float top = position.y + scale.y / 2f;
+
+                // - - - Update min and max values
+                if (left < minX) minX = left;
+                if (right > maxX) maxX = right;
+                if (bottom < minY) minY = bottom;
+                if (top > maxY) maxY = top;
+            }
+
+            // - - - Calculate the center and size of the bounding box
+            Vector2f boxCenter = new Vector2f((minX + maxX) / 2f, (minY + maxY) / 2f);
+            Vector2f boxSize = new Vector2f(maxX - minX, maxY - minY);
+
+            // - - - Draw the bounding box in red
+            DebugPencil.addBox(boxCenter, boxSize, new Vector3f(1, 0, 0));
         }
     }
 

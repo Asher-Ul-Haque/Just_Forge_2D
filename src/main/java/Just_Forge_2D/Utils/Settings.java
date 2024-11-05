@@ -1,5 +1,6 @@
 package Just_Forge_2D.Utils;
 
+import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.InputSystem.Keys;
 import Just_Forge_2D.RenderingSystem.TextureMaximizeFilter;
 import Just_Forge_2D.RenderingSystem.TextureMinimizeFilter;
@@ -208,8 +209,8 @@ public class Settings
     // - - - Texture
     private  TextureWrapping DEFAULT_TEXTURE_WRAP_S = TextureWrapping.REPEAT;
     private  TextureWrapping DEFAULT_TEXTURE_WRAP_T = TextureWrapping.REPEAT;
-    private  TextureMinimizeFilter DEFAULT_TEXTURE_MIN_FILTER = TextureMinimizeFilter.NEAREST;
-    private  TextureMaximizeFilter DEFAULT_TEXTURE_MAX_FILTER = TextureMaximizeFilter.NEAREST;
+    private  TextureMinimizeFilter DEFAULT_TEXTURE_MIN_FILTER = TextureMinimizeFilter.LINEAR;
+    private  TextureMaximizeFilter DEFAULT_TEXTURE_MAX_FILTER = TextureMaximizeFilter.LINEAR;
     public static TextureWrapping DEFAULT_TEXTURE_WRAP_S() { return getInstance().DEFAULT_TEXTURE_WRAP_S;}
     public static TextureWrapping DEFAULT_TEXTURE_WRAP_T() { return getInstance().DEFAULT_TEXTURE_WRAP_T;}
     public static TextureMinimizeFilter DEFAULT_TEXTURE_MIN_FILTER() { return getInstance().DEFAULT_TEXTURE_MIN_FILTER;}
@@ -217,7 +218,7 @@ public class Settings
 
 
     // - - - Theme
-    private  boolean DARK_MODE_ENABLED = true;
+    private boolean DARK_MODE_ENABLED = true;
     public static boolean DARK_MODE_ENABLED() { return getInstance().DARK_MODE_ENABLED; }
     private  ImVec4 DEFAULT_CLEAN_THEME_SECONDARY_COLOR = new ImVec4(0.129411765f, 0.1450980f, 0.16078f, 1.0f);
     public static ImVec4 DEFAULT_CLEAN_THEME_SECONDARY_COLOR() { return getInstance().DEFAULT_CLEAN_THEME_SECONDARY_COLOR; }
@@ -280,11 +281,11 @@ public class Settings
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
         String json = gson.toJson(instance);
-        try
+        try (FileWriter globalWriter = new FileWriter("Settings.justForgeFile"); FileWriter localWriter = new FileWriter(EditorSystemManager.projectDir + "/Settings.justForgeFile"))
         {
-            FileWriter writer = new FileWriter("Settings.justForgeFile");
-            writer.write(json);
-            writer.close();
+            globalWriter.write(json);
+            localWriter.write(json);
+
         }
         catch (Exception e)
         {
@@ -307,4 +308,5 @@ public class Settings
             instance = new Settings();
         }
     }
+
 }

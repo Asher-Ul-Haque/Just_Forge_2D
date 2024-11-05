@@ -302,6 +302,7 @@ public class GameWindow extends Window
             }
             if (EditorSystemManager.isRelease)
             {
+                System.out.println();
                 super.setSize(WIDTH, HEIGHT);
                 float aspectWidth = WIDTH;
                 float aspectHeight = aspectWidth / ((float) GameWindow.getFrameBuffer().getSize().x / GameWindow.getFrameBuffer().getSize().y);

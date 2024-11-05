@@ -2,9 +2,7 @@ package Just_Forge_2D.SceneSystem;
 
 import Just_Forge_2D.AnimationSystem.AnimationComponent;
 import Just_Forge_2D.AssetPool.AssetPool;
-import Just_Forge_2D.EditorSystem.EditorComponents.NonPickableComponent;
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
-import Just_Forge_2D.EditorSystem.InputControls.MouseControlComponent;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.Components.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.Components.TransformComponent;
@@ -67,9 +65,9 @@ public class Scene
         for (int i = 0; i < gameObjects.size(); ++i)
         {
             GameObject go = gameObjects.get(i);
+            go.start();
             if (this.renderer != null && go.hasComponent(SpriteComponent.class)) this.renderer.add(go);
             if (this.physics != null && go.hasComponent(RigidBodyComponent.class)) this.physics.add(go);
-            go.start();
         }
         isRunning = true;
         Logger.FORGE_LOG_INFO("Scene: " + this + " Started");
@@ -99,8 +97,8 @@ public class Scene
         {
             gameObjects.add(go);
             go.start();
-            if (this.renderer != null && go.hasComponent(SpriteComponent.class)) this.renderer.destroyGameObject(go);
-            if (this.physics != null && go.hasComponent(SpriteComponent.class)) this.physics.destroyGameObject(go);
+            if (this.renderer != null && go.hasComponent(SpriteComponent.class)) this.renderer.add(go);
+            if (this.physics != null && go.hasComponent(SpriteComponent.class)) this.physics.add(go);
         }
         pendingObjects.clear();
     }
@@ -228,23 +226,6 @@ public class Scene
         {
             GameObject go = gameObjects.get(i);
             go.editorUpdate(DELTA_TIME);
-            SpriteComponent spr = go.getComponent(SpriteComponent.class);
-            if (spr != null)
-            {
-                if (!spr.hasBeenRead() && this.renderer != null)
-                {
-                    if (go.isDead())
-                    {
-                        spr.destroy();
-                        this.renderer.destroyGameObject(go);
-                    }
-                    else if (!go.equals(MouseControlComponent.holdingObject) && !go.hasComponent(NonPickableComponent.class))
-                    {
-                        spr.start();
-                        this.renderer.add(go);
-                    }
-                }
-            }
 
             if (go.isDead())
             {
@@ -258,6 +239,7 @@ public class Scene
         for (GameObject go : pendingObjects)
         {
             gameObjects.add(go);
+            go.start();
             if (this.renderer != null) this.renderer.add(go);
             if (this.physics != null) this.physics.add(go);
         }

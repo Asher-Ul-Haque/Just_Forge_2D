@@ -3,8 +3,6 @@ package Just_Forge_2D.EditorSystem;
 import Just_Forge_2D.AssetPool.AssetPool;
 import Just_Forge_2D.AssetPool.AssetPoolSerializer;
 import Just_Forge_2D.AudioSystem.AudioSystemManager;
-import Just_Forge_2D.EditorSystem.Themes.CleanTheme;
-import Just_Forge_2D.EditorSystem.Themes.Theme;
 import Just_Forge_2D.EditorSystem.Windows.ObjectSelector;
 import Just_Forge_2D.EntityComponentSystem.Components.ComponentList;
 import Just_Forge_2D.EventSystem.EventManager;
@@ -14,6 +12,8 @@ import Just_Forge_2D.GameSystem.ProjectManager;
 import Just_Forge_2D.RenderingSystem.Shader;
 import Just_Forge_2D.SceneSystem.MainSceneScript;
 import Just_Forge_2D.SceneSystem.SceneScript;
+import Just_Forge_2D.Themes.CatppuccinTheme;
+import Just_Forge_2D.Themes.Theme;
 import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.Utils.Settings;
 import Just_Forge_2D.WindowSystem.GameWindow;
@@ -56,7 +56,7 @@ public class EditorSystemManager
 
     public static Class<? extends SceneScript> currentSceneInitializer;
     public static String projectDir = System.getProperty("user.dir");
-    public static final boolean isRelease = true;
+    public static final boolean isRelease = false;
 
     public static state getCurrentState()
     {
@@ -127,7 +127,7 @@ public class EditorSystemManager
         WindowSystemManager.initialize();
         editorWindowConfig = new WindowConfig();
         editorWindowConfig.setHeight(800);
-        if (currentTheme == null) currentTheme = new CleanTheme(Settings.DARK_MODE_ENABLED());
+        if (currentTheme == null) currentTheme = new CatppuccinTheme(Settings.DARK_MODE_ENABLED());
         GameWindow.get();
         EditorSystemManager.setSelector();
         setEditorLayer();

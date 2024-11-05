@@ -33,6 +33,7 @@ public class AssetPoolDisplay
     private static boolean open = false;
     private static boolean spriteEditorOpen = false;
     private static boolean keepSize;
+    private static boolean keepAspectRatio;
 
     // - - - Sprite Sheet
     private static final Vector2f size = new Vector2f(GridlinesComponent.gridSize);
@@ -174,7 +175,11 @@ public class AssetPoolDisplay
         List<String> spriteSheetNames = AssetPool.getSpriteSheetNames();
         if (mode.equals(Mode.CREATION))
         {
-            if (!spriteSheetNames.isEmpty()) keepSize = Widgets.drawBoolControl(Icons.Expand + "  Keep Size", keepSize);
+            if (!spriteSheetNames.isEmpty())
+            {
+                keepSize = Widgets.drawBoolControl(Icons.Expand + "  Keep Size", keepSize);
+                if (!keepSize) keepAspectRatio = Widgets.drawBoolControl(Icons.ExpandArrowsAlt + "  Keep Aspect Ratio", keepAspectRatio);
+            }
         }
         for (String sheetName : spriteSheetNames)
         {
@@ -234,19 +239,7 @@ public class AssetPoolDisplay
         ImGui.pushID(index);
         if (Widgets.imageButton(id, spriteWidth, spriteHeight, texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y))
         {
-            switch (mode)
-            {
-                case CREATION:
-                    GameObject object = PrefabManager.generateObject(sprite, keepSize ? GridlinesComponent.gridSize.x : sprite.getWidth() / Settings.DEFAULT_SIZE_DOWN_FACTOR(),
-                        keepSize ? GridlinesComponent.gridSize.y : sprite.getHeight() / Settings.DEFAULT_SIZE_DOWN_FACTOR());
-                    MouseControlComponent.pickupObject(object);
-                    break;
-
-                case SELECTION:
-                    onSpriteSelection.accept(sprite.copy());
-                    mode = Mode.CREATION;
-                    break;
-            }
+            spriteButton(sprite);
         }
         ImGui.popID();
 
@@ -290,6 +283,7 @@ public class AssetPoolDisplay
                 if (mode.equals(Mode.CREATION))
                 {
                     keepSize = Widgets.drawBoolControl(Icons.Expand + "  Keep Size", keepSize);
+                    if (!keepSize) keepAspectRatio = Widgets.drawBoolControl(Icons.ExpandArrowsAlt + "  Keep Aspect Ratio", keepAspectRatio);
 
                     if (Widgets.button(ICON_REMOVE))
                     {
@@ -317,19 +311,38 @@ public class AssetPoolDisplay
 
         if (Widgets.imageButton(id, sprite.getWidth(), sprite.getHeight(), texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y))
         {
-            switch (mode)
-            {
-                case CREATION:
-                    GameObject object = PrefabManager.generateObject(sprite, !keepSize ? GridlinesComponent.gridSize.x : sprite.getWidth() / Settings.DEFAULT_SIZE_DOWN_FACTOR(),
-                            !keepSize ? GridlinesComponent.gridSize.y : sprite.getHeight() / Settings.DEFAULT_SIZE_DOWN_FACTOR());
-                    MouseControlComponent.pickupObject(object);
-                    break;
+            spriteButton(sprite);
+        }
+    }
 
-                case SELECTION:
-                    onSpriteSelection.accept(sprite.copy());
-                    mode = Mode.CREATION;
-                    break;
-            }
+    private static void spriteButton(Sprite sprite)
+    {
+        switch (mode)
+        {
+            case CREATION:
+                GameObject object;
+                if (!keepSize)
+                {
+                    if (keepAspectRatio)
+                    {
+                        float aspectRatio = sprite.getWidth() / sprite.getHeight();
+                        float height = GridlinesComponent.gridSize.y;
+                        float width = height * aspectRatio;
+                        object = PrefabManager.generateObject(sprite, width, height);
+                    }
+                    else object = PrefabManager.generateObject(sprite, GridlinesComponent.gridSize.x, GridlinesComponent.gridSize.y);
+                }
+                else
+                {
+                    object = PrefabManager.generateObject(sprite, sprite.getWidth() / Settings.DEFAULT_SIZE_DOWN_FACTOR(), sprite.getHeight() / Settings.DEFAULT_SIZE_DOWN_FACTOR());
+                }
+                MouseControlComponent.pickupObject(object);
+                break;
+
+            case SELECTION:
+                onSpriteSelection.accept(sprite.copy());
+                mode = Mode.CREATION;
+                break;
         }
     }
 

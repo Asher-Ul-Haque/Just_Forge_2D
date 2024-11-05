@@ -2,9 +2,9 @@ package Just_Forge_2D.EntityComponentSystem.Components;
 
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.EditorSystem.Icons;
-import Just_Forge_2D.EditorSystem.Themes.Theme;
 import Just_Forge_2D.EditorSystem.Widgets;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
+import Just_Forge_2D.Themes.Theme;
 import Just_Forge_2D.Utils.Logger;
 import imgui.ImGui;
 import org.jbox2d.dynamics.contacts.Contact;
