@@ -54,6 +54,7 @@ public class GameManager
                     {
                         Logger.FORGE_LOG_FATAL("Error in user code. Exit code : " + exitCode);
                         if (IS_NOT_EARLY) progressPercentage = 1f;
+                        TinyFileDialogs.tinyfd_notifyPopup( "Code Error", "Error in user code. Check logs","error");
                         return;
                     }
                     if (IS_NOT_EARLY) progressPercentage = 0.9f;
@@ -86,6 +87,10 @@ public class GameManager
                     {
                         System.exit(0);
                     }
+                    else
+                    {
+                        TinyFileDialogs.tinyfd_notifyPopup("Couldn't find code", "Couldn't find an entry point in the user code. \nEnsure that the Game Interface is implemented.","error");
+                    }
                     return;
                 }
             }
@@ -93,10 +98,15 @@ public class GameManager
             {
                 if (IS_NOT_EARLY) success = false;
                 else earlyCompileSuccess = false;
+                if (IS_NOT_EARLY) progressPercentage = 1f;
                 Logger.FORGE_LOG_FATAL("Failed to build user code: " + e.getMessage());
                 if (EditorSystemManager.isRelease)
                 {
                     System.exit(0);
+                }
+                else
+                {
+                    TinyFileDialogs.tinyfd_notifyPopup("Failed to build user code", "","error");
                 }
                 return;
             }
@@ -203,6 +213,7 @@ public class GameManager
             {
                 TinyFileDialogs.tinyfd_notifyPopup("Error in compiling project", "Failed to build user code: " + e.getMessage(), "error");
                 Logger.FORGE_LOG_FATAL("Failed to build user code: " + e.getMessage());
+                return;
             }
         }).start();
 

@@ -12,6 +12,7 @@ import Just_Forge_2D.GameSystem.GameCodeLoader;
 import Just_Forge_2D.GameSystem.GameManager;
 import Just_Forge_2D.GameSystem.ProjectManager;
 import Just_Forge_2D.RenderingSystem.Texture;
+import Just_Forge_2D.Themes.Theme;
 import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.Utils.Settings;
 import Just_Forge_2D.WindowSystem.GameWindow;
@@ -43,7 +44,7 @@ public class SplashScreen
         {
             Logger.FORGE_LOG_INFO("Initializing Just Forge 2D");
             // - - - set up the window
-            GameWindow.get().setClearColor(new Vector4f(0.0f, 0.0f, 0.0f, 1.0f));
+            GameWindow.get().setClearColor(new Vector4f(0.0f, 0.0f, 0.0f, 0.0f));
             GameWindow.get().setAlwaysOnTop(true);
             GameWindow.get().setDecorated(false);
             GameWindow.get().setSize(600, 400);
@@ -173,14 +174,16 @@ public class SplashScreen
         ImGui.setCursorPosY(GameWindow.get().getHeight() - 40);
         String title = "Loading Project: " + ProjectManager.PROJECT_NAME;
         Widgets.text(title);
+        Theme.setDefaultTextColor(EditorSystemManager.getCurrentTheme().secondaryColor);
         ImGui.setCursorPosY(GameWindow.get().getHeight() - 20);
         ImVec4 backColor = EditorSystemManager.getCurrentTheme().quaternaryColor;
-        ImVec4 color = EditorSystemManager.getCurrentTheme().tertiaryColor;
+        ImVec4 color = EditorSystemManager.getCurrentTheme().secondaryColor;
         ImGui.pushStyleColor(ImGuiCol.PlotHistogram, color.x, color.y, color.z, color.w);
         ImGui.pushStyleColor(ImGuiCol.FrameBg, backColor.x, backColor.y, backColor.z, backColor.w);
         progress = Math.min(GameManager.getProgressPercentage(), progress + 0.01f);
         ImGui.progressBar(progress, ImGui.getContentRegionAvailX(), 14);
         ImGui.popStyleColor(2);
+        Theme.resetDefaultTextColor();
 
         if (load) cleanup();
         if (!EditorSystemManager.isRelease)

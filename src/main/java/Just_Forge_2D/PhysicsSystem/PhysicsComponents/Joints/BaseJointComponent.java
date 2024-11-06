@@ -7,7 +7,6 @@ import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent;
 import Just_Forge_2D.RenderingSystem.DebugPencil;
 import imgui.ImGui;
-import org.jbox2d.dynamics.joints.Joint;
 import org.joml.Vector3f;
 
 public abstract class BaseJointComponent extends Component
@@ -55,10 +54,7 @@ public abstract class BaseJointComponent extends Component
     @Override
     public void editorGUI()
     {
-        if (ImGui.button("Destroy##" + this.getClass().hashCode()))
-        {
-            this.gameObject.removeComponent(this.getClass());
-        }
+        super.deleteButton();
         otherName = Widgets.inputText("Other name: ", otherName);
         debugDrawAtRuntime = Widgets.drawBoolControl("Debug Draw At Runtime", debugDrawAtRuntime);
         if (ImGui.button("Set other"))

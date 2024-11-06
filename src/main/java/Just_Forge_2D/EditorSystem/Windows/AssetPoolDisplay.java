@@ -33,7 +33,7 @@ public class AssetPoolDisplay
     private static boolean open = false;
     private static boolean spriteEditorOpen = false;
     private static boolean keepSize;
-    private static boolean keepAspectRatio;
+    private static boolean keepAspectRatio = true;
 
     // - - - Sprite Sheet
     private static final Vector2f size = new Vector2f(GridlinesComponent.gridSize);

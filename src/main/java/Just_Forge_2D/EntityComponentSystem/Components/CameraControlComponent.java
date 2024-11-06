@@ -49,8 +49,7 @@ public class CameraControlComponent extends Component
     @Override
     public void editorGUI()
     {
-        if (Widgets.button(Icons.Trash + " Destroy##" + this.getClass().hashCode())) this.gameObject.removeComponent(this.getClass());
-
+        super.deleteButton();
         positionLerpFactor = Widgets.drawFloatControl(Icons.MapPin + "  Position Smoothness", positionLerpFactor);
         zoomLerpFactor = Widgets.drawFloatControl(Icons.ExpandAlt + "  Zoom Smoothness", zoomLerpFactor);
         Widgets.text("");

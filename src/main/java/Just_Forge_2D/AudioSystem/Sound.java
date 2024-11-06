@@ -23,7 +23,7 @@ public class Sound
     private LowLevelSound wav;
     private boolean loop;
     private int volume = 100;
-    private float pitch;
+    private float pitch = 1;
 
     private boolean isPlaying = false;
 

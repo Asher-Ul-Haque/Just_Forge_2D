@@ -239,7 +239,6 @@ public class Scene
         for (GameObject go : pendingObjects)
         {
             gameObjects.add(go);
-            go.start();
             if (this.renderer != null) this.renderer.add(go);
             if (this.physics != null) this.physics.add(go);
         }

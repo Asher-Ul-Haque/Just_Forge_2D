@@ -174,4 +174,24 @@ public class Texture
         this.WARP_T = T;
         init(this.getFilepath());
     }
+
+    public TextureWrapping getWrap_tFilter()
+    {
+        return WARP_T;
+    }
+
+    public TextureWrapping getWrap_sFilter()
+    {
+        return WARP_S;
+    }
+
+    public TextureMaximizeFilter getMaximizeFilter()
+    {
+        return MAX_FILTER;
+    }
+
+    public TextureMinimizeFilter getMinimizeFilter()
+    {
+        return MIN_FILTER;
+    }
 }

@@ -176,8 +176,7 @@ public class AnimationState
                 {
                     Vector2f[] texCoords = currentFrameSprite.getTextureCoordinates();
                     Widgets.image(currentFrameSprite.getTextureID(), currentFrameSprite.getWidth() * 2, currentFrameSprite.getHeight() * 2,
-                            texCoords, true);
-                }
+                            texCoords, true);}
             }
         }
     }

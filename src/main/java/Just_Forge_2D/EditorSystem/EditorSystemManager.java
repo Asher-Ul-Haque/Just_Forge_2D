@@ -12,7 +12,7 @@ import Just_Forge_2D.GameSystem.ProjectManager;
 import Just_Forge_2D.RenderingSystem.Shader;
 import Just_Forge_2D.SceneSystem.MainSceneScript;
 import Just_Forge_2D.SceneSystem.SceneScript;
-import Just_Forge_2D.Themes.CatppuccinTheme;
+import Just_Forge_2D.Themes.CleanTheme;
 import Just_Forge_2D.Themes.Theme;
 import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.Utils.Settings;
@@ -127,7 +127,7 @@ public class EditorSystemManager
         WindowSystemManager.initialize();
         editorWindowConfig = new WindowConfig();
         editorWindowConfig.setHeight(800);
-        if (currentTheme == null) currentTheme = new CatppuccinTheme(Settings.DARK_MODE_ENABLED());
+        if (currentTheme == null) currentTheme = new CleanTheme(Settings.DARK_MODE_ENABLED());
         GameWindow.get();
         EditorSystemManager.setSelector();
         setEditorLayer();

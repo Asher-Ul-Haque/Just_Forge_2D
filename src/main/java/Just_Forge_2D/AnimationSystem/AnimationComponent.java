@@ -195,7 +195,6 @@ public class AnimationComponent extends Component
             AnimationState animation = states.get(i);
             if (ImGui.collapsingHeader(states.get(i).title))
             {
-
                 ImGui.separator();
                 if (Widgets.button(Icons.Trash + "  Delete" + " ##" + i))
                 {
@@ -209,11 +208,13 @@ public class AnimationComponent extends Component
                 {
                     setDefaultState(animation.title);
                 }
+
                 ImGui.sameLine();
                 animation.previewControls(GameWindow.get().getDeltaTime());
 
                 ImGui.sameLine();
                 animation.newFrameControls();
+
                 Widgets.text("");
                 animation.editorGUI();
                 Widgets.text("");

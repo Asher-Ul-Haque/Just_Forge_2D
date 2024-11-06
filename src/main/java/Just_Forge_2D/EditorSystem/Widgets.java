@@ -8,6 +8,7 @@ import imgui.flag.ImGuiCol;
 import imgui.flag.ImGuiCond;
 import imgui.flag.ImGuiTableFlags;
 import imgui.flag.ImGuiWindowFlags;
+import imgui.type.ImBoolean;
 import imgui.type.ImInt;
 import imgui.type.ImString;
 import org.joml.Vector2f;
@@ -15,14 +16,20 @@ import org.joml.Vector2i;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 
+import static Just_Forge_2D.Themes.Theme.resetDefaultTextColor;
+import static Just_Forge_2D.Themes.Theme.setDefaultTextColor;
+
+
 public class Widgets
 {
 
     private static final float DEFAULT_RESET = 0.0f;
+    private static ImBoolean popupOpen = new ImBoolean(false);
+
 
 
     // - - - Vec2 Control - - -
-    public static void drawVec2Control(String label, Vector2f values, float resetValue, float JUMP, boolean INT)
+    public static void drawVec2Control(String label, Vector2f values, float resetValue, float JUMP)
     {
         ImGui.pushID(label);
 
@@ -30,7 +37,9 @@ public class Widgets
         {
             ImGui.tableNextColumn();
             ImGui.alignTextToFramePadding();
+            setDefaultTextColor(EditorSystemManager.getCurrentTheme().secondaryColor);
             ImGui.text(label);
+            resetDefaultTextColor();
 
             ImGui.tableNextColumn();
             float framePaddingX = EditorSystemManager.getCurrentTheme().framePadding.x;
@@ -51,18 +60,8 @@ public class Widgets
             }
             ImGui.popStyleColor(3);
             ImGui.sameLine();
-            if (INT)
-            {
-                int[] vecValuesX = {(int) values.x};
-                ImGui.dragInt("##X", vecValuesX, JUMP);
-                values.set(vecValuesX[0], values.y);
-            }
-            else
-            {
-                float[] vecValuesX = {values.x};
-                ImGui.dragFloat("##X", vecValuesX, JUMP);
-                values.set(vecValuesX[0], values.y);
-            }
+            float[] vecValuesX = {values.x};
+            ImGui.dragFloat("##X", vecValuesX, JUMP);
             ImGui.popItemWidth();
 
             ImGui.sameLine();
@@ -76,20 +75,11 @@ public class Widgets
             }
             ImGui.popStyleColor(3);
             ImGui.sameLine();
-            if (INT)
-            {
-                int[] vecValuesY = {(int) values.y};
-                ImGui.dragInt("##Y", vecValuesY, JUMP);
-                values.set(values.x, vecValuesY[0]);
-            }
-            else
-            {
-                float[] vecValuesY = {values.y};
-                ImGui.dragFloat("##Y", vecValuesY, JUMP);
-                values.set(values.x, vecValuesY[0]);
-            }
+            float[] vecValuesY = {values.y};
+            ImGui.dragFloat("##Y", vecValuesY, JUMP);
             ImGui.popItemWidth();
 
+            values.set(vecValuesX[0], vecValuesY[0]);
 
             ImGui.endTable();
         }
@@ -97,21 +87,18 @@ public class Widgets
         ImGui.popID();
     }
 
-    public static void drawVec2Control(String label, Vector2f values, float resetValue, float JUMP)
-    {
-        drawVec2Control(label, values, resetValue, JUMP, false);
-    }
+
 
     public static void drawVec2Control(String label, Vector2i values, float resetValue, float JUMP)
     {
         Vector2f valuesCpy = new Vector2f(values);
-        drawVec2Control(label, valuesCpy, resetValue, JUMP, true);
+        drawVec2Control(label, valuesCpy, resetValue, JUMP);
         values.set((int) valuesCpy.x, (int) valuesCpy.y);
     }
 
     public static void drawVec2Control(String label, Vector2f values)
     {
-        drawVec2Control(label, values, DEFAULT_RESET, 0.1f, false);
+        drawVec2Control(label, values, DEFAULT_RESET, 0.1f);
     }
 
     public static void drawVec2Control(String label, Vector2i values)
@@ -127,7 +114,9 @@ public class Widgets
         {
             ImGui.tableNextColumn();
             ImGui.alignTextToFramePadding();
+            setDefaultTextColor(EditorSystemManager.getCurrentTheme().secondaryColor);
             ImGui.text(label);
+            resetDefaultTextColor();
 
             ImGui.tableNextColumn(); // Second column for the input controls
             float framePaddingX = EditorSystemManager.getCurrentTheme().framePadding.x;
@@ -204,7 +193,9 @@ public class Widgets
         if (ImGui.beginTable("##tableFloatControl" + label, 2, ImGuiTableFlags.SizingStretchSame))
         {
             ImGui.tableNextColumn();
+            setDefaultTextColor(EditorSystemManager.getCurrentTheme().secondaryColor);
             ImGui.text(label);
+            resetDefaultTextColor();
             ImGui.tableNextColumn();
             ImGui.dragFloat("##DragFloat", valArr, 0.1f);
             ImGui.endTable();
@@ -220,7 +211,9 @@ public class Widgets
         if (ImGui.beginTable("##tableIntControl", 2, ImGuiTableFlags.SizingStretchSame))
         {
             ImGui.tableNextColumn();
+            setDefaultTextColor(EditorSystemManager.getCurrentTheme().secondaryColor);
             ImGui.text(label);
+            resetDefaultTextColor();
             ImGui.tableNextColumn();
             ImGui.dragInt("##DragInt", valArr, 0.1f);
             ImGui.endTable();
@@ -240,7 +233,9 @@ public class Widgets
         if (ImGui.beginTable("##tableColorPicker4", 2, ImGuiTableFlags.SizingStretchSame))
         {
             ImGui.tableNextColumn();
+            setDefaultTextColor(EditorSystemManager.getCurrentTheme().secondaryColor);
             ImGui.text(label);
+            resetDefaultTextColor();
 
             ImGui.tableNextColumn();
             changed = ImGui.colorEdit4("##ColorPicker", colorArr);
@@ -267,7 +262,9 @@ public class Widgets
         if (ImGui.beginTable("##tableColorPicker3", 2, ImGuiTableFlags.SizingStretchSame))
         {
             ImGui.tableNextColumn();
+            setDefaultTextColor(EditorSystemManager.getCurrentTheme().secondaryColor);
             ImGui.text(label);
+            resetDefaultTextColor();
 
             ImGui.tableNextColumn();
             changed = ImGui.colorEdit3("##ColorPicker", colorArr);  // Use colorEdit3 for 3-component color
@@ -293,7 +290,9 @@ public class Widgets
         if (ImGui.beginTable("##tableBoolControl", 2, ImGuiTableFlags.SizingStretchSame))
         {
             ImGui.tableNextColumn();
+            setDefaultTextColor(EditorSystemManager.getCurrentTheme().secondaryColor);
             ImGui.text(label);
+            resetDefaultTextColor();
 
             ImGui.tableNextColumn();
             if (ImGui.checkbox("##" + label, value))
@@ -309,7 +308,7 @@ public class Widgets
     }
 
 
-        // - - - Text Input - - -
+    // - - - Text Input - - -
     public static String inputText(String label, String text)
     {
         ImGui.pushID(label);
@@ -318,7 +317,9 @@ public class Widgets
         if (ImGui.beginTable("##tableTextInput", 2, ImGuiTableFlags.SizingStretchSame))
         {
             ImGui.tableNextColumn();
+            setDefaultTextColor(EditorSystemManager.getCurrentTheme().tertiaryColor);
             ImGui.text(label);
+            resetDefaultTextColor();
 
             ImGui.tableNextColumn();
             if (ImGui.inputText("##" + label, imString))
@@ -346,7 +347,9 @@ public class Widgets
         if (ImGui.beginTable("##tableEnumControl", 2, ImGuiTableFlags.NoPadOuterX))
         {
             ImGui.tableNextColumn();
+            setDefaultTextColor(EditorSystemManager.getCurrentTheme().tertiaryColor);
             ImGui.text(label);
+            resetDefaultTextColor();
 
             ImGui.tableNextColumn();
             ImInt index = new ImInt(indexOf(currentEnumName, enumValues));
@@ -485,7 +488,7 @@ public class Widgets
 
     public static void text(String TEXT)
     {
-        Theme.setDefaultTextColor(EditorSystemManager.getCurrentTheme().tertiaryColor);
+        Theme.setDefaultTextColor(EditorSystemManager.getCurrentTheme().secondaryColor);
         ImGui.text(TEXT);
         Theme.resetDefaultTextColor();
     }

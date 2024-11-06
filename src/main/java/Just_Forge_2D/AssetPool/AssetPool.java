@@ -142,6 +142,11 @@ public class AssetPool
 
     public static Texture makeTexture(String FILE_PATH)
     {
+        return makeTexture(FILE_PATH, true);
+    }
+
+    public static Texture makeTexture(String FILE_PATH, boolean ABSOLUTE)
+    {
         if (AssetPool.texturePool.containsKey(FILE_PATH))
         {
             Logger.FORGE_LOG_TRACE("Loaded texture: " + FILE_PATH);
@@ -149,7 +154,7 @@ public class AssetPool
         }
         else
         {
-            addTexture(FILE_PATH, FILE_PATH, true);
+            addTexture(FILE_PATH, FILE_PATH, ABSOLUTE);
             return getTexture(FILE_PATH);
         }
     }

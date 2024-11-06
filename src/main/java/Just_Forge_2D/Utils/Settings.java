@@ -228,11 +228,11 @@ public class Settings
     public static ImVec4 DEFAULT_CLEAN_THEME_TERTIARY_COLOR() { return getInstance().DEFAULT_CLEAN_THEME_TERTIARY_COLOR; }
     private  ImVec4 DEFAULT_CLEAN_THEME_QUATERNARY_COLOR = new ImVec4(0.8747f, 0.892156f, 0.91760f, 1.0f);
     public static ImVec4 DEFAULT_CLEAN_THEME_QUATERNARY_COLOR() { return getInstance().DEFAULT_CLEAN_THEME_QUATERNARY_COLOR; }
-    private  float DEFAULT_POPUP_ROUNDING = 4f;
+    private  float DEFAULT_POPUP_ROUNDING = 8f;
     public static float DEFAULT_POPUP_ROUNDING() { return getInstance().DEFAULT_POPUP_ROUNDING; }
     private  float DEFAULT_WINDOW_BORDER_SIZE = 0.0f;
     public static float DEFAULT_WINDOW_BORDER_SIZE() { return getInstance().DEFAULT_WINDOW_BORDER_SIZE; }
-    private  float DEFAULT_WINDOW_ROUNDING = 0.0f;
+    private  float DEFAULT_WINDOW_ROUNDING = 8.0f;
     public static float DEFAULT_WINDOW_ROUNDING() { return getInstance().DEFAULT_WINDOW_ROUNDING; }
     private  ImVec2 DEFAULT_WINDOW_PADDING = new ImVec2(4.0f, 4.0f);
     public static ImVec2 DEFAULT_WINDOW_PADDING() { return getInstance().DEFAULT_WINDOW_PADDING; }
@@ -242,7 +242,7 @@ public class Settings
     public static float DEFAULT_FRAME_ROUNDING() { return getInstance().DEFAULT_FRAME_ROUNDING; }
     private  float DEFAULT_TREE_NODE_INDENT = 16f;
     public static float DEFAULT_TREE_NODE_INDENT() { return getInstance().DEFAULT_TREE_NODE_INDENT; }
-    private  float DEFAULT_TAB_ROUNDING = 4f;
+    private  float DEFAULT_TAB_ROUNDING = 8f;
     public static float DEFAULT_TAB_ROUNDING() { return getInstance().DEFAULT_TAB_ROUNDING; }
     private  float DEFAULT_TAB_BORDER = 0f;
     public static float DEFAULT_TAB_BORDER() { return getInstance().DEFAULT_TAB_BORDER; }
@@ -258,8 +258,6 @@ public class Settings
     public static float MAX_IMAGE_DISPLAY_HEIGHT() { return getInstance().MAX_IMAGE_DISPLAY_HEIGHT; }
 
     // - - - Text Component
-    private  String DEFAULT_TEXT = "FORGE";
-    public static String DEFAULT_TEXT() { return getInstance().DEFAULT_TEXT; }
     private  float DEFAULT_CHARACTER_SPACING = 1f;
     public static float DEFAULT_CHARACTER_SPACING() { return getInstance().DEFAULT_CHARACTER_SPACING; }
     private  float DEFAULT_TAB_SPACING = 4f;

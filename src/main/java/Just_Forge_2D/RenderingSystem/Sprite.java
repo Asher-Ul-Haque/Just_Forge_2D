@@ -93,6 +93,10 @@ public class Sprite
         if (TEXTURE == null) return;
         setWidth(TEXTURE.getWidth());
         setHeight(TEXTURE.getHeight());
+        setMinimizeFilter(texture.getMinimizeFilter());
+        setMaximizeFilter(texture.getMaximizeFilter());
+        setWrap_sFilter(texture.getWrap_sFilter());
+        setWrap_tFilter(texture.getWrap_tFilter());
     }
 
     // - - - for coordinates

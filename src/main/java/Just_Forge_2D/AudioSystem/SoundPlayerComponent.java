@@ -14,6 +14,7 @@ public class SoundPlayerComponent extends Component
 {
     private Sound sound;
     private Vector3f position = new Vector3f();
+    private boolean playOnStart;
 
     public SoundPlayerComponent() {}
 
@@ -26,6 +27,12 @@ public class SoundPlayerComponent extends Component
     {
         if (warn()) return;
         this.sound.play();
+    }
+
+    @Override
+    public void start()
+    {
+        if (playOnStart) play();
     }
 
     public void stop()
@@ -126,6 +133,16 @@ public class SoundPlayerComponent extends Component
         Logger.FORGE_LOG_ERROR("Cannot set null as sound");
     }
 
+    public void setPlayOnStart(boolean REAL)
+    {
+        playOnStart = REAL;
+    }
+
+    public boolean getPlayOnStart()
+    {
+        return playOnStart;
+    }
+
     @Override
     public void editorGUI()
     {
@@ -141,6 +158,7 @@ public class SoundPlayerComponent extends Component
         setPitch(Widgets.drawFloatControl(Icons.Microphone + "  Pitch", getPitch()));
         setVolume(Widgets.drawIntControl((getVolume() > 0 ? Icons.VolumeUp : Icons.VolumeMute) + "  Volume", getVolume()));
         setLooping(Widgets.drawBoolControl(Icons.RedoAlt + "  Looping", isLooping()));
+        setPlayOnStart(Widgets.drawBoolControl((playOnStart ? Icons.Stop : Icons.Play) + "  Play on Start", getPlayOnStart()));
 
         if (Widgets.button(!sound.isPlaying() ? Icons.Play : Icons.Stop))
         {
