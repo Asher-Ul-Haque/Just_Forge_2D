@@ -1,21 +1,25 @@
 package Just_Forge_2D.EditorSystem.Windows;
 
 import Just_Forge_2D.AssetPool.AssetPool;
+import Just_Forge_2D.AssetPool.AssetPoolSerializer;
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.EditorSystem.ImGUIManager;
-import Just_Forge_2D.EditorSystem.Themes.Theme;
+import Just_Forge_2D.EditorSystem.Widgets;
 import Just_Forge_2D.EventSystem.EventManager;
 import Just_Forge_2D.EventSystem.Events.Event;
 import Just_Forge_2D.EventSystem.Events.EventTypes;
+import Just_Forge_2D.GameSystem.GameCodeLoader;
 import Just_Forge_2D.GameSystem.GameManager;
 import Just_Forge_2D.GameSystem.ProjectManager;
 import Just_Forge_2D.RenderingSystem.Texture;
-import Just_Forge_2D.SceneSystem.EmptySceneScript;
-import Just_Forge_2D.Utils.DefaultValues;
+import Just_Forge_2D.Themes.Theme;
 import Just_Forge_2D.Utils.Logger;
+import Just_Forge_2D.Utils.Settings;
 import Just_Forge_2D.WindowSystem.GameWindow;
 import Just_Forge_2D.WindowSystem.WindowSystemManager;
 import imgui.ImGui;
+import imgui.ImVec4;
+import imgui.flag.ImGuiCol;
 import imgui.flag.ImGuiWindowFlags;
 import org.joml.Vector4f;
 
@@ -31,6 +35,7 @@ public class SplashScreen
     private static boolean readyToLoad = false;
     private static boolean load = false;
     private static boolean compiling = false;
+    private static float progress = 0.0f;
 
     // - - - initialization
     public static void initialize()
@@ -39,7 +44,7 @@ public class SplashScreen
         {
             Logger.FORGE_LOG_INFO("Initializing Just Forge 2D");
             // - - - set up the window
-            GameWindow.get().setClearColor(new Vector4f(0.0f));
+            GameWindow.get().setClearColor(new Vector4f(0.0f, 0.0f, 0.0f, 0.0f));
             GameWindow.get().setAlwaysOnTop(true);
             GameWindow.get().setDecorated(false);
             GameWindow.get().setSize(600, 400);
@@ -53,9 +58,11 @@ public class SplashScreen
             if (logoTexture == null)
             {
                 logoTexture = new Texture();
-                logoTexture.init(DefaultValues.DEFAULT_ICON_PATH);
-                AssetPool.addTexture("Default", DefaultValues.DEFAULT_ICON_PATH);
+                logoTexture.init("Assets/Textures/icon.png");
+                AssetPool.addTexture("Default", Settings.DEFAULT_ICON_PATH(), true);
             }
+
+            // if (!EditorSystemManager.isRelease) startEarlyCompilation();
 
             // - - - flip the flags
             Logger.FORGE_LOG_TRACE("Getting Ready to go");
@@ -66,6 +73,16 @@ public class SplashScreen
 
 
     // - - - the main render function
+    public static void restart()
+    {
+        timer = splashTime + relapseTime + 0.01f;
+        compiling = false;
+        readyToLoad = false;
+        progress = 0.0f;
+        load = false;
+        isInitialized = false;
+    }
+
     public static void render(float DELTA_TIME)
     {
         initialize();
@@ -81,7 +98,7 @@ public class SplashScreen
         float imageY = (GameWindow.get().getHeight() - (float) logoTexture.getHeight()) / 2.0f;
         if (timer > splashTime + relapseTime && !readyToLoad)
         {
-            imageX -= ((float) GameWindow.get().getWidth() / 4);
+            if (!EditorSystemManager.isRelease) imageX -= ((float) GameWindow.get().getWidth() / 4);
         }
         ImGui.setCursorPos(imageX, imageY);
         ImGui.image(logoTexture.getID(), (float) logoTexture.getWidth(), (float) logoTexture.getHeight(), 0, 1, 1, 0);
@@ -95,7 +112,7 @@ public class SplashScreen
             }
             else
             {
-                GameWindow.get().setVisible(false);
+                if (!EditorSystemManager.isRelease) GameWindow.get().setVisible(false);
             }
         }
         ImGui.end();
@@ -107,7 +124,7 @@ public class SplashScreen
         if (!GameWindow.get().isDecorated())
         {
             Logger.FORGE_LOG_TRACE("Getting the window back");
-            GameWindow.get().setDecorated(true);
+            if (!EditorSystemManager.isRelease) GameWindow.get().setDecorated(true);
             GameWindow.get().setAlwaysOnTop(false);
             GameWindow.get().setVisible(true);
         }
@@ -125,7 +142,7 @@ public class SplashScreen
         float buttonY = 128f;
 
         ImGui.setCursorPos(buttonX, buttonY);
-        if (timer > splashTime + relapseTime)
+        if (timer > splashTime + relapseTime && !EditorSystemManager.isRelease)
         {
             ImGui.pushFont(ImGUIManager.interExtraBold);
             if (ImGui.button("Create New Project", buttonWidth, buttonHeight))
@@ -153,51 +170,79 @@ public class SplashScreen
     // - - - load code and display the text
     private static void displayLoadingPage()
     {
-        if (load) cleanup();
-        if (!GameWindow.get().isVisible()) GameWindow.get().setVisible(true);
-
         ImGui.setCursorPosX((ImGui.getWindowWidth() - ImGui.calcTextSize("Loading Project: " + ProjectManager.PROJECT_NAME).x) / 2);
-        ImGui.setCursorPosY(GameWindow.get().getHeight() - 32);
-        Theme.setDefaultTextColor(EditorSystemManager.getCurrentTheme().secondaryColor);
+        ImGui.setCursorPosY(GameWindow.get().getHeight() - 40);
         String title = "Loading Project: " + ProjectManager.PROJECT_NAME;
-        ImGui.text(title);
+        Widgets.text(title);
+        Theme.setDefaultTextColor(EditorSystemManager.getCurrentTheme().secondaryColor);
+        ImGui.setCursorPosY(GameWindow.get().getHeight() - 20);
+        ImVec4 backColor = EditorSystemManager.getCurrentTheme().quaternaryColor;
+        ImVec4 color = EditorSystemManager.getCurrentTheme().secondaryColor;
+        ImGui.pushStyleColor(ImGuiCol.PlotHistogram, color.x, color.y, color.z, color.w);
+        ImGui.pushStyleColor(ImGuiCol.FrameBg, backColor.x, backColor.y, backColor.z, backColor.w);
+        progress = Math.min(GameManager.getProgressPercentage(), progress + 0.01f);
+        ImGui.progressBar(progress, ImGui.getContentRegionAvailX(), 14);
+        ImGui.popStyleColor(2);
         Theme.resetDefaultTextColor();
+
+        if (load) cleanup();
+        if (!EditorSystemManager.isRelease)
+        {
+            if (!GameWindow.get().isVisible()) GameWindow.get().setVisible(true);
+        }
         load = true;
     }
 
     // - - - finish up
     public static void cleanup()
     {
+        // - - - Check if lastProjectPath is null before comparing
         if (!compiling)
         {
             Logger.FORGE_LOG_TRACE("Compiling");
             compiling = true;
             Logger.FORGE_LOG_TRACE("Building user code");
+            GameWindow.get().setCurrentScene(null);
             GameManager.buildUserCode();
-            compiling = true;
-            if (GameManager.isSuccess())
+        }
+
+        // Ensure success or that the paths match
+        if (GameManager.isSuccess() && GameManager.getProgressPercentage() == 1f)
+        {
+            progress = 1f;
+            if (!EditorSystemManager.isRelease)
             {
-                if (EditorSystemManager.currentSceneInitializer == null)
-                {
-                    EditorSystemManager.setCurrentSceneInitializer(EmptySceneScript.class);
-                }
-                GameWindow.get().setVisible(false);
-                Logger.FORGE_LOG_TRACE("Project Path : " + EditorSystemManager.projectDir);
-                EditorSystemManager.setCurrentState(EditorSystemManager.state.isEditor);
-                GameWindow.get().maximize();
-                if (EditorSystemManager.isRelease) EventManager.notify(null, new Event(EventTypes.ForgeStart));
-                else EventManager.notify(null, new Event(EventTypes.ForgeStop));
-                if (EditorSystemManager.isRelease) GameWindow.get().setTitle(ProjectManager.PROJECT_NAME);
-                else GameWindow.get().setTitle("Just Forge 2D    -    " + ProjectManager.PROJECT_NAME);
-                GameWindow.get().setVisible(true);
+                AssetPoolSerializer.loadAssetPool(EditorSystemManager.projectDir + "/.forge/Pool.justForgeFile");
+                AssetPool.addSound("Default", "default.ogg", false, false);
+                GameCodeLoader.openEye();
             }
-            else
+            if (EditorSystemManager.currentSceneInitializer == null || GameWindow.getCurrentScene() == null)
             {
-                timer = splashTime + relapseTime + 0.01f;
-                compiling = false;
-                readyToLoad = false;
-                load = false;
+                EditorSystemManager.setCurrentSceneInitializer(null);
             }
+
+            GameWindow.get().setVisible(false);
+            Logger.FORGE_LOG_TRACE("Project Path : " + EditorSystemManager.projectDir);
+            GameWindow.get().setDecorated(true);
+            GameWindow.get().maximize();
+            EditorSystemManager.setCurrentState(EditorSystemManager.state.isEditor);
+
+            if (EditorSystemManager.isRelease)
+            {
+                EventManager.notify(null, new Event(EventTypes.ForgeStart));
+            }
+
+            String windowTitle = EditorSystemManager.isRelease ? ProjectManager.PROJECT_NAME : "Just Forge 2D    -    " + ProjectManager.PROJECT_NAME;
+            GameWindow.get().setTitle(windowTitle);
+            GameWindow.get().setVisible(true);
+        }
+        else if (!GameManager.isSuccess() && GameManager.getProgressPercentage() == 1f)
+        {
+            EditorSystemManager.setCurrentState(EditorSystemManager.state.isSplashScreen);
+            GameWindow.get().restore();
+            GameWindow.get().resetTitleBar();
+            SplashScreen.restart();
+            SplashScreen.initialize();
         }
     }
 }

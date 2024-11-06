@@ -4,6 +4,7 @@ public enum EventTypes
 {
     ForgeStart,
     ForgeStop,
+    ForgeResize,
     SaveLevel,
     LoadLevel,
     SpriteAdded,

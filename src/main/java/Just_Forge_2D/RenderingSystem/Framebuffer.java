@@ -1,6 +1,7 @@
 package Just_Forge_2D.RenderingSystem;
 
 import Just_Forge_2D.Utils.Logger;
+import org.joml.Vector2i;
 
 import static org.lwjgl.opengl.GL30.*;
 
@@ -9,6 +10,18 @@ public class Framebuffer
     // private variables
     private final int fboID;
     private final Texture texture;
+
+    public Vector2i getSize()
+    {
+        return size;
+    }
+
+    public void setSize(Vector2i SIZE)
+    {
+        this.size.set(SIZE);
+    }
+
+    private final Vector2i size;
 
 
     // - - - | Functions | - - -
@@ -38,6 +51,7 @@ public class Framebuffer
             assert false;
         }
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        size = new Vector2i(WIDTH, HEIGHT);
         Logger.FORGE_LOG_INFO("Framebuffer created");
     }
 

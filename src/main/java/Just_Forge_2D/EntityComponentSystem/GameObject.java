@@ -1,9 +1,8 @@
 package Just_Forge_2D.EntityComponentSystem;
 
 import Just_Forge_2D.AssetPool.AssetPool;
-import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
-import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
+import Just_Forge_2D.EntityComponentSystem.Components.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.Components.TransformComponent;
 import Just_Forge_2D.EventSystem.EventManager;
 import Just_Forge_2D.EventSystem.Events.Event;
@@ -13,7 +12,6 @@ import Just_Forge_2D.Utils.JsonHandlers.GameObjectJsonHandler;
 import Just_Forge_2D.Utils.Logger;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import imgui.ImGui;
 import org.lwjgl.util.tinyfd.TinyFileDialogs;
 
 import java.util.ArrayList;
@@ -65,7 +63,6 @@ public class GameObject
                 }
             }
         }
-        Logger.FORGE_LOG_WARNING("No component of type : " + COMPONENT_CLASS + " in : " + this);
         return null;
     }
 
@@ -177,26 +174,6 @@ public class GameObject
 
     // - - - Editor Stuff - - -
 
-    public void editorGUI()
-    {
-        for (int i = 0; i < components.size(); ++i)
-        {
-            Component component = components.get(i);
-            ImGui.setCursorPosY(ImGui.getCursorPosY() + EditorSystemManager.getCurrentTheme().framePadding.y);
-            if (ImGui.collapsingHeader(component.getClass().getSimpleName()))
-            {
-                try
-                {
-                    component.editorGUI();
-                }
-                catch (Exception e)
-                {
-                    handleComponentException(component, e);
-                }
-            }
-        }
-    }
-
     public void editorUpdate(float DELTA_TIME)
     {
         for (int i = 0 ; i < components.size(); ++i)
@@ -276,7 +253,7 @@ public class GameObject
         SpriteComponent sprite = obj.getComponent(SpriteComponent.class);
         if (sprite != null && sprite.getTexture() != null)
         {
-            sprite.setTexture(AssetPool.getTexture(sprite.getTexture().getFilepath()));
+            sprite.setTexture(AssetPool.makeTexture(sprite.getTexture().getFilepath()));
         }
 
         return obj;
@@ -287,8 +264,10 @@ public class GameObject
 
     private void handleComponentException(Component COMPONENT,  Exception e)
     {
-        TinyFileDialogs.tinyfd_notifyPopup(e.getClass().getSimpleName(), "Component : " + COMPONENT + "\nGame Object : " + this.name, "error");
+        StackTraceElement[] trace = e.getStackTrace();
+        TinyFileDialogs.tinyfd_notifyPopup(e.getClass().getSimpleName(), "Component : " + COMPONENT.getClass().getSimpleName() + "\n" + trace[0].getFileName() + " : " + trace[0].getLineNumber(), "error");
         Logger.FORGE_LOG_FATAL(COMPONENT + " caused Exception : " + e.getClass());
+        Logger.FORGE_LOG_FATAL(trace[0].getFileName() + " : " + trace[0].getLineNumber());
         Logger.FORGE_LOG_ERROR(e.getMessage());
         Logger.FORGE_LOG_ERROR("Reason: " + e.getCause());
         EventManager.notify(null, new Event(EventTypes.ForgeStop));

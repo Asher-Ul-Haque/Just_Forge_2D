@@ -1,15 +1,13 @@
 package Just_Forge_2D.PhysicsSystem.PhysicsComponents;
 
-import Just_Forge_2D.EditorSystem.EditorSystemManager;
-import Just_Forge_2D.EditorSystem.Themes.Theme;
+import Just_Forge_2D.EditorSystem.Icons;
 import Just_Forge_2D.EditorSystem.Widgets;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.Components.TransformComponent;
 import Just_Forge_2D.PhysicsSystem.Enums.BodyType;
-import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.Logger;
+import Just_Forge_2D.Utils.Settings;
 import Just_Forge_2D.WindowSystem.GameWindow;
-import imgui.ImGui;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.joml.Vector2f;
@@ -19,17 +17,17 @@ public class RigidBodyComponent extends Component
 {
     // - - - private variables
     public Vector2f velocity = new Vector2f();
-    private float angularDamping = DefaultValues.ANGULAR_DAMPING;
-    private float linearDamping = DefaultValues.LINEAR_DAMPING;
-    private float density = DefaultValues.DEFAULT_MASS;
+    private float angularDamping = Settings.ANGULAR_DAMPING();
+    private float linearDamping = Settings.LINEAR_DAMPING();
+    private float density = Settings.DEFAULT_MASS();
     private BodyType bodyType = BodyType.Dynamic;
-    private boolean fixedRotation = DefaultValues.ROTATION_FIXED;
-    private boolean continuousCollision = DefaultValues.CONTINUOUS_COLLISION;
+    private boolean fixedRotation = Settings.ROTATION_FIXED();
+    private boolean continuousCollision = Settings.CONTINUOUS_COLLISION();
     private transient Body rawBody = null;
     public float angularVelocity = 0.0f;
-    public float gravityScale = DefaultValues.GRAVITY_SCALE;
-    public float frictionCoefficient = DefaultValues.DEFAULT_FRICTION;
-    public float restitutionCoefficient = DefaultValues.DEFAULT_RESTITUTION;
+    public float gravityScale = Settings.GRAVITY_SCALE();
+    public float frictionCoefficient = Settings.DEFAULT_FRICTION();
+    public float restitutionCoefficient = Settings.DEFAULT_RESTITUTION();
     private boolean isSensor = false;
     private boolean isEditor = false;
 
@@ -376,56 +374,37 @@ public class RigidBodyComponent extends Component
     {
         isEditor = true;
         // - - - destroy button
-        if (ImGui.button("Destroy"))
-        {
-            this.gameObject.removeComponent(this.getClass());
-        }
+        super.deleteButton();
 
         // - - - body type
 
-        Enum t = Widgets.drawEnumControls(BodyType.class, "Body Type", bodyType);
-        if (t != null)
-        {
-            bodyType = (BodyType) t;
-        }
+        Enum t = Widgets.drawEnumControls(BodyType.class, Icons.Box + "  Body Type", bodyType);
+        if (t != null) bodyType = (BodyType) t;
 
         // - - - mass
-        setDensity(Widgets.drawFloatControl("Density", getDensity()));
+        setDensity(Widgets.drawFloatControl(Icons.WeightHanging + "  Density", getDensity()));
 
         // - - - gravity scale
-        setGravityScale(Widgets.drawFloatControl("Gravity Scale", gravityScale));
+        setGravityScale(Widgets.drawFloatControl(Icons.Feather + "  Gravity Scale", gravityScale));
 
 
         // - - - linear damping
-        setLinearDamping(Widgets.drawFloatControl("Linear Damping", linearDamping));
+        setLinearDamping(Widgets.drawFloatControl(Icons.Rocket + "  Linear Damping", linearDamping));
 
 
         // - - - angular damping
-        setAngularDamping(Widgets.drawFloatControl("Angular Damping", angularVelocity));
+        setAngularDamping(Widgets.drawFloatControl(Icons.SyncAlt + "  Angular Damping", angularVelocity));
 
         // - - - friction
-        setFrictionCoefficient(Widgets.drawFloatControl("Friction Coeff", frictionCoefficient));
+        setFrictionCoefficient(Widgets.drawFloatControl(Icons.Rocket + "  Friction Coefficient", frictionCoefficient));
 
         // - - - restitution
-        setRestitutionCoefficient(Widgets.drawFloatControl("Restitution", restitutionCoefficient));
+        setRestitutionCoefficient(Widgets.drawFloatControl(Icons.Skating + "  Restitution", restitutionCoefficient));
 
         // - - - fixed rotation, continuous collision and is Sensor
-        fixedRotation = Widgets.drawBoolControl("Fixed Rotation", fixedRotation);
-
-        Theme.setDefaultTextColor(EditorSystemManager.getCurrentTheme().secondaryColor);
-        boolean val = continuousCollision;
-        if (ImGui.checkbox("Continuous Collision", val))
-        {
-            val = !val;
-            continuousCollision = val;
-        }
-        val = isSensor;
-        if (ImGui.checkbox("isSensor", val))
-        {
-            val = !val;
-            isSensor = val;
-        }
-        Theme.resetDefaultTextColor();
+        fixedRotation = Widgets.drawBoolControl((fixedRotation ? Icons.Thumbtack : Icons.SyncAlt) + "  Fixed Rotation", fixedRotation);
+        continuousCollision = Widgets.drawBoolControl(Icons.FighterJet + " Continuous Collision", continuousCollision);
+        isSensor = Widgets.drawBoolControl((isSensor ? Icons.Eye : Icons.EyeSlash) + "  Sensor", isSensor);
 
         isEditor = false;
     }

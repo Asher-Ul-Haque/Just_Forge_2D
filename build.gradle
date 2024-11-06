@@ -9,15 +9,9 @@ shadowJar {
     manifest {
         attributes 'Main-Class': 'Just_Forge_2D.Main'
     }
-    from('Assets') {
-        into '${buildDir}/libs/Assets'
-    }
-    from('libs') {
-        into '%{buildDir}/libs'
-    }
 }
 group = "somebody.just"
-version = "1.2-SNAPSHOT"
+version = "1.0-release"
 
 repositories {
     flatDir{
@@ -30,7 +24,7 @@ import org.gradle.internal.os.OperatingSystem
 
 project.ext.lwjglVersion = "3.3.4"
 project.ext.jomlVersion = "1.10.7"
-project.ext.imguiVersion = "1.86.11"
+project.ext.imguiVersion = "1.86.12"
 
 switch (OperatingSystem.current()) {
     case OperatingSystem.LINUX:

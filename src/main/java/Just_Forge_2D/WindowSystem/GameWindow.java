@@ -7,14 +7,17 @@ package Just_Forge_2D.WindowSystem;
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.EditorSystem.ImGUIManager;
 import Just_Forge_2D.EditorSystem.Windows.ComponentsWindow;
-import Just_Forge_2D.EditorSystem.Windows.MainWindowConfig;
+import Just_Forge_2D.EditorSystem.Windows.GameWindowConfig;
 import Just_Forge_2D.EditorSystem.Windows.ObjectSelector;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
+import Just_Forge_2D.EventSystem.EventManager;
 import Just_Forge_2D.EventSystem.Events.Event;
+import Just_Forge_2D.EventSystem.Events.EventTypes;
 import Just_Forge_2D.GameSystem.GameCodeLoader;
 import Just_Forge_2D.InputSystem.Mouse;
 import Just_Forge_2D.PhysicsSystem.PhysicsSystemManager;
 import Just_Forge_2D.RenderingSystem.DebugPencil;
+import Just_Forge_2D.RenderingSystem.Framebuffer;
 import Just_Forge_2D.RenderingSystem.Renderer;
 import Just_Forge_2D.SceneSystem.Camera;
 import Just_Forge_2D.SceneSystem.Scene;
@@ -37,6 +40,7 @@ public class GameWindow extends Window
 
     // - - - Window variables - - -
     private boolean isInitialized = false;
+    private Framebuffer framebuffer;
 
     // - - - Systems
 
@@ -54,6 +58,7 @@ public class GameWindow extends Window
     {
         super(CONFIG);
         Logger.FORGE_LOG_INFO("Started Just Forge 2D");
+        framebuffer = new Framebuffer(WindowSystemManager.getMonitorSize().x, WindowSystemManager.getMonitorSize().y);
     }
 
     // - - - Systems function to change the scene
@@ -84,7 +89,7 @@ public class GameWindow extends Window
         if (GameWindow.window == null)
         {
             Logger.FORGE_LOG_ERROR("No Window config specified");
-            GameWindow.window = new GameWindow(new MainWindowConfig());
+            GameWindow.window = new GameWindow(new GameWindowConfig());
         }
         return GameWindow.window;
     }
@@ -110,17 +115,10 @@ public class GameWindow extends Window
 
         isInitialized = true;
 
-        EditorSystemManager.setFramebuffer();
-        glViewport(0, 0, WindowSystemManager.getMonitorSize().x, WindowSystemManager.getMonitorSize().y);
-        Logger.FORGE_LOG_INFO("Framebuffer created and assigned for offscreen rendering");
-
-        Logger.FORGE_LOG_INFO("Editor linked with window");
-
-
-        // - - - compile shaders
-
-        EditorSystemManager.compileShaders();
-
+        if (framebuffer == null) framebuffer = new Framebuffer(WindowSystemManager.getMonitorSize().x, WindowSystemManager.getMonitorSize().y);
+        glViewport(0, 0, framebuffer.getSize().x, framebuffer.getSize().y);
+        Logger.FORGE_LOG_DEBUG("Framebuffer created and assigned for offscreen rendering");
+        Logger.FORGE_LOG_DEBUG("Editor linked with window");
 
         beginTime = (float) TimeKeeper.getTime();
         Logger.FORGE_LOG_INFO("Time keeping system Online");
@@ -150,7 +148,7 @@ public class GameWindow extends Window
                     glDisable(GL_BLEND);
                     ObjectSelector.enableWriting();
 
-                    glViewport(0, 0, WindowSystemManager.getMonitorSize().x, WindowSystemManager.getMonitorSize().y);
+                    glViewport(0, 0, framebuffer.getSize().x, framebuffer.getSize().y);
                     clear();
                     Renderer.bindShader(EditorSystemManager.selectorShader);
                     currentScene.render(dt);
@@ -164,7 +162,7 @@ public class GameWindow extends Window
                     DebugPencil.beginFrame();
 
                     // - - - Framebuffer
-                    EditorSystemManager.getFramebuffer().bind();
+                    framebuffer.bind();
 
                 }
                 this.clear();
@@ -174,20 +172,20 @@ public class GameWindow extends Window
                     if (EditorSystemManager.isRuntimePlaying)
                     {
                         currentScene.update(dt);
+                        GameCodeLoader.loop(dt);
                     }
                     else if (!EditorSystemManager.isRelease)
                     {
                         currentScene.editorUpdate(dt);
                     }
-                    GameCodeLoader.loop(dt);
                     currentScene.render(dt);
-                    if (!EditorSystemManager.isRelease) DebugPencil.draw();
+                    DebugPencil.draw();
                 }
 
                 // - - - Finish drawing to texture so that imgui should be rendered to the window
                 if (!EditorSystemManager.isRelease)
                 {
-                    EditorSystemManager.getFramebuffer().unbind();
+                    framebuffer.unbind();
 
                     // - - - Update the editor
                     ImGUIManager.update(dt, currentScene);
@@ -237,6 +235,7 @@ public class GameWindow extends Window
                 Logger.FORGE_LOG_INFO("Starting Game");
                 EditorSystemManager.isRuntimePlaying = true;
                 SceneSystemManager.save(currentScene);
+                GameCodeLoader.init();
                 try
                 {
                     GameWindow.changeScene(GameWindow.getCurrentScene().getScript().getClass().getDeclaredConstructor().newInstance());
@@ -282,5 +281,55 @@ public class GameWindow extends Window
     public static PhysicsSystemManager getPhysicsSystem()
     {
         return getCurrentScene().getPhysics();
+    }
+
+    public static Framebuffer getFrameBuffer() {return get().framebuffer;}
+
+    @Override
+    public void setSize(int WIDTH, int HEIGHT)
+    {
+        if (WIDTH <= 0 || HEIGHT <= 0)
+        {
+            Logger.FORGE_LOG_WARNING("Cannot resize " + this.config.title + " to : " + WIDTH + " : " + HEIGHT);
+            return;
+        }
+        if (this.config.resizable)
+        {
+            this.framebuffer = new Framebuffer(WIDTH, HEIGHT);
+            if (EditorSystemManager.getCurrentState().equals(EditorSystemManager.state.isSplashScreen))
+            {
+                super.setSize(WIDTH, HEIGHT);
+            }
+            if (EditorSystemManager.isRelease)
+            {
+                System.out.println();
+                super.setSize(WIDTH, HEIGHT);
+                float aspectWidth = WIDTH;
+                float aspectHeight = aspectWidth / ((float) GameWindow.getFrameBuffer().getSize().x / GameWindow.getFrameBuffer().getSize().y);
+                float scaleDown = HEIGHT / aspectHeight;
+                if (aspectHeight > HEIGHT)
+                {
+                    // - - - switch to pillar mode
+                    aspectHeight = HEIGHT;
+                    aspectWidth = aspectHeight * ((float) GameWindow.getFrameBuffer().getSize().x / GameWindow.getFrameBuffer().getSize().y);
+                }
+                Mouse.setGameViewport(new Vector2f(0,  -scaleDown), new Vector2f(aspectWidth, aspectHeight));
+            }
+            EventManager.notify(null, new Event(EventTypes.ForgeResize));
+        }
+    }
+
+    @Override
+    public void close()
+    {
+        if (!EditorSystemManager.isRelease) SceneSystemManager.save(currentScene);
+        EventManager.notify(null, new Event(EventTypes.ForgeStop));
+        GameCodeLoader.terminate();
+        super.close();
+    }
+
+    public void resetTitleBar()
+    {
+        this.setTitle("Just Forge 2D");
     }
 }

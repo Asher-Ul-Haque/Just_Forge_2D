@@ -1,5 +1,5 @@
 #type vertex
-#version 450
+#version 410
 layout (location=0) in vec3 aPos;
 layout (location=1) in vec3 aColor;
 out vec3 fColor;
@@ -14,7 +14,7 @@ void main()
 
 
 #type fragment
-#version 450
+#version 410
 
 in vec3 fColor;
 out vec4 color;

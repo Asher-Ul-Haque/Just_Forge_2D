@@ -10,7 +10,9 @@ import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Logger
 {
@@ -29,7 +31,7 @@ public class Logger
     private static Path LOG_FILE_PATH = Paths.get("logs", "latest.justForgeLog");
 
     private static final int maxWriteBuffer = 15;
-    private static final int maxReadBuffer = 1024;
+    private static final int maxReadBuffer = 4096;
     private static final List<String> writeBuffer = new ArrayList<>(maxWriteBuffer);
     private static final String[] readBuffer = new String[maxReadBuffer];
     private static int readBufferIndex = 0;
@@ -40,10 +42,32 @@ public class Logger
         readBufferIndex = (readBufferIndex + 1) % maxReadBuffer;
     }
 
+    private static void maintainLogFileLimit(int MAX_FILES)
+    {
+        try {
+            Path logDir = LOG_FILE_PATH.getParent();
+            List<Path> logFiles = Files.list(logDir)
+                    .filter(path -> path.getFileName().toString().endsWith(".justForgeLog"))
+                    .sorted(Comparator.comparingLong(path -> path.toFile().lastModified()))
+                    .collect(Collectors.toList());
+
+            // - - - Delete oldest files if we exceed the maximum allowed number
+            while (logFiles.size() > MAX_FILES)
+            {
+                Files.delete(logFiles.remove(0));
+            }
+        }
+        catch (IOException e)
+        {
+            Logger.FORGE_LOG_ERROR("Failed to maintain log file limit: " + e.getMessage());
+        }
+    }
+
     static
     {
         if (!EditorSystemManager.isRelease)
         {
+            maintainLogFileLimit(Settings.MAX_LOG_FILE_LIMIT());
             // - - - Ensure the log file and directory are created at the start
             try
             {
@@ -67,7 +91,7 @@ public class Logger
                         }
                         catch (FileAlreadyExistsException e)
                         {
-                            Logger.FORGE_LOG_ERROR("Bro let the engine breath");
+                            Logger.FORGE_LOG_ERROR("Bro let the engine breathe");
                             Files.delete(oldLog);
                             Files.move(LOG_FILE_PATH, oldLog);
                         }
@@ -76,7 +100,7 @@ public class Logger
                     else
                     {
                         Files.delete(LOG_FILE_PATH);
-                        LOG_FILE_PATH = Paths.get("logs", stamp + ".justForgeFile");
+                        LOG_FILE_PATH = Paths.get("logs", stamp + ".justForgeLog");
                     }
                 }
 
@@ -87,10 +111,9 @@ public class Logger
                     writer.write("\n---- Log Session Started ----\n");
                 }
 
-                // - - - Redirect System.out and System.err to the custom logger
-                PrintStream logStream = new PrintStream(new LoggerOutputStream());
-                System.setErr(logStream);
-
+                // - - - Redirect System.err to the custom logger (System.out can stay normal)
+                PrintStream logStream = new PrintStream(new LoggerOutputStream(true)); // true = for System.err
+                if (!EditorSystemManager.isRelease) System.setErr(logStream);
             }
 
             catch (IOException e)
@@ -104,8 +127,8 @@ public class Logger
     // - - - Logging functions - - -
     public static void FORGE_LOG_FATAL(Object... ARGS)
     {
-        if (EditorSystemManager.isRelease) return;
-        String message = formatMessage("[FATAL]", ARGS);
+        //if (EditorSystemManager.isRelease) return;
+        String message = formatMessage("[FATAL]  ", ARGS);
         addToReadBuffer(message);
         System.out.println(ANSI_RESET + ANSI_RED_BG + message + ANSI_RESET);
         writeToFile(message);
@@ -113,8 +136,8 @@ public class Logger
 
     public static void FORGE_LOG_ERROR(Object... ARGS)
     {
-        if (EditorSystemManager.isRelease) return;
-        String message = formatMessage("[ERROR]", ARGS);
+        //if (EditorSystemManager.isRelease) return;
+        String message = formatMessage("[ERROR]  ", ARGS);
         addToReadBuffer(message);
         System.out.println(ANSI_RED + message + ANSI_RESET);
         writeToFile(message);
@@ -122,7 +145,7 @@ public class Logger
 
     public static void FORGE_LOG_WARNING(Object... ARGS)
     {
-        if (EditorSystemManager.isRelease) return;
+        //if (EditorSystemManager.isRelease) return;
         String message = formatMessage("[WARNING]", ARGS);
         addToReadBuffer(message);
         System.out.println(ANSI_PASTEL_RED + message + ANSI_RESET);
@@ -131,8 +154,8 @@ public class Logger
 
     public static void FORGE_LOG_DEBUG(Object... ARGS)
     {
-        if (EditorSystemManager.isRelease) return;
-        String message = formatMessage("[DEBUG]", ARGS);
+        //if (EditorSystemManager.isRelease) return;
+        String message = formatMessage("[DEBUG]  ", ARGS);
         addToReadBuffer(message);
         System.out.println(ANSI_BLUE + message + ANSI_RESET);
         writeToFile(message);
@@ -140,8 +163,8 @@ public class Logger
 
     public static void FORGE_LOG_TRACE(Object... ARGS)
     {
-        if (EditorSystemManager.isRelease) return;
-        String message = formatMessage("[TRACE]", ARGS);
+        //if (EditorSystemManager.isRelease) return;
+        String message = formatMessage("[TRACE]  ", ARGS);
         addToReadBuffer(message);
         System.out.println(ANSI_PURPLE + message + ANSI_RESET);
         writeToFile(message);
@@ -149,8 +172,8 @@ public class Logger
 
     public static void FORGE_LOG_INFO(Object... ARGS)
     {
-        if (EditorSystemManager.isRelease) return;
-        String message = formatMessage("[INFO]", ARGS);
+        //if (EditorSystemManager.isRelease) return;
+        String message = formatMessage("[INFO]   ", ARGS);
         addToReadBuffer(message);
         System.out.println(ANSI_GREEN + message + ANSI_RESET);
         writeToFile(message);
@@ -159,7 +182,7 @@ public class Logger
     private static String formatMessage(String level, Object... ARGS)
     {
         StringBuilder message = new StringBuilder();
-        message.append(level).append(": \t");
+        message.append(level).append("\t");
 
         for (Object o : ARGS)
         {
@@ -169,7 +192,7 @@ public class Logger
             }
             catch (Exception e)
             {
-                message.append("[Invalid Object]");
+                message.append("[Invalid Object]").append(e.getMessage());
             }
         }
 
@@ -179,13 +202,21 @@ public class Logger
     private static void writeToFile(String message)
     {
         writeBuffer.add(message);
-        if (writeBuffer.size() <= 10) return;
-        finish();
+        if (writeBuffer.size() >= 10) // Adjust buffer threshold if needed
+        {
+            flushToFile();
+        }
     }
 
     private static class LoggerOutputStream extends OutputStream
     {
         private final StringBuilder buffer = new StringBuilder();
+        private final boolean isErrStream;
+
+        public LoggerOutputStream(boolean isErrStream)
+        {
+            this.isErrStream = isErrStream;
+        }
 
         @Override
         public void write(int b) throws IOException
@@ -195,6 +226,12 @@ public class Logger
                 String line = buffer.toString();
                 writeToFile(line);
                 buffer.setLength(0);
+
+                // - - - If it's System.err, flush the buffer immediately
+                if (isErrStream)
+                {
+                    flushToFile();
+                }
             }
             else
             {
@@ -203,14 +240,14 @@ public class Logger
         }
     }
 
-    public static void finish()
+    public static void flushToFile()
     {
         if (EditorSystemManager.isRelease) return;
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(LOG_FILE_PATH.toString(), true)))
         {
-            for (String m : writeBuffer)
+            for (String message : writeBuffer)
             {
-                writer.write(m + "\n");
+                writer.write(message + "\n");
             }
             writeBuffer.clear();
         }

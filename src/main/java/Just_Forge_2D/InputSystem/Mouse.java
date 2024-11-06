@@ -2,7 +2,7 @@ package Just_Forge_2D.InputSystem;
 
 import Just_Forge_2D.SceneSystem.Camera;
 import Just_Forge_2D.Utils.Logger;
-import Just_Forge_2D.WindowSystem.WindowSystemManager;
+import Just_Forge_2D.Utils.Settings;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
@@ -39,7 +39,7 @@ public class Mouse
 
     // - - - Relations
     private final Vector2f gameViewportPos = new Vector2f();
-    private final Vector2f gameViewportSize = new Vector2f();
+    private final Vector2f gameViewportSize = new Vector2f(Settings.DEFAULT_WINDOW_WIDTH(), Settings.DEFAULT_WINDOW_HEIGHT());
 
     private static Camera worldCamera;
 
@@ -234,7 +234,7 @@ public class Mouse
     public static float getScreenY(int SCREEN_HEIGHT)
     {
         float currentY = getY() - get().gameViewportPos.y;
-        currentY = WindowSystemManager.getMonitorSize().y - ((currentY / get().gameViewportSize.y) * SCREEN_HEIGHT);
+        currentY = SCREEN_HEIGHT - ((currentY / get().gameViewportSize.y) * SCREEN_HEIGHT);
         return currentY;
     }
 
@@ -272,6 +272,15 @@ public class Mouse
     {
         int BUTTON = MOUSE_BUTTON.buttonCode;
         return isMouseButtonDown(BUTTON);
+    }
+
+    public static boolean isAnyMouseButtonDown()
+    {
+        for (boolean b : mouse.isMouseButtonPressed)
+        {
+            if (b) return b;
+        }
+        return false;
     }
 
 

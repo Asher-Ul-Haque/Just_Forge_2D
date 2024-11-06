@@ -6,6 +6,7 @@ build/
 
 ### Custom
 .idea/
+Executables/
 .idea/*
 build/*
 logs/*

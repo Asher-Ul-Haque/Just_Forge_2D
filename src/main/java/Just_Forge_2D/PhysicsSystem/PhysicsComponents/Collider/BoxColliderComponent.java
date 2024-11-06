@@ -1,11 +1,9 @@
 package Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider;
 
 
-import Just_Forge_2D.EditorSystem.EditorSystemManager;
-import Just_Forge_2D.EditorSystem.Themes.Theme;
+import Just_Forge_2D.EditorSystem.Icons;
 import Just_Forge_2D.EditorSystem.Widgets;
 import Just_Forge_2D.RenderingSystem.DebugPencil;
-import imgui.ImGui;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 
@@ -65,15 +63,11 @@ public class BoxColliderComponent extends ColliderComponent
     public void editorGUI()
     {
         super.editorGUI();
-        Theme.setDefaultTextColor(EditorSystemManager.getCurrentTheme().secondaryColor);
-        if (ImGui.checkbox("Auto Scale", this.autoScale))
-        {
-            this.autoScale = !this.autoScale;
-        }
-        Theme.resetDefaultTextColor();
-        Widgets.drawVec2Control("Half Size", this.halfSize);
-        Widgets.drawVec2Control("Origin", this.origin);
-        Widgets.drawVec2Control("Offset", this.offset);
+        autoScale = Widgets.drawBoolControl(Icons.ExpandArrowsAlt+ "  Auto Scale", autoScale);
+        if (autoScale) return;
+        Widgets.drawVec2Control(Icons.Expand + "  Half Size", this.halfSize);
+        Widgets.drawVec2Control(Icons.MapPin + "  Origin", this.origin);
+        Widgets.drawVec2Control(Icons.LocationArrow + "  Offset", this.offset);
     }
 
 

@@ -2,10 +2,12 @@ package Just_Forge_2D.GameSystem;
 
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.SceneSystem.SceneSystemManager;
-import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.Logger;
+import Just_Forge_2D.Utils.Settings;
+import org.jetbrains.annotations.NotNull;
 import org.lwjgl.util.tinyfd.TinyFileDialogs;
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -18,7 +20,45 @@ public class ProjectManager
     // - - - project management defaults
     private static final String DEFAULT_PROJECTS_DIR = System.getProperty("user.home") + "/Documents/ForgeProjects";
     private static final String PROJECT_TEMPLATE_DIR = "ProjectTemplate";
-    public static String PROJECT_NAME = null;
+    @NotNull public static String PROJECT_NAME = new File(System.getProperty("user.dir")).getName();
+
+
+    // - - - Get the last project path:
+    public static void saveLastProjectPath()
+    {
+        Path path = Paths.get("Configurations/lastProject.justForgeFile");
+        try
+        {
+            Files.write(path, Paths.get(EditorSystemManager.projectDir).toAbsolutePath().toString().getBytes());
+            System.out.println("File written to: " + path);
+        }
+        catch (IOException e)
+        {
+            Logger.FORGE_LOG_WARNING(e.getMessage());
+        }
+    }
+
+    public static File getLastProjectPath()
+    {
+        Path path = Paths.get("Configurations/lastProject.justForgeFile");
+        try
+        {
+            if (Files.exists(path))
+            {
+                String projectPath = new String(Files.readAllBytes(path)).trim();
+                return new File(projectPath);
+            }
+            else
+            {
+                Logger.FORGE_LOG_WARNING("Last project path file does not exist.");
+            }
+        }
+        catch (IOException e)
+        {
+            Logger.FORGE_LOG_WARNING(e.getMessage());
+        }
+        return null;
+    }
 
 
     // - - - Creating new Project - - -
@@ -114,7 +154,7 @@ public class ProjectManager
 
     private static String selectProjectDirectory()
     {
-        return TinyFileDialogs.tinyfd_selectFolderDialog("Select Project Directory", Paths.get(DEFAULT_PROJECTS_DIR + DefaultValues.DEFAULT_SAVE_DIR).toAbsolutePath().toString());
+        return TinyFileDialogs.tinyfd_selectFolderDialog("Select Project Directory", Paths.get(DEFAULT_PROJECTS_DIR + Settings.DEFAULT_SAVE_DIR()).toAbsolutePath().toString());
     }
 
 
@@ -152,5 +192,47 @@ public class ProjectManager
                 Logger.FORGE_LOG_FATAL("Error copying: " + sourcePath + " to " + destination + " - " + e.getMessage());
             }
         });
+    }
+
+    public static boolean copyFile(String SRC, String DST)
+    {
+        try
+        {
+            Path source = Paths.get(SRC);
+            Path destination = Paths.get(DST);
+            Files.copy(source, destination);
+            return true;
+        }
+        catch (Exception e)
+        {
+            Logger.FORGE_LOG_ERROR("Failed to copy file: " + SRC + " "+ e.getMessage());
+            return false;
+        }
+    }
+
+    public static void openProjectInBrowser()
+    {
+        try
+        {
+            File projectDirFile = new File(EditorSystemManager.projectDir);
+            if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.OPEN))
+            {
+                new Thread(() ->
+                {
+                    try
+                    {
+                        Desktop.getDesktop().open(projectDirFile);
+                    }
+                    catch (IOException e)
+                    {
+                        Logger.FORGE_LOG_ERROR(e.getMessage());
+                    }
+                }).start();
+            }
+        }
+        catch (Exception e)
+        {
+            Logger.FORGE_LOG_ERROR(e.getMessage());
+        }
     }
 }

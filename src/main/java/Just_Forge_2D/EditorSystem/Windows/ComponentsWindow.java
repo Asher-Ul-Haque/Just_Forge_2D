@@ -1,11 +1,20 @@
 package Just_Forge_2D.EditorSystem.Windows;
 
+import Just_Forge_2D.EditorSystem.Icons;
+import Just_Forge_2D.EditorSystem.ImGUIManager;
+import Just_Forge_2D.EditorSystem.Widgets;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.Components.ComponentList;
-import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
+import Just_Forge_2D.EntityComponentSystem.Components.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
+import Just_Forge_2D.PrefabSystem.NonSpritePrefab;
+import Just_Forge_2D.PrefabSystem.Prefab;
+import Just_Forge_2D.PrefabSystem.PrefabManager;
+import Just_Forge_2D.PrefabSystem.SpritePrefab;
+import Just_Forge_2D.RenderingSystem.Sprite;
 import Just_Forge_2D.Utils.Logger;
 import imgui.ImGui;
+import org.joml.Vector2f;
 import org.joml.Vector4f;
 
 import java.util.ArrayList;
@@ -18,6 +27,7 @@ public class ComponentsWindow
     // - - - private variables
     private static final List<GameObject> activeGameObjects = new ArrayList<>();
     private static final List<Vector4f> activeGameObjectsColors = new ArrayList<>();
+    private static boolean deletePopup = false;
 
 
     // - - - Functions - - -
@@ -26,33 +36,90 @@ public class ComponentsWindow
 
     public static void render()
     {
-        ImGui.begin("Components");
+        ImGui.begin(Icons.CodeBranch + "  Components Window");
         if (activeGameObjects.size() == 1 && activeGameObjects.get(0) != null)
         {
             GameObject activeGameObject = activeGameObjects.get(0);
-            if (ImGui.button("Delete"))
+            ImGui.columns(2);
+            if (Widgets.button(Icons.Trash + " Delete"))
             {
-                activeGameObject.destroy();
-                clearSelection();
+                deletePopup = !deletePopup;
             }
+            ImGui.nextColumn();
+            if (Widgets.button(Icons.Copy + "  Make Prefab"))
+            {
+                SpriteComponent spriteComponent = activeGameObject.getComponent(SpriteComponent.class);
+                Prefab prefab;
+                if (spriteComponent != null)
+                {
+                    Sprite spr = spriteComponent.getSpriteCopy();
+                    prefab = new SpritePrefab(activeGameObject.name, spr, activeGameObject.transform.scale.x, activeGameObject.transform.scale.y);
+                }
+                else
+                {
+                    prefab = new NonSpritePrefab(activeGameObject.name, activeGameObject.transform.scale.x, activeGameObject.transform.scale.y);
+                }
+                PrefabManager.registerPrefab(activeGameObject.name,  prefab);
+            }
+            ImGui.columns(1);
+            Widgets.text("");
+            if (deletePopup)
+            {
+                Widgets.PopupReturn returnVal = Widgets.popUp(Icons.ExclamationTriangle, "Delete Confirmation", "Are you sure you want to delete \n" +activeGameObject, new Vector2f(300, 128));
+                switch (returnVal)
+                {
+                    case OK:
+                        activeGameObject.destroy();
+                        clearSelection();
+                        deletePopup = false;
+                        break;
+
+                    case CANCEL:
+                        deletePopup = false;
+                        break;
+                }
+            }
+            Widgets.text("");
             if (activeGameObject != null)
             {
-                if (ImGui.beginPopupContextWindow("Component Adder"))
+                if (ImGui.beginPopupContextWindow(Icons.UserCog + "  Component Adder"))
                 {
                     String message = "Add Component";
                     ImGui.setCursorPosX((ImGui.getContentRegionAvailX() - ImGui.calcTextSize(message).x) / 2f);
+                    ImGui.pushFont(ImGUIManager.interExtraBold);
                     ImGui.text(message);
+                    ImGui.popFont();
+                    Widgets.text("");
+
                     int delay = 2;
-                    for (Class<? extends Component> type : ComponentList.types)
+                    for (Class<? extends Component> type : ComponentList.getTypes())
                     {
+                        // - - - Skip components already added to the active game object
                         if (activeGameObject.getComponent(type) != null) continue;
+
+                        // - - - Get component registry info for dependencies
+                        ComponentList.ComponentRegistry registry = ComponentList.getComponentInfo(type);
+
+                        // - - - Check if all required components are present
+                        List<Class<? extends Component>> requiredTypes = registry.requiredComponents();
+                        if (requiredTypes != null)
+                        {
+                            boolean allRequirementsMet = requiredTypes.stream()
+                                    .allMatch(requiredType -> activeGameObject.getComponent(requiredType) != null);
+
+                            // - - - If not all requirements are met, skip this component
+                            if (!allRequirementsMet) continue;
+                        }
+
+                        // - - - Add a separator between groups of components
                         if (delay-- == 0)
                         {
-                            ImGui.separator();
+                            Widgets.text("");
                             delay = 2;
                         }
 
-                        if (ImGui.menuItem(type.getSimpleName()))
+                        // - - - Display the menu item and handle the component addition on click
+                        if (ImGui.menuItem(registry.name()))
                         {
                             try
                             {
@@ -61,14 +128,29 @@ public class ComponentsWindow
                             }
                             catch (Exception e)
                             {
-                                Logger.FORGE_LOG_ERROR("Cant add component : " + type.getSimpleName());
+                                Logger.FORGE_LOG_ERROR("Can't add component: " + registry.name());
                                 Logger.FORGE_LOG_ERROR(e.getCause());
                             }
                         }
                     }
                     ImGui.endPopup();
                 }
-                activeGameObject.editorGUI();
+
+                List<Component> components = activeGameObject.getComponents();
+                for (int i = 0; i < components.size(); ++i)
+                {
+                    Component component = components.get(i);
+                    String name = component.getClass().getSimpleName();
+                    ComponentList.ComponentRegistry componentRegistry = ComponentList.getComponentInfo(component.getClass());
+                    if (componentRegistry != null)
+                    {
+                        name = componentRegistry.name();
+                    }
+                    if (ImGui.collapsingHeader(name))
+                    {
+                        component.editorGUI();
+                    }
+                }
             }
         }
         else

@@ -3,13 +3,13 @@ package Just_Forge_2D.WindowSystem;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.EventSystem.EventManager;
 import Just_Forge_2D.EventSystem.Events.Event;
+import Just_Forge_2D.EventSystem.Events.EventTypes;
 import Just_Forge_2D.EventSystem.Observer;
-import Just_Forge_2D.GameSystem.GameCodeLoader;
 import Just_Forge_2D.InputSystem.Keyboard;
 import Just_Forge_2D.InputSystem.Mouse;
 import Just_Forge_2D.SceneSystem.Scene;
-import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.Logger;
+import Just_Forge_2D.Utils.Settings;
 import Just_Forge_2D.Utils.TimeKeeper;
 import org.joml.Vector4f;
 import org.lwjgl.BufferUtils;
@@ -78,6 +78,15 @@ public class Window implements Observer
         glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, this.config.transparent ? GLFW_TRUE : GLFW_FALSE);
         glfwWindowHint(GLFW_FLOATING, this.config.alwaysOnTop ? GLFW_TRUE : GLFW_FALSE);
 
+        // - - - mac os specific
+        if (System.getProperty("os.name").contains("mac"))
+        {
+            glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+            glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
+            glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+            glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE);
+        }
+
         // - - - Create the window
         this.glfwWindowPtr = glfwCreateWindow(100, 100, this.config.title, 0, 0);
         if (this.glfwWindowPtr == 0)
@@ -92,9 +101,11 @@ public class Window implements Observer
         glfwSetCursorPosCallback(this.glfwWindowPtr, Mouse::mousePositionCallback);
         glfwSetMouseButtonCallback(this.glfwWindowPtr, Mouse::mouseButtonCallback);
         glfwSetScrollCallback(this.glfwWindowPtr, Mouse::mouseScrollCallback);
-        glfwSetWindowSizeCallback(this.glfwWindowPtr, (w, newWidth, newHeight) -> {
+        glfwSetWindowSizeCallback(this.glfwWindowPtr, (w, newWidth, newHeight) ->
+        {
             this.config.width = newWidth;
             this.config.height = newHeight;
+            EventManager.notify(null, new Event(EventTypes.ForgeResize));
         });
 
         Logger.FORGE_LOG_DEBUG("Linking " + this.config.title + " with Keyboard");
@@ -176,7 +187,6 @@ public class Window implements Observer
     public void close()
     {
         Logger.FORGE_LOG_INFO("Closing " + this.config.title);
-        GameCodeLoader.terminate();
         glfwSetWindowShouldClose(this.glfwWindowPtr, true);
         this.shouldClose = true;
     }
@@ -294,6 +304,11 @@ public class Window implements Observer
     public void setIcon(String IMAGE_PATH)
     {
         Logger.FORGE_LOG_DEBUG("Setting Icon for " + this.config.title + " to : " + IMAGE_PATH);
+        if (System.getProperty("os.name").toLowerCase().contains("mac"))
+        {
+            Logger.FORGE_LOG_ERROR("Mac OS doesnt allow for window icons");
+            return;
+        }
         if (IMAGE_PATH == null)
         {
             Logger.FORGE_LOG_WARNING("No Icon Path specified, going with default icon for " + this.config.title);
@@ -340,7 +355,7 @@ public class Window implements Observer
     {
         Logger.FORGE_LOG_DEBUG("Setting title of " + this.config.title + " to : " + TITLE);
         this.config.title = TITLE;
-        glfwSetWindowTitle(this.glfwWindowPtr, this.config.title);
+        glfwSetWindowTitle(this.glfwWindowPtr, TITLE);
     }
 
 
@@ -354,8 +369,9 @@ public class Window implements Observer
 
     public void setOpacity(float OPACITY)
     {
-        Logger.FORGE_LOG_DEBUG("Setting opacity of " + this.config.title + " to : " + OPACITY % 1.0f);
-        glfwSetWindowOpacity(this.glfwWindowPtr, OPACITY % 1.0f);
+        float clamped = Math.max(0f, Math.min(1f, OPACITY));
+        Logger.FORGE_LOG_DEBUG("Setting opacity of " + this.config.title + " to : " + clamped);
+        glfwSetWindowOpacity(this.glfwWindowPtr, clamped);
     }
 
     // - - - hide or show
@@ -480,7 +496,7 @@ public class Window implements Observer
 
     protected void warnFPSSpike()
     {
-        if (Math.abs(this.fps - (int) ( 1.0f / dt)) >= DefaultValues.DEFAULT_FPS)
+        if (Math.abs(this.fps - (int) ( 1.0f / dt)) >= Settings.DEFAULT_FPS())
         {
             Logger.FORGE_LOG_WARNING(this.config.title + " Experiencing lag spike. Current fps: " + this.fps);
         }

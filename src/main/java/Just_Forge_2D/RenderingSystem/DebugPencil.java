@@ -1,9 +1,9 @@
 package Just_Forge_2D.RenderingSystem;
 
 import Just_Forge_2D.AssetPool.AssetPool;
-import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.ForgeMath;
 import Just_Forge_2D.Utils.Logger;
+import Just_Forge_2D.Utils.Settings;
 import Just_Forge_2D.WindowSystem.GameWindow;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
@@ -22,7 +22,7 @@ public class DebugPencil
     // - - - Private Variables - - -
 
     // - - - lines
-    private static final int MAX_LINES = DefaultValues.DEBUG_PENCIL_MAX_LINES;
+    private static final int MAX_LINES = Settings.DEBUG_PENCIL_MAX_LINES();
     private static final List<Line> lines = new ArrayList<>();
 
     // - - - rendering info
@@ -34,10 +34,10 @@ public class DebugPencil
     private static boolean started = false;
 
     // - - - Defaults
-    private static final int defaultLifetime = DefaultValues.DEBUG_PENCIL_DEFAULT_LIFE;
-    private static final Vector3f defaultColor = DefaultValues.DEBUG_PENCIL_DEFAULT_COLOR;
-    private static final int defaultWidth = DefaultValues.DEBUG_PENCIL_DEFAULT_WIDTH;
-    private static final float defaultRotation = DefaultValues.DEBUG_PENCIL_DEFAULT_ROTATION;
+    private static final int defaultLifetime = Settings.DEBUG_PENCIL_DEFAULT_LIFE();
+    private static final Vector3f defaultColor = Settings.DEBUG_PENCIL_DEFAULT_COLOR();
+    private static int width = Settings.DEBUG_PENCIL_DEFAULT_WIDTH();
+    private static final float defaultRotation = Settings.DEBUG_PENCIL_DEFAULT_ROTATION();
 
 
     // - - - | Functions | - - -
@@ -46,6 +46,10 @@ public class DebugPencil
     // - - - start
     public static void start()
     {
+        if (shader == null)
+        {
+            AssetPool.addShader("Debug", "Assets/Shaders/debug.glsl");
+        }
         // - - - Generate the vao
         vaoID = glGenVertexArrays();
         glBindVertexArray(vaoID);
@@ -67,7 +71,7 @@ public class DebugPencil
         glEnableVertexAttribArray(1);
 
         // - - - set width
-        glLineWidth(defaultWidth);
+        glLineWidth(width);
     }
 
     // - - - frame start
@@ -145,7 +149,18 @@ public class DebugPencil
 
 
     // - - - | Add Stuff | - - -
-    // TODO: Add other primitives and other constants for common values like colors
+
+
+    // - - - width
+    public static void setWidth(int WIDTH)
+    {
+        width = Math.min(1, WIDTH);
+    }
+
+    public static int getWidth()
+    {
+        return width;
+    }
 
 
     // - - - Add Lines - - -
@@ -250,7 +265,7 @@ public class DebugPencil
     // - - - default
     public static void addCircle(Vector2f CENTER, float RADIUS, Vector3f COLOR, int LIFETIME)
     {
-        int segments = Math.max(DefaultValues.DEBUG_PENCIL_MIN_CIRCLE_PRECISION, Math.min(DefaultValues.DEBUG_PENCIL_MAX_CIRCLE_PRECISION, (int) (RADIUS * 16)));
+        int segments = Math.max(Settings.DEBUG_PENCIL_MIN_CIRCLE_PRECISION(), Math.min(Settings.DEBUG_PENCIL_MAX_CIRCLE_PRECISION(), (int) (RADIUS * 16)));
         Vector2f[] points = new Vector2f[segments];
         float increment = (float) (2 * Math.PI / segments);
         float currentAngle = 0;

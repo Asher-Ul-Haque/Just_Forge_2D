@@ -6,8 +6,8 @@ import Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider.*;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent;
 import Just_Forge_2D.PhysicsSystem.PhysicsManagers.ColliderManager;
 import Just_Forge_2D.SceneSystem.Scene;
-import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.Logger;
+import Just_Forge_2D.Utils.Settings;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
@@ -17,7 +17,7 @@ import org.jbox2d.dynamics.Fixture;
 public class PhysicsSystemManager
 {
     private Scene owner;
-    private float fixedDelta = DefaultValues.PHYSICS_DELTA_TIME;
+    private float fixedDelta = Settings.PHYSICS_DELTA_TIME();
     public PhysicsWorld rawWorld;
 
 
@@ -114,10 +114,6 @@ public class PhysicsSystemManager
                 body.resetMassData();
             }
         }
-        else
-        {
-            Logger.FORGE_LOG_ERROR("Cannot register : " + OBJ + " with Physics System : null game object");
-        }
     }
 
     // - - - destroy
@@ -132,10 +128,6 @@ public class PhysicsSystemManager
                 rawWorld.getWorld().destroyBody(rb.getRawBody());
                 rb.setRawBody(null);
             }
-        }
-        else
-        {
-            Logger.FORGE_LOG_ERROR("Cannot remove : " + GO + " from physics system: null raw physics body");
         }
     }
 

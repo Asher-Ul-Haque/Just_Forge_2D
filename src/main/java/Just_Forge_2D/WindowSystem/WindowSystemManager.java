@@ -1,7 +1,7 @@
 package Just_Forge_2D.WindowSystem;
 
-import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.Logger;
+import Just_Forge_2D.Utils.Settings;
 import org.joml.Vector2i;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
@@ -72,7 +72,7 @@ public class WindowSystemManager
         if (vidMode == null)
         {
             Logger.FORGE_LOG_FATAL("Error in getting Monitor Size. Window System Panic");
-            return new Vector2i(DefaultValues.DEFAULT_WINDOW_WIDTH, DefaultValues.DEFAULT_WINDOW_HEIGHT);
+            return new Vector2i(Settings.DEFAULT_WINDOW_WIDTH(), Settings.DEFAULT_WINDOW_HEIGHT());
         }
         return new Vector2i(vidMode.width(), vidMode.height());
     }

@@ -1,18 +1,21 @@
 package Just_Forge_2D.EditorSystem;
 
 import Just_Forge_2D.AssetPool.AssetPool;
+import Just_Forge_2D.AssetPool.AssetPoolSerializer;
 import Just_Forge_2D.AudioSystem.AudioSystemManager;
-import Just_Forge_2D.EditorSystem.Themes.CleanTheme;
-import Just_Forge_2D.EditorSystem.Themes.Theme;
 import Just_Forge_2D.EditorSystem.Windows.ObjectSelector;
 import Just_Forge_2D.EntityComponentSystem.Components.ComponentList;
-import Just_Forge_2D.RenderingSystem.Framebuffer;
+import Just_Forge_2D.EventSystem.EventManager;
+import Just_Forge_2D.EventSystem.Events.Event;
+import Just_Forge_2D.EventSystem.Events.EventTypes;
+import Just_Forge_2D.GameSystem.ProjectManager;
 import Just_Forge_2D.RenderingSystem.Shader;
-import Just_Forge_2D.RenderingSystem.SpriteSheet;
-import Just_Forge_2D.SceneSystem.EmptySceneScript;
+import Just_Forge_2D.SceneSystem.MainSceneScript;
 import Just_Forge_2D.SceneSystem.SceneScript;
-import Just_Forge_2D.Utils.DefaultValues;
+import Just_Forge_2D.Themes.CleanTheme;
+import Just_Forge_2D.Themes.Theme;
 import Just_Forge_2D.Utils.Logger;
+import Just_Forge_2D.Utils.Settings;
 import Just_Forge_2D.WindowSystem.GameWindow;
 import Just_Forge_2D.WindowSystem.WindowConfig;
 import Just_Forge_2D.WindowSystem.WindowSystemManager;
@@ -20,7 +23,6 @@ import Just_Forge_2D.WindowSystem.WindowSystemManager;
 
 public class EditorSystemManager
 {
-    private static Framebuffer framebuffer;
     private static Theme currentTheme;
     public static Shader defaultShader;
     public static Shader selectorShader;
@@ -37,24 +39,24 @@ public class EditorSystemManager
     {
         if (INITIALIZER == null)
         {
-            Logger.FORGE_LOG_ERROR("Cant assign null as initializer");
+            GameWindow.changeScene(new MainSceneScript());
             return;
         }
-        EditorSystemManager.currentSceneInitializer = INITIALIZER;
         try
         {
-            GameWindow.changeScene(currentSceneInitializer.getDeclaredConstructor().newInstance());
+            GameWindow.changeScene(GameWindow.getCurrentScene().getScript().getClass().getDeclaredConstructor().newInstance());
         }
         catch (Exception e)
         {
+            EditorSystemManager.currentSceneInitializer = INITIALIZER;
             Logger.FORGE_LOG_FATAL("Couldn't change scene");
-            GameWindow.changeScene(new EmptySceneScript());
+            GameWindow.changeScene(new MainSceneScript());
         }
     }
 
     public static Class<? extends SceneScript> currentSceneInitializer;
     public static String projectDir = System.getProperty("user.dir");
-    public static boolean isRelease = false;
+    public static final boolean isRelease = false;
 
     public static state getCurrentState()
     {
@@ -74,32 +76,21 @@ public class EditorSystemManager
         isSelector
     }
 
-
-    public static Framebuffer getFramebuffer()
-    {
-        return framebuffer;
-    }
-
-    public static void setFramebuffer()
-    {
-        framebuffer = new Framebuffer(WindowSystemManager.getMonitorSize().x, WindowSystemManager.getMonitorSize().y);
-    }
-
     public static void setSelector()
     {
-        ObjectSelector.init(WindowSystemManager.getMonitorSize().x, WindowSystemManager.getMonitorSize().y);
+        ObjectSelector.init(GameWindow.getFrameBuffer().getSize().x, GameWindow.getFrameBuffer().getSize().y);
     }
 
     public static void compileShaders()
     {
-        AssetPool.addShader("Default", "Assets/Shaders/default.glsl");
+        AssetPool.addShader("Default", "Assets/Shaders/default.glsl", true);
+        AssetPool.addShader("Debug", "Assets/Shaders/debug.glsl", true);
         EditorSystemManager.defaultShader = AssetPool.getShader("Default");
 
         if (!EditorSystemManager.isRelease)
         {
-            AssetPool.addShader("Selector", "Assets/Shaders/selector.glsl");
-            AssetPool.addShader("Debug", "Assets/Shaders/debug.glsl");
-            EditorSystemManager.selectorShader = AssetPool.getShader("Selector");
+            EditorSystemManager.selectorShader = new Shader("Assets/Shaders/selector.glsl");
+            selectorShader.compile();
         }
     }
 
@@ -136,18 +127,25 @@ public class EditorSystemManager
         WindowSystemManager.initialize();
         editorWindowConfig = new WindowConfig();
         editorWindowConfig.setHeight(800);
-        if (currentTheme == null) currentTheme = new CleanTheme(DefaultValues.DARK_MODE_ENABLED);
+        if (currentTheme == null) currentTheme = new CleanTheme(Settings.DARK_MODE_ENABLED());
         GameWindow.get();
-        AssetPool.addSpriteSheet("Gizmos", new SpriteSheet(AssetPool.getTexture("Assets/Textures/gizmos.png"), 24, 48, 3, 0));
         EditorSystemManager.setSelector();
         setEditorLayer();
         ComponentList.initialize();
+        compileShaders();
     }
 
     public static void end()
     {
+        EventManager.notify(null, new Event(EventTypes.ForgeStop));
+        if (!isRelease)
+        {
+            AssetPoolSerializer.saveAssetPool(projectDir + "/.forge/Pool.justForgeFile");
+            ProjectManager.saveLastProjectPath();
+        }
         AudioSystemManager.terminate();
         ImGUIManager.destroyImGui();
-        Logger.finish();
+        Settings.save();
+        Logger.flushToFile();
     }
 }

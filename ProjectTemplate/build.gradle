@@ -9,12 +9,12 @@ def osName = System.getProperty("os.name").toLowerCase()
 def osArch = System.getProperty("os.arch").toLowerCase()
 
 if (osName.contains("linux")) {
-    engineJar = 'Just-Forge-2D-SNAPSHOT-1.3-linux'
+    engineJar = 'Just-Forge-2D-release-1.0-linux'
 } else if (osName.contains("mac")) {
     engineJar = 'Just-Forge-2D-SNAPSHOT-1.2-macos'
 } else if (osName.contains("win")) {
     if (osArch.contains("amd64")) {
-        engineJar = 'Just-Forge-2D-SNAPSHOT-1.2-win64'
+        engineJar = 'Just-Forge-2D-release-1.0-win64'
     } else if (osArch.contains("x86")) {
         engineJar = 'Just-Forge-2D-SNAPSHOT-1.2-win32'
     } else {

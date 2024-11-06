@@ -3,11 +3,11 @@ package Just_Forge_2D.EditorSystem.EditorComponents.GizmoSystem;
 import Just_Forge_2D.EditorSystem.EditorComponents.NonPickableComponent;
 import Just_Forge_2D.EditorSystem.Windows.ComponentsWindow;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
-import Just_Forge_2D.EntityComponentSystem.Components.Sprite.Sprite;
-import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
+import Just_Forge_2D.EntityComponentSystem.Components.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.InputSystem.Mouse;
 import Just_Forge_2D.PrefabSystem.PrefabManager;
+import Just_Forge_2D.RenderingSystem.Sprite;
 import Just_Forge_2D.WindowSystem.GameWindow;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
@@ -51,8 +51,8 @@ public class GizmoComponent extends Component
 
     public GizmoComponent(Sprite ARROW)
     {
-        this.xAxisGizmo = PrefabManager.generateDefaultSpriteObject(ARROW, gizmoWidth, gizmoHeight);
-        this.yAxisGizmo = PrefabManager.generateDefaultSpriteObject(ARROW, gizmoWidth, gizmoHeight);
+        this.xAxisGizmo = PrefabManager.generateObject(ARROW, gizmoWidth, gizmoHeight);
+        this.yAxisGizmo = PrefabManager.generateObject(ARROW, gizmoWidth, gizmoHeight);
         this.xAxisSprite = this.xAxisGizmo.getComponent(SpriteComponent.class);
         this.yAxisSprite = this.yAxisGizmo.getComponent(SpriteComponent.class);
         this.xAxisGizmo.transform.position.add(this.xAxisOffset);

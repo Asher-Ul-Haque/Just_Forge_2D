@@ -1,9 +1,10 @@
 package Just_Forge_2D.EntityComponentSystem.Components;
 
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
-import Just_Forge_2D.EditorSystem.Themes.Theme;
+import Just_Forge_2D.EditorSystem.Icons;
 import Just_Forge_2D.EditorSystem.Widgets;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
+import Just_Forge_2D.Themes.Theme;
 import Just_Forge_2D.Utils.Logger;
 import imgui.ImGui;
 import org.jbox2d.dynamics.contacts.Contact;
@@ -19,8 +20,10 @@ public abstract class Component
 {
     // - - - Private variables
     public transient GameObject gameObject = null; // a reference to the object it belongs to
+    public static String NAME;
     private static int ID_COUNTER = 0;
     private int uniqueID = -1;
+    private boolean deletePopup = false;
 
 
     // - - - | Functions | - - -
@@ -35,14 +38,31 @@ public abstract class Component
 
     // - - - Editor Part - - -
 
+    protected final void deleteButton()
+    {
+        if (Widgets.button(Icons.Trash + " Destroy##" + this.getClass().hashCode()))
+        {
+            deletePopup = !deletePopup;
+        }
+        if (deletePopup)
+        {
+            switch (Widgets.popUp(Icons.ExclamationTriangle , "Delete Confirmation", "Are you sure you want to remove \n" + this.getClass().getSimpleName() +"\nfrom " + this.gameObject, new Vector2f(300, 128)))
+            {
+                case OK:
+                    this.gameObject.removeComponent(this.getClass());
+                    break;
+
+                case CANCEL:
+                    deletePopup = false;
+                    break;
+            }
+        }
+    }
     public void editorGUI()
     {
         try
         {
-            if (ImGui.button("Destroy##" + this.getClass().hashCode()))
-            {
-                this.gameObject.removeComponent(this.getClass());
-            }
+            deleteButton();
             Field[] fields = this.getClass().getDeclaredFields();
             for (Field field : fields)
             {

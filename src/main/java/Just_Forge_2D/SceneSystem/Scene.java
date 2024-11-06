@@ -4,9 +4,10 @@ import Just_Forge_2D.AnimationSystem.AnimationComponent;
 import Just_Forge_2D.AssetPool.AssetPool;
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
-import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
+import Just_Forge_2D.EntityComponentSystem.Components.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.Components.TransformComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
+import Just_Forge_2D.EventSystem.EventManager;
 import Just_Forge_2D.InputSystem.Mouse;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent;
 import Just_Forge_2D.PhysicsSystem.PhysicsSystemManager;
@@ -64,9 +65,9 @@ public class Scene
         for (int i = 0; i < gameObjects.size(); ++i)
         {
             GameObject go = gameObjects.get(i);
+            go.start();
             if (this.renderer != null && go.hasComponent(SpriteComponent.class)) this.renderer.add(go);
             if (this.physics != null && go.hasComponent(RigidBodyComponent.class)) this.physics.add(go);
-            go.start();
         }
         isRunning = true;
         Logger.FORGE_LOG_INFO("Scene: " + this + " Started");
@@ -96,8 +97,8 @@ public class Scene
         {
             gameObjects.add(go);
             go.start();
-            if (this.renderer != null) this.renderer.destroyGameObject(go);
-            if (this.physics != null) this.physics.destroyGameObject(go);
+            if (this.renderer != null && go.hasComponent(SpriteComponent.class)) this.renderer.add(go);
+            if (this.physics != null && go.hasComponent(SpriteComponent.class)) this.physics.add(go);
         }
         pendingObjects.clear();
     }
@@ -111,6 +112,11 @@ public class Scene
     public void init()
     {
         this.camera = Mouse.getWorldCamera();
+        if (!EditorSystemManager.isRelease)
+        {
+            this.gameObjects.add(0, SceneSystemManager.createMaster(this));
+        }
+        EventManager.addObserver(this.camera);
         if (this.savePath.isEmpty()) setSavePath(this.script.savePath);
         this.script.loadResources(this);
         for (GameObject g : this.getGameObjects())
@@ -120,7 +126,7 @@ public class Scene
                 SpriteComponent spr = g.getComponent(SpriteComponent.class);
                 if (spr.getTexture() != null)
                 {
-                    spr.setTexture(AssetPool.getTexture(spr.getTexture().getFilepath()));
+                    spr.setTexture(AssetPool.makeTexture(spr.getTexture().getFilepath()));
                 }
             }
 
@@ -131,7 +137,6 @@ public class Scene
             }
         }
         this.script.init(this);
-        if (!EditorSystemManager.isRelease) SceneSystemManager.createMaster(this);
         Logger.FORGE_LOG_INFO("Scene: " + this.script + " Initialized");
     }
 
@@ -167,7 +172,6 @@ public class Scene
                 return object;
             }
         }
-        Logger.FORGE_LOG_WARNING("Found no game object with ID: " + GAME_OBJECT_ID + " in scene: " + this);
         return null;
     }
 
@@ -182,6 +186,22 @@ public class Scene
         }
         Logger.FORGE_LOG_WARNING("Found no game object with Name: " + NAME + " in scene: " + this);
         return null;
+    }
+
+    public void removeGameObject(GameObject GAME_OBJECT)
+    {
+        if (this.physics != null) this.physics.destroyGameObject(GAME_OBJECT);
+        if (this.renderer != null) this.renderer.destroyGameObject(GAME_OBJECT);
+        this.gameObjects.remove(GAME_OBJECT);
+        this.pendingObjects.remove(GAME_OBJECT);
+    }
+
+    public void clearGameObjects()
+    {
+        for (int i = 1; i < gameObjects.size(); ++i)
+        {
+            gameObjects.get(i).destroy();
+        }
     }
 
     // - - - Getters and Setters - - -
@@ -219,7 +239,6 @@ public class Scene
         for (GameObject go : pendingObjects)
         {
             gameObjects.add(go);
-
             if (this.renderer != null) this.renderer.add(go);
             if (this.physics != null) this.physics.add(go);
         }

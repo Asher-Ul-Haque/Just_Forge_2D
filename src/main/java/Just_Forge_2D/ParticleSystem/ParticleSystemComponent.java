@@ -1,21 +1,17 @@
 package Just_Forge_2D.ParticleSystem;
 
+import Just_Forge_2D.EditorSystem.Icons;
 import Just_Forge_2D.EditorSystem.Widgets;
-import Just_Forge_2D.EditorSystem.Windows.SceneHierarchyWindow;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
-import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
+import Just_Forge_2D.EntityComponentSystem.Components.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.EventSystem.EventManager;
 import Just_Forge_2D.EventSystem.Events.Event;
 import Just_Forge_2D.EventSystem.Observer;
-import Just_Forge_2D.InputSystem.Keyboard;
-import Just_Forge_2D.InputSystem.Keys;
-import Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent;
 import Just_Forge_2D.RenderingSystem.DebugPencil;
+import Just_Forge_2D.RenderingSystem.Sprite;
 import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.WindowSystem.GameWindow;
-import org.jbox2d.particle.ParticleDef;
-import org.jbox2d.particle.ParticleSystem;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
@@ -26,32 +22,29 @@ import java.util.Random;
 
 public class ParticleSystemComponent extends Component implements Observer
 {
-    private transient List<Particle> particles = new ArrayList<>();
-    private int maxParticles = 36;
-    private Vector2f minSize = new Vector2f(0.1f);
-    private Vector2f maxSize = new Vector2f(0.2f);
-    private static Random randomizer;
-    private Vector4f startColor = new Vector4f(1.0f, 0.0f, 1.0f, 1.0f);
-    private Vector4f finalColor = new Vector4f(1.0f, 1.0f, 0.0f, 1.0f);
-    private float minLifespan = 0.05f;
-    private float maxLifespan = 0.2f;
-    private float fanStart = 0;
-    private float fanEnd = (float) (2 * Math.PI);
-    private float angularVelocity = 0.2f;
-    private float minSpeed = 0.1f;
-    private float maxSpeed = 0.5f;
-    private boolean debugDrawAtRuntime = false;
-    private transient ParticleGenerator generator;
-    private Vector4f debugColor = new Vector4f(1.0f).sub(GameWindow.get().getClearColor());
-    private boolean keepPhysics = false;
-    private boolean useOnce = false;
-    private Vector2f offset = new Vector2f();
-    private int particleLayer;
-    private String templateName;
-    private Keys keypress = Keys.ENTER;
-    private ParticleSystem particleSystem;
+    protected transient List<Particle> particles = new ArrayList<>();
+    protected int maxParticles = 36;
+    protected final Vector2f minSize = new Vector2f(0.1f);
+    protected final Vector2f maxSize = new Vector2f(0.2f);
+    protected static Random randomizer;
+    protected final Vector4f startColor = new Vector4f(1.0f, 0.0f, 1.0f, 1.0f);
+    protected final Vector4f finalColor = new Vector4f(1.0f, 1.0f, 0.0f, 1.0f);
+    protected float minLifespan = 0.05f;
+    protected float maxLifespan = 0.2f;
+    protected float fanStart = 0;
+    protected float fanEnd = (float) (2 * Math.PI);
+    protected float angularVelocity = 0.2f;
+    protected float minSpeed = 0.1f;
+    protected float maxSpeed = 0.5f;
+    protected boolean debugDrawAtRuntime = false;
+    protected ParticleGenerator generator;
+    protected Vector4f debugColor = new Vector4f(1.0f).sub(GameWindow.get().getClearColor());
+    protected boolean useOnce = false;
+    protected Vector2f offset = new Vector2f();
+    protected int particleLayer;
+    protected boolean resetAll;
 
-    private Vector2f generateVelocity()
+    protected Vector2f generateVelocity()
     {
         float randomAngle = randomizer.nextFloat(fanStart, fanEnd + 0.0001f);
         return new Vector2f((float) Math.cos(randomAngle), (float) Math.sin(randomAngle)).normalize().mul(randomizer.nextFloat(minSpeed, maxSpeed + 0.1f));
@@ -93,60 +86,52 @@ public class ParticleSystemComponent extends Component implements Observer
         this.generator = TEMPLATE;
     }
 
-    private void resetParticle(Particle PARTICLE)
+    protected void resetParticle(Particle PARTICLE)
     {
         PARTICLE.lifeTime = randomizer.nextFloat(minLifespan, maxLifespan + 0.001f);
         PARTICLE.core.transform.position = new Vector2f(this.gameObject.transform.position).add(offset);
-        SpriteComponent renderable = PARTICLE.core.getComponent(SpriteComponent.class);
-        if (renderable != null) renderable.setColor(new Vector4f(startColor));
         PARTICLE.lifeSpan = PARTICLE.lifeTime;
         PARTICLE.angularVelocity = angularVelocity;
         PARTICLE.core.transform.scale = generateSize();
         PARTICLE.velocity = generateVelocity();
         PARTICLE.core.transform.rotation = randomizer.nextFloat();
         PARTICLE.core.transform.layer = particleLayer;
-        if (keepPhysics)
-        {
-            RigidBodyComponent rb = PARTICLE.core.getComponent(RigidBodyComponent.class);
-            rb.setTransform(PARTICLE.core.transform);
-            rb.addImpulse(PARTICLE.velocity);
-            rb.setAngularVelocity(PARTICLE.angularVelocity);
-            rb.addTorque(PARTICLE.angularVelocity);
-        }
-        PARTICLE.wake(true);
+        PARTICLE.wake(startColor);
     }
-
 
     @Override
     public void start()
     {
-        if (templateName == null)
-        {
-            templateName = this.gameObject.name;
-        }
-        generator = new ParticleGenerator(GameWindow.getCurrentScene().getGameObject(templateName), keepPhysics, this.particleSystem);
-
+        makeBackupGenerator();
         randomizer = new Random(this.gameObject.getUniqueID());
+
         for (int i = particles.size(); i < maxParticles; ++i)
         {
-            Particle particle = this.generator.create(new ParticleDef());
+            Particle particle = this.generator.create();
             particles.add(particle);
             resetParticle(particle);
+            particle.wake(false);
             GameWindow.getCurrentScene().addGameObject(particle.core);
         }
         Logger.FORGE_LOG_DEBUG("Starting");
+    }
+
+    public void resetAll()
+    {
+        this.resetAll = true;
     }
 
     @Override
     public void update(float DELTA_TIME)
     {
         clamp();
-        if (Keyboard.isKeyBeginPress(Keys.ENTER))
+        if (resetAll)
         {
             for (Particle p : particles)
             {
                 resetParticle(p);
             }
+            resetAll = false;
         }
         for (int i = 0; i < particles.size(); ++i)
         {
@@ -179,17 +164,34 @@ public class ParticleSystemComponent extends Component implements Observer
         clamp();
     }
 
-
-    private void clamp()
+    protected void clamp()
     {
-        fanStart = Math.min(fanEnd, fanStart);
-        fanEnd = Math.max(fanStart, fanEnd);
+        // - - - Angle clamping
+        if (fanStart > fanEnd)
+        {
+            float temp = fanStart;
+            fanStart = fanEnd;
+            fanEnd = temp;
+        }
+
+        // - - - Lifespan clamping
         maxLifespan = Math.max(0.001f, maxLifespan);
-        minLifespan = Math.max(Math.min(maxLifespan, minLifespan), 0f);
-        maxSpeed = Math.max(0f, maxSpeed);
-        minSpeed = Math.max(Math.min(minSpeed, maxSpeed), 0f);
-        maxParticles = Math.max(0, maxParticles);
+        minLifespan = Math.min(maxLifespan, Math.max(0f, minLifespan));
+
+        // - - - Speed clamping
+        maxSpeed = Math.max(0f, maxSpeed); // - - - Ensure maxSpeed has a minimum bound of 0
+        minSpeed = Math.min(maxSpeed, Math.max(0f, minSpeed)); // - - - minSpeed ≤ maxSpeed and ≥ 0f
+
+        // - - - Particle count clamping
+        maxParticles = Math.max(0, maxParticles); // - - - Ensure at least 0 particle
+
+        // - - - Size clamping
+        maxSize.x = Math.max(0.01f, maxSize.x); // - - - Ensure non-zero positive size
+        maxSize.y = Math.max(0.01f, maxSize.y);
+        minSize.x = Math.min(maxSize.x, Math.max(0.01f, minSize.x)); // - - - -minSize ≤ maxSize and ≥ smallest bound
+        minSize.y = Math.min(maxSize.y, Math.max(0.01f, minSize.y));
     }
+
 
     @Override
     public void onNotify(GameObject OBJECT, Event EVENT)
@@ -207,25 +209,59 @@ public class ParticleSystemComponent extends Component implements Observer
         }
     }
 
+    public void makeBackupGenerator()
+    {
+        if (generator == null)
+        {
+            SpriteComponent spr = this.gameObject.getComponent(SpriteComponent.class);
+            if (spr == null)
+            {
+                Logger.FORGE_LOG_WARNING("No Sprite Component for Particle Component");
+                return;
+            }
+            Sprite sprite = spr.getSpriteCopy();
+            if (sprite == null)
+            {
+                Logger.FORGE_LOG_WARNING("No Sprite Component for Particle Component");
+                return;
+            }
+
+            generator = new ParticleGenerator(sprite, this.gameObject.name, maxSize.x, maxSize.y);
+        }
+    }
+
     @Override
     public void editorGUI()
     {
-        String name = this.generator != null ? templateName : this.gameObject.name;
-        String input = Widgets.inputText("Template", name);
-        if (!input.equals(name))
-        {
-            for (GameObject g : SceneHierarchyWindow.gameObjectList())
-            {
-                if (g.name.equals(input))
-                {
-                    templateName = g.name;
-                    break;
-                }
-            }
-        }
-        super.editorGUI();
-    }
+        super.deleteButton();
 
-    public boolean keepingPhysics() { return this.keepPhysics; }
-    public void setKeepPhysics(boolean REALLY) { this.keepPhysics = REALLY; }
+        makeBackupGenerator();
+        generator.setSprite(SpriteComponent.spriteGUI(generator.sprite, generator::setSprite, this.hashCode()));
+
+        Widgets.text("");
+        Widgets.drawVec2Control(Icons.MinusCircle + "  Minimum Size", minSize);
+        Widgets.drawVec2Control(Icons.PlusCircle + "  Maximum Size", maxSize);
+        Widgets.drawVec2Control(Icons.MapPin + "  Offset", offset);
+        Widgets.text("");
+        maxParticles = Widgets.drawIntControl(Icons.Braille + "  Max Particles", maxParticles);
+        particleLayer = Widgets.drawIntControl(Icons.LayerGroup + "  Particle Layer", particleLayer);
+        minLifespan = Widgets.drawFloatControl(Icons.Skull + "  Minimum Lifespan", minLifespan);
+        maxLifespan = Widgets.drawFloatControl(Icons.Skull + "  Maximum Lifespan", maxLifespan);
+        Widgets.text("");
+        fanStart = Widgets.drawFloatControl(Icons.CircleNotch + "  Minimum Angle", fanStart);
+        fanEnd = Widgets.drawFloatControl(Icons.CircleNotch + "  Maximum Angle", fanEnd);
+        Widgets.text("");
+        angularVelocity = Widgets.drawFloatControl(Icons.CircleNotch + "  Angular Velocity", angularVelocity);
+        minSpeed = Widgets.drawFloatControl(Icons.Running + "  Minimum Speed", minSpeed);
+        maxSpeed = Widgets.drawFloatControl(Icons.Running + "  Maximum Speed", maxSpeed);
+        Widgets.text("");
+        Widgets.colorPicker4(Icons.EyeDropper + "  Minimum Angle Color", startColor);
+        Widgets.colorPicker4(Icons.EyeDropper + "  Maximum Angle Color", finalColor);
+        Widgets.colorPicker4(Icons.EyeDropper + "  Debug Color", debugColor);
+        Widgets.text("");
+        debugDrawAtRuntime = Widgets.drawBoolControl(Icons.Pen + "  Debug Draw At Runtime", debugDrawAtRuntime);
+        useOnce = Widgets.drawBoolControl(Icons.DiceOne + "  Use Once", useOnce);
+        if (Widgets.button(Icons.PowerOff + "  Reset All", true)) resetAll = true;
+        clamp();
+    }
 }

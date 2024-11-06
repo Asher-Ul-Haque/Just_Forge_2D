@@ -1,7 +1,7 @@
 package Just_Forge_2D.PhysicsSystem.PhysicsComponents.Collider;
 
-import Just_Forge_2D.EditorSystem.EditorSystemManager;
-import Just_Forge_2D.EditorSystem.Themes.Theme;
+import Just_Forge_2D.EditorSystem.Icons;
+import Just_Forge_2D.EditorSystem.Widgets;
 import imgui.ImGui;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
@@ -62,25 +62,21 @@ public class PolygonColliderComponent extends ColliderComponent
     public void editorGUI()
     {
         super.editorGUI();
-        Theme.setDefaultTextColor(EditorSystemManager.getCurrentTheme().secondaryColor);
-        ImGui.text("Collider Count: " + this.colliders.size());
-        Theme.resetDefaultTextColor();
+        Widgets.text(Icons.ListOl + "  Collider Count: " + this.colliders.size());
+        if (Widgets.button(Icons.PlusSquare + "  Add Collider")) addCollider();
+        ImGui.separator();
 
         for (int i = 0; i < colliders.size(); ++i)
         {
             if (ImGui.collapsingHeader("Collider : " + (i + 1)))
             {
-                if (ImGui.button("Delete Collider" +"##i"))
+                if (Widgets.button(Icons.MinusSquare + "  Delete Collider" +"##i"))
                 {
                     removeCollider(i);
                     continue;
                 }
                 colliders.get(i).editorGUI();
             }
-        }
-        if (ImGui.button("Add Collider"))
-        {
-            addCollider();
         }
     }
 }

@@ -1,12 +1,12 @@
 package Just_Forge_2D.EditorSystem;
 
 import Just_Forge_2D.EditorSystem.InputControls.KeyboardControls;
-import Just_Forge_2D.EditorSystem.Themes.ConfigFlags;
 import Just_Forge_2D.EditorSystem.Windows.*;
 import Just_Forge_2D.InputSystem.Keyboard;
 import Just_Forge_2D.InputSystem.Mouse;
 import Just_Forge_2D.PrefabSystem.PrefabManager;
 import Just_Forge_2D.SceneSystem.Scene;
+import Just_Forge_2D.Themes.ConfigFlags;
 import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.WindowSystem.GameWindow;
 import imgui.*;
@@ -31,10 +31,10 @@ public class ImGUIManager
     public static ImGuiIO io;
     public static ImFont interExtraBold;
     public static ImFont interRegular;
-    private static List<Runnable> renderWindows = new ArrayList<>();
-    private static List<Boolean> toRender = new ArrayList<>();
-    private static List<String> renderWindowNames = new ArrayList<>();
-    static float timer = 0f;
+    public static ImFont fontAwesome;
+    private static final List<Runnable> renderWindows = new ArrayList<>();
+    private static final List<Boolean> toRender = new ArrayList<>();
+    private static final List<String> renderWindowNames = new ArrayList<>();
 
 
     // - - - Functions - - -
@@ -208,22 +208,33 @@ public class ImGUIManager
 
     private static void setFontAtlas()
     {
-        // - - - spritesheet but for fonts
-        final ImFontAtlas fontAtlas = io.getFonts();
-        final ImFontConfig fontConfig = new ImFontConfig();
+        final ImGuiIO io = ImGui.getIO();
 
-        fontConfig.setGlyphRanges(fontAtlas.getGlyphRangesDefault());
+        final ImFontGlyphRangesBuilder rangesBuilder = new ImFontGlyphRangesBuilder();
+        rangesBuilder.addRanges(io.getFonts().getGlyphRangesDefault());
+        rangesBuilder.addRanges(Icons._IconRange);
+        short[] glyphs = rangesBuilder.buildRanges();
 
         final String interPath = "Assets/Fonts/JetBrainsMono-Bold.ttf";
         final int interFontSize = 16;
-        interRegular = fontAtlas.addFontFromFileTTF(interPath, interFontSize);
+        interRegular = io.getFonts().addFontFromFileTTF(interPath, interFontSize);
 
+        final ImFontConfig fontConfig = new ImFontConfig();
+        fontConfig.setMergeMode(true);
+
+        final String fontAwesomePath = "Assets/Fonts/FontAwesome.ttf";
+        final int fontAwesomeFontSize = 16;
+        fontAwesome = io.getFonts().addFontFromFileTTF(fontAwesomePath, fontAwesomeFontSize, fontConfig, glyphs);
+
+        final ImFontConfig noMergeConf = new ImFontConfig();
+        noMergeConf.setMergeMode(false);
         final String interExtraBoldPath = "Assets/Fonts/Inter-Black.otf";
         final int interExtraBoldFontSize = 16;
-        interExtraBold = fontAtlas.addFontFromFileTTF(interExtraBoldPath, interExtraBoldFontSize);
+        interExtraBold = io.getFonts().addFontFromFileTTF(interExtraBoldPath, interExtraBoldFontSize, noMergeConf);
 
+
+        io.getFonts().build();
         fontConfig.destroy();
-        fontAtlas.build();
     }
 
     // - - - start function because constructors are pointless
@@ -251,19 +262,19 @@ public class ImGUIManager
         if (!EditorSystemManager.isRelease) setFontAtlas();
 
         EditorSystemManager.getCurrentTheme().applyTheme();
-        imGuiGl3.init("#version 450 core");
+        imGuiGl3.init("#version 410 core");
         Logger.FORGE_LOG_INFO("Editor GUI ready");
 
-        addRenderWindow(KeyboardControls::editorUpdate, "Keyboard Controls");
-        addRenderWindow(SceneHierarchyWindow::editorGUI, "Scene Hierarchy Window");
-        addRenderWindow(GameViewport::render, "Game Viewport");
-        addRenderWindow(ComponentsWindow::render, "Components Window");
-        addRenderWindow(CameraControlWindow::render, "Camera Controls");
-        addRenderWindow(FPSGraph::render, "FPS Graphs");
-        addRenderWindow(GridControls::render, "Grid Controls");
-        addRenderWindow(AssetPoolDisplay::render, "Asset Pool Display");
-        addRenderWindow(Logs::render, "Logs");
-        addRenderWindow(PrefabManager::render, "Prefabs");
+        addRenderWindow(KeyboardControls::editorUpdate, Icons.Keyboard + "  Keyboard Controls");
+        addRenderWindow(SceneHierarchyWindow::editorGUI, Icons.Video + "  Scene Hierarchy Window");
+        addRenderWindow(GameViewport::render, Icons.Gamepad + "  Game Viewport");
+        addRenderWindow(ComponentsWindow::render, Icons.CodeBranch + "  Components Window");
+        addRenderWindow(CameraControlWindow::render, Icons.Camera + "  Camera Controls");
+        addRenderWindow(FPSGraph::render, Icons.ChartLine + "  FPS Graph");
+        addRenderWindow(GridControls::render, Icons.DigitalTachograph + "  Grid Controls");
+        addRenderWindow(AssetPoolDisplay::render, Icons.Images + "  Asset Pool Display");
+        addRenderWindow(Logs::render, Icons.Blog + "  Logs");
+        addRenderWindow(PrefabManager::render, Icons.Copy + "  Prefabs");
     }
 
 
@@ -271,31 +282,38 @@ public class ImGUIManager
 
     public static void update(float DELTA_TIME, Scene SCENE)
     {
-        startFrame(DELTA_TIME);
-        switch (EditorSystemManager.currentState)
+        try
         {
-            case isEditor:
-                if (ConfigFlags.dockingEnable) setupDockSpace();
-                SCENE.editorGUI();
-                MenuBar.render();
+            startFrame(DELTA_TIME);
+            switch (EditorSystemManager.currentState)
+            {
+                case isEditor:
+                    if (ConfigFlags.dockingEnable) setupDockSpace();
+                    SCENE.editorGUI();
+                    MenuBar.render();
 
-                for (int i = 0; i < toRender.size(); ++i)
-                {
-                    if (toRender.get(i))
+                    for (int i = 0; i < toRender.size(); ++i)
                     {
-                        renderWindows.get(i).run();
+                        if (toRender.get(i))
+                        {
+                            renderWindows.get(i).run();
+                        }
                     }
-                }
-                ImGui.end();
-                break;
+                    ImGui.end();
+                    break;
 
-            case isSplashScreen:
-                SplashScreen.render(DELTA_TIME);
-                break;
+                case isSplashScreen:
+                    SplashScreen.render(DELTA_TIME);
+                    break;
+            }
+
+            ImGui.render();
+            endFrame();
         }
-
-        ImGui.render();
-        endFrame();
+        catch (Exception e)
+        {
+            Logger.FORGE_LOG_FATAL(e.getMessage());
+        }
     }
 
     private static void startFrame(final float DELTA_TIME)

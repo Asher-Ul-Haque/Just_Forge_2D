@@ -1,0 +1,217 @@
+[Window][Debug##Default]
+Pos=60,60
+Size=400,400
+Collapsed=0
+
+[Window][Splash Screen]
+Pos=0,0
+Size=600,400
+Collapsed=0
+
+[Window][Dockspace Demo]
+Pos=0,0
+Size=1366,724
+Collapsed=0
+
+[Window][Scene Hierarchy]
+Pos=4,376
+Size=231,344
+Collapsed=0
+DockId=0x00000004,0
+
+[Window][Game Viewport]
+Pos=237,28
+Size=697,452
+Collapsed=0
+DockId=0x00000008,0
+
+[Window][Components]
+Pos=936,28
+Size=426,692
+Collapsed=0
+DockId=0x0000000A,0
+
+[Window][Camera Controls]
+Pos=237,482
+Size=697,238
+Collapsed=0
+DockId=0x00000005,0
+
+[Window][FPS]
+Pos=237,482
+Size=697,238
+Collapsed=0
+DockId=0x00000005,1
+
+[Window][Asset Pool]
+Pos=4,28
+Size=231,346
+Collapsed=0
+DockId=0x00000003,0
+
+[Window][Prefabs]
+Pos=4,28
+Size=231,346
+Collapsed=0
+DockId=0x00000003,1
+
+[Window][Logger]
+Pos=237,482
+Size=697,238
+Collapsed=0
+DockId=0x00000005,3
+
+[Window][Grid Controls]
+Pos=237,482
+Size=697,238
+Collapsed=0
+DockId=0x00000005,2
+
+[Window][Building the game]
+Pos=60,60
+Size=32,32
+Collapsed=0
+
+[Window][Settings]
+Pos=283,50
+Size=800,600
+Collapsed=0
+
+[Window][Confirm Delete]
+Pos=72,60
+Size=352,76
+Collapsed=0
+
+[Window][Create Game Object]
+Pos=277,77
+Size=225,584
+Collapsed=0
+
+[Window][  Sample Popup]
+Pos=150,10
+Size=71,96
+Collapsed=0
+
+[Window][  Confirm Delete]
+Pos=519,53
+Size=238,101
+Collapsed=0
+
+[Window][  Create New Game Object]
+Pos=899,56
+Size=211,684
+Collapsed=0
+
+[Window][  Delete Confirmation]
+Pos=1022,371
+Size=300,128
+Collapsed=0
+
+[Window][##Delete Confirmation]
+Pos=533,50
+Size=300,128
+Collapsed=0
+
+[Window][##Confirm Death]
+Pos=533,50
+Size=300,128
+Collapsed=0
+
+[Window][##Confirm Delete]
+Pos=507,50
+Size=352,92
+Collapsed=0
+
+[Window][##Delete Prefab]
+Pos=545,50
+Size=324,105
+Collapsed=0
+
+[Window][  Scene Hierarchy Window]
+Pos=4,368
+Size=862,352
+Collapsed=0
+DockId=0x0000000E,0
+
+[Window][  Game Viewport]
+Pos=868,28
+Size=32,600
+Collapsed=0
+DockId=0x00000008,0
+
+[Window][  Components Window]
+Pos=902,28
+Size=460,692
+Collapsed=0
+DockId=0x00000010,0
+
+[Window][  Camera Controls]
+Pos=868,630
+Size=32,90
+Collapsed=0
+DockId=0x00000006,2
+
+[Window][  FPS Graph]
+Pos=868,630
+Size=32,90
+Collapsed=0
+DockId=0x00000006,0
+
+[Window][  Grid Controls]
+Pos=868,630
+Size=32,90
+Collapsed=0
+DockId=0x00000006,1
+
+[Window][  Asset Pool Display]
+Pos=4,28
+Size=478,412
+Collapsed=0
+DockId=0x0000000D,0
+
+[Window][  Prefabs]
+Pos=4,28
+Size=862,338
+Collapsed=0
+DockId=0x0000000D,1
+
+[Window][  Logs]
+Pos=868,630
+Size=32,90
+Collapsed=0
+DockId=0x00000006,3
+
+[Window][  Asset Pool]
+Pos=4,28
+Size=862,338
+Collapsed=0
+DockId=0x0000000D,0
+
+[Window][##Settings]
+Pos=349,50
+Size=668,136
+Collapsed=0
+
+[Table][0x2FAA55A9,2]
+Column 0  Weight=1.9065
+Column 1  Weight=0.0935
+
+[Docking][Data]
+DockSpace             ID=0x6D3A3A6E Window=0x091AB4BE Pos=4,28 Size=1358,692 Split=X Selected=0xAE7BB42F
+  DockNode            ID=0x0000000F Parent=0x6D3A3A6E SizeRef=896,692 Split=X
+    DockNode          ID=0x0000000B Parent=0x0000000F SizeRef=862,692 Split=Y Selected=0x2FDAADFC
+      DockNode        ID=0x0000000D Parent=0x0000000B SizeRef=320,338 Selected=0x446D1056
+      DockNode        ID=0x0000000E Parent=0x0000000B SizeRef=320,352 Selected=0xB59FF763
+    DockNode          ID=0x0000000C Parent=0x0000000F SizeRef=32,692 Split=Y
+      DockNode        ID=0x00000009 Parent=0x0000000C SizeRef=1358,600 Split=X
+        DockNode      ID=0x00000007 Parent=0x00000009 SizeRef=930,692 Split=X
+          DockNode    ID=0x00000001 Parent=0x00000007 SizeRef=231,692 Split=Y Selected=0xDF18B7BE
+            DockNode  ID=0x00000003 Parent=0x00000001 SizeRef=160,346 Selected=0x601E4255
+            DockNode  ID=0x00000004 Parent=0x00000001 SizeRef=160,344 Selected=0x9A68760C
+          DockNode    ID=0x00000002 Parent=0x00000007 SizeRef=697,692 Split=Y Selected=0xAE7BB42F
+            DockNode  ID=0x00000008 Parent=0x00000002 SizeRef=919,452 CentralNode=1 HiddenTabBar=1 Selected=0x15EFE5EF
+            DockNode  ID=0x00000005 Parent=0x00000002 SizeRef=919,238 Selected=0x9FD216C5
+        DockNode      ID=0x0000000A Parent=0x00000009 SizeRef=426,692 Selected=0xA115F62D
+      DockNode        ID=0x00000006 Parent=0x0000000C SizeRef=1358,90 Selected=0xA079815D
+  DockNode            ID=0x00000010 Parent=0x6D3A3A6E SizeRef=460,692 Selected=0x41EB0D78
+

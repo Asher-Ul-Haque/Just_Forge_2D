@@ -29,6 +29,7 @@ public class SceneSystemManager
     public static Set<String> sceneScripts = new HashSet<>();
     public static void save(Scene SCENE)
     {
+        if (SCENE == null) return;
         Gson gson = new GsonBuilder()
                 .setPrettyPrinting()
                 .registerTypeAdapter(Component.class, new ComponentJsonHandler())
@@ -65,6 +66,7 @@ public class SceneSystemManager
 
     public static void load(Scene SCENE)
     {
+        if (SCENE == null) return;
         Gson gson = new GsonBuilder()
                 .setPrettyPrinting()
                 .registerTypeAdapter(Component.class, new ComponentJsonHandler())
@@ -116,7 +118,6 @@ public class SceneSystemManager
             maxCompoId++;
             GameObject.init(maxGoId);
             Component.init(maxCompoId);
-
         }
     }
 
@@ -145,7 +146,7 @@ public class SceneSystemManager
         return SCENE.isRunning;
     }
 
-    public static void createMaster(Scene SCENE)
+    protected static GameObject createMaster(Scene SCENE)
     {
         GameObject master = new GameObject("Master");
         master.noSerialize();
@@ -154,6 +155,6 @@ public class SceneSystemManager
         master.addComponent(new GizmoSystemComponent());
         master.addComponent(new MouseControlComponent());
         master.addComponent(new NonPickableComponent());
-        SCENE.addGameObject(master);
+        return master;
     }
 }

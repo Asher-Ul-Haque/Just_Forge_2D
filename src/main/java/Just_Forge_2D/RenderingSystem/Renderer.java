@@ -1,9 +1,10 @@
 package Just_Forge_2D.RenderingSystem;
 
-import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
+import Just_Forge_2D.AssetPool.AssetPool;
+import Just_Forge_2D.EntityComponentSystem.Components.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
-import Just_Forge_2D.Utils.DefaultValues;
 import Just_Forge_2D.Utils.Logger;
+import Just_Forge_2D.Utils.Settings;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,9 +14,10 @@ import java.util.List;
 public class Renderer
 {
     // - - - private variables
-    private final int MAX_BATCH_SIZE = DefaultValues.MAX_BATCH_SIZE;
+    private final int MAX_BATCH_SIZE = Settings.MAX_BATCH_SIZE();
     private final List<RenderBatch> batches;
     private static Shader currentShader;
+    private volatile boolean reloadAssets = false;
 
 
     // - - - | Functions | - - -
@@ -68,19 +70,28 @@ public class Renderer
         }
     }
 
+    public void reload()
+    {
+        reloadAssets = true;
+    }
+
     // - - - Destroy Game Object
     public void destroyGameObject(GameObject GO)
     {
         Logger.FORGE_LOG_DEBUG("Destroying Game Object from the scene: " + GO);
+
         if (GO.getComponent(SpriteComponent.class) == null) return;
-        for (RenderBatch batch: batches)
+
+        for (int i = 0; i < batches.size(); i++)
         {
+            RenderBatch batch = batches.get(i);
             if (batch.destroyIfExists(GO))
             {
-                return;
+                break;
             }
         }
     }
+
 
     // - - - use
     public void render()
@@ -89,6 +100,11 @@ public class Renderer
         {
             RenderBatch batch = batches.get(i);
             batch.render();
+        }
+        if (reloadAssets)
+        {
+            AssetPool.reloadAssets();
+            reloadAssets = false;
         }
     }
 

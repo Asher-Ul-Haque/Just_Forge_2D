@@ -43,7 +43,7 @@ public class PistonComponent extends BaseJointComponent
     @Override
     protected void createJoint()
     {
-        if (joint != null) joint = null;
+        joint = null;
         if (otherRB != null)
         {
             other = otherRB.gameObject;
@@ -241,12 +241,6 @@ public class PistonComponent extends BaseJointComponent
 
     // - - - Editor - - -
 
-    @Override
-    public void debugDraw()
-    {
-        if (other == null || joint == null) return;
-        DebugPencil.addLine(this.gameObject.transform.position, other.transform.position);
-    }
 
     @Override
     public void editorGUI()
@@ -306,4 +300,5 @@ public class PistonComponent extends BaseJointComponent
 
         setMotorSpeed(Widgets.drawFloatControl("Motor Speed", getMotorSpeed()));
     }
+
 }

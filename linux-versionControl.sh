@@ -10,7 +10,7 @@ cd build/libs || exit
 JAR_FILE=$(ls *.jar | head -n 1)
 
 # Step 4: Rename the JAR file (e.g., to ProjectShadowJar.jar)
-NEW_JAR_NAME="Just-Forge-2D-SNAPSHOT-1.3-linux.jar"
+NEW_JAR_NAME="Just-Forge-2D-release-1.0-linux.jar"
 mv "$JAR_FILE" "$NEW_JAR_NAME"
 
 # Step 5: Move the renamed JAR to the ProjectTemplate/libs folder

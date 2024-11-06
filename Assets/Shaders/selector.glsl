@@ -1,5 +1,5 @@
 #type vertex
-#version 450
+#version 410
 
     layout (location=0) in vec3 aPos;
     layout (location=1) in vec4 aColor;
@@ -26,7 +26,7 @@
 
 
 #type fragment
-#version 450
+#version 410
 
     in vec4 fColor;
     in vec2 fTextureCoords;
@@ -45,10 +45,6 @@
         {
            int id = int(fTextureID);
            texColor = fColor * texture(uTextures[id], fTextureCoords);
-        }
-        if (texColor.a < 0.5)
-        {
-            discard;
         }
         color = vec3(fEntityID, fEntityID, fEntityID);
     }

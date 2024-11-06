@@ -1,6 +1,6 @@
 package Just_Forge_2D.RenderingSystem;
 
-import Just_Forge_2D.EntityComponentSystem.Components.Sprite.SpriteComponent;
+import Just_Forge_2D.EntityComponentSystem.Components.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.WindowSystem.GameWindow;
@@ -52,10 +52,10 @@ public class RenderBatch implements Comparable<RenderBatch>
 
 
     // - - - batch related
-    private final SpriteComponent[] sprites;
-    private int spriteCount;
+    protected final SpriteComponent[] sprites;
+    protected int spriteCount;
     protected boolean hasRoom;
-    private final List<Texture> textures;
+    protected final List<Texture> textures;
     private final int maxBatchSize;
     private final int layer;
 

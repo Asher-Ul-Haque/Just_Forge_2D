@@ -1,13 +1,19 @@
 package Just_Forge_2D.EditorSystem.Windows;
 
+import Just_Forge_2D.AssetPool.AssetPool;
+import Just_Forge_2D.AssetPool.AssetPoolSerializer;
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
+import Just_Forge_2D.EditorSystem.Icons;
 import Just_Forge_2D.EditorSystem.ImGUIManager;
 import Just_Forge_2D.EventSystem.EventManager;
 import Just_Forge_2D.EventSystem.Events.Event;
 import Just_Forge_2D.EventSystem.Events.EventTypes;
+import Just_Forge_2D.GameSystem.GameCodeLoader;
 import Just_Forge_2D.GameSystem.GameManager;
-import Just_Forge_2D.Utils.DefaultValues;
+import Just_Forge_2D.GameSystem.ProjectManager;
+import Just_Forge_2D.SceneSystem.SceneSystemManager;
 import Just_Forge_2D.Utils.Logger;
+import Just_Forge_2D.Utils.Settings;
 import Just_Forge_2D.WindowSystem.GameWindow;
 import imgui.ImGui;
 import org.lwjgl.util.tinyfd.TinyFileDialogs;
@@ -17,19 +23,47 @@ public class MenuBar
     public static void render()
     {
         ImGui.beginMainMenuBar();
-        if (ImGui.beginMenu("File"))
+
+        if (ImGui.beginMenu(Icons.Gamepad + "  Project"))
         {
-            if (ImGui.menuItem("Save", ""))
+            if (ImGui.menuItem(Icons.Code + "  Recompile Game"))
+            {
+                GameManager.buildUserCode();
+            }
+            if (ImGui.menuItem(Icons.Redo + "  Reload Assets"))
+            {
+                AssetPool.reloadAssets();
+            }
+            if (ImGui.menuItem(Icons.FolderOpen + "  Open in Browser"))
+            {
+                ProjectManager.openProjectInBrowser();
+            }
+            if (ImGui.menuItem(Icons.WindowClose + "  Close"))
+            {
+                AssetPoolSerializer.saveAssetPool(EditorSystemManager.projectDir + "/.forge/Pool.justForgeFile");
+                SceneSystemManager.save(GameWindow.getCurrentScene());
+                GameCodeLoader.terminate();
+                GameCodeLoader.closeEye();
+                EventManager.notify(null, new Event(EventTypes.ForgeStop));
+                EditorSystemManager.setCurrentState(EditorSystemManager.state.isSplashScreen);
+                GameWindow.get().restore();
+                GameWindow.get().resetTitleBar();
+                SplashScreen.restart();
+                SplashScreen.initialize();
+            }
+            ImGui.endMenu();
+        }
+        ImGui.separator();
+
+        if (ImGui.beginMenu(Icons.Film + " Scene"))
+        {
+            if (ImGui.menuItem(Icons.Save + " Save", ""))
             {
                 EventManager.notify(null, new Event(EventTypes.SaveLevel));
             }
-            if (ImGui.menuItem("Load", ""))
+            if (ImGui.menuItem(Icons.Save+ " Save As", ""))
             {
-                EventManager.notify(null, new Event(EventTypes.LoadLevel));
-            }
-            if (ImGui.menuItem("Save As", ""))
-            {
-                String savePath = TinyFileDialogs.tinyfd_saveFileDialog("Choose Save Location", EditorSystemManager.projectDir + DefaultValues.DEFAULT_SAVE_DIR,null,null);
+                String savePath = TinyFileDialogs.tinyfd_saveFileDialog("Choose Save Location", EditorSystemManager.projectDir + Settings.DEFAULT_SAVE_DIR(),null,null);
                 if (savePath != null)
                 {
                     if (!savePath.endsWith(".justForgeFile")) savePath += ".justForgeFile";
@@ -37,9 +71,13 @@ public class MenuBar
                     EventManager.notify(null, new Event(EventTypes.SaveLevel));
                 }
             }
-            if (ImGui.menuItem("Load From", ""))
+            if (ImGui.menuItem(Icons.FileImport + " Load", ""))
             {
-                String savePath = TinyFileDialogs.tinyfd_openFileDialog("Choose Save Location", EditorSystemManager.projectDir + DefaultValues.DEFAULT_SAVE_DIR,null,null, false);
+                EventManager.notify(null, new Event(EventTypes.LoadLevel));
+            }
+            if (ImGui.menuItem(Icons.FileImport + " Load From", ""))
+            {
+                String savePath = TinyFileDialogs.tinyfd_openFileDialog("Choose Save Location", EditorSystemManager.projectDir + Settings.DEFAULT_SAVE_DIR(),null,null, false);
                 if (savePath != null)
                 {
                     if (!savePath.endsWith(".justForgeFile"))
@@ -53,40 +91,50 @@ public class MenuBar
                     }
                 }
             }
-            ImGui.endMenu();  // End the "File" menu
+            ImGui.endMenu();
         }
+        ImGui.separator();
 
-        if (ImGui.beginMenu("Run"))
+        if (ImGui.beginMenu(Icons.Bug + "  Run"))
         {
-            if (ImGui.menuItem("Build JAR"))
+            if (ImGui.menuItem(Icons.MugHot + "  Build JAR"))
             {
-                GameManager.compileCode();
+                GameManager.compileJar();
             }
-            if (ImGui.menuItem("Run JAR"))
+            if (ImGui.menuItem(Icons.Terminal + "  Run JAR"))
             {
                 GameManager.runCode();
             }
             ImGui.endMenu();
         }
+        ImGui.separator();
 
-        if (ImGui.beginMenu("View"))
+        if (ImGui.beginMenu(Icons.Eye + "  View"))
         {
             for (int i = 0; i < ImGUIManager.getRenderable().size(); ++i)
             {
+                if (ImGUIManager.getRenderableNames().get(i).startsWith("Keyboard")) continue;
                 Boolean b = ImGUIManager.getRenderable().get(i);
-                if (ImGui.menuItem((b ? "HIDE" : "SHOW") + "\t\t" + ImGUIManager.getRenderableNames().get(i)))
-                {
-                    ImGUIManager.getRenderable().set(i, !b);
-                }
+                if (ImGui.checkbox(ImGUIManager.getRenderableNames().get(i), b)) b = !b;
+                ImGUIManager.getRenderable().set(i, b);
             }
             ImGui.endMenu();
         }
+        ImGui.separator();
 
-        if (ImGui.beginMenu("Settings"))
+        if (ImGui.beginMenu(Icons.Cog + "  Settings"))
         {
-            DefaultValues.render();
+            if (ImGui.menuItem(Icons.Save + "  Save"))
+            {
+                Settings.save();
+            }
+            if (ImGui.menuItem(Icons.FileUpload + "  Load"))
+            {
+                Settings.load();
+            }
             ImGui.endMenu();
         }
+        ImGui.separator();
 
         ImGui.endMainMenuBar();
     }
