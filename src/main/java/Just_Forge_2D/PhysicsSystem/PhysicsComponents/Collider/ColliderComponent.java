@@ -52,11 +52,7 @@ public abstract class ColliderComponent extends Component
     @Override
     public void editorGUI()
     {
-        if (Widgets.button(Icons.Trash + " Destroy##" + this.getClass().hashCode()))
-        {
-            this.gameObject.removeComponent(this.getClass());
-            return;
-        }
+        super.deleteButton();
         debugDrawAtRuntime = Widgets.drawBoolControl(Icons.Pen + "  Runtime Debug Draw", debugDrawAtRuntime);
         if (debugDrawAtRuntime)
         {

@@ -7,11 +7,8 @@ import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.Components.ComponentList;
 import Just_Forge_2D.EntityComponentSystem.Components.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
-import Just_Forge_2D.PrefabSystem.NonSpritePrefab;
-import Just_Forge_2D.PrefabSystem.Prefab;
+import Just_Forge_2D.PrefabSystem.CopyCatPrefab;
 import Just_Forge_2D.PrefabSystem.PrefabManager;
-import Just_Forge_2D.PrefabSystem.SpritePrefab;
-import Just_Forge_2D.RenderingSystem.Sprite;
 import Just_Forge_2D.Utils.Logger;
 import imgui.ImGui;
 import org.joml.Vector2f;
@@ -48,17 +45,7 @@ public class ComponentsWindow
             ImGui.nextColumn();
             if (Widgets.button(Icons.Copy + "  Make Prefab"))
             {
-                SpriteComponent spriteComponent = activeGameObject.getComponent(SpriteComponent.class);
-                Prefab prefab;
-                if (spriteComponent != null)
-                {
-                    Sprite spr = spriteComponent.getSpriteCopy();
-                    prefab = new SpritePrefab(activeGameObject.name, spr, activeGameObject.transform.scale.x, activeGameObject.transform.scale.y);
-                }
-                else
-                {
-                    prefab = new NonSpritePrefab(activeGameObject.name, activeGameObject.transform.scale.x, activeGameObject.transform.scale.y);
-                }
+                CopyCatPrefab prefab = new CopyCatPrefab(activeGameObject.name, activeGameObject);
                 PrefabManager.registerPrefab(activeGameObject.name,  prefab);
             }
             ImGui.columns(1);

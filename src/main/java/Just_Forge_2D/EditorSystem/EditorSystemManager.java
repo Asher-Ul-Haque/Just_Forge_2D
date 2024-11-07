@@ -56,7 +56,7 @@ public class EditorSystemManager
 
     public static Class<? extends SceneScript> currentSceneInitializer;
     public static String projectDir = System.getProperty("user.dir");
-    public static final boolean isRelease = false;
+    public static final boolean isRelease = true;
 
     public static state getCurrentState()
     {
@@ -109,9 +109,10 @@ public class EditorSystemManager
         return currentTheme;
     }
 
-    public void setTheme(Theme THEME)
+    public static void setTheme(Theme THEME)
     {
         currentTheme = THEME;
+        currentTheme.applyTheme();
     }
 
     public static void run()

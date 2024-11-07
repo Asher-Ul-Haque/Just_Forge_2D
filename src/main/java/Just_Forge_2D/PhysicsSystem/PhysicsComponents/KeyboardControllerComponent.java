@@ -52,8 +52,7 @@ public class KeyboardControllerComponent extends Component
     @Override
     public void editorGUI()
     {
-        if (Widgets.button(Icons.Trash + " Destroy##" + this.getClass().hashCode())) this.gameObject.removeComponent(this.getClass());
-
+        super.deleteButton();
         Enum t = Widgets.drawEnumControls(Keys.class, Icons.LongArrowAltLeft + "  Move Left Key", leftKey);
         if (t != null) leftKey = (Keys) t;
 

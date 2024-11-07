@@ -22,6 +22,11 @@ import org.lwjgl.system.MemoryStack;
 import org.lwjgl.system.MemoryUtil;
 import org.lwjgl.util.tinyfd.TinyFileDialogs;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -34,6 +39,11 @@ public class AssetPoolDisplay
     private static boolean spriteEditorOpen = false;
     private static boolean keepSize;
     private static boolean keepAspectRatio = true;
+    private static boolean copyToProject = true;
+    private static boolean popup = false;
+    private static String popupMessage = "";
+    private static Runnable clearMethod;
+    private static String toDelete = "";
 
     // - - - Sprite Sheet
     private static final Vector2f size = new Vector2f(GridlinesComponent.gridSize);
@@ -107,11 +117,12 @@ public class AssetPoolDisplay
         }
     }
 
-    // - - - Helper for asset addition
+
     private static void addAsset(String assetName, String assetPath, boolean condition, Runnable onAdd, Runnable EXTRA)
     {
         name = Widgets.inputText(Icons.User + "  Name", name);
         path = Widgets.inputText(Icons.FileImage + "  Path", path);
+        copyToProject = Widgets.drawBoolControl(Icons.Copy + "  Copy To Project", copyToProject);
         EXTRA.run();
         ImGui.columns(2);
 
@@ -119,12 +130,9 @@ public class AssetPoolDisplay
         {
             switch (assetName)
             {
-                case "Sprite Sheet" ->
-                        path = handleBrowse("Select a Sprite Sheet", assetPath, new String[]{"*.png", "*.jpg", "*.jpeg"});
-                case "Texture" ->
-                        path = handleBrowse("Select a Texture", assetPath, new String[]{"*.png", "*.jpg", "*.jpeg"});
-                case "Sound" ->
-                        path = handleBrowse("Select a Sound", assetPath, new String[]{"*.wav", "*.ogg"});
+                case "Sprite Sheet" -> path = handleBrowse("Select a Sprite Sheet", assetPath, new String[]{"*.png", "*.jpg", "*.jpeg"});
+                case "Texture" -> path = handleBrowse("Select a Texture", assetPath, new String[]{"*.png", "*.jpg", "*.jpeg"});
+                case "Sound" -> path = handleBrowse("Select a Sound", assetPath, new String[]{"*.wav", "*.ogg"});
             }
         }
 
@@ -134,12 +142,42 @@ public class AssetPoolDisplay
         {
             if (Widgets.button(Icons.FileImport + " Add"))
             {
+                if (copyToProject)
+                {
+                    try
+                    {
+                        String destinationFolder = switch (assetName)
+                        {
+                            case "Sprite Sheet", "Texture" -> EditorSystemManager.projectDir + "/Assets/Textures/";
+                            case "Sound" -> EditorSystemManager.projectDir + "/Assets/Sounds/";
+                            default -> "";
+                        };
+
+                        Path sourcePath = Paths.get(path);
+                        Path destinationPath = Paths.get(destinationFolder + sourcePath.getFileName());
+
+                        // - - - Ensure the destination folder exists
+                        Files.createDirectories(destinationPath.getParent());
+
+                        // - - - Copy the file to the destination folder
+                        Files.copy(sourcePath, destinationPath, StandardCopyOption.REPLACE_EXISTING);
+
+                        // - - - Update the path to the new location within the project directory
+                        path = destinationPath.toString();
+                    }
+                    catch (IOException e)
+                    {
+                        Logger.FORGE_LOG_ERROR("Failed to copy asset: " + e.getMessage());
+                    }
+                }
+
                 onAdd.run();
                 open = false;
             }
         }
         ImGui.columns(1);
     }
+
 
 
 
@@ -150,7 +188,7 @@ public class AssetPoolDisplay
     {
         if (ImGui.beginTabItem(Icons.PhotoVideo + " Sprite Sheets"))
         {
-            handleAddAndClear(AssetPool::clearSpriteSheetPool, "a SpriteSheet");
+            handleAddAndClear(AssetPool::clearSpriteSheetPool, "a SpriteSheet", AssetPool.getAllSpriteSheets().isEmpty());
 
             if (open)
             {
@@ -163,7 +201,13 @@ public class AssetPoolDisplay
                         SpriteSheet sheet = new SpriteSheet(t, (int) size.x, (int) size.y, spriteCount, spriteSpacing);
                         AssetPool.addSpriteSheet(name, sheet, true);
                     }
-                    else Logger.FORGE_LOG_ERROR("Bad Texture: " + name);
+                    else
+                    {
+                        popup = true;
+                        open = false;
+                        popupMessage = "Bad Texture: " + name;
+                        Logger.FORGE_LOG_ERROR(popupMessage);
+                    }
                 },
                 () ->
                 {
@@ -205,8 +249,9 @@ public class AssetPoolDisplay
             ImGui.columns(2);
             if (Widgets.button(ICON_REMOVE))
             {
-                AssetPool.removeSpriteSheet(NAME);
-
+                clearMethod = () -> {AssetPool.removeSpriteSheet(NAME);};
+                toDelete = NAME;
+                popup = true;
                 return;
             }
 
@@ -267,7 +312,7 @@ public class AssetPoolDisplay
         {
             if (mode.equals(Mode.CREATION))
             {
-                handleAddAndClear(AssetPool::clearTexturePool, "a Texture");
+                handleAddAndClear(AssetPool::clearTexturePool, "a Texture", AssetPool.getAllTextures().isEmpty());
 
                 if (open)
                 {
@@ -295,7 +340,9 @@ public class AssetPoolDisplay
 
                     if (Widgets.button(ICON_REMOVE))
                     {
-                        AssetPool.removeTexture(textureName);
+                        clearMethod = () -> {AssetPool.removeTexture(textureName);};
+                        toDelete = textureName;
+                        popup = true;
                         continue;
                     }
                 }
@@ -361,7 +408,7 @@ public class AssetPoolDisplay
         {
             if (mode.equals(Mode.CREATION))
             {
-                handleAddAndClear(AssetPool::clearSoundPool, "a Sound");
+                handleAddAndClear(AssetPool::clearSoundPool, "a Sound", AssetPool.getAllSounds().isEmpty());
 
                 if (open)
                 {
@@ -385,7 +432,9 @@ public class AssetPoolDisplay
 
             if (Widgets.button(ICON_REMOVE + " ##" + i))
             {
-                AssetPool.removeSound(soundName);
+                clearMethod = () -> {AssetPool.removeSound(soundName);};
+                toDelete = soundName;
+                popup = true;
                 continue;
             }
 
@@ -410,12 +459,29 @@ public class AssetPoolDisplay
     }
 
     // - - - Helper to handle adding and clearing assets
-    private static void handleAddAndClear(Runnable clearMethod, String addLabel)
+    private static void handleAddAndClear(Runnable CLEAR, String addLabel, boolean condition)
     {
         if (mode.equals(Mode.SPRITE_SELECTION)) return;
         if (Widgets.button(ICON_ADD + " " + addLabel)) open = !open;
+        if (condition) return;
         ImGui.sameLine();
-        if (Widgets.button(Icons.TrashAlt + " Clear")) clearMethod.run();
+        if (Widgets.button(Icons.TrashAlt + " Clear"))
+        {
+            popup = true;
+            clearMethod = CLEAR;
+            if (addLabel.equals("a SpriteSheet"))
+            {
+                toDelete = "All Sprite Sheets";
+            }
+            else if (addLabel.equals("a Sound"))
+            {
+                toDelete = "All Sounds";
+            }
+            else if (addLabel.equals("a Texture"))
+            {
+                toDelete = "All Textures";
+            }
+        }
         Widgets.text("");
     }
 
@@ -454,6 +520,22 @@ public class AssetPoolDisplay
                     break;
             }
             ImGui.endTabBar();
+        }
+        if (popup)
+        {
+            switch(Widgets.popUp(Icons.ExclamationTriangle, "Delete Asset", "Are you sure you want to delete: \n" + toDelete))
+            {
+                case OK:
+                    clearMethod.run();
+                    popup = !popup;
+                    clearMethod = null;
+                    toDelete = "";
+                    break;
+
+                case CANCEL:
+                    popup = !popup;
+                    break;
+            }
         }
         ImGui.end();
     }

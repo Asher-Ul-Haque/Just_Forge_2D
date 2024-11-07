@@ -2,6 +2,7 @@ package Just_Forge_2D.TextSystem;
 
 import Just_Forge_2D.AssetPool.AssetPool;
 import Just_Forge_2D.EditorSystem.EditorComponents.NonPickableComponent;
+import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.EditorSystem.Icons;
 import Just_Forge_2D.EditorSystem.Widgets;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
@@ -40,9 +41,11 @@ public class TextComponent extends Component
         if (!tried)
         {
             Texture t = new Texture();
-            t.init("Assets/Textures/font.png");
-            t.setFilters(TextureMaximizeFilter.NEAREST, TextureMinimizeFilter.NEAREST, Settings.DEFAULT_TEXTURE_WRAP_S(), Settings.DEFAULT_TEXTURE_WRAP_T());
-            AssetPool.addSpriteSheet("font", new SpriteSheet(t, 16, 16, 36, 0));
+            if (t.init(EditorSystemManager.projectDir + "/Assets/Textures/font.png"))
+            {
+                t.setFilters(TextureMaximizeFilter.NEAREST, TextureMinimizeFilter.NEAREST, Settings.DEFAULT_TEXTURE_WRAP_S(), Settings.DEFAULT_TEXTURE_WRAP_T());
+                AssetPool.addSpriteSheet("font", new SpriteSheet(t, 16, 16, 36, 0));
+            }
             tried = true;
         }
     }

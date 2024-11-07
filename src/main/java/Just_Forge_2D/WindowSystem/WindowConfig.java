@@ -19,6 +19,7 @@ public class WindowConfig
 
     // - - - advanced configuration
     protected float aspectRatio = Settings.DEFAULT_ASPECT_RATIO();
+    protected float opacity = Settings.DEFAULT_WINDOW_OPACITY();
     protected boolean vsync = Settings.DEFAULT_VSYNC_ENABLE();
     protected boolean transparent = Settings.DEFAULT_WINDOW_TRANSPARENCY_STATE();
     protected boolean maximized = Settings.DEFAULT_WINDOW_MAXIMIZED_STATE();

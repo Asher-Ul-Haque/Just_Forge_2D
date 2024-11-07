@@ -8,6 +8,7 @@ import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.InputSystem.Mouse;
 import Just_Forge_2D.PrefabSystem.PrefabManager;
 import Just_Forge_2D.RenderingSystem.Sprite;
+import Just_Forge_2D.RenderingSystem.TextureMaximizeFilter;
 import Just_Forge_2D.WindowSystem.GameWindow;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
@@ -55,10 +56,14 @@ public class GizmoComponent extends Component
         this.yAxisGizmo = PrefabManager.generateObject(ARROW, gizmoWidth, gizmoHeight);
         this.xAxisSprite = this.xAxisGizmo.getComponent(SpriteComponent.class);
         this.yAxisSprite = this.yAxisGizmo.getComponent(SpriteComponent.class);
+        this.xAxisSprite.setMaximizeFilter(TextureMaximizeFilter.LINEAR);
+        this.yAxisSprite.setMaximizeFilter(TextureMaximizeFilter.LINEAR);
         this.xAxisGizmo.transform.position.add(this.xAxisOffset);
         this.yAxisGizmo.transform.position.add(this.yAxisOffset);
         this.xAxisGizmo.addComponent(new NonPickableComponent());
         this.yAxisGizmo.addComponent(new NonPickableComponent());
+        this.xAxisSprite.applyTextureFilters();
+        this.yAxisSprite.applyTextureFilters();
 
         GameWindow.getCurrentScene().addGameObject(this.xAxisGizmo);
         GameWindow.getCurrentScene().addGameObject(this.yAxisGizmo);
@@ -139,6 +144,7 @@ public class GizmoComponent extends Component
     private void activate()
     {
         this.xAxisSprite.setColor(xAxisColor);
+
         this.xAxisGizmo.transform.layer = Math.max(this.xAxisGizmo.transform.layer, this.activeGameObject.transform.layer + 1);
         this.yAxisGizmo.transform.layer = Math.max(this.xAxisGizmo.transform.layer, this.activeGameObject.transform.layer + 1);
         this.yAxisSprite.setColor(yAxisColor);
@@ -159,8 +165,8 @@ public class GizmoComponent extends Component
         Vector2f mousePos = new Vector2f(Mouse.getWorldX(), Mouse.getWorldY());
 
         if (mousePos.x <= xAxisGizmo.transform.position.x + (gizmoHeight / 2.0f) &&
-                mousePos.x >= xAxisGizmo.transform.position.x - (gizmoWidth / 2.0f) &&
-                mousePos.y >= xAxisGizmo.transform.position.y - (gizmoHeight / 2.0f) &&
+                mousePos.x >= xAxisGizmo.transform.position.x - (gizmoHeight / 2.0f) &&
+                mousePos.y >= xAxisGizmo.transform.position.y - (gizmoWidth / 2.0f) &&
                 mousePos.y <= xAxisGizmo.transform.position.y + (gizmoWidth / 2.0f))
         {
             xAxisSprite.setColor(xAxisHoverColor);

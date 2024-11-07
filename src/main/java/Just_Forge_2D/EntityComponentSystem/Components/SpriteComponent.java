@@ -28,6 +28,7 @@ public class SpriteComponent extends Component
     // - - - | Functions | - - -
 
 
+
     // - - - Getters and Setters - - -
 
     // - - - Color
@@ -109,11 +110,63 @@ public class SpriteComponent extends Component
     @Override
     public void start()
     {
-        if (sprite.getTexture() != null) this.sprite.setTexture(AssetPool.makeTexture(this.sprite.getTexture().getFilepath()));
-        this.sprite.applyTextureFilters();
+        if (sprite.getTexture() != null)
+        {
+            this.sprite.setTexture(AssetPool.makeTexture(this.sprite.getTexture().getFilepath()));
+            sprite.applyTextureFilters();
+        }
         this.lastTransform = gameObject.transform.copy();
         read = true;
         wrote = false;
+    }
+
+    public TextureMinimizeFilter getMinimizeFilter()
+    {
+        return sprite.getMinimizeFilter();
+    }
+
+    public TextureMaximizeFilter getMaximizeFilter()
+    {
+        return sprite.getMaximizeFilter();
+    }
+
+    public TextureWrapping getWrap_sFilter()
+    {
+        return sprite.getWrap_s();
+    }
+
+    public TextureWrapping getWrap_tFilter()
+    {
+        return sprite.getWrap_t();
+    }
+
+    public void setMinimizeFilter(TextureMinimizeFilter FILTER)
+    {
+        sprite.setMinimizeFilter(FILTER);
+        sprite.applyTextureFilters();
+    }
+
+    public void setMaximizeFilter(TextureMaximizeFilter FILTER)
+    {
+        sprite.setMaximizeFilter(FILTER);
+        sprite.applyTextureFilters();
+    }
+
+    public void setWrap_s(TextureWrapping WRAP)
+    {
+        sprite.setWrap_sFilter(WRAP);
+        sprite.applyTextureFilters();
+    }
+
+    public void setWrap_t(TextureWrapping WRAP)
+    {
+        sprite.setWrap_tFilter(WRAP);
+        sprite.applyTextureFilters();
+    }
+
+    public void applyTextureFilters()
+    {
+        sprite.applyTextureFilters();
     }
 
     // - - - Update if data changes
@@ -134,6 +187,7 @@ public class SpriteComponent extends Component
         update(DELTA_TIME);
         if (!read)
         {
+            sprite.applyTextureFilters();
             Renderer renderer = GameWindow.getCurrentScene().getRenderer();
             if (renderer != null)
             {

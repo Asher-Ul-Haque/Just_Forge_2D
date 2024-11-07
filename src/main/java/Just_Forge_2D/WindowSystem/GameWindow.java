@@ -28,6 +28,7 @@ import Just_Forge_2D.Utils.TimeKeeper;
 import org.joml.Vector2f;
 
 import static org.lwjgl.glfw.GLFW.glfwPollEvents;
+import static org.lwjgl.glfw.GLFW.glfwSetWindowOpacity;
 import static org.lwjgl.opengl.GL11.*;
 
 
@@ -41,6 +42,7 @@ public class GameWindow extends Window
     // - - - Window variables - - -
     private boolean isInitialized = false;
     private Framebuffer framebuffer;
+    private boolean ignore = false;
 
     // - - - Systems
 
@@ -141,6 +143,7 @@ public class GameWindow extends Window
 
                 // - - - Render passes - - -
 
+                glViewport(0, 0, framebuffer.getSize().x, framebuffer.getSize().y);
                 if (!EditorSystemManager.isRelease)
                 {
 
@@ -148,7 +151,6 @@ public class GameWindow extends Window
                     glDisable(GL_BLEND);
                     ObjectSelector.enableWriting();
 
-                    glViewport(0, 0, framebuffer.getSize().x, framebuffer.getSize().y);
                     clear();
                     Renderer.bindShader(EditorSystemManager.selectorShader);
                     currentScene.render(dt);
@@ -158,14 +160,15 @@ public class GameWindow extends Window
 
                     glEnable(GL_BLEND);
                     glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+
                     // - - - Debug Drawing
-                    DebugPencil.beginFrame();
 
                     // - - - Framebuffer
                     framebuffer.bind();
 
                 }
                 this.clear();
+                DebugPencil.beginFrame();
                 if (dt >= 0.0d)
                 {
                     Renderer.bindShader(EditorSystemManager.defaultShader);
@@ -275,6 +278,32 @@ public class GameWindow extends Window
                     Logger.FORGE_LOG_FATAL(e.getCause());
                 }
                 break;
+
+            case ForgeResize:
+                if (ignore)
+                {
+                    ignore = false;
+                    return;
+                }
+                if (this.config.resizable)
+                {
+                    this.framebuffer = new Framebuffer(getWidth(), getHeight());
+
+                    if (EditorSystemManager.isRelease)
+                    {
+                        float aspectWidth = getWidth();
+                        float aspectHeight = aspectWidth / ((float) GameWindow.getFrameBuffer().getSize().x / GameWindow.getFrameBuffer().getSize().y);
+                        float scaleDown = getHeight() / aspectHeight;
+                        if (aspectHeight > getHeight())
+                        {
+                            // - - - switch to pillar mode
+                            aspectHeight = getHeight();
+                            aspectWidth = aspectHeight * ((float) GameWindow.getFrameBuffer().getSize().x / GameWindow.getFrameBuffer().getSize().y);
+                        }
+                        Mouse.setGameViewport(new Vector2f(0,  -scaleDown), new Vector2f(aspectWidth, aspectHeight));
+                    }
+                }
+                break;
         }
     }
 
@@ -284,6 +313,15 @@ public class GameWindow extends Window
     }
 
     public static Framebuffer getFrameBuffer() {return get().framebuffer;}
+
+    @Override
+    public void setOpacity(float OPACITY)
+    {
+        float clamped = Math.max(0f, Math.min(1f, OPACITY));
+        config.opacity = clamped;
+        Logger.FORGE_LOG_DEBUG("Setting opacity of " + this.config.title + " to : " + clamped);
+        if (EditorSystemManager.isRelease) glfwSetWindowOpacity(this.glfwWindowPtr, clamped);
+    }
 
     @Override
     public void setSize(int WIDTH, int HEIGHT)
@@ -302,7 +340,6 @@ public class GameWindow extends Window
             }
             if (EditorSystemManager.isRelease)
             {
-                System.out.println();
                 super.setSize(WIDTH, HEIGHT);
                 float aspectWidth = WIDTH;
                 float aspectHeight = aspectWidth / ((float) GameWindow.getFrameBuffer().getSize().x / GameWindow.getFrameBuffer().getSize().y);
@@ -315,6 +352,7 @@ public class GameWindow extends Window
                 }
                 Mouse.setGameViewport(new Vector2f(0,  -scaleDown), new Vector2f(aspectWidth, aspectHeight));
             }
+            ignore = true;
             EventManager.notify(null, new Event(EventTypes.ForgeResize));
         }
     }

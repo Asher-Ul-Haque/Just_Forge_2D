@@ -364,12 +364,14 @@ public class Window implements Observer
     // - - - opacity
     public float getOpacity()
     {
-        return glfwGetWindowOpacity(this.glfwWindowPtr);
+        return config.opacity;
+        //return glfwGetWindowOpacity(this.glfwWindowPtr);
     }
 
     public void setOpacity(float OPACITY)
     {
         float clamped = Math.max(0f, Math.min(1f, OPACITY));
+        config.opacity = clamped;
         Logger.FORGE_LOG_DEBUG("Setting opacity of " + this.config.title + " to : " + clamped);
         glfwSetWindowOpacity(this.glfwWindowPtr, clamped);
     }

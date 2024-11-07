@@ -7,6 +7,7 @@ import Just_Forge_2D.RenderingSystem.SpriteSheet;
 import Just_Forge_2D.RenderingSystem.Texture;
 import Just_Forge_2D.Utils.Logger;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -33,6 +34,12 @@ public class AssetPool
 
     private static void shaderAdder(String NAME, String FILE_PATH)
     {
+        File real = new File(FILE_PATH);
+        if (!real.exists())
+        {
+            Logger.FORGE_LOG_ERROR("No such file exists");
+            return;
+        }
         if (!AssetPool.shaderPool.containsKey(FILE_PATH))
         {
             Logger.FORGE_LOG_DEBUG("Shader with path: " + FILE_PATH + " Hashed in shader Asset Pool and loaded");
@@ -98,6 +105,12 @@ public class AssetPool
 
     private static void textureAdder(String NAME, String FILE_PATH)
     {
+        File real = new File(FILE_PATH);
+        if (!real.exists())
+        {
+            Logger.FORGE_LOG_ERROR("No such file exists");
+            return;
+        }
         if (!AssetPool.texturePool.containsKey(FILE_PATH))
         {
             Logger.FORGE_LOG_DEBUG("Texture with path: " + FILE_PATH + " Hashed in shader Asset Pool and loaded");
@@ -196,6 +209,12 @@ public class AssetPool
 
     private static void spriteSheetAdder(String NAME, SpriteSheet SPRITE_SHEET, String FILE_PATH)
     {
+        File real = new File(FILE_PATH);
+        if (!real.exists())
+        {
+            Logger.FORGE_LOG_ERROR("No such file exists");
+            return;
+        }
         if (!AssetPool.spriteSheetPool.containsKey(FILE_PATH))
         {
             nameToFileSpriteSheet.put(NAME, FILE_PATH);
@@ -266,6 +285,12 @@ public class AssetPool
 
     private static void soundAdder(String NAME, String FILE_PATH, boolean DOES_LOOP)
     {
+        File real = new File(FILE_PATH);
+        if (!real.exists())
+        {
+            Logger.FORGE_LOG_ERROR("No such file exists");
+            return;
+        }
         if (!AssetPool.soundPool.containsKey(FILE_PATH))
         {
             Logger.FORGE_LOG_DEBUG("Sound with path: " + FILE_PATH + " Hashed in Asset Pool and loaded");

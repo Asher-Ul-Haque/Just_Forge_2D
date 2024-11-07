@@ -42,9 +42,10 @@
   "DEFAULT_EDITOR_CAMERA_SCROLL_SENSITIVITY": 0.05,
   "DEFAULT_CAMERA_ZOOM": 1.0,
   "DEFAULT_CAMERA_PROJECTION_SIZE": {
-    "x": 17.0,
+    "x": 16.0,
     "y": 9.0
   },
+  "DEFAULT_WINDOW_OPACITY": 1.0,
   "DEFAULT_WINDOW_WIDTH": 1980,
   "DEFAULT_WINDOW_HEIGHT": 720,
   "DEFAULT_ASPECT_RATIO": 1.7777778,
@@ -53,9 +54,9 @@
   "DEFAULT_WINDOW_TITLE": "Just Forge 2D",
   "DEFAULT_CLEAR_COLOR": {
     "x": 0.0,
-    "y": 0.0,
-    "z": 0.0,
-    "w": 1.0
+    "y": 1.0,
+    "z": 0.89411765,
+    "w": 1.0039216
   },
   "DEFAULT_ICON_PATH": "Assets/Textures/logo.png",
   "DEFAULT_VSYNC_ENABLE": true,
@@ -82,32 +83,32 @@
   "DEFAULT_TEXTURE_MAX_FILTER": "NEAREST",
   "DARK_MODE_ENABLED": true,
   "DEFAULT_CLEAN_THEME_SECONDARY_COLOR": {
-    "x": 0.1529,
-    "y": 0.1686,
-    "z": 0.1961,
+    "x": 0.12941177,
+    "y": 0.145098,
+    "z": 0.16078,
     "w": 1.0
   },
   "DEFAULT_CLEAN_THEME_PRIMARY_COLOR": {
-    "x": 0.9255,
-    "y": 0.8706,
-    "z": 0.8392,
+    "x": 0.97647,
+    "y": 0.972549,
+    "z": 0.9686275,
     "w": 1.0
   },
   "DEFAULT_CLEAN_THEME_TERTIARY_COLOR": {
-    "x": 0.2627,
-    "y": 0.3098,
-    "z": 0.3255,
+    "x": 0.20392157,
+    "y": 0.22745,
+    "z": 0.2509,
     "w": 1.0
   },
   "DEFAULT_CLEAN_THEME_QUATERNARY_COLOR": {
-    "x": 0.9098,
-    "y": 0.7216,
-    "z": 0.6902,
+    "x": 0.8747,
+    "y": 0.892156,
+    "z": 0.9176,
     "w": 1.0
   },
-  "DEFAULT_POPUP_ROUNDING": 4.0,
+  "DEFAULT_POPUP_ROUNDING": 8.0,
   "DEFAULT_WINDOW_BORDER_SIZE": 0.0,
-  "DEFAULT_WINDOW_ROUNDING": 0.0,
+  "DEFAULT_WINDOW_ROUNDING": 8.0,
   "DEFAULT_WINDOW_PADDING": {
     "x": 4.0,
     "y": 4.0
@@ -118,12 +119,11 @@
   },
   "DEFAULT_FRAME_ROUNDING": 4.0,
   "DEFAULT_TREE_NODE_INDENT": 16.0,
-  "DEFAULT_TAB_ROUNDING": 4.0,
+  "DEFAULT_TAB_ROUNDING": 8.0,
   "DEFAULT_TAB_BORDER": 0.0,
   "MAX_LOG_FILE_LIMIT": 15,
   "MAX_IMAGE_DISPLAY_WIDTH": 64.0,
   "MAX_IMAGE_DISPLAY_HEIGHT": 64.0,
-  "DEFAULT_TEXT": "FORGE",
   "DEFAULT_CHARACTER_SPACING": 1.0,
   "DEFAULT_TAB_SPACING": 4.0,
   "DEFAULT_LINE_HEIGHT": 1.0,

@@ -26,6 +26,9 @@ public class CleanTheme extends Theme
         this.popupBgColor = secondaryColor;
         this.popupRounding = Settings.DEFAULT_POPUP_ROUNDING();
 
+        this.textColor = secondaryColor;
+        this.textAltColor = primaryColor;
+
         this.windowBorderSize = Settings.DEFAULT_WINDOW_BORDER_SIZE();
         this.windowBorderColor = secondaryColor;
         this.windowBorderShadowColor = secondaryColor;
@@ -54,7 +57,7 @@ public class CleanTheme extends Theme
 
         this.tabBgColor = secondaryColor;
         this.tabHoveredColor = tertiaryColor;
-        this.tabActiveColor = secondaryColor;
+        this.tabActiveColor = tertiaryColor;
         this.tabUnfocusedColor = secondaryColor;
         this.tabUnfocusedActiveColor = secondaryColor;
         this.tabRounding = Settings.DEFAULT_TAB_ROUNDING();

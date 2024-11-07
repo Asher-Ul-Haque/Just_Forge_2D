@@ -186,7 +186,7 @@ public class MouseControlComponent extends Component implements Observer
                 }
             }
         }
-        if (ComponentsWindow.getActiveGameObjects().size() > 1)
+        if (!ComponentsWindow.getActiveGameObjects().isEmpty())
         {
             // - - - Get the active game objects
             List<GameObject> activeGameObjects = ComponentsWindow.getActiveGameObjects();

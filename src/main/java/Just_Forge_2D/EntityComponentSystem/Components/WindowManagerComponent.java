@@ -110,7 +110,7 @@ public class WindowManagerComponent extends Component
         // - - - opacity control
         if (Widgets.button(Icons.Check + " " + " ##" + "window opacity")) setOpacity(cacheOpacity);
         ImGui.sameLine();
-        cacheOpacity = Math.min(Math.max(0.1f, Widgets.drawFloatControl(Icons.Eye + "  Opacity", cacheOpacity)), 1f);
+        cacheOpacity = Math.min(Math.max(0f, Widgets.drawFloatControl(Icons.Eye + "  Opacity", cacheOpacity)), 1f);
 
         // - - - Decorated (border) toggle
         if (Widgets.button(Icons.Check + " " + " ##" + "window decorated")) setDecorated(cacheDecorated);

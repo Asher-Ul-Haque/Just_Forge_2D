@@ -5,6 +5,7 @@ import Just_Forge_2D.AssetPool.AssetPoolSerializer;
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.EditorSystem.Icons;
 import Just_Forge_2D.EditorSystem.ImGUIManager;
+import Just_Forge_2D.EditorSystem.Widgets;
 import Just_Forge_2D.EventSystem.EventManager;
 import Just_Forge_2D.EventSystem.Events.Event;
 import Just_Forge_2D.EventSystem.Events.EventTypes;
@@ -12,6 +13,7 @@ import Just_Forge_2D.GameSystem.GameCodeLoader;
 import Just_Forge_2D.GameSystem.GameManager;
 import Just_Forge_2D.GameSystem.ProjectManager;
 import Just_Forge_2D.SceneSystem.SceneSystemManager;
+import Just_Forge_2D.Themes.CleanTheme;
 import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.Utils.Settings;
 import Just_Forge_2D.WindowSystem.GameWindow;
@@ -135,6 +137,12 @@ public class MenuBar
             ImGui.endMenu();
         }
         ImGui.separator();
+
+        if (Widgets.button(Settings.DARK_MODE_ENABLED() ? Icons.Sun : Icons.Moon))
+        {
+            Settings.toggleDarkMode();
+            EditorSystemManager.setTheme(new CleanTheme(Settings.DARK_MODE_ENABLED()));
+        }
 
         ImGui.endMainMenuBar();
     }

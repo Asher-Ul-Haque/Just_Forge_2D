@@ -34,7 +34,7 @@ public class GameViewport
         Mouse.setGameViewport(new Vector2f(topLeft.x, topLeft.y), new Vector2f(windowSize.x, windowSize.y));
 
         int textureId = GameWindow.getFrameBuffer().getTextureID();
-        ImGui.image(textureId, windowSize.x, windowSize.y, 0, 1, 1, 0);
+        ImGui.image(textureId, windowSize.x, windowSize.y, 0, 1, 1, 0, 1, 1, 1, GameWindow.get().getOpacity());
         windowIsHovered = ImGui.isItemHovered();
 
         float buttonWidth = 80f;

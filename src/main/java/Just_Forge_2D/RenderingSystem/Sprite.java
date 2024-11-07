@@ -93,10 +93,6 @@ public class Sprite
         if (TEXTURE == null) return;
         setWidth(TEXTURE.getWidth());
         setHeight(TEXTURE.getHeight());
-        setMinimizeFilter(texture.getMinimizeFilter());
-        setMaximizeFilter(texture.getMaximizeFilter());
-        setWrap_sFilter(texture.getWrap_sFilter());
-        setWrap_tFilter(texture.getWrap_tFilter());
     }
 
     // - - - for coordinates
@@ -124,7 +120,7 @@ public class Sprite
         copy.setHeight(this.getHeight());
         copy.setTexture(this.getTexture());
         copy.setTextureCoordinates(this.getTextureCoordinates());
-
+        copy.applyTextureFilters();
         return copy;
     }
 }

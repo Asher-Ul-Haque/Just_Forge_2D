@@ -94,7 +94,8 @@ public class PrefabManager
                     case OK:
                         unregisterPrefab(name);
                         showPrefabDeletePopup = false;
-                        break;
+                        ImGui.end();
+                        return;
 
                     case CANCEL:
                         showPrefabDeletePopup = false;

@@ -121,7 +121,10 @@ public class Settings
     private  Vector2f DEFAULT_CAMERA_PROJECTION_SIZE = new Vector2f(16f, 9f);
     public static Vector2f DEFAULT_CAMERA_PROJECTION_SIZE() { return getInstance().DEFAULT_CAMERA_PROJECTION_SIZE; }
 
-// - - - Window - - -
+    // - - - Window - - -
+
+    private float DEFAULT_WINDOW_OPACITY = 1f;
+    public static float DEFAULT_WINDOW_OPACITY() { return getInstance().DEFAULT_WINDOW_OPACITY; }
 
     // - - - sizes
     private  int DEFAULT_WINDOW_WIDTH = 1980;
@@ -209,8 +212,8 @@ public class Settings
     // - - - Texture
     private  TextureWrapping DEFAULT_TEXTURE_WRAP_S = TextureWrapping.REPEAT;
     private  TextureWrapping DEFAULT_TEXTURE_WRAP_T = TextureWrapping.REPEAT;
-    private  TextureMinimizeFilter DEFAULT_TEXTURE_MIN_FILTER = TextureMinimizeFilter.LINEAR;
-    private  TextureMaximizeFilter DEFAULT_TEXTURE_MAX_FILTER = TextureMaximizeFilter.LINEAR;
+    private  TextureMinimizeFilter DEFAULT_TEXTURE_MIN_FILTER = TextureMinimizeFilter.NEAREST;
+    private  TextureMaximizeFilter DEFAULT_TEXTURE_MAX_FILTER = TextureMaximizeFilter.NEAREST;
     public static TextureWrapping DEFAULT_TEXTURE_WRAP_S() { return getInstance().DEFAULT_TEXTURE_WRAP_S;}
     public static TextureWrapping DEFAULT_TEXTURE_WRAP_T() { return getInstance().DEFAULT_TEXTURE_WRAP_T;}
     public static TextureMinimizeFilter DEFAULT_TEXTURE_MIN_FILTER() { return getInstance().DEFAULT_TEXTURE_MIN_FILTER;}
@@ -219,6 +222,12 @@ public class Settings
 
     // - - - Theme
     private boolean DARK_MODE_ENABLED = true;
+
+    public static void toggleDarkMode()
+    {
+        instance.DARK_MODE_ENABLED = !instance.DARK_MODE_ENABLED;
+    }
+
     public static boolean DARK_MODE_ENABLED() { return getInstance().DARK_MODE_ENABLED; }
     private  ImVec4 DEFAULT_CLEAN_THEME_SECONDARY_COLOR = new ImVec4(0.129411765f, 0.1450980f, 0.16078f, 1.0f);
     public static ImVec4 DEFAULT_CLEAN_THEME_SECONDARY_COLOR() { return getInstance().DEFAULT_CLEAN_THEME_SECONDARY_COLOR; }
@@ -238,7 +247,7 @@ public class Settings
     public static ImVec2 DEFAULT_WINDOW_PADDING() { return getInstance().DEFAULT_WINDOW_PADDING; }
     private  ImVec2 DEFAULT_FRAME_PADDING = new ImVec2(4.0f, 4.0f);
     public static ImVec2 DEFAULT_FRAME_PADDING() { return getInstance().DEFAULT_FRAME_PADDING; }
-    private  float DEFAULT_FRAME_ROUNDING = 4.0f;
+    private  float DEFAULT_FRAME_ROUNDING = 8.0f;
     public static float DEFAULT_FRAME_ROUNDING() { return getInstance().DEFAULT_FRAME_ROUNDING; }
     private  float DEFAULT_TREE_NODE_INDENT = 16f;
     public static float DEFAULT_TREE_NODE_INDENT() { return getInstance().DEFAULT_TREE_NODE_INDENT; }

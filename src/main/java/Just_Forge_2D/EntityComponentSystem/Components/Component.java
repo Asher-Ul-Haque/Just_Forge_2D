@@ -40,10 +40,11 @@ public abstract class Component
 
     protected final void deleteButton()
     {
-        if (Widgets.button(Icons.Trash + " Destroy##" + this.getClass().hashCode()))
+        if (Widgets.button(Icons.Trash + " Destroy##" + this.getClass().hashCode(), true))
         {
             deletePopup = !deletePopup;
         }
+        ImGui.newLine();
         if (deletePopup)
         {
             switch (Widgets.popUp(Icons.ExclamationTriangle , "Delete Confirmation", "Are you sure you want to remove \n" + this.getClass().getSimpleName() +"\nfrom " + this.gameObject, new Vector2f(300, 128)))

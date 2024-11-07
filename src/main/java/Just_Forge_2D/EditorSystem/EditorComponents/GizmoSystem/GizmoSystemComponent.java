@@ -14,7 +14,7 @@ import Just_Forge_2D.Utils.Settings;
 public class GizmoSystemComponent extends Component
 {
     // - - - private variables
-    private Texture gizmoTexture;
+    protected static Texture gizmoTexture;
     private SpriteSheet gizmos;
     private int currentGizmo = 0;
 

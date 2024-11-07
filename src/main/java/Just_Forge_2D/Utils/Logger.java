@@ -2,7 +2,10 @@ package Just_Forge_2D.Utils;
 
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -110,10 +113,6 @@ public class Logger
                     writer.write(stamp);
                     writer.write("\n---- Log Session Started ----\n");
                 }
-
-                // - - - Redirect System.err to the custom logger (System.out can stay normal)
-                PrintStream logStream = new PrintStream(new LoggerOutputStream(true)); // true = for System.err
-                if (!EditorSystemManager.isRelease) System.setErr(logStream);
             }
 
             catch (IOException e)
@@ -205,38 +204,6 @@ public class Logger
         if (writeBuffer.size() >= 10) // Adjust buffer threshold if needed
         {
             flushToFile();
-        }
-    }
-
-    private static class LoggerOutputStream extends OutputStream
-    {
-        private final StringBuilder buffer = new StringBuilder();
-        private final boolean isErrStream;
-
-        public LoggerOutputStream(boolean isErrStream)
-        {
-            this.isErrStream = isErrStream;
-        }
-
-        @Override
-        public void write(int b) throws IOException
-        {
-            if (b == '\n')
-            {
-                String line = buffer.toString();
-                writeToFile(line);
-                buffer.setLength(0);
-
-                // - - - If it's System.err, flush the buffer immediately
-                if (isErrStream)
-                {
-                    flushToFile();
-                }
-            }
-            else
-            {
-                buffer.append((char) b);
-            }
         }
     }
 

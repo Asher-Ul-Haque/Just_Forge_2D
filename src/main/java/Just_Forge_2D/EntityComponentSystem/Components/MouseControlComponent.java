@@ -54,8 +54,6 @@ public class MouseControlComponent extends Component
         {
             rb.setTransform(this.gameObject.transform);
         }
-        Logger.FORGE_LOG_INFO(gameObject.transform.position + " Game OBject pos");
-        Logger.FORGE_LOG_INFO(targetPosition + " Target Position");
     }
 
     protected boolean moveCondition()

@@ -8,7 +8,6 @@ import imgui.flag.ImGuiCol;
 import imgui.flag.ImGuiCond;
 import imgui.flag.ImGuiTableFlags;
 import imgui.flag.ImGuiWindowFlags;
-import imgui.type.ImBoolean;
 import imgui.type.ImInt;
 import imgui.type.ImString;
 import org.joml.Vector2f;
@@ -24,8 +23,6 @@ public class Widgets
 {
 
     private static final float DEFAULT_RESET = 0.0f;
-    private static ImBoolean popupOpen = new ImBoolean(false);
-
 
 
     // - - - Vec2 Control - - -
@@ -37,7 +34,7 @@ public class Widgets
         {
             ImGui.tableNextColumn();
             ImGui.alignTextToFramePadding();
-            setDefaultTextColor(EditorSystemManager.getCurrentTheme().secondaryColor);
+            setDefaultTextColor(EditorSystemManager.getCurrentTheme().textColor);
             ImGui.text(label);
             resetDefaultTextColor();
 
@@ -114,7 +111,7 @@ public class Widgets
         {
             ImGui.tableNextColumn();
             ImGui.alignTextToFramePadding();
-            setDefaultTextColor(EditorSystemManager.getCurrentTheme().secondaryColor);
+            setDefaultTextColor(EditorSystemManager.getCurrentTheme().textColor);
             ImGui.text(label);
             resetDefaultTextColor();
 
@@ -193,7 +190,7 @@ public class Widgets
         if (ImGui.beginTable("##tableFloatControl" + label, 2, ImGuiTableFlags.SizingStretchSame))
         {
             ImGui.tableNextColumn();
-            setDefaultTextColor(EditorSystemManager.getCurrentTheme().secondaryColor);
+            setDefaultTextColor(EditorSystemManager.getCurrentTheme().textColor);
             ImGui.text(label);
             resetDefaultTextColor();
             ImGui.tableNextColumn();
@@ -211,7 +208,7 @@ public class Widgets
         if (ImGui.beginTable("##tableIntControl", 2, ImGuiTableFlags.SizingStretchSame))
         {
             ImGui.tableNextColumn();
-            setDefaultTextColor(EditorSystemManager.getCurrentTheme().secondaryColor);
+            setDefaultTextColor(EditorSystemManager.getCurrentTheme().textColor);
             ImGui.text(label);
             resetDefaultTextColor();
             ImGui.tableNextColumn();
@@ -233,7 +230,7 @@ public class Widgets
         if (ImGui.beginTable("##tableColorPicker4", 2, ImGuiTableFlags.SizingStretchSame))
         {
             ImGui.tableNextColumn();
-            setDefaultTextColor(EditorSystemManager.getCurrentTheme().secondaryColor);
+            setDefaultTextColor(EditorSystemManager.getCurrentTheme().textColor);
             ImGui.text(label);
             resetDefaultTextColor();
 
@@ -262,7 +259,7 @@ public class Widgets
         if (ImGui.beginTable("##tableColorPicker3", 2, ImGuiTableFlags.SizingStretchSame))
         {
             ImGui.tableNextColumn();
-            setDefaultTextColor(EditorSystemManager.getCurrentTheme().secondaryColor);
+            setDefaultTextColor(EditorSystemManager.getCurrentTheme().textColor);
             ImGui.text(label);
             resetDefaultTextColor();
 
@@ -290,7 +287,7 @@ public class Widgets
         if (ImGui.beginTable("##tableBoolControl", 2, ImGuiTableFlags.SizingStretchSame))
         {
             ImGui.tableNextColumn();
-            setDefaultTextColor(EditorSystemManager.getCurrentTheme().secondaryColor);
+            setDefaultTextColor(EditorSystemManager.getCurrentTheme().textColor);
             ImGui.text(label);
             resetDefaultTextColor();
 
@@ -317,7 +314,7 @@ public class Widgets
         if (ImGui.beginTable("##tableTextInput", 2, ImGuiTableFlags.SizingStretchSame))
         {
             ImGui.tableNextColumn();
-            setDefaultTextColor(EditorSystemManager.getCurrentTheme().tertiaryColor);
+            setDefaultTextColor(EditorSystemManager.getCurrentTheme().textColor);
             ImGui.text(label);
             resetDefaultTextColor();
 
@@ -347,7 +344,7 @@ public class Widgets
         if (ImGui.beginTable("##tableEnumControl", 2, ImGuiTableFlags.NoPadOuterX))
         {
             ImGui.tableNextColumn();
-            setDefaultTextColor(EditorSystemManager.getCurrentTheme().tertiaryColor);
+            setDefaultTextColor(EditorSystemManager.getCurrentTheme().textColor);
             ImGui.text(label);
             resetDefaultTextColor();
 
@@ -488,7 +485,7 @@ public class Widgets
 
     public static void text(String TEXT)
     {
-        Theme.setDefaultTextColor(EditorSystemManager.getCurrentTheme().secondaryColor);
+        Theme.setDefaultTextColor(EditorSystemManager.getCurrentTheme().textColor);
         ImGui.text(TEXT);
         Theme.resetDefaultTextColor();
     }
@@ -527,7 +524,7 @@ public class Widgets
         if (ImGui.beginPopupModal("##" + TITLE, ImGuiWindowFlags.NoTitleBar))
         {
             // - - - Display text
-            Theme.setDefaultTextColor(EditorSystemManager.getCurrentTheme().primaryColor);
+            Theme.setDefaultTextColor(EditorSystemManager.getCurrentTheme().textAltColor);
             ImGui.text(ICON);
             ImGui.sameLine();
             float windowWidth = ImGui.getWindowWidth();

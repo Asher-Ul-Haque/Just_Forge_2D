@@ -30,6 +30,10 @@ public abstract class Theme
     public ImVec4 windowTitleBgCollapsedColor;
     public float windowRounding;
 
+    // - - - text color
+    public ImVec4 textColor;
+    public ImVec4 textAltColor;
+
     // - - - padding and miscellaneous
     public ImVec2 windowPadding;
 
