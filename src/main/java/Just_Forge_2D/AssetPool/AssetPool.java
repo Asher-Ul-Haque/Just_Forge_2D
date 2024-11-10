@@ -162,7 +162,6 @@ public class AssetPool
     {
         if (AssetPool.texturePool.containsKey(FILE_PATH))
         {
-            Logger.FORGE_LOG_TRACE("Loaded texture: " + FILE_PATH);
             return AssetPool.texturePool.get(FILE_PATH);
         }
         else

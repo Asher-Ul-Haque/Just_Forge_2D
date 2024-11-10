@@ -208,7 +208,7 @@ public class AnimationState
         {
             animationFrames.get(i).editorGUI();
 
-            if (Widgets.button(Icons.Trash + "  Remove Frame" + " ##" + hashCode()))
+            if (Widgets.button(Icons.Trash + "  Remove Frame" + " ##" + hashCode() + i))
             {
                 animationFrames.remove(i);
                 continue;

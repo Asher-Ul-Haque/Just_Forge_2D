@@ -95,6 +95,7 @@ public class Keyboard
 
     public static void reset()
     {
+        if (keyboard == null) return;
         for (boolean b : keyboard.isKeyPressed)
         {
             b = false;

@@ -101,6 +101,9 @@ public class MenuBar
         {
             if (ImGui.menuItem(Icons.MugHot + "  Build JAR"))
             {
+                AssetPoolSerializer.saveAssetPool(EditorSystemManager.projectDir + "/.forge/Pool.justForgeFile");
+                SceneSystemManager.save(GameWindow.getCurrentScene());
+                Settings.save();
                 GameManager.compileJar();
             }
             if (ImGui.menuItem(Icons.Terminal + "  Run JAR"))

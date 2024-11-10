@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Just Forge 2D</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="shortcut icon" href="Assets/Textures/logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        @font-face {
+            font-family: 'Inter';
+            src: url('Assets/Fonts/Inter-Black.otf') format('truetype');
+            font-weight: 400;
+        }
+
+        body {
+            font-family: 'Inter', inter;
+            background-color: #0E0E0E; /* Updated background color */
+        }
+
+        .gamepad-icon {
+            width: 343px;
+            height: 308px;
+        }
+
+        .btn-modern {
+            background-color: #1E1E1E;
+            color: white;
+            font-weight: 600;
+            border-radius: 5px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding-left: 15px; /* For better icon alignment */
+        }
+
+        .btn-modern i {
+            margin-right: auto; /* Align icon to the left */
+        }
+
+        .btn-modern:hover {
+            background-color: #333333;
+            transform: translateY(-3px);
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .footer-link:hover {
+            color: #FF4C60;
+        }
+
+        .heart-icon {
+            color: #FF4C60;
+            transition: transform 0.3s ease;
+        }
+
+        .heart-icon:hover {
+            transform: scale(1.2);
+        }
+    </style>
+</head>
+
+<body class="text-white">
+<div class="flex flex-col items-center justify-center min-h-screen px-4">
+    <div class="absolute top-0 left-0 p-4 md:p-6 flex flex-col space-y-3">
+        <a href="https://github.com/Asher-Ul-Haque/Just_Forge_2D" class="text-white py-2 px-4 rounded-md btn-modern text-xs md:text-sm">
+            <i class="fab fa-github text-xs md:text-sm"></i>
+            <span class="flex-1 text-center">Source Code</span>
+        </a>
+        <a href="https://github.com/Asher-Ul-Haque/Just_Forge_2D/wiki" class="text-white py-2 px-4 rounded-md btn-modern text-xs md:text-sm">
+            <i class="fas fa-bookmark text-xs md:text-sm"></i>
+            <span class="flex-1 text-center">Wiki</span>
+        </a>
+        <a href="https://www.oracle.com/in/java/technologies/downloads/" class="text-white py-2 px-4 rounded-md btn-modern text-xs md:text-sm">
+            <i class="fas fa-coffee text-xs md:text-sm"></i>
+            <span class="flex-1 text-center">Java Download</span>
+        </a>
+    </div>
+
+    <div class="text-center mt-12 md:mt-16 lg:mt-20">
+        <img src="Assets/Textures/logo.png" alt="Logo" class="gamepad-icon mx-auto mb-6">
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-2">J&nbsp;U&nbsp;S&nbsp;T&nbsp;&nbsp;&nbsp;&nbsp;F&nbsp;O&nbsp;R&nbsp;G&nbsp;E&nbsp;&nbsp;&nbsp;&nbsp;2&nbsp;D</h1>
+        <br>
+        <p class="text-xs sm:text-md mb-2">Simple Powerful 2D Game Engine</p>
+        <p class="text-xs sm:text-sm md:text-base mb-8">Built Using OpenGL and Java</p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-5 max-w-md lg:max-w-lg mx-auto">
+            <a href="https://github.com/Asher-Ul-Haque/Just_Forge_2D/releases/tag/release" class="text-white py-3 px-6 rounded-md btn-modern text-xs md:text-sm">
+                <i class="fab fa-windows"></i>
+                <span class="flex-1 text-center">Windows</span>
+            </a>
+            <a href="https://github.com/Asher-Ul-Haque/Just_Forge_2D/releases/tag/release" class="text-white py-3 px-6 rounded-md btn-modern text-xs md:text-sm">
+                <i class="fab fa-linux"></i>
+                <span class="flex-1 text-center">Linux</span>
+            </a>
+            <a href="https://github.com/Asher-Ul-Haque/Just_Forge_2D/releases/tag/release" class="text-white py-3 px-6 rounded-md btn-modern text-xs md:text-sm">
+                <i class="fab fa-apple"></i>
+                <span class="flex-1 text-center">Mac OS</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<footer class="w-full text-center py-3 mt-10 lg:mt-16">
+    <p class="text-xs sm:text-sm text-gray-400">
+        Made with <i class="fas fa-heart heart-icon"></i> by
+        <a href="https://www.linkedin.com/in/abhigyan-raj-6211502a1/" target="_blank" class="footer-link text-gray-400 hover:text-pink-500 transition">Abhigyann</a>
+    </p>
+</footer>
+
+</body>
+
+</html>

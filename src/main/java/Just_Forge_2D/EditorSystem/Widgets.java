@@ -402,7 +402,7 @@ public class Widgets
     {
         LABEL = " " + LABEL + " ";
         ImVec2 framePadding = EditorSystemManager.getCurrentTheme().framePadding;
-        String mainLabel = LABEL.contains(" ##") ? LABEL.substring(0, LABEL.indexOf(" ##")) : LABEL;
+        String mainLabel = LABEL.contains("##") ? LABEL.substring(0, LABEL.indexOf("##")) : LABEL;
         float textWidth = ImGui.calcTextSize(mainLabel).x + ImGui.getStyle().getFramePaddingX() * 2;
         if (CENTER)
         {

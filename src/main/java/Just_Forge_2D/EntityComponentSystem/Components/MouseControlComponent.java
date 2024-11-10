@@ -5,7 +5,6 @@ import Just_Forge_2D.EditorSystem.Widgets;
 import Just_Forge_2D.InputSystem.Mouse;
 import Just_Forge_2D.InputSystem.MouseButtons;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent;
-import Just_Forge_2D.Utils.Logger;
 import org.joml.Vector2f;
 
 public class MouseControlComponent extends Component
@@ -43,7 +42,6 @@ public class MouseControlComponent extends Component
         // - - - lerp between current position and target position
         if (moveCondition())
         {
-            Logger.FORGE_LOG_TRACE("Detected");
             currentPosition.lerp(targetPosition, lerpSpeed * DELTA_TIME);
         }
 

@@ -44,7 +44,7 @@ public class TextComponent extends Component
             if (t.init(EditorSystemManager.projectDir + "/Assets/Textures/font.png"))
             {
                 t.setFilters(TextureMaximizeFilter.NEAREST, TextureMinimizeFilter.NEAREST, Settings.DEFAULT_TEXTURE_WRAP_S(), Settings.DEFAULT_TEXTURE_WRAP_T());
-                AssetPool.addSpriteSheet("font", new SpriteSheet(t, 16, 16, 36, 0));
+                AssetPool.addSpriteSheet("font", new SpriteSheet(t, 16, 16, 68, 0), true);
             }
             tried = true;
         }
@@ -64,7 +64,6 @@ public class TextComponent extends Component
             Logger.FORGE_LOG_ERROR("No SpriteSheet named : " + font + " exists in the asset pool");
             return;
         }
-        sheet.getTexture().setFilters(TextureMaximizeFilter.NEAREST, TextureMinimizeFilter.NEAREST, Settings.DEFAULT_TEXTURE_WRAP_S(), Settings.DEFAULT_TEXTURE_WRAP_T());
         float xPos = 0f;
         float yPos = 0f;
 
@@ -105,9 +104,6 @@ public class TextComponent extends Component
     {
         int spriteIndex = getSpriteIndex(character);
         Sprite sprite = FONT.getSprite(spriteIndex);
-        sprite.setMaximizeFilter(TextureMaximizeFilter.NEAREST);
-        sprite.setMinimizeFilter(TextureMinimizeFilter.NEAREST);
-        sprite.applyTextureFilters();
         GameObject object = PrefabManager.generateObject(sprite, size, size);
         object.name = this.gameObject + " char : " + character +  " index : " + spriteIndex;
         GameWindow.getCurrentScene().addGameObject(object);
@@ -124,7 +120,42 @@ public class TextComponent extends Component
     {
         if (character >= 'a' && character <= 'z') return character - 'a';  // Sprites 0-25 for 'a' to 'z'
         else if (character >= '0' && character <= '9') return character - '0' + 26;  // Sprites 26-35 for '0' to '9'
-        return 0;  // Handle any unsupported character (can be expanded)
+        return switch (character)
+        {
+            case '~' -> 36;
+            case '`' -> 37;
+            case '!' -> 38;
+            case '@' -> 39;
+            case '#' -> 40;
+            case '$' -> 41;
+            case '%' -> 42;
+            case '^' -> 43;
+            case '&' -> 44;
+            case '*' -> 45;
+            case '(' -> 46;
+            case ')' -> 47;
+            case '-' -> 48;
+            case '_' -> 49;
+            case '+' -> 50;
+            case '=' -> 51;
+            case '{' -> 52;
+            case '}' -> 53;
+            case '[' -> 54;
+            case ']' -> 55;
+            case '|' -> 56;
+            case '\\' -> 57;
+            case ':' -> 58;
+            case ';' -> 59;
+            case '"' -> 60;
+            case '\'' -> 61;
+            case ',' -> 62;
+            case '.' -> 63;
+            case '<' -> 64;
+            case '>' -> 65;
+            case '?' -> 66;
+            case '/' -> 67;
+            default -> 0;
+        };
     }
 
     public void setText(String newText)

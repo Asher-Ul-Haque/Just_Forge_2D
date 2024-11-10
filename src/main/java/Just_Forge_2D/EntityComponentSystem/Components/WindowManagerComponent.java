@@ -3,6 +3,7 @@ package Just_Forge_2D.EntityComponentSystem.Components;
 import Just_Forge_2D.EditorSystem.Icons;
 import Just_Forge_2D.EditorSystem.Widgets;
 import Just_Forge_2D.WindowSystem.GameWindow;
+import Just_Forge_2D.WindowSystem.Window;
 import imgui.ImGui;
 import org.joml.Vector2i;
 import org.joml.Vector4f;
@@ -16,15 +17,16 @@ public class WindowManagerComponent extends Component
     protected float cacheOpacity = GameWindow.get().getOpacity();
     protected String cacheTitle = GameWindow.get().getTitle();
     protected Vector2i cachePosition = new Vector2i(GameWindow.get().getXPosition(), GameWindow.get().getYPosition());
+    protected transient boolean started = false;
 
-    // Wrapper for setting the window size
+    // - - - Wrapper for setting the window size
     public void setWindowSize(Vector2i size)
     {
         this.cacheSize.set(size);
         GameWindow.get().setSize(size.x, size.y);
     }
 
-    // Wrapper for setting the background color
+    // - - - Wrapper for setting the background color
     public void setBackgroundColor(Vector4f color)
     {
         this.cacheBgColor.set(color);
@@ -32,7 +34,7 @@ public class WindowManagerComponent extends Component
     }
 
 
-    // Wrapper for window decoration
+    // - - - Wrapper for window decoration
     public void setDecorated(boolean decorated)
     {
         this.cacheDecorated = decorated;
@@ -40,34 +42,54 @@ public class WindowManagerComponent extends Component
     }
 
 
-    // Wrapper for VSync
-    public void setVsync(boolean vsync) {
+    // - - - Wrapper for VSync
+    public void setVsync(boolean vsync)
+    {
         this.cacheVsync = vsync;
         GameWindow.get().setVsync(vsync);
     }
 
-    // Wrapper for opacity
-    public void setOpacity(float opacity) {
+    // - - - Wrapper for opacity
+    public void setOpacity(float opacity)
+    {
         this.cacheOpacity = opacity;
         GameWindow.get().setOpacity(opacity);
     }
 
-    // Wrapper for setting the window title
-    public void setTitle(String title) {
+    // - - - Wrapper for setting the window title
+    public void setTitle(String title)
+    {
         this.cacheTitle = title;
         GameWindow.get().setTitle(title);
     }
 
-    // Wrapper for setting position
-    public void setPosition(Vector2i position) {
+    // - - - Wrapper for setting position
+    public void setPosition(Vector2i position)
+    {
         this.cachePosition.set(position);
         GameWindow.get().setPosition(position.x, position.y);
     }
 
-    // Synchronize all cached settings with the GameWindow
+    @Override
+    public void update(float DELTA_TIME)
+    {
+        if (!started)
+        {
+            started = true;
+            sync();
+        }
+    }
+
+    @Override
+    public void editorUpdate(float DELTA_TIME)
+    {
+        update(DELTA_TIME);
+    }
+
+    // - - - Synchronize all cached settings with the GameWindow
     public void sync()
     {
-        GameWindow gameWindow = GameWindow.get();
+        Window gameWindow = GameWindow.get();
         gameWindow.setSize(cacheSize.x, cacheSize.y);
         gameWindow.setClearColor(cacheBgColor);
         gameWindow.setDecorated(cacheDecorated);
@@ -78,7 +100,8 @@ public class WindowManagerComponent extends Component
     }
 
     @Override
-    public void start() {
+    public void start()
+    {
         sync();
     }
 

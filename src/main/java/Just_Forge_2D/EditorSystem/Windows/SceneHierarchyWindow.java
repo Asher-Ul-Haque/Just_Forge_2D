@@ -3,6 +3,7 @@ package Just_Forge_2D.EditorSystem.Windows;
 import Just_Forge_2D.EditorSystem.EditorComponents.NonPickableComponent;
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.EditorSystem.Icons;
+import Just_Forge_2D.EditorSystem.InputControls.MouseControlComponent;
 import Just_Forge_2D.EditorSystem.Widgets;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.Components.ComponentList;
@@ -65,7 +66,7 @@ public class SceneHierarchyWindow
             {
                GameObject obj = GameWindow.getCurrentScene().createGameObject(newObjectName);
                obj.addComponent(new SpriteComponent());
-               GameWindow.getCurrentScene().addGameObject(obj);
+               MouseControlComponent.pickupObject(obj);
                showAddPopup = false;
             }
             ImGui.nextColumn();

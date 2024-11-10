@@ -32,6 +32,7 @@ public class SoundPlayerComponent extends Component
     @Override
     public void start()
     {
+        warn();
         if (playOnStart) play();
     }
 
@@ -173,5 +174,12 @@ public class SoundPlayerComponent extends Component
             if (sound.isPlaying()) sound.pause();
             else sound.resume();
         }
+    }
+
+    @Override
+    public void destroy()
+    {
+        if (warn()) return;
+        this.sound.stop();
     }
 }

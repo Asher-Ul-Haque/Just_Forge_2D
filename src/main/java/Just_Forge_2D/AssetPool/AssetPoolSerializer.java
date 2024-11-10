@@ -26,7 +26,7 @@ public class AssetPoolSerializer
 
     private static void deserialize(String json)
     {
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
         AssetPoolData data = gson.fromJson(json, AssetPoolData.class);
 
         // - - - Populate from deserialized data

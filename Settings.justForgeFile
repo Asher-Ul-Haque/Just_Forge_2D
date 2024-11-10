@@ -54,9 +54,9 @@
   "DEFAULT_WINDOW_TITLE": "Just Forge 2D",
   "DEFAULT_CLEAR_COLOR": {
     "x": 0.0,
-    "y": 1.0,
-    "z": 0.89411765,
-    "w": 1.0039216
+    "y": 0.0,
+    "z": 0.0,
+    "w": 0.0
   },
   "DEFAULT_ICON_PATH": "Assets/Textures/logo.png",
   "DEFAULT_VSYNC_ENABLE": true,
@@ -81,7 +81,7 @@
   "DEFAULT_TEXTURE_WRAP_T": "REPEAT",
   "DEFAULT_TEXTURE_MIN_FILTER": "NEAREST",
   "DEFAULT_TEXTURE_MAX_FILTER": "NEAREST",
-  "DARK_MODE_ENABLED": true,
+  "DARK_MODE_ENABLED": false,
   "DEFAULT_CLEAN_THEME_SECONDARY_COLOR": {
     "x": 0.12941177,
     "y": 0.145098,

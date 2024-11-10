@@ -25,7 +25,7 @@ public class Sound
     private int volume = 100;
     private float pitch = 1;
 
-    private boolean isPlaying = false;
+    private transient boolean isPlaying = false;
 
     public Sound(String FILEPATH, boolean LOOPS)
     {

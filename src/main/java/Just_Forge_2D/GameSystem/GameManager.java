@@ -152,13 +152,14 @@ public class GameManager
                 Path projectPath = Paths.get(EditorSystemManager.projectDir);
                 Path assetsPath = projectPath.resolve("Assets");
                 Path savesPath = projectPath.resolve("SceneScripts");
+                Path extraPath = projectPath.resolve(".forge");
 
                 destinationDirPath = Paths.get(TinyFileDialogs.tinyfd_selectFolderDialog("Select Project Directory", projectPath.toString()));
                 if (destinationDirPath != null)
                 {
                     try
                     {
-                        File[] directoriesToCreate = {new File(destinationDirPath.resolve("Assets").toString()), new File(destinationDirPath.resolve("SceneScripts").toString())};
+                        File[] directoriesToCreate = {new File(destinationDirPath.resolve("Assets").toString()), new File(destinationDirPath.resolve("SceneScripts").toString()), new File(destinationDirPath.resolve(".forge").toString())};
                         for (File dir : directoriesToCreate)
                         {
                             if (!dir.exists())
@@ -171,6 +172,7 @@ public class GameManager
                         copyDirectory(projectPath.resolve("build/libs"), destinationDirPath);
                         copyDirectory(assetsPath, destinationDirPath.resolve("Assets"));
                         copyDirectory(savesPath, destinationDirPath.resolve("SceneScripts"));
+                        copyDirectory(extraPath, destinationDirPath.resolve(".forge"));
 
                         File[] jarFiles = destinationDirPath.toFile().listFiles((dir, name) -> name.endsWith(".jar"));
                         if (jarFiles == null || jarFiles.length == 0)

@@ -210,9 +210,9 @@ public class SplashScreen
         if (GameManager.isSuccess() && GameManager.getProgressPercentage() == 1f)
         {
             progress = 1f;
+            AssetPoolSerializer.loadAssetPool(EditorSystemManager.projectDir + "/.forge/Pool.justForgeFile");
             if (!EditorSystemManager.isRelease)
             {
-                AssetPoolSerializer.loadAssetPool(EditorSystemManager.projectDir + "/.forge/Pool.justForgeFile");
                 AssetPool.addSound("Default", "default.ogg", false, false);
                 GameCodeLoader.openEye();
             }

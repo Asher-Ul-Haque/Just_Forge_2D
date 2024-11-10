@@ -8,6 +8,7 @@ import Just_Forge_2D.EntityComponentSystem.Components.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.Components.TransformComponent;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
 import Just_Forge_2D.EventSystem.EventManager;
+import Just_Forge_2D.InputSystem.Keyboard;
 import Just_Forge_2D.InputSystem.Mouse;
 import Just_Forge_2D.PhysicsSystem.PhysicsComponents.RigidBodyComponent;
 import Just_Forge_2D.PhysicsSystem.PhysicsSystemManager;
@@ -137,6 +138,7 @@ public class Scene
             }
         }
         this.script.init(this);
+        Keyboard.reset();
         Logger.FORGE_LOG_INFO("Scene: " + this.script + " Initialized");
     }
 

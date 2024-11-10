@@ -18,8 +18,8 @@ public class AnimationComponent extends Component
 {
     private boolean editorUpdate = false;
     private transient String to = "";
-    private transient String from = "";
     private transient String trigger = "";
+    private transient String temp = "";
 
     // - - - static class for triggering
     private static class StateTrigger
@@ -203,7 +203,10 @@ public class AnimationComponent extends Component
                 }
                 Widgets.text("");
 
-                animation.title = Widgets.inputText("Title: ", animation.title);
+                if (Widgets.button(Icons.Check)) animation.title = temp;
+                ImGui.sameLine();
+                temp = Widgets.inputText("Title: ", temp);
+
                 if (Widgets.button(Icons.Star + "  Set as Default" + " ##" + i))
                 {
                     setDefaultState(animation.title);
