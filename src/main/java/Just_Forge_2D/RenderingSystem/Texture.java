@@ -194,4 +194,25 @@ public class Texture
     {
         return MIN_FILTER;
     }
+
+    public void setMIN_FILTER(TextureMinimizeFilter MIN_FILTER)
+    {
+        this.MIN_FILTER = MIN_FILTER;
+    }
+
+    public void setMAX_FILTER(TextureMaximizeFilter MAX_FILTER)
+    {
+        this.MAX_FILTER = MAX_FILTER;
+    }
+
+    public void setWARP_S(TextureWrapping WARP_S)
+    {
+        this.WARP_S = WARP_S;
+    }
+
+    public void setWARP_T(TextureWrapping WARP_T)
+    {
+        this.WARP_T = WARP_T;
+    }
+
 }

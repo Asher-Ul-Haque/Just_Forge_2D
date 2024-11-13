@@ -62,15 +62,10 @@ public class SpriteComponent extends Component
     public Sprite getSpriteCopy()
     {
         Sprite copy = new Sprite();
-        this.sprite.applyTextureFilters();
         copy.setHeight(this.sprite.getHeight());
         copy.setWidth(this.sprite.getWidth());
         copy.setTexture(this.getTexture());
         copy.setTextureCoordinates(this.getTextureCoords());
-        copy.setMinimizeFilter(this.sprite.getMinimizeFilter());
-        copy.setMaximizeFilter(this.sprite.getMaximizeFilter());
-        copy.setWrap_sFilter(this.sprite.getWrap_s());
-        copy.setWrap_tFilter(this.sprite.getWrap_t());
         return copy;
     }
 
@@ -78,7 +73,6 @@ public class SpriteComponent extends Component
     {
         if (SPRITE.equals(this.sprite)) return;
         this.sprite = SPRITE;
-        this.sprite.applyTextureFilters();
         this.isChanged = true;
     }
 
@@ -113,7 +107,7 @@ public class SpriteComponent extends Component
         if (sprite.getTexture() != null)
         {
             this.sprite.setTexture(AssetPool.makeTexture(this.sprite.getTexture().getFilepath()));
-            sprite.applyTextureFilters();
+            applyTextureFilters();
         }
         this.lastTransform = gameObject.transform.copy();
         read = true;
@@ -122,51 +116,47 @@ public class SpriteComponent extends Component
 
     public TextureMinimizeFilter getMinimizeFilter()
     {
-        return sprite.getMinimizeFilter();
+        return sprite.getTexture().getMinimizeFilter();
     }
 
     public TextureMaximizeFilter getMaximizeFilter()
     {
-        return sprite.getMaximizeFilter();
+        return sprite.getTexture().getMaximizeFilter();
     }
 
     public TextureWrapping getWrap_sFilter()
     {
-        return sprite.getWrap_s();
+        return sprite.getTexture().getWrap_sFilter();
     }
 
     public TextureWrapping getWrap_tFilter()
     {
-        return sprite.getWrap_t();
+        return sprite.getTexture().getWrap_tFilter();
     }
 
     public void setMinimizeFilter(TextureMinimizeFilter FILTER)
     {
-        sprite.setMinimizeFilter(FILTER);
-        sprite.applyTextureFilters();
+        getTexture().setMIN_FILTER(FILTER);
     }
 
     public void setMaximizeFilter(TextureMaximizeFilter FILTER)
     {
-        sprite.setMaximizeFilter(FILTER);
-        sprite.applyTextureFilters();
+        getTexture().setMAX_FILTER(FILTER);
     }
 
     public void setWrap_s(TextureWrapping WRAP)
     {
-        sprite.setWrap_sFilter(WRAP);
-        sprite.applyTextureFilters();
+        getTexture().setWARP_S(WRAP);
     }
 
     public void setWrap_t(TextureWrapping WRAP)
     {
-        sprite.setWrap_tFilter(WRAP);
-        sprite.applyTextureFilters();
+        getTexture().setWARP_T(WRAP);
     }
 
     public void applyTextureFilters()
     {
-        sprite.applyTextureFilters();
+        getTexture().init(getTexture().getFilepath());
     }
 
     // - - - Update if data changes
@@ -187,7 +177,7 @@ public class SpriteComponent extends Component
         update(DELTA_TIME);
         if (!read)
         {
-            sprite.applyTextureFilters();
+            applyTextureFilters();
             Renderer renderer = GameWindow.getCurrentScene().getRenderer();
             if (renderer != null)
             {
@@ -210,33 +200,14 @@ public class SpriteComponent extends Component
         if (SPR.getTexture() != null)
         {
             Vector2f[] texCoords = SPR.getTextureCoordinates();
-            if (Widgets.imageButton(SPR.getTextureID(), SPR.getWidth() * 2, SPR.getHeight() * 2, texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y, true))
+            if (Widgets.imageButton(SPR.getTextureID(), SPR.getWidth() * 4, SPR.getHeight() * 4, texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y, true))
             {
                 AssetPoolDisplay.enableSpriteSelection(CALLBACK);
             }
 
             if (Widgets.button(Icons.Trash + " ##" + HASHCODE, true))
             {
-                Sprite n = new Sprite();
-                n.applyTextureFilters();
-                return n;
-            }
-
-            TextureMaximizeFilter max = Widgets.drawEnumControls(TextureMaximizeFilter.class, Icons.Box + "  Texture Maximize Filter", SPR.getMaximizeFilter());
-            if (max != null) SPR.setMaximizeFilter(max);
-
-            TextureMinimizeFilter min = Widgets.drawEnumControls(TextureMinimizeFilter.class, Icons.Box + "  Texture Minimize Filter", SPR.getMinimizeFilter());
-            if (min != null) SPR.setMinimizeFilter(min);
-
-            TextureWrapping wrap = Widgets.drawEnumControls(TextureWrapping.class, Icons.Box + "  Texture Wrap S Filter", SPR.getWrap_s());
-            if (wrap != null) SPR.setWrap_sFilter(wrap);
-
-            wrap = Widgets.drawEnumControls(TextureWrapping.class, Icons.Box + "  Texture Wrap T Filter", SPR.getWrap_t());
-            if (wrap != null) SPR.setWrap_tFilter(wrap);
-
-            if (Widgets.button("Apply Filter" + " ##" + HASHCODE, true))
-            {
-                SPR.applyTextureFilters();
+                return new Sprite();
             }
         }
         else
@@ -254,6 +225,18 @@ public class SpriteComponent extends Component
     {
         super.deleteButton();
         setSprite(spriteGUI(this.sprite, this::setSprite, this.hashCode()));
+        if (getTexture() != null)
+        {
+            setMaximizeFilter(Widgets.drawEnumControls(TextureMaximizeFilter.class, Icons.Box + "  Texture Maximize Filter", getMaximizeFilter()));
+            setMinimizeFilter(Widgets.drawEnumControls(TextureMinimizeFilter.class, Icons.Box + "  Texture Minimize Filter", getMinimizeFilter()));
+            setWrap_s(Widgets.drawEnumControls(TextureWrapping.class, Icons.Box + "  Texture Wrap -S Filter", getWrap_sFilter()));
+            setWrap_t(Widgets.drawEnumControls(TextureWrapping.class, Icons.Box + "  Texture Wrap -T  Filter", getWrap_tFilter()));
+
+            if (Widgets.button("Apply Filter" + " ##" + this.hashCode(), true))
+            {
+                applyTextureFilters();
+            }
+        }
         if (Widgets.colorPicker4(Icons.EyeDropper +"  Color Picker", this.color)) this.isChanged = true;
         setShowAtRuntime(Widgets.drawBoolControl((getShowAtRuntime() ? Icons.Eye : Icons.EyeSlash) + "  Show", getShowAtRuntime()));
         Widgets.text("");

@@ -105,7 +105,7 @@ public class GizmoComponent extends Component
         boolean xAxisHot = checkXHoverState();
         boolean yAxisHot = checkYHoverState();
 
-        if ((xAxisHot || xAxisActive) && Mouse.isDragging() && Mouse.isMouseButtonDown(GLFW_MOUSE_BUTTON_LEFT))
+        if ((xAxisHot || xAxisActive) && Mouse.isMouseButtonDown(GLFW_MOUSE_BUTTON_LEFT))
         {
             xAxisActive = true;
             yAxisActive = false;

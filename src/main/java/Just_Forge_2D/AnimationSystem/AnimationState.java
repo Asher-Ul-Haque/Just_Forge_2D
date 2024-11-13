@@ -187,10 +187,6 @@ public class AnimationState
         if (Widgets.button(Icons.PlusSquare + "  Add Frame" + " ##" + hashCode()))
         {
             Sprite n = new Sprite();
-            n.setWrap_sFilter(defaultSprite.getWrap_s());
-            n.setWrap_tFilter(defaultSprite.getWrap_t());
-            n.setMaximizeFilter(defaultSprite.getMaximizeFilter());
-            n.setMinimizeFilter(defaultSprite.getMinimizeFilter());
             addFrame(n);
         }
         if (Widgets.drawBoolControl(Icons.Redo + "  Looping", doesLoop) != doesLoop) setLoop(!doesLoop);

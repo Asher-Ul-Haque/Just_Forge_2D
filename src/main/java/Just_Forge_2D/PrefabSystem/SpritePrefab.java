@@ -26,11 +26,7 @@ public class SpritePrefab implements Prefab
         block.transform.scale.x = sizeX;
         block.transform.scale.y = sizeY;
         SpriteComponent spriteComponent = new SpriteComponent();
-        Sprite sprite = new Sprite();
-        sprite.setHeight(this.sprite.getHeight());
-        sprite.setWidth(this.sprite.getWidth());
-        sprite.setTexture(this.sprite.getTexture());
-        sprite.setTextureCoordinates(this.sprite.getTextureCoordinates());
+        Sprite sprite = this.sprite.copy();
         spriteComponent.setSprite(sprite);
         block.addComponent(spriteComponent);
         return block;
