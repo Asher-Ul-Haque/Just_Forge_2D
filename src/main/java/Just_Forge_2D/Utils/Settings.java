@@ -21,6 +21,7 @@ import java.nio.file.Paths;
 public class Settings
 {
     private static Settings instance = null;
+    private static boolean popupOpen = false;
     
     private static Settings getInstance()
     {
@@ -314,6 +315,16 @@ public class Settings
             Logger.FORGE_LOG_ERROR("Reverting to Default Settings");
             instance = new Settings();
         }
+    }
+
+    public static void editorGUI()
+    {
+        ImVec4 colorCache = EditorSystemManager.getCurrentTheme().popupBgColor;
+        EditorSystemManager.getCurrentTheme().applyPopupBg(EditorSystemManager.getCurrentTheme().windowBgColor);
+
+        // - - - the popup goes here
+
+        EditorSystemManager.getCurrentTheme().applyPopupBg(colorCache);
     }
 
 }

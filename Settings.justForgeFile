@@ -54,9 +54,9 @@
   "DEFAULT_WINDOW_TITLE": "Just Forge 2D",
   "DEFAULT_CLEAR_COLOR": {
     "x": 0.0,
-    "y": 0.0,
-    "z": 0.0,
-    "w": 0.0
+    "y": 0.43137255,
+    "z": 1.0,
+    "w": 1.0039216
   },
   "DEFAULT_ICON_PATH": "Assets/Textures/logo.png",
   "DEFAULT_VSYNC_ENABLE": true,

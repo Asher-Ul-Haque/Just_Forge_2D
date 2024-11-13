@@ -193,6 +193,7 @@ public class AnimationComponent extends Component
         for (int i = 0; i < this.states.size(); i++)
         {
             AnimationState animation = states.get(i);
+            ImGui.indent(16f);
             if (ImGui.collapsingHeader(states.get(i).title))
             {
                 ImGui.separator();

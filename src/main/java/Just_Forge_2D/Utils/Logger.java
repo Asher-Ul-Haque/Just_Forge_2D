@@ -38,6 +38,8 @@ public class Logger
     private static final List<String> writeBuffer = new ArrayList<>(maxWriteBuffer);
     private static final String[] readBuffer = new String[maxReadBuffer];
     private static int readBufferIndex = 0;
+    private static String[] orderedLogs = new String[maxReadBuffer];
+    private static int lastReadBufferIndex = -1;
 
     private static void addToReadBuffer(String MESSAGE)
     {
@@ -226,6 +228,27 @@ public class Logger
 
     public static String[] getReadBuffer()
     {
-        return readBuffer;
+        if (orderedLogs[0] == null)
+        {
+            for (int i = 0; i < maxReadBuffer; ++i)
+            {
+                orderedLogs[i] = readBuffer[i];
+            }
+        }
+        if (readBufferIndex == lastReadBufferIndex)
+        {
+            return orderedLogs; // - - - Return cached ordered logs
+        }
+
+        // - - - Rebuild the ordered logs if new entries are detected
+        int size = Math.min(maxReadBuffer, readBufferIndex); // - - - Buffer length if not fully used
+        for (int i = 0; i < size; i++)
+        {
+            orderedLogs[i] = readBuffer[(readBufferIndex + i) % maxReadBuffer];
+        }
+
+        // - - - Mark the index to detect changes in future calls
+        lastReadBufferIndex = readBufferIndex;
+        return orderedLogs;
     }
 }

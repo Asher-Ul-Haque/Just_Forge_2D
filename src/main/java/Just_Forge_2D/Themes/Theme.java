@@ -164,7 +164,12 @@ public abstract class Theme
 
     public void applyPopupBg()
     {
-        ImGui.getStyle().setColor(ImGuiCol.PopupBg, popupBgColor.x, popupBgColor.y, popupBgColor.z, popupBgColor.w);
+        applyPopupBg(popupBgColor);
+    }
+
+    public void applyPopupBg(ImVec4 COLOR)
+    {
+        ImGui.getStyle().setColor(ImGuiCol.PopupBg, COLOR.x, COLOR.y, COLOR.z, COLOR.w);
         ImGui.getStyle().setPopupRounding(popupRounding);
     }
 

@@ -364,7 +364,7 @@ public class AssetPoolDisplay
         int id = TEXTURE.getID();
         Vector2f[] texCoords = sprite.getTextureCoordinates();
 
-        if (Widgets.imageButton(id, sprite.getWidth(), sprite.getHeight(), texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y))
+        if (Widgets.imageButton(id, TEXTURE.getWidth() * 2, TEXTURE.getHeight() * 2, texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y))
         {
             spriteButton(sprite);
         }

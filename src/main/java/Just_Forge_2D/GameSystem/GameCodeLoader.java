@@ -3,6 +3,7 @@ package Just_Forge_2D.GameSystem;
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.WindowSystem.GameWindow;
+import org.lwjgl.util.tinyfd.TinyFileDialogs;
 
 import java.io.IOException;
 import java.nio.file.*;
@@ -25,15 +26,36 @@ public class GameCodeLoader
     {
         if (success)
         {
-            game.init();
+            try
+            {
+                game.init();
+            }
+            catch (Throwable e)
+            {
+                handleUserCodeException(e);
+            }
         }
+    }
+
+    private static void handleUserCodeException(Throwable e)
+    {
+        StackTraceElement[] elements = e.getStackTrace();
+        TinyFileDialogs.tinyfd_notifyPopup(e.getClass().getSimpleName(), "User Code : " + elements[0].getFileName() + " : " + elements[0].getLineNumber(), "error");
+        Logger.FORGE_LOG_FATAL(e.getMessage());
     }
 
     public static void loop(float DELTA_TIME)
     {
         if (success)
         {
-            game.update(DELTA_TIME);
+            try
+            {
+                game.update(DELTA_TIME);
+            }
+            catch (Throwable e)
+            {
+                handleUserCodeException(e);
+            }
         }
     }
 
@@ -41,7 +63,14 @@ public class GameCodeLoader
     {
         if (success)
         {
-            game.end();
+            try
+            {
+                game.end();
+            }
+            catch (Throwable e)
+            {
+                handleUserCodeException(e);
+            }
         }
         closeEye();
     }

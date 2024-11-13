@@ -177,7 +177,6 @@ public class SpriteComponent extends Component
         update(DELTA_TIME);
         if (!read)
         {
-            applyTextureFilters();
             Renderer renderer = GameWindow.getCurrentScene().getRenderer();
             if (renderer != null)
             {
