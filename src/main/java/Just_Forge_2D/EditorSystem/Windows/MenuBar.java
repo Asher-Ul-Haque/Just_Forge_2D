@@ -129,6 +129,10 @@ public class MenuBar
 
         if (ImGui.beginMenu(Icons.Cog + "  Settings"))
         {
+            if (ImGui.menuItem(Icons.Edit + "  Change"))
+            {
+                Settings.trigger();
+            }
             if (ImGui.menuItem(Icons.Save + "  Save"))
             {
                 Settings.save();

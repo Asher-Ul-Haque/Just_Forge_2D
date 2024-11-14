@@ -8,6 +8,7 @@ import Just_Forge_2D.PrefabSystem.PrefabManager;
 import Just_Forge_2D.SceneSystem.Scene;
 import Just_Forge_2D.Themes.ConfigFlags;
 import Just_Forge_2D.Utils.Logger;
+import Just_Forge_2D.Utils.Settings;
 import Just_Forge_2D.WindowSystem.GameWindow;
 import imgui.*;
 import imgui.callback.ImStrConsumer;
@@ -273,8 +274,9 @@ public class ImGUIManager
         addRenderWindow(FPSGraph::render, Icons.ChartLine + "  FPS Graph");
         addRenderWindow(GridControls::render, Icons.DigitalTachograph + "  Grid Controls");
         addRenderWindow(AssetPoolDisplay::render, Icons.Images + "  Asset Pool Display");
-        addRenderWindow(Logs::render, Icons.Blog + "  Logs");
+        addRenderWindow(Logs::render, Icons.Terminal + "  Logs");
         addRenderWindow(PrefabManager::render, Icons.Copy + "  Prefabs");
+        addRenderWindow(Settings::editorGUI, Icons.Cog + "  Settings");
     }
 
 

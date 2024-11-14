@@ -2,69 +2,39 @@ package Just_Forge_2D.Utils;
 
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Comparator;
+import java.util.Deque;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Logger
 {
-    private static final String ANSI_RESET = "\u001B[0m";
-
-    // - - - Colors
-    private static final String ANSI_RED_BG = "\u001B[41m"; // Red background
-    private static final String ANSI_RED = "\u001B[31m"; // Red
-    private static final String ANSI_PASTEL_RED = "\u001B[38;5;216m"; // Light Pink
-    private static final String ANSI_BLUE = "\u001B[34m"; // Blue
-    private static final String ANSI_GREEN = "\u001B[32m"; // Green
-    private static final String ANSI_PURPLE = "\u001B[35m"; // PURPLE (light blue)
-
     // - - -Log file path
     private static final String stamp = LocalDate.now() + "_" + LocalTime.now().getHour() + "_" + LocalTime.now().getMinute()  + "_" + LocalTime.now().getSecond();
     private static Path LOG_FILE_PATH = Paths.get("logs", "latest.justForgeLog");
 
     private static final int maxWriteBuffer = 15;
-    private static final int maxReadBuffer = 4096;
+    private static final int maxReadBuffer = 1024;
     private static final List<String> writeBuffer = new ArrayList<>(maxWriteBuffer);
-    private static final String[] readBuffer = new String[maxReadBuffer];
-    private static int readBufferIndex = 0;
-    private static String[] orderedLogs = new String[maxReadBuffer];
-    private static int lastReadBufferIndex = -1;
+    private static final Deque<String> readBuffer = new ArrayDeque<>(maxReadBuffer);
 
     private static void addToReadBuffer(String MESSAGE)
     {
-        readBuffer[readBufferIndex] = MESSAGE;
-        readBufferIndex = (readBufferIndex + 1) % maxReadBuffer;
-    }
-
-    private static void maintainLogFileLimit(int MAX_FILES)
-    {
-        try {
-            Path logDir = LOG_FILE_PATH.getParent();
-            List<Path> logFiles = Files.list(logDir)
-                    .filter(path -> path.getFileName().toString().endsWith(".justForgeLog"))
-                    .sorted(Comparator.comparingLong(path -> path.toFile().lastModified()))
-                    .collect(Collectors.toList());
-
-            // - - - Delete oldest files if we exceed the maximum allowed number
-            while (logFiles.size() > MAX_FILES)
-            {
-                Files.delete(logFiles.remove(0));
-            }
-        }
-        catch (IOException e)
+        if (EditorSystemManager.isRelease) System.out.println(MESSAGE);
+        else
         {
-            Logger.FORGE_LOG_ERROR("Failed to maintain log file limit: " + e.getMessage());
+            if (readBuffer.size() >= maxReadBuffer)
+            {
+                readBuffer.pollFirst(); // Remove the oldest message if the buffer is full
+            }
+            readBuffer.addLast(MESSAGE);
         }
     }
 
@@ -72,7 +42,6 @@ public class Logger
     {
         if (!EditorSystemManager.isRelease)
         {
-            maintainLogFileLimit(Settings.MAX_LOG_FILE_LIMIT());
             // - - - Ensure the log file and directory are created at the start
             try
             {
@@ -115,6 +84,12 @@ public class Logger
                     writer.write(stamp);
                     writer.write("\n---- Log Session Started ----\n");
                 }
+
+                // - - - Redirect System.err to the custom logger (System.out can stay normal)
+                PrintStream logErrorStream = new PrintStream(new LoggerOutputStream(true)); // true = for System.err
+                PrintStream logOutputStream = new PrintStream(new LoggerOutputStream(false));
+                System.setErr(logErrorStream);
+                if (!EditorSystemManager.isRelease) System.setOut(logOutputStream);
             }
 
             catch (IOException e)
@@ -128,19 +103,15 @@ public class Logger
     // - - - Logging functions - - -
     public static void FORGE_LOG_FATAL(Object... ARGS)
     {
-        //if (EditorSystemManager.isRelease) return;
         String message = formatMessage("[FATAL]  ", ARGS);
         addToReadBuffer(message);
-        System.out.println(ANSI_RESET + ANSI_RED_BG + message + ANSI_RESET);
         writeToFile(message);
     }
 
     public static void FORGE_LOG_ERROR(Object... ARGS)
     {
-        //if (EditorSystemManager.isRelease) return;
         String message = formatMessage("[ERROR]  ", ARGS);
         addToReadBuffer(message);
-        System.out.println(ANSI_RED + message + ANSI_RESET);
         writeToFile(message);
     }
 
@@ -149,7 +120,6 @@ public class Logger
         if (EditorSystemManager.isRelease) return;
         String message = formatMessage("[WARNING]", ARGS);
         addToReadBuffer(message);
-        System.out.println(ANSI_PASTEL_RED + message + ANSI_RESET);
         writeToFile(message);
     }
 
@@ -158,7 +128,6 @@ public class Logger
         if (EditorSystemManager.isRelease) return;
         String message = formatMessage("[DEBUG]  ", ARGS);
         addToReadBuffer(message);
-        System.out.println(ANSI_BLUE + message + ANSI_RESET);
         writeToFile(message);
     }
 
@@ -167,7 +136,6 @@ public class Logger
         if (EditorSystemManager.isRelease) return;
         String message = formatMessage("[TRACE]  ", ARGS);
         addToReadBuffer(message);
-        System.out.println(ANSI_PURPLE + message + ANSI_RESET);
         writeToFile(message);
     }
 
@@ -176,7 +144,6 @@ public class Logger
         if (EditorSystemManager.isRelease) return;
         String message = formatMessage("[INFO]   ", ARGS);
         addToReadBuffer(message);
-        System.out.println(ANSI_GREEN + message + ANSI_RESET);
         writeToFile(message);
     }
 
@@ -209,6 +176,40 @@ public class Logger
         }
     }
 
+    private static class LoggerOutputStream extends OutputStream
+    {
+        private final StringBuilder buffer = new StringBuilder();
+        private final boolean isErrStream;
+
+        public LoggerOutputStream(boolean isErrStream)
+        {
+            this.isErrStream = isErrStream;
+        }
+
+        @Override
+        public void write(int b) throws IOException
+        {
+            if (b == '\n')
+            {
+                String line = buffer.toString();
+                if (isErrStream) formatMessage("[FATAL]  ", line);
+                writeToFile(line);
+                addToReadBuffer(line);
+                buffer.setLength(0);
+
+                // - - - If it's System.err, flush the buffer immediately
+                if (isErrStream)
+                {
+                    flushToFile();
+                }
+            }
+            else
+            {
+                buffer.append((char) b);
+            }
+        }
+    }
+
     public static void flushToFile()
     {
         if (EditorSystemManager.isRelease) return;
@@ -222,33 +223,12 @@ public class Logger
         }
         catch (IOException e)
         {
-            System.out.println(ANSI_RED + "[ERROR]: Failed to write to log file: " + e.getMessage() + ANSI_RESET);
+            System.out.println("[ERROR]: Failed to write to log file: " + e.getMessage());
         }
     }
 
     public static String[] getReadBuffer()
     {
-        if (orderedLogs[0] == null)
-        {
-            for (int i = 0; i < maxReadBuffer; ++i)
-            {
-                orderedLogs[i] = readBuffer[i];
-            }
-        }
-        if (readBufferIndex == lastReadBufferIndex)
-        {
-            return orderedLogs; // - - - Return cached ordered logs
-        }
-
-        // - - - Rebuild the ordered logs if new entries are detected
-        int size = Math.min(maxReadBuffer, readBufferIndex); // - - - Buffer length if not fully used
-        for (int i = 0; i < size; i++)
-        {
-            orderedLogs[i] = readBuffer[(readBufferIndex + i) % maxReadBuffer];
-        }
-
-        // - - - Mark the index to detect changes in future calls
-        lastReadBufferIndex = readBufferIndex;
-        return orderedLogs;
+        return readBuffer.toArray(new String[0]);
     }
 }

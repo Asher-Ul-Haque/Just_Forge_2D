@@ -1,9 +1,11 @@
 package Just_Forge_2D.EditorSystem.Windows;
 
+import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.EditorSystem.Icons;
 import Just_Forge_2D.EditorSystem.Widgets;
 import Just_Forge_2D.Utils.Logger;
 import imgui.ImGui;
+import imgui.ImVec4;
 import imgui.flag.ImGuiWindowFlags;
 
 public class Logs
@@ -15,10 +17,11 @@ public class Logs
     private static boolean showInfo = true;
     private static boolean showDebug = true;
     private static boolean showTrace = true;
+    private static boolean showOther = true;
 
     public static void render()
     {
-        ImGui.begin(Icons.Blog + "  Logs", ImGuiWindowFlags.AlwaysVerticalScrollbar | ImGuiWindowFlags.AlwaysHorizontalScrollbar);
+        ImGui.begin(Icons.Terminal + "  Logs", ImGuiWindowFlags.AlwaysVerticalScrollbar | ImGuiWindowFlags.AlwaysHorizontalScrollbar);
 
         // - - - Checkbox UI to toggle log levels
         if (ImGui.collapsingHeader(Icons.Filter + "  Filters"))
@@ -29,6 +32,7 @@ public class Logs
             showInfo = Widgets.drawBoolControl(Icons.InfoCircle + "  INFO", showInfo);
             showDebug = Widgets.drawBoolControl(Icons.Bug + "  DEBUG", showDebug);
             showTrace = Widgets.drawBoolControl(Icons.Comment + "  TRACE", showTrace);
+            showOther = Widgets.drawBoolControl(Icons.EnvelopeOpenText + "  OTHER", showOther);
         }
         Widgets.text("");
 
@@ -36,7 +40,8 @@ public class Logs
         {
             String e = Logger.getReadBuffer()[i];
             if (e == null) continue;
-            float r = 1f, g = 1f, b = 1f;
+            ImVec4 color = EditorSystemManager.getCurrentTheme().textColor;
+            float r = color.x, g = color.y, b = color.z;
 
             // - - - Apply color coding based on the log type
             if (e.startsWith("[FATAL]") && showFatal)
@@ -75,11 +80,7 @@ public class Logs
                 g = 128f / 256f;
                 b = 164f / 256f;
             }
-            else
-            {
-                continue;
-            }
-
+            else if (!showOther) continue;
             ImGui.textColored(r, g, b, 1f, e);
         }
 

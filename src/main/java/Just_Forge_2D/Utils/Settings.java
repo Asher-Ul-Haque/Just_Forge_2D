@@ -1,12 +1,15 @@
 package Just_Forge_2D.Utils;
 
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
+import Just_Forge_2D.EditorSystem.Icons;
+import Just_Forge_2D.EditorSystem.Widgets;
 import Just_Forge_2D.InputSystem.Keys;
 import Just_Forge_2D.RenderingSystem.TextureMaximizeFilter;
 import Just_Forge_2D.RenderingSystem.TextureMinimizeFilter;
 import Just_Forge_2D.RenderingSystem.TextureWrapping;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import imgui.ImGui;
 import imgui.ImVec2;
 import imgui.ImVec4;
 import org.jbox2d.common.Vec2;
@@ -220,6 +223,9 @@ public class Settings
     public static TextureMinimizeFilter DEFAULT_TEXTURE_MIN_FILTER() { return getInstance().DEFAULT_TEXTURE_MIN_FILTER;}
     public static TextureMaximizeFilter DEFAULT_TEXTURE_MAX_FILTER() { return getInstance().DEFAULT_TEXTURE_MAX_FILTER;}
 
+    private int DEFAULT_MAX_COMMAND_HISTORY = 20;
+    public static int DEFAULT_MAX_COMMAND_HISTORY() {return getInstance().DEFAULT_MAX_COMMAND_HISTORY;}
+
 
     // - - - Theme
     private boolean DARK_MODE_ENABLED = true;
@@ -319,12 +325,49 @@ public class Settings
 
     public static void editorGUI()
     {
-        ImVec4 colorCache = EditorSystemManager.getCurrentTheme().popupBgColor;
-        EditorSystemManager.getCurrentTheme().applyPopupBg(EditorSystemManager.getCurrentTheme().windowBgColor);
+        if (popupOpen)
+        {
+            ImVec4 colorCache = EditorSystemManager.getCurrentTheme().popupBgColor;
+            EditorSystemManager.getCurrentTheme().applyPopupBg(EditorSystemManager.getCurrentTheme().windowBgColor);
 
-        // - - - the popup goes here
+            // - - - the popup goes here
+            switch (Widgets.popUp(Settings::editInstance))
+            {
+                case OK:
+                    popupOpen = false;
+                    break;
 
-        EditorSystemManager.getCurrentTheme().applyPopupBg(colorCache);
+                case CANCEL:
+                    popupOpen = false;
+                    break;
+            }
+            EditorSystemManager.getCurrentTheme().applyPopupBg(colorCache);
+        }
+    }
+
+    private static void editInstance()
+    {
+        if (ImGui.beginTabBar("Settings Tabs"))
+        {
+            if (ImGui.beginTabItem("Grid"))
+            {
+                getInstance().GRID_HEIGHT = Widgets.drawFloatControl("Height", GRID_HEIGHT());
+                getInstance().GRID_WIDTH = Widgets.drawFloatControl("Width", GRID_HEIGHT());
+                getInstance().SHOW_GRID = Widgets.drawBoolControl("Show", SHOW_GRID());
+                ImGui.endTabItem();
+            }
+            if (ImGui.beginTabItem("Window Settings"))
+            {
+                getInstance().DARK_MODE_ENABLED = Widgets.drawBoolControl(Icons.Sun, getInstance().DARK_MODE_ENABLED);
+                ImGui.endTabItem();
+            }
+            ImGui.endTabBar();
+        }
+    }
+
+    public static void trigger()
+    {
+        popupOpen = !popupOpen;
     }
 
 }
