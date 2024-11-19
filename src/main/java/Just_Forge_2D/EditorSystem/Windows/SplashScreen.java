@@ -58,7 +58,7 @@ public class SplashScreen
             if (logoTexture == null)
             {
                 logoTexture = new Texture();
-                logoTexture.init("Assets/Textures/icon.png");
+                logoTexture.init("Assets/Textures/logo.png");
                 AssetPool.addTexture("Default", Settings.DEFAULT_ICON_PATH(), true);
             }
 
@@ -102,6 +102,13 @@ public class SplashScreen
         }
         ImGui.setCursorPos(imageX, imageY);
         ImGui.image(logoTexture.getID(), (float) logoTexture.getWidth(), (float) logoTexture.getHeight(), 0, 1, 1, 0);
+        ImGui.setCursorPosX(imageX);
+        if (!EditorSystemManager.isRelease)
+        {
+            ImGui.pushFont(ImGUIManager.interExtraBold);
+            Widgets.text("       J  U  S  T       F  O  R  G  E       2  D");
+            ImGui.popFont();
+        }
 
         if (timer > splashTime)
         {

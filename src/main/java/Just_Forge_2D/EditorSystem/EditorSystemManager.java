@@ -56,7 +56,7 @@ public class EditorSystemManager
 
     public static Class<? extends SceneScript> currentSceneInitializer;
     public static String projectDir = System.getProperty("user.dir");
-    public static final boolean isRelease = false;
+    public static final boolean isRelease = true;
 
     public static state getCurrentState()
     {
@@ -142,6 +142,10 @@ public class EditorSystemManager
         if (!isRelease)
         {
             AssetPoolSerializer.saveAssetPool(projectDir + "/.forge/Pool.justForgeFile");
+            AssetPool.clearSpriteSheetPool();
+            AssetPool.clearShaderPool();
+            AssetPool.clearSoundPool();
+            AssetPool.clearTexturePool();
             ProjectManager.saveLastProjectPath();
         }
         AudioSystemManager.terminate();

@@ -71,4 +71,10 @@ public class ForgeMath
         }
         return centroid.div(VERTICES.size());
     }
+
+    public static float clamp(float VALUE, float MIN, float MAX)
+    {
+        return Math.max(MIN, Math.min(MAX, VALUE));
+    }
+
 }

@@ -47,7 +47,9 @@ public abstract class Component
         ImGui.newLine();
         if (deletePopup)
         {
-            switch (Widgets.popUp(Icons.ExclamationTriangle , "Delete Confirmation", "Are you sure you want to remove \n" + this.getClass().getSimpleName() +"\nfrom " + this.gameObject, new Vector2f(300, 128)))
+            ComponentList.ComponentRegistry info = ComponentList.getComponentInfo(this.getClass());
+            String displayName = (info == null) ? this.getClass().getSimpleName() : info.name();
+            switch (Widgets.popUp(Icons.ExclamationTriangle , "Delete Confirmation", "Are you sure you want to remove \n" + displayName +"\nfrom " + this.gameObject))
             {
                 case OK:
                     this.gameObject.removeComponent(this.getClass());

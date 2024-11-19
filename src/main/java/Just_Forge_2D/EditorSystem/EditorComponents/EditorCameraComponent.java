@@ -92,17 +92,19 @@ public class EditorCameraComponent extends Component
             dragDebounce -= DELTA_TIME;
             return;
         }
-        else if (Mouse.isMouseButtonDown(GLFW_MOUSE_BUTTON_RIGHT))
-        {
-            Vector2f mousePos = new Vector2f(Mouse.getWorldX(), Mouse.getWorldY());
-            Vector2f delta = new Vector2f(mousePos).sub(this.clickOrigin);
-            this.editorCamera.getPosition().sub(delta.mul(DELTA_TIME).mul(dragSensitivity));
-            this.clickOrigin.lerp(mousePos, DELTA_TIME);
-        }
         if (dragDebounce <= 0.0f && !Mouse.isMouseButtonDown(GLFW_MOUSE_BUTTON_RIGHT))
         {
             dragDebounce = Settings.DEFAULT_EDITOR_CAMERA_DRAG_DEBOUNCE();
         }
+        else if (Mouse.isMouseButtonDown(GLFW_MOUSE_BUTTON_RIGHT))
+        {
+            Vector2f mousePos = new Vector2f(Mouse.getWorldX(), Mouse.getWorldY());
+            if (mousePos.equals(this.editorCamera.getPosition())) return;
+            Vector2f delta = new Vector2f(mousePos).sub(this.clickOrigin);
+            this.editorCamera.getPosition().sub(delta.mul(DELTA_TIME).mul(dragSensitivity));
+            this.clickOrigin.lerp(mousePos, DELTA_TIME);
+        }
+
 
         if (Mouse.getScrollY() != 0.0f && this.editorCamera.getZoom() != 0)
         {

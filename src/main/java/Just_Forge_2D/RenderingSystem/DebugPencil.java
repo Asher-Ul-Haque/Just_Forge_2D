@@ -93,6 +93,8 @@ public class DebugPencil
                 i--;
             }
         }
+
+        setWidth(GameWindow.get().getWidth() / (Settings.DEFAULT_WINDOW_WIDTH() + 1) * Settings.DEBUG_PENCIL_DEFAULT_WIDTH());
     }
 
     public static void draw()

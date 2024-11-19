@@ -221,7 +221,7 @@ public class MouseControlComponent extends Component implements Observer
             Vector2f boxSize = new Vector2f(maxX - minX, maxY - minY);
 
             // - - - Draw the bounding box in red
-            DebugPencil.addBox(boxCenter, boxSize, new Vector3f(1, 0, 0));
+            DebugPencil.addBox(boxCenter, boxSize, new Vector3f(0.8f, 0.8f, 0.0f));
         }
     }
 
@@ -230,5 +230,6 @@ public class MouseControlComponent extends Component implements Observer
     {
         boxSelect = false;
         holdingObject = null;
+        ComponentsWindow.clearSelection();
     }
 }

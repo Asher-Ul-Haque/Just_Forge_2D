@@ -31,7 +31,7 @@ public class Texture
 
     public Texture(int WIDTH, int HEIGHT)
     {
-        this.filepath = "Assets/Textures/icon.png";
+        this.filepath = "Assets/Textures/logo.png";
 
         // - - - Generate the texture on GPU
         textureID = glGenTextures();

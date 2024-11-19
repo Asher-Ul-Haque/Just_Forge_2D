@@ -11,7 +11,6 @@ import Just_Forge_2D.PrefabSystem.CopyCatPrefab;
 import Just_Forge_2D.PrefabSystem.PrefabManager;
 import Just_Forge_2D.Utils.Logger;
 import imgui.ImGui;
-import org.joml.Vector2f;
 import org.joml.Vector4f;
 
 import java.util.ArrayList;
@@ -52,7 +51,7 @@ public class ComponentsWindow
             Widgets.text("");
             if (deletePopup)
             {
-                Widgets.PopupReturn returnVal = Widgets.popUp(Icons.ExclamationTriangle, "Delete Confirmation", "Are you sure you want to delete \n" +activeGameObject, new Vector2f(300, 128));
+                Widgets.PopupReturn returnVal = Widgets.popUp(Icons.ExclamationTriangle, "Delete Confirmation", "Are you sure you want to delete \n" +activeGameObject);
                 switch (returnVal)
                 {
                     case OK:

@@ -7,6 +7,7 @@ import Just_Forge_2D.InputSystem.Keys;
 import Just_Forge_2D.RenderingSystem.TextureMaximizeFilter;
 import Just_Forge_2D.RenderingSystem.TextureMinimizeFilter;
 import Just_Forge_2D.RenderingSystem.TextureWrapping;
+import Just_Forge_2D.Themes.CleanTheme;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import imgui.ImGui;
@@ -223,11 +224,8 @@ public class Settings
     public static TextureMinimizeFilter DEFAULT_TEXTURE_MIN_FILTER() { return getInstance().DEFAULT_TEXTURE_MIN_FILTER;}
     public static TextureMaximizeFilter DEFAULT_TEXTURE_MAX_FILTER() { return getInstance().DEFAULT_TEXTURE_MAX_FILTER;}
 
-    private int DEFAULT_MAX_COMMAND_HISTORY = 20;
-    public static int DEFAULT_MAX_COMMAND_HISTORY() {return getInstance().DEFAULT_MAX_COMMAND_HISTORY;}
 
-
-    // - - - Theme
+    // - - - ThemE
     private boolean DARK_MODE_ENABLED = true;
 
     public static void toggleDarkMode()
@@ -334,11 +332,16 @@ public class Settings
             switch (Widgets.popUp(Settings::editInstance))
             {
                 case OK:
+                    save();
                     popupOpen = false;
                     break;
 
                 case CANCEL:
+                    load();
                     popupOpen = false;
+                    break;
+
+                default:
                     break;
             }
             EditorSystemManager.getCurrentTheme().applyPopupBg(colorCache);
@@ -347,6 +350,11 @@ public class Settings
 
     private static void editInstance()
     {
+        if (Widgets.button(Settings.DARK_MODE_ENABLED() ? Icons.Sun : Icons.Moon, true))
+        {
+            Settings.toggleDarkMode();
+            EditorSystemManager.setTheme(new CleanTheme(Settings.DARK_MODE_ENABLED()));
+        }
         if (ImGui.beginTabBar("Settings Tabs"))
         {
             if (ImGui.beginTabItem("Grid"))
@@ -356,9 +364,114 @@ public class Settings
                 getInstance().SHOW_GRID = Widgets.drawBoolControl("Show", SHOW_GRID());
                 ImGui.endTabItem();
             }
+            if (ImGui.beginTabItem("Rendering"))
+            {
+                getInstance().MAX_BATCH_SIZE = Widgets.drawIntControl("Batch Size", MAX_BATCH_SIZE());
+                getInstance().DEBUG_PENCIL_MAX_LINES = Widgets.drawIntControl("Pencil Lines", DEBUG_PENCIL_MAX_LINES());
+                getInstance().DEBUG_PENCIL_DEFAULT_LIFE = Widgets.drawIntControl("Line Life", DEBUG_PENCIL_DEFAULT_LIFE());
+                getInstance().DEBUG_PENCIL_DEFAULT_WIDTH = Widgets.drawIntControl("Line Width", DEBUG_PENCIL_DEFAULT_WIDTH());
+                getInstance().DEBUG_PENCIL_MIN_CIRCLE_PRECISION = Widgets.drawIntControl("Circle Min Precision", DEBUG_PENCIL_MIN_CIRCLE_PRECISION());
+                getInstance().DEBUG_PENCIL_MAX_CIRCLE_PRECISION = Widgets.drawIntControl("Circle Max Precision", DEBUG_PENCIL_MAX_CIRCLE_PRECISION());
+                getInstance().DEBUG_PENCIL_DEFAULT_ROTATION = Widgets.drawFloatControl("Circle Max Precision", DEBUG_PENCIL_DEFAULT_ROTATION());
+                getInstance().DEFAULT_LAYER = Widgets.drawIntControl("Layer", DEFAULT_LAYER());
+                Widgets.colorPicker3("Default Color", DEBUG_PENCIL_DEFAULT_COLOR());
+                ImGui.endTabItem();
+            }
+            if (ImGui.beginTabItem("Physics"))
+            {
+                Vector2f temp = new Vector2f(getInstance().GRAVITY.x, getInstance().GRAVITY.y);
+                Widgets.drawVec2Control("Gravity", temp);
+                getInstance().GRAVITY = new Vec2(temp.x, temp.y);
+                getInstance().PHYSICS_DELTA_TIME = Widgets.drawFloatControl("Delta Time", PHYSICS_DELTA_TIME());
+                getInstance().VELOCITY_ITERATIONS = Widgets.drawIntControl("Velocity Iterations", VELOCITY_ITERATIONS());
+                getInstance().POSITION_ITERATIONS = Widgets.drawIntControl("Position Iterations", POSITION_ITERATIONS());
+                getInstance().LINEAR_DAMPING = Widgets.drawFloatControl("Linear Damping", LINEAR_DAMPING());
+                getInstance().ANGULAR_DAMPING = Widgets.drawFloatControl("Angular Damping", ANGULAR_DAMPING());
+                getInstance().DEFAULT_MASS = Widgets.drawFloatControl("Mass", DEFAULT_MASS());
+                getInstance().GRAVITY_SCALE = Widgets.drawFloatControl("Gravity Scale", GRAVITY_SCALE());
+                getInstance().DEFAULT_ROTATION = Widgets.drawFloatControl("Default Rotation", DEFAULT_ROTATION());
+                getInstance().DEFAULT_RESTITUTION = Widgets.drawFloatControl("Restitution", DEFAULT_RESTITUTION());
+                getInstance().DEFAULT_FRICTION = Widgets.drawFloatControl("Friction", DEFAULT_FRICTION());
+                getInstance().DEFAULT_MAX_WALK_SPEED = Widgets.drawFloatControl("Max Walk Speed", DEFAULT_MAX_WALK_SPEED());
+                getInstance().DEFAULT_GROUND_ACCELERATION = Widgets.drawFloatControl("Ground Acceleration", DEFAULT_GROUND_ACCELERATION());
+                getInstance().DEFAULT_GROUND_DECELERATION = Widgets.drawFloatControl("Ground Deceleration", DEFAULT_GROUND_DECELERATION());
+                getInstance().DEFAULT_AIR_ACCELERATION = Widgets.drawFloatControl("Air Acceleration", DEFAULT_AIR_ACCELERATION());
+                getInstance().DEFAULT_AIR_DECELERATION = Widgets.drawFloatControl("Air Deceleration", DEFAULT_AIR_DECELERATION());
+                getInstance().ROTATION_FIXED = Widgets.drawBoolControl("Fixed Rotation", ROTATION_FIXED());
+                getInstance().CONTINUOUS_COLLISION = Widgets.drawBoolControl("Continuous Collision", CONTINUOUS_COLLISION());
+                ImGui.endTabItem();
+            }
             if (ImGui.beginTabItem("Window Settings"))
             {
-                getInstance().DARK_MODE_ENABLED = Widgets.drawBoolControl(Icons.Sun, getInstance().DARK_MODE_ENABLED);
+                getInstance().DEFAULT_WINDOW_WIDTH = Widgets.drawIntControl("Width", DEFAULT_WINDOW_WIDTH());
+                getInstance().DEFAULT_WINDOW_HEIGHT = Widgets.drawIntControl("Height", DEFAULT_WINDOW_HEIGHT());
+                getInstance().DEFAULT_ASPECT_RATIO = Widgets.drawFloatControl("Aspect Ratio", DEFAULT_ASPECT_RATIO());
+                getInstance().DEFAULT_SIZE_DOWN_FACTOR = Widgets.drawFloatControl("Size Down Factor", DEFAULT_SIZE_DOWN_FACTOR());
+                getInstance().DEFAULT_FPS = Widgets.drawFloatControl("FPS", DEFAULT_FPS());
+                getInstance().DEFAULT_WINDOW_TITLE = Widgets.inputText("Title", DEFAULT_WINDOW_TITLE());
+                Widgets.colorPicker4("Clear Color", DEFAULT_CLEAR_COLOR());
+                getInstance().DEFAULT_ICON_PATH = Widgets.inputText("Icon Path", DEFAULT_ICON_PATH());
+                getInstance().DEFAULT_VSYNC_ENABLE = Widgets.drawBoolControl("VSync", DEFAULT_VSYNC_ENABLE());
+                getInstance().DEFAULT_WINDOW_TRANSPARENCY_STATE = Widgets.drawBoolControl("Transparency", DEFAULT_WINDOW_TRANSPARENCY_STATE());
+                getInstance().DEFAULT_WINDOW_MAXIMIZED_STATE = Widgets.drawBoolControl("Maximized", DEFAULT_WINDOW_MAXIMIZED_STATE());
+                getInstance().DEFAULT_WINDOW_VISIBLE_STATE = Widgets.drawBoolControl("Visible", DEFAULT_WINDOW_VISIBLE_STATE());
+                getInstance().DEFAULT_WINDOW_DECORATION_STATE = Widgets.drawBoolControl("Decoration", DEFAULT_WINDOW_DECORATION_STATE());
+                getInstance().DEFAULT_WINDOW_RESIZABLE_STATE = Widgets.drawBoolControl("Resizable", DEFAULT_WINDOW_RESIZABLE_STATE());
+                getInstance().DEFAULT_WINDOW_FLOAT_STATUS = Widgets.drawBoolControl("Float", DEFAULT_WINDOW_FLOAT_STATUS());
+                ImGui.endTabItem();
+            }
+
+            if (ImGui.beginTabItem("Keyboard Control"))
+            {
+                getInstance().DEFAULT_JUMP_IMPULSE = Widgets.drawFloatControl("Jump Impulse", DEFAULT_JUMP_IMPULSE());
+                getInstance().DEFAULT_MAX_RUN_SPEED = Widgets.drawFloatControl("Max Run Speed", DEFAULT_MAX_RUN_SPEED());
+                getInstance().DEFAULT_GROUND_DETECT_RAY_LENGTH = Widgets.drawFloatControl("Ground Detect Ray Length", DEFAULT_GROUND_DETECT_RAY_LENGTH());
+                getInstance().DEFAULT_COYOTE_TIME = Widgets.drawFloatControl("Coyote Time", DEFAULT_COYOTE_TIME());
+                getInstance().DEFAULT_MAX_JUMPS = Widgets.drawIntControl("Max Jumps", DEFAULT_MAX_JUMPS());
+                getInstance().DEFAULT_MOVE_RIGHT_KEY = (Keys) Widgets.drawEnumControls(Keys.class, "Move Right", DEFAULT_MOVE_RIGHT_KEY());
+                getInstance().DEFAULT_MOVE_LEFT_KEY = (Keys) Widgets.drawEnumControls(Keys.class, "Move Left", DEFAULT_MOVE_LEFT_KEY());
+                getInstance().DEFAULT_RUN_KEY = (Keys) Widgets.drawEnumControls(Keys.class, "Run", DEFAULT_RUN_KEY());
+                getInstance().DEFAULT_JUMP_KEY = (Keys) Widgets.drawEnumControls(Keys.class, "Jump", DEFAULT_JUMP_KEY());
+                ImGui.endTabItem();
+            }
+            if (ImGui.beginTabItem("Texture"))
+            {
+                getInstance().DEFAULT_TEXTURE_WRAP_S = (TextureWrapping) Widgets.drawEnumControls(TextureWrapping.class, "Wrap S", DEFAULT_TEXTURE_WRAP_S());
+                getInstance().DEFAULT_TEXTURE_WRAP_T = (TextureWrapping) Widgets.drawEnumControls(TextureWrapping.class, "Wrap T", DEFAULT_TEXTURE_WRAP_T());
+                getInstance().DEFAULT_TEXTURE_MIN_FILTER = (TextureMinimizeFilter) Widgets.drawEnumControls(TextureMinimizeFilter.class, "Min Filter", DEFAULT_TEXTURE_MIN_FILTER());
+                getInstance().DEFAULT_TEXTURE_MAX_FILTER = (TextureMaximizeFilter) Widgets.drawEnumControls(TextureMaximizeFilter.class, "Max Filter", DEFAULT_TEXTURE_MAX_FILTER());
+                getInstance().MAX_IMAGE_DISPLAY_WIDTH = Widgets.drawFloatControl("Max Image Width", MAX_IMAGE_DISPLAY_WIDTH());
+                getInstance().MAX_IMAGE_DISPLAY_HEIGHT = Widgets.drawFloatControl("Max Image Height", MAX_IMAGE_DISPLAY_HEIGHT());
+                ImGui.endTabItem();
+            }
+            if (ImGui.beginTabItem("Text Component"))
+            {
+                getInstance().DEFAULT_CHARACTER_SPACING = Widgets.drawFloatControl("Character Spacing", DEFAULT_CHARACTER_SPACING());
+                getInstance().DEFAULT_TAB_SPACING = Widgets.drawFloatControl("Tab Spacing", DEFAULT_TAB_SPACING());
+                getInstance().DEFAULT_LINE_HEIGHT = Widgets.drawFloatControl("Line Height", DEFAULT_LINE_HEIGHT());
+                getInstance().DEFAULT_TEXT_SIZE = Widgets.drawFloatControl("Text Size", DEFAULT_TEXT_SIZE());
+                getInstance().DEFAULT_TEXT_MOVE_WITH_MASTER = Widgets.drawBoolControl("Move With Master", DEFAULT_TEXT_MOVE_WITH_MASTER());
+                getInstance().DEFAULT_TEXT_LAYER = Widgets.drawIntControl("Layer", DEFAULT_TEXT_LAYER());
+                Widgets.colorPicker4("Character Color", DEFAULT_CHARACTER_COLOR());
+                ImGui.endTabItem();
+            }
+            if (ImGui.beginTabItem("Editor Camera"))
+            {
+                getInstance().DEFAULT_EDITOR_CAMERA_DRAG_DEBOUNCE = Widgets.drawFloatControl("Drag Debounce", DEFAULT_EDITOR_CAMERA_DRAG_DEBOUNCE());
+                getInstance().DEFAULT_EDITOR_CAMERA_LERP_TIME = Widgets.drawFloatControl("Lerp Time", DEFAULT_EDITOR_CAMERA_LERP_TIME());
+                getInstance().DEFAULT_EDITOR_CAMERA_DRAG_SENSITIVITY = Widgets.drawFloatControl("Drag Sensitivity", DEFAULT_EDITOR_CAMERA_DRAG_SENSITIVITY());
+                getInstance().DEFAULT_EDITOR_CAMERA_SCROLL_SENSITIVITY = Widgets.drawFloatControl("Scroll Sensitivity", DEFAULT_EDITOR_CAMERA_SCROLL_SENSITIVITY());
+                getInstance().DEFAULT_CAMERA_ZOOM = Widgets.drawFloatControl("Zoom", DEFAULT_CAMERA_ZOOM());
+                Vector2f temp = new Vector2f(getInstance().DEFAULT_CAMERA_PROJECTION_SIZE.x, getInstance().DEFAULT_CAMERA_PROJECTION_SIZE.y);
+                Widgets.drawVec2Control("Projection Size", temp);
+                getInstance().DEFAULT_CAMERA_PROJECTION_SIZE = new Vector2f(temp.x, temp.y);
+                ImGui.endTabItem();
+            }
+            if (ImGui.beginTabItem("Misc"))
+            {
+                getInstance().DEFAULT_FRAME_TIME = Widgets.drawFloatControl("Frame Time", DEFAULT_FRAME_TIME());
+                getInstance().DEFAULT_SAVE_DIR = Widgets.inputText("Save Directory", DEFAULT_SAVE_DIR());
+                getInstance().MAX_LOG_FILE_LIMIT = Widgets.drawIntControl("Log File Limit", MAX_LOG_FILE_LIMIT());
                 ImGui.endTabItem();
             }
             ImGui.endTabBar();

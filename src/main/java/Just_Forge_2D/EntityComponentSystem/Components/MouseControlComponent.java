@@ -11,6 +11,7 @@ public class MouseControlComponent extends Component
 {
     private float lerpSpeed = 10f;
     private Mode mode = Mode.NONE;
+    private boolean rotateTowardsMouse = false;
     static enum Mode
     {
         LEFT_CLICK,
@@ -38,6 +39,13 @@ public class MouseControlComponent extends Component
 
         // - - - Create a target position based on the mouse position
         Vector2f targetPosition = new Vector2f(mouseX, mouseY);
+
+        if (rotateTowardsMouse)
+        {
+            Vector2f direction = new Vector2f(targetPosition).sub(currentPosition).normalize().negate();
+            float angle = (float) Math.atan2(direction.y, direction.x);
+            this.gameObject.transform.rotation = (float) (angle + (Math.PI / 2f));
+        }
 
         // - - - lerp between current position and target position
         if (moveCondition())
@@ -101,5 +109,6 @@ public class MouseControlComponent extends Component
         super.deleteButton();
         lerpSpeed = Widgets.drawFloatControl(Icons.Running + "  Speed", lerpSpeed);
         mode = Widgets.drawEnumControls(Mode.class, Icons.Mouse + "  Input Mode", mode);
+        rotateTowardsMouse = Widgets.drawBoolControl(Icons.Redo + "  Rotate with Mouse", rotateTowardsMouse);
     }
 }

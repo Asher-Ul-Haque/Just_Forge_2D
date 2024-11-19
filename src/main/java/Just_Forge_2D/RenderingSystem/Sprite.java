@@ -1,6 +1,5 @@
 package Just_Forge_2D.RenderingSystem;
 
-import Just_Forge_2D.Utils.Settings;
 import org.joml.Vector2f;
 
 
@@ -8,8 +7,8 @@ import org.joml.Vector2f;
 public class Sprite
 {
     // - - - private variables for texturing
-    private float width = Settings.GRID_WIDTH();
-    private float height = Settings.GRID_HEIGHT();
+    private float width = 0;
+    private float height = 0;
     private Texture texture = null;
     private Vector2f[] textureCoordinates = {
     new Vector2f(1, 1),
