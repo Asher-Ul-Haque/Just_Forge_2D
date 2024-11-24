@@ -6,7 +6,6 @@ import org.lwjgl.BufferUtils;
 
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
-import java.nio.file.Paths;
 
 import static org.lwjgl.opengl.GL11C.*;
 import static org.lwjgl.stb.STBImage.*;
@@ -63,7 +62,7 @@ public class Texture
     // - - - init
     public boolean init(String FILEPATH)
     {
-        this.filepath = Paths.get(FILEPATH).toString();
+        this.filepath = FILEPATH;
 
         // - - - Generate the texture on GPU
         try

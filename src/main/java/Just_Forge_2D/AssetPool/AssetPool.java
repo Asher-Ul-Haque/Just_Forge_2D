@@ -8,6 +8,7 @@ import Just_Forge_2D.RenderingSystem.Texture;
 import Just_Forge_2D.Utils.Logger;
 
 import java.io.File;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,12 +35,6 @@ public class AssetPool
 
     private static void shaderAdder(String NAME, String FILE_PATH)
     {
-        File real = new File(FILE_PATH);
-        if (!real.exists())
-        {
-            Logger.FORGE_LOG_ERROR("No such file exists");
-            return;
-        }
         if (!AssetPool.shaderPool.containsKey(FILE_PATH))
         {
             Logger.FORGE_LOG_DEBUG("Shader with path: " + FILE_PATH + " Hashed in shader Asset Pool and loaded");
@@ -59,10 +54,14 @@ public class AssetPool
         addShader(NAME, FILE_PATH, false);
     }
 
-    public static void addShader(String NAME, String FILE_PATH, boolean ABSOLUTE_PATH)
+    public static void addShader(String NAME, String FILE_PATH, boolean ABSOLUTE)
     {
-        if (ABSOLUTE_PATH) shaderAdder(NAME, FILE_PATH);
-        else shaderAdder(NAME, EditorSystemManager.projectDir + "/Assets/Shaders/" + FILE_PATH);
+        if (!checkFileExistence(FILE_PATH, ABSOLUTE))
+        {
+            Logger.FORGE_LOG_ERROR("No such shader file (.glsl with both fragment and vertex shader) exists : " + FILE_PATH);
+        }
+        if (ABSOLUTE) shaderAdder(NAME, FILE_PATH);
+        else shaderAdder(NAME, getRelativeFilePath(FILE_PATH));
     }
 
     public static Shader getShader(String NAME)
@@ -105,12 +104,6 @@ public class AssetPool
 
     private static void textureAdder(String NAME, String FILE_PATH)
     {
-        File real = new File(FILE_PATH);
-        if (!real.exists())
-        {
-            Logger.FORGE_LOG_ERROR("No such file exists");
-            return;
-        }
         if (!AssetPool.texturePool.containsKey(FILE_PATH))
         {
             Logger.FORGE_LOG_DEBUG("Texture with path: " + FILE_PATH + " Hashed in shader Asset Pool and loaded");
@@ -138,8 +131,12 @@ public class AssetPool
 
     public static void addTexture(String NAME, String FILE_PATH, boolean ABSOLUTE)
     {
+        if (!checkFileExistence(FILE_PATH, ABSOLUTE))
+        {
+            Logger.FORGE_LOG_ERROR("No such texture file exists : " + FILE_PATH);
+        }
         if (ABSOLUTE) textureAdder(NAME, FILE_PATH);
-        else textureAdder(NAME, EditorSystemManager.projectDir + "/Assets/Textures/" + FILE_PATH);
+        else textureAdder(NAME, getRelativeFilePath(FILE_PATH));
     }
 
     public static Texture getTexture(String NAME)
@@ -380,5 +377,24 @@ public class AssetPool
             Shader shader = entry.getValue();
             shader.compile();
         }
+    }
+
+    public static boolean checkFileExistence(String FILE_PATH, boolean ABSOLUTE)
+    {
+        if (ABSOLUTE)
+        {
+            return new File(FILE_PATH).exists();
+        }
+        else
+        {
+            String relativePath = getRelativeFilePath(FILE_PATH);
+            return new File(System.getProperty("user.dir", relativePath)).exists();
+        }
+    }
+
+    public static String getRelativeFilePath(String FILE_PATH)
+    {
+
+        return Paths.get(System.getProperty("user.dir")).relativize(Paths.get(FILE_PATH)).toString();
     }
 }

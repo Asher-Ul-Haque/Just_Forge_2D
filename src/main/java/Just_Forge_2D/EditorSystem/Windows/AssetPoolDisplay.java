@@ -316,7 +316,7 @@ public class AssetPoolDisplay
 
                 if (open)
                 {
-                    addAsset("Texture", EditorSystemManager.projectDir + "/Assets/Textures/", !name.isEmpty() && !path.isEmpty(), () -> AssetPool.addTexture(name, path, true), () -> {
+                    addAsset("Texture", EditorSystemManager.projectDir + "/Assets/Textures/", !name.isEmpty() && !path.isEmpty(), () -> AssetPool.addTexture(name, path, !copyToProject), () -> {
                     });
                 }
             }

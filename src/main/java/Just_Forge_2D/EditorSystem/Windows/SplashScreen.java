@@ -217,6 +217,7 @@ public class SplashScreen
         if (GameManager.isSuccess() && GameManager.getProgressPercentage() == 1f)
         {
             progress = 1f;
+            System.setProperty("user.dir", EditorSystemManager.projectDir);
             AssetPoolSerializer.loadAssetPool(EditorSystemManager.projectDir + "/.forge/Pool.justForgeFile");
             if (!EditorSystemManager.isRelease)
             {
