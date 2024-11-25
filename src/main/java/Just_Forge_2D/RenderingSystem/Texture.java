@@ -1,9 +1,11 @@
 package Just_Forge_2D.RenderingSystem;
 
+import Just_Forge_2D.AssetPool.AssetPool;
 import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.Utils.Settings;
 import org.lwjgl.BufferUtils;
 
+import java.io.File;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 
@@ -62,7 +64,8 @@ public class Texture
     // - - - init
     public boolean init(String FILEPATH)
     {
-        this.filepath = FILEPATH;
+        if (AssetPool.isAbsolutePath(FILEPATH)) this.filepath = FILEPATH;
+        else this.filepath = new File(System.getProperty("user.dir"), FILEPATH).getAbsolutePath();
 
         // - - - Generate the texture on GPU
         try

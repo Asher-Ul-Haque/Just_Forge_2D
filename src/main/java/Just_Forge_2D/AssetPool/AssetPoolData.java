@@ -22,7 +22,8 @@ class AssetPoolData
     public AssetPoolData(Map<String, String> nameToFileTextures, Map<String, String> nameToFileSpriteSheet,
                          Map<String, String> nameToFileShader, Map<String, String> nameToFileSounds,
                          Map<String, Shader> shaderPool, Map<String, Texture> texturePool,
-                         Map<String, SpriteSheet> spriteSheetPool, Map<String, Sound> soundPool) {
+                         Map<String, SpriteSheet> spriteSheetPool, Map<String, Sound> soundPool)
+    {
         this.nameToFileTextures = nameToFileTextures;
         this.nameToFileSpriteSheet = nameToFileSpriteSheet;
         this.nameToFileShader = nameToFileShader;

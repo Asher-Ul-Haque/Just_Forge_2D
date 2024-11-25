@@ -1,6 +1,7 @@
 package Just_Forge_2D.EntityComponentSystem;
 
 import Just_Forge_2D.AssetPool.AssetPool;
+import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.Components.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.Components.TransformComponent;
@@ -270,6 +271,7 @@ public class GameObject
         Logger.FORGE_LOG_FATAL(trace[0].getFileName() + " : " + trace[0].getLineNumber());
         Logger.FORGE_LOG_ERROR(e.getMessage());
         Logger.FORGE_LOG_ERROR("Reason: " + e.getCause());
+        if (EditorSystemManager.isRelease) System.exit(1);
         EventManager.notify(null, new Event(EventTypes.ForgeStop));
     }
 }

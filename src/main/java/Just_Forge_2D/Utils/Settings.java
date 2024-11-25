@@ -350,7 +350,7 @@ public class Settings
 
     private static void editInstance()
     {
-        if (Widgets.button(Settings.DARK_MODE_ENABLED() ? Icons.Sun : Icons.Moon, true))
+        if (Widgets.button(Settings.DARK_MODE_ENABLED() ? Icons.Sun + "  Light Mode" : Icons.Moon + "   Dark Theme", true))
         {
             Settings.toggleDarkMode();
             EditorSystemManager.setTheme(new CleanTheme(Settings.DARK_MODE_ENABLED()));

@@ -59,7 +59,6 @@ public class SplashScreen
             {
                 logoTexture = new Texture();
                 logoTexture.init("Assets/Textures/logo.png");
-                AssetPool.addTexture("Default", Settings.DEFAULT_ICON_PATH(), true);
             }
 
             // if (!EditorSystemManager.isRelease) startEarlyCompilation();
@@ -218,10 +217,13 @@ public class SplashScreen
         {
             progress = 1f;
             System.setProperty("user.dir", EditorSystemManager.projectDir);
+            logoTexture = new Texture();
+            logoTexture.init("Assets/Textures/logo.png");
+            AssetPool.addTexture("Default", Settings.DEFAULT_ICON_PATH(), false);
             AssetPoolSerializer.loadAssetPool(EditorSystemManager.projectDir + "/.forge/Pool.justForgeFile");
             if (!EditorSystemManager.isRelease)
             {
-                AssetPool.addSound("Default", "default.ogg", false, false);
+                AssetPool.addSound("Default", "/Assets/Sounds/default.ogg", false, false);
                 GameCodeLoader.openEye();
             }
             if (EditorSystemManager.currentSceneInitializer == null || GameWindow.getCurrentScene() == null)

@@ -18,7 +18,6 @@ public class GridlinesComponent extends Component
     public static boolean showGrid = Settings.SHOW_GRID();
 
 
-
     @Override
     public void editorUpdate(float DELTA_TIME)
     {

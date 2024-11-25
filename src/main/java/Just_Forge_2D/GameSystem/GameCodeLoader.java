@@ -129,6 +129,15 @@ public class GameCodeLoader
                             if (currentTime - lastModifiedTime > DEBOUNCE_DELAY)
                             {
                                 lastModifiedTime = currentTime;
+                                try
+                                {
+                                    Thread.sleep(10);
+                                }
+                                catch (Exception e)
+                                {
+                                    Logger.FORGE_LOG_WARNING("The Eye was woken up from its slumber before it could wait for the program to sleep");
+                                    Logger.FORGE_LOG_ERROR(e.getMessage());
+                                }
 
                                 // Check if changes were in src/main/java or Assets
                                 Path changedDir = (Path) key.watchable();

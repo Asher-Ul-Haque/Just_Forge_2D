@@ -34,7 +34,7 @@ public class AssetPoolSerializer
         {
             if (new File(filePath).exists())
             {
-                addTexture(name, filePath, true);
+                addTexture(name, filePath, AssetPool.isAbsolutePath(filePath));
             }
             else
             {
@@ -49,14 +49,14 @@ public class AssetPoolSerializer
             Texture t = AssetPool.makeTexture(filePath);
             t.init(filePath);
             SpriteSheet newSheet = new SpriteSheet(t, sheet.getWidth(), sheet.getHeight(), sheet.size(), sheet.getSpacing());
-            addSpriteSheet(name, newSheet, true);
+            addSpriteSheet(name, newSheet, isAbsolutePath(filePath));
         });
 
         data.nameToFileShader.forEach((name, filePath) ->
         {
             if (new File(filePath).exists())
             {
-                addShader(name, filePath, true);
+                addShader(name, filePath, AssetPool.isAbsolutePath(filePath));
             }
             else
             {
@@ -68,7 +68,7 @@ public class AssetPoolSerializer
         {
             if (new File(filePath).exists())
             {
-                addSound(name, filePath, true, true);
+                addSound(name, filePath, true, AssetPool.isAbsolutePath(filePath));
             }
             else
             {
