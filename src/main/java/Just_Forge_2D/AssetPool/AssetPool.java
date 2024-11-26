@@ -7,7 +7,6 @@ import Just_Forge_2D.RenderingSystem.Texture;
 import Just_Forge_2D.Utils.Logger;
 
 import java.io.File;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -392,14 +391,7 @@ public class AssetPool
 
     public static String getRelativeFilePath(String FILE_PATH)
     {
-        try
-        {
-            return Paths.get(System.getProperty("user.dir")).relativize(Paths.get(FILE_PATH)).toString();
-        }
-        catch (Exception e)
-        {
-            return FILE_PATH.replace(System.getProperty("user.dir"), "");
-        }
+        return FILE_PATH.replace(System.getProperty("user.dir"), "");
     }
 
     public static boolean isAbsolutePath(String FILE_PATH)

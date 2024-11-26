@@ -33,7 +33,7 @@
     in float fTextureID;
     in float fEntityID;
 
-    out vec3 color;
+    out vec4 color;
 
     uniform sampler2D uTextures[8];
 
@@ -46,5 +46,5 @@
            int id = int(fTextureID);
            texColor = fColor * texture(uTextures[id], fTextureCoords);
         }
-        color = vec3(fEntityID, fEntityID, fEntityID);
+        color = vec4(fEntityID, fEntityID, fEntityID, texColor.a);
     }

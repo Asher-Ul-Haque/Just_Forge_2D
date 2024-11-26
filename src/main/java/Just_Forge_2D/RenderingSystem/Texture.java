@@ -3,13 +3,15 @@ package Just_Forge_2D.RenderingSystem;
 import Just_Forge_2D.AssetPool.AssetPool;
 import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.Utils.Settings;
+import org.joml.Vector2i;
 import org.lwjgl.BufferUtils;
 
 import java.io.File;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 
-import static org.lwjgl.opengl.GL11C.*;
+import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL30.*;
 import static org.lwjgl.stb.STBImage.*;
 
 // - - - Texture Loading Class
@@ -217,5 +219,60 @@ public class Texture
     public void setWARP_T(TextureWrapping WARP_T)
     {
         this.WARP_T = WARP_T;
+    }
+
+    public float[] readPixel(int X, int Y)
+    {
+        float[] pixels = new float[4];
+        int framebuffer = glGenFramebuffers();
+        glBindFramebuffer(GL_READ_FRAMEBUFFER, framebuffer);
+
+        // - - - Attach the texture to the framebuffer
+        glFramebufferTexture2D(GL_READ_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureID, 0);
+
+        // - - - Check if the framebuffer is complete
+        if (glCheckFramebufferStatus(GL_READ_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+        {
+            Logger.FORGE_LOG_FATAL("Framebuffer for texture : " + this.filepath + " is not complete");
+            return pixels;
+        }
+
+        // - - - Prepare the buffer to store pixel data
+
+        // - - - Read the pixel
+        glReadPixels(X, Y, 1, 1, GL_RGBA, GL_FLOAT, pixels);
+
+        // - - - Clean up
+        glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
+        glDeleteFramebuffers(framebuffer);
+
+        // - - - Return the pixel data
+        return pixels;
+    }
+
+    public float[] readPixels(Vector2i START, Vector2i END)
+    {
+        Vector2i size = new Vector2i(END).sub(START).absolute();
+        float[] pixels = new float[4 * size.x * size.y];
+        int framebuffer = glGenFramebuffers();
+        glBindFramebuffer(GL_READ_FRAMEBUFFER, framebuffer);
+
+        // - - - Attach the texture to the framebuffer
+        glFramebufferTexture2D(GL_READ_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureID, 0);
+
+        // - - - Check if the framebuffer is complete
+        if (glCheckFramebufferStatus(GL_READ_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+        {
+            Logger.FORGE_LOG_FATAL("Framebuffer for texture : " + this.filepath + " is not complete");
+            return pixels;
+        }
+
+        glReadPixels(START.x, START.y, size.x, size.y, GL_RGBA, GL_FLOAT, pixels);
+        for (int i = 0; i < pixels.length; ++i)
+        {
+            pixels[i] -= 1;
+        }
+
+        return pixels;
     }
 }

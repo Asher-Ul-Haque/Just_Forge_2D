@@ -1,5 +1,6 @@
 package Just_Forge_2D.AudioSystem;
 
+import Just_Forge_2D.AssetPool.AssetPool;
 import Just_Forge_2D.AudioSystem.TinySound.LowLevelSound;
 import Just_Forge_2D.AudioSystem.TinySound.TinySound;
 import Just_Forge_2D.Utils.Logger;
@@ -7,6 +8,7 @@ import org.joml.Vector3f;
 import org.lwjgl.stb.STBVorbis;
 import org.lwjgl.system.MemoryStack;
 
+import java.io.File;
 import java.nio.IntBuffer;
 import java.nio.ShortBuffer;
 
@@ -49,12 +51,15 @@ public class Sound
 
     private boolean loadOgg(String FILEPATH)
     {
+        String correctPath;
+        if (AssetPool.isAbsolutePath(FILEPATH)) correctPath = FILEPATH;
+        else correctPath = new File(System.getProperty("user.dir"), FILEPATH).getAbsolutePath();
+
         try (MemoryStack stack = MemoryStack.stackPush())
         {
             IntBuffer channelsBuffer = stack.mallocInt(1);
             IntBuffer sampleRateBuffer = stack.mallocInt(1);
-
-            ShortBuffer rawAudioBuffer = STBVorbis.stb_vorbis_decode_filename(FILEPATH, channelsBuffer, sampleRateBuffer);
+            ShortBuffer rawAudioBuffer = STBVorbis.stb_vorbis_decode_filename(correctPath, channelsBuffer, sampleRateBuffer);
             if (rawAudioBuffer == null)
             {
                 Logger.FORGE_LOG_ERROR("Could not load .ogg sound: " + FILEPATH);

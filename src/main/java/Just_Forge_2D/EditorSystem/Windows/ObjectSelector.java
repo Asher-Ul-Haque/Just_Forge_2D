@@ -85,7 +85,10 @@ public class ObjectSelector
         float[] pixels = new float[4];
         glReadPixels(X, Y, 1, 1, GL_RGBA, GL_FLOAT, pixels);
 
-        return (int)(pixels[0]) - 1;
+        int check = (int)(pixels[0]);
+        if ((pixels[3]) == 0) check = 0;
+
+        return check - 1;
     }
 
     public static float[] readPixels(Vector2i START, Vector2i END)

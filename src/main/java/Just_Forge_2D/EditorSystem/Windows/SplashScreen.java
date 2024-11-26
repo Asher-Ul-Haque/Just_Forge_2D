@@ -226,7 +226,7 @@ public class SplashScreen
             EditorSystemManager.defaultShader = AssetPool.getShader("Default");
             if (!EditorSystemManager.isRelease)
             {
-                AssetPool.addSound("Default", "/Assets/Sounds/default.ogg", false, false);
+                AssetPool.addSound("Default", "Assets/Sounds/default.ogg", false, false);
                 GameCodeLoader.openEye();
             }
             if (EditorSystemManager.currentSceneInitializer == null || GameWindow.getCurrentScene() == null)
