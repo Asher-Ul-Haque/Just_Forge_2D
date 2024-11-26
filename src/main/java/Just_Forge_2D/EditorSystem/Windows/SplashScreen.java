@@ -221,6 +221,9 @@ public class SplashScreen
             logoTexture.init("Assets/Textures/logo.png");
             AssetPool.addTexture("Default", Settings.DEFAULT_ICON_PATH(), false);
             AssetPoolSerializer.loadAssetPool(EditorSystemManager.projectDir + "/.forge/Pool.justForgeFile");
+            AssetPool.addShader("Default", "Assets/Shaders/default.glsl", false);
+            AssetPool.addShader("Debug", "Assets/Shaders/debug.glsl", false);
+            EditorSystemManager.defaultShader = AssetPool.getShader("Default");
             if (!EditorSystemManager.isRelease)
             {
                 AssetPool.addSound("Default", "/Assets/Sounds/default.ogg", false, false);

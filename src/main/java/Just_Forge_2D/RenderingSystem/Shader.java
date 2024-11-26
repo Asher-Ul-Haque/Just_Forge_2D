@@ -1,9 +1,11 @@
 package Just_Forge_2D.RenderingSystem;
 
+import Just_Forge_2D.AssetPool.AssetPool;
 import Just_Forge_2D.Utils.Logger;
 import org.joml.*;
 import org.lwjgl.BufferUtils;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.FloatBuffer;
 import java.nio.file.Files;
@@ -19,18 +21,21 @@ public class Shader
     // - - - Private variables for compiling
     private int shaderProgramID;
     private String vertexSource, fragmentSource;
-    private final String filePath;
+    private transient final String filePath;
     private boolean beingUsed = false;
 
     // - - - Constructor to get a usable shader
     public Shader(String FILE_PATH)
     {
         this.filePath = FILE_PATH;
+        String correctPath;
+        if (AssetPool.isAbsolutePath(FILE_PATH)) correctPath = FILE_PATH;
+        else correctPath = new File(System.getProperty("user.dir"), FILE_PATH).getAbsolutePath();
 
         // - - - Get the file contents to compile it
         try
         {
-            String source = new String(Files.readAllBytes(Paths.get(filePath)));
+            String source = new String(Files.readAllBytes(Paths.get(correctPath)));
             String[] splitString = source.split("(#type)( )+([a-zA-Z]+)");
 
             // - - - Find first word after the word #type

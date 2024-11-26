@@ -1,7 +1,6 @@
 package Just_Forge_2D.AssetPool;
 
 import Just_Forge_2D.AudioSystem.Sound;
-import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.RenderingSystem.Shader;
 import Just_Forge_2D.RenderingSystem.SpriteSheet;
 import Just_Forge_2D.RenderingSystem.Texture;
@@ -405,6 +404,6 @@ public class AssetPool
 
     public static boolean isAbsolutePath(String FILE_PATH)
     {
-        return FILE_PATH.startsWith(EditorSystemManager.projectDir) || FILE_PATH.startsWith(EditorSystemManager.launchLocation);
+        return FILE_PATH.equals(new File(FILE_PATH).getAbsolutePath());
     }
 }

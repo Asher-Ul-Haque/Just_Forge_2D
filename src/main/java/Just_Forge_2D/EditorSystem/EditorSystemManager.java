@@ -84,10 +84,6 @@ public class EditorSystemManager
 
     public static void compileShaders()
     {
-        AssetPool.addShader("Default", "Assets/Shaders/default.glsl", true);
-        AssetPool.addShader("Debug", "Assets/Shaders/debug.glsl", true);
-        EditorSystemManager.defaultShader = AssetPool.getShader("Default");
-
         if (!EditorSystemManager.isRelease)
         {
             EditorSystemManager.selectorShader = new Shader("Assets/Shaders/selector.glsl");
