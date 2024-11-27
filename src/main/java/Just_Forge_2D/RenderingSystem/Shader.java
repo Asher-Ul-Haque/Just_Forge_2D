@@ -28,9 +28,14 @@ public class Shader
     public Shader(String FILE_PATH)
     {
         this.filePath = FILE_PATH;
+        read();
+    }
+
+    public void read()
+    {
         String correctPath;
-        if (AssetPool.isAbsolutePath(FILE_PATH)) correctPath = FILE_PATH;
-        else correctPath = new File(System.getProperty("user.dir"), FILE_PATH).getAbsolutePath();
+        if (AssetPool.isAbsolutePath(this.filePath)) correctPath = this.filePath;
+        else correctPath = new File(System.getProperty("user.dir"), filePath).getAbsolutePath();
 
         // - - - Get the file contents to compile it
         try
@@ -85,6 +90,12 @@ public class Shader
             Logger.FORGE_LOG_ERROR(e.getMessage());
             assert false;
         }
+    }
+
+    public void reload()
+    {
+        read();
+        compile();
     }
 
     // - - - Actually compile and link

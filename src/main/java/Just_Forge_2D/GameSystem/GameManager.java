@@ -1,6 +1,6 @@
 package Just_Forge_2D.GameSystem;
 
-import Just_Forge_2D.EditorSystem.EditorSystemManager;
+import Just_Forge_2D.EditorSystem.Forge;
 import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.Utils.Settings;
 import imgui.ImGui;
@@ -22,14 +22,14 @@ public class GameManager
     protected static Game game;
     protected static volatile boolean success = false; // should we visible to other threads
     protected static volatile boolean earlyCompileSuccess = false; // should we visible to other threads
-    private static Path destinationDirPath = Paths.get(EditorSystemManager.projectDir);
+    private static Path destinationDirPath = Paths.get(Forge.projectDir);
     private static volatile float progressPercentage; // should be visible to other threads
 
     // - - - Code Loading - - -
 
     public static void buildUserCode()
     {
-        buildUserCode(new File(EditorSystemManager.projectDir), true);
+        buildUserCode(new File(Forge.projectDir), true);
     }
 
     public static void buildUserCode(File DIRECTORY, boolean IS_NOT_EARLY)
@@ -41,7 +41,7 @@ public class GameManager
         {
             try
             {
-                if (!EditorSystemManager.isRelease)
+                if (!Forge.isRelease)
                 {
                     String gradlewCommand = System.getProperty("os.name").toLowerCase().contains("win") ? "gradlew.bat" : "./gradlew";
                     ProcessBuilder processBuilder = new ProcessBuilder(
@@ -67,7 +67,7 @@ public class GameManager
 
                 try
                 {
-                    Path projectPath = Paths.get(EditorSystemManager.projectDir);
+                    Path projectPath = Paths.get(Forge.projectDir);
                     Path classesDir = projectPath.resolve("build/classes/java/main");
                     URLClassLoader classLoader = new URLClassLoader(new URL[]{classesDir.toUri().toURL()});
                     if (IS_NOT_EARLY) progressPercentage = 0.98f;
@@ -88,7 +88,7 @@ public class GameManager
                     if (IS_NOT_EARLY) progressPercentage = 1f;
                     if (IS_NOT_EARLY) success = false;
                     else earlyCompileSuccess = false;
-                    if (EditorSystemManager.isRelease)
+                    if (Forge.isRelease)
                     {
                         System.exit(0);
                     }
@@ -105,7 +105,7 @@ public class GameManager
                 else earlyCompileSuccess = false;
                 if (IS_NOT_EARLY) progressPercentage = 1f;
                 Logger.FORGE_LOG_FATAL("Failed to build user code: " + e.getMessage());
-                if (EditorSystemManager.isRelease)
+                if (Forge.isRelease)
                 {
                     System.exit(0);
                 }
@@ -141,7 +141,7 @@ public class GameManager
             {
                 String gradlewCommand = System.getProperty("os.name").toLowerCase().contains("win") ? "./gradlew.bat" : "./gradlew";
                 ProcessBuilder processBuilder = new ProcessBuilder(gradlewCommand, "shadowJar");
-                processBuilder.directory(new File(EditorSystemManager.projectDir.toString()));
+                processBuilder.directory(new File(Forge.projectDir.toString()));
                 processBuilder.inheritIO();
 
                 Process process = processBuilder.start();
@@ -154,7 +154,7 @@ public class GameManager
                     return;
                 }
 
-                Path projectPath = Paths.get(EditorSystemManager.projectDir);
+                Path projectPath = Paths.get(Forge.projectDir);
                 Path assetsPath = projectPath.resolve("Assets");
                 Path savesPath = projectPath.resolve("SceneScripts");
                 Path extraPath = projectPath.resolve(".forge");

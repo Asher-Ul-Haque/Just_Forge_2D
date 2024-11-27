@@ -1,6 +1,6 @@
 package Just_Forge_2D.Utils;
 
-import Just_Forge_2D.EditorSystem.EditorSystemManager;
+import Just_Forge_2D.EditorSystem.Forge;
 import Just_Forge_2D.EditorSystem.Icons;
 import Just_Forge_2D.EditorSystem.Widgets;
 import Just_Forge_2D.InputSystem.Keys;
@@ -287,7 +287,7 @@ public class Settings
     private  Vector4f DEFAULT_CHARACTER_COLOR = new Vector4f(1.0f);
     public static Vector4f DEFAULT_CHARACTER_COLOR() { return getInstance().DEFAULT_CHARACTER_COLOR; }
 
-    private String DEFAULT_LIBS_PATH = "libs";
+    private String DEFAULT_LIBS_PATH = Forge.launchLocation + "/libs";
     public static String DEFAULT_LIBS_PATH() {return getInstance().DEFAULT_LIBS_PATH;}
 
 
@@ -296,7 +296,7 @@ public class Settings
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
         String json = gson.toJson(instance);
-        try (FileWriter globalWriter = new FileWriter("Settings.justForgeFile"); FileWriter localWriter = new FileWriter(EditorSystemManager.projectDir + "/Settings.justForgeFile"))
+        try (FileWriter globalWriter = new FileWriter("Settings.justForgeFile"); FileWriter localWriter = new FileWriter(Forge.projectDir + "/Settings.justForgeFile"))
         {
             globalWriter.write(json);
             localWriter.write(json);
@@ -328,8 +328,8 @@ public class Settings
     {
         if (popupOpen)
         {
-            ImVec4 colorCache = EditorSystemManager.getCurrentTheme().popupBgColor;
-            EditorSystemManager.getCurrentTheme().applyPopupBg(EditorSystemManager.getCurrentTheme().windowBgColor);
+            ImVec4 colorCache = Forge.getCurrentTheme().popupBgColor;
+            Forge.getCurrentTheme().applyPopupBg(Forge.getCurrentTheme().windowBgColor);
 
             // - - - the popup goes here
             switch (Widgets.popUp(Settings::editInstance))
@@ -347,7 +347,7 @@ public class Settings
                 default:
                     break;
             }
-            EditorSystemManager.getCurrentTheme().applyPopupBg(colorCache);
+            Forge.getCurrentTheme().applyPopupBg(colorCache);
         }
     }
 
@@ -356,7 +356,7 @@ public class Settings
         if (Widgets.button(Settings.DARK_MODE_ENABLED() ? Icons.Sun + "  Light Mode" : Icons.Moon + "   Dark Theme", true))
         {
             Settings.toggleDarkMode();
-            EditorSystemManager.setTheme(new CleanTheme(Settings.DARK_MODE_ENABLED()));
+            Forge.setTheme(new CleanTheme(Settings.DARK_MODE_ENABLED()));
         }
         if (ImGui.beginTabBar("Settings Tabs"))
         {

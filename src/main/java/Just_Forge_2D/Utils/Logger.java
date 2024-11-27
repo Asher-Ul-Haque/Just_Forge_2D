@@ -1,6 +1,6 @@
 package Just_Forge_2D.Utils;
 
-import Just_Forge_2D.EditorSystem.EditorSystemManager;
+import Just_Forge_2D.EditorSystem.Forge;
 
 import java.io.*;
 import java.nio.file.FileAlreadyExistsException;
@@ -18,7 +18,7 @@ public class Logger
 {
     // - - -Log file path
     private static final String stamp = LocalDate.now() + "_" + LocalTime.now().getHour() + "_" + LocalTime.now().getMinute()  + "_" + LocalTime.now().getSecond();
-    private static Path LOG_FILE_PATH = Paths.get("logs", "latest.justForgeLog");
+    public static Path LOG_FILE_PATH = Paths.get("logs", "latest.justForgeLog");
 
     private static final int maxWriteBuffer = 15;
     private static final int maxReadBuffer = 1024;
@@ -27,7 +27,7 @@ public class Logger
 
     private static void addToReadBuffer(String MESSAGE)
     {
-        if (EditorSystemManager.isRelease) System.out.println(MESSAGE);
+        if (Forge.isRelease) System.out.println(MESSAGE);
         else
         {
             if (readBuffer.size() >= maxReadBuffer)
@@ -40,7 +40,7 @@ public class Logger
 
     static
     {
-        if (!EditorSystemManager.isRelease)
+        if (!Forge.isRelease)
         {
             // - - - Ensure the log file and directory are created at the start
             try
@@ -89,7 +89,7 @@ public class Logger
                 PrintStream logErrorStream = new PrintStream(new LoggerOutputStream(true)); // true = for System.err
                 PrintStream logOutputStream = new PrintStream(new LoggerOutputStream(false));
                 System.setErr(logErrorStream);
-                if (!EditorSystemManager.isRelease) System.setOut(logOutputStream);
+                if (!Forge.isRelease) System.setOut(logOutputStream);
             }
 
             catch (IOException e)
@@ -117,7 +117,7 @@ public class Logger
 
     public static void FORGE_LOG_WARNING(Object... ARGS)
     {
-        if (EditorSystemManager.isRelease) return;
+        if (Forge.isRelease) return;
         String message = formatMessage("[WARNING]", ARGS);
         addToReadBuffer(message);
         writeToFile(message);
@@ -125,7 +125,7 @@ public class Logger
 
     public static void FORGE_LOG_DEBUG(Object... ARGS)
     {
-        if (EditorSystemManager.isRelease) return;
+        if (Forge.isRelease) return;
         String message = formatMessage("[DEBUG]  ", ARGS);
         addToReadBuffer(message);
         writeToFile(message);
@@ -133,7 +133,7 @@ public class Logger
 
     public static void FORGE_LOG_TRACE(Object... ARGS)
     {
-        if (EditorSystemManager.isRelease) return;
+        if (Forge.isRelease) return;
         String message = formatMessage("[TRACE]  ", ARGS);
         addToReadBuffer(message);
         writeToFile(message);
@@ -141,7 +141,7 @@ public class Logger
 
     public static void FORGE_LOG_INFO(Object... ARGS)
     {
-        if (EditorSystemManager.isRelease) return;
+        if (Forge.isRelease) return;
         String message = formatMessage("[INFO]   ", ARGS);
         addToReadBuffer(message);
         writeToFile(message);
@@ -212,7 +212,7 @@ public class Logger
 
     public static void flushToFile()
     {
-        if (EditorSystemManager.isRelease) return;
+        if (Forge.isRelease) return;
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(LOG_FILE_PATH.toString(), true)))
         {
             for (String message : writeBuffer)

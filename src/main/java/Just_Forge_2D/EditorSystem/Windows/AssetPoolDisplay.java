@@ -3,7 +3,7 @@ package Just_Forge_2D.EditorSystem.Windows;
 import Just_Forge_2D.AssetPool.AssetPool;
 import Just_Forge_2D.AudioSystem.Sound;
 import Just_Forge_2D.EditorSystem.EditorComponents.GridlinesComponent;
-import Just_Forge_2D.EditorSystem.EditorSystemManager;
+import Just_Forge_2D.EditorSystem.Forge;
 import Just_Forge_2D.EditorSystem.Icons;
 import Just_Forge_2D.EditorSystem.InputControls.MouseControlComponent;
 import Just_Forge_2D.EditorSystem.Widgets;
@@ -21,7 +21,6 @@ import org.lwjgl.PointerBuffer;
 import org.lwjgl.system.MemoryStack;
 import org.lwjgl.system.MemoryUtil;
 import org.lwjgl.util.tinyfd.TinyFileDialogs;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -148,8 +147,8 @@ public class AssetPoolDisplay
                     {
                         String destinationFolder = switch (assetName)
                         {
-                            case "Sprite Sheet", "Texture" -> EditorSystemManager.projectDir + "/Assets/Textures/";
-                            case "Sound" -> EditorSystemManager.projectDir + "/Assets/Sounds/";
+                            case "Sprite Sheet", "Texture" -> Forge.projectDir + "/Assets/Textures/";
+                            case "Sound" -> Forge.projectDir + "/Assets/Sounds/";
                             default -> "";
                         };
 
@@ -192,7 +191,7 @@ public class AssetPoolDisplay
 
             if (open)
             {
-                addAsset("Sprite Sheet", EditorSystemManager.projectDir + "/Assets/Textures/", !name.isEmpty() && !path.isEmpty(),
+                addAsset("Sprite Sheet", Forge.projectDir + "/Assets/Textures/", !name.isEmpty() && !path.isEmpty(),
                 () ->
                 {
                     Texture t = new Texture();
@@ -316,7 +315,7 @@ public class AssetPoolDisplay
 
                 if (open)
                 {
-                    addAsset("Texture", EditorSystemManager.projectDir + "/Assets/Textures/", !name.isEmpty() && !path.isEmpty(), () -> AssetPool.addTexture(name, path, !copyToProject), () -> {
+                    addAsset("Texture", Forge.projectDir + "/Assets/Textures/", !name.isEmpty() && !path.isEmpty(), () -> AssetPool.addTexture(name, path, !copyToProject), () -> {
                     });
                 }
             }
@@ -412,7 +411,7 @@ public class AssetPoolDisplay
 
                 if (open)
                 {
-                    addAsset("Sound", EditorSystemManager.projectDir + "/Assets/Sounds/", !name.isEmpty() && !path.isEmpty(), () -> AssetPool.addSound(name, path, loop, true), () -> loop = Widgets.drawBoolControl(Icons.SyncAlt + " Looping", loop));
+                    addAsset("Sound", Forge.projectDir + "/Assets/Sounds/", !name.isEmpty() && !path.isEmpty(), () -> AssetPool.addSound(name, path, loop, true), () -> loop = Widgets.drawBoolControl(Icons.SyncAlt + " Looping", loop));
                 }
             }
             drawSounds();
@@ -534,6 +533,15 @@ public class AssetPoolDisplay
 
                 case CANCEL:
                     popup = !popup;
+                    break;
+            }
+        }
+        if (!AssetPool.message.isBlank())
+        {
+            switch(Widgets.popUp(Icons.ExclamationTriangle, "Asset Error", AssetPool.message))
+            {
+                case OK, CANCEL:
+                    AssetPool.message = "";
                     break;
             }
         }

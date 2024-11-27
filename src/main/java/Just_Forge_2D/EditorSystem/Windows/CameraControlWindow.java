@@ -1,7 +1,7 @@
 package Just_Forge_2D.EditorSystem.Windows;
 
 import Just_Forge_2D.EditorSystem.EditorComponents.EditorCameraComponent;
-import Just_Forge_2D.EditorSystem.EditorSystemManager;
+import Just_Forge_2D.EditorSystem.Forge;
 import Just_Forge_2D.EditorSystem.Icons;
 import Just_Forge_2D.EditorSystem.Widgets;
 import Just_Forge_2D.SceneSystem.Camera;
@@ -18,7 +18,7 @@ public class CameraControlWindow
         Camera worldCamera = GameWindow.getCurrentScene().getCamera();
         if (worldCamera != null)
         {
-            ImGui.setCursorPosY(ImGui.getCursorPosY() + EditorSystemManager.getCurrentTheme().framePadding.y);
+            ImGui.setCursorPosY(ImGui.getCursorPosY() + Forge.getCurrentTheme().framePadding.y);
 
             Widgets.drawVec2Control(Icons.Crosshairs + "  Position", worldCamera.getPosition());
             worldCamera.setZoom(Widgets.drawFloatControl(Icons.Binoculars + "  Zoom", worldCamera.getZoom()));

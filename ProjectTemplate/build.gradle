@@ -4,7 +4,7 @@ plugins {
 }
 
 // Get the library path from a Gradle property or default to "libs"
-def libPath = project.hasProperty('libPath') ? project.getProperty('libPath') : 'libs'
+def libPath = project.hasProperty('libPath') ? project.getProperty('libPath') : '/user/local/share/Just-Forge-2D/libs'
 
 def engineJar = ""
 

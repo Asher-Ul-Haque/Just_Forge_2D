@@ -1,6 +1,6 @@
 package Just_Forge_2D.EditorSystem.EditorComponents.GizmoSystem;
 
-import Just_Forge_2D.EditorSystem.EditorSystemManager;
+import Just_Forge_2D.EditorSystem.Forge;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.InputSystem.Keyboard;
 import Just_Forge_2D.InputSystem.Keys;
@@ -31,7 +31,7 @@ public class GizmoSystemComponent extends Component
         if (gizmos == null)
         {
             if (gizmoTexture == null) gizmoTexture = new Texture();
-            gizmoTexture.init(EditorSystemManager.launchLocation + "/Assets/Textures/gizmos.png");
+            gizmoTexture.init(Forge.launchLocation + "/Assets/Textures/gizmos.png");
             gizmoTexture.setFilters(TextureMaximizeFilter.LINEAR, TextureMinimizeFilter.LINEAR, Settings.DEFAULT_TEXTURE_WRAP_S(), Settings.DEFAULT_TEXTURE_WRAP_T());
             gizmos = new SpriteSheet(gizmoTexture, 24, 48, 3, 0);
         }

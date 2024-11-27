@@ -260,9 +260,9 @@ public class ImGUIManager
         setKeyboardCallbacks();
         setMouseCallbacks();
         setClipboardCallbacks();
-        if (!EditorSystemManager.isRelease) setFontAtlas();
+        if (!Forge.isRelease) setFontAtlas();
 
-        EditorSystemManager.getCurrentTheme().applyTheme();
+        Forge.getCurrentTheme().applyTheme();
         imGuiGl3.init("#version 410 core");
         Logger.FORGE_LOG_INFO("Editor GUI ready");
 
@@ -273,10 +273,10 @@ public class ImGUIManager
         addRenderWindow(CameraControlWindow::render, Icons.Camera + "  Camera Controls");
         addRenderWindow(FPSGraph::render, Icons.ChartLine + "  FPS Graph");
         addRenderWindow(GridControls::render, Icons.DigitalTachograph + "  Grid Controls");
-        addRenderWindow(AssetPoolDisplay::render, Icons.Images + "  Asset Pool Display");
         addRenderWindow(Logs::render, Icons.Terminal + "  Logs");
         addRenderWindow(PrefabManager::render, Icons.Copy + "  Prefabs");
         addRenderWindow(Settings::editorGUI, Icons.Cog + "  Settings");
+        addRenderWindow(AssetPoolDisplay::render, Icons.Images + "  Asset Pool Display");
     }
 
 
@@ -287,7 +287,7 @@ public class ImGUIManager
         try
         {
             startFrame(DELTA_TIME);
-            switch (EditorSystemManager.currentState)
+            switch (Forge.currentState)
             {
                 case isEditor:
                     if (ConfigFlags.dockingEnable) setupDockSpace();

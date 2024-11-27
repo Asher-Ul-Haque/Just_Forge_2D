@@ -1,6 +1,6 @@
 package Just_Forge_2D.GameSystem;
 
-import Just_Forge_2D.EditorSystem.EditorSystemManager;
+import Just_Forge_2D.EditorSystem.Forge;
 import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.WindowSystem.GameWindow;
 import org.lwjgl.util.tinyfd.TinyFileDialogs;
@@ -88,13 +88,13 @@ public class GameCodeLoader
     }
     public static void openEye()
     {
-        if (!watch && !EditorSystemManager.isRelease)
+        if (!watch && !Forge.isRelease)
         {
             try
             {
                 eyeBall = FileSystems.getDefault().newWatchService();
-                registerAllDirectories(Paths.get(EditorSystemManager.projectDir + "/src/main/java"));
-                registerAllDirectories(Paths.get(EditorSystemManager.projectDir + "/Assets"));
+                registerAllDirectories(Paths.get(Forge.projectDir + "/src/main/java"));
+                registerAllDirectories(Paths.get(Forge.projectDir + "/Assets"));
                 watch = true;
 
                 // - - - Start the watcher thread - -

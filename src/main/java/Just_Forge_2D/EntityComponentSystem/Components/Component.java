@@ -1,6 +1,6 @@
 package Just_Forge_2D.EntityComponentSystem.Components;
 
-import Just_Forge_2D.EditorSystem.EditorSystemManager;
+import Just_Forge_2D.EditorSystem.Forge;
 import Just_Forge_2D.EditorSystem.Icons;
 import Just_Forge_2D.EditorSystem.Widgets;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
@@ -96,7 +96,7 @@ public abstract class Component
                 else if (type == boolean.class)
                 {
                     boolean val = (boolean)value;
-                    Theme.setDefaultTextColor(EditorSystemManager.getCurrentTheme().secondaryColor);
+                    Theme.setDefaultTextColor(Forge.getCurrentTheme().secondaryColor);
                     if (ImGui.checkbox(name + ": ", val))
                     {
                         val = !val;

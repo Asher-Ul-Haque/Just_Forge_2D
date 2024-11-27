@@ -1,6 +1,6 @@
 package Just_Forge_2D.AssetPool;
 
-import Just_Forge_2D.EditorSystem.EditorSystemManager;
+import Just_Forge_2D.EditorSystem.Forge;
 import Just_Forge_2D.RenderingSystem.SpriteSheet;
 import Just_Forge_2D.RenderingSystem.Texture;
 import Just_Forge_2D.Utils.Logger;
@@ -108,11 +108,11 @@ public class AssetPoolSerializer
 
     public static void loadAssetPool()
     {
-        loadAssetPool(EditorSystemManager.projectDir + "/.forge/Pool.justForgeFile");
+        loadAssetPool(Forge.projectDir + "/.forge/Pool.justForgeFile");
     }
 
     public static void saveAssetPool()
     {
-        saveAssetPool(EditorSystemManager.projectDir + "/.forge/Pool.justForgeFile");
+        saveAssetPool(Forge.projectDir + "/.forge/Pool.justForgeFile");
     }
 }

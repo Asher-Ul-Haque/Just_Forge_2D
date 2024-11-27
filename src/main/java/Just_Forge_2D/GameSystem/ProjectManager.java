@@ -1,6 +1,6 @@
 package Just_Forge_2D.GameSystem;
 
-import Just_Forge_2D.EditorSystem.EditorSystemManager;
+import Just_Forge_2D.EditorSystem.Forge;
 import Just_Forge_2D.SceneSystem.SceneSystemManager;
 import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.Utils.Settings;
@@ -29,7 +29,7 @@ public class ProjectManager
         Path path = Paths.get("Configurations/lastProject.justForgeFile");
         try
         {
-            Files.write(path, Paths.get(EditorSystemManager.projectDir).toAbsolutePath().toString().getBytes());
+            Files.write(path, Paths.get(Forge.projectDir).toAbsolutePath().toString().getBytes());
             System.out.println("File written to: " + path);
         }
         catch (IOException e)
@@ -92,7 +92,7 @@ public class ProjectManager
         {
             copyDirectory(Paths.get(PROJECT_TEMPLATE_DIR), destinationDir);
             Logger.FORGE_LOG_INFO("Project created successfully at: " + destinationDir.toAbsolutePath());
-            EditorSystemManager.projectDir = destinationDir.toString();
+            Forge.projectDir = destinationDir.toString();
             PROJECT_NAME = projectName;
             return true;
         }
@@ -131,7 +131,7 @@ public class ProjectManager
         String selectedDir = selectProjectDirectory();
         if (selectedDir != null && !selectedDir.trim().isEmpty())
         {
-            EditorSystemManager.projectDir = selectedDir;
+            Forge.projectDir = selectedDir;
             File dir = new File(selectedDir);
             PROJECT_NAME = dir.getName();
             try
@@ -214,7 +214,33 @@ public class ProjectManager
     {
         try
         {
-            File projectDirFile = new File(EditorSystemManager.projectDir);
+            File projectDirFile = new File(Forge.projectDir);
+            if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.OPEN))
+            {
+                new Thread(() ->
+                {
+                    try
+                    {
+                        Desktop.getDesktop().open(projectDirFile);
+                    }
+                    catch (IOException e)
+                    {
+                        Logger.FORGE_LOG_ERROR(e.getMessage());
+                    }
+                }).start();
+            }
+        }
+        catch (Exception e)
+        {
+            Logger.FORGE_LOG_ERROR(e.getMessage());
+        }
+    }
+
+    public static void openInBrowser(String FILE_PATH)
+    {
+        try
+        {
+            File projectDirFile = new File(FILE_PATH);
             if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.OPEN))
             {
                 new Thread(() ->

@@ -1,6 +1,6 @@
 package Just_Forge_2D.PhysicsSystem.PhysicsComponents.Joints;
 
-import Just_Forge_2D.EditorSystem.EditorSystemManager;
+import Just_Forge_2D.EditorSystem.Forge;
 import Just_Forge_2D.EditorSystem.Widgets;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.GameObject;
@@ -59,7 +59,7 @@ public abstract class BaseJointComponent extends Component
         debugDrawAtRuntime = Widgets.drawBoolControl("Debug Draw At Runtime", debugDrawAtRuntime);
         if (ImGui.button("Set other"))
         {
-            if (!EditorSystemManager.isRuntimePlaying) createJoint();
+            if (!Forge.isRuntimePlaying) createJoint();
         }
     }
 

@@ -4,7 +4,7 @@ package Just_Forge_2D.WindowSystem;
 
 // - - - Internal
 
-import Just_Forge_2D.EditorSystem.EditorSystemManager;
+import Just_Forge_2D.EditorSystem.Forge;
 import Just_Forge_2D.EditorSystem.ImGUIManager;
 import Just_Forge_2D.EditorSystem.Windows.ComponentsWindow;
 import Just_Forge_2D.EditorSystem.Windows.GameWindowConfig;
@@ -132,7 +132,7 @@ public class GameWindow extends Window
     @Override
     public void gameLoop()
     {
-        switch (EditorSystemManager.getCurrentState())
+        switch (Forge.getCurrentState())
         {
             case isEditor:
                 warnFPSSpike();
@@ -144,7 +144,7 @@ public class GameWindow extends Window
                 // - - - Render passes - - -
 
                 glViewport(0, 0, framebuffer.getSize().x, framebuffer.getSize().y);
-                if (!EditorSystemManager.isRelease)
+                if (!Forge.isRelease)
                 {
 
                     // - - - 1: renderer to object picker
@@ -152,7 +152,7 @@ public class GameWindow extends Window
                     ObjectSelector.enableWriting();
 
                     clear();
-                    Renderer.bindShader(EditorSystemManager.selectorShader);
+                    Renderer.bindShader(Forge.selectorShader);
                     currentScene.render(dt);
                     ObjectSelector.disableWriting();
 
@@ -171,13 +171,13 @@ public class GameWindow extends Window
                 DebugPencil.beginFrame();
                 if (dt >= 0.0d)
                 {
-                    Renderer.bindShader(EditorSystemManager.defaultShader);
-                    if (EditorSystemManager.isRuntimePlaying)
+                    Renderer.bindShader(Renderer.defaultShader);
+                    if (Forge.isRuntimePlaying)
                     {
                         currentScene.update(dt);
                         GameCodeLoader.loop(dt);
                     }
-                    else if (!EditorSystemManager.isRelease)
+                    else if (!Forge.isRelease)
                     {
                         currentScene.editorUpdate(dt);
                     }
@@ -186,7 +186,7 @@ public class GameWindow extends Window
                 }
 
                 // - - - Finish drawing to texture so that imgui should be rendered to the window
-                if (!EditorSystemManager.isRelease)
+                if (!Forge.isRelease)
                 {
                     framebuffer.unbind();
 
@@ -236,7 +236,7 @@ public class GameWindow extends Window
         {
             case ForgeStart:
                 Logger.FORGE_LOG_INFO("Starting Game");
-                EditorSystemManager.isRuntimePlaying = true;
+                Forge.isRuntimePlaying = true;
                 SceneSystemManager.save(currentScene);
                 GameCodeLoader.init();
                 try
@@ -252,7 +252,7 @@ public class GameWindow extends Window
             case ForgeStop:
                 Logger.FORGE_LOG_INFO("Ending Game");
                 ComponentsWindow.clearSelection();
-                EditorSystemManager.isRuntimePlaying = false;
+                Forge.isRuntimePlaying = false;
                 try
                 {
                     GameWindow.changeScene(GameWindow.getCurrentScene().getScript().getClass().getDeclaredConstructor().newInstance());
@@ -289,7 +289,7 @@ public class GameWindow extends Window
                 {
                     this.framebuffer = new Framebuffer(getWidth(), getHeight());
 
-                    if (EditorSystemManager.isRelease)
+                    if (Forge.isRelease)
                     {
                         float aspectWidth = getWidth();
                         float aspectHeight = aspectWidth / ((float) GameWindow.getFrameBuffer().getSize().x / GameWindow.getFrameBuffer().getSize().y);
@@ -320,7 +320,7 @@ public class GameWindow extends Window
         float clamped = Math.max(0f, Math.min(1f, OPACITY));
         config.opacity = clamped;
         Logger.FORGE_LOG_DEBUG("Setting opacity of " + this.config.title + " to : " + clamped);
-        if (EditorSystemManager.isRelease) glfwSetWindowOpacity(this.glfwWindowPtr, clamped);
+        if (Forge.isRelease) glfwSetWindowOpacity(this.glfwWindowPtr, clamped);
     }
 
     @Override
@@ -334,11 +334,11 @@ public class GameWindow extends Window
         if (this.config.resizable)
         {
             this.framebuffer = new Framebuffer(WIDTH, HEIGHT);
-            if (EditorSystemManager.getCurrentState().equals(EditorSystemManager.state.isSplashScreen))
+            if (Forge.getCurrentState().equals(Forge.state.isSplashScreen))
             {
                 super.setSize(WIDTH, HEIGHT);
             }
-            if (EditorSystemManager.isRelease)
+            if (Forge.isRelease)
             {
                 super.setSize(WIDTH, HEIGHT);
                 float aspectWidth = WIDTH;
@@ -360,7 +360,7 @@ public class GameWindow extends Window
     @Override
     public void close()
     {
-        if (!EditorSystemManager.isRelease) SceneSystemManager.save(currentScene);
+        if (!Forge.isRelease) SceneSystemManager.save(currentScene);
         EventManager.notify(null, new Event(EventTypes.ForgeStop));
         GameCodeLoader.terminate();
         super.close();

@@ -21,7 +21,7 @@ import Just_Forge_2D.WindowSystem.WindowConfig;
 import Just_Forge_2D.WindowSystem.WindowSystemManager;
 
 
-public class EditorSystemManager
+public class Forge
 {
     private static Theme currentTheme;
     public static Shader defaultShader;
@@ -48,7 +48,7 @@ public class EditorSystemManager
         }
         catch (Exception e)
         {
-            EditorSystemManager.currentSceneInitializer = INITIALIZER;
+            Forge.currentSceneInitializer = INITIALIZER;
             Logger.FORGE_LOG_FATAL("Couldn't change scene");
             GameWindow.changeScene(new MainSceneScript());
         }
@@ -65,7 +65,7 @@ public class EditorSystemManager
     }
 
     public static void setCurrentState(state currentState) {
-        EditorSystemManager.currentState = currentState;
+        Forge.currentState = currentState;
     }
 
     protected static state currentState = state.isSplashScreen;
@@ -84,9 +84,9 @@ public class EditorSystemManager
 
     public static void compileShaders()
     {
-        if (!EditorSystemManager.isRelease)
+        if (!Forge.isRelease)
         {
-            EditorSystemManager.selectorShader = new Shader("Assets/Shaders/selector.glsl");
+            Forge.selectorShader = new Shader("Assets/Shaders/selector.glsl");
             selectorShader.compile();
         }
     }
@@ -127,7 +127,7 @@ public class EditorSystemManager
         editorWindowConfig.setHeight(800);
         if (currentTheme == null) currentTheme = new CleanTheme(Settings.DARK_MODE_ENABLED());
         GameWindow.get();
-        EditorSystemManager.setSelector();
+        Forge.setSelector();
         setEditorLayer();
         ComponentList.initialize();
         compileShaders();

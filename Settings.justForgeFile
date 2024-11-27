@@ -6,9 +6,9 @@
   "DEBUG_PENCIL_MAX_LINES": 32768,
   "DEBUG_PENCIL_DEFAULT_LIFE": 1,
   "DEBUG_PENCIL_DEFAULT_COLOR": {
-    "x": 0.980695,
-    "y": 0.980695,
-    "z": 0.980695
+    "x": 1.0,
+    "y": 1.0,
+    "z": 1.0
   },
   "DEBUG_PENCIL_DEFAULT_WIDTH": 4,
   "DEBUG_PENCIL_MAX_CIRCLE_PRECISION": 100,
@@ -117,11 +117,11 @@
     "x": 4.0,
     "y": 4.0
   },
-  "DEFAULT_FRAME_ROUNDING": 4.0,
+  "DEFAULT_FRAME_ROUNDING": 8.0,
   "DEFAULT_TREE_NODE_INDENT": 16.0,
   "DEFAULT_TAB_ROUNDING": 8.0,
   "DEFAULT_TAB_BORDER": 0.0,
-  "MAX_LOG_FILE_LIMIT": 20,
+  "MAX_LOG_FILE_LIMIT": 15,
   "MAX_IMAGE_DISPLAY_WIDTH": 64.0,
   "MAX_IMAGE_DISPLAY_HEIGHT": 64.0,
   "DEFAULT_CHARACTER_SPACING": 1.0,
@@ -136,5 +136,5 @@
     "z": 1.0,
     "w": 1.0
   },
-  "DEFAULT_LIBS_PATH": "libs"
+  "DEFAULT_LIBS_PATH": "/home/nadeem/Documents/Just_Forge_2D/libs"
 }

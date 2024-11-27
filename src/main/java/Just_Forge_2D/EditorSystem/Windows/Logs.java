@@ -1,8 +1,9 @@
 package Just_Forge_2D.EditorSystem.Windows;
 
-import Just_Forge_2D.EditorSystem.EditorSystemManager;
+import Just_Forge_2D.EditorSystem.Forge;
 import Just_Forge_2D.EditorSystem.Icons;
 import Just_Forge_2D.EditorSystem.Widgets;
+import Just_Forge_2D.GameSystem.ProjectManager;
 import Just_Forge_2D.Utils.Logger;
 import imgui.ImGui;
 import imgui.ImVec4;
@@ -23,6 +24,12 @@ public class Logs
     {
         ImGui.begin(Icons.Terminal + "  Logs", ImGuiWindowFlags.AlwaysVerticalScrollbar | ImGuiWindowFlags.AlwaysHorizontalScrollbar);
 
+        if (Widgets.button(Icons.FileAudio))
+        {
+            ProjectManager.openInBrowser(Logger.LOG_FILE_PATH.toString());
+        }
+        ImGui.sameLine();
+
         // - - - Checkbox UI to toggle log levels
         if (ImGui.collapsingHeader(Icons.Filter + "  Filters"))
         {
@@ -40,7 +47,7 @@ public class Logs
         {
             String e = Logger.getReadBuffer()[i];
             if (e == null) continue;
-            ImVec4 color = EditorSystemManager.getCurrentTheme().textColor;
+            ImVec4 color = Forge.getCurrentTheme().textColor;
             float r = color.x, g = color.y, b = color.z;
 
             // - - - Apply color coding based on the log type

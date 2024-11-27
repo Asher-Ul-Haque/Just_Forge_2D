@@ -2,7 +2,7 @@ package Just_Forge_2D.SceneSystem;
 
 import Just_Forge_2D.AnimationSystem.AnimationComponent;
 import Just_Forge_2D.AssetPool.AssetPool;
-import Just_Forge_2D.EditorSystem.EditorSystemManager;
+import Just_Forge_2D.EditorSystem.Forge;
 import Just_Forge_2D.EntityComponentSystem.Components.Component;
 import Just_Forge_2D.EntityComponentSystem.Components.SpriteComponent;
 import Just_Forge_2D.EntityComponentSystem.Components.TransformComponent;
@@ -113,7 +113,7 @@ public class Scene
     public void init()
     {
         this.camera = Mouse.getWorldCamera();
-        if (!EditorSystemManager.isRelease)
+        if (!Forge.isRelease)
         {
             this.gameObjects.add(0, SceneSystemManager.createMaster(this));
         }

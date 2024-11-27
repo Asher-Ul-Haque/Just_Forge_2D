@@ -1,7 +1,7 @@
 package Just_Forge_2D.EditorSystem.Windows;
 
 import Just_Forge_2D.EditorSystem.EditorComponents.NonPickableComponent;
-import Just_Forge_2D.EditorSystem.EditorSystemManager;
+import Just_Forge_2D.EditorSystem.Forge;
 import Just_Forge_2D.EditorSystem.Icons;
 import Just_Forge_2D.EditorSystem.InputControls.MouseControlComponent;
 import Just_Forge_2D.EditorSystem.Widgets;
@@ -83,11 +83,11 @@ public class SceneHierarchyWindow
             nameFilter = Widgets.inputText("Filter by name", nameFilter);
 
 
-            Theme.setDefaultTextColor(EditorSystemManager.getCurrentTheme().secondaryColor);
+            Theme.setDefaultTextColor(Forge.getCurrentTheme().secondaryColor);
             ImGui.text("Filter by components:");
             ImGui.beginChild("##ComponentFilterChild", ImGui.getContentRegionAvailX(), 200, true);
             Theme.resetDefaultTextColor();
-            Theme.setDefaultTextColor(EditorSystemManager.getCurrentTheme().secondaryColor);
+            Theme.setDefaultTextColor(Forge.getCurrentTheme().secondaryColor);
             for (Class<? extends Component> componentClass : ComponentList.getTypes()) {
                 boolean isSelected = componentFilters.getOrDefault(componentClass, false);
                 if (ImGui.checkbox(componentClass.getSimpleName(), isSelected)) {

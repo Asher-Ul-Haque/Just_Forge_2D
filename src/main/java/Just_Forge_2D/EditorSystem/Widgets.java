@@ -34,13 +34,13 @@ public class Widgets
         {
             ImGui.tableNextColumn();
             ImGui.alignTextToFramePadding();
-            setDefaultTextColor(EditorSystemManager.getCurrentTheme().textColor);
+            setDefaultTextColor(Forge.getCurrentTheme().textColor);
             ImGui.text(label);
             resetDefaultTextColor();
 
             ImGui.tableNextColumn();
-            float framePaddingX = EditorSystemManager.getCurrentTheme().framePadding.x;
-            float framePaddingY = EditorSystemManager.getCurrentTheme().framePadding.y;
+            float framePaddingX = Forge.getCurrentTheme().framePadding.x;
+            float framePaddingY = Forge.getCurrentTheme().framePadding.y;
             float totalWidth = ImGui.calcItemWidth() - (framePaddingX * 2.0f); // Get total available width
 
 
@@ -111,13 +111,13 @@ public class Widgets
         {
             ImGui.tableNextColumn();
             ImGui.alignTextToFramePadding();
-            setDefaultTextColor(EditorSystemManager.getCurrentTheme().textColor);
+            setDefaultTextColor(Forge.getCurrentTheme().textColor);
             ImGui.text(label);
             resetDefaultTextColor();
 
             ImGui.tableNextColumn(); // Second column for the input controls
-            float framePaddingX = EditorSystemManager.getCurrentTheme().framePadding.x;
-            float framePaddingY = EditorSystemManager.getCurrentTheme().framePadding.y;
+            float framePaddingX = Forge.getCurrentTheme().framePadding.x;
+            float framePaddingY = Forge.getCurrentTheme().framePadding.y;
             float totalWidth = ImGui.calcItemWidth() - (framePaddingX * 2.0f); // Get total available width
 
 
@@ -190,7 +190,7 @@ public class Widgets
         if (ImGui.beginTable("##tableFloatControl" + label, 2, ImGuiTableFlags.SizingStretchSame))
         {
             ImGui.tableNextColumn();
-            setDefaultTextColor(EditorSystemManager.getCurrentTheme().textColor);
+            setDefaultTextColor(Forge.getCurrentTheme().textColor);
             ImGui.text(label);
             resetDefaultTextColor();
             ImGui.tableNextColumn();
@@ -208,7 +208,7 @@ public class Widgets
         if (ImGui.beginTable("##tableIntControl", 2, ImGuiTableFlags.SizingStretchSame))
         {
             ImGui.tableNextColumn();
-            setDefaultTextColor(EditorSystemManager.getCurrentTheme().textColor);
+            setDefaultTextColor(Forge.getCurrentTheme().textColor);
             ImGui.text(label);
             resetDefaultTextColor();
             ImGui.tableNextColumn();
@@ -230,7 +230,7 @@ public class Widgets
         if (ImGui.beginTable("##tableColorPicker4", 2, ImGuiTableFlags.SizingStretchSame))
         {
             ImGui.tableNextColumn();
-            setDefaultTextColor(EditorSystemManager.getCurrentTheme().textColor);
+            setDefaultTextColor(Forge.getCurrentTheme().textColor);
             ImGui.text(label);
             resetDefaultTextColor();
 
@@ -259,7 +259,7 @@ public class Widgets
         if (ImGui.beginTable("##tableColorPicker3", 2, ImGuiTableFlags.SizingStretchSame))
         {
             ImGui.tableNextColumn();
-            setDefaultTextColor(EditorSystemManager.getCurrentTheme().textColor);
+            setDefaultTextColor(Forge.getCurrentTheme().textColor);
             ImGui.text(label);
             resetDefaultTextColor();
 
@@ -287,7 +287,7 @@ public class Widgets
         if (ImGui.beginTable("##tableBoolControl", 2, ImGuiTableFlags.SizingStretchSame))
         {
             ImGui.tableNextColumn();
-            setDefaultTextColor(EditorSystemManager.getCurrentTheme().textColor);
+            setDefaultTextColor(Forge.getCurrentTheme().textColor);
             ImGui.text(label);
             resetDefaultTextColor();
 
@@ -314,7 +314,7 @@ public class Widgets
         if (ImGui.beginTable("##tableTextInput", 2, ImGuiTableFlags.SizingStretchSame))
         {
             ImGui.tableNextColumn();
-            setDefaultTextColor(EditorSystemManager.getCurrentTheme().textColor);
+            setDefaultTextColor(Forge.getCurrentTheme().textColor);
             ImGui.text(label);
             resetDefaultTextColor();
 
@@ -344,7 +344,7 @@ public class Widgets
         if (ImGui.beginTable("##tableEnumControl", 2, ImGuiTableFlags.NoPadOuterX))
         {
             ImGui.tableNextColumn();
-            setDefaultTextColor(EditorSystemManager.getCurrentTheme().textColor);
+            setDefaultTextColor(Forge.getCurrentTheme().textColor);
             ImGui.text(label);
             resetDefaultTextColor();
 
@@ -401,7 +401,7 @@ public class Widgets
     public static boolean button(String LABEL, boolean CENTER)
     {
         LABEL = " " + LABEL + " ";
-        ImVec2 framePadding = EditorSystemManager.getCurrentTheme().framePadding;
+        ImVec2 framePadding = Forge.getCurrentTheme().framePadding;
         String mainLabel = LABEL.contains("##") ? LABEL.substring(0, LABEL.indexOf("##")) : LABEL;
         float textWidth = ImGui.calcTextSize(mainLabel).x + ImGui.getStyle().getFramePaddingX() * 2;
         if (CENTER)
@@ -485,7 +485,7 @@ public class Widgets
 
     public static void text(String TEXT)
     {
-        Theme.setDefaultTextColor(EditorSystemManager.getCurrentTheme().textColor);
+        Theme.setDefaultTextColor(Forge.getCurrentTheme().textColor);
         ImGui.text(TEXT);
         Theme.resetDefaultTextColor();
     }
@@ -527,7 +527,7 @@ public class Widgets
             float windowWidth = ImGui.getWindowWidth();
             if (ICON != null)
             {
-                Theme.setDefaultTextColor(EditorSystemManager.getCurrentTheme().textAltColor);
+                Theme.setDefaultTextColor(Forge.getCurrentTheme().textAltColor);
                 ImGui.text(ICON);
                 ImGui.sameLine();
                 float titleWidth = ImGui.calcTextSize(TITLE).x;

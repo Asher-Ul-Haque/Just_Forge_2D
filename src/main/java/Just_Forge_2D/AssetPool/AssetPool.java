@@ -25,15 +25,26 @@ public class AssetPool
     protected static final Map<String, Texture> texturePool = new HashMap<>();
     protected static final Map<String, SpriteSheet> spriteSheetPool = new HashMap<>();
     protected static final Map<String, Sound> soundPool = new HashMap<>();
+    public static String message = "";
 
 
     // - - - Functions - - -
 
     // - - - shader - - -
 
+    public static boolean hasShader(String NAME)
+    {
+        return nameToFileShader.containsKey(NAME);
+    }
+
+    public static boolean hasShaderFile(String FILE_PATH)
+    {
+        return AssetPool.shaderPool.containsKey(FILE_PATH) || AssetPool.shaderPool.containsKey(getRelativeFilePath(FILE_PATH));
+    }
+
     private static void shaderAdder(String NAME, String FILE_PATH)
     {
-        if (!AssetPool.shaderPool.containsKey(FILE_PATH) && !AssetPool.shaderPool.containsKey(getRelativeFilePath(FILE_PATH)))
+        if (!hasShaderFile(FILE_PATH))
         {
             Logger.FORGE_LOG_DEBUG("Shader with path: " + FILE_PATH + " Hashed in shader Asset Pool and loaded");
             Shader shader = new Shader(FILE_PATH);
@@ -56,7 +67,8 @@ public class AssetPool
     {
         if (!checkFileExistence(FILE_PATH, ABSOLUTE))
         {
-            Logger.FORGE_LOG_ERROR("No such shader file (.glsl with both fragment and vertex shader) exists : " + FILE_PATH);
+            message = "No such shader file (.glsl with both fragment and vertex shader) exists : " + FILE_PATH;
+            Logger.FORGE_LOG_ERROR(message);
             return;
         }
         if (ABSOLUTE) shaderAdder(NAME, FILE_PATH);
@@ -114,12 +126,14 @@ public class AssetPool
             }
             else
             {
-                Logger.FORGE_LOG_ERROR("Bad Texture : " + NAME);
+                message = "Bad Texture : " + NAME + " at " + FILE_PATH;
+                Logger.FORGE_LOG_ERROR(message);
             }
         }
         else
         {
-            Logger.FORGE_LOG_WARNING("Texture at: " + FILE_PATH + " already exists in the shader pool");
+            message = "Texture at: " + FILE_PATH + " already exists in the shader pool";
+            Logger.FORGE_LOG_WARNING(message);
         }
     }
 
@@ -132,7 +146,8 @@ public class AssetPool
     {
         if (!checkFileExistence(FILE_PATH, ABSOLUTE))
         {
-            Logger.FORGE_LOG_ERROR("No such texture file exists : " + FILE_PATH);
+            message = "No such texture file exists : " + FILE_PATH;
+            Logger.FORGE_LOG_ERROR(message);
             return;
         }
         if (ABSOLUTE) textureAdder(NAME, FILE_PATH);
@@ -217,7 +232,8 @@ public class AssetPool
         }
         else
         {
-            Logger.FORGE_LOG_WARNING("Sprite Sheet at: " + FILE_PATH + " already exists in Asset Pool");
+            message = "Sprite Sheet at: " + FILE_PATH + " already exists in Asset Pool";
+            Logger.FORGE_LOG_WARNING(message);
         }
     }
 
@@ -230,7 +246,8 @@ public class AssetPool
     {
         if (!checkFileExistence(SPRITE_SHEET.getTexture().getFilepath(), ABSOLUTE))
         {
-            Logger.FORGE_LOG_ERROR("No such texture (sprite sheet) file exists : " + SPRITE_SHEET.getTexture().getFilepath());
+            message = "No such texture (sprite sheet) file exists : " + SPRITE_SHEET.getTexture().getFilepath();
+            Logger.FORGE_LOG_ERROR(message);
             return;
         }
         if (ABSOLUTE) spriteSheetAdder(NAME, SPRITE_SHEET, SPRITE_SHEET.getTexture().getFilepath());
@@ -290,7 +307,8 @@ public class AssetPool
             Sound sound = new Sound(FILE_PATH, DOES_LOOP);
             if (!sound.valid)
             {
-                Logger.FORGE_LOG_ERROR("Bad Sound : " + NAME);
+                message = "Bad Sound : " + NAME + " at " + FILE_PATH;
+                Logger.FORGE_LOG_ERROR(message);
                 return;
             }
             nameToFileSounds.put(NAME, FILE_PATH);
@@ -302,7 +320,8 @@ public class AssetPool
     {
         if (!checkFileExistence(FILE_PATH, ABSOLUTE))
         {
-            Logger.FORGE_LOG_ERROR("No such sound file exists : " + FILE_PATH);
+            message = "No such sound file exists : " + FILE_PATH;
+            Logger.FORGE_LOG_ERROR(message);
             return;
         }
 
@@ -373,6 +392,11 @@ public class AssetPool
         {
             Sound sound = entry.getValue();
             entry.setValue(new Sound(sound.getFilePath(), sound.loops()));
+        }
+        for (Map.Entry<String, Shader> entry : shaderPool.entrySet())
+        {
+            Shader shader = entry.getValue();
+            shader.reload();
         }
     }
 

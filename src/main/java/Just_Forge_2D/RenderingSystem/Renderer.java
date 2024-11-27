@@ -17,6 +17,7 @@ public class Renderer
     private final int MAX_BATCH_SIZE = Settings.MAX_BATCH_SIZE();
     private final List<RenderBatch> batches;
     private static Shader currentShader;
+    public static Shader defaultShader;
     private volatile boolean reloadAssets = false;
 
 
