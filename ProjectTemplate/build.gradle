@@ -3,6 +3,9 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
 
+// Get the library path from a Gradle property or default to "libs"
+def libPath = project.hasProperty('libPath') ? project.getProperty('libPath') : 'libs'
+
 def engineJar = ""
 
 def osName = System.getProperty("os.name").toLowerCase()
@@ -26,7 +29,7 @@ if (osName.contains("linux")) {
 
 repositories {
     flatDir {
-        dirs 'libs' // This is where the engine JAR is located
+        dirs libPath // Use the configurable library path
     }
     mavenCentral()
 }

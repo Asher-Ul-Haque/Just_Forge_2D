@@ -43,6 +43,7 @@ public class ParticleSystemComponent extends Component implements Observer
     protected Vector2f offset = new Vector2f();
     protected int particleLayer;
     protected boolean resetAll;
+    protected transient Class<? extends ParticleBehaviorComponent> particleBehaviour = null;
 
     protected Vector2f generateVelocity()
     {
@@ -99,19 +100,25 @@ public class ParticleSystemComponent extends Component implements Observer
         PARTICLE.wake(startColor);
     }
 
+    protected void getMakeParticle(int INDEX)
+    {
+        if (particles.get(INDEX) == null)
+        {
+            particles.set(INDEX, this.generator.create());
+            resetParticle(particles.get(INDEX));
+            particles.get(INDEX).wake(false);
+            GameWindow.getCurrentScene().addGameObject(particles.get(INDEX).core);
+        }
+    }
+
     @Override
     public void start()
     {
         makeBackupGenerator();
         randomizer = new Random(this.gameObject.getUniqueID());
-
-        for (int i = particles.size(); i < maxParticles; ++i)
+        for (int i = 0; i < maxParticles; ++i)
         {
-            Particle particle = this.generator.create();
-            particles.add(particle);
-            resetParticle(particle);
-            particle.wake(false);
-            GameWindow.getCurrentScene().addGameObject(particle.core);
+            particles.add(null);
         }
         Logger.FORGE_LOG_DEBUG("Starting");
     }
@@ -127,15 +134,21 @@ public class ParticleSystemComponent extends Component implements Observer
         clamp();
         if (resetAll)
         {
-            for (Particle p : particles)
+            for (int i = 0; i < maxParticles; ++i)
             {
-                resetParticle(p);
+                if (particles.get(i) == null) getMakeParticle(i);
+                resetParticle(particles.get(i));
             }
             resetAll = false;
         }
-        for (int i = 0; i < particles.size(); ++i)
+        for (int i = 0; i < maxParticles; ++i)
         {
             Particle particle = particles.get(i);
+            if (particle == null)
+            {
+                getMakeParticle(i);
+                break;
+            }
             GameObject core = particle.core;
             if (particle.lifeSpan < 0)
             {
@@ -147,10 +160,18 @@ public class ParticleSystemComponent extends Component implements Observer
             }
             else
             {
-                core.transform.rotation += particle.angularVelocity * DELTA_TIME;
-                core.transform.position.add(new Vector2f(particle.velocity).mul(DELTA_TIME));
-                SpriteComponent renderable = core.getComponent(SpriteComponent.class);
-                if (renderable != null) renderable.setColor(new Vector4f(startColor).lerp(finalColor, 1.0f - (particle.lifeSpan / particle.lifeTime)));
+                if (particleBehaviour == null)
+                {
+                    core.transform.rotation += particle.angularVelocity * DELTA_TIME;
+                    core.transform.position.add(new Vector2f(particle.velocity).mul(DELTA_TIME));
+                    SpriteComponent renderable = core.getComponent(SpriteComponent.class);
+                    if (renderable != null)
+                        renderable.setColor(new Vector4f(startColor).lerp(finalColor, 1.0f - (particle.lifeSpan / particle.lifeTime)));
+                }
+                else
+                {
+                    particle.core.update(DELTA_TIME);
+                }
                 particle.lifeSpan -= DELTA_TIME;
             }
         }
@@ -201,6 +222,7 @@ public class ParticleSystemComponent extends Component implements Observer
             case ForgeStop:
                 for (Particle particle : particles)
                 {
+                    if (particle == null) continue;
                     Logger.FORGE_LOG_DEBUG("Destroying particle : " + particle.core.name);
                     particle.core.destroy();
                 }
@@ -226,7 +248,7 @@ public class ParticleSystemComponent extends Component implements Observer
                 return;
             }
 
-            generator = new ParticleGenerator(sprite, this.gameObject.name, maxSize.x, maxSize.y);
+            generator = new ParticleGenerator(sprite, this.gameObject.name, maxSize.x, maxSize.y, particleBehaviour);
         }
     }
 
@@ -263,5 +285,10 @@ public class ParticleSystemComponent extends Component implements Observer
         useOnce = Widgets.drawBoolControl(Icons.DiceOne + "  Use Once", useOnce);
         if (Widgets.button(Icons.PowerOff + "  Reset All", true)) resetAll = true;
         clamp();
+    }
+
+    public void setParticleBehaviour(Class<? extends ParticleBehaviorComponent> BEHAVIOUR)
+    {
+        this.particleBehaviour = BEHAVIOUR;
     }
 }

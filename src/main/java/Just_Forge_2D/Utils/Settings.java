@@ -287,6 +287,9 @@ public class Settings
     private  Vector4f DEFAULT_CHARACTER_COLOR = new Vector4f(1.0f);
     public static Vector4f DEFAULT_CHARACTER_COLOR() { return getInstance().DEFAULT_CHARACTER_COLOR; }
 
+    private String DEFAULT_LIBS_PATH = "libs";
+    public static String DEFAULT_LIBS_PATH() {return getInstance().DEFAULT_LIBS_PATH;}
+
 
     public static void save()
     {
@@ -471,6 +474,7 @@ public class Settings
             {
                 getInstance().DEFAULT_FRAME_TIME = Widgets.drawFloatControl("Frame Time", DEFAULT_FRAME_TIME());
                 getInstance().DEFAULT_SAVE_DIR = Widgets.inputText("Save Directory", DEFAULT_SAVE_DIR());
+                getInstance().DEFAULT_LIBS_PATH = Widgets.inputText("Default Engine Library Path", DEFAULT_LIBS_PATH());
                 getInstance().MAX_LOG_FILE_LIMIT = Widgets.drawIntControl("Log File Limit", MAX_LOG_FILE_LIMIT());
                 ImGui.endTabItem();
             }

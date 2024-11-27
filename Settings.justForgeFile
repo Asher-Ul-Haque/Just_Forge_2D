@@ -135,5 +135,6 @@
     "y": 1.0,
     "z": 1.0,
     "w": 1.0
-  }
+  },
+  "DEFAULT_LIBS_PATH": "libs"
 }

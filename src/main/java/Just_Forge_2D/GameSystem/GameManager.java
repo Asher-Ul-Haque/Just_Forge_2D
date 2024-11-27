@@ -2,6 +2,7 @@ package Just_Forge_2D.GameSystem;
 
 import Just_Forge_2D.EditorSystem.EditorSystemManager;
 import Just_Forge_2D.Utils.Logger;
+import Just_Forge_2D.Utils.Settings;
 import imgui.ImGui;
 import org.lwjgl.util.tinyfd.TinyFileDialogs;
 
@@ -43,7 +44,11 @@ public class GameManager
                 if (!EditorSystemManager.isRelease)
                 {
                     String gradlewCommand = System.getProperty("os.name").toLowerCase().contains("win") ? "gradlew.bat" : "./gradlew";
-                    ProcessBuilder processBuilder = new ProcessBuilder(gradlewCommand, "build");
+                    ProcessBuilder processBuilder = new ProcessBuilder(
+                            gradlewCommand,
+                            "build",
+                            "-PlibPath=" + Settings.DEFAULT_LIBS_PATH()
+                    );
                     processBuilder.directory(DIRECTORY);
                     processBuilder.inheritIO();
 
