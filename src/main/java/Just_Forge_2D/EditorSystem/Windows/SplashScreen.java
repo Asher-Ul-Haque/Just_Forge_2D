@@ -158,6 +158,7 @@ public class SplashScreen
             {
                 if (ProjectManager.createNewProject())
                 {
+                    creating = true;
                     showLogsOption = false;
                     GameWindow.get().setVisible(false);
                     readyToLoad = true;
@@ -169,6 +170,7 @@ public class SplashScreen
             {
                 if (ProjectManager.openExistingProject())
                 {
+                    creating = false;
                     showLogsOption = false;
                     GameWindow.get().setVisible(false);
                     readyToLoad = true;
@@ -177,6 +179,7 @@ public class SplashScreen
 
             if (showLogsOption)
             {
+                creating = false;
                 buttonY += 80.0f;
                 ImGui.setCursorPos(buttonX, buttonY);
                 if (ImGui.button("Open Logs", buttonWidth, buttonHeight))
@@ -235,14 +238,13 @@ public class SplashScreen
             logoTexture = new Texture();
             logoTexture.init("Assets/Textures/logo.png");
             AssetPoolSerializer.loadAssetPool(Forge.projectDir + "/.forge/Pool.justForgeFile");
-            if (creating)
+            if (!AssetPool.hasShader("Default"))
             {
-                AssetPool.addTexture("Default", Settings.DEFAULT_ICON_PATH(), false);
                 AssetPool.addShader("Default", "Assets/Shaders/default.glsl", false);
                 AssetPool.addShader("Debug", "Assets/Shaders/debug.glsl", false);
-                AssetPool.addSound("Default", "Assets/Sounds/default.ogg", false, false);
-                creating = false;
             }
+            if (!AssetPool.hasTexture("Default")) AssetPool.addTexture("Default", Settings.DEFAULT_ICON_PATH(), false);
+            if (!AssetPool.hasSound("Default")) AssetPool.addSound("Default", "Assets/Sounds/default.ogg", false, false);
             Renderer.defaultShader = AssetPool.getShader("Default");
             if (!Forge.isRelease)
             {
@@ -276,6 +278,7 @@ public class SplashScreen
             SplashScreen.restart();
             SplashScreen.initialize();
             showLogsOption = true;
+            creating = true;
         }
     }
 }

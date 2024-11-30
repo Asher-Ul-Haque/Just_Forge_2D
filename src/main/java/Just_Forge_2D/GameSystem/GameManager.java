@@ -140,8 +140,11 @@ public class GameManager
             try
             {
                 String gradlewCommand = System.getProperty("os.name").toLowerCase().contains("win") ? "./gradlew.bat" : "./gradlew";
-                ProcessBuilder processBuilder = new ProcessBuilder(gradlewCommand, "shadowJar");
-                processBuilder.directory(new File(Forge.projectDir.toString()));
+                ProcessBuilder processBuilder = new ProcessBuilder(
+                        gradlewCommand,
+                        "shadowJar",
+                        "-PlibPath=" + Settings.DEFAULT_LIBS_PATH()
+                );                processBuilder.directory(new File(Forge.projectDir.toString()));
                 processBuilder.inheritIO();
 
                 Process process = processBuilder.start();

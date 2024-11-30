@@ -114,6 +114,11 @@ public class Renderer
 
     public static void bindShader(Shader SHADER)
     {
+        if (SHADER == null)
+        {
+            Renderer.defaultShader = AssetPool.getShader("Default");
+            Renderer.defaultShader.use();
+        }
         currentShader = SHADER;
         currentShader.use();
     }

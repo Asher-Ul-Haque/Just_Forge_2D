@@ -327,7 +327,7 @@ public class AssetPool
 
     public static boolean hasSoundFile(String FILE_PATH)
     {
-        return !AssetPool.soundPool.containsKey(FILE_PATH) && !AssetPool.soundPool.containsKey(getRelativeFilePath(FILE_PATH));
+        return AssetPool.soundPool.containsKey(FILE_PATH) || AssetPool.soundPool.containsKey(getRelativeFilePath(FILE_PATH));
     }
 
     private static void soundAdder(String NAME, String FILE_PATH, boolean DOES_LOOP)

@@ -237,7 +237,7 @@ public class GameWindow extends Window
             case ForgeStart:
                 Logger.FORGE_LOG_INFO("Starting Game");
                 Forge.isRuntimePlaying = true;
-                SceneSystemManager.save(currentScene);
+                if (!Forge.isRelease) SceneSystemManager.save(currentScene);
                 GameCodeLoader.init();
                 try
                 {

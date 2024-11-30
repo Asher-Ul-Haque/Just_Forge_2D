@@ -199,7 +199,7 @@ public class AssetPoolDisplay
                     if (t.init(path))
                     {
                         SpriteSheet sheet = new SpriteSheet(t, (int) size.x, (int) size.y, spriteCount, spriteSpacing);
-                        AssetPool.addSpriteSheet(name, sheet, true);
+                        AssetPool.addSpriteSheet(name, sheet, !copyToProject);
                     }
                     else
                     {
@@ -412,7 +412,7 @@ public class AssetPoolDisplay
 
                 if (open)
                 {
-                    addAsset("Sound", Forge.projectDir + "/Assets/Sounds/", !name.isEmpty() && !path.isEmpty(), () -> AssetPool.addSound(name, path, loop, true), () -> loop = Widgets.drawBoolControl(Icons.SyncAlt + " Looping", loop));
+                    addAsset("Sound", Forge.projectDir + "/Assets/Sounds/", !name.isEmpty() && !path.isEmpty(), () -> AssetPool.addSound(name, path, loop, !copyToProject), () -> loop = Widgets.drawBoolControl(Icons.SyncAlt + " Looping", loop));
                 }
             }
             drawSounds();
