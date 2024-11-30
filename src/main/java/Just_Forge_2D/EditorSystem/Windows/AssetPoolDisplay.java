@@ -21,6 +21,7 @@ import org.lwjgl.PointerBuffer;
 import org.lwjgl.system.MemoryStack;
 import org.lwjgl.system.MemoryUtil;
 import org.lwjgl.util.tinyfd.TinyFileDialogs;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -129,8 +130,8 @@ public class AssetPoolDisplay
         {
             switch (assetName)
             {
-                case "Sprite Sheet" -> path = handleBrowse("Select a Sprite Sheet", assetPath, new String[]{"*.png", "*.jpg", "*.jpeg"});
-                case "Texture" -> path = handleBrowse("Select a Texture", assetPath, new String[]{"*.png", "*.jpg", "*.jpeg"});
+                case "Sprite Sheet" -> path = handleBrowse("Select a Sprite Sheet", assetPath, new String[]{"*.png", "*.jpeg"});
+                case "Texture" -> path = handleBrowse("Select a Texture", assetPath, new String[]{"*.png","*.jpeg"});
                 case "Sound" -> path = handleBrowse("Select a Sound", assetPath, new String[]{"*.wav", "*.ogg"});
             }
         }

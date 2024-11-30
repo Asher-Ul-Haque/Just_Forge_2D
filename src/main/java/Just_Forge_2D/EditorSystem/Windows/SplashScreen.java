@@ -38,6 +38,7 @@ public class SplashScreen
     private static boolean compiling = false;
     private static float progress = 0.0f;
     private static boolean showLogsOption = false;
+    private static boolean creating = false;
 
     // - - - initialization
     public static void initialize()
@@ -178,7 +179,7 @@ public class SplashScreen
             {
                 buttonY += 80.0f;
                 ImGui.setCursorPos(buttonX, buttonY);
-                if (ImGui.button("Open Logs", buttonX, buttonY))
+                if (ImGui.button("Open Logs", buttonWidth, buttonHeight))
                 {
                     ProjectManager.openInBrowser(Logger.LOG_FILE_PATH.toString());
                 }
@@ -234,10 +235,14 @@ public class SplashScreen
             logoTexture = new Texture();
             logoTexture.init("Assets/Textures/logo.png");
             AssetPoolSerializer.loadAssetPool(Forge.projectDir + "/.forge/Pool.justForgeFile");
-            if (AssetPool.getTexture("Default") == null) AssetPool.addTexture("Default", Settings.DEFAULT_ICON_PATH(), false);
-            if (AssetPool.getShader("Default") == null)  AssetPool.addShader("Default", "Assets/Shaders/default.glsl", false);
-            if (AssetPool.getShader("Debug") == null)    AssetPool.addShader("Debug", "Assets/Shaders/debug.glsl", false);
-            if (AssetPool.getSound("Default") == null)   AssetPool.addSound("Default", "Assets/Sounds/default.ogg", false, false);
+            if (creating)
+            {
+                AssetPool.addTexture("Default", Settings.DEFAULT_ICON_PATH(), false);
+                AssetPool.addShader("Default", "Assets/Shaders/default.glsl", false);
+                AssetPool.addShader("Debug", "Assets/Shaders/debug.glsl", false);
+                AssetPool.addSound("Default", "Assets/Sounds/default.ogg", false, false);
+                creating = false;
+            }
             Renderer.defaultShader = AssetPool.getShader("Default");
             if (!Forge.isRelease)
             {

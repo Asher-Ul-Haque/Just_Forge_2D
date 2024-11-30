@@ -1,6 +1,7 @@
 package Just_Forge_2D.RenderingSystem;
 
 import Just_Forge_2D.AssetPool.AssetPool;
+import Just_Forge_2D.EditorSystem.Forge;
 import Just_Forge_2D.Utils.Logger;
 import Just_Forge_2D.Utils.Settings;
 import org.joml.Vector2i;
@@ -90,7 +91,7 @@ public class Texture
             stbi_set_flip_vertically_on_load(true);
             String correctPath;
             if (AssetPool.isAbsolutePath(FILEPATH)) correctPath = FILEPATH;
-            else correctPath = new File(System.getProperty("user.dir"), FILEPATH).getAbsolutePath();
+            else correctPath = new File(Forge.projectDir, FILEPATH).getAbsolutePath();
             ByteBuffer image = stbi_load(correctPath, width, height, channels, 0);
 
             if (image != null)

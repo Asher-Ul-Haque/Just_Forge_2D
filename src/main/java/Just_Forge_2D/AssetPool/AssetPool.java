@@ -1,6 +1,7 @@
 package Just_Forge_2D.AssetPool;
 
 import Just_Forge_2D.AudioSystem.Sound;
+import Just_Forge_2D.EditorSystem.Forge;
 import Just_Forge_2D.RenderingSystem.Shader;
 import Just_Forge_2D.RenderingSystem.SpriteSheet;
 import Just_Forge_2D.RenderingSystem.Texture;
@@ -44,7 +45,7 @@ public class AssetPool
 
     private static void shaderAdder(String NAME, String FILE_PATH)
     {
-        if (!hasShaderFile(FILE_PATH))
+        if (!hasShaderFile(FILE_PATH) && !hasShader(NAME))
         {
             Logger.FORGE_LOG_DEBUG("Shader with path: " + FILE_PATH + " Hashed in shader Asset Pool and loaded");
             Shader shader = new Shader(FILE_PATH);
@@ -113,9 +114,19 @@ public class AssetPool
 
     // - - - texture - - -
 
+    public static boolean hasTexture(String NAME)
+    {
+        return nameToFileTextures.containsKey(NAME);
+    }
+
+    public static boolean hasTextureFile(String FILE_PATH)
+    {
+        return AssetPool.texturePool.containsKey(FILE_PATH) || AssetPool.texturePool.containsKey(getRelativeFilePath(FILE_PATH));
+    }
+
     private static void textureAdder(String NAME, String FILE_PATH)
     {
-        if (!AssetPool.texturePool.containsKey(FILE_PATH) && !AssetPool.texturePool.containsKey(getRelativeFilePath(FILE_PATH)))
+        if (!hasTextureFile(FILE_PATH) && !hasTexture(NAME))
         {
             Logger.FORGE_LOG_DEBUG("Texture with path: " + FILE_PATH + " Hashed in shader Asset Pool and loaded");
             Texture texture = new Texture();
@@ -222,9 +233,19 @@ public class AssetPool
 
     // - - - sprite sheets - - -
 
+    public static boolean hasSpriteSheet(String NAME)
+    {
+        return nameToFileSpriteSheet.containsKey(NAME);
+    }
+
+    public static boolean hasSpriteSheetFile(String FILE_PATH)
+    {
+        return AssetPool.spriteSheetPool.containsKey(FILE_PATH) || AssetPool.spriteSheetPool.containsKey(getRelativeFilePath(FILE_PATH));
+    }
+
     private static void spriteSheetAdder(String NAME, SpriteSheet SPRITE_SHEET, String FILE_PATH)
     {
-        if (!AssetPool.spriteSheetPool.containsKey(FILE_PATH) && !AssetPool.spriteSheetPool.containsKey(getRelativeFilePath(FILE_PATH)))
+        if (!hasSpriteSheetFile(FILE_PATH) && !hasSpriteSheet(NAME))
         {
             nameToFileSpriteSheet.put(NAME, FILE_PATH);
             AssetPool.spriteSheetPool.put(FILE_PATH, SPRITE_SHEET);
@@ -299,9 +320,19 @@ public class AssetPool
 
     // - - - Sounds - - -
 
+    public static boolean hasSound(String NAME)
+    {
+        return nameToFileSounds.containsKey(NAME);
+    }
+
+    public static boolean hasSoundFile(String FILE_PATH)
+    {
+        return !AssetPool.soundPool.containsKey(FILE_PATH) && !AssetPool.soundPool.containsKey(getRelativeFilePath(FILE_PATH));
+    }
+
     private static void soundAdder(String NAME, String FILE_PATH, boolean DOES_LOOP)
     {
-        if (!AssetPool.soundPool.containsKey(FILE_PATH) && !AssetPool.soundPool.containsKey(getRelativeFilePath(FILE_PATH)))
+        if (!hasSound(NAME) && !hasSoundFile(FILE_PATH))
         {
             Logger.FORGE_LOG_DEBUG("Sound with path: " + FILE_PATH + " Hashed in Asset Pool and loaded");
             Sound sound = new Sound(FILE_PATH, DOES_LOOP);
@@ -415,7 +446,8 @@ public class AssetPool
 
     public static String getRelativeFilePath(String FILE_PATH)
     {
-        return FILE_PATH.replace(System.getProperty("user.dir"), "");
+        String projectDir = Forge.projectDir + "/";
+        return FILE_PATH.replace(projectDir, "");
     }
 
     public static boolean isAbsolutePath(String FILE_PATH)

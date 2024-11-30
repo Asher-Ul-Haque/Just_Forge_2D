@@ -129,37 +129,37 @@ Collapsed=0
 
 [Window][  Scene Hierarchy Window]
 Pos=4,368
-Size=364,352
+Size=432,352
 Collapsed=0
 DockId=0x0000000E,0
 
 [Window][  Game Viewport]
-Pos=370,28
-Size=665,309
+Pos=438,28
+Size=520,309
 Collapsed=0
 DockId=0x00000008,0
 
 [Window][  Components Window]
-Pos=1037,28
-Size=325,692
+Pos=960,28
+Size=402,692
 Collapsed=0
 DockId=0x00000010,0
 
 [Window][  Camera Controls]
-Pos=370,339
-Size=665,381
+Pos=438,339
+Size=520,381
 Collapsed=0
 DockId=0x00000006,2
 
 [Window][  FPS Graph]
-Pos=370,339
-Size=665,381
+Pos=438,339
+Size=520,381
 Collapsed=0
 DockId=0x00000006,0
 
 [Window][  Grid Controls]
-Pos=370,339
-Size=665,381
+Pos=438,339
+Size=520,381
 Collapsed=0
 DockId=0x00000006,1
 
@@ -171,7 +171,7 @@ DockId=0x0000000D,0
 
 [Window][  Prefabs]
 Pos=4,28
-Size=364,338
+Size=432,338
 Collapsed=0
 DockId=0x0000000D,1
 
@@ -183,7 +183,7 @@ DockId=0x00000006,3
 
 [Window][  Asset Pool]
 Pos=4,28
-Size=364,338
+Size=432,338
 Collapsed=0
 DockId=0x0000000D,0
 
@@ -209,8 +209,8 @@ Collapsed=0
 DockId=0x00000006,3
 
 [Window][  Logs]
-Pos=370,339
-Size=665,381
+Pos=438,339
+Size=520,381
 Collapsed=0
 DockId=0x00000006,3
 
@@ -225,8 +225,8 @@ Size=850,660
 Collapsed=0
 
 [Window][##Asset Error]
-Pos=416,50
-Size=534,114
+Pos=263,50
+Size=840,118
 Collapsed=0
 
 [Table][0x2FAA55A9,2]
@@ -235,11 +235,11 @@ Column 1  Weight=0.0935
 
 [Docking][Data]
 DockSpace             ID=0x6D3A3A6E Window=0x091AB4BE Pos=4,28 Size=1358,692 Split=X Selected=0xAE7BB42F
-  DockNode            ID=0x0000000F Parent=0x6D3A3A6E SizeRef=1031,692 Split=X
-    DockNode          ID=0x0000000B Parent=0x0000000F SizeRef=364,692 Split=Y Selected=0x2FDAADFC
+  DockNode            ID=0x0000000F Parent=0x6D3A3A6E SizeRef=954,692 Split=X
+    DockNode          ID=0x0000000B Parent=0x0000000F SizeRef=432,692 Split=Y Selected=0x2FDAADFC
       DockNode        ID=0x0000000D Parent=0x0000000B SizeRef=320,338 Selected=0x446D1056
       DockNode        ID=0x0000000E Parent=0x0000000B SizeRef=320,352 Selected=0xB59FF763
-    DockNode          ID=0x0000000C Parent=0x0000000F SizeRef=665,692 Split=Y
+    DockNode          ID=0x0000000C Parent=0x0000000F SizeRef=520,692 Split=Y
       DockNode        ID=0x00000009 Parent=0x0000000C SizeRef=1358,309 Split=X
         DockNode      ID=0x00000007 Parent=0x00000009 SizeRef=930,692 Split=X
           DockNode    ID=0x00000001 Parent=0x00000007 SizeRef=231,692 Split=Y Selected=0xDF18B7BE
@@ -249,6 +249,6 @@ DockSpace             ID=0x6D3A3A6E Window=0x091AB4BE Pos=4,28 Size=1358,692 Spl
             DockNode  ID=0x00000008 Parent=0x00000002 SizeRef=919,452 CentralNode=1 HiddenTabBar=1 Selected=0x15EFE5EF
             DockNode  ID=0x00000005 Parent=0x00000002 SizeRef=919,238 Selected=0x9FD216C5
         DockNode      ID=0x0000000A Parent=0x00000009 SizeRef=426,692 Selected=0xA115F62D
-      DockNode        ID=0x00000006 Parent=0x0000000C SizeRef=1358,381 Selected=0x24C89E96
-  DockNode            ID=0x00000010 Parent=0x6D3A3A6E SizeRef=325,692 Selected=0x41EB0D78
+      DockNode        ID=0x00000006 Parent=0x0000000C SizeRef=1358,381 Selected=0x06E5215F
+  DockNode            ID=0x00000010 Parent=0x6D3A3A6E SizeRef=402,692 Selected=0x41EB0D78
 
