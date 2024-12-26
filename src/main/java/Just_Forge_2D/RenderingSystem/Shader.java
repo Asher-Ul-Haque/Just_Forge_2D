@@ -20,8 +20,8 @@ public class Shader
 {
     // - - - Private variables for compiling
     private int shaderProgramID;
-    private String vertexSource, fragmentSource;
-    private transient final String filePath;
+    private transient String vertexSource, fragmentSource;
+    private final String filePath;
     private boolean beingUsed = false;
 
     // - - - Constructor to get a usable shader

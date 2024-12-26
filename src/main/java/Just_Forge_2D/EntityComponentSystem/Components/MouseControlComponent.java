@@ -34,6 +34,8 @@ public class MouseControlComponent extends Component
         float mouseX = Mouse.getWorldX();
         float mouseY = Mouse.getWorldY();
 
+        
+
         // - - - Get the current position of the GameObject
         Vector2f currentPosition = this.gameObject.transform.position;
 

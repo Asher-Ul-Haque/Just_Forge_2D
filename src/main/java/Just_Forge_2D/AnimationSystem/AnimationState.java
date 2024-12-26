@@ -24,7 +24,7 @@ public class AnimationState
     private transient int currentSprite = 0;
     public boolean doesLoop = false;
     public boolean isFinished = false;
-    private float previewSpeed = Settings.DEFAULT_FRAME_TIME();
+    private float previewSpeed = 1f;
     private transient boolean isPreviewing;
     private transient float elapsedTime = 0;
 
@@ -175,7 +175,7 @@ public class AnimationState
                 if (currentFrameSprite != null)
                 {
                     Vector2f[] texCoords = currentFrameSprite.getTextureCoordinates();
-                    Widgets.image(currentFrameSprite.getTextureID(), currentFrameSprite.getWidth() * 2, currentFrameSprite.getHeight() * 2,
+                    Widgets.image(currentFrameSprite.getTextureID(), currentFrameSprite.getWidth() * 4, currentFrameSprite.getHeight() * 4,
                             texCoords, true);}
             }
         }
@@ -190,7 +190,7 @@ public class AnimationState
             addFrame(n);
         }
         if (Widgets.drawBoolControl(Icons.Redo + "  Looping", doesLoop) != doesLoop) setLoop(!doesLoop);
-        previewSpeed = Math.max(Float.MIN_VALUE, Widgets.drawFloatControl(Icons.HourglassHalf + "  Preview Speed", previewSpeed));
+        previewSpeed = Math.max(Math.abs(Float.MIN_VALUE), Widgets.drawFloatControl(Icons.HourglassHalf + "  Preview Speed", previewSpeed));
     }
 
     public void editorGUI()
@@ -249,5 +249,4 @@ public class AnimationState
         }
         return null; // - - - Fallback, should not happen in looping animations
     }
-
 }

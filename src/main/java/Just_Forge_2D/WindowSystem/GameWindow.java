@@ -14,6 +14,7 @@ import Just_Forge_2D.EventSystem.EventManager;
 import Just_Forge_2D.EventSystem.Events.Event;
 import Just_Forge_2D.EventSystem.Events.EventTypes;
 import Just_Forge_2D.GameSystem.GameCodeLoader;
+import Just_Forge_2D.InputSystem.Keyboard;
 import Just_Forge_2D.InputSystem.Mouse;
 import Just_Forge_2D.PhysicsSystem.PhysicsSystemManager;
 import Just_Forge_2D.RenderingSystem.DebugPencil;
@@ -92,6 +93,15 @@ public class GameWindow extends Window
         {
             Logger.FORGE_LOG_ERROR("No Window config specified");
             GameWindow.window = new GameWindow(new GameWindowConfig());
+        }
+        return GameWindow.window;
+    }
+
+    public static GameWindow get(WindowConfig CONFIG)
+    {
+        if (GameWindow.window == null)
+        {
+            GameWindow.window = new GameWindow(CONFIG);
         }
         return GameWindow.window;
     }
@@ -242,6 +252,7 @@ public class GameWindow extends Window
                 try
                 {
                     GameWindow.changeScene(GameWindow.getCurrentScene().getScript().getClass().getDeclaredConstructor().newInstance());
+                    Keyboard.reset();
                 }
                 catch (Exception e)
                 {
@@ -253,6 +264,7 @@ public class GameWindow extends Window
                 Logger.FORGE_LOG_INFO("Ending Game");
                 ComponentsWindow.clearSelection();
                 Forge.isRuntimePlaying = false;
+                Keyboard.reset();
                 try
                 {
                     GameWindow.changeScene(GameWindow.getCurrentScene().getScript().getClass().getDeclaredConstructor().newInstance());

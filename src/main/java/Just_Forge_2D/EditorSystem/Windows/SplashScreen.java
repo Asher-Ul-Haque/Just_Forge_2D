@@ -180,8 +180,7 @@ public class SplashScreen
             if (showLogsOption)
             {
                 creating = false;
-                buttonY += 80.0f;
-                ImGui.setCursorPos(buttonX, buttonY);
+                ImGui.setCursorPos(buttonX, buttonY + 80.f);
                 if (ImGui.button("Open Logs", buttonWidth, buttonHeight))
                 {
                     ProjectManager.openInBrowser(Logger.LOG_FILE_PATH.toString());

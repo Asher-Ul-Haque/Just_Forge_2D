@@ -62,7 +62,7 @@ public class KeyboardControllerComponent extends Component
         t = Widgets.drawEnumControls(Keys.class, Icons.LongArrowAltUp + "  Jump Key", jumpKey);
         if (t != null) jumpKey = (Keys) t;
 
-        t = Widgets.drawEnumControls(Keys.class, Icons.Running + "  Run Key", rightKey);
+        t = Widgets.drawEnumControls(Keys.class, Icons.Running + "  Run Key", runKey);
         if (t != null) runKey = (Keys) t;
 
         Widgets.text("");

@@ -54,7 +54,7 @@ public class Camera implements Observer
         Vector3f cameraUp = new Vector3f(0.0f, 1.0f, 0.0f);
 
         this.viewMatrix.identity();
-        this.viewMatrix.lookAt(new Vector3f(position.x, position.y, 20.0f), cameraFront.add(position.x, position.y, 0.0f), cameraUp);
+        this.viewMatrix.lookAt(new Vector3f(position.x, position.y, 32.0f), cameraFront.add(position.x, position.y, 0.0f), cameraUp);
         this.viewMatrix.rotateXYZ(rotation);
         this.viewMatrix.invert(this.inverseViewMatrix);
 

@@ -44,7 +44,7 @@ public class TextComponent extends Component
             if (t.init(Forge.projectDir + "/Assets/Textures/font.png"))
             {
                 t.setFilters(TextureMaximizeFilter.NEAREST, TextureMinimizeFilter.NEAREST, Settings.DEFAULT_TEXTURE_WRAP_S(), Settings.DEFAULT_TEXTURE_WRAP_T());
-                AssetPool.addSpriteSheet("font", new SpriteSheet(t, 16, 16, 68, 0), true);
+                if (!AssetPool.hasSpriteSheetFile(Forge.projectDir + "/Assets/Textures/font.png")) AssetPool.addSpriteSheet("font", new SpriteSheet(t, 16, 16, 68, 0), true);
             }
             tried = true;
         }

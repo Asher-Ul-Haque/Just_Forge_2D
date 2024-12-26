@@ -196,7 +196,7 @@ public class AssetPoolDisplay
                 () ->
                 {
                     Texture t = new Texture();
-                    if (t.init(path))
+                    if (t.init(copyToProject ? AssetPool.getRelativeFilePath(path) : path))
                     {
                         SpriteSheet sheet = new SpriteSheet(t, (int) size.x, (int) size.y, spriteCount, spriteSpacing);
                         AssetPool.addSpriteSheet(name, sheet, !copyToProject);
@@ -211,9 +211,9 @@ public class AssetPoolDisplay
                 },
                 () ->
                 {
-                    Widgets.drawVec2Control(Icons.Expand + "  Sprite Size", size);
-                    spriteCount = Widgets.drawIntControl(Icons.ListOl + "  Sprite Count", spriteCount);
-                    spriteSpacing = Widgets.drawIntControl(Icons.Underline + " Sprite Spacing", spriteSpacing);
+                    Widgets.drawVec2Control(Icons.Expand + "  Sprite Size", size, 1, 1f);
+                    spriteCount   = Math.max(0, Widgets.drawIntControl(Icons.ListOl + "  Sprite Count", spriteCount));
+                    spriteSpacing = Math.max(0, Widgets.drawIntControl(Icons.Underline + " Sprite Spacing", spriteSpacing));
                 });
             }
             drawSpriteSheets();

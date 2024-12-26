@@ -10,17 +10,29 @@ import Just_Forge_2D.WindowSystem.GameWindow;
 import org.joml.Vector2f;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 
 public class CameraControlComponent extends Component
 {
+    protected class CameraData
+    {
+        public float positionLerpFactor = 0.1f;
+        public float zoomLerpFactor = 0.1f;
+        public float minZoom = 0.5f;
+        public float maxZoom = 2.0f;
+        public float shakeIntensity = 0.5f;
+        public float shakeDuration = 1f;
+        public Vector2f xLimits = new Vector2f();
+        public Vector2f yLimits = new Vector2f();
+        public Set<Vector2f> points = new HashSet<>();
+    }
+
     protected static Camera camera;
-    protected static List<Vector2f> points = new ArrayList<>();
+    protected static Set<Vector2f> points = new HashSet<>();
     protected static float positionLerpFactor = 0.1f;    // Controls how smoothly the camera moves
     protected static float zoomLerpFactor = 0.1f; // Controls how smoothly the camera zooms
-    protected static float minZoom = 0.5f;        // Minimum zoom level (most zoomed in)
-    protected static float maxZoom = 2.0f;        // Maximum zoom level (most zoomed out)
     protected static float totalPoints = 0f;
     protected static transient Vector2f absoluteControlPoint = null;
     protected static float shakeDuration = 1f;
@@ -36,14 +48,67 @@ public class CameraControlComponent extends Component
     protected static boolean limitYEnabled = false;
 
     // - - - Zoom limits
+    protected static float minZoom = 0.5f;        // Minimum zoom level (most zoomed in)
+    protected static float maxZoom = 2.0f;        // Maximum zoom level (most zoomed out)
     protected static boolean minZoomEnabled = false;
     protected static boolean maxZoomEnabled = false;
+
+    // - - - Load / Store
+    protected static boolean stored = false;
+    protected CameraData data = null;
+    protected static transient CameraControlComponent activeInstance;
+
+    protected void save()
+    {
+        this.data = new CameraData();
+        this.data.maxZoom = maxZoom;
+        this.data.minZoom = minZoom;
+        this.data.xLimits = new Vector2f(xLimits);
+        this.data.yLimits = new Vector2f(yLimits);
+        this.data.shakeDuration = shakeDuration;
+        this.data.shakeIntensity = shakeIntensity;
+        this.data.positionLerpFactor = positionLerpFactor;
+        this.data.zoomLerpFactor = zoomLerpFactor;
+        this.data.points = new HashSet<>(points);
+    }
+
+    protected void load()
+    {
+        maxZoom = this.data.maxZoom;
+        minZoom = this.data.minZoom;
+        xLimits = new Vector2f(this.data.xLimits);
+        yLimits = new Vector2f(this.data.yLimits);
+        shakeDuration = this.data.shakeDuration;
+        shakeIntensity = this.data.shakeIntensity;
+        positionLerpFactor = this.data.positionLerpFactor;
+        zoomLerpFactor = this.data.zoomLerpFactor;
+        points = new HashSet<>(points);
+    }
 
     @Override
     public void start()
     {
         camera = GameWindow.getCurrentScene().getCamera();
+        if (activeInstance == null)
+        {
+            activeInstance = this;
+            if (data != null)
+            {
+                load();
+            }
+        }
         addPoint(this.gameObject.transform.position);
+    }
+
+    @Override
+    public void destroy()
+    {
+        removePoint(this.gameObject.transform.position);
+        if (activeInstance == this)
+        {
+            save();
+            activeInstance = null;
+        }
     }
 
     @Override
@@ -66,6 +131,8 @@ public class CameraControlComponent extends Component
         if (limitYEnabled) Widgets.drawVec2Control(Icons.Crosshairs + "  Y Limits", yLimits);
         limitXEnabled = Widgets.drawBoolControl(Icons.Crosshairs + "  Limit X Movement", limitXEnabled);
         limitYEnabled = Widgets.drawBoolControl(Icons.Crosshairs + "  Limit Y Movement", limitYEnabled);
+
+        if (activeInstance == this) save();
     }
 
     public void clearPoints() {points.clear();}
@@ -111,7 +178,7 @@ public class CameraControlComponent extends Component
 
     protected Vector2f calculateAveragePosition()
     {
-        Vector2f sum = ForgeMath.calculateCentroid(points);
+        Vector2f sum = ForgeMath.calculateCentroid(new ArrayList<>(points));
         if (hasAbsoluteControl && absoluteControlPoint != null) return absoluteControlPoint;
         Vector2f point = new Vector2f(sum.sub(new Vector2f(camera.getProjectionSize()).mul(camera.getZoom() * 0.5f)));
         if (shakeElapsedTime < shakeDuration) point.add(generateShakeOffset());
@@ -140,16 +207,16 @@ public class CameraControlComponent extends Component
         if (hasAbsoluteControl || points.size() < 2) return minZoom;
 
         float maxDistance = 0f;
-        for (int i = 0; i < points.size(); i++)
-        {
-            for (int j = i + 1; j < points.size(); j++)
-            {
-                float distance = points.get(i).distance(camera.getPosition());
-                maxDistance = Math.max(maxDistance, distance);
+        for (Vector2f point1 : points) {
+            for (Vector2f point2 : points) {
+                if (!point1.equals(point2)) {
+                    float distance = point1.distance(camera.getPosition());
+                    maxDistance = Math.max(maxDistance, distance);
+                }
             }
         }
 
-        return maxDistance / Math.max(camera.getProjectionSize().x, camera.getProjectionSize().y);
+        return (maxDistance) / Math.max(camera.getProjectionSize().x, camera.getProjectionSize().y);
     }
 
     protected void clamp()
@@ -172,9 +239,6 @@ public class CameraControlComponent extends Component
         minZoomEnabled = ENABLE_MIN_ZOOM_LIMITS;
         maxZoomEnabled = ENABLE_MAX_ZOOM_LIMITS;
     }
-
-    @Override
-    public void destroy() {removePoint(this.gameObject.transform.position);}
 
     @Override
     public void editorUpdate(float DELTA_TIME)

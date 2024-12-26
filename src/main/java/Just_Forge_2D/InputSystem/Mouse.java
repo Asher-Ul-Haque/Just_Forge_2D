@@ -315,11 +315,13 @@ public class Mouse
     public static void setCamera(Camera CAMERA)
     {
         Logger.FORGE_LOG_DEBUG("Switching world camera");
-        if (CAMERA != null)
+        if (CAMERA == null)
         {
             Logger.FORGE_LOG_ERROR("Cannot assign null as world camera");
-            worldCamera = CAMERA;
+            worldCamera = new Camera(new Vector2f());
+            return;
         }
+        worldCamera = CAMERA;
     }
 
     public static Camera getWorldCamera()

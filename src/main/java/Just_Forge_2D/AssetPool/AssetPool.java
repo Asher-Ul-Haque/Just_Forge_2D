@@ -178,7 +178,7 @@ public class AssetPool
 
     public static Texture makeTexture(String FILE_PATH)
     {
-        return makeTexture(FILE_PATH, true);
+        return makeTexture(FILE_PATH, isAbsolutePath(FILE_PATH));
     }
 
     public static Texture makeTexture(String FILE_PATH, boolean ABSOLUTE)

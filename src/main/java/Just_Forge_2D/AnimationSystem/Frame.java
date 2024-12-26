@@ -19,7 +19,7 @@ public class Frame
     public void editorGUI()
     {
         // - - - Show sprite preview as an image button
-        if (Widgets.imageButton(sprite.getTextureID(), sprite.getWidth(), sprite.getHeight(), sprite.getTextureCoordinates(), true))
+        if (Widgets.imageButton(sprite.getTextureID(), sprite.getWidth() * 4, sprite.getHeight() * 4, sprite.getTextureCoordinates(), true))
         {
             AssetPoolDisplay.enableSpriteSelection((Sprite SP)->{this.sprite = SP;});
         }

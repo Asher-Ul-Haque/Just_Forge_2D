@@ -3,6 +3,7 @@ package Just_Forge_2D.EditorSystem;
 import Just_Forge_2D.AssetPool.AssetPool;
 import Just_Forge_2D.AssetPool.AssetPoolSerializer;
 import Just_Forge_2D.AudioSystem.AudioSystemManager;
+import Just_Forge_2D.EditorSystem.Windows.GameWindowConfig;
 import Just_Forge_2D.EditorSystem.Windows.ObjectSelector;
 import Just_Forge_2D.EntityComponentSystem.Components.ComponentList;
 import Just_Forge_2D.EventSystem.EventManager;
@@ -123,10 +124,10 @@ public class Forge
     {
         AudioSystemManager.initialize();
         WindowSystemManager.initialize();
-        editorWindowConfig = new WindowConfig();
+        editorWindowConfig = new GameWindowConfig();
         editorWindowConfig.setHeight(800);
         if (currentTheme == null) currentTheme = new CleanTheme(Settings.DARK_MODE_ENABLED());
-        GameWindow.get();
+        GameWindow.get(editorWindowConfig);
         Forge.setSelector();
         setEditorLayer();
         ComponentList.initialize();
