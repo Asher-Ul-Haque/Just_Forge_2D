@@ -47,7 +47,8 @@ Look at this demo which shows how to use particles system, asset pool textures, 
 <div align="center">
 
 
-https://github.com/user-attachments/assets/31d2563d-4f0f-40cb-98ac-efe6fac22d98
+https://github.com/user-attachments/assets/95c727ff-b859-4556-bcb6-710e5b546d12
+
 
 </div>
 
